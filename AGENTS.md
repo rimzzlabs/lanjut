@@ -17,7 +17,7 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 - shadcn (base-ui variant)
 - Tailwind CSS
 - dnd-kit (section reordering, drag and drop)
-- TipTap (rich text editing, schema-restricted per field)
+- [PlateJS](https://platejs.org/llms.txt)
 - motion/react (animation)
 - zustand (in-memory state)
 - IndexedDB via idb (persistence layer)
@@ -25,12 +25,13 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 - @mobily/ts-belt (general utilities)
 - commitlint + commitizen (commit message enforcement)
 - husky + lint-staged (pre-commit hooks)
+- nuqs (search params state)
 
 @mobily/ts-belt is the single utility library. Do not introduce radash or any second utility library with overlapping purpose.
 
 ## Architecture Rule: Two Layers
 
-1. Structural layer. Fixed section types (header, summary, experience, education, skills, custom sections from an approved list). Each field has a restricted TipTap schema: bold, italic, bullet list, ordered list, link. No tables, no multi-column layout, no text boxes, no inline images, no custom heading levels beyond what the section template defines.
+1. Structural layer. Fixed section types (header, summary, experience, education, skills, custom sections from an approved list). Each field has a restricted PlateJS schema: bold, italic, bullet list, ordered list, link. No tables, no multi-column layout, no text boxes, no inline images, no custom heading levels beyond what the section template defines.
 
 2. Presentation layer. Typography, spacing, color, accent styles, section visual ordering. Fully customizable. Must never alter the underlying linear text structure used for parsing or export.
 
@@ -38,15 +39,11 @@ Any feature request that adds structural freedom (tables, columns, floating elem
 
 ## Data and Storage
 
-- Resume documents persist in IndexedDB, not localStorage. localStorage is not sized for rich text plus metadata across multiple resumes.
+
 - zustand holds working state, synced to IndexedDB on change (debounced).
 - No resume content is sent to any server, API route, or open-next function. Confirm this on every PR touching data flow.
 - Schema for a resume document: versioned. Add a schema version field. Write a migration path before changing field shapes, do not silently break old saved resumes.
 
-## Editor (TipTap)
-
-- Each field gets its own TipTap instance with an explicit extension allowlist. Do not use the default starter kit unmodified, it permits structures the export pipeline cannot guarantee will parse.
-- New extensions require justification against the structural layer rule above before merging.
 
 ## Drag and Drop (dnd-kit)
 
@@ -68,7 +65,7 @@ Any feature request that adds structural freedom (tables, columns, floating elem
 
 1. Resume data schema + IndexedDB layer
 2. zustand store wired to persistence
-3. TipTap fields with restricted schemas
+3. PlateJS fields with restricted schemas
 4. dnd-kit section/field reordering
 5. Presentation layer (themes, typography, spacing)
 6. Export pipeline (PDF, then docx/txt)
@@ -84,8 +81,9 @@ Any feature request that adds structural freedom (tables, columns, floating elem
 
 - TypeScript strict mode on.
 - No `any` without inline justification comment.
-- Components colocated by feature, not by type (no global `components/` dump for feature-specific UI).
-- Shared UI primitives only in the shadcn-managed `components/ui` directory.
+- Components live in `./src/components/<domain-name>/*`, grouped by their domain (e.g. `./src/components/landing/landing-hero.tsx`). Never a global `components/` dump by type, and never colocated under `src/app/` route folders.
+- Shared non-primitive components (used across domains, but not base UI primitives) live in `./src/components/shared/*`.
+- Shared UI primitives only in the shadcn-managed `./src/components/ui` directory.
 - No comments restating what code does. Comment only on complex logic where intent is not recoverable from reading the code (e.g., a non-obvious mathematical computation, a workaround for a library bug, a non-standard algorithm).
 - Do not reach for `useEffect` as a default tool for state synchronization, computed values, or event response. Before adding a `useEffect`, check whether the case matches one of the patterns in https://react.dev/learn/you-might-not-need-an-effect. Valid `useEffect` use is limited to synchronizing with an external system (IndexedDB writes, subscriptions, third-party widget instances). Derived state belongs in render or in zustand selectors, not in an effect that copies state into state.
 - Separate components by concern. A list is not one component. Split into list container, list item, and item-internal pieces as separate components, each in its own file or clearly separated block. Do not collapse a list and its item rendering logic into a single component body.
