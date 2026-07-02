@@ -39,7 +39,7 @@ export interface SectionSchema {
 }
 
 /** The default richtext allowlist shared by most body fields. */
-const PROSE_FEATURES: RichTextFeature[] = [
+export const PROSE_FEATURES: RichTextFeature[] = [
   "bold",
   "italic",
   "bulletList",
@@ -53,14 +53,15 @@ const PROSE_FEATURES: RichTextFeature[] = [
  */
 export const HEADER_SCHEMA: FieldSchema[] = [
   {
-    key: "fullName",
-    label: "Full name",
+    key: "firstName",
+    label: "First name",
     kind: "plain",
-    placeholder: "John Doe",
+    placeholder: "John",
   },
+  { key: "lastName", label: "Last name", kind: "plain", placeholder: "Doe" },
   {
-    key: "headline",
-    label: "Headline",
+    key: "jobTitle",
+    label: "Job title",
     kind: "plain",
     placeholder: "Senior Frontend Engineer",
   },
@@ -72,16 +73,23 @@ export const HEADER_SCHEMA: FieldSchema[] = [
     placeholder: "+1 555 010 1234",
   },
   {
-    key: "location",
-    label: "Location",
-    kind: "plain",
-    placeholder: "San Francisco, CA",
-  },
-  {
     key: "website",
     label: "Website",
     kind: "plain",
     placeholder: "https://doe.dev",
+  },
+  { key: "city", label: "City", kind: "plain", placeholder: "San Francisco" },
+  {
+    key: "province",
+    label: "Province",
+    kind: "plain",
+    placeholder: "California",
+  },
+  {
+    key: "country",
+    label: "Country",
+    kind: "plain",
+    placeholder: "United States",
   },
 ];
 
@@ -110,22 +118,22 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
     singleton: false,
     fields: [
       {
+        key: "title",
+        label: "Job title",
+        kind: "plain",
+        placeholder: "Senior Engineer",
+      },
+      {
         key: "company",
         label: "Company",
         kind: "plain",
         placeholder: "Acme Inc.",
       },
       {
-        key: "role",
-        label: "Role",
+        key: "website",
+        label: "Company website",
         kind: "plain",
-        placeholder: "Senior Engineer",
-      },
-      {
-        key: "location",
-        label: "Location",
-        kind: "plain",
-        placeholder: "Remote",
+        placeholder: "acme.com",
       },
       {
         key: "startDate",
@@ -140,8 +148,8 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
         placeholder: "Present",
       },
       {
-        key: "highlights",
-        label: "Highlights",
+        key: "description",
+        label: "Description",
         kind: "richtext",
         features: PROSE_FEATURES,
       },
@@ -188,13 +196,53 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
   skills: {
     type: "skills",
     defaultTitle: "Skills",
-    singleton: true,
+    singleton: false,
+    fields: [
+      { key: "name", label: "Skill", kind: "plain", placeholder: "TypeScript" },
+      {
+        key: "level",
+        label: "Proficiency",
+        kind: "plain",
+        placeholder: "Advanced",
+      },
+    ],
+  },
+  certifications: {
+    type: "certifications",
+    defaultTitle: "Certifications",
+    singleton: false,
     fields: [
       {
-        key: "body",
-        label: "Skills",
-        kind: "richtext",
-        features: PROSE_FEATURES,
+        key: "name",
+        label: "Name",
+        kind: "plain",
+        placeholder: "AWS Certified Solutions Architect",
+      },
+      {
+        key: "issuer",
+        label: "Issuer",
+        kind: "plain",
+        placeholder: "Amazon Web Services",
+      },
+      {
+        key: "url",
+        label: "Certificate URL",
+        kind: "plain",
+        placeholder: "https://…",
+      },
+    ],
+  },
+  languages: {
+    type: "languages",
+    defaultTitle: "Languages",
+    singleton: false,
+    fields: [
+      { key: "name", label: "Language", kind: "plain", placeholder: "English" },
+      {
+        key: "level",
+        label: "Proficiency",
+        kind: "plain",
+        placeholder: "Fluent",
       },
     ],
   },

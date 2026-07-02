@@ -1,0 +1,77 @@
+"use client";
+
+import { Plus } from "lucide-react";
+import { useEffect } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import {
+  FieldDescription,
+  FieldGroup,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
+import { useResumeStore } from "@/lib/store";
+import {
+  applyLanguagesValues,
+  type LanguageItemValues,
+  type LanguagesFormValues,
+  toLanguagesValues,
+} from "../resume-form-adapter";
+import { EditorSectionLanguagesFormItem } from "./ed-section-languages-form-item";
+
+function emptyLanguage(): LanguageItemValues {
+  return { name: "", level: "" };
+}
+
+export function EditorSectionLanguagesForm() {
+  const open = useResumeStore((state) => state.open);
+  const updateOpen = useResumeStore((state) => state.updateOpen);
+
+  const form = useForm<LanguagesFormValues>({
+    defaultValues: open ? toLanguagesValues(open) : { languages: [] },
+  });
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "languages",
+  });
+
+  useEffect(() => {
+    const subscription = form.watch(() => {
+      updateOpen((draft) => applyLanguagesValues(draft, form.getValues()));
+    });
+    return () => subscription.unsubscribe();
+  }, [form, updateOpen]);
+
+  if (!open) return null;
+
+  return (
+    <form>
+      <FieldSet className="gap-3">
+        <FieldLegend className="sr-only">Languages</FieldLegend>
+        <FieldDescription className="sr-only">
+          Languages you speak
+        </FieldDescription>
+        <Button
+          type="button"
+          onClick={() => append(emptyLanguage())}
+          variant="outline"
+          className="w-full"
+        >
+          <Plus /> Add Language
+        </Button>
+
+        <FieldGroup className="gap-2">
+          {fields.map((field, index) => (
+            <EditorSectionLanguagesFormItem
+              key={field.id}
+              control={form.control}
+              deletable={fields.length > 1}
+              index={index}
+              onRemoveField={remove}
+            />
+          ))}
+        </FieldGroup>
+      </FieldSet>
+    </form>
+  );
+}

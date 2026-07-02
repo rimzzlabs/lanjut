@@ -3,6 +3,8 @@ import { A4 } from "./resume-geometry";
 
 interface ResumePageProps {
   children: ReactNode;
+  page: number;
+  total: number;
 }
 
 /**
@@ -26,10 +28,13 @@ const PAPER_STYLE: CSSProperties = {
 export function ResumePage(props: ResumePageProps) {
   return (
     <div
-      className="mx-auto overflow-hidden rounded border bg-white text-foreground shadow-sm"
+      className="relative mx-auto overflow-hidden rounded border bg-white text-foreground shadow-sm"
       style={PAPER_STYLE}
     >
       {props.children}
+      <p className="text-[0.6875rem] text-muted-foreground/70 absolute bottom-4 right-4">
+        <span className="sr-only">Page</span> {props.page}/{props.total}
+      </p>
     </div>
   );
 }

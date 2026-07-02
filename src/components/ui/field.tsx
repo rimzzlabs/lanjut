@@ -100,6 +100,7 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
 
 function FieldLabel({
   className,
+
   ...props
 }: React.ComponentProps<typeof Label>) {
   return (
@@ -108,6 +109,7 @@ function FieldLabel({
       className={cn(
         "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:bg-input/30 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border *:data-[slot=field]:p-4",
         "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col",
+        "aria-required:after:content-['*'] aria-required:after:text-destructive aria-required:after:-ml-1.5",
         className,
       )}
       {...props}

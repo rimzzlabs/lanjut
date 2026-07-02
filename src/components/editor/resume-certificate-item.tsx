@@ -3,8 +3,8 @@ import type { CertificateItemView } from "./resume-preview";
 export function ResumeCertificateItem(props: CertificateItemView) {
   return (
     <article>
-      <div className="flex items-baseline justify-between gap-4">
-        <h3 className="text-sm font-semibold">
+      <div className="group flex items-baseline justify-between gap-4">
+        <h3 className="text-xs font-semibold">
           {props.href ? (
             <a href={props.href} className="hover:underline">
               {props.title}
@@ -17,7 +17,7 @@ export function ResumeCertificateItem(props: CertificateItemView) {
           {props.startDate} - {props.endDate}
         </span>
       </div>
-      <p className="text-sm text-muted-foreground">{props.issuer}</p>
+      <p className="text-xs text-muted-foreground">{props.issuer}</p>
     </article>
   );
 }

@@ -16,8 +16,8 @@ import {
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuItem,
+  SidebarMenuSkeleton,
 } from "../ui/sidebar";
-import { Skeleton } from "../ui/skeleton";
 import { PlatformSidebarResumeCreate } from "./platform-sidebar-resume-create";
 import { PlatformSidebarResumeItem } from "./platform-sidebar-resume-item";
 
@@ -40,7 +40,7 @@ export function PlatformSidebarResume() {
         {indexStatus !== "ready" ? (
           SKELETON_KEYS.map((key) => (
             <SidebarMenuItem key={key}>
-              <Skeleton className="h-8 w-full" />
+              <SidebarMenuSkeleton />
             </SidebarMenuItem>
           ))
         ) : index.length === 0 ? (

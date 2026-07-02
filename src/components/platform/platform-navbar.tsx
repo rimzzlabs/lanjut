@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { Button } from "../ui/button";
 import { SidebarTrigger } from "../ui/sidebar";
 import { Spinner } from "../ui/spinner";
+import { PlatformNavbarBreadcrumb } from "./platform-navbar-breadcrumb";
 
 const PlatformNavbarTheme = dynamic(
   () => import("./platform-navbar-theme").then((m) => m.PlatformNavbarTheme),
@@ -22,6 +23,7 @@ export function PlatformNavbar() {
     <header className="sticky top-0 inset-x-0 z-50 border-b bg-background motion-safe:bg-background/50 motion-safe:backdrop-blur-sm">
       <nav className="h-12 flex items-center gap-2 px-6">
         <SidebarTrigger />
+        <PlatformNavbarBreadcrumb />
 
         <div className="inline-flex items-center gap-2 ml-auto">
           <PlatformNavbarTheme />

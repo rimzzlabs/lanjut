@@ -109,8 +109,12 @@ export function ResumeDocument(props: ResumeDocumentProps) {
             transformOrigin: "top left",
           }}
         >
-          {pages.map((pageBlocks) => (
-            <ResumePage key={pageBlocks[0].id}>
+          {pages.map((pageBlocks, index, items) => (
+            <ResumePage
+              page={index + 1}
+              total={items.length}
+              key={pageBlocks[0].id}
+            >
               {pageBlocks.map((block, index) => (
                 <div
                   key={block.id}

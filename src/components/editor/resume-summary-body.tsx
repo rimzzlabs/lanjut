@@ -4,7 +4,7 @@ interface ResumeSummaryBodyProps {
 
 export function ResumeSummaryBody(props: ResumeSummaryBodyProps) {
   return (
-    <p className="text-sm leading-relaxed text-muted-foreground">
+    <p className="text-xs leading-relaxed text-muted-foreground">
       {props.body}
     </p>
   );

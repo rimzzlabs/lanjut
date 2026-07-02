@@ -128,3 +128,42 @@
     @apply font-sans;
   }
 }
+
+@layer components {
+  /* Tailwind Preflight strips list/mark styling; restore it inside the
+     restricted rich-text editor so bold/italic/lists read as formatted text. */
+  .tiptap-content:focus-visible {
+    @apply outline-none;
+  }
+  .tiptap-content p {
+    @apply my-0;
+  }
+  .tiptap-content strong {
+    @apply font-semibold;
+  }
+  .tiptap-content em {
+    @apply italic;
+  }
+  .tiptap-content a {
+    @apply text-primary underline underline-offset-2;
+  }
+  .tiptap-content ul {
+    @apply my-1 list-disc pl-5;
+  }
+  .tiptap-content ol {
+    @apply my-1 list-decimal pl-5;
+  }
+  .tiptap-content li {
+    @apply my-0.5;
+  }
+  /* Placeholder text for the empty first paragraph (extension-placeholder).
+     Written as plain CSS: `@apply` inside a `::before` with `content: attr()`
+     trips the Tailwind v4 parser and drops the rule. */
+  .tiptap-content p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    color: var(--muted-foreground);
+    pointer-events: none;
+    float: left;
+    height: 0;
+  }
+}

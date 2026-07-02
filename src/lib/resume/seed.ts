@@ -39,12 +39,15 @@ export const SEED_RESUME: Resume = {
   updatedAt: "2026-01-01T00:00:00.000Z",
   header: {
     fields: {
-      fullName: plain("John Doe"),
-      headline: plain("Senior Frontend Engineer"),
+      firstName: plain("John"),
+      lastName: plain("Doe"),
+      jobTitle: plain("Senior Frontend Engineer"),
       email: plain("john.doe@example.com"),
       phone: plain("+1 555 010 1234"),
-      location: plain("San Francisco, CA"),
-      website: plain("https://johndoe.dev"),
+      website: plain("johndoe.dev"),
+      city: plain("San Francisco"),
+      province: plain("California"),
+      country: plain("United States"),
     },
   },
   sections: [
@@ -73,12 +76,12 @@ export const SEED_RESUME: Resume = {
         {
           id: "seed-experience-1",
           fields: {
+            title: plain("Senior Frontend Engineer"),
             company: plain("Acme Corp"),
-            role: plain("Senior Frontend Engineer"),
-            location: plain("Remote"),
+            website: plain("acme.example.com"),
             startDate: plain("Mar 2022"),
             endDate: plain("Present"),
-            highlights: prose(
+            description: prose(
               bulletList([
                 "Led migration of a 200k-line codebase to a typed component library, cutting UI defects by 40%.",
                 "Owned the design-system accessibility program, reaching WCAG 2.1 AA across all shipped components.",
@@ -90,12 +93,12 @@ export const SEED_RESUME: Resume = {
         {
           id: "seed-experience-2",
           fields: {
+            title: plain("Frontend Engineer"),
             company: plain("Globex"),
-            role: plain("Frontend Engineer"),
-            location: plain("Boston, MA"),
+            website: plain("globex.example.com"),
             startDate: plain("Jul 2018"),
             endDate: plain("Feb 2022"),
-            highlights: prose(
+            description: prose(
               bulletList([
                 "Built the customer-facing analytics dashboard used by 12k weekly active users.",
                 "Reduced initial bundle size by 55% through code-splitting and dependency audits.",
@@ -134,15 +137,52 @@ export const SEED_RESUME: Resume = {
       entries: [
         {
           id: "seed-skills-1",
+          fields: { name: plain("TypeScript"), level: plain("Expert") },
+        },
+        {
+          id: "seed-skills-2",
+          fields: { name: plain("React & Next.js"), level: plain("Expert") },
+        },
+        {
+          id: "seed-skills-3",
+          fields: { name: plain("Node.js"), level: plain("Advanced") },
+        },
+        {
+          id: "seed-skills-4",
           fields: {
-            body: prose(
-              bulletList([
-                "Languages: TypeScript, JavaScript, HTML, CSS",
-                "Frameworks: React, Next.js, Node.js",
-                "Tooling: Vite, Playwright, Storybook, Figma",
-              ]),
-            ),
+            name: plain("Testing (Playwright)"),
+            level: plain("Intermediate"),
           },
+        },
+      ],
+    },
+    {
+      id: "seed-certifications",
+      type: "certifications",
+      title: "Certifications",
+      entries: [
+        {
+          id: "seed-certifications-1",
+          fields: {
+            name: plain("AWS Certified Solutions Architect"),
+            issuer: plain("Amazon Web Services"),
+            url: plain("aws.amazon.com/certification"),
+          },
+        },
+      ],
+    },
+    {
+      id: "seed-languages",
+      type: "languages",
+      title: "Languages",
+      entries: [
+        {
+          id: "seed-languages-1",
+          fields: { name: plain("English"), level: plain("Native") },
+        },
+        {
+          id: "seed-languages-2",
+          fields: { name: plain("Spanish"), level: plain("Professional") },
         },
       ],
     },
