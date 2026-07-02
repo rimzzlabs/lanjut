@@ -7,6 +7,8 @@
  * Data → adapter → consumer: these types are the consumer contract.
  */
 
+import type { RichBlock } from "./rich-content";
+
 export type ContactKind = "phone" | "email" | "website" | "location";
 
 export interface ContactView {
@@ -30,7 +32,7 @@ export interface ExperienceItemView {
   companyHref?: string;
   startDate: string;
   endDate: string;
-  highlights: string[];
+  description: RichBlock[];
 }
 
 export interface EducationItemView {
@@ -39,6 +41,7 @@ export interface EducationItemView {
   institution: string;
   startDate: string;
   endDate: string;
+  details: RichBlock[];
 }
 
 export interface CertificateItemView {
@@ -64,7 +67,7 @@ export interface LanguageItemView {
 
 export interface ResumePreview {
   header: HeaderView;
-  summary: string;
+  summary: RichBlock[];
   experience: ExperienceItemView[];
   education: EducationItemView[];
   certificates: CertificateItemView[];

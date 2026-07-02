@@ -7,6 +7,7 @@ import type {
   ResumePreview,
   SkillItemView,
 } from "./resume-preview";
+import { isRichEmpty, type RichBlock } from "./rich-content";
 
 /**
  * Pagination metadata shared by every block. `keepWithNext` glues a block to the
@@ -29,7 +30,7 @@ export type ResumeBlock = BlockMeta &
   (
     | { kind: "header"; header: HeaderView }
     | { kind: "heading"; title: string }
-    | { kind: "summary"; body: string }
+    | { kind: "summary"; body: RichBlock[] }
     | { kind: "experience"; item: ExperienceItemView }
     | { kind: "education"; item: EducationItemView }
     | { kind: "certificate"; item: CertificateItemView }
@@ -63,7 +64,7 @@ function entryGap(index: number): number {
 }
 
 function hasExperience(item: ExperienceItemView): boolean {
-  return Boolean(item.role || item.company || item.highlights.length > 0);
+  return Boolean(item.role || item.company) || !isRichEmpty(item.description);
 }
 
 function hasEducation(item: EducationItemView): boolean {
@@ -98,12 +99,11 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
     },
   ];
 
-  const summary = resume.summary.trim();
-  if (summary) {
+  if (!isRichEmpty(resume.summary)) {
     blocks.push(heading("summary-heading", "Summary"), {
       id: "summary-body",
       kind: "summary",
-      body: summary,
+      body: resume.summary,
       gapBefore: GAP.body,
       keepWithNext: false,
     });

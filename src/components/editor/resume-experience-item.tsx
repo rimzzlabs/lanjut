@@ -1,4 +1,5 @@
 import type { ExperienceItemView } from "./resume-preview";
+import { ResumeRichText } from "./resume-rich-text";
 
 export function ResumeExperienceItem(props: ExperienceItemView) {
   return (
@@ -20,11 +21,7 @@ export function ResumeExperienceItem(props: ExperienceItemView) {
         )}
       </p>
 
-      <ul className="mt-2 list-disc space-y-1 pl-5 text-xs leading-relaxed text-muted-foreground">
-        {props.highlights.map((highlight) => (
-          <li key={highlight}>{highlight}</li>
-        ))}
-      </ul>
+      <ResumeRichText blocks={props.description} className="mt-2" />
     </article>
   );
 }
