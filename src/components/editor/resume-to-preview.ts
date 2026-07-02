@@ -1,14 +1,14 @@
-import type { JSONContent } from "@tiptap/core";
 import type { Field, Resume, Section } from "@/lib/resume/types";
 import { dateSortValue } from "./month-year-menu/month-year-menu-data";
 import type { ContactView, HeaderView, ResumePreview } from "./resume-preview";
+import { type RichBlock, tiptapToRichBlocks } from "./rich-content";
 
 function plain(field: Field | undefined): string {
   return field?.kind === "plain" ? field.value.trim() : "";
 }
 
-function rich(field: Field | undefined): JSONContent | undefined {
-  return field?.kind === "richtext" ? field.value : undefined;
+function richBlocks(field: Field | undefined): RichBlock[] {
+  return field?.kind === "richtext" ? tiptapToRichBlocks(field.value) : [];
 }
 
 function sectionOfType(
@@ -16,36 +16,6 @@ function sectionOfType(
   type: Section["type"],
 ): Section | undefined {
   return resume.sections.find((section) => section.type === type);
-}
-
-/** All text nodes under `node`, concatenated in document order. */
-function nodeText(node: JSONContent | undefined): string {
-  if (!node) return "";
-  let text = node.text ?? "";
-  for (const child of node.content ?? []) text += nodeText(child);
-  return text;
-}
-
-/**
- * Flattens a restricted TipTap doc into linear text lines: every list item and
- * every top-level paragraph becomes one line. Inline marks (bold/italic/link)
- * collapse to their text — the plain-string view-model carries structure, not
- * formatting. Rendering marks in the preview is separate follow-up work.
- */
-function richLines(doc: JSONContent | undefined): string[] {
-  const lines: string[] = [];
-  for (const block of doc?.content ?? []) {
-    if (block.type === "bulletList" || block.type === "orderedList") {
-      for (const item of block.content ?? []) {
-        const text = nodeText(item).trim();
-        if (text) lines.push(text);
-      }
-      continue;
-    }
-    const text = nodeText(block).trim();
-    if (text) lines.push(text);
-  }
-  return lines;
 }
 
 /** A stored URL is domain-only (see `UrlInput`); restore the scheme for links. */
@@ -120,7 +90,7 @@ export function resumeToPreview(resume: Resume): ResumePreview {
 
   return {
     header: toHeaderView(resume),
-    summary: richLines(rich(summaryBody)).join(" "),
+    summary: richBlocks(summaryBody),
     experience: (sectionOfType(resume, "experience")?.entries ?? [])
       .map((entry) => {
         const website = plain(entry.fields.website);
@@ -131,7 +101,7 @@ export function resumeToPreview(resume: Resume): ResumePreview {
           companyHref: website ? withHttps(website) : undefined,
           startDate: plain(entry.fields.startDate),
           endDate: plain(entry.fields.endDate),
-          highlights: richLines(rich(entry.fields.description)),
+          description: richBlocks(entry.fields.description),
         };
       })
       .sort(byRecency),
@@ -142,6 +112,7 @@ export function resumeToPreview(resume: Resume): ResumePreview {
         institution: plain(entry.fields.institution),
         startDate: plain(entry.fields.startDate),
         endDate: plain(entry.fields.endDate),
+        details: richBlocks(entry.fields.details),
       }))
       .sort(byRecency),
     certificates: (sectionOfType(resume, "certifications")?.entries ?? []).map(

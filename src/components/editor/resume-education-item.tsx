@@ -1,4 +1,5 @@
 import type { EducationItemView } from "./resume-preview";
+import { ResumeRichText } from "./resume-rich-text";
 
 export function ResumeEducationItem(props: EducationItemView) {
   return (
@@ -10,6 +11,7 @@ export function ResumeEducationItem(props: EducationItemView) {
         </span>
       </div>
       <p className="text-xs text-muted-foreground">{props.institution}</p>
+      <ResumeRichText blocks={props.details} className="mt-1" />
     </article>
   );
 }

@@ -1,11 +1,10 @@
+import { ResumeRichText } from "./resume-rich-text";
+import type { RichBlock } from "./rich-content";
+
 interface ResumeSummaryBodyProps {
-  body: string;
+  body: RichBlock[];
 }
 
 export function ResumeSummaryBody(props: ResumeSummaryBodyProps) {
-  return (
-    <p className="text-xs leading-relaxed text-muted-foreground">
-      {props.body}
-    </p>
-  );
+  return <ResumeRichText blocks={props.body} />;
 }

@@ -37,13 +37,13 @@ export function EditorResumePreview() {
 
 function PreviewSkeleton() {
   return (
-    <div className="mx-auto aspect-[210/297] w-full max-w-[794px] animate-pulse rounded border bg-white shadow-sm" />
+    <div className="mx-auto aspect-210/297 w-full max-w-[794px] animate-pulse rounded border bg-white shadow-sm" />
   );
 }
 
 function PreviewMessage(props: { children: string }) {
   return (
-    <div className="mx-auto flex aspect-[210/297] w-full max-w-[794px] items-center justify-center rounded border bg-white text-sm text-muted-foreground shadow-sm">
+    <div className="mx-auto flex aspect-210/297 w-full max-w-[794px] items-center justify-center rounded border bg-white text-sm text-muted-foreground shadow-sm">
       {props.children}
     </div>
   );
