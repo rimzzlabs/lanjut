@@ -18,10 +18,13 @@ interface PhoneNumberInputProps {
  * `+` country code), so no country selector is needed.
  */
 export function PhoneNumberInput(props: PhoneNumberInputProps) {
+  // The library warns when the initial value isn't strict E.164; strip any
+  // formatting (spaces, dashes, parens) that legacy or hand-entered values carry.
+  const value = props.value.replace(/[^\d+]/g, "") || undefined;
   return (
     <PhoneInput
       id={props.id}
-      value={props.value || undefined}
+      value={value}
       placeholder={props.placeholder}
       inputComponent={Input}
       onChange={(value) => props.onChange(value ?? "")}

@@ -7,7 +7,7 @@ interface ResumeLanguagesListProps {
 
 export function ResumeLanguagesList(props: ResumeLanguagesListProps) {
   return (
-    <ul className="flex flex-wrap gap-x-12 gap-y-2">
+    <ul className="grid grid-cols-2 gap-x-8 gap-y-1">
       {props.items.map((item) => (
         <ResumeLanguageItem key={item.id} {...item} />
       ))}

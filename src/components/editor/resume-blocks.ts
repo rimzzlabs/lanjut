@@ -5,6 +5,7 @@ import type {
   HeaderView,
   LanguageItemView,
   ResumePreview,
+  SkillItemView,
 } from "./resume-preview";
 
 /**
@@ -32,7 +33,7 @@ export type ResumeBlock = BlockMeta &
     | { kind: "experience"; item: ExperienceItemView }
     | { kind: "education"; item: EducationItemView }
     | { kind: "certificate"; item: CertificateItemView }
-    | { kind: "skills"; items: string[] }
+    | { kind: "skills"; items: SkillItemView[] }
     | { kind: "languages"; items: LanguageItemView[] }
   );
 
@@ -61,6 +62,31 @@ function entryGap(index: number): number {
   return index === 0 ? GAP.firstEntry : GAP.entry;
 }
 
+function hasExperience(item: ExperienceItemView): boolean {
+  return Boolean(item.role || item.company || item.highlights.length > 0);
+}
+
+function hasEducation(item: EducationItemView): boolean {
+  return Boolean(item.degree || item.institution);
+}
+
+function hasCertificate(item: CertificateItemView): boolean {
+  return Boolean(item.title || item.issuer);
+}
+
+function hasSkill(item: SkillItemView): boolean {
+  return Boolean(item.name);
+}
+
+function hasLanguage(item: LanguageItemView): boolean {
+  return Boolean(item.name);
+}
+
+/**
+ * Builds the linear block sequence, omitting any section — heading included —
+ * that has no meaningful content, so a sparse résumé shows only what the user
+ * filled in. Empty repeated entries are dropped before a section is weighed.
+ */
 export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
   const blocks: ResumeBlock[] = [
     {
@@ -70,61 +96,88 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
       gapBefore: 0,
       keepWithNext: false,
     },
-    heading("summary-heading", "Summary"),
-    {
+  ];
+
+  const summary = resume.summary.trim();
+  if (summary) {
+    blocks.push(heading("summary-heading", "Summary"), {
       id: "summary-body",
       kind: "summary",
-      body: resume.summary,
+      body: summary,
       gapBefore: GAP.body,
       keepWithNext: false,
-    },
-    heading("experience-heading", "Experience"),
-    ...resume.experience.map(
-      (item, index): ResumeBlock => ({
-        id: item.id,
-        kind: "experience",
-        item,
-        gapBefore: entryGap(index),
-        keepWithNext: false,
-      }),
-    ),
-    heading("education-heading", "Education"),
-    ...resume.education.map(
-      (item, index): ResumeBlock => ({
-        id: item.id,
-        kind: "education",
-        item,
-        gapBefore: entryGap(index),
-        keepWithNext: false,
-      }),
-    ),
-    heading("certificates-heading", "Certificates"),
-    ...resume.certificates.map(
-      (item, index): ResumeBlock => ({
-        id: item.id,
-        kind: "certificate",
-        item,
-        gapBefore: entryGap(index),
-        keepWithNext: false,
-      }),
-    ),
-    heading("skills-heading", "Skills"),
-    {
+    });
+  }
+
+  const experience = resume.experience.filter(hasExperience);
+  if (experience.length > 0) {
+    blocks.push(
+      heading("experience-heading", "Experience"),
+      ...experience.map(
+        (item, index): ResumeBlock => ({
+          id: item.id,
+          kind: "experience",
+          item,
+          gapBefore: entryGap(index),
+          keepWithNext: false,
+        }),
+      ),
+    );
+  }
+
+  const education = resume.education.filter(hasEducation);
+  if (education.length > 0) {
+    blocks.push(
+      heading("education-heading", "Education"),
+      ...education.map(
+        (item, index): ResumeBlock => ({
+          id: item.id,
+          kind: "education",
+          item,
+          gapBefore: entryGap(index),
+          keepWithNext: false,
+        }),
+      ),
+    );
+  }
+
+  const certificates = resume.certificates.filter(hasCertificate);
+  if (certificates.length > 0) {
+    blocks.push(
+      heading("certificates-heading", "Certificates"),
+      ...certificates.map(
+        (item, index): ResumeBlock => ({
+          id: item.id,
+          kind: "certificate",
+          item,
+          gapBefore: entryGap(index),
+          keepWithNext: false,
+        }),
+      ),
+    );
+  }
+
+  const skills = resume.skills.filter(hasSkill);
+  if (skills.length > 0) {
+    blocks.push(heading("skills-heading", "Skills"), {
       id: "skills-body",
       kind: "skills",
-      items: resume.skills,
+      items: skills,
       gapBefore: GAP.body,
       keepWithNext: false,
-    },
-    heading("languages-heading", "Languages"),
-    {
+    });
+  }
+
+  const languages = resume.languages.filter(hasLanguage);
+  if (languages.length > 0) {
+    blocks.push(heading("languages-heading", "Languages"), {
       id: "languages-body",
       kind: "languages",
-      items: resume.languages,
+      items: languages,
       gapBefore: GAP.body,
       keepWithNext: false,
-    },
-  ];
+    });
+  }
 
   return blocks;
 }

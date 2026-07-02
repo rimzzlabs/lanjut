@@ -1,6 +1,6 @@
-import type { LanguageItemView } from "./resume-preview";
+import type { SkillItemView } from "./resume-preview";
 
-export function ResumeLanguageItem(props: LanguageItemView) {
+export function ResumeSkillItem(props: SkillItemView) {
   return (
     <li className="flex items-baseline justify-between gap-4 text-xs">
       <span className="font-semibold">{props.name}</span>

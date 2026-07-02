@@ -50,6 +50,12 @@ export interface CertificateItemView {
   endDate: string;
 }
 
+export interface SkillItemView {
+  id: string;
+  name: string;
+  proficiency: string;
+}
+
 export interface LanguageItemView {
   id: string;
   name: string;
@@ -62,7 +68,6 @@ export interface ResumePreview {
   experience: ExperienceItemView[];
   education: EducationItemView[];
   certificates: CertificateItemView[];
-  /** One line per skill group, laid out across two columns in reading order. */
-  skills: string[];
+  skills: SkillItemView[];
   languages: LanguageItemView[];
 }

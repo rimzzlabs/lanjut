@@ -39,9 +39,7 @@ export function EditorSectionCertificationsFormItem(
           name={`certifications.${props.index}.name`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel aria-required htmlFor={field.name}>
-                Name
-              </FieldLabel>
+              <FieldLabel htmlFor={field.name}>Name</FieldLabel>
               <div className="flex items-center gap-2">
                 <Input
                   placeholder="AWS Certified Solutions Architect"

@@ -10,6 +10,7 @@ import { EditorSectionExperience } from "./ed-section-experience/ed-section-expe
 import { EditorSectionLanguages } from "./ed-section-languages/ed-section-languages";
 import { EditorSectionPersonal } from "./ed-section-personal/ed-section-personal";
 import { EditorSectionSkills } from "./ed-section-skills/ed-section-skills";
+import { EditorSectionSummary } from "./ed-section-summary/ed-section-summary";
 
 const SKELETONS = [1, 2, 3, 4, 5, 6];
 
@@ -44,10 +45,11 @@ export function EditorSectionList() {
   return (
     <Accordion key={open.id} multiple className="border-none">
       <EditorSectionPersonal />
+      <EditorSectionSummary />
       <EditorSectionExperience />
       <EditorSectionEducation />
-      <EditorSectionSkills />
       <EditorSectionCertifications />
+      <EditorSectionSkills />
       <EditorSectionLanguages />
     </Accordion>
   );

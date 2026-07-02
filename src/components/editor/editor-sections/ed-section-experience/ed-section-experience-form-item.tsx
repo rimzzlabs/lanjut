@@ -4,7 +4,6 @@ import { UrlInput } from "@/components/shared/url-input";
 import { Button } from "@/components/ui/button";
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -13,8 +12,8 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { PROSE_FEATURES } from "@/lib/resume/schema-registry";
-import { MonthYearMenu } from "../../month-year-menu/month-year-menu";
 import { RichTextEditor } from "../../rich-text/rich-text-editor";
+import { DateRangeFields } from "../date-range-fields";
 import type { ExperienceFormValues } from "../resume-form-adapter";
 
 interface EditorSectionExperienceFormItemProps {
@@ -43,9 +42,7 @@ export function EditorSectionExperienceFormItem(
           name={`experiences.${props.index}.title`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel aria-required htmlFor={field.name}>
-                Job Title
-              </FieldLabel>
+              <FieldLabel htmlFor={field.name}>Job Title</FieldLabel>
               <div className="flex items-center gap-2">
                 <Input placeholder="UX Engineer" {...field} id={field.name} />
                 {props.deletable && (
@@ -70,9 +67,7 @@ export function EditorSectionExperienceFormItem(
           name={`experiences.${props.index}.company`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel aria-required htmlFor={field.name}>
-                Company
-              </FieldLabel>
+              <FieldLabel htmlFor={field.name}>Company</FieldLabel>
               <Input placeholder="Acme Inc." {...field} id={field.name} />
               <FieldError errors={[fieldState.error]} />
             </Field>
@@ -92,64 +87,24 @@ export function EditorSectionExperienceFormItem(
                 onChange={field.onChange}
                 onBlur={field.onBlur}
               />
-              <FieldDescription>
-                Assuming the site will always support <code>https</code>.
-              </FieldDescription>
               <FieldError errors={[fieldState.error]} />
             </Field>
           )}
         />
 
-        <div className="grid grid-cols-[minmax(0,1fr)_max-content_minmax(0,1fr)] gap-3">
-          <Controller
-            control={props.control}
-            name={`experiences.${props.index}.startDate`}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel aria-required htmlFor={field.name}>
-                  Start Date
-                </FieldLabel>
-                <MonthYearMenu
-                  id={field.name}
-                  value={field.value}
-                  placeholder="Start date"
-                  onChange={field.onChange}
-                />
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
-          />
-
-          <div className="h-px w-2 bg-muted-foreground mt-12" />
-
-          <Controller
-            control={props.control}
-            name={`experiences.${props.index}.endDate`}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel aria-required htmlFor={field.name}>
-                  End Date
-                </FieldLabel>
-                <MonthYearMenu
-                  id={field.name}
-                  value={field.value}
-                  placeholder="End date"
-                  onChange={field.onChange}
-                />
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
-          />
-        </div>
+        <DateRangeFields
+          control={props.control}
+          startName={`experiences.${props.index}.startDate`}
+          endName={`experiences.${props.index}.endDate`}
+          presentLabel="I currently work here"
+        />
 
         <Controller
           control={props.control}
           name={`experiences.${props.index}.description`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel aria-required htmlFor={field.name}>
-                Summary
-              </FieldLabel>
+              <FieldLabel htmlFor={field.name}>Summary</FieldLabel>
               <RichTextEditor
                 id={field.name}
                 value={field.value}

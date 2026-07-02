@@ -36,7 +36,6 @@ interface ResumeStoreState {
   duplicateResume: (id: string) => Promise<Resume | undefined>;
   removeResume: (id: string) => Promise<void>;
   openResume: (id: string) => Promise<void>;
-  closeResume: () => Promise<void>;
   /** Apply an edit to the open document; schedules a debounced persist. */
   updateOpen: (recipe: (draft: Resume) => void) => void;
   /** Force any pending write to commit now (e.g. before navigating away). */
@@ -134,11 +133,6 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     }
     await setLastOpenedResumeId(id);
     set({ open: resume, openStatus: "ready" });
-  },
-
-  async closeResume() {
-    await flushOpenResumePersist();
-    set({ open: null, openStatus: "idle" });
   },
 
   updateOpen(recipe) {

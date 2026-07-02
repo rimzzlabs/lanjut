@@ -30,7 +30,7 @@ export function EditorSectionCertificationsForm() {
   const form = useForm<CertificationsFormValues>({
     defaultValues: open ? toCertificationsValues(open) : { certifications: [] },
   });
-  const { fields, append, remove } = useFieldArray({
+  const { fields, prepend, remove } = useFieldArray({
     control: form.control,
     name: "certifications",
   });
@@ -53,7 +53,7 @@ export function EditorSectionCertificationsForm() {
         </FieldDescription>
         <Button
           type="button"
-          onClick={() => append(emptyCertification())}
+          onClick={() => prepend(emptyCertification())}
           variant="outline"
           className="w-full"
         >

@@ -30,7 +30,7 @@ export function EditorSectionLanguagesForm() {
   const form = useForm<LanguagesFormValues>({
     defaultValues: open ? toLanguagesValues(open) : { languages: [] },
   });
-  const { fields, append, remove } = useFieldArray({
+  const { fields, prepend, remove } = useFieldArray({
     control: form.control,
     name: "languages",
   });
@@ -53,7 +53,7 @@ export function EditorSectionLanguagesForm() {
         </FieldDescription>
         <Button
           type="button"
-          onClick={() => append(emptyLanguage())}
+          onClick={() => prepend(emptyLanguage())}
           variant="outline"
           className="w-full"
         >

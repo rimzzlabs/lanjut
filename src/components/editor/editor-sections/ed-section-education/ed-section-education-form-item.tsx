@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { PROSE_FEATURES } from "@/lib/resume/schema-registry";
-import { MonthYearMenu } from "../../month-year-menu/month-year-menu";
 import { RichTextEditor } from "../../rich-text/rich-text-editor";
+import { DateRangeFields } from "../date-range-fields";
 import type { EducationFormValues } from "../resume-form-adapter";
 
 interface EditorSectionEducationFormItemProps {
@@ -40,9 +40,7 @@ export function EditorSectionEducationFormItem(
           name={`educations.${props.index}.institution`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel aria-required htmlFor={field.name}>
-                Institution
-              </FieldLabel>
+              <FieldLabel htmlFor={field.name}>Institution</FieldLabel>
               <div className="flex items-center gap-2">
                 <Input
                   placeholder="State University"
@@ -71,9 +69,7 @@ export function EditorSectionEducationFormItem(
           name={`educations.${props.index}.degree`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel aria-required htmlFor={field.name}>
-                Degree
-              </FieldLabel>
+              <FieldLabel htmlFor={field.name}>Degree</FieldLabel>
               <Input
                 placeholder="B.Sc. Computer Science"
                 {...field}
@@ -96,47 +92,12 @@ export function EditorSectionEducationFormItem(
           )}
         />
 
-        <div className="grid grid-cols-[minmax(0,1fr)_max-content_minmax(0,1fr)] gap-3">
-          <Controller
-            control={props.control}
-            name={`educations.${props.index}.startDate`}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel aria-required htmlFor={field.name}>
-                  Start Date
-                </FieldLabel>
-                <MonthYearMenu
-                  id={field.name}
-                  value={field.value}
-                  placeholder="Start date"
-                  onChange={field.onChange}
-                />
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
-          />
-
-          <div className="mt-12 h-px w-2 bg-muted-foreground" />
-
-          <Controller
-            control={props.control}
-            name={`educations.${props.index}.endDate`}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel aria-required htmlFor={field.name}>
-                  End Date
-                </FieldLabel>
-                <MonthYearMenu
-                  id={field.name}
-                  value={field.value}
-                  placeholder="End date"
-                  onChange={field.onChange}
-                />
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
-          />
-        </div>
+        <DateRangeFields
+          control={props.control}
+          startName={`educations.${props.index}.startDate`}
+          endName={`educations.${props.index}.endDate`}
+          presentLabel="I currently study here"
+        />
 
         <Controller
           control={props.control}

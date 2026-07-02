@@ -30,7 +30,7 @@ export function EditorSectionSkillsForm() {
   const form = useForm<SkillsFormValues>({
     defaultValues: open ? toSkillsValues(open) : { skills: [] },
   });
-  const { fields, append, remove } = useFieldArray({
+  const { fields, prepend, remove } = useFieldArray({
     control: form.control,
     name: "skills",
   });
@@ -51,7 +51,7 @@ export function EditorSectionSkillsForm() {
         </FieldDescription>
         <Button
           type="button"
-          onClick={() => append(emptySkill())}
+          onClick={() => prepend(emptySkill())}
           variant="outline"
           className="w-full"
         >

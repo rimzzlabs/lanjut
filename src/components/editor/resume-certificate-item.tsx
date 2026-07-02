@@ -13,9 +13,11 @@ export function ResumeCertificateItem(props: CertificateItemView) {
             props.title
           )}
         </h3>
-        <span className="shrink-0 text-xs text-muted-foreground">
-          {props.startDate} - {props.endDate}
-        </span>
+        {(props.startDate || props.endDate) && (
+          <span className="shrink-0 text-xs text-muted-foreground">
+            {props.startDate} - {props.endDate}
+          </span>
+        )}
       </div>
       <p className="text-xs text-muted-foreground">{props.issuer}</p>
     </article>

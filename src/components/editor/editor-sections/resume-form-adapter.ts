@@ -7,13 +7,16 @@ export interface PersonalFormValues {
   firstName: string;
   lastName: string;
   jobTitle: string;
-  summary: JSONContent;
   email: string;
   phone: string;
   website: string;
   city: string;
   province: string;
   country: string;
+}
+
+export interface SummaryFormValues {
+  summary: JSONContent;
 }
 
 export interface ExperienceItemValues {
@@ -97,12 +100,10 @@ function sectionOfType(
 
 export function toPersonalValues(resume: Resume): PersonalFormValues {
   const fields = resume.header.fields;
-  const summary = sectionOfType(resume, "summary")?.entries[0]?.fields.body;
   return {
     firstName: plainValue(fields.firstName),
     lastName: plainValue(fields.lastName),
     jobTitle: plainValue(fields.jobTitle),
-    summary: richValue(summary),
     email: plainValue(fields.email),
     phone: plainValue(fields.phone),
     website: plainValue(fields.website),
@@ -126,9 +127,20 @@ export function applyPersonalValues(
   fields.city = plain(values.city);
   fields.province = plain(values.province);
   fields.country = plain(values.country);
+}
 
-  const summary = sectionOfType(draft, "summary");
-  const entry = summary?.entries[0];
+// --- Summary (singleton section, single rich-text body) --------------------
+
+export function toSummaryValues(resume: Resume): SummaryFormValues {
+  const body = sectionOfType(resume, "summary")?.entries[0]?.fields.body;
+  return { summary: richValue(body) };
+}
+
+export function applySummaryValues(
+  draft: Resume,
+  values: SummaryFormValues,
+): void {
+  const entry = sectionOfType(draft, "summary")?.entries[0];
   if (entry) entry.fields.body = rich(values.summary);
 }
 

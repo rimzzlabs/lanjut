@@ -1,12 +1,15 @@
+import type { SkillItemView } from "./resume-preview";
+import { ResumeSkillItem } from "./resume-skill-item";
+
 interface ResumeSkillsListProps {
-  items: string[];
+  items: SkillItemView[];
 }
 
 export function ResumeSkillsList(props: ResumeSkillsListProps) {
   return (
-    <ul className="grid grid-cols-2 gap-x-8 gap-y-1 text-xs text-muted-foreground">
+    <ul className="grid grid-cols-2 gap-x-8 gap-y-1">
       {props.items.map((item) => (
-        <li key={item}>{item}</li>
+        <ResumeSkillItem key={item.id} {...item} />
       ))}
     </ul>
   );

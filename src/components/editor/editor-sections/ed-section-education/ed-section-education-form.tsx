@@ -38,7 +38,7 @@ export function EditorSectionEducationForm() {
   const form = useForm<EducationFormValues>({
     defaultValues: open ? toEducationValues(open) : { educations: [] },
   });
-  const { fields, append, remove } = useFieldArray({
+  const { fields, prepend, remove } = useFieldArray({
     control: form.control,
     name: "educations",
   });
@@ -61,7 +61,7 @@ export function EditorSectionEducationForm() {
         </FieldDescription>
         <Button
           type="button"
-          onClick={() => append(emptyEducation())}
+          onClick={() => prepend(emptyEducation())}
           variant="outline"
           className="w-full"
         >

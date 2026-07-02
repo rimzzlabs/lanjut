@@ -38,7 +38,7 @@ export function EditorSectionExperienceForm() {
   const form = useForm<ExperienceFormValues>({
     defaultValues: open ? toExperienceValues(open) : { experiences: [] },
   });
-  const { fields, append, remove } = useFieldArray({
+  const { fields, prepend, remove } = useFieldArray({
     control: form.control,
     name: "experiences",
   });
@@ -65,7 +65,7 @@ export function EditorSectionExperienceForm() {
         </FieldDescription>
         <Button
           type="button"
-          onClick={() => append(emptyExperience())}
+          onClick={() => prepend(emptyExperience())}
           variant="outline"
           className="w-full"
         >

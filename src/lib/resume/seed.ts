@@ -43,7 +43,7 @@ export const SEED_RESUME: Resume = {
       lastName: plain("Doe"),
       jobTitle: plain("Senior Frontend Engineer"),
       email: plain("john.doe@example.com"),
-      phone: plain("+1 555 010 1234"),
+      phone: plain("+15550101234"),
       website: plain("johndoe.dev"),
       city: plain("San Francisco"),
       province: plain("California"),

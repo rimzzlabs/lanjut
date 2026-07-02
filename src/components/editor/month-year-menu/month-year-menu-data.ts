@@ -1,5 +1,8 @@
 import { format, getYear } from "date-fns";
 
+/** Sentinel end-date value marking an ongoing role or study ("current"). */
+export const PRESENT_DATE = "Present";
+
 export interface Option {
   label: string;
   value: string;
@@ -53,4 +56,19 @@ export function formatMonthYear(
   year: string | undefined,
 ): string {
   return [month, year].filter(Boolean).join(" ");
+}
+
+const MONTH_INDEX = new Map(MONTHS.map((month, index) => [month.value, index]));
+
+/**
+ * A comparable ordinal for a stored "MMM YYYY" / "YYYY" value, used to sort
+ * entries newest-first. `PRESENT_DATE`, empty, and unparseable values rank as the
+ * most recent, so a freshly added (undated) row is treated as the latest.
+ */
+export function dateSortValue(value: string | undefined): number {
+  const trimmed = value?.trim();
+  if (!trimmed || trimmed === PRESENT_DATE) return Number.POSITIVE_INFINITY;
+  const { month, year } = parseMonthYear(trimmed);
+  if (!year) return Number.POSITIVE_INFINITY;
+  return Number(year) * 12 + (month ? (MONTH_INDEX.get(month) ?? 0) : 0);
 }

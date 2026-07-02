@@ -2,7 +2,7 @@
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Save, TextInitial, XIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import {
   RESUME_TITLE_MAX_LENGTH,
   type ResumeTitleForm,
@@ -78,12 +78,18 @@ export function PlatformResumeCreateDialog(
                   <TextInitial />
                 </InputGroupAddon>
 
-                <InputGroupInput
-                  id="create-resume-title"
-                  maxLength={RESUME_TITLE_MAX_LENGTH}
-                  placeholder="Software Engineer"
-                  aria-invalid={error ? true : undefined}
-                  {...form.register("title")}
+                <Controller
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <InputGroupInput
+                      id="create-resume-title"
+                      maxLength={RESUME_TITLE_MAX_LENGTH}
+                      placeholder="Software Engineer"
+                      aria-invalid={error ? true : undefined}
+                      {...field}
+                    />
+                  )}
                 />
               </InputGroup>
 
