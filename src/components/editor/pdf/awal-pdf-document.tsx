@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   headerLeft: { flexShrink: 1 },
-  name: { fontSize: 18, fontWeight: 700 },
+  name: { fontSize: 18, fontWeight: 700, lineHeight: 1.25 },
   headline: { marginTop: 2, fontSize: 10.5, color: PDF_COLORS.muted },
   headerRight: { alignItems: "flex-end", gap: 2 },
   contact: { fontSize: 9 },
