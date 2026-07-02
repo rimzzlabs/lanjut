@@ -41,3 +41,18 @@ land in the right slots. Do this at least once per meaningful export change:
 - [ ] If available, upload to a real ATS sandbox (Greenhouse / Workday test posting) and
       confirm the parsed application is complete and correctly ordered.
 - [ ] Confirm no content is dropped and no section is reordered.
+
+## Parser notes
+
+Real parsers (e.g. [OpenResume](https://www.open-resume.com)) use strict heuristics.
+Decisions made to satisfy them:
+
+- **Website is exported as a full `https://` URL**, not a bare domain. Parsers only
+  recognize a link when it has a scheme (`https://…`), a `www.` prefix, or a path
+  slash — `johndoe.dev` alone is not detected.
+- **Contact icons are drawn as vector SVG**, so they never appear in the extracted
+  text and can't interfere with field detection.
+- **Location** relies on the parser. OpenResume, for one, only matches US-style
+  `City, ST` with a **two-letter** state (regex `[A-Z][a-zA-Z\s]+, [A-Z]{2}`); a full
+  "City, Province, Country" won't be detected as a location. This is a parser
+  limitation, not an export defect — entering a 2-letter state code makes it parse.

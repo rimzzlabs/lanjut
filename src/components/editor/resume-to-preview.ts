@@ -62,11 +62,10 @@ function toHeaderView(resume: Resume): HeaderView {
     contacts.push({ kind: "email", value: email, href: `mailto:${email}` });
   const website = plain(fields.website);
   if (website) {
-    contacts.push({
-      kind: "website",
-      value: website,
-      href: withHttps(website),
-    });
+    // Show the full URL (scheme included): a bare domain isn't recognized as a
+    // link by résumé parsers, which look for http(s)://, www., or a path.
+    const url = withHttps(website);
+    contacts.push({ kind: "website", value: url, href: url });
   }
   const location = [
     plain(fields.city),
