@@ -22,12 +22,18 @@ import {
   PopoverTrigger,
 } from "../ui/popover";
 import { Spinner } from "../ui/spinner";
+import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
+
+type ExportFormat = "pdf" | "docx" | "txt";
+
+const FORMATS: ExportFormat[] = ["pdf", "docx", "txt"];
 
 export function PlatformNavbarDownload() {
   const pathname = usePathname();
   const open = useResumeStore((state) => state.open);
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [fileName, setFileName] = useState("");
+  const [format, setFormat] = useState<ExportFormat>("pdf");
   const [generating, setGenerating] = useState(false);
 
   if (!pathname.includes("/editor/")) return null;
@@ -42,11 +48,24 @@ export function PlatformNavbarDownload() {
     if (!open) return;
     setGenerating(true);
     try {
-      // Lazy-loaded so @react-pdf stays out of the main bundle until needed.
-      const { downloadResumePdf } = await import(
-        "@/components/editor/pdf/download-resume-pdf"
-      );
-      await downloadResumePdf(resumeToPreview(open), fileName);
+      // Lazy-loaded so the heavy PDF/docx libraries stay out of the main bundle.
+      const preview = resumeToPreview(open);
+      if (format === "pdf") {
+        const { downloadResumePdf } = await import(
+          "@/components/editor/pdf/download-resume-pdf"
+        );
+        await downloadResumePdf(preview, fileName);
+      } else if (format === "docx") {
+        const { downloadResumeDocx } = await import(
+          "@/components/editor/docx/download-resume-docx"
+        );
+        await downloadResumeDocx(preview, fileName);
+      } else {
+        const { downloadResumeText } = await import(
+          "@/components/editor/download-resume-text"
+        );
+        downloadResumeText(preview, fileName);
+      }
       setPopoverOpen(false);
     } finally {
       setGenerating(false);
@@ -61,7 +80,9 @@ export function PlatformNavbarDownload() {
       <PopoverContent align="end">
         <PopoverHeader>
           <PopoverTitle>Download résumé</PopoverTitle>
-          <PopoverDescription>Name your PDF file.</PopoverDescription>
+          <PopoverDescription>
+            Pick a format and name your file.
+          </PopoverDescription>
         </PopoverHeader>
 
         <form
@@ -71,6 +92,26 @@ export function PlatformNavbarDownload() {
           }}
         >
           <Field>
+            <FieldLabel>Format</FieldLabel>
+            <ToggleGroup
+              variant="outline"
+              spacing={0}
+              className="w-full"
+              value={[format]}
+              onValueChange={(value) => {
+                const next = value[0] as ExportFormat | undefined;
+                if (next) setFormat(next);
+              }}
+            >
+              {FORMATS.map((value) => (
+                <ToggleGroupItem key={value} value={value} className="flex-1">
+                  {value.toUpperCase()}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
+          </Field>
+
+          <Field className="mt-3">
             <FieldLabel htmlFor="download-file-name">File name</FieldLabel>
             <InputGroup>
               <InputGroupInput
@@ -80,7 +121,7 @@ export function PlatformNavbarDownload() {
                 onChange={(event) => setFileName(event.target.value)}
               />
               <InputGroupAddon align="inline-end">
-                <InputGroupText>.pdf</InputGroupText>
+                <InputGroupText>.{format}</InputGroupText>
               </InputGroupAddon>
             </InputGroup>
           </Field>

@@ -39,6 +39,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^4.4.0",
+    "docx": "^9.7.1",
     "embla-carousel-react": "^8.6.0",
     "idb": "^8.0.3",
     "input-otp": "^1.4.2",

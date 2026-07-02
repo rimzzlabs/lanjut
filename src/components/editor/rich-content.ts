@@ -78,3 +78,31 @@ export function isRichEmpty(blocks: RichBlock[]): boolean {
       : block.items.some(hasText),
   );
 }
+
+function runsText(runs: InlineRun[]): string {
+  return runs
+    .map((run) => run.text)
+    .join("")
+    .trim();
+}
+
+/**
+ * Flattens rich blocks to plain-text lines — one per paragraph, and each list
+ * item prefixed with "- " — for the .txt export. Marks are dropped (plain text
+ * carries no formatting); reading order is preserved.
+ */
+export function richBlocksToText(blocks: RichBlock[]): string[] {
+  const lines: string[] = [];
+  for (const block of blocks) {
+    if (block.type === "paragraph") {
+      const text = runsText(block.runs);
+      if (text) lines.push(text);
+      continue;
+    }
+    for (const item of block.items) {
+      const text = runsText(item);
+      if (text) lines.push(`- ${text}`);
+    }
+  }
+  return lines;
+}
