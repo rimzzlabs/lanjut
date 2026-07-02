@@ -2,6 +2,7 @@
 
 import { ResizablePanel } from "../ui/resizable";
 import { useSidebar } from "../ui/sidebar";
+import { EditorSectionList } from "./editor-section-list";
 
 export function EditorSidebar() {
   const { open } = useSidebar();
@@ -11,10 +12,9 @@ export function EditorSidebar() {
       minSize={open ? "28%" : "30%"}
       maxSize="40%"
     >
-      <div className="h-full overflow-y-auto p-4">
-        <div className="inline-flex items-center gap-2">
-          <h3 className="text-lg font-medium">Editor</h3>
-        </div>
+      <div className="h-full overflow-y-auto px-6 py-5">
+        <h2 className="mb-2 text-2xl font-bold tracking-tight">Resume</h2>
+        <EditorSectionList />
       </div>
     </ResizablePanel>
   );
