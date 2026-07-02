@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { SidebarTrigger } from "../ui/sidebar";
 import { Spinner } from "../ui/spinner";
 import { PlatformNavbarBreadcrumb } from "./platform-navbar-breadcrumb";
+import { PlatformNavbarDownload } from "./platform-navbar-download";
 
 const PlatformNavbarTheme = dynamic(
   () => import("./platform-navbar-theme").then((m) => m.PlatformNavbarTheme),
@@ -27,6 +28,7 @@ export function PlatformNavbar() {
 
         <div className="inline-flex items-center gap-2 ml-auto">
           <PlatformNavbarTheme />
+          <PlatformNavbarDownload />
         </div>
       </nav>
     </header>

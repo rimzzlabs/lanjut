@@ -19,6 +19,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^5.4.0",
     "@mobily/ts-belt": "4.0.0-rc.5",
+    "@react-pdf/renderer": "^4.5.1",
     "@shadcn/react": "^0.2.0",
     "@tiptap/core": "^3.27.1",
     "@tiptap/extension-bold": "^3.27.1",
