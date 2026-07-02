@@ -32,7 +32,7 @@ export function PlatformNavbarTheme() {
   const onChangeTheme = (next: string) => setTheme(next);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <Tooltip>
         <TooltipTrigger
           render={<DropdownMenuTrigger render={<Button variant="outline" />} />}

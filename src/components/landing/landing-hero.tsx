@@ -42,13 +42,11 @@ export function LandingHero() {
 
       <motion.h1
         variants={itemVariants}
-        className="mb-6 text-5xl font-bold tracking-tight md:text-7xl"
+        className="mb-6 text-5xl font-bold tracking-tight md:text-7xl bg-linear-to-r from-primary to-violet-800 bg-clip-text text-transparent"
       >
         Land The Interview,
         <br />
-        <span className="bg-linear-to-r from-foreground to-primary bg-clip-text text-transparent">
-          Not The Reject Pile.
-        </span>
+        Not The Reject Pile.
       </motion.h1>
 
       <motion.p
@@ -61,11 +59,21 @@ export function LandingHero() {
       </motion.p>
 
       <motion.div variants={itemVariants} className="flex gap-4">
-        <Button render={<Link href="/editor" />} size="lg" className="gap-2">
+        <Button
+          size="lg"
+          className="gap-2"
+          nativeButton={false}
+          render={<Link href="/platform" />}
+        >
           Start building
           <ArrowRight className="size-4" />
         </Button>
-        <Button render={<Link href="/samples" />} size="lg" variant="outline">
+        <Button
+          size="lg"
+          variant="outline"
+          nativeButton={false}
+          render={<Link href="/samples" />}
+        >
           See a sample
         </Button>
       </motion.div>

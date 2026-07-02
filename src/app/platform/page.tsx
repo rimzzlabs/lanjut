@@ -4,10 +4,10 @@ import { PlatformResumeToolbar } from "@/components/platform/platform-resume-too
 
 export default function PlatformPage() {
   return (
-    <>
+    <div className="flex flex-col gap-4 p-4">
       <PlatformResumeToolbar />
       <PlatformResumeGrid />
       <PlatformEmptyState />
-    </>
+    </div>
   );
 }
