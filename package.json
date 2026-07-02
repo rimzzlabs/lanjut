@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write",
+    "validate:exports": "tsx scripts/validate-exports.tsx",
     "commit": "cz",
     "ui:add": "pnpm dlx shadcn add",
     "prepare": "husky"
@@ -75,9 +76,12 @@
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
     "husky": "^9.1.7",
+    "jszip": "^3.10.1",
     "lint-staged": "^17.0.8",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "^4.22.5",
+    "typescript": "^5",
+    "unpdf": "^1.6.2"
   },
   "config": {
     "commitizen": {
