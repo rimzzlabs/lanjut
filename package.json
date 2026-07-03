@@ -8,6 +8,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "ship": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "lint": "biome check",
     "format": "biome format --write",
     "validate:exports": "tsx scripts/validate-exports.tsx",
@@ -22,6 +26,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@hookform/resolvers": "^5.4.0",
     "@mobily/ts-belt": "4.0.0-rc.5",
+    "@opennextjs/cloudflare": "^1.20.1",
     "@react-pdf/renderer": "^4.5.1",
     "@shadcn/react": "^0.2.0",
     "@tiptap/core": "^3.27.1",
@@ -83,7 +88,8 @@
     "tailwindcss": "^4",
     "tsx": "^4.22.5",
     "typescript": "^5",
-    "unpdf": "^1.6.2"
+    "unpdf": "^1.6.2",
+    "wrangler": "^4.107.0"
   },
   "config": {
     "commitizen": {
