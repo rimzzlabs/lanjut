@@ -63,4 +63,4 @@ See `AGENTS.md` for architecture rules and code conventions before submitting a 
 
 ## License
 
-GPL-3.0.
+[AGPL-3.0-only](LICENSE). Copyright © 2026 Rizki Citra.
