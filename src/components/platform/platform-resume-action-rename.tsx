@@ -2,7 +2,7 @@
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Save, TextInitial, XIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -45,7 +45,7 @@ export function PlatformResumeActionRename(
   const form = useForm<ResumeTitleForm>({
     resolver: standardSchemaResolver(resumeTitleSchema),
     defaultValues: { title: props.resume.title },
-    mode: "onChange",
+    mode: "onTouched",
   });
 
   const onSubmit = form.handleSubmit(async (values) => {
@@ -54,8 +54,6 @@ export function PlatformResumeActionRename(
     }
     props.onOpenChange(false);
   });
-
-  const error = form.formState.errors.title;
 
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
@@ -70,31 +68,35 @@ export function PlatformResumeActionRename(
 
         <form onSubmit={onSubmit}>
           <FieldGroup>
-            <Field data-invalid={error ? true : undefined}>
-              <FieldLabel htmlFor="rename-resume-title">
-                Resume label
-              </FieldLabel>
-              <InputGroup>
-                <InputGroupAddon>
-                  <TextInitial />
-                </InputGroupAddon>
-                <InputGroupInput
-                  id="rename-resume-title"
-                  maxLength={RESUME_TITLE_MAX_LENGTH}
-                  placeholder="e.g: Software Engineer"
-                  aria-invalid={error ? true : undefined}
-                  {...form.register("title")}
-                />
-              </InputGroup>
+            <Controller
+              control={form.control}
+              name="title"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="rename-resume-title">
+                    Resume label
+                  </FieldLabel>
+                  <InputGroup>
+                    <InputGroupAddon>
+                      <TextInitial />
+                    </InputGroupAddon>
+                    <InputGroupInput
+                      id="rename-resume-title"
+                      maxLength={RESUME_TITLE_MAX_LENGTH}
+                      placeholder="e.g: Software Engineer"
+                      aria-invalid={fieldState.invalid}
+                      {...field}
+                    />
+                  </InputGroup>
 
-              {error ? (
-                <FieldError>{error.message}</FieldError>
-              ) : (
-                <FieldDescription>
-                  At least 3 characters or up. Max 100 characters.
-                </FieldDescription>
+                  <FieldDescription>
+                    At least 3 characters or up. Max 100 characters.
+                  </FieldDescription>
+
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
               )}
-            </Field>
+            />
           </FieldGroup>
 
           <DialogFooter className="mt-6">
