@@ -32,6 +32,7 @@ export function ResumeDocument(props: ResumeDocumentProps) {
   const [heights, setHeights] = useState<Record<string, number>>({});
   const [availableWidth, setAvailableWidth] = useState(0);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `blocks` is a deliberate re-run trigger — the ResizeObserver only fires when the layer's total size changes, which misses block-id swaps that keep the layout size (stale height keys collapse pagination).
   useEffect(() => {
     const layer = measureRef.current;
     if (!layer) return;
@@ -57,8 +58,7 @@ export function ResumeDocument(props: ResumeDocumentProps) {
       cancelled = true;
       observer.disconnect();
     };
-    // Mount-once: the ResizeObserver re-measures whenever block content reflows.
-  }, []);
+  }, [blocks]);
 
   useEffect(() => {
     const el = containerRef.current;

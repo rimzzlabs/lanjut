@@ -96,6 +96,16 @@ function sectionOfType(
   return resume.sections.find((section) => section.type === type);
 }
 
+/**
+ * Keep entry ids stable across form-driven rebuilds by reusing the existing
+ * entry's id at the same index. Regenerating ids on every keystroke invalidates
+ * everything keyed by them downstream — most visibly the preview's measured
+ * block heights, which collapsed pagination to a single page.
+ */
+function entryId(section: Section, index: number): string {
+  return section.entries[index]?.id ?? nanoid();
+}
+
 // --- Personal (header + summary section) -----------------------------------
 
 export function toPersonalValues(resume: Resume): PersonalFormValues {
@@ -169,8 +179,8 @@ export function applyExperienceValues(
 ): void {
   const section = sectionOfType(draft, "experience");
   if (!section) return;
-  section.entries = values.experiences.map((item) => ({
-    id: nanoid(),
+  section.entries = values.experiences.map((item, index) => ({
+    id: entryId(section, index),
     fields: {
       title: plain(item.title),
       company: plain(item.company),
@@ -207,8 +217,8 @@ export function applyEducationValues(
 ): void {
   const section = sectionOfType(draft, "education");
   if (!section) return;
-  section.entries = values.educations.map((item) => ({
-    id: nanoid(),
+  section.entries = values.educations.map((item, index) => ({
+    id: entryId(section, index),
     fields: {
       institution: plain(item.institution),
       degree: plain(item.degree),
@@ -241,8 +251,8 @@ export function applySkillsValues(
 ): void {
   const section = sectionOfType(draft, "skills");
   if (!section) return;
-  section.entries = values.skills.map((item) => ({
-    id: nanoid(),
+  section.entries = values.skills.map((item, index) => ({
+    id: entryId(section, index),
     fields: { name: plain(item.name), level: plain(item.level) },
   }));
 }
@@ -271,8 +281,8 @@ export function applyCertificationsValues(
 ): void {
   const section = sectionOfType(draft, "certifications");
   if (!section) return;
-  section.entries = values.certifications.map((item) => ({
-    id: nanoid(),
+  section.entries = values.certifications.map((item, index) => ({
+    id: entryId(section, index),
     fields: {
       name: plain(item.name),
       issuer: plain(item.issuer),
@@ -302,8 +312,8 @@ export function applyLanguagesValues(
 ): void {
   const section = sectionOfType(draft, "languages");
   if (!section) return;
-  section.entries = values.languages.map((item) => ({
-    id: nanoid(),
+  section.entries = values.languages.map((item, index) => ({
+    id: entryId(section, index),
     fields: { name: plain(item.name), level: plain(item.level) },
   }));
 }

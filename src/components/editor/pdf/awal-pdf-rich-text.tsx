@@ -23,30 +23,27 @@ function runStyle(run: InlineRun): {
   };
 }
 
-function runKey(run: InlineRun): string {
-  return `${run.href ?? ""}|${run.bold ? "b" : ""}${run.italic ? "i" : ""}|${run.text}`;
-}
+/*
+ * Index keys are deliberate throughout this renderer: blocks/runs are a
+ * stateless linear projection re-derived wholesale from the document, never
+ * reordered in place, and their text content is not unique (duplicate
+ * paragraphs would collide as keys).
+ */
 
 function InlineRuns(props: { runs: InlineRun[] }) {
-  return props.runs.map((run) =>
+  return props.runs.map((run, index) =>
     run.href ? (
-      <Link
-        key={runKey(run)}
-        src={run.href}
-        style={[styles.link, runStyle(run)]}
-      >
+      // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
+      <Link key={index} src={run.href} style={[styles.link, runStyle(run)]}>
         {run.text}
       </Link>
     ) : (
-      <Text key={runKey(run)} style={runStyle(run)}>
+      // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
+      <Text key={index} style={runStyle(run)}>
         {run.text}
       </Text>
     ),
   );
-}
-
-function runsText(runs: InlineRun[]): string {
-  return runs.map((run) => run.text).join("");
 }
 
 interface AwalPdfRichTextProps {
@@ -59,14 +56,16 @@ export function AwalPdfRichText(props: AwalPdfRichTextProps) {
   if (props.blocks.length === 0) return null;
   return (
     <View style={props.style}>
-      {props.blocks.map((block) => {
+      {props.blocks.map((block, index) => {
         if (block.type === "list") {
           return (
-            <View key={block.items.map(runsText).join("|")}>
-              {block.items.map((runs, index) => (
-                <View key={runsText(runs)} style={styles.listItem}>
+            // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
+            <View key={index}>
+              {block.items.map((runs, itemIndex) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
+                <View key={itemIndex} style={styles.listItem}>
                   <Text style={styles.bullet}>
-                    {block.ordered ? `${index + 1}.` : "•"}
+                    {block.ordered ? `${itemIndex + 1}.` : "•"}
                   </Text>
                   <Text style={styles.itemBody}>
                     <InlineRuns runs={runs} />
@@ -77,7 +76,8 @@ export function AwalPdfRichText(props: AwalPdfRichTextProps) {
           );
         }
         return (
-          <Text key={runsText(block.runs)} style={styles.paragraph}>
+          // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
+          <Text key={index} style={styles.paragraph}>
             <InlineRuns runs={block.runs} />
           </Text>
         );

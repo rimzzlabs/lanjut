@@ -1,14 +1,6 @@
 import { cn } from "@/lib/utils";
 import type { InlineRun, RichBlock } from "./rich-content";
 
-function runsText(runs: InlineRun[]): string {
-  return runs.map((run) => run.text).join("");
-}
-
-function runKey(run: InlineRun): string {
-  return `${run.href ?? ""}|${run.bold ? "b" : ""}${run.italic ? "i" : ""}|${run.text}`;
-}
-
 function RichRun(props: InlineRun) {
   let node: React.ReactNode = props.text;
   if (props.bold) node = <strong className="font-semibold">{node}</strong>;
@@ -23,8 +15,18 @@ function RichRun(props: InlineRun) {
   return node;
 }
 
+/*
+ * Index keys are deliberate throughout this renderer: blocks/runs are a
+ * stateless linear projection re-derived wholesale from the document, never
+ * reordered in place, and their text content is not unique (duplicate
+ * paragraphs would collide as keys).
+ */
+
 function RichRuns(props: { runs: InlineRun[] }) {
-  return props.runs.map((run) => <RichRun key={runKey(run)} {...run} />);
+  return props.runs.map((run, index) => {
+    // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
+    return <RichRun key={index} {...run} />;
+  });
 }
 
 interface ResumeRichTextProps {
@@ -46,27 +48,30 @@ export function ResumeRichText(props: ResumeRichTextProps) {
         props.className,
       )}
     >
-      {props.blocks.map((block) => {
+      {props.blocks.map((block, index) => {
         if (block.type === "list") {
           const ListTag = block.ordered ? "ol" : "ul";
+          const listClass = cn(
+            "space-y-1 pl-5",
+            block.ordered ? "list-decimal" : "list-disc",
+          );
           return (
-            <ListTag
-              key={block.items.map(runsText).join("|")}
-              className={cn(
-                "space-y-1 pl-5",
-                block.ordered ? "list-decimal" : "list-disc",
-              )}
-            >
-              {block.items.map((runs) => (
-                <li key={runsText(runs)}>
-                  <RichRuns runs={runs} />
-                </li>
-              ))}
+            // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
+            <ListTag key={index} className={listClass}>
+              {block.items.map((runs, itemIndex) => {
+                return (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
+                  <li key={itemIndex}>
+                    <RichRuns runs={runs} />
+                  </li>
+                );
+              })}
             </ListTag>
           );
         }
         return (
-          <p key={runsText(block.runs)}>
+          // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
+          <p key={index}>
             <RichRuns runs={block.runs} />
           </p>
         );
