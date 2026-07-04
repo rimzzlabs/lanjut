@@ -17,7 +17,7 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 - shadcn (base-ui variant)
 - Tailwind CSS
 - dnd-kit (section reordering, drag and drop)
-- [PlateJS](https://platejs.org/llms.txt)
+- [TipTap](https://tiptap.dev/docs) (rich text editing, restricted extension set)
 - motion/react (animation)
 - zustand (in-memory state)
 - IndexedDB via idb (persistence layer)
@@ -31,7 +31,7 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 
 ## Architecture Rule: Two Layers
 
-1. Structural layer. Fixed section types (header, summary, experience, education, skills, custom sections from an approved list). Each field has a restricted PlateJS schema: bold, italic, bullet list, ordered list, link. No tables, no multi-column layout, no text boxes, no inline images, no custom heading levels beyond what the section template defines.
+1. Structural layer. Fixed section types (header, summary, experience, education, skills, custom sections from an approved list). Each field has a restricted TipTap schema: bold, italic, bullet list, ordered list, link. No tables, no multi-column layout, no text boxes, no inline images, no custom heading levels beyond what the section template defines.
 
 2. Presentation layer. Typography, spacing, color, accent styles, section visual ordering. Fully customizable. Must never alter the underlying linear text structure used for parsing or export.
 
@@ -65,7 +65,7 @@ Any feature request that adds structural freedom (tables, columns, floating elem
 
 1. Resume data schema + IndexedDB layer
 2. zustand store wired to persistence
-3. PlateJS fields with restricted schemas
+3. TipTap fields with restricted schemas
 4. dnd-kit section/field reordering
 5. Presentation layer (themes, typography, spacing)
 6. Export pipeline (PDF, then docx/txt)
