@@ -42,6 +42,14 @@ export function registerPdfFonts(): void {
     ],
   });
 
+  Font.register({
+    family: "GeistMono",
+    fonts: [
+      { src: "/fonts/GeistMono-Regular.ttf", fontWeight: 400 },
+      { src: "/fonts/GeistMono-Bold.ttf", fontWeight: 700 },
+    ],
+  });
+
   Font.registerHyphenationCallback((word) => [word]);
 }
 

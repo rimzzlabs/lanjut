@@ -3,7 +3,13 @@
  * metadata only — the rendering for each template lives under
  * `@/components/editor/templates`.
  */
-export type TemplateId = "awal" | "ketat" | "luasa";
+export type TemplateId =
+  | "awal"
+  | "ketat"
+  | "luasa"
+  | "tebal"
+  | "klasik"
+  | "ketik";
 
 export const DEFAULT_TEMPLATE_ID: TemplateId = "awal";
 
@@ -51,6 +57,27 @@ export const TEMPLATES: TemplateSummary[] = [
     description:
       "An airy minimalist layout: letterspaced headings, a single contact line, and slim accent bars. Generous whitespace throughout.",
     addedAt: "2026-07-04T00:00:00.000Z",
+  },
+  {
+    id: "tebal",
+    name: "Tebal",
+    description:
+      "A bold, modern statement: oversized name, heavy uppercase headings over thick rules, and strong typographic hierarchy.",
+    addedAt: "2026-07-05T00:00:00.000Z",
+  },
+  {
+    id: "klasik",
+    name: "Klasik",
+    description:
+      "A traditional all-serif CV: centered name and contacts, quiet centered headings, and italic dates. Timeless and formal.",
+    addedAt: "2026-07-05T00:00:00.000Z",
+  },
+  {
+    id: "ketik",
+    name: "Ketik",
+    description:
+      "A typewriter-flavored technical look: monospace name, headings, and dates over a clean sans body. Built for developers.",
+    addedAt: "2026-07-05T00:00:00.000Z",
   },
 ];
 

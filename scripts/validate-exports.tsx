@@ -53,6 +53,13 @@ function registerFonts(): void {
       },
     ],
   });
+  Font.register({
+    family: "GeistMono",
+    fonts: [
+      { src: `${root}/public/fonts/GeistMono-Regular.ttf`, fontWeight: 400 },
+      { src: `${root}/public/fonts/GeistMono-Bold.ttf`, fontWeight: 700 },
+    ],
+  });
   Font.registerHyphenationCallback((word) => [word]);
 }
 

@@ -3,7 +3,10 @@ import type { TemplateId } from "@/lib/templates";
 import { ResumeBlockView } from "../resume-block-view";
 import type { ResumeBlock } from "../resume-blocks";
 import { KetatBlockView } from "./ketat/ketat-block-view";
+import { KetikBlockView } from "./ketik/ketik-block-view";
+import { KlasikBlockView } from "./klasik/klasik-block-view";
 import { LuasaBlockView } from "./luasa/luasa-block-view";
+import { TebalBlockView } from "./tebal/tebal-block-view";
 
 export type BlockViewComponent = ComponentType<{ block: ResumeBlock }>;
 
@@ -16,4 +19,7 @@ export const TEMPLATE_BLOCK_VIEWS: Record<TemplateId, BlockViewComponent> = {
   awal: ResumeBlockView,
   ketat: KetatBlockView,
   luasa: LuasaBlockView,
+  tebal: TebalBlockView,
+  klasik: KlasikBlockView,
+  ketik: KetikBlockView,
 };
