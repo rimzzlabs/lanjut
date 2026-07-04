@@ -13,14 +13,14 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useResumeStore } from "@/lib/store";
 
-interface PlatformResumeGridActionDeleteProps {
+interface PlatformResumeActionDeleteProps {
   open: boolean;
   onOpenChange: (next: boolean) => void;
   resume: { id: string; title: string };
 }
 
-export function PlatformResumeGridActionDelete(
-  props: PlatformResumeGridActionDeleteProps,
+export function PlatformResumeActionDelete(
+  props: PlatformResumeActionDeleteProps,
 ) {
   const removeResume = useResumeStore((state) => state.removeResume);
   const [pending, setPending] = useState(false);

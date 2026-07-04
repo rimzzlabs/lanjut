@@ -12,8 +12,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { PlatformResumeGridActionDelete } from "./platform-resume-grid-item-action-delete";
-import { PlatformResumeGridActionRename } from "./platform-resume-grid-item-action-rename";
+import { PlatformResumeActionDelete } from "../platform-resume-action-delete";
+import { PlatformResumeActionRename } from "../platform-resume-action-rename";
 
 interface PlatformResumeGridItemMenuProps {
   resume: { id: string; title: string };
@@ -61,14 +61,14 @@ export function PlatformResumeGridItemMenu({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <PlatformResumeGridActionRename
+      <PlatformResumeActionRename
         key={resume.title}
         resume={resume}
         open={open.rename}
         onOpenChange={onOpenRename}
       />
 
-      <PlatformResumeGridActionDelete
+      <PlatformResumeActionDelete
         resume={resume}
         open={open.remove}
         onOpenChange={onOpenRemove}

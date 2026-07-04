@@ -32,14 +32,14 @@ import {
 } from "@/lib/forms/resume";
 import { useResumeStore } from "@/lib/store";
 
-interface PlatformResumeGridActionRenameProps {
+interface PlatformResumeActionRenameProps {
   open: boolean;
   onOpenChange: (next: boolean) => void;
   resume: { id: string; title: string };
 }
 
-export function PlatformResumeGridActionRename(
-  props: PlatformResumeGridActionRenameProps,
+export function PlatformResumeActionRename(
+  props: PlatformResumeActionRenameProps,
 ) {
   const renameResume = useResumeStore((state) => state.renameResume);
   const form = useForm<ResumeTitleForm>({
