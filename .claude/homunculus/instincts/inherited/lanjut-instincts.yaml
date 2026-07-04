@@ -1,0 +1,300 @@
+# Instincts generated from https://github.com/rimzzlabs/lanjut
+# Generated: 2026-07-04T05:23:52.192Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: lanjut-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/rimzzlabs/lanjut
+---
+
+# Lanjut Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: feat
+
+## Evidence
+
+- 1 commits analyzed
+- Detected conventional commit pattern
+- Examples: feat: add Tebal, Klasik, and Ketik résumé templates
+
+---
+id: lanjut-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/rimzzlabs/lanjut
+---
+
+# Lanjut Commit Length
+
+## Action
+
+Write moderate-length commit messages (~51 characters)
+
+## Evidence
+
+- Average commit message length: 51 chars
+- Based on 1 commits
+
+---
+id: lanjut-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/rimzzlabs/lanjut
+---
+
+# Lanjut Naming Files
+
+## Action
+
+Use kebab-case naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: kebab-case
+
+---
+id: lanjut-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/rimzzlabs/lanjut
+---
+
+# Lanjut Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: lanjut-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/rimzzlabs/lanjut
+---
+
+# Lanjut Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: lanjut-arch-type-based
+trigger: "when adding new code"
+confidence: 0.8
+domain: architecture
+source: repo-analysis
+source_repo: https://github.com/rimzzlabs/lanjut
+---
+
+# Lanjut Arch Type Based
+
+## Action
+
+Place code in the appropriate type folder (components/, services/, utils/, etc.)
+
+## Evidence
+
+- Type-based module organization detected
+- Folders: components, lib
+
+---
+id: lanjut-test-separate
+trigger: "when writing tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/rimzzlabs/lanjut
+---
+
+# Lanjut Test Separate
+
+## Action
+
+Place tests in the tests/ or __tests__/ directory, mirroring src structure
+
+## Evidence
+
+- Separate test directory pattern detected
+- Tests live in dedicated test folders
+
+---
+id: lanjut-instinct-file-naming
+trigger: "When creating a new file in the codebase"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: rimzzlabs/lanjut
+---
+
+# Lanjut Instinct File Naming
+
+## Action
+
+Name the file using kebab-case (e.g., my-component.ts)
+
+## Evidence
+
+- Pattern in files: src/components, src/lib
+
+---
+id: lanjut-instinct-function-naming
+trigger: "When defining a new function"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: rimzzlabs/lanjut
+---
+
+# Lanjut Instinct Function Naming
+
+## Action
+
+Use camelCase for the function name
+
+## Evidence
+
+- Pattern in files: src/components, src/lib
+
+---
+id: lanjut-instinct-class-naming
+trigger: "When defining a new class"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: rimzzlabs/lanjut
+---
+
+# Lanjut Instinct Class Naming
+
+## Action
+
+Use PascalCase for the class name
+
+## Evidence
+
+- Pattern in files: src/components, src/lib
+
+---
+id: lanjut-instinct-constant-naming
+trigger: "When declaring a constant"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: rimzzlabs/lanjut
+---
+
+# Lanjut Instinct Constant Naming
+
+## Action
+
+Use SCREAMING_SNAKE_CASE for constant names
+
+## Evidence
+
+- Pattern in files: src/lib
+
+---
+id: lanjut-instinct-import-style
+trigger: "When importing modules within the codebase"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: rimzzlabs/lanjut
+---
+
+# Lanjut Instinct Import Style
+
+## Action
+
+Use relative import paths
+
+## Evidence
+
+- Pattern in files: src/components, src/lib
+
+---
+id: lanjut-instinct-export-style
+trigger: "When exporting functions, classes, or constants"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: rimzzlabs/lanjut
+---
+
+# Lanjut Instinct Export Style
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in files: src/components, src/lib
+
+---
+id: lanjut-instinct-commit-format
+trigger: "When writing a git commit message"
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: rimzzlabs/lanjut
+---
+
+# Lanjut Instinct Commit Format
+
+## Action
+
+Start the commit message with 'feat:' followed by a concise description (average length ~51 characters)
+
+## Evidence
+
+- Seen in commit: feat: add Tebal, Klasik, and Ketik résumé templates
+- Pattern: conventional commit with 'feat' prefix
+
+---
+id: lanjut-instinct-test-location
+trigger: "When adding new tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: rimzzlabs/lanjut
+---
+
+# Lanjut Instinct Test Location
+
+## Action
+
+Place test files in a separate directory from source code
+
+## Evidence
+
+- Pattern in architecture: testLocation is 'separate'
+
