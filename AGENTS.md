@@ -16,7 +16,6 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 - open-next on Cloudflare (hosting only, no server-side handling of user resume data)
 - shadcn (base-ui variant)
 - Tailwind CSS
-- dnd-kit (section reordering, drag and drop)
 - [TipTap](https://tiptap.dev/docs) (rich text editing, restricted extension set)
 - motion/react (animation)
 - zustand (in-memory state)
@@ -45,10 +44,9 @@ Any feature request that adds structural freedom (tables, columns, floating elem
 - Schema for a resume document: versioned. Add a schema version field. Write a migration path before changing field shapes, do not silently break old saved resumes.
 
 
-## Drag and Drop (dnd-kit)
+## Reordering
 
-- Used for section reordering and field reordering within a section (e.g., experience entries).
-- Drag and drop changes ordering metadata only. It does not alter content schema.
+- Section and entry reordering (if/when built) changes ordering metadata only. It does not alter content schema.
 
 ## Export
 
@@ -66,10 +64,9 @@ Any feature request that adds structural freedom (tables, columns, floating elem
 1. Resume data schema + IndexedDB layer
 2. zustand store wired to persistence
 3. TipTap fields with restricted schemas
-4. dnd-kit section/field reordering
-5. Presentation layer (themes, typography, spacing)
-6. Export pipeline (PDF, then docx/txt)
-7. Parser validation pass
+4. Presentation layer (themes, typography, spacing)
+5. Export pipeline (PDF, then docx/txt)
+6. Parser validation pass
 
 ## Non-Goals
 

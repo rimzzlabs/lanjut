@@ -25,7 +25,6 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Template gallery with search, sort, and live seed-data previews
 - Résumé library with live first-page thumbnails, rename, and delete
 - Print-accurate A4 preview with automatic pagination
-- Drag-and-drop section and entry reordering
 - Rich text editing per field, scoped to ATS-safe formatting (bold, italic, lists, links)
 - Local persistence via IndexedDB, no data leaves the browser
 - Export to PDF (linear reading order preserved) and plain text / .docx
@@ -52,7 +51,6 @@ Every template renders the same linear block sequence, so switching templates ne
 | Hosting | open-next on Cloudflare |
 | UI components | shadcn (base-ui) |
 | Styling | Tailwind CSS |
-| Drag and drop | dnd-kit |
 | Rich text editor | TipTap |
 | Animation | motion/react |
 | State | zustand |
