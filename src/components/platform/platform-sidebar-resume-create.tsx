@@ -12,7 +12,7 @@ export function PlatformSidebarResumeCreate() {
     <>
       <Button
         size="icon-xs"
-        className="ml-auto -mr-3"
+        className="ml-auto"
         variant="ghost"
         onClick={() => setOpen(true)}
       >

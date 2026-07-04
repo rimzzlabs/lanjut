@@ -30,10 +30,10 @@ export function PlatformEmptyState() {
             <Inbox />
           </EmptyMedia>
 
-          <EmptyTitle>No Résumé Yet</EmptyTitle>
+          <EmptyTitle>No résumés yet</EmptyTitle>
           <EmptyDescription>
-            You have not yet create a résumé on this device. You can create a
-            new résumé from scratch or from sample below.
+            Nothing is saved on this device yet. Start from a template, or
+            create a blank résumé.
           </EmptyDescription>
 
           <div className="inline-flex items-center gap-2">
@@ -41,10 +41,10 @@ export function PlatformEmptyState() {
               nativeButton={false}
               render={<Link href="/platform/template" />}
             >
-              <Search /> Browse Template
+              <Search /> Browse templates
             </Button>
             <Button variant="secondary" onClick={() => setOpen(true)}>
-              <FilePlus /> New Résumé
+              <FilePlus /> New résumé
             </Button>
           </div>
         </EmptyHeader>

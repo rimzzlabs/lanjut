@@ -22,7 +22,7 @@ export function PlatformTemplateGrid() {
   }
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,16rem),1fr))] gap-4">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,24rem),1fr))] gap-4">
       {results.map((template) => (
         <PlatformTemplateGridItem key={template.id} template={template} />
       ))}

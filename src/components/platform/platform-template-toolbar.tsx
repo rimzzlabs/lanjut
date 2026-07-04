@@ -44,6 +44,7 @@ export function PlatformTemplateToolbar() {
 
       <div className="ml-auto">
         <Select
+          items={SORT_OPTIONS}
           value={sort}
           onValueChange={(value) => setSort(value as TemplateSort)}
         >

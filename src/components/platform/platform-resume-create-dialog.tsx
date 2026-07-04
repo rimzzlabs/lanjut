@@ -3,6 +3,7 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Save, TextInitial, XIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   RESUME_TITLE_MAX_LENGTH,
@@ -10,6 +11,7 @@ import {
   resumeTitleSchema,
 } from "@/lib/forms/resume";
 import { useResumeStore } from "@/lib/store";
+import { DEFAULT_TEMPLATE_ID, resolveTemplateId } from "@/lib/templates";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -32,6 +34,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "../ui/input-group";
+import { PlatformTemplateRadioGroup } from "./platform-template-radio-group";
 
 interface PlatformResumeCreateDialogProps {
   open: boolean;
@@ -47,6 +50,9 @@ export function PlatformResumeCreateDialog(
 ) {
   const router = useRouter();
   const createResume = useResumeStore((state) => state.createResume);
+  const [templateId, setTemplateId] = useState(() =>
+    resolveTemplateId(props.templateId ?? DEFAULT_TEMPLATE_ID),
+  );
   const form = useForm<ResumeTitleForm>({
     resolver: standardSchemaResolver(resumeTitleSchema),
     defaultValues: { title: props.initialTitle ?? "" },
@@ -54,13 +60,11 @@ export function PlatformResumeCreateDialog(
   });
 
   const onSubmit = form.handleSubmit(async (values) => {
-    const resume = await createResume(values.title, props.templateId);
+    const resume = await createResume(values.title, templateId);
     form.reset({ title: "" });
     props.onOpenChange(false);
     router.push(`/platform/editor/${resume.id}`);
   });
-
-  const error = form.formState.errors.title;
 
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
@@ -74,37 +78,42 @@ export function PlatformResumeCreateDialog(
 
         <form onSubmit={onSubmit}>
           <FieldGroup>
-            <Field data-invalid={error ? true : undefined}>
-              <FieldLabel htmlFor="create-resume-title">
-                Résumé label
-              </FieldLabel>
-              <InputGroup>
-                <InputGroupAddon>
-                  <TextInitial />
-                </InputGroupAddon>
-
-                <Controller
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
+            <Controller
+              control={form.control}
+              name="title"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="create-resume-title">
+                    Résumé label
+                  </FieldLabel>
+                  <InputGroup>
+                    <InputGroupAddon>
+                      <TextInitial />
+                    </InputGroupAddon>
                     <InputGroupInput
                       id="create-resume-title"
                       maxLength={RESUME_TITLE_MAX_LENGTH}
                       placeholder="Software Engineer"
-                      aria-invalid={error ? true : undefined}
+                      aria-invalid={fieldState.invalid}
                       {...field}
                     />
-                  )}
-                />
-              </InputGroup>
+                  </InputGroup>
 
-              {error ? (
-                <FieldError>{error.message}</FieldError>
-              ) : (
-                <FieldDescription>
-                  At least 3 characters or more, maximum 100 chars at most.
-                </FieldDescription>
+                  <FieldDescription>
+                    At least 3 characters or more, maximum 100 chars at most.
+                  </FieldDescription>
+
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
               )}
+            />
+
+            <Field>
+              <FieldLabel>Template</FieldLabel>
+              <PlatformTemplateRadioGroup
+                value={templateId}
+                onValueChange={setTemplateId}
+              />
             </Field>
           </FieldGroup>
 

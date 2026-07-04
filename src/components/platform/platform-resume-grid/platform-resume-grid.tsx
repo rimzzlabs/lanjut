@@ -25,7 +25,7 @@ export function PlatformResumeGrid() {
   }
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,16rem),1fr))] gap-4">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,21rem),1fr))] gap-4">
       {results.map((resume) => (
         <PlatformResumeGridItem key={resume.id} resume={resume} />
       ))}
