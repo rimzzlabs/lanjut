@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/rimzzlabs/lanjut/compare/v0.3.0...v0.3.1) (2026-07-04)
+
+
+### Bug Fixes
+
+* serve the opengraph image as a static file ([#32](https://github.com/rimzzlabs/lanjut/issues/32)) ([0df0d4b](https://github.com/rimzzlabs/lanjut/commit/0df0d4b106b6d8167b688420cea6f63c988b7b76))
+
 ## [0.3.0](https://github.com/rimzzlabs/lanjut/compare/v0.2.0...v0.3.0) (2026-07-04)
 
 
