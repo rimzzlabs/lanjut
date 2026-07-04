@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PlatformTemplateGrid } from "@/components/platform/platform-template-grid/platform-template-grid";
 import { PlatformTemplateToolbar } from "@/components/platform/platform-template-toolbar";
+
+export const metadata: Metadata = {
+  title: "Browse templates",
+};
 
 export default function PlatformTemplatePage() {
   return (
