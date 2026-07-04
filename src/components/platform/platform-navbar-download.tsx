@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import { useResumeStore } from "@/lib/store";
+import { resolveTemplateId } from "@/lib/templates";
 import { Button } from "../ui/button";
 import { Field, FieldLabel } from "../ui/field";
 import {
@@ -54,7 +55,11 @@ export function PlatformNavbarDownload() {
         const { downloadResumePdf } = await import(
           "@/components/editor/pdf/download-resume-pdf"
         );
-        await downloadResumePdf(preview, fileName);
+        await downloadResumePdf(
+          preview,
+          fileName,
+          resolveTemplateId(open.templateId),
+        );
       } else if (format === "docx") {
         const { downloadResumeDocx } = await import(
           "@/components/editor/docx/download-resume-docx"

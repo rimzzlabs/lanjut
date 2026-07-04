@@ -10,7 +10,7 @@ import { Packer } from "docx";
 import JSZip from "jszip";
 import { extractText, getDocumentProxy } from "unpdf";
 import { buildAwalDocx } from "@/components/editor/docx/resume-to-docx";
-import { AwalPdfDocument } from "@/components/editor/pdf/awal-pdf-document";
+import { TEMPLATE_PDF_DOCUMENTS } from "@/components/editor/pdf/template-pdf-document";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import { resumeToText } from "@/components/editor/resume-to-text";
 import { SEED_RESUME } from "@/lib/resume/seed";
@@ -31,6 +31,23 @@ function registerFonts(): void {
       },
       {
         src: `${root}/public/fonts/Inter-BoldItalic.ttf`,
+        fontWeight: 700,
+        fontStyle: "italic",
+      },
+    ],
+  });
+  Font.register({
+    family: "Lora",
+    fonts: [
+      { src: `${root}/public/fonts/Lora-Regular.ttf`, fontWeight: 400 },
+      { src: `${root}/public/fonts/Lora-Bold.ttf`, fontWeight: 700 },
+      {
+        src: `${root}/public/fonts/Lora-Italic.ttf`,
+        fontWeight: 400,
+        fontStyle: "italic",
+      },
+      {
+        src: `${root}/public/fonts/Lora-BoldItalic.ttf`,
         fontWeight: 700,
         fontStyle: "italic",
       },
@@ -81,10 +98,16 @@ function checkReadingOrder(text: string, label: string): string[] {
   return errors;
 }
 
+/**
+ * Case-insensitive: templates may render fields uppercase via textTransform
+ * (whole words survive, which is what parsers need). Word-destroying styling
+ * (e.g. letterSpacing) still fails because the characters no longer adjoin.
+ */
 function checkFields(text: string, label: string): string[] {
-  return REQUIRED_FIELDS.filter((field) => !text.includes(field)).map(
-    (field) => `${label}: field "${field}" not found in extracted text`,
-  );
+  const haystack = text.toUpperCase();
+  return REQUIRED_FIELDS.filter(
+    (field) => !haystack.includes(field.toUpperCase()),
+  ).map((field) => `${label}: field "${field}" not found in extracted text`);
 }
 
 async function extractPdfText(buffer: Uint8Array): Promise<string> {
@@ -110,19 +133,25 @@ async function main(): Promise<void> {
   registerFonts();
   const preview = resumeToPreview(SEED_RESUME);
 
-  const txt = resumeToText(preview);
-  const pdf = await extractPdfText(
-    await renderToBuffer(<AwalPdfDocument preview={preview} />),
-  );
-  const docx = await extractDocxText(
-    await Packer.toBuffer(buildAwalDocx(preview)),
-  );
-
   const outputs: [string, string][] = [
-    ["TXT", txt],
-    ["PDF", pdf],
-    ["DOCX", docx],
+    ["TXT", resumeToText(preview)],
+    [
+      "DOCX",
+      await extractDocxText(await Packer.toBuffer(buildAwalDocx(preview))),
+    ],
   ];
+
+  // Every template's PDF must extract cleanly, not just the default one.
+  for (const [template, PdfDocument] of Object.entries(
+    TEMPLATE_PDF_DOCUMENTS,
+  )) {
+    outputs.push([
+      `PDF(${template})`,
+      await extractPdfText(
+        await renderToBuffer(<PdfDocument preview={preview} />),
+      ),
+    ]);
+  }
 
   const errors: string[] = [];
   for (const [label, text] of outputs) {
@@ -137,7 +166,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    "\n✓ All exports preserve reading order and carry every field (PDF, DOCX, TXT).",
+    "\n✓ All exports preserve reading order and carry every field (every template PDF, DOCX, TXT).",
   );
 }
 

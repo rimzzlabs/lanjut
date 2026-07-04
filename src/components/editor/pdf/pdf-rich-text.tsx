@@ -1,7 +1,7 @@
 import { Link, StyleSheet, Text, View } from "@react-pdf/renderer";
 import type { ComponentProps } from "react";
 import type { InlineRun, RichBlock } from "../rich-content";
-import { PDF_COLORS } from "./awal-fonts";
+import { PDF_COLORS } from "./pdf-fonts";
 
 type PdfStyle = ComponentProps<typeof View>["style"];
 
@@ -46,13 +46,13 @@ function InlineRuns(props: { runs: InlineRun[] }) {
   );
 }
 
-interface AwalPdfRichTextProps {
+interface PdfRichTextProps {
   blocks: RichBlock[];
   style?: PdfStyle;
 }
 
 /** Renders `RichBlock`s into react-pdf primitives, preserving marks and lists. */
-export function AwalPdfRichText(props: AwalPdfRichTextProps) {
+export function PdfRichText(props: PdfRichTextProps) {
   if (props.blocks.length === 0) return null;
   return (
     <View style={props.style}>
@@ -64,6 +64,8 @@ export function AwalPdfRichText(props: AwalPdfRichTextProps) {
               {block.items.map((runs, itemIndex) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
                 <View key={itemIndex} style={styles.listItem}>
+                  {/* Only "•" — the bundled font subsets lack fancier list
+                      glyphs (e.g. U+25AA), which render as garbage. */}
                   <Text style={styles.bullet}>
                     {block.ordered ? `${itemIndex + 1}.` : "•"}
                   </Text>

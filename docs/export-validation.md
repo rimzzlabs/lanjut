@@ -52,6 +52,11 @@ Decisions made to satisfy them:
   slash — `johndoe.dev` alone is not detected.
 - **Contact icons are drawn as vector SVG**, so they never appear in the extracted
   text and can't interfere with field detection.
+- **`letterSpacing` is banned in PDF template styles.** react-pdf positions
+  letter-spaced glyphs individually, so extractors read `J o h n D o e` — word
+  boundaries are destroyed and fields stop matching. `textTransform: "uppercase"`
+  is fine (whole words survive; the gate matches fields case-insensitively). The
+  DOM preview may still use CSS `tracking-*` — it is never text-extracted.
 - **Location** relies on the parser. OpenResume, for one, only matches US-style
   `City, ST` with a **two-letter** state (regex `[A-Z][a-zA-Z\s]+, [A-Z]{2}`); a full
   "City, Province, Country" won't be detected as a location. This is a parser

@@ -9,47 +9,56 @@ import {
 import { buildResumeBlocks, type ResumeBlock } from "../resume-blocks";
 import type {
   CertificateItemView,
+  ContactView,
   EducationItemView,
   ExperienceItemView,
   HeaderView,
   ResumePreview,
 } from "../resume-preview";
-import { PdfContactIcon } from "./pdf-contact-icon";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfRichText } from "./pdf-rich-text";
 
 const styles = StyleSheet.create({
   page: {
-    paddingVertical: 40,
-    paddingHorizontal: 44,
+    paddingVertical: 44,
+    paddingHorizontal: 48,
     fontFamily: "Inter",
     fontSize: 9,
     color: PDF_COLORS.foreground,
-    lineHeight: 1.4,
+    lineHeight: 1.45,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    gap: 16,
+  accentBar: {
+    borderLeftWidth: 1.5,
+    borderLeftColor: PDF_COLORS.foreground,
+    paddingLeft: 12,
   },
-  headerLeft: { flexShrink: 1 },
-  name: { fontSize: 18, fontWeight: 700, lineHeight: 1.25 },
-  headline: { marginTop: 2, fontSize: 10.5, color: PDF_COLORS.muted },
-  headerRight: { alignItems: "flex-start", gap: 3 },
-  contactRow: { flexDirection: "row", alignItems: "center", gap: 4 },
-  linkPlain: { color: PDF_COLORS.foreground, textDecoration: "none" },
-  heading: {
-    fontSize: 10,
-    fontWeight: 600,
+  softBar: {
+    borderLeftWidth: 1.5,
+    borderLeftColor: PDF_COLORS.border,
+    paddingLeft: 12,
+  },
+  // No letterSpacing anywhere in PDF styles: react-pdf places letter-spaced
+  // glyphs individually, which destroys word boundaries in text extraction.
+  name: {
+    fontFamily: "Lora",
+    fontSize: 18,
     textTransform: "uppercase",
-    letterSpacing: 0.5,
-    paddingBottom: 2,
-    borderBottomWidth: 0.75,
-    borderBottomStyle: "dotted",
-    borderBottomColor: PDF_COLORS.border,
-    marginBottom: 4,
+    lineHeight: 1.25,
+  },
+  headline: {
+    marginTop: 1,
+    fontFamily: "Lora",
+    fontSize: 10,
+    color: PDF_COLORS.muted,
+  },
+  contactLine: { marginTop: 3, fontSize: 9, color: PDF_COLORS.muted },
+  linkMuted: { color: PDF_COLORS.muted, textDecoration: "none" },
+  heading: {
+    fontFamily: "Lora",
+    fontSize: 9.5,
+    fontWeight: 700,
+    textTransform: "uppercase",
   },
   entryRow: {
     flexDirection: "row",
@@ -57,41 +66,46 @@ const styles = StyleSheet.create({
     alignItems: "baseline",
     gap: 8,
   },
-  entryTitle: { fontSize: 9.5, fontWeight: 600 },
+  entryTitle: { fontSize: 9.5, textTransform: "uppercase" },
   entryDate: { fontSize: 9, color: PDF_COLORS.muted, flexShrink: 0 },
-  subtitle: { fontSize: 9, color: PDF_COLORS.muted },
-  subtitleLink: { color: PDF_COLORS.muted, textDecoration: "none" },
+  subtitle: { fontSize: 9, fontStyle: "italic", color: PDF_COLORS.muted },
   body: { marginTop: 3 },
 });
 
-function PdfHeader(props: { header: HeaderView }) {
+function LuasaContactLine(props: { contacts: ContactView[] }) {
   return (
-    <View style={styles.header}>
-      <View style={styles.headerLeft}>
-        <Text style={styles.name}>{props.header.fullName}</Text>
-        {props.header.headline ? (
-          <Text style={styles.headline}>{props.header.headline}</Text>
-        ) : null}
-      </View>
-      <View style={styles.headerRight}>
-        {props.header.contacts.map((contact) => (
-          <View key={contact.kind} style={styles.contactRow}>
-            <PdfContactIcon kind={contact.kind} />
-            {contact.href ? (
-              <Link src={contact.href} style={styles.linkPlain}>
-                {contact.value}
-              </Link>
-            ) : (
-              <Text>{contact.value}</Text>
-            )}
-          </View>
-        ))}
-      </View>
+    <Text style={styles.contactLine}>
+      {props.contacts.map((contact, index) => (
+        <Text key={contact.kind}>
+          {index > 0 ? "  •  " : ""}
+          {contact.href ? (
+            <Link src={contact.href} style={styles.linkMuted}>
+              {contact.value}
+            </Link>
+          ) : (
+            contact.value
+          )}
+        </Text>
+      ))}
+    </Text>
+  );
+}
+
+function LuasaHeader(props: { header: HeaderView }) {
+  return (
+    <View style={styles.accentBar}>
+      <Text style={styles.name}>{props.header.fullName}</Text>
+      {props.header.headline ? (
+        <Text style={styles.headline}>{props.header.headline}</Text>
+      ) : null}
+      {props.header.contacts.length > 0 ? (
+        <LuasaContactLine contacts={props.header.contacts} />
+      ) : null}
     </View>
   );
 }
 
-function PdfExperience(props: { item: ExperienceItemView }) {
+function LuasaExperience(props: { item: ExperienceItemView }) {
   return (
     <View>
       <View style={styles.entryRow}>
@@ -102,7 +116,7 @@ function PdfExperience(props: { item: ExperienceItemView }) {
       </View>
       <Text style={styles.subtitle}>
         {props.item.companyHref ? (
-          <Link src={props.item.companyHref} style={styles.subtitleLink}>
+          <Link src={props.item.companyHref} style={styles.linkMuted}>
             {props.item.company}
           </Link>
         ) : (
@@ -114,9 +128,9 @@ function PdfExperience(props: { item: ExperienceItemView }) {
   );
 }
 
-function PdfEducation(props: { item: EducationItemView }) {
+function LuasaEducation(props: { item: EducationItemView }) {
   return (
-    <View>
+    <View style={styles.softBar}>
       <View style={styles.entryRow}>
         <Text style={styles.entryTitle}>{props.item.degree}</Text>
         <Text style={styles.entryDate}>
@@ -129,14 +143,14 @@ function PdfEducation(props: { item: EducationItemView }) {
   );
 }
 
-function PdfCertificate(props: { item: CertificateItemView }) {
+function LuasaCertificate(props: { item: CertificateItemView }) {
   const range = dateRange(props.item.startDate, props.item.endDate);
   return (
-    <View>
+    <View style={styles.softBar}>
       <View style={styles.entryRow}>
         <Text style={styles.entryTitle}>
           {props.item.href ? (
-            <Link src={props.item.href} style={styles.linkPlain}>
+            <Link src={props.item.href} style={styles.linkMuted}>
               {props.item.title}
             </Link>
           ) : (
@@ -150,21 +164,25 @@ function PdfCertificate(props: { item: CertificateItemView }) {
   );
 }
 
-function PdfBlock(props: { block: ResumeBlock }) {
+function LuasaBlock(props: { block: ResumeBlock }) {
   const { block } = props;
   switch (block.kind) {
     case "header":
-      return <PdfHeader header={block.header} />;
+      return <LuasaHeader header={block.header} />;
     case "heading":
       return <Text style={styles.heading}>{block.title}</Text>;
     case "summary":
-      return <PdfRichText blocks={block.body} />;
+      return (
+        <View style={styles.softBar}>
+          <PdfRichText blocks={block.body} />
+        </View>
+      );
     case "experience":
-      return <PdfExperience item={block.item} />;
+      return <LuasaExperience item={block.item} />;
     case "education":
-      return <PdfEducation item={block.item} />;
+      return <LuasaEducation item={block.item} />;
     case "certificate":
-      return <PdfCertificate item={block.item} />;
+      return <LuasaCertificate item={block.item} />;
     case "skills":
       return <PdfGrid items={block.items} />;
     case "languages":
@@ -173,13 +191,11 @@ function PdfBlock(props: { block: ResumeBlock }) {
 }
 
 /**
- * The "Awal" résumé as a react-pdf document. It renders the same linear
- * `buildResumeBlocks` sequence the on-screen preview uses, so PDF content,
- * ordering, sorting, and empty-section gating stay identical — and the text is
- * real (extractable), never rasterized. react-pdf handles page breaks; a
- * heading's `minPresenceAhead` keeps it from being orphaned at a page foot.
+ * "Luasa" as a react-pdf document: airy minimalist layout with slim accent bars
+ * and letterspaced headings. Consumes the same linear `buildResumeBlocks`
+ * sequence as every template, so reading order and extraction are identical.
  */
-export function AwalPdfDocument(props: { preview: ResumePreview }) {
+export function LuasaPdfDocument(props: { preview: ResumePreview }) {
   const blocks = buildResumeBlocks(props.preview);
   return (
     <Document>
@@ -190,7 +206,7 @@ export function AwalPdfDocument(props: { preview: ResumePreview }) {
             style={{ marginTop: block.gapBefore }}
             minPresenceAhead={block.keepWithNext ? 48 : 0}
           >
-            <PdfBlock block={block} />
+            <LuasaBlock block={block} />
           </View>
         ))}
       </Page>
