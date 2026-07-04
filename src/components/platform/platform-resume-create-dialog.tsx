@@ -2,6 +2,7 @@
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Save, TextInitial, XIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import {
   RESUME_TITLE_MAX_LENGTH,
@@ -42,6 +43,7 @@ interface PlatformResumeCreateDialogProps {
 export function PlatformResumeCreateDialog(
   props: PlatformResumeCreateDialogProps,
 ) {
+  const router = useRouter();
   const createResume = useResumeStore((state) => state.createResume);
   const form = useForm<ResumeTitleForm>({
     resolver: standardSchemaResolver(resumeTitleSchema),
@@ -50,9 +52,10 @@ export function PlatformResumeCreateDialog(
   });
 
   const onSubmit = form.handleSubmit(async (values) => {
-    await createResume(values.title);
+    const resume = await createResume(values.title);
     form.reset({ title: "" });
     props.onOpenChange(false);
+    router.push(`/platform/editor/${resume.id}`);
   });
 
   const error = form.formState.errors.title;

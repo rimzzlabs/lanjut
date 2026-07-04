@@ -1,6 +1,7 @@
 "use client";
 
 import { FilePlus, Inbox, Search } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { useResumeStore } from "@/lib/store";
 import { Button } from "../ui/button";
@@ -36,7 +37,10 @@ export function PlatformEmptyState() {
           </EmptyDescription>
 
           <div className="inline-flex items-center gap-2">
-            <Button>
+            <Button
+              nativeButton={false}
+              render={<Link href="/platform/template" />}
+            >
               <Search /> Browse Template
             </Button>
             <Button variant="secondary" onClick={() => setOpen(true)}>
