@@ -49,6 +49,7 @@ export const SEED_RESUME: Resume = {
   id: "seed",
   schemaVersion: CURRENT_SCHEMA_VERSION,
   title: "Untitled résumé",
+  templateId: "awal",
   createdAt: "2026-01-01T00:00:00.000Z",
   updatedAt: "2026-01-01T00:00:00.000Z",
   header: {

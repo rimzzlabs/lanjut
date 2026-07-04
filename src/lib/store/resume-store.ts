@@ -31,7 +31,7 @@ interface ResumeStoreState {
   openStatus: OpenStatus;
 
   hydrateIndex: () => Promise<void>;
-  createResume: (title: string) => Promise<Resume>;
+  createResume: (title: string, templateId?: string) => Promise<Resume>;
   renameResume: (id: string, title: string) => Promise<void>;
   duplicateResume: (id: string) => Promise<Resume | undefined>;
   removeResume: (id: string) => Promise<void>;
@@ -72,8 +72,9 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     set({ index, indexStatus: "ready" });
   },
 
-  async createResume(title) {
+  async createResume(title, templateId) {
     const resume = cloneResumeAsNew(SEED_RESUME, S.trim(title));
+    if (templateId) resume.templateId = templateId;
     await putResume(resume);
     await setLastOpenedResumeId(resume.id);
     set((state) => ({

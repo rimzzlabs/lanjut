@@ -213,6 +213,13 @@ const migrateV3toV4: Migration = (doc) => {
   return next;
 };
 
+/** v4→v5: adds the presentation-template id; existing documents keep "awal". */
+const migrateV4toV5: Migration = (doc) => {
+  const next = structuredClone(doc);
+  if (!G.isString(next.templateId)) next.templateId = "awal";
+  return next;
+};
+
 /**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
@@ -220,6 +227,7 @@ const LADDER: Record<number, Migration> = {
   1: migrateV1toV2,
   2: migrateV2toV3,
   3: migrateV3toV4,
+  4: migrateV4toV5,
 };
 
 function readVersion(doc: ResumeDoc): number {

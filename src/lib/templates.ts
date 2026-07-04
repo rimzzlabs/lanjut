@@ -1,14 +1,25 @@
 /**
  * The catalog of résumé templates shown on the Browse Templates page. Presentation
- * metadata only — the rendering/adapter for each template lives under
- * `@/components/editor`. Currently a single starter template ("Awal").
+ * metadata only — the rendering for each template lives under
+ * `@/components/editor/templates`.
  */
+export type TemplateId = "awal" | "ketat" | "luasa";
+
+export const DEFAULT_TEMPLATE_ID: TemplateId = "awal";
+
 export interface TemplateSummary {
-  id: string;
+  id: TemplateId;
   name: string;
   description: string;
   /** ISO 8601 — when the template was added, for "newest" sorting. */
   addedAt: string;
+}
+
+/** Coerces a persisted template id to a known one, falling back to the default. */
+export function resolveTemplateId(id: string): TemplateId {
+  return TEMPLATES.some((template) => template.id === id)
+    ? (id as TemplateId)
+    : DEFAULT_TEMPLATE_ID;
 }
 
 export type TemplateSort = "name-asc" | "name-desc" | "newest";
@@ -26,6 +37,20 @@ export const TEMPLATES: TemplateSummary[] = [
     description:
       "A clean, single-column ATS-safe starter. Linear reading order, no columns or tables, with room for every section.",
     addedAt: "2026-01-01T00:00:00.000Z",
+  },
+  {
+    id: "ketat",
+    name: "Ketat",
+    description:
+      "A compact serif classic: centered ruled section headings, right-aligned contact column, and italic dates. Dense without feeling cramped.",
+    addedAt: "2026-07-04T00:00:00.000Z",
+  },
+  {
+    id: "luasa",
+    name: "Luasa",
+    description:
+      "An airy minimalist layout: letterspaced headings, a single contact line, and slim accent bars. Generous whitespace throughout.",
+    addedAt: "2026-07-04T00:00:00.000Z",
   },
 ];
 

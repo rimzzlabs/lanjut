@@ -38,6 +38,8 @@ interface PlatformResumeCreateDialogProps {
   onOpenChange: (open: boolean) => void;
   /** Prefills the label field. Remount (via `key`) to re-seed a new value. */
   initialTitle?: string;
+  /** Presentation template for the new résumé; defaults to the starter (Awal). */
+  templateId?: string;
 }
 
 export function PlatformResumeCreateDialog(
@@ -52,7 +54,7 @@ export function PlatformResumeCreateDialog(
   });
 
   const onSubmit = form.handleSubmit(async (values) => {
-    const resume = await createResume(values.title);
+    const resume = await createResume(values.title, props.templateId);
     form.reset({ title: "" });
     props.onOpenChange(false);
     router.push(`/platform/editor/${resume.id}`);

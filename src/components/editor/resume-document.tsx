@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ResumeBlockView } from "./resume-block-view";
+import type { TemplateId } from "@/lib/templates";
 import { buildResumeBlocks } from "./resume-blocks";
 import { A4, CONTENT_HEIGHT_PX, CONTENT_WIDTH_PX } from "./resume-geometry";
 import { ResumePage } from "./resume-page";
 import { paginate } from "./resume-paginate";
 import type { ResumePreview } from "./resume-preview";
+import { TEMPLATE_BLOCK_VIEWS } from "./templates/template-block-view";
 
 interface ResumeDocumentProps {
   resume: ResumePreview;
+  template: TemplateId;
 }
 
 /** Vertical gap between stacked pages (matches the `gap-6` on the page stack). */
@@ -27,12 +29,13 @@ const PAGE_GAP_PX = 24;
  */
 export function ResumeDocument(props: ResumeDocumentProps) {
   const blocks = useMemo(() => buildResumeBlocks(props.resume), [props.resume]);
+  const BlockView = TEMPLATE_BLOCK_VIEWS[props.template];
   const measureRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [heights, setHeights] = useState<Record<string, number>>({});
   const [availableWidth, setAvailableWidth] = useState(0);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `blocks` is a deliberate re-run trigger — the ResizeObserver only fires when the layer's total size changes, which misses block-id swaps that keep the layout size (stale height keys collapse pagination).
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `blocks` and `BlockView` are deliberate re-run triggers — the ResizeObserver only fires when the layer's total size changes, which misses block-id swaps or template restyles that keep the layout size (stale height keys collapse pagination).
   useEffect(() => {
     const layer = measureRef.current;
     if (!layer) return;
@@ -58,7 +61,7 @@ export function ResumeDocument(props: ResumeDocumentProps) {
       cancelled = true;
       observer.disconnect();
     };
-  }, [blocks]);
+  }, [blocks, BlockView]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -92,7 +95,7 @@ export function ResumeDocument(props: ResumeDocumentProps) {
       >
         {blocks.map((block) => (
           <div key={block.id} data-block-id={block.id}>
-            <ResumeBlockView block={block} />
+            <BlockView block={block} />
           </div>
         ))}
       </div>
@@ -120,7 +123,7 @@ export function ResumeDocument(props: ResumeDocumentProps) {
                   key={block.id}
                   style={{ marginTop: index === 0 ? 0 : block.gapBefore }}
                 >
-                  <ResumeBlockView block={block} />
+                  <BlockView block={block} />
                 </div>
               ))}
             </ResumePage>

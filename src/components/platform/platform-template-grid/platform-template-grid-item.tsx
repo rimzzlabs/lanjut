@@ -36,7 +36,11 @@ export function PlatformTemplateGridItem({
         </Button>
       </CardFooter>
 
-      <PlatformResumeCreateDialog open={open} onOpenChange={setOpen} />
+      <PlatformResumeCreateDialog
+        open={open}
+        onOpenChange={setOpen}
+        templateId={template.id}
+      />
     </Card>
   );
 }

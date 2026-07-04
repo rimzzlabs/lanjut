@@ -5,7 +5,7 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 4;
+export const CURRENT_SCHEMA_VERSION = 5;
 
 export type FieldKind = "plain" | "richtext";
 
@@ -72,6 +72,12 @@ export interface Resume {
   schemaVersion: number;
   /** The résumé's name, e.g. "Frontend Engineer — Acme". Per-job tailoring is core. */
   title: string;
+  /**
+   * Presentation-layer template rendering this document (e.g. "awal"). Kept a
+   * loose string so the schema doesn't couple to the UI catalog; renderers fall
+   * back to the default template for unknown ids.
+   */
+  templateId: string;
   header: Header;
   sections: Section[];
   /** ISO 8601. */

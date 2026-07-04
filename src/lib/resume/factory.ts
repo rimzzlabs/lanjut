@@ -70,6 +70,7 @@ export function createEmptyResume(title: string): Resume {
     id: nanoid(),
     schemaVersion: CURRENT_SCHEMA_VERSION,
     title,
+    templateId: "awal",
     header: createEmptyHeader(),
     sections: [
       createEmptySection("summary"),
