@@ -34,6 +34,16 @@ export function PlatformNavbarBreadcrumb() {
             </BreadcrumbItem>
           </>
         )}
+
+        {pathname.includes("/template") && (
+          <>
+            <BreadcrumbSeparator />
+
+            <BreadcrumbItem>
+              <BreadcrumbPage>Browse Templates</BreadcrumbPage>
+            </BreadcrumbItem>
+          </>
+        )}
       </BreadcrumbList>
     </Breadcrumb>
   );

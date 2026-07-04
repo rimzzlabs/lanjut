@@ -1,4 +1,4 @@
-import { HelpCircle, Layout } from "lucide-react";
+import { HelpCircle, Layout, LayoutTemplate } from "lucide-react";
 import Link from "next/link";
 import {
   SidebarGroup,
@@ -16,6 +16,11 @@ export function PlatformSidebarPlatform() {
         <SidebarMenuItem>
           <SidebarMenuButton render={<Link href="/platform" />}>
             <Layout /> Dashboard
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+        <SidebarMenuItem>
+          <SidebarMenuButton render={<Link href="/platform/template" />}>
+            <LayoutTemplate /> Browse Template
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem>
