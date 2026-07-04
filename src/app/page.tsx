@@ -1,9 +1,20 @@
+import type { Metadata } from "next";
+import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingHero } from "@/components/landing/landing-hero";
+import { LandingPreviewEditor } from "@/components/landing/landing-preview-editor";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-1 items-center justify-center bg-background font-sans">
-      <LandingHero />
-    </div>
+    <>
+      <main>
+        <LandingHero />
+        <LandingPreviewEditor />
+      </main>
+      <LandingFooter />
+    </>
   );
 }
