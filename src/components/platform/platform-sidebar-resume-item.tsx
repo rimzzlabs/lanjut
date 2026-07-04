@@ -1,9 +1,18 @@
-import { format } from "date-fns";
-import { FileText } from "lucide-react";
+import { FileText, MoreVertical, Pen, Trash } from "lucide-react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import type { ResumeIndexEntry } from "@/lib/resume";
+import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import { SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 interface PlatformSidebarResumeItemProps {
   resume: ResumeIndexEntry;
@@ -12,31 +21,50 @@ interface PlatformSidebarResumeItemProps {
 export function PlatformSidebarResumeItem({
   resume,
 }: PlatformSidebarResumeItemProps) {
-  return (
-    <Tooltip>
-      <SidebarMenuItem>
-        <TooltipTrigger
-          render={
-            <SidebarMenuButton
-              className="truncate"
-              render={<Link href={`/platform/editor/${resume.id}`} />}
-            />
-          }
-        >
-          <FileText />
-          <span className="truncate">{resume.title}</span>
-        </TooltipTrigger>
+  const { id } = useParams<{ id?: string }>();
 
-        <TooltipContent side="inline-end">
-          <div className="flex flex-col gap-2">
-            <p className="text-sm text-balance">{resume.title}</p>
-            <p className="text-xs font-medium text-muted-foreground">
-              Last modified:{" "}
-              {format(new Date(resume.updatedAt), "EEE dd MMM, yyyy")}
-            </p>
-          </div>
-        </TooltipContent>
-      </SidebarMenuItem>
-    </Tooltip>
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton
+        isActive={id === resume.id}
+        className="truncate"
+        render={<Link href={`/platform/editor/${resume.id}`} />}
+      >
+        <FileText />
+        <span className="truncate">{resume.title}</span>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            onClick={(e) => e.preventDefault()}
+            render={
+              <Button size="icon-xs" className="ml-auto" variant="ghost" />
+            }
+          >
+            <span className="sr-only">Menu</span>
+            <MoreVertical />
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="start">
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>Modify {resume.title}</DropdownMenuLabel>
+              <DropdownMenuItem>
+                <Pen />
+                Rename
+              </DropdownMenuItem>
+
+              {id !== resume.id && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem variant="destructive">
+                    <Trash />
+                    Delete
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
   );
 }

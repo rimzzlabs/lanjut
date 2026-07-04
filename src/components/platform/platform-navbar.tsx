@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { Button } from "../ui/button";
 import { SidebarTrigger } from "../ui/sidebar";
+import { Skeleton } from "../ui/skeleton";
 import { Spinner } from "../ui/spinner";
 import { PlatformNavbarBreadcrumb } from "./platform-navbar-breadcrumb";
 import { PlatformNavbarDownload } from "./platform-navbar-download";
@@ -13,7 +14,8 @@ const PlatformNavbarTheme = dynamic(
     ssr: false,
     loading: () => (
       <Button variant="secondary" className="w-24">
-        <Spinner />
+        <Spinner className="stroke-muted-foreground/25" />
+        <Skeleton className="h-4 w-12 bg-muted-foreground/10" />
       </Button>
     ),
   },

@@ -1,5 +1,8 @@
+"use client";
+
 import { HelpCircle, Layout, LayoutTemplate } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -9,17 +12,25 @@ import {
 } from "../ui/sidebar";
 
 export function PlatformSidebarPlatform() {
+  const pathname = usePathname();
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton render={<Link href="/platform" />}>
+          <SidebarMenuButton
+            isActive={pathname === "/platform"}
+            render={<Link href="/platform" />}
+          >
             <Layout /> Dashboard
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem>
-          <SidebarMenuButton render={<Link href="/platform/template" />}>
+          <SidebarMenuButton
+            isActive={pathname.endsWith("/template")}
+            render={<Link href="/platform/template" />}
+          >
             <LayoutTemplate /> Browse Template
           </SidebarMenuButton>
         </SidebarMenuItem>
