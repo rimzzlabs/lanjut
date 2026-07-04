@@ -1,0 +1,49 @@
+name: Feature request
+description: Suggest an improvement or a new capability for Lanjut.
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before writing, a quick note on scope: Lanjut deliberately restricts the *structure* of a résumé so it parses cleanly in applicant tracking systems. Presentation (typography, spacing, color, section order) is fully customizable; structure (tables, multi-column layouts, text boxes, inline images) is not — regardless of how the request is framed. Accounts and server-side storage are also non-goals.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the situation where you needed this, rather than the solution itself.
+      placeholder: When I tailor my résumé for different roles, I have to...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How do you imagine it working?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Workarounds you use today, or other ways this could be solved.
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Which layer does this touch?
+      options:
+        - Presentation (typography, spacing, color, ordering)
+        - Editor experience (no change to the document itself)
+        - Export (PDF / DOCX / TXT)
+        - Other / not sure
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues and this hasn't been requested yet.
+          required: true
+        - label: This request doesn't add structural freedom that breaks ATS parseability (tables, columns, floating elements, decorative icons in text), and doesn't require accounts or server-side storage.
+          required: true
