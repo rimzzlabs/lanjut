@@ -6,7 +6,7 @@ import type { ResumeIndexEntry } from "./types";
 const ERROR_TOLERANCE = 0.4;
 
 /**
- * The closest saved résumé to a requested id that no longer resolves — the
+ * The closest saved résumé to a requested id that no longer resolves, the
  * "did you mean" candidate for mangled or truncated editor links. Distance is
  * measured on ids (the only signal a broken URL carries); anything beyond
  * tolerance returns undefined, so a genuinely deleted résumé suggests nothing.

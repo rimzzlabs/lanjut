@@ -110,13 +110,13 @@ export function PlatformBugReportForm(props: PlatformBugReportFormProps) {
               <RichTextEditor
                 id="bug-report-steps"
                 features={PROSE_FEATURES}
-                placeholder="1. Create a résumé — a numbered list works great here"
+                placeholder="1. Create a résumé (a numbered list works great here)"
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
               />
               <FieldDescription>
-                Optional here — you can also fill this in on GitHub.
+                Optional here; you can also fill this in on GitHub.
               </FieldDescription>
             </Field>
           )}

@@ -19,7 +19,7 @@ interface PlatformTemplateRadioGroupProps {
 /**
  * Template chooser: a radio list of template names beside one live seed-data
  * preview of the selected template. A single legible preview beats a tile per
- * template — at dialog size six mini-renders are unreadable.
+ * template; at dialog size six mini-renders are unreadable.
  */
 export function PlatformTemplateRadioGroup(
   props: PlatformTemplateRadioGroupProps,

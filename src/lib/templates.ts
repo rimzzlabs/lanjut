@@ -1,6 +1,6 @@
 /**
  * The catalog of résumé templates shown on the Browse Templates page. Presentation
- * metadata only — the rendering for each template lives under
+ * metadata only; the rendering for each template lives under
  * `@/components/editor/templates`.
  */
 export type TemplateId =
@@ -17,7 +17,7 @@ export interface TemplateSummary {
   id: TemplateId;
   name: string;
   description: string;
-  /** ISO 8601 — when the template was added, for "newest" sorting. */
+  /** ISO 8601: when the template was added, for "newest" sorting. */
   addedAt: string;
 }
 

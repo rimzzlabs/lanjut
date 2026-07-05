@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-// Must match MOBILE_BREAKPOINT in hooks/use-mobile.ts — below it the sidebar
+// Must match MOBILE_BREAKPOINT in hooks/use-mobile.ts; below it the sidebar
 // renders as a sheet controlled via `mobileControl`, not `open`.
 const MOBILE_QUERY = "(max-width: 767px)";
 

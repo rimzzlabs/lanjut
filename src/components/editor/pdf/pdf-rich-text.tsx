@@ -64,7 +64,7 @@ export function PdfRichText(props: PdfRichTextProps) {
               {block.items.map((runs, itemIndex) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
                 <View key={itemIndex} style={styles.listItem}>
-                  {/* Only "•" — the bundled font subsets lack fancier list
+                  {/* Only "•"; the bundled font subsets lack fancier list
                       glyphs (e.g. U+25AA), which render as garbage. */}
                   <Text style={styles.bullet}>
                     {block.ordered ? `${itemIndex + 1}.` : "•"}

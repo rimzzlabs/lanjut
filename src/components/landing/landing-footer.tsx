@@ -19,7 +19,7 @@ export function LandingFooter() {
             <span className="font-heading text-sm font-semibold">Lanjut</span>
           </div>
           <p className="text-xs text-muted-foreground">
-            Local-first — your résumé never leaves your browser.
+            Local-first: your résumé never leaves your browser.
           </p>
         </div>
 

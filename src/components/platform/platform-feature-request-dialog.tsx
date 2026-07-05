@@ -28,7 +28,7 @@ export function PlatformFeatureRequestDialog() {
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle>Request a feature</ResponsiveDialogTitle>
           <ResponsiveDialogDescription className="text-balance">
-            This opens a prefilled GitHub issue for you to review and submit — a
+            This opens a prefilled GitHub issue for you to review and submit; a
             GitHub account is required. Note that résumé structure (tables,
             columns, images) is out of scope by design; presentation is fair
             game.

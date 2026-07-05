@@ -1,6 +1,6 @@
 /**
  * The minimal number of single-character edits (insert, delete, substitute) to
- * align `query` against the best-matching substring of `text` — a Levenshtein
+ * align `query` against the best-matching substring of `text`, a Levenshtein
  * distance DP whose first row is left at zero, so a match may begin at any
  * offset in `text`. A return of 0 means `query` occurs verbatim in `text`.
  *

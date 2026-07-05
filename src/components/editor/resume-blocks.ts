@@ -84,7 +84,7 @@ function hasLanguage(item: LanguageItemView): boolean {
 }
 
 /**
- * Builds the linear block sequence, omitting any section — heading included —
+ * Builds the linear block sequence, omitting any section (heading included)
  * that has no meaningful content, so a sparse résumé shows only what the user
  * filled in. Empty repeated entries are dropped before a section is weighed.
  */

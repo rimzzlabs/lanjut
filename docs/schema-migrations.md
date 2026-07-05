@@ -20,7 +20,7 @@ existing data.
 
 `src/lib/resume/migrations.ts` holds one forward-only step per version, keyed by
 the version it migrates *from* (`LADDER[N]: vN → vN+1`). `runMigrations` walks a
-document up the ladder at **read time, in memory** — the raw document on disk is
+document up the ladder at **read time, in memory**; the raw document on disk is
 untouched until the user's next edit persists the migrated shape.
 
 Rules for every step:
@@ -32,7 +32,7 @@ Rules for every step:
   build), the step must leave the existing data untouched and degrade to a
   no-op. It must never blank fields or replace entries it can't parse. The
   first write after a migration persists the migrated document over the
-  original — a lossy step destroys data permanently at that moment.
+  original; a lossy step destroys data permanently at that moment.
 - **Shipped atomically.** The field-shape change, the `CURRENT_SCHEMA_VERSION`
   bump, and the ladder rung land in the same PR. A shipped gap in the ladder
   makes every older document unreadable.
@@ -46,7 +46,7 @@ writing a downgraded document over a newer one.
 
 Before the repository (`src/lib/db/resume.ts`) migrates a document, it snapshots
 the raw pre-migration form into the `backups` object store, keyed by
-`${resumeId}@v${schemaVersion}` — one snapshot per document per ladder crossing.
+`${resumeId}@v${schemaVersion}`, one snapshot per document per ladder crossing.
 This happens on read, before the migrated shape has any chance of being
 persisted, so a buggy ladder step is always recoverable.
 
@@ -61,7 +61,7 @@ Migration failures are isolated per document and **nothing is ever deleted**:
 - `listResumeIndex` migrates each document in its own try/catch. Unreadable
   documents are counted (`unreadableCount`), not dropped from disk, and one bad
   document cannot empty the whole Library.
-- The Library shows a notice ("saved by a newer version — refresh to update")
+- The Library shows a notice ("saved by a newer version, refresh to update")
   when `unreadableCount > 0`, and the empty state is suppressed so the user is
   never told they have no résumés while unreadable ones exist.
 - Opening an unreadable document resolves to the `missing` state instead of a

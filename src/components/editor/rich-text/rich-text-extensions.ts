@@ -15,7 +15,7 @@ import type { RichTextFeature } from "@/lib/resume/schema-registry";
  * Builds the restricted TipTap schema for a richtext Field. Document/Paragraph/
  * Text are always present; every other node/mark is opt-in via `features`, so
  * disallowed structure (headings, tables, images) can neither be typed nor
- * survive a paste — the schema simply has no node to represent it.
+ * survive a paste; the schema simply has no node to represent it.
  */
 export function buildRichTextExtensions(
   features: readonly RichTextFeature[],

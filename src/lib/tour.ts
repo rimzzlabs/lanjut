@@ -55,7 +55,7 @@ export const TOURS: AppTour[] = [
         sidebar: "closed",
         title: "Welcome to Lanjut",
         content:
-          "A free, local-first résumé builder. Everything you write stays in this browser — nothing is ever sent to a server.",
+          "A free, local-first résumé builder. Everything you write stays in this browser; nothing is ever sent to a server.",
       },
       {
         ...TOP_STEP,
@@ -90,7 +90,7 @@ export const TOURS: AppTour[] = [
         side: "right",
         title: "Your résumés",
         content:
-          "Every résumé you create shows up here — pick one to jump into the editor.",
+          "Every résumé you create shows up here; pick one to jump into the editor.",
       },
       {
         ...TOP_STEP,
@@ -113,7 +113,7 @@ export const TOURS: AppTour[] = [
         side: "right",
         title: "Browse templates",
         content:
-          "Templates change presentation only — typography, spacing, accents. The structure stays linear so ATS parsers can always read your résumé.",
+          "Templates change presentation only: typography, spacing, accents. The structure stays linear so ATS parsers can always read your résumé.",
       },
       {
         ...TOP_STEP,

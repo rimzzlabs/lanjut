@@ -18,7 +18,7 @@ export function PlatformResumeUnreadableNotice() {
       <AlertTitle>Some résumés need a newer version of the app</AlertTitle>
       <AlertDescription>
         {subject} saved by a newer version of Lanjut than the one this tab is
-        running. They are still stored safely on this device — refresh the page
+        running. They are still stored safely on this device. Refresh the page
         to update the app and see them again.
       </AlertDescription>
     </Alert>

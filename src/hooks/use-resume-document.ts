@@ -13,7 +13,7 @@ import type { Resume } from "@/lib/resume";
 export function useResumeDocument(id: string, updatedAt: string) {
   const [resume, setResume] = useState<Resume | null>(null);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `updatedAt` is a deliberate re-fetch trigger — the id alone doesn't change when the document is edited.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `updatedAt` is a deliberate re-fetch trigger; the id alone doesn't change when the document is edited.
   useEffect(() => {
     let cancelled = false;
     void getResume(id)

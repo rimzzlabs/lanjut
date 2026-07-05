@@ -21,7 +21,7 @@ interface RichTextEditorProps {
 /**
  * Restricted rich-text control. Uncontrolled after mount: `value` seeds the
  * initial document once, then edits flow out through `onChange`. The editor's
- * live document is never re-synced from `value` (that would reset the caret) —
+ * live document is never re-synced from `value` (that would reset the caret);
  * to load a different document, remount with a fresh `key`.
  */
 export function RichTextEditor(props: RichTextEditorProps) {

@@ -12,7 +12,7 @@ interface LuasaBlockViewProps {
   block: ResumeBlock;
 }
 
-/** "Luasa" — an airy minimalist layout with slim accent bars and letterspaced headings. */
+/** "Luasa": an airy minimalist layout with slim accent bars and letterspaced headings. */
 export function LuasaBlockView(props: LuasaBlockViewProps) {
   const { block } = props;
   switch (block.kind) {

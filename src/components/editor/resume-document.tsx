@@ -21,11 +21,11 @@ const PAGE_GAP_PX = 24;
  * Renders a résumé as exact A4 pages, reflowing content across pages as it grows.
  * Pagination is presentation-only: blocks are measured off-screen at the printable
  * width, then packed into page-height buckets without reordering (linear reading
- * order — and therefore parse/export order — is preserved).
+ * order, and therefore parse/export order, is preserved).
  *
  * The rendered stack is scaled to fit the available width (never upscaled past
  * 100%) so the fixed A4 page shrinks as the surrounding panel narrows. Scaling is
- * a CSS transform on the whole stack — it changes nothing about text order.
+ * a CSS transform on the whole stack; it changes nothing about text order.
  */
 export function ResumeDocument(props: ResumeDocumentProps) {
   const blocks = useMemo(() => buildResumeBlocks(props.resume), [props.resume]);
@@ -35,7 +35,7 @@ export function ResumeDocument(props: ResumeDocumentProps) {
   const [heights, setHeights] = useState<Record<string, number>>({});
   const [availableWidth, setAvailableWidth] = useState(0);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `blocks` and `BlockView` are deliberate re-run triggers — the ResizeObserver only fires when the layer's total size changes, which misses block-id swaps or template restyles that keep the layout size (stale height keys collapse pagination).
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `blocks` and `BlockView` are deliberate re-run triggers; the ResizeObserver only fires when the layer's total size changes, which misses block-id swaps or template restyles that keep the layout size (stale height keys collapse pagination).
   useEffect(() => {
     const layer = measureRef.current;
     if (!layer) return;

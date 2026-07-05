@@ -12,8 +12,8 @@ export type BlockViewComponent = ComponentType<{ block: ResumeBlock }>;
 
 /**
  * Presentation-layer registry: which block renderer draws each template. All
- * templates consume the same linear `ResumeBlock` sequence — only styling
- * differs — so pagination, exports, and parse order stay identical.
+ * templates consume the same linear `ResumeBlock` sequence (only styling
+ * differs) so pagination, exports, and parse order stay identical.
  */
 export const TEMPLATE_BLOCK_VIEWS: Record<TemplateId, BlockViewComponent> = {
   awal: ResumeBlockView,

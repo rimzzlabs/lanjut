@@ -15,13 +15,13 @@ const STEPS: Step[] = [
     kicker: "01 · Template",
     title: "Pick a template",
     description:
-      "Start from a template you like. Each one only changes typography, spacing, and accents — the structure underneath stays ATS-safe.",
+      "Start from a template you like. Each one only changes typography, spacing, and accents; the structure underneath stays ATS-safe.",
   },
   {
     kicker: "02 · Content",
     title: "Type it once",
     description:
-      "Fill structured sections — experience, education, skills. Every change lands in your browser's storage and nowhere else.",
+      "Fill structured sections: experience, education, skills. Every change lands in your browser's storage and nowhere else.",
   },
   {
     kicker: "03 · Export",
@@ -237,7 +237,7 @@ function ArtifactParserOutput() {
           EXPERIENCE
         </motion.p>
         <motion.p variants={terminalLineVariants} className="text-stone-200">
-          Senior Frontend Engineer — Acme Corp
+          Senior Frontend Engineer, Acme Corp
         </motion.p>
         <motion.p variants={terminalLineVariants} className="text-stone-400">
           Mar 2022 – Present

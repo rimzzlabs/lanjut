@@ -28,7 +28,7 @@ export function PlatformBugReportDialog() {
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle>Report a bug</ResponsiveDialogTitle>
           <ResponsiveDialogDescription className="text-balance">
-            This opens a prefilled GitHub issue for you to review and submit — a
+            This opens a prefilled GitHub issue for you to review and submit; a
             GitHub account is required, and your browser details are filled in
             for you.
           </ResponsiveDialogDescription>

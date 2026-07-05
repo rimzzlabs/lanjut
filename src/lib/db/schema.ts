@@ -4,7 +4,7 @@ import type { Resume } from "@/lib/resume";
 const DB_NAME = "lanjut";
 
 /**
- * IndexedDB structural version. Governs object stores and indexes ONLY — document
+ * IndexedDB structural version. Governs object stores and indexes ONLY; document
  * field-shape changes are versioned separately by the in-document schemaVersion
  * and its migration ladder (see docs/schema-migrations.md). Bump this only when
  * adding/changing a store or index, never for a field-shape change.
@@ -20,7 +20,7 @@ export const META_KEYS = {
 
 /**
  * A raw pre-migration snapshot of a résumé document, written before the first
- * read that steps it up the ladder — so a buggy or lossy migration is always
+ * read that steps it up the ladder, so a buggy or lossy migration is always
  * recoverable. Keyed by `${resumeId}@v${schemaVersion}`: one snapshot per
  * document per ladder crossing.
  */
@@ -53,7 +53,7 @@ export interface LanjutDB extends DBSchema {
 let dbPromise: Promise<IDBPDatabase<LanjutDB>> | null = null;
 
 /**
- * Lazily open the singleton database. Guarded against server rendering — this is
+ * Lazily open the singleton database. Guarded against server rendering; this is
  * the only persistence tier and it never leaves the browser.
  */
 export function getDb(): Promise<IDBPDatabase<LanjutDB>> {

@@ -74,7 +74,7 @@ function PreviewEnter(props: { children: ReactNode }) {
 
 /**
  * ResumeDocument paints unpaginated on mount, then reflows once its measurement
- * effects fire — a visible flicker if it happens mid-entrance. A blank sheet
+ * effects fire, a visible flicker if it happens mid-entrance. A blank sheet
  * (matching ResumePage's paper style) rides the slide instead, and the real
  * content fades in over it only after the entrance has settled.
  */

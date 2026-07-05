@@ -6,7 +6,7 @@ import { getDb, META_KEYS } from "./schema";
 export interface ResumeIndexResult {
   entries: readonly ResumeIndexEntry[];
   /**
-   * Documents that failed migration — typically written by a newer app build
+   * Documents that failed migration, typically written by a newer app build
    * than the one currently running. They stay untouched in the store.
    */
   unreadableCount: number;
@@ -65,7 +65,7 @@ export async function deleteResume(id: string): Promise<void> {
 
 /**
  * The lightweight Library projection (id, title, updatedAt), newest first. Reads
- * full bodies to migrate them, but returns only index fields — the full body of a
+ * full bodies to migrate them, but returns only index fields; the full body of a
  * non-open Resume is not kept in memory. Migration failures are isolated per
  * document and counted, never deleted: one unreadable document must not make the
  * whole Library look empty.

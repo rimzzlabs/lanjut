@@ -6,7 +6,7 @@ export interface ChangelogEntry {
 
 /**
  * User-facing release notes shown in the "What's new" sheet, newest first.
- * Hand-written in plain language — not generated from commits. Add an entry
+ * Hand-written in plain language, not generated from commits. Add an entry
  * here as part of each release PR; skip versions with nothing user-visible.
  */
 export const CHANGELOG: ChangelogEntry[] = [
@@ -17,7 +17,7 @@ export const CHANGELOG: ChangelogEntry[] = [
       "Your saved résumés are safer during app updates: a backup copy is kept on your device before any data-format upgrade, and a résumé the app can't read yet is flagged with a notice instead of disappearing.",
       "A guided tour now walks you through the dashboard, the templates, and the editor on your first visit.",
       "The landing page walks through how Lanjut works, ending with a one-click way to start a new résumé.",
-      "Found a bug or missing a feature? Report it from the sidebar — we prefill the GitHub issue for you.",
+      "Found a bug or missing a feature? Report it from the sidebar; we prefill the GitHub issue for you.",
       "On your phone, dialogs now open as drawers that are easier to reach and swipe away.",
     ],
   },
@@ -37,7 +37,7 @@ export const CHANGELOG: ChangelogEntry[] = [
     highlights: [
       "Export your résumé as PDF, DOCX, or plain text.",
       "Bold, italics, links, and lists now show up in the live preview.",
-      "The editor covers the full section set — summary, experience, education, skills, certifications, and languages.",
+      "The editor covers the full section set: summary, experience, education, skills, certifications, and languages.",
     ],
   },
 ];

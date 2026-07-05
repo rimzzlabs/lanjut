@@ -22,7 +22,7 @@ const PAPER_STYLE: CSSProperties = {
 
 /**
  * A single, exact A4 page frame. Fixed width and height with `overflow-hidden`
- * so content never spills past the page bounds — the paginator is responsible
+ * so content never spills past the page bounds; the paginator is responsible
  * for placing only what fits (see `paginate`).
  */
 export function ResumePage(props: ResumePageProps) {

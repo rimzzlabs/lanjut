@@ -4,7 +4,7 @@ import type { Resume } from "@/lib/resume";
 
 /**
  * The persist target is read lazily so this module and the store don't import
- * each other circularly — the store registers its getter at init.
+ * each other circularly; the store registers its getter at init.
  */
 type OpenResumeGetter = () => Resume | null;
 
@@ -36,7 +36,7 @@ export function scheduleOpenResumePersist(): void {
 }
 
 /**
- * Flush a pending write immediately — called on resume-switch and page-hide so
+ * Flush a pending write immediately; called on resume-switch and page-hide so
  * the worst-case loss window stays bounded to edits made after the last flush.
  */
 export async function flushOpenResumePersist(): Promise<void> {
@@ -47,7 +47,7 @@ export async function flushOpenResumePersist(): Promise<void> {
 
 /**
  * Register the page-lifecycle flush safety net. Returns a cleanup. Intended to be
- * called once from a client provider effect — synchronizing with the browser's
+ * called once from a client provider effect; synchronizing with the browser's
  * lifecycle is a legitimate external-system effect.
  */
 export function registerResumeFlushListeners(): () => void {

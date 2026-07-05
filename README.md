@@ -21,7 +21,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 
 ## Features
 
-- Six résumé templates, all sharing one linear document structure — only styling differs
+- Six résumé templates, all sharing one linear document structure; only styling differs
 - Template gallery with search, sort, and live seed-data previews
 - Résumé library with live first-page thumbnails, rename, and delete
 - Print-accurate A4 preview with automatic pagination
@@ -94,9 +94,9 @@ Changes to the export path are gated by `pnpm validate:exports`, which regenerat
 
 ## Contributing
 
-Bug reports and feature requests go through the issue forms — note the scope rules there: presentation is customizable, structure is not, and accounts/server storage are non-goals.
+Bug reports and feature requests go through the issue forms; note the scope rules there: presentation is customizable, structure is not, and accounts/server storage are non-goals.
 
-Commit messages follow Conventional Commits via commitlint and commitizen. Run `pnpm commit` instead of `git commit` to use the prompt. Pre-commit hooks (husky + lint-staged) run lint and format checks before any commit is accepted. PR titles follow the same convention with a fully lowercase subject — they become the squash-merge commit.
+Commit messages follow Conventional Commits via commitlint and commitizen. Run `pnpm commit` instead of `git commit` to use the prompt. Pre-commit hooks (husky + lint-staged) run lint and format checks before any commit is accepted. PR titles follow the same convention with a fully lowercase subject; they become the squash-merge commit.
 
 See `AGENTS.md` for architecture rules and code conventions before submitting a PR.
 

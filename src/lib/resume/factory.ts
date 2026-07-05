@@ -60,7 +60,7 @@ export function createEmptyHeader(): Header {
 }
 
 /**
- * A blank structural document — Header plus one empty Entry per core Section.
+ * A blank structural document: Header plus one empty Entry per core Section.
  * The primary create path seeds the Seed fixture instead (see seed.ts); this is
  * the deferred "blank resume" option.
  */

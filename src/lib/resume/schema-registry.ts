@@ -1,7 +1,7 @@
 import type { FieldKey, SectionType } from "./types";
 
 /**
- * The allowed TipTap features for a richtext Field — the Restricted schema
+ * The allowed TipTap features for a richtext Field: the Restricted schema
  * allowlist. Base document/paragraph/text are always implied. Both typing and
  * paste are filtered through this list so disallowed structure (tables, headings,
  * images) cannot be represented or pasted in.
@@ -49,7 +49,7 @@ export const PROSE_FEATURES: RichTextFeature[] = [
 
 /**
  * The privileged Header's Field shape. Identity and contact information only.
- * Not part of the Section registry — the Header is not a Section.
+ * Not part of the Section registry; the Header is not a Section.
  */
 export const HEADER_SCHEMA: FieldSchema[] = [
   {

@@ -8,7 +8,7 @@ import { useResumeStore } from "@/lib/store";
 
 /**
  * The editor's missing-résumé state. When the route id doesn't resolve, the
- * library index is searched for the closest id within edit tolerance — a
+ * library index is searched for the closest id within edit tolerance, a
  * "did you mean" for mangled or truncated links. Deleted résumés (no near id)
  * fall back to the plain message.
  */

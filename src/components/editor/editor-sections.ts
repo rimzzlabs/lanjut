@@ -30,7 +30,7 @@ export interface EditorSectionDescriptor {
  * The editor's section navigation, in reading order. Personal Details maps to the
  * privileged `Header` (always first, never hidden); the rest map to reorderable
  * sections. This is the sidebar's view contract, decoupled from the persisted
- * `Resume` model — an adapter will project real sections onto these descriptors.
+ * `Resume` model; an adapter will project real sections onto these descriptors.
  */
 export const EDITOR_SECTIONS: EditorSectionDescriptor[] = [
   {

@@ -7,13 +7,13 @@ function dateRange(start: string, end: string): string {
   return `${start} - ${end}`;
 }
 
-/** "Role — Company — Dates", dropping whichever parts are absent. */
+/** "Role - Company - Dates", dropping whichever parts are absent. */
 function metaLine(...parts: string[]): string {
-  return parts.filter(Boolean).join(" — ");
+  return parts.filter(Boolean).join(" - ");
 }
 
 /**
- * Serializes the résumé to plain text in linear reading order — the ATS-safest
+ * Serializes the résumé to plain text in linear reading order, the ATS-safest
  * format. Reuses `buildResumeBlocks` so the content, ordering, sorting, and
  * empty-section gating match the preview and the PDF exactly.
  */

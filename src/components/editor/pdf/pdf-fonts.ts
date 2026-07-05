@@ -5,7 +5,7 @@ let registered = false;
 /**
  * Registers the font families the PDF templates use, matching the on-screen
  * preview: Inter (sans, all templates) and Lora (serif accents in Ketat/Luasa).
- * Idempotent — safe to call before every render. Hyphenation is disabled so
+ * Idempotent, safe to call before every render. Hyphenation is disabled so
  * react-pdf never injects soft hyphens that would corrupt text extraction
  * (pdftotext / ATS parsers must see whole words in reading order).
  */

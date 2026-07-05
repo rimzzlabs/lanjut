@@ -7,10 +7,10 @@ type ResumeDoc = Record<string, unknown>;
 
 /**
  * A forward-only migration from version N to N+1, keyed by N. Each step is a pure
- * JSON→JSON function over a plain document, testable with fixtures — never runs
+ * JSON→JSON function over a plain document, testable with fixtures; never runs
  * inside idb's onupgradeneeded (that governs store structure only; see
  * docs/schema-migrations.md). Steps must bail out (keep the original data) when a
- * document does not match the shape they expect — a mis-stamped schemaVersion
+ * document does not match the shape they expect: a mis-stamped schemaVersion
  * must degrade to a no-op, never to blanked or replaced fields.
  */
 type Migration = (doc: ResumeDoc) => ResumeDoc;
@@ -143,7 +143,7 @@ const migrateV2toV3: Migration = (doc) => {
       | { fields?: Record<string, unknown> }
       | undefined;
     // Entries without a `body` field are not the v2 single-body shape (likely a
-    // mis-stamped doc already at v3+) — replacing them would destroy real skills.
+    // mis-stamped doc already at v3+); replacing them would destroy real skills.
     if (first?.fields && !("body" in first.fields)) continue;
     const body = (first?.fields?.body as { value?: unknown } | undefined)
       ?.value;

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 function Input(props: React.ComponentProps<"input">) {
   // A controlled input (one with `onChange`) must never receive an `undefined`
   // value, or base-ui warns when it later becomes a string (uncontrolled →
-  // controlled) — e.g. react-hook-form's `values` before its first sync.
+  // controlled), e.g. react-hook-form's `values` before its first sync.
   const value = props.onChange && props.value === undefined ? "" : props.value;
   return (
     <InputPrimitive

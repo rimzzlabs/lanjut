@@ -24,7 +24,7 @@ export function useEditorResume() {
     if (id) void openResume(id);
   }, [id, openResume]);
 
-  // On unmount, only flush pending writes — never clear the open document.
+  // On unmount, only flush pending writes; never clear the open document.
   // Clearing it here races with the reopen effect (and React StrictMode's
   // remount): the async clear can land after `openResume` has already skipped an
   // unchanged id, stranding the store empty and the preview stuck loading.

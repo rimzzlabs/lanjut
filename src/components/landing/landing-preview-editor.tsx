@@ -19,7 +19,7 @@ export function LandingPreviewEditor() {
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground text-balance sm:text-base">
           Build your ATS-safe résumé in a focused editor. No AI slop, no
-          overwhelming features — straight to the point, without wasting your
+          overwhelming features. Straight to the point, without wasting your
           time.
         </p>
       </motion.div>

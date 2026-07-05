@@ -12,7 +12,7 @@ interface KetikBlockViewProps {
   block: ResumeBlock;
 }
 
-/** "Ketik" — typewriter-flavored: monospace name/headings/dates over a sans body. */
+/** "Ketik": typewriter-flavored: monospace name/headings/dates over a sans body. */
 export function KetikBlockView(props: KetikBlockViewProps) {
   const { block } = props;
   switch (block.kind) {

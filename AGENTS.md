@@ -43,7 +43,7 @@ Any feature request that adds structural freedom (tables, columns, floating elem
 - No resume content is sent to any server, API route, or open-next function. Confirm this on every PR touching data flow.
 - Document shape is versioned by the in-document `schemaVersion` plus a forward-only, read-time migration ladder (`src/lib/resume/migrations.ts`). Ship the shape change, the `CURRENT_SCHEMA_VERSION` bump, and the ladder rung in the same PR. Full reference: `docs/schema-migrations.md`.
 - The IndexedDB `DB_VERSION` is separate and governs object stores/indexes only. Never bump it for a field-shape change; never reshape documents inside the idb `upgrade` callback.
-- Migration steps must be bail-safe: when a document does not match the expected shape, keep the original data and no-op — never blank or replace what cannot be parsed.
+- Migration steps must be bail-safe: when a document does not match the expected shape, keep the original data and no-op; never blank or replace what cannot be parsed.
 - Raw pre-migration documents are snapshotted to the `backups` object store before migration. Documents that fail migration are surfaced as unreadable in the UI and are never deleted or overwritten.
 
 

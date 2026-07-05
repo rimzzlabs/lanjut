@@ -12,7 +12,7 @@ interface KetatBlockViewProps {
   block: ResumeBlock;
 }
 
-/** "Ketat" — a compact serif classic with centered, ruled section headings. */
+/** "Ketat": a compact serif classic with centered, ruled section headings. */
 export function KetatBlockView(props: KetatBlockViewProps) {
   const { block } = props;
   switch (block.kind) {

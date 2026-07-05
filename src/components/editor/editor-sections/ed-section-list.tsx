@@ -39,7 +39,7 @@ export function EditorSectionList() {
     );
   }
 
-  // Keyed by the open résumé so a load/switch remounts the forms — this is how
+  // Keyed by the open résumé so a load/switch remounts the forms; this is how
   // the uncontrolled rich-text editors pick up the loaded document.
   return (
     <Accordion key={open.id} multiple className="border-none">

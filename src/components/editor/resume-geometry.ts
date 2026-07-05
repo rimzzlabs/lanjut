@@ -19,8 +19,8 @@ export const A4 = {
   marginPx: mmToPx(14),
 } as const;
 
-/** Printable width of one page — the exact width content is measured at. */
+/** Printable width of one page; the exact width content is measured at. */
 export const CONTENT_WIDTH_PX = A4.widthPx - A4.marginPx * 2;
 
-/** Printable height of one page — the per-page height budget for pagination. */
+/** Printable height of one page; the per-page height budget for pagination. */
 export const CONTENT_HEIGHT_PX = A4.heightPx - A4.marginPx * 2;

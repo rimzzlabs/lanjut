@@ -46,7 +46,7 @@ export type SectionType =
 
 /**
  * A typed, reorderable unit below the Header. `title` is presentation/label data
- * only — relabeling never changes the Section's parse shape or Field schema.
+ * only; relabeling never changes the Section's parse shape or Field schema.
  */
 export interface Section {
   id: string;
@@ -70,7 +70,7 @@ export interface Header {
 export interface Resume {
   id: string;
   schemaVersion: number;
-  /** The résumé's name, e.g. "Frontend Engineer — Acme". Per-job tailoring is core. */
+  /** The résumé's name, e.g. "Frontend Engineer, Acme". Per-job tailoring is core. */
   title: string;
   /**
    * Presentation-layer template rendering this document (e.g. "awal"). Kept a

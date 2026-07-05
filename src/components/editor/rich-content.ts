@@ -2,8 +2,8 @@ import type { JSONContent } from "@tiptap/core";
 
 /**
  * A run of inline text carrying the restricted schema's marks (bold, italic,
- * link). This is the export-neutral shape every renderer consumes — the DOM
- * preview, the PDF template, and the text/docx serializers — so marks survive
+ * link). This is the export-neutral shape every renderer consumes (the DOM
+ * preview, the PDF template, and the text/docx serializers) so marks survive
  * into every output instead of collapsing to plain strings.
  */
 export interface InlineRun {
@@ -121,8 +121,8 @@ export function richBlocksToMarkdown(blocks: RichBlock[]): string {
 }
 
 /**
- * Flattens rich blocks to plain-text lines — one per paragraph, and each list
- * item prefixed with "- " — for the .txt export. Marks are dropped (plain text
+ * Flattens rich blocks to plain-text lines (one per paragraph, and each list
+ * item prefixed with "- ") for the .txt export. Marks are dropped (plain text
  * carries no formatting); reading order is preserved.
  */
 export function richBlocksToText(blocks: RichBlock[]): string[] {

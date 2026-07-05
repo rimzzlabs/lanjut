@@ -41,7 +41,7 @@ function prose(...blocks: JSONContent[]): Field {
 /**
  * The single code-defined sample Resume. Every newly created Resume is cloned
  * from this fixture, and the export Parser gate reuses it as its test document.
- * The stable ids here are placeholders — cloneResumeAsNew reassigns fresh ids.
+ * The stable ids here are placeholders; cloneResumeAsNew reassigns fresh ids.
  * It doubles as the "Awal" template showcase, so it exercises every section plus
  * bold / italic / link marks.
  */

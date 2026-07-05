@@ -36,7 +36,7 @@ export function issueTitle(prefix: string, summaryLine: string): string {
 
 /**
  * GitHub prefills issue-form fields from query params keyed by the field ids
- * in the matching .github/ISSUE_TEMPLATE/*.yml — keep the param names in sync
+ * in the matching .github/ISSUE_TEMPLATE/*.yml; keep the param names in sync
  * with those files. Body fields are markdown strings; GitHub renders the
  * textareas as GFM.
  */

@@ -24,9 +24,9 @@ export function LandingClosure() {
           Lanjut. Resume. Résumé.
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground text-balance sm:text-base">
-          The name is the pitch — lanjut means continue. Pick a template or
-          start from a blank page; either way it&apos;s free, open source, and
-          your résumé never leaves your browser.
+          The name is the pitch: lanjut means continue. Pick a template or start
+          from a blank page; either way it&apos;s free, open source, and your
+          résumé never leaves your browser.
         </p>
         <div className="mx-auto mt-8 flex w-full max-w-xs flex-col justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:gap-4">
           <Button

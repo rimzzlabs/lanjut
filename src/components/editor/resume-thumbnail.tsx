@@ -16,8 +16,8 @@ interface ResumeThumbnailProps {
 /**
  * A miniature, non-interactive render of a résumé's first page, scaled with a
  * CSS transform to fill the container width. Unlike ResumeDocument there is no
- * measurement or pagination pass — blocks flow linearly and the page frame's
- * overflow clipping cuts everything past page one — so it is cheap enough to
+ * measurement or pagination pass (blocks flow linearly and the page frame's
+ * overflow clipping cuts everything past page one) so it is cheap enough to
  * render per card in a grid.
  */
 export function ResumeThumbnail(props: ResumeThumbnailProps) {

@@ -12,7 +12,7 @@ interface TebalBlockViewProps {
   block: ResumeBlock;
 }
 
-/** "Tebal" — a bold modern statement with heavy uppercase headings over thick rules. */
+/** "Tebal": a bold modern statement with heavy uppercase headings over thick rules. */
 export function TebalBlockView(props: TebalBlockViewProps) {
   const { block } = props;
   switch (block.kind) {

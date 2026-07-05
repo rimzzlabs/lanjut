@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 /**
  * The card "desk": a dotted work surface with an A4 sheet resting on it. The
  * sheet is pinned near the top and clipped by the frame, so the paper visibly
- * runs past the bottom edge — the page continues — and lifts on card hover.
+ * runs past the bottom edge (the page continues) and lifts on card hover.
  */
 export function PlatformPaperFrame(props: { children: ReactNode }) {
   return (

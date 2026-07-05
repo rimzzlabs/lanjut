@@ -99,7 +99,7 @@ function sectionOfType(
 /**
  * Keep entry ids stable across form-driven rebuilds by reusing the existing
  * entry's id at the same index. Regenerating ids on every keystroke invalidates
- * everything keyed by them downstream — most visibly the preview's measured
+ * everything keyed by them downstream, most visibly the preview's measured
  * block heights, which collapsed pagination to a single page.
  */
 function entryId(section: Section, index: number): string {

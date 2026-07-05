@@ -12,7 +12,7 @@ interface KlasikBlockViewProps {
   block: ResumeBlock;
 }
 
-/** "Klasik" — a traditional all-serif CV with a centered header and quiet headings. */
+/** "Klasik": a traditional all-serif CV with a centered header and quiet headings. */
 export function KlasikBlockView(props: KlasikBlockViewProps) {
   const { block } = props;
   switch (block.kind) {

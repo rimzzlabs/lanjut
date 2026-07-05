@@ -141,7 +141,7 @@ function gridParagraphs(
         children: [
           new TextRun({ text: item.name, bold: true }),
           ...(item.proficiency
-            ? [new TextRun({ text: ` — ${item.proficiency}`, color: MUTED })]
+            ? [new TextRun({ text: ` - ${item.proficiency}`, color: MUTED })]
             : []),
         ],
       }),

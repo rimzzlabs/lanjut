@@ -175,7 +175,7 @@ function PdfBlock(props: { block: ResumeBlock }) {
 /**
  * The "Awal" résumé as a react-pdf document. It renders the same linear
  * `buildResumeBlocks` sequence the on-screen preview uses, so PDF content,
- * ordering, sorting, and empty-section gating stay identical — and the text is
+ * ordering, sorting, and empty-section gating stay identical, and the text is
  * real (extractable), never rasterized. react-pdf handles page breaks; a
  * heading's `minPresenceAhead` keeps it from being orphaned at a page foot.
  */

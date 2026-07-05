@@ -8,7 +8,7 @@ export const EXPORT_FORMATS: ExportFormat[] = ["pdf", "docx", "txt"];
 
 /**
  * Exports `resume` in the chosen format and triggers the browser download.
- * Everything renders client-side — no résumé content leaves the device. The
+ * Everything renders client-side; no résumé content leaves the device. The
  * per-format modules are loaded lazily so the heavy PDF/docx libraries stay
  * out of the main bundle.
  */
