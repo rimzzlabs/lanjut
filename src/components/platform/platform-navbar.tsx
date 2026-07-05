@@ -14,7 +14,7 @@ export function PlatformNavbar() {
         <SidebarTrigger />
         <PlatformNavbarBreadcrumb />
 
-        <div className="lg:inline-flex items-center gap-2 ml-auto">
+        <div className="inline-flex items-center gap-2 ml-auto">
           <PlatformNavbarChangelog />
           <PlatformNavbarTheme />
           <PlatformNavbarDownload />
