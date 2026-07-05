@@ -2,6 +2,7 @@
 
 import { SidebarTrigger } from "../ui/sidebar";
 import { PlatformNavbarBreadcrumb } from "./platform-navbar-breadcrumb";
+import { PlatformNavbarChangelog } from "./platform-navbar-changelog";
 import { PlatformNavbarDownload } from "./platform-navbar-download";
 import { PlatformNavbarMobileMenu } from "./platform-navbar-mobile-menu";
 import { PlatformNavbarTheme } from "./platform-navbar-theme";
@@ -14,6 +15,7 @@ export function PlatformNavbar() {
         <PlatformNavbarBreadcrumb />
 
         <div className="lg:inline-flex items-center gap-2 ml-auto">
+          <PlatformNavbarChangelog />
           <PlatformNavbarTheme />
           <PlatformNavbarDownload />
           <PlatformNavbarMobileMenu />

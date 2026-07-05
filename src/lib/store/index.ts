@@ -1,3 +1,4 @@
+export { useChangelogStore } from "./changelog-store";
 export { useIssueReportStore } from "./issue-report-store";
 export {
   flushOpenResumePersist,
