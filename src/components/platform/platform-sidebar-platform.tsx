@@ -15,7 +15,7 @@ export function PlatformSidebarPlatform() {
   const pathname = usePathname();
 
   return (
-    <SidebarGroup>
+    <SidebarGroup id="tour-sidebar-nav">
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenuItem>
@@ -34,12 +34,6 @@ export function PlatformSidebarPlatform() {
             <LayoutTemplate /> Browse Template
           </SidebarMenuButton>
         </SidebarMenuItem>
-        {/* wired with react tour */}
-        {/* <SidebarMenuItem>
-          <SidebarMenuButton disabled>
-            <HelpCircle /> Guide
-          </SidebarMenuButton>
-        </SidebarMenuItem> */}
       </SidebarMenu>
     </SidebarGroup>
   );

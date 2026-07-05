@@ -40,7 +40,7 @@ export function PlatformNavbarDownload() {
 
   return (
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
-      <PopoverTrigger render={<Button disabled={!open} />}>
+      <PopoverTrigger render={<Button id="tour-download" disabled={!open} />}>
         <Download /> Download Résumé
       </PopoverTrigger>
       <PopoverContent align="end">

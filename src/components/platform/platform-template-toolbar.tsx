@@ -31,7 +31,7 @@ export function PlatformTemplateToolbar() {
 
   return (
     <div className="flex items-center gap-2">
-      <InputGroup className="max-w-xs">
+      <InputGroup id="tour-search-template" className="max-w-xs">
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>
@@ -42,7 +42,7 @@ export function PlatformTemplateToolbar() {
         />
       </InputGroup>
 
-      <div className="ml-auto">
+      <div id="tour-sort-template" className="ml-auto">
         <Select
           items={SORT_OPTIONS}
           value={sort}

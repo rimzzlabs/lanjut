@@ -107,6 +107,9 @@ importers:
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      nextstepjs:
+        specifier: ^2.2.0
+        version: 2.2.0(motion@12.42.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(next@16.2.9(@babel/core@7.29.7)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       nuqs:
         specifier: ^2.9.0
         version: 2.9.0(next@16.2.9(@babel/core@7.29.7)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
@@ -3835,6 +3838,23 @@ packages:
       babel-plugin-react-compiler:
         optional: true
       sass:
+        optional: true
+
+  nextstepjs@2.2.0:
+    resolution: {integrity: sha512-VpUvKpIMbxBaLAMM3O8mc5Tavao4UBpKZ0+KyUGXxZhqdJt2ejS2l7pXLtlq2r62NG3EV0yv1wit5mgte7c3Vw==}
+    peerDependencies:
+      '@remix-run/react': '>=1.0.0'
+      motion: '>=11'
+      next: '>=13.0.0'
+      react: '>=18'
+      react-dom: '>=18'
+      react-router: '>=7.0.0'
+    peerDependenciesMeta:
+      '@remix-run/react':
+        optional: true
+      next:
+        optional: true
+      react-router:
         optional: true
 
   node-domexception@1.0.0:
@@ -8637,6 +8657,14 @@ snapshots:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+
+  nextstepjs@2.2.0(motion@12.42.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(next@16.2.9(@babel/core@7.29.7)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+    dependencies:
+      motion: 12.42.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+    optionalDependencies:
+      next: 16.2.9(@babel/core@7.29.7)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
 
   node-domexception@1.0.0: {}
 

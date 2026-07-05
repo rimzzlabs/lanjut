@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";
 import { PlatformNavbar } from "@/components/platform/platform-navbar";
 import { PlatformSidebar } from "@/components/platform/platform-sidebar";
+import { TourProvider } from "@/components/tour/tour-provider";
 import {
   Sidebar,
   SidebarInset,
@@ -16,15 +17,17 @@ export const metadata: Metadata = {
 
 export default function PlatformLayout({ children }: PropsWithChildren) {
   return (
-    <SidebarProvider>
-      <Sidebar>
-        <PlatformSidebar />
-      </Sidebar>
+    <TourProvider>
+      <SidebarProvider>
+        <Sidebar>
+          <PlatformSidebar />
+        </Sidebar>
 
-      <SidebarInset>
-        <PlatformNavbar />
-        {children}
-      </SidebarInset>
-    </SidebarProvider>
+        <SidebarInset>
+          <PlatformNavbar />
+          {children}
+        </SidebarInset>
+      </SidebarProvider>
+    </TourProvider>
   );
 }

@@ -13,7 +13,10 @@ export default function EditorLayoutPage(
     <div className="h-[calc(100vh-4rem)] flex-1 overflow-hidden">
       <ResizablePanelGroup>
         <ResizablePanel defaultSize="68%" minSize="40%" maxSize="72%">
-          <ScrollArea className="h-[calc(100vh-3.5rem)]">
+          <ScrollArea
+            id="tour-editor-preview"
+            className="h-[calc(100vh-3.5rem)]"
+          >
             <div className="bg-muted px-6 py-10">{props.children}</div>
           </ScrollArea>
         </ResizablePanel>

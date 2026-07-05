@@ -17,7 +17,7 @@ export function PlatformResumeToolbar() {
 
   return (
     <div className="flex items-center gap-2">
-      <InputGroup className="max-w-xs">
+      <InputGroup id="tour-search-resume" className="max-w-xs">
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>
@@ -29,7 +29,7 @@ export function PlatformResumeToolbar() {
       </InputGroup>
 
       <nav className="inline-flex items-center gap-2 ml-auto">
-        <Button onClick={() => setOpen(true)}>
+        <Button id="tour-create-resume" onClick={() => setOpen(true)}>
           <Plus /> Résumé
         </Button>
       </nav>

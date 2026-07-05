@@ -29,7 +29,7 @@ export function PlatformSidebarResume() {
   const indexStatus = useResumeStore((state) => state.indexStatus);
 
   return (
-    <SidebarGroup>
+    <SidebarGroup id="tour-sidebar-resumes">
       <SidebarGroupLabel>
         <span>My Résumé</span>
 
