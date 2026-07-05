@@ -11,6 +11,13 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "0.5.0",
+    date: "2026-07-05",
+    highlights: [
+      "New Organization Experience section: showcase volunteer, student, and community roles with dates and highlights, just like work experience. It shows up in every template and export, and your existing résumés get it automatically.",
+    ],
+  },
+  {
     version: "0.4.0",
     date: "2026-07-05",
     highlights: [
