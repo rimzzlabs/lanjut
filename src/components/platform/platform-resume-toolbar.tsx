@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus, Search } from "lucide-react";
-import { useState } from "react";
+import { useResumeCreateDialog } from "@/hooks/use-resume-create-dialog";
 import { useResumeSearchQuery } from "@/hooks/use-resume-search";
 import { Button } from "../ui/button";
 import {
@@ -12,7 +12,7 @@ import {
 import { PlatformResumeCreateDialog } from "./platform-resume-create-dialog";
 
 export function PlatformResumeToolbar() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useResumeCreateDialog();
   const [query, setQuery] = useResumeSearchQuery();
 
   return (
