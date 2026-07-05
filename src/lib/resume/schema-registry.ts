@@ -155,6 +155,43 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
       },
     ],
   },
+  organizations: {
+    type: "organizations",
+    defaultTitle: "Organizations",
+    singleton: false,
+    fields: [
+      {
+        key: "role",
+        label: "Role",
+        kind: "plain",
+        placeholder: "Head of Public Relations",
+      },
+      {
+        key: "organization",
+        label: "Organization",
+        kind: "plain",
+        placeholder: "Student Executive Board",
+      },
+      {
+        key: "startDate",
+        label: "Start date",
+        kind: "plain",
+        placeholder: "Jan 2023",
+      },
+      {
+        key: "endDate",
+        label: "End date",
+        kind: "plain",
+        placeholder: "Present",
+      },
+      {
+        key: "description",
+        label: "Description",
+        kind: "richtext",
+        features: PROSE_FEATURES,
+      },
+    ],
+  },
   education: {
     type: "education",
     defaultTitle: "Education",

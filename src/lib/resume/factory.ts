@@ -75,6 +75,7 @@ export function createEmptyResume(title: string): Resume {
     sections: [
       createEmptySection("summary"),
       createEmptySection("experience"),
+      createEmptySection("organizations"),
       createEmptySection("education"),
       createEmptySection("skills"),
       createEmptySection("certifications"),

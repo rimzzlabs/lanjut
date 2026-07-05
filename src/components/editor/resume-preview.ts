@@ -69,6 +69,13 @@ export interface ResumePreview {
   header: HeaderView;
   summary: RichBlock[];
   experience: ExperienceItemView[];
+  /**
+   * Organization entries (volunteer, student, community roles) are
+   * presentationally identical to experience entries, so they reuse
+   * `ExperienceItemView` (`company` holds the organization name) and every
+   * renderer's experience path.
+   */
+  organizations: ExperienceItemView[];
   education: EducationItemView[];
   certificates: CertificateItemView[];
   skills: SkillItemView[];

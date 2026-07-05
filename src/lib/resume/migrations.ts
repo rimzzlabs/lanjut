@@ -238,6 +238,44 @@ const migrateV4toV5: Migration = (doc) => {
 };
 
 /**
+ * v5→v6: adds the Organizations section (volunteer, student, and community
+ * roles). Existing documents gain it (with one empty entry) if it is not
+ * already present, so the new editor form has somewhere to write.
+ */
+const migrateV5toV6: Migration = (doc) => {
+  const next = structuredClone(doc);
+  const sections = Array.isArray(next.sections)
+    ? (next.sections as Array<Record<string, unknown>>)
+    : [];
+
+  if (!sections.some((s) => s.type === "organizations")) {
+    sections.push({
+      id: nanoid(),
+      type: "organizations",
+      title: "Organizations",
+      entries: [
+        {
+          id: nanoid(),
+          fields: {
+            role: plainField(""),
+            organization: plainField(""),
+            startDate: plainField(""),
+            endDate: plainField(""),
+            description: {
+              kind: "richtext",
+              value: { type: "doc", content: [{ type: "paragraph" }] },
+            },
+          },
+        },
+      ],
+    });
+  }
+
+  next.sections = sections;
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -245,6 +283,7 @@ const LADDER: Record<number, Migration> = {
   2: migrateV2toV3,
   3: migrateV3toV4,
   4: migrateV4toV5,
+  5: migrateV5toV6,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

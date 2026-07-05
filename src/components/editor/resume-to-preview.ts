@@ -104,6 +104,16 @@ export function resumeToPreview(resume: Resume): ResumePreview {
         };
       })
       .sort(byRecency),
+    organizations: (sectionOfType(resume, "organizations")?.entries ?? [])
+      .map((entry) => ({
+        id: entry.id,
+        role: plain(entry.fields.role),
+        company: plain(entry.fields.organization),
+        startDate: plain(entry.fields.startDate),
+        endDate: plain(entry.fields.endDate),
+        description: richBlocks(entry.fields.description),
+      }))
+      .sort(byRecency),
     education: (sectionOfType(resume, "education")?.entries ?? [])
       .map((entry) => ({
         id: entry.id,

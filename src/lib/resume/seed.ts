@@ -233,6 +233,56 @@ export const SEED_RESUME: Resume = {
       ],
     },
     {
+      id: "seed-organizations",
+      type: "organizations",
+      title: "Organizations",
+      entries: [
+        {
+          id: "seed-organizations-1",
+          fields: {
+            role: plain("Organizer"),
+            organization: plain("React SF Meetup"),
+            startDate: plain("Jan 2021"),
+            endDate: plain("Present"),
+            description: prose(
+              ul(
+                li(
+                  t("Curate monthly talks for a "),
+                  b("1,800-member"),
+                  t(
+                    " community and coordinate speakers, venues, and sponsors.",
+                  ),
+                ),
+                li(
+                  t(
+                    "Launched a lightning-talk track that has given 30+ first-time speakers a stage.",
+                  ),
+                ),
+              ),
+            ),
+          },
+        },
+        {
+          id: "seed-organizations-2",
+          fields: {
+            role: plain("President"),
+            organization: plain("Web Development Club, State University"),
+            startDate: plain("2016"),
+            endDate: plain("2018"),
+            description: prose(
+              ul(
+                li(
+                  t("Grew the club from 30 to "),
+                  b("120 members"),
+                  t(" and ran weekly hands-on workshops."),
+                ),
+              ),
+            ),
+          },
+        },
+      ],
+    },
+    {
       id: "seed-education",
       type: "education",
       title: "Education",

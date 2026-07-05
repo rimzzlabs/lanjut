@@ -6,12 +6,14 @@ import {
   GraduationCap,
   Languages,
   type LucideIcon,
+  Users,
   Zap,
 } from "lucide-react";
 
 export type EditorSectionId =
   | "personal-details"
   | "experience"
+  | "organizations"
   | "education"
   | "skills"
   | "languages"
@@ -40,6 +42,12 @@ export const EDITOR_SECTIONS: EditorSectionDescriptor[] = [
     required: true,
   },
   { id: "experience", label: "Experience", icon: Briefcase, required: false },
+  {
+    id: "organizations",
+    label: "Organizations",
+    icon: Users,
+    required: false,
+  },
   { id: "education", label: "Education", icon: GraduationCap, required: false },
   { id: "skills", label: "Skills", icon: Zap, required: false },
   { id: "languages", label: "Languages", icon: Languages, required: false },

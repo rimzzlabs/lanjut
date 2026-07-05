@@ -125,6 +125,24 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
     );
   }
 
+  // Organization entries reuse the "experience" block kind: they render
+  // identically in every template and export, only the section heading differs.
+  const organizations = resume.organizations.filter(hasExperience);
+  if (organizations.length > 0) {
+    blocks.push(
+      heading("organizations-heading", "Organizations"),
+      ...organizations.map(
+        (item, index): ResumeBlock => ({
+          id: item.id,
+          kind: "experience",
+          item,
+          gapBefore: entryGap(index),
+          keepWithNext: false,
+        }),
+      ),
+    );
+  }
+
   const education = resume.education.filter(hasEducation);
   if (education.length > 0) {
     blocks.push(

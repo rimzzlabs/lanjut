@@ -7,11 +7,12 @@ import { EditorSectionCertifications } from "./ed-section-certifications/ed-sect
 import { EditorSectionEducation } from "./ed-section-education/ed-section-education";
 import { EditorSectionExperience } from "./ed-section-experience/ed-section-experience";
 import { EditorSectionLanguages } from "./ed-section-languages/ed-section-languages";
+import { EditorSectionOrganizations } from "./ed-section-organizations/ed-section-organizations";
 import { EditorSectionPersonal } from "./ed-section-personal/ed-section-personal";
 import { EditorSectionSkills } from "./ed-section-skills/ed-section-skills";
 import { EditorSectionSummary } from "./ed-section-summary/ed-section-summary";
 
-const SKELETONS = [1, 2, 3, 4, 5, 6];
+const SKELETONS = [1, 2, 3, 4, 5, 6, 7];
 
 export function EditorSectionList() {
   const openStatus = useResumeStore((state) => state.openStatus);
@@ -46,6 +47,7 @@ export function EditorSectionList() {
       <EditorSectionPersonal />
       <EditorSectionSummary />
       <EditorSectionExperience />
+      <EditorSectionOrganizations />
       <EditorSectionEducation />
       <EditorSectionCertifications />
       <EditorSectionSkills />

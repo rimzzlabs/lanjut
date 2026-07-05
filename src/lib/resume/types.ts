@@ -5,7 +5,7 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 5;
+export const CURRENT_SCHEMA_VERSION = 6;
 
 export type FieldKind = "plain" | "richtext";
 
@@ -38,6 +38,7 @@ export interface Entry {
 export type SectionType =
   | "summary"
   | "experience"
+  | "organizations"
   | "education"
   | "skills"
   | "certifications"

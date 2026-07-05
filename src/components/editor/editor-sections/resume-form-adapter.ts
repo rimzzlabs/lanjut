@@ -32,6 +32,18 @@ export interface ExperienceFormValues {
   experiences: ExperienceItemValues[];
 }
 
+export interface OrganizationItemValues {
+  role: string;
+  organization: string;
+  startDate: string;
+  endDate: string;
+  description: JSONContent;
+}
+
+export interface OrganizationsFormValues {
+  organizations: OrganizationItemValues[];
+}
+
 export interface EducationItemValues {
   institution: string;
   degree: string;
@@ -185,6 +197,42 @@ export function applyExperienceValues(
       title: plain(item.title),
       company: plain(item.company),
       website: plain(item.website),
+      startDate: plain(item.startDate),
+      endDate: plain(item.endDate),
+      description: rich(item.description),
+    },
+  }));
+}
+
+// --- Organizations (repeating section entries) ------------------------------
+
+export function organizationEntries(resume: Resume): Entry[] {
+  return sectionOfType(resume, "organizations")?.entries ?? [];
+}
+
+export function toOrganizationsValues(resume: Resume): OrganizationsFormValues {
+  return {
+    organizations: organizationEntries(resume).map((entry) => ({
+      role: plainValue(entry.fields.role),
+      organization: plainValue(entry.fields.organization),
+      startDate: plainValue(entry.fields.startDate),
+      endDate: plainValue(entry.fields.endDate),
+      description: richValue(entry.fields.description),
+    })),
+  };
+}
+
+export function applyOrganizationsValues(
+  draft: Resume,
+  values: OrganizationsFormValues,
+): void {
+  const section = sectionOfType(draft, "organizations");
+  if (!section) return;
+  section.entries = values.organizations.map((item, index) => ({
+    id: entryId(section, index),
+    fields: {
+      role: plain(item.role),
+      organization: plain(item.organization),
       startDate: plain(item.startDate),
       endDate: plain(item.endDate),
       description: rich(item.description),
