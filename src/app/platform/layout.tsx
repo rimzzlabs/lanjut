@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";
 import { PlatformBugReportDialog } from "@/components/platform/platform-bug-report-dialog";
+import { PlatformFeatureRequestDialog } from "@/components/platform/platform-feature-request-dialog";
 import { PlatformNavbar } from "@/components/platform/platform-navbar";
 import { PlatformSidebar } from "@/components/platform/platform-sidebar";
 import { PlatformSidebarProvider } from "@/components/platform/platform-sidebar-provider";
@@ -27,6 +28,7 @@ export default function PlatformLayout({ children }: PropsWithChildren) {
         </SidebarInset>
 
         <PlatformBugReportDialog />
+        <PlatformFeatureRequestDialog />
       </PlatformSidebarProvider>
     </TourProvider>
   );

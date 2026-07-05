@@ -8,33 +8,34 @@ import {
   ResponsiveDialogHeader,
   ResponsiveDialogTitle,
 } from "../shared/responsive-dialog";
-import { PlatformBugReportForm } from "./platform-bug-report-form";
+import { PlatformFeatureRequestForm } from "./platform-feature-request-form";
 
 /**
  * Rendered once at the platform layout level, outside the sidebar: on mobile
  * the sidebar is a sheet that closes when this dialog opens, and a dialog
  * mounted inside it would be unmounted mid-open. Opened via useIssueReportStore.
  */
-export function PlatformBugReportDialog() {
+export function PlatformFeatureRequestDialog() {
   const open = useIssueReportStore((state) => state.open);
   const setOpen = useIssueReportStore((state) => state.setOpen);
 
   return (
     <ResponsiveDialog
-      open={open === "bug"}
-      onOpenChange={(next) => setOpen(next ? "bug" : null)}
+      open={open === "feature"}
+      onOpenChange={(next) => setOpen(next ? "feature" : null)}
     >
       <ResponsiveDialogContent className="sm:max-w-lg">
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle>Report a bug</ResponsiveDialogTitle>
+          <ResponsiveDialogTitle>Request a feature</ResponsiveDialogTitle>
           <ResponsiveDialogDescription className="text-balance">
             This opens a prefilled GitHub issue for you to review and submit — a
-            GitHub account is required, and your browser details are filled in
-            for you.
+            GitHub account is required. Note that résumé structure (tables,
+            columns, images) is out of scope by design; presentation is fair
+            game.
           </ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 
-        <PlatformBugReportForm onSubmitted={() => setOpen(null)} />
+        <PlatformFeatureRequestForm onSubmitted={() => setOpen(null)} />
       </ResponsiveDialogContent>
     </ResponsiveDialog>
   );

@@ -2,18 +2,13 @@
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { ExternalLink, XIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import {
-  BUG_AREAS,
-  type BugReportForm,
-  bugReportSchema,
-} from "@/lib/forms/bug-report";
-import {
-  areaForPathname,
-  buildBugReportUrl,
-  issueTitle,
-} from "@/lib/github-issue";
+  FEATURE_LAYERS,
+  type FeatureRequestForm,
+  featureRequestSchema,
+} from "@/lib/forms/feature-request";
+import { buildFeatureRequestUrl, issueTitle } from "@/lib/github-issue";
 import { emptyRichTextValue } from "@/lib/resume";
 import { PROSE_FEATURES } from "@/lib/resume/schema-registry";
 import {
@@ -43,33 +38,31 @@ import {
   SelectValue,
 } from "../ui/select";
 
-interface PlatformBugReportFormProps {
+interface PlatformFeatureRequestFormProps {
   onSubmitted: () => void;
 }
 
-export function PlatformBugReportForm(props: PlatformBugReportFormProps) {
-  const pathname = usePathname();
-  const form = useForm<BugReportForm>({
-    resolver: standardSchemaResolver(bugReportSchema),
+export function PlatformFeatureRequestForm(
+  props: PlatformFeatureRequestFormProps,
+) {
+  const form = useForm<FeatureRequestForm>({
+    resolver: standardSchemaResolver(featureRequestSchema),
     defaultValues: {
-      whatHappened: emptyRichTextValue(),
-      steps: emptyRichTextValue(),
-      area: areaForPathname(pathname),
+      problem: emptyRichTextValue(),
+      proposal: emptyRichTextValue(),
+      layer: "Other / not sure",
     },
     mode: "onChange",
   });
 
   const onSubmit = form.handleSubmit((values) => {
-    const whatHappened = tiptapToRichBlocks(values.whatHappened);
-    const steps = tiptapToRichBlocks(values.steps);
-    const url = buildBugReportUrl({
-      title: issueTitle(
-        "fix(bug,via app):",
-        richBlocksToText(whatHappened)[0] ?? "",
-      ),
-      whatHappened: richBlocksToMarkdown(whatHappened),
-      steps: richBlocksToMarkdown(steps),
-      area: values.area,
+    const problem = tiptapToRichBlocks(values.problem);
+    const proposal = tiptapToRichBlocks(values.proposal);
+    const url = buildFeatureRequestUrl({
+      title: issueTitle("feat(via app):", richBlocksToText(proposal)[0] ?? ""),
+      problem: richBlocksToMarkdown(problem),
+      proposal: richBlocksToMarkdown(proposal),
+      layer: values.layer,
     });
     window.open(url, "_blank", "noopener,noreferrer");
     props.onSubmitted();
@@ -80,16 +73,41 @@ export function PlatformBugReportForm(props: PlatformBugReportFormProps) {
       <FieldGroup>
         <Controller
           control={form.control}
-          name="whatHappened"
+          name="problem"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="bug-report-what-happened">
-                What happened?
+              <FieldLabel htmlFor="feature-request-problem">
+                What problem does this solve?
               </FieldLabel>
               <RichTextEditor
-                id="bug-report-what-happened"
+                id="feature-request-problem"
                 features={PROSE_FEATURES}
-                placeholder="The editor preview goes blank when..."
+                placeholder="When I tailor my résumé for different roles, I have to..."
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+              />
+              <FieldDescription>
+                Describe the situation where you needed this, rather than the
+                solution itself.
+              </FieldDescription>
+              <FieldError errors={[fieldState.error]} />
+            </Field>
+          )}
+        />
+
+        <Controller
+          control={form.control}
+          name="proposal"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="feature-request-proposal">
+                Proposed solution
+              </FieldLabel>
+              <RichTextEditor
+                id="feature-request-proposal"
+                features={PROSE_FEATURES}
+                placeholder="How do you imagine it working?"
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
@@ -101,39 +119,16 @@ export function PlatformBugReportForm(props: PlatformBugReportFormProps) {
 
         <Controller
           control={form.control}
-          name="steps"
+          name="layer"
           render={({ field }) => (
             <Field>
-              <FieldLabel htmlFor="bug-report-steps">
-                Steps to reproduce
-              </FieldLabel>
-              <RichTextEditor
-                id="bug-report-steps"
-                features={PROSE_FEATURES}
-                placeholder="1. Create a résumé — a numbered list works great here"
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-              />
-              <FieldDescription>
-                Optional here — you can also fill this in on GitHub.
-              </FieldDescription>
-            </Field>
-          )}
-        />
-
-        <Controller
-          control={form.control}
-          name="area"
-          render={({ field }) => (
-            <Field>
-              <FieldLabel>Where does the bug show up?</FieldLabel>
+              <FieldLabel>Which layer does this touch?</FieldLabel>
               <Select
                 value={field.value}
                 onValueChange={(value) => field.onChange(value)}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Area" />
+                  <SelectValue placeholder="Layer" />
                 </SelectTrigger>
                 <SelectContent
                   alignItemWithTrigger={false}
@@ -141,9 +136,9 @@ export function PlatformBugReportForm(props: PlatformBugReportFormProps) {
                   className="w-[--anchor-width]"
                 >
                   <SelectGroup>
-                    {BUG_AREAS.map((area) => (
-                      <SelectItem key={area} value={area}>
-                        {area}
+                    {FEATURE_LAYERS.map((layer) => (
+                      <SelectItem key={layer} value={layer}>
+                        {layer}
                       </SelectItem>
                     ))}
                   </SelectGroup>
