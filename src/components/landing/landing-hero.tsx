@@ -31,7 +31,7 @@ export function LandingHero() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="w-11/12 mx-auto max-w-5xl flex min-h-svh flex-col items-center justify-center px-4 py-20 text-center md:py-24"
+      className="w-11/12 mx-auto max-w-5xl flex min-h-svh flex-col items-center justify-center py-20 text-center md:py-24"
     >
       <motion.div variants={itemVariants} className="relative mb-4 md:mb-5">
         <span

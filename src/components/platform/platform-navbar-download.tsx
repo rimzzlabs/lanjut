@@ -33,7 +33,7 @@ export function PlatformNavbarDownload() {
           />
         }
       >
-        <Download /> Download Résumé
+        <Download /> <span className="sr-only">Download</span> Résumé
       </PopoverTrigger>
       <PopoverContent align="end">
         <PopoverHeader>
