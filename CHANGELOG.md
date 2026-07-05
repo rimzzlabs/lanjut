@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/rimzzlabs/lanjut/compare/v0.4.0...v0.4.1) (2026-07-05)
+
+
+### Bug Fixes
+
+* show navbar actions on small screens and round the sheet close button ([#52](https://github.com/rimzzlabs/lanjut/issues/52)) ([475f1aa](https://github.com/rimzzlabs/lanjut/commit/475f1aa8702e1c435afd18cb7890c45a0ce4832d))
+
 ## [0.4.0](https://github.com/rimzzlabs/lanjut/compare/v0.3.1...v0.4.0) (2026-07-05)
 
 
