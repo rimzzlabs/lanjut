@@ -43,7 +43,7 @@ export function LandingPreviewEditor() {
           title="Lanjut Editor"
           width={1437}
           height={871}
-          className="w-full aspect-video rounded-lg border object-cover object-top"
+          className="w-full aspect-video rounded-lg border object-scale-down object-top"
         />
         <figcaption className="sr-only">
           Lanjut&apos;s ATS Resume Editor

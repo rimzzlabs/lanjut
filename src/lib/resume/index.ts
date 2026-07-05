@@ -15,7 +15,7 @@ export {
   SECTION_REGISTRY,
   type SectionSchema,
 } from "./schema-registry";
-export { filterResumeIndex } from "./search";
+export { filterResumeIndex, nearestResumeById } from "./search";
 export { SEED_RESUME } from "./seed";
 export {
   CURRENT_SCHEMA_VERSION,

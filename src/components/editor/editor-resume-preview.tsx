@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useMemo } from "react";
 import { useResumeStore } from "@/lib/store";
 import { resolveTemplateId } from "@/lib/templates";
+import { EditorResumeNotFound } from "./editor-resume-not-found";
 import { ResumeDocument } from "./resume-document";
 import { resumeToPreview } from "./resume-to-preview";
 
@@ -24,7 +25,7 @@ export function EditorResumePreview() {
     <AnimatePresence mode="wait">
       {openStatus === "missing" ? (
         <PreviewEnter key="missing">
-          <PreviewMessage>Résumé not found.</PreviewMessage>
+          <EditorResumeNotFound />
         </PreviewEnter>
       ) : !open || !preview ? (
         <PreviewFade key="skeleton">
@@ -112,13 +113,5 @@ function PreviewFade(props: { children: ReactNode }) {
 function PreviewSkeleton() {
   return (
     <div className="mx-auto aspect-210/297 w-full max-w-[794px] animate-pulse rounded border bg-white shadow-sm" />
-  );
-}
-
-function PreviewMessage(props: { children: string }) {
-  return (
-    <div className="mx-auto flex aspect-210/297 w-full max-w-[794px] items-center justify-center rounded border bg-white text-sm text-muted-foreground shadow-sm">
-      {props.children}
-    </div>
   );
 }

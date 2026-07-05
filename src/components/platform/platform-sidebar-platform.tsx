@@ -1,6 +1,6 @@
 "use client";
 
-import { HelpCircle, Layout, LayoutTemplate } from "lucide-react";
+import { Layout, LayoutTemplate } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -34,11 +34,12 @@ export function PlatformSidebarPlatform() {
             <LayoutTemplate /> Browse Template
           </SidebarMenuButton>
         </SidebarMenuItem>
-        <SidebarMenuItem>
-          <SidebarMenuButton>
+        {/* wired with react tour */}
+        {/* <SidebarMenuItem>
+          <SidebarMenuButton disabled>
             <HelpCircle /> Guide
           </SidebarMenuButton>
-        </SidebarMenuItem>
+        </SidebarMenuItem> */}
       </SidebarMenu>
     </SidebarGroup>
   );

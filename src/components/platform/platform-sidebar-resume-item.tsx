@@ -1,7 +1,8 @@
+import type { BaseUIEvent } from "@base-ui/react";
 import { FileText, MoreVertical, Pen, Trash } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { type MouseEvent, useState } from "react";
 import type { ResumeIndexEntry } from "@/lib/resume";
 import { Button } from "../ui/button";
 import {
@@ -27,12 +28,18 @@ export function PlatformSidebarResumeItem({
   const { id } = useParams<{ id?: string }>();
   const [open, setOpen] = useState({ rename: false, remove: false });
 
-  const openRenameDialog = () => setOpen((prev) => ({ ...prev, rename: true }));
+  const openRenameDialog = (e: BaseUIEvent<MouseEvent>) => {
+    e.preventDefault();
+    setOpen((prev) => ({ ...prev, rename: true }));
+  };
   const onOpenRename = (next: boolean) => {
     setOpen((prev) => ({ ...prev, rename: next }));
   };
 
-  const openRemoveDialog = () => setOpen((prev) => ({ ...prev, remove: true }));
+  const openRemoveDialog = (e: BaseUIEvent<MouseEvent>) => {
+    e.preventDefault();
+    setOpen((prev) => ({ ...prev, remove: true }));
+  };
   const onOpenRemove = (next: boolean) => {
     setOpen((prev) => ({ ...prev, remove: next }));
   };
@@ -49,7 +56,9 @@ export function PlatformSidebarResumeItem({
 
         <DropdownMenu>
           <DropdownMenuTrigger
-            onClick={(e) => e.preventDefault()}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
             render={
               <Button size="icon-xs" className="ml-auto" variant="ghost" />
             }
@@ -58,9 +67,11 @@ export function PlatformSidebarResumeItem({
             <MoreVertical />
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="start">
+          <DropdownMenuContent align="start" className="w-40">
             <DropdownMenuGroup>
-              <DropdownMenuLabel>Modify {resume.title}</DropdownMenuLabel>
+              <DropdownMenuLabel className="text-pretty">
+                Modify <strong>{resume.title}</strong>
+              </DropdownMenuLabel>
               <DropdownMenuItem onClick={openRenameDialog}>
                 <Pen />
                 Rename

@@ -68,7 +68,7 @@ export function PlatformResumeCreateDialog(
 
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>Create a new resume</DialogTitle>
           <DialogDescription className="text-balance">
