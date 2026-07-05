@@ -3,16 +3,16 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Save, TextInitial, XIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  ResponsiveDialog,
+  ResponsiveDialogClose,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from "@/components/shared/responsive-dialog";
+import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldDescription,
@@ -56,15 +56,15 @@ export function PlatformResumeActionRename(
   });
 
   return (
-    <Dialog open={props.open} onOpenChange={props.onOpenChange}>
-      <DialogContent showCloseButton={false}>
-        <DialogHeader>
-          <DialogTitle>Rename </DialogTitle>
-          <DialogDescription>
+    <ResponsiveDialog open={props.open} onOpenChange={props.onOpenChange}>
+      <ResponsiveDialogContent showCloseButton={false}>
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle>Rename </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription>
             You can rename this resume label to whatever you want. If the value
             of the label is same as before, it won&apos;t be saved.
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         <form onSubmit={onSubmit}>
           <FieldGroup>
@@ -99,17 +99,17 @@ export function PlatformResumeActionRename(
             />
           </FieldGroup>
 
-          <DialogFooter className="mt-6">
-            <DialogClose render={<Button type="button" variant="outline" />}>
+          <ResponsiveDialogFooter className="mt-6">
+            <ResponsiveDialogClose type="button" variant="outline">
               <XIcon /> Cancel
-            </DialogClose>
+            </ResponsiveDialogClose>
 
             <Button type="submit" disabled={form.formState.isSubmitting}>
               <Save /> Save
             </Button>
-          </DialogFooter>
+          </ResponsiveDialogFooter>
         </form>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

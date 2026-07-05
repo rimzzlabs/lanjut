@@ -12,14 +12,12 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "../ui/sidebar";
 
 export function PlatformSidebarOther() {
   const pathname = usePathname();
   const openStatus = useResumeStore((state) => state.openStatus);
   const isDesktop = useMediaQuery(MEDIA_XL);
-  const { setOpenMobile } = useSidebar();
   const { startNextStep } = useNextStep();
 
   const baseTour = tourForPathname(pathname);
@@ -35,10 +33,7 @@ export function PlatformSidebarOther() {
           <SidebarMenuButton
             id="tour-guide"
             disabled={guideDisabled}
-            onClick={() => {
-              setOpenMobile(false);
-              startNextStep(tour);
-            }}
+            onClick={() => startNextStep(tour)}
           >
             <HelpCircle /> Guide
           </SidebarMenuButton>

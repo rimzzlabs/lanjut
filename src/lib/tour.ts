@@ -1,4 +1,4 @@
-import type { Step, Tour } from "nextstepjs";
+import type { Step } from "nextstepjs";
 
 export const LIBRARY_TOUR = "library";
 export const TEMPLATE_TOUR = "template";
@@ -11,10 +11,27 @@ export type TourName =
   | typeof EDITOR_TOUR
   | typeof EDITOR_SHEET_TOUR;
 
+export interface AppStep extends Step {
+  sidebar?: "open" | "closed";
+}
+
+export interface AppTour {
+  tour: TourName;
+  steps: AppStep[];
+}
+
 export function tourForPathname(pathname: string): TourName {
   if (pathname.startsWith("/platform/editor")) return EDITOR_TOUR;
   if (pathname.startsWith("/platform/template")) return TEMPLATE_TOUR;
   return LIBRARY_TOUR;
+}
+
+export function getTourStep(
+  tourName: string | null,
+  stepIndex: number,
+): AppStep | undefined {
+  const tour = TOURS.find((t) => t.tour === tourName);
+  return tour?.steps[stepIndex];
 }
 
 const BASE_STEP = {
@@ -25,26 +42,20 @@ const BASE_STEP = {
   pointerRadius: 16,
 } satisfies Partial<Step>;
 
-export const TOURS: Tour[] = [
+export const TOURS: AppTour[] = [
   {
     tour: LIBRARY_TOUR,
     steps: [
       {
         ...BASE_STEP,
+        sidebar: "closed",
         title: "Welcome to Lanjut",
         content:
           "A free, local-first résumé builder. Everything you write stays in this browser — nothing is ever sent to a server.",
       },
       {
         ...BASE_STEP,
-        selector: "#tour-sidebar-nav",
-        side: "right",
-        title: "Get around",
-        content:
-          "Switch between your dashboard and the template gallery from here.",
-      },
-      {
-        ...BASE_STEP,
+        sidebar: "closed",
         selector: "#tour-create-resume",
         side: "bottom-right",
         title: "Create a résumé",
@@ -53,6 +64,7 @@ export const TOURS: Tour[] = [
       },
       {
         ...BASE_STEP,
+        sidebar: "closed",
         selector: "#tour-search-resume",
         side: "bottom-left",
         title: "Find it later",
@@ -60,6 +72,16 @@ export const TOURS: Tour[] = [
       },
       {
         ...BASE_STEP,
+        sidebar: "open",
+        selector: "#tour-sidebar-nav",
+        side: "right",
+        title: "Get around",
+        content:
+          "Switch between your dashboard and the template gallery from here.",
+      },
+      {
+        ...BASE_STEP,
+        sidebar: "open",
         selector: "#tour-sidebar-resumes",
         side: "right",
         title: "Your résumés",
@@ -68,6 +90,7 @@ export const TOURS: Tour[] = [
       },
       {
         ...BASE_STEP,
+        sidebar: "open",
         selector: "#tour-guide",
         side: "right",
         title: "Replay anytime",
@@ -81,6 +104,7 @@ export const TOURS: Tour[] = [
     steps: [
       {
         ...BASE_STEP,
+        sidebar: "closed",
         selector: "#tour-template-grid > :first-child",
         side: "right",
         title: "Browse templates",
@@ -89,6 +113,7 @@ export const TOURS: Tour[] = [
       },
       {
         ...BASE_STEP,
+        sidebar: "closed",
         selector: "#tour-search-template",
         side: "bottom-left",
         title: "Search",
@@ -96,6 +121,7 @@ export const TOURS: Tour[] = [
       },
       {
         ...BASE_STEP,
+        sidebar: "closed",
         selector: "#tour-sort-template",
         side: "bottom-right",
         title: "Sort",
@@ -137,12 +163,14 @@ export const TOURS: Tour[] = [
     steps: [
       {
         ...BASE_STEP,
+        sidebar: "closed",
         title: "Live preview",
         content:
           "This paper is your résumé exactly as it will export. It updates as you type and is saved to this browser automatically.",
       },
       {
         ...BASE_STEP,
+        sidebar: "closed",
         selector: "#tour-editor-edit",
         side: "top-right",
         title: "Fill in your details",

@@ -11,6 +11,17 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useResumeStore } from "@/lib/store";
 
 interface PlatformResumeActionDeleteProps {
@@ -22,6 +33,7 @@ interface PlatformResumeActionDeleteProps {
 export function PlatformResumeActionDelete(
   props: PlatformResumeActionDeleteProps,
 ) {
+  const isMobile = useIsMobile();
   const removeResume = useResumeStore((state) => state.removeResume);
   const [pending, setPending] = useState(false);
 
@@ -32,17 +44,54 @@ export function PlatformResumeActionDelete(
     props.onOpenChange(false);
   }
 
+  const title = (
+    <>
+      Delete <strong>{props.resume.title}</strong>?
+    </>
+  );
+  const description = (
+    <>
+      This will delete <strong>{props.resume.title}</strong>.{" "}
+      <strong>This action cannot be undone</strong>. Are you sure?
+    </>
+  );
+
+  if (isMobile) {
+    return (
+      <Drawer
+        showSwipeHandle
+        open={props.open}
+        onOpenChange={props.onOpenChange}
+      >
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>{title}</DrawerTitle>
+            <DrawerDescription>{description}</DrawerDescription>
+          </DrawerHeader>
+
+          <DrawerFooter>
+            <Button
+              variant="destructive"
+              onClick={handleDelete}
+              disabled={pending}
+            >
+              Delete
+            </Button>
+            <DrawerClose render={<Button variant="outline" />}>
+              Cancel
+            </DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
   return (
     <AlertDialog open={props.open} onOpenChange={props.onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Delete <strong>{props.resume.title}</strong>?
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            This will delete <strong>{props.resume.title}</strong>.{" "}
-            <strong>This action cannot be undone</strong>. Are you sure?
-          </AlertDialogDescription>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>

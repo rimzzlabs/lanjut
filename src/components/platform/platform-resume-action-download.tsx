@@ -7,12 +7,12 @@ import {
 } from "@/components/editor/download-resume";
 import { getResume } from "@/lib/db";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "../ui/dialog";
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from "../shared/responsive-dialog";
 import { PlatformResumeDownloadForm } from "./platform-resume-download-form";
 
 interface PlatformResumeActionDownloadProps {
@@ -43,15 +43,17 @@ export function PlatformResumeActionDownload(
   }
 
   return (
-    <Dialog open={props.open} onOpenChange={props.onOpenChange}>
-      <DialogContent className="sm:max-w-sm">
-        <DialogHeader>
-          <DialogTitle>Download {props.resume.title}</DialogTitle>
-          <DialogDescription>
+    <ResponsiveDialog open={props.open} onOpenChange={props.onOpenChange}>
+      <ResponsiveDialogContent className="sm:max-w-sm">
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle>
+            Download {props.resume.title}
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription>
             Pick a format and name your file. The export is generated in your
             browser.
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         {missing ? (
           <p className="text-sm text-destructive">
@@ -67,7 +69,7 @@ export function PlatformResumeActionDownload(
             }
           />
         )}
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

@@ -3,11 +3,7 @@
 import { Download } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import {
-  downloadResume,
-  type ExportFormat,
-} from "@/components/editor/download-resume";
-import { useResumeStore } from "@/lib/store";
+import { useResumeDownload } from "@/hooks/use-resume-download";
 import { Button } from "../ui/button";
 import {
   Popover,
@@ -21,22 +17,10 @@ import { PlatformResumeDownloadForm } from "./platform-resume-download-form";
 
 export function PlatformNavbarDownload() {
   const pathname = usePathname();
-  const open = useResumeStore((state) => state.open);
+  const { resume, generating, download } = useResumeDownload();
   const [popoverOpen, setPopoverOpen] = useState(false);
-  const [generating, setGenerating] = useState(false);
 
   if (!pathname.includes("/editor/")) return null;
-
-  const onDownload = async (format: ExportFormat, fileName: string) => {
-    if (!open) return;
-    setGenerating(true);
-    try {
-      await downloadResume(open, format, fileName);
-      setPopoverOpen(false);
-    } finally {
-      setGenerating(false);
-    }
-  };
 
   return (
     <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
@@ -44,7 +28,7 @@ export function PlatformNavbarDownload() {
         render={
           <Button
             id="tour-download"
-            disabled={!open}
+            disabled={!resume}
             className="max-md:hidden"
           />
         }
@@ -60,10 +44,14 @@ export function PlatformNavbarDownload() {
         </PopoverHeader>
 
         <PlatformResumeDownloadForm
-          key={`${open?.id}-${popoverOpen}`}
-          defaultFileName={open?.title ?? ""}
+          key={`${resume?.id}-${popoverOpen}`}
+          defaultFileName={resume?.title ?? ""}
           generating={generating}
-          onSubmit={(format, fileName) => void onDownload(format, fileName)}
+          onSubmit={(format, fileName) =>
+            void download(format, fileName).then(
+              (done) => done && setPopoverOpen(false),
+            )
+          }
         />
       </PopoverContent>
     </Popover>

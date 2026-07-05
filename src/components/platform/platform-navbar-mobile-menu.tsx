@@ -1,14 +1,10 @@
 "use client";
 
-import {
-  Contrast,
-  Download,
-  Laptop2,
-  LayoutList,
-  Moon,
-  Sun,
-} from "lucide-react";
+import { Contrast, Download, Laptop2, Menu, Moon, Sun } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
+import { useState } from "react";
+import { useResumeStore } from "@/lib/store";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -25,16 +21,23 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { PlatformResumeDownloadDrawer } from "./platform-resume-download-drawer";
 
 export function PlatformNavbarMobileMenu() {
+  const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const resume = useResumeStore((state) => state.open);
+  const [downloadOpen, setDownloadOpen] = useState(false);
 
+  const isEditor = pathname.includes("/editor/");
   const onChangeTheme = (next: string) => setTheme(next);
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button size="icon" variant="outline" />}>
-        <LayoutList />
+      <DropdownMenuTrigger
+        render={<Button size="icon" variant="outline" className="lg:hidden" />}
+      >
+        <Menu />
         <span className="sr-only">Menu</span>
       </DropdownMenuTrigger>
 
@@ -69,13 +72,26 @@ export function PlatformNavbarMobileMenu() {
             </DropdownMenuPortal>
           </DropdownMenuSub>
 
-          <DropdownMenuSeparator />
+          {isEditor && (
+            <>
+              <DropdownMenuSeparator className="md:hidden" />
 
-          <DropdownMenuItem>
-            <Download /> Download Resume
-          </DropdownMenuItem>
+              <DropdownMenuItem
+                className="md:hidden"
+                disabled={!resume}
+                onClick={() => setDownloadOpen(true)}
+              >
+                <Download /> Download Résumé
+              </DropdownMenuItem>
+            </>
+          )}
         </DropdownMenuGroup>
       </DropdownMenuContent>
+
+      <PlatformResumeDownloadDrawer
+        open={downloadOpen}
+        onOpenChange={setDownloadOpen}
+      />
     </DropdownMenu>
   );
 }

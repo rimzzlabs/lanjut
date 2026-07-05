@@ -12,16 +12,16 @@ import {
 } from "@/lib/forms/resume";
 import { useResumeStore } from "@/lib/store";
 import { DEFAULT_TEMPLATE_ID, resolveTemplateId } from "@/lib/templates";
-import { Button } from "../ui/button";
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "../ui/dialog";
+  ResponsiveDialog,
+  ResponsiveDialogClose,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from "../shared/responsive-dialog";
+import { Button } from "../ui/button";
 import {
   Field,
   FieldDescription,
@@ -67,14 +67,14 @@ export function PlatformResumeCreateDialog(
   });
 
   return (
-    <Dialog open={props.open} onOpenChange={props.onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>Create a new resume</DialogTitle>
-          <DialogDescription className="text-balance">
+    <ResponsiveDialog open={props.open} onOpenChange={props.onOpenChange}>
+      <ResponsiveDialogContent className="sm:max-w-lg">
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle>Create a new resume</ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="text-balance">
             You can create a new resume. But let&apos;s name your résumé first.
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         <form onSubmit={onSubmit}>
           <FieldGroup>
@@ -117,17 +117,17 @@ export function PlatformResumeCreateDialog(
             </Field>
           </FieldGroup>
 
-          <DialogFooter className="mt-6">
-            <DialogClose render={<Button type="button" variant="outline" />}>
+          <ResponsiveDialogFooter className="mt-6">
+            <ResponsiveDialogClose type="button" variant="outline">
               <XIcon /> Cancel
-            </DialogClose>
+            </ResponsiveDialogClose>
             <Button type="submit" disabled={form.formState.isSubmitting}>
               <Save />
               Save
             </Button>
-          </DialogFooter>
+          </ResponsiveDialogFooter>
         </form>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }
