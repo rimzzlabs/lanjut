@@ -10,8 +10,12 @@ const SIDEBAR_SETTLE_MS = 400;
 
 function prepareStep(tourName: string | null, stepIndex: number) {
   const step = getTourStep(tourName, stepIndex);
-  if (!step?.sidebar) return;
-  useSidebarStore.getState().ensureVisible(step.sidebar === "open");
+  if (!step || (!step.sidebar && !step.scrollTop)) return;
+  if (step.scrollTop) window.scrollTo({ top: 0, behavior: "instant" });
+  if (step.sidebar) {
+    useSidebarStore.getState().ensureVisible(step.sidebar === "open");
+  }
+
   // NextStep re-anchors on window resize; nudge it once the sidebar settles
   // so targets that mount with the mobile sheet get a real position.
   setTimeout(
@@ -44,6 +48,7 @@ export function TourProvider(props: PropsWithChildren) {
         onStepChange={handleStepChange}
         onComplete={handleTourEnd}
         onSkip={handleTourEnd}
+        noInViewScroll
         disableConsoleLogs
       >
         {props.children}

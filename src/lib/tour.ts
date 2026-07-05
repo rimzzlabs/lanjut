@@ -13,6 +13,7 @@ export type TourName =
 
 export interface AppStep extends Step {
   sidebar?: "open" | "closed";
+  scrollTop?: boolean;
 }
 
 export interface AppTour {
@@ -42,19 +43,22 @@ const BASE_STEP = {
   pointerRadius: 16,
 } satisfies Partial<Step>;
 
+// Library and template targets all sit at the top of a window-scrolled page.
+const TOP_STEP = { ...BASE_STEP, scrollTop: true } satisfies Partial<AppStep>;
+
 export const TOURS: AppTour[] = [
   {
     tour: LIBRARY_TOUR,
     steps: [
       {
-        ...BASE_STEP,
+        ...TOP_STEP,
         sidebar: "closed",
         title: "Welcome to Lanjut",
         content:
           "A free, local-first résumé builder. Everything you write stays in this browser — nothing is ever sent to a server.",
       },
       {
-        ...BASE_STEP,
+        ...TOP_STEP,
         sidebar: "closed",
         selector: "#tour-create-resume",
         side: "bottom-right",
@@ -63,7 +67,7 @@ export const TOURS: AppTour[] = [
           "Start a new résumé from here. You can keep as many as you like.",
       },
       {
-        ...BASE_STEP,
+        ...TOP_STEP,
         sidebar: "closed",
         selector: "#tour-search-resume",
         side: "bottom-left",
@@ -71,7 +75,7 @@ export const TOURS: AppTour[] = [
         content: "Search your library by title once it grows.",
       },
       {
-        ...BASE_STEP,
+        ...TOP_STEP,
         sidebar: "open",
         selector: "#tour-sidebar-nav",
         side: "right",
@@ -80,7 +84,7 @@ export const TOURS: AppTour[] = [
           "Switch between your dashboard and the template gallery from here.",
       },
       {
-        ...BASE_STEP,
+        ...TOP_STEP,
         sidebar: "open",
         selector: "#tour-sidebar-resumes",
         side: "right",
@@ -89,7 +93,7 @@ export const TOURS: AppTour[] = [
           "Every résumé you create shows up here — pick one to jump into the editor.",
       },
       {
-        ...BASE_STEP,
+        ...TOP_STEP,
         sidebar: "open",
         selector: "#tour-guide",
         side: "right",
@@ -103,7 +107,7 @@ export const TOURS: AppTour[] = [
     tour: TEMPLATE_TOUR,
     steps: [
       {
-        ...BASE_STEP,
+        ...TOP_STEP,
         sidebar: "closed",
         selector: "#tour-template-grid > :first-child",
         side: "right",
@@ -112,7 +116,7 @@ export const TOURS: AppTour[] = [
           "Templates change presentation only — typography, spacing, accents. The structure stays linear so ATS parsers can always read your résumé.",
       },
       {
-        ...BASE_STEP,
+        ...TOP_STEP,
         sidebar: "closed",
         selector: "#tour-search-template",
         side: "bottom-left",
@@ -120,7 +124,7 @@ export const TOURS: AppTour[] = [
         content: "Look up a template by name.",
       },
       {
-        ...BASE_STEP,
+        ...TOP_STEP,
         sidebar: "closed",
         selector: "#tour-sort-template",
         side: "bottom-right",
