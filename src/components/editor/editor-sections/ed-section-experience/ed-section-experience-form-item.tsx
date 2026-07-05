@@ -62,35 +62,37 @@ export function EditorSectionExperienceFormItem(
           )}
         />
 
-        <Controller
-          control={props.control}
-          name={`experiences.${props.index}.company`}
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>Company</FieldLabel>
-              <Input placeholder="Acme Inc." {...field} id={field.name} />
-              <FieldError errors={[fieldState.error]} />
-            </Field>
-          )}
-        />
+        <div className="grid gap-6 2xl:grid-cols-2 2xl:gap-3">
+          <Controller
+            control={props.control}
+            name={`experiences.${props.index}.company`}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor={field.name}>Company</FieldLabel>
+                <Input placeholder="Acme Inc." {...field} id={field.name} />
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            )}
+          />
 
-        <Controller
-          control={props.control}
-          name={`experiences.${props.index}.website`}
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>Company Website</FieldLabel>
-              <UrlInput
-                id={field.name}
-                value={field.value}
-                placeholder="acme.com"
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-              />
-              <FieldError errors={[fieldState.error]} />
-            </Field>
-          )}
-        />
+          <Controller
+            control={props.control}
+            name={`experiences.${props.index}.website`}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor={field.name}>Company Website</FieldLabel>
+                <UrlInput
+                  id={field.name}
+                  value={field.value}
+                  placeholder="acme.com"
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                />
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            )}
+          />
+        </div>
 
         <DateRangeFields
           control={props.control}

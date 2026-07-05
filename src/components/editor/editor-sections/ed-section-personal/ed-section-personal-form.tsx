@@ -97,38 +97,40 @@ export function EditorSectionPersonalForm() {
             So HR can reach you easily
           </FieldDescription>
           <FieldGroup>
-            <Controller
-              control={form.control}
-              name="email"
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Email address</FieldLabel>
-                  <Input
-                    placeholder="john@acme.inc"
-                    {...field}
-                    id={field.name}
-                  />
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
-            />
-            <Controller
-              control={form.control}
-              name="phone"
-              render={({ field, fieldState }) => (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Phone Number</FieldLabel>
-                  <PhoneNumberInput
-                    id={field.name}
-                    value={field.value}
-                    placeholder="+62812345678"
-                    onChange={field.onChange}
-                    onBlur={field.onBlur}
-                  />
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
-            />
+            <div className="grid gap-6 2xl:grid-cols-2 2xl:gap-3">
+              <Controller
+                control={form.control}
+                name="email"
+                render={({ field, fieldState }) => (
+                  <Field>
+                    <FieldLabel htmlFor={field.name}>Email address</FieldLabel>
+                    <Input
+                      placeholder="john@acme.inc"
+                      {...field}
+                      id={field.name}
+                    />
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                )}
+              />
+              <Controller
+                control={form.control}
+                name="phone"
+                render={({ field, fieldState }) => (
+                  <Field>
+                    <FieldLabel htmlFor={field.name}>Phone Number</FieldLabel>
+                    <PhoneNumberInput
+                      id={field.name}
+                      value={field.value}
+                      placeholder="+62812345678"
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                )}
+              />
+            </div>
             <Controller
               control={form.control}
               name="website"

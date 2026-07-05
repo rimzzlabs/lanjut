@@ -3,6 +3,7 @@
 import { A, F, O, pipe } from "@mobily/ts-belt";
 import { Laptop2, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useIsClient } from "@/hooks/use-is-client";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -21,6 +22,7 @@ const THEMES = [
 ] as const;
 
 export function PlatformNavbarTheme() {
+  const mounted = useIsClient();
   const { theme, setTheme } = useTheme();
 
   const selected = pipe(
@@ -31,11 +33,18 @@ export function PlatformNavbarTheme() {
 
   const onChangeTheme = (next: string) => setTheme(next);
 
+  if (!mounted) return null;
+
   return (
     <DropdownMenu modal={false}>
       <Tooltip>
         <TooltipTrigger
-          render={<DropdownMenuTrigger render={<Button variant="outline" />} />}
+          suppressHydrationWarning
+          render={
+            <DropdownMenuTrigger
+              render={<Button variant="outline" className="max-lg:hidden" />}
+            />
+          }
         >
           <selected.icon /> {selected.label}
         </TooltipTrigger>

@@ -31,17 +31,32 @@ export function EditorSectionLanguagesFormItem(
   props: EditorSectionLanguagesFormItemProps,
 ) {
   return (
-    <div className="flex items-start gap-2">
-      <Controller
-        control={props.control}
-        name={`languages.${props.index}.name`}
-        render={({ field, fieldState }) => (
-          <Field className="flex-1">
-            <Input placeholder="English" {...field} id={field.name} />
-            <FieldError errors={[fieldState.error]} />
-          </Field>
+    <div className="flex flex-col md:flex-row md:items-center gap-2">
+      <div className="flex items-center gap-2">
+        <Controller
+          control={props.control}
+          name={`languages.${props.index}.name`}
+          render={({ field, fieldState }) => (
+            <Field className="flex-1">
+              <Input placeholder="English" {...field} id={field.name} />
+              <FieldError errors={[fieldState.error]} />
+            </Field>
+          )}
+        />
+
+        {props.deletable && (
+          <Button
+            type="button"
+            variant="outline"
+            size="icon-sm"
+            className="md:hidden"
+            onClick={() => props.onRemoveField(props.index)}
+          >
+            <Trash className="size-3.5 stroke-destructive" />
+            <span className="sr-only">Remove language</span>
+          </Button>
         )}
-      />
+      </div>
 
       <Controller
         control={props.control}
@@ -51,7 +66,7 @@ export function EditorSectionLanguagesFormItem(
             value={field.value || null}
             onValueChange={(value) => field.onChange(value)}
           >
-            <SelectTrigger className="w-40">
+            <SelectTrigger className="w-[87.888%] md:w-40">
               <SelectValue placeholder="Proficiency" />
             </SelectTrigger>
             <SelectContent>
@@ -70,6 +85,7 @@ export function EditorSectionLanguagesFormItem(
           type="button"
           variant="outline"
           size="icon-sm"
+          className="max-md:hidden"
           onClick={() => props.onRemoveField(props.index)}
         >
           <Trash className="size-3.5 stroke-destructive" />

@@ -64,33 +64,35 @@ export function EditorSectionEducationFormItem(
           )}
         />
 
-        <Controller
-          control={props.control}
-          name={`educations.${props.index}.degree`}
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>Degree</FieldLabel>
-              <Input
-                placeholder="B.Sc. Computer Science"
-                {...field}
-                id={field.name}
-              />
-              <FieldError errors={[fieldState.error]} />
-            </Field>
-          )}
-        />
+        <div className="grid gap-6 2xl:grid-cols-2 2xl:gap-3">
+          <Controller
+            control={props.control}
+            name={`educations.${props.index}.degree`}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor={field.name}>Degree</FieldLabel>
+                <Input
+                  placeholder="B.Sc. Computer Science"
+                  {...field}
+                  id={field.name}
+                />
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            )}
+          />
 
-        <Controller
-          control={props.control}
-          name={`educations.${props.index}.location`}
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>Location</FieldLabel>
-              <Input placeholder="Boston, MA" {...field} id={field.name} />
-              <FieldError errors={[fieldState.error]} />
-            </Field>
-          )}
-        />
+          <Controller
+            control={props.control}
+            name={`educations.${props.index}.location`}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor={field.name}>Location</FieldLabel>
+                <Input placeholder="Boston, MA" {...field} id={field.name} />
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            )}
+          />
+        </div>
 
         <DateRangeFields
           control={props.control}

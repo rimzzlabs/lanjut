@@ -3,11 +3,13 @@ import type { Step, Tour } from "nextstepjs";
 export const LIBRARY_TOUR = "library";
 export const TEMPLATE_TOUR = "template";
 export const EDITOR_TOUR = "editor";
+export const EDITOR_SHEET_TOUR = "editor-sheet";
 
 export type TourName =
   | typeof LIBRARY_TOUR
   | typeof TEMPLATE_TOUR
-  | typeof EDITOR_TOUR;
+  | typeof EDITOR_TOUR
+  | typeof EDITOR_SHEET_TOUR;
 
 export function tourForPathname(pathname: string): TourName {
   if (pathname.startsWith("/platform/editor")) return EDITOR_TOUR;
@@ -127,6 +129,25 @@ export const TOURS: Tour[] = [
         title: "Download",
         content:
           "Export as PDF, DOCX, or plain text when you are ready to apply.",
+      },
+    ],
+  },
+  {
+    tour: EDITOR_SHEET_TOUR,
+    steps: [
+      {
+        ...BASE_STEP,
+        title: "Live preview",
+        content:
+          "This paper is your résumé exactly as it will export. It updates as you type and is saved to this browser automatically.",
+      },
+      {
+        ...BASE_STEP,
+        selector: "#tour-editor-edit",
+        side: "top-right",
+        title: "Fill in your details",
+        content:
+          "Tap Edit to open the section forms. Each section maps to a fixed, ATS-parseable structure.",
       },
     ],
   },
