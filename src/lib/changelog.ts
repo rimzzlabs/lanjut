@@ -11,16 +11,10 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
-    version: "0.5.0",
-    date: "2026-07-05",
-    highlights: [
-      "New Organization Experience section: showcase volunteer, student, and community roles with dates and highlights, just like work experience. It shows up in every template and export, and your existing résumés get it automatically.",
-    ],
-  },
-  {
     version: "0.4.0",
     date: "2026-07-05",
     highlights: [
+      "New Organization Experience section: showcase volunteer, student, and community roles with dates and highlights, just like work experience. It shows up in every template and export, and your existing résumés get it automatically.",
       "Your saved résumés are safer during app updates: a backup copy is kept on your device before any data-format upgrade, and a résumé the app can't read yet is flagged with a notice instead of disappearing.",
       "A guided tour now walks you through the dashboard, the templates, and the editor on your first visit.",
       "The landing page walks through how Lanjut works, ending with a one-click way to start a new résumé.",
