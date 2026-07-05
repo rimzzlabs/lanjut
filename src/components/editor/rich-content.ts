@@ -86,6 +86,40 @@ function runsText(runs: InlineRun[]): string {
     .trim();
 }
 
+function runMarkdown(run: InlineRun): string {
+  // GFM emphasis markers must hug non-whitespace, so a run's edge whitespace
+  // is shifted outside the markers ("bold " -> "**bold** ").
+  const match = /^(\s*)([\s\S]*?)(\s*)$/.exec(run.text);
+  const [, lead = "", core = "", tail = ""] = match ?? [];
+  if (!core) return run.text;
+  let text = core;
+  if (run.italic) text = `*${text}*`;
+  if (run.bold) text = `**${text}**`;
+  if (run.href) text = `[${text}](${run.href})`;
+  return lead + text + tail;
+}
+
+/**
+ * Serializes rich blocks to GitHub-flavored markdown (used to prefill issue
+ * bodies, which GitHub renders as markdown). Paragraphs become blocks separated
+ * by blank lines; lists keep their `-` / `1.` markers.
+ */
+export function richBlocksToMarkdown(blocks: RichBlock[]): string {
+  const parts: string[] = [];
+  for (const block of blocks) {
+    if (block.type === "paragraph") {
+      parts.push(block.runs.map(runMarkdown).join("").trim());
+      continue;
+    }
+    const lines = block.items.map((item, index) => {
+      const marker = block.ordered ? `${index + 1}.` : "-";
+      return `${marker} ${item.map(runMarkdown).join("").trim()}`;
+    });
+    parts.push(lines.join("\n"));
+  }
+  return parts.join("\n\n");
+}
+
 /**
  * Flattens rich blocks to plain-text lines — one per paragraph, and each list
  * item prefixed with "- " — for the .txt export. Marks are dropped (plain text

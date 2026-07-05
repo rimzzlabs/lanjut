@@ -1,3 +1,4 @@
+export { useBugReportStore } from "./bug-report-store";
 export {
   flushOpenResumePersist,
   registerResumeFlushListeners,

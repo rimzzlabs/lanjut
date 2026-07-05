@@ -1,10 +1,10 @@
 "use client";
 
-import { HelpCircle } from "lucide-react";
+import { Bug, HelpCircle, HelpingHand } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useNextStep } from "nextstepjs";
 import { MEDIA_XL, useMediaQuery } from "@/hooks/use-media-query";
-import { useResumeStore } from "@/lib/store";
+import { useBugReportStore, useResumeStore } from "@/lib/store";
 import { EDITOR_SHEET_TOUR, EDITOR_TOUR, tourForPathname } from "@/lib/tour";
 import {
   SidebarGroup,
@@ -12,13 +12,16 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "../ui/sidebar";
 
 export function PlatformSidebarOther() {
   const pathname = usePathname();
   const openStatus = useResumeStore((state) => state.openStatus);
+  const setBugReportOpen = useBugReportStore((state) => state.setOpen);
   const isDesktop = useMediaQuery(MEDIA_XL);
   const { startNextStep } = useNextStep();
+  const { isMobile, setOpenMobile } = useSidebar();
 
   const baseTour = tourForPathname(pathname);
   const tour =
@@ -38,6 +41,22 @@ export function PlatformSidebarOther() {
             <HelpCircle /> Guide
           </SidebarMenuButton>
         </SidebarMenuItem>
+
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            onClick={() => {
+              if (isMobile) setOpenMobile(false);
+              setBugReportOpen(true);
+            }}
+          >
+            <Bug /> Report a bug
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+        {/* <SidebarMenuItem>
+          <SidebarMenuButton>
+            <HelpingHand /> Feature request
+          </SidebarMenuButton>
+        </SidebarMenuItem> */}
       </SidebarMenu>
     </SidebarGroup>
   );
