@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { PlatformResumeActionDelete } from "../platform-resume-action-delete";
+import { PlatformResumeActionDownload } from "../platform-resume-action-download";
 import { PlatformResumeActionRename } from "../platform-resume-action-rename";
 
 interface PlatformResumeGridItemMenuProps {
@@ -22,7 +23,11 @@ interface PlatformResumeGridItemMenuProps {
 export function PlatformResumeGridItemMenu({
   resume,
 }: PlatformResumeGridItemMenuProps) {
-  const [open, setOpen] = useState({ rename: false, remove: false });
+  const [open, setOpen] = useState({
+    rename: false,
+    remove: false,
+    download: false,
+  });
 
   const openRemoveDialog = () => setOpen((prev) => ({ ...prev, remove: true }));
   const onOpenRemove = (next: boolean) => {
@@ -32,6 +37,12 @@ export function PlatformResumeGridItemMenu({
   const openRenameDialog = () => setOpen((prev) => ({ ...prev, rename: true }));
   const onOpenRename = (next: boolean) => {
     setOpen((prev) => ({ ...prev, rename: next }));
+  };
+
+  const openDownloadDialog = () =>
+    setOpen((prev) => ({ ...prev, download: true }));
+  const onOpenDownload = (next: boolean) => {
+    setOpen((prev) => ({ ...prev, download: next }));
   };
 
   return (
@@ -47,7 +58,7 @@ export function PlatformResumeGridItemMenu({
             <DropdownMenuItem onClick={openRenameDialog}>
               <Pen /> Rename
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={openDownloadDialog}>
               <Download />
               Download
             </DropdownMenuItem>
@@ -72,6 +83,12 @@ export function PlatformResumeGridItemMenu({
         resume={resume}
         open={open.remove}
         onOpenChange={onOpenRemove}
+      />
+
+      <PlatformResumeActionDownload
+        resume={resume}
+        open={open.download}
+        onOpenChange={onOpenDownload}
       />
     </Fragment>
   );
