@@ -23,34 +23,36 @@ export function PlatformEmptyState() {
   if (indexStatus !== "ready" || index.length > 0) return null;
 
   return (
-    <Empty>
-      <EmptyContent>
-        <EmptyHeader>
-          <EmptyMedia variant="icon">
-            <Inbox />
-          </EmptyMedia>
+    <div className="min-h-[calc(100vh-16rem)] grid place-items-center">
+      <Empty className="px-0">
+        <EmptyContent>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <Inbox />
+            </EmptyMedia>
 
-          <EmptyTitle>No résumés yet</EmptyTitle>
-          <EmptyDescription>
-            Nothing is saved on this device yet. Start from a template, or
-            create a blank résumé.
-          </EmptyDescription>
+            <EmptyTitle>No résumés yet</EmptyTitle>
+            <EmptyDescription>
+              Nothing is saved on this device yet. Start from a template, or
+              create a blank résumé.
+            </EmptyDescription>
 
-          <div className="inline-flex items-center gap-2">
-            <Button
-              nativeButton={false}
-              render={<Link href="/platform/template" />}
-            >
-              <Search /> Browse templates
-            </Button>
-            <Button variant="secondary" onClick={() => setOpen(true)}>
-              <FilePlus /> New résumé
-            </Button>
-          </div>
-        </EmptyHeader>
-      </EmptyContent>
+            <div className="inline-flex items-center gap-2">
+              <Button
+                nativeButton={false}
+                render={<Link href="/platform/template" />}
+              >
+                <Search /> Browse templates
+              </Button>
+              <Button variant="secondary" onClick={() => setOpen(true)}>
+                <FilePlus /> New résumé
+              </Button>
+            </div>
+          </EmptyHeader>
+        </EmptyContent>
 
-      <PlatformResumeCreateDialog open={open} onOpenChange={setOpen} />
-    </Empty>
+        <PlatformResumeCreateDialog open={open} onOpenChange={setOpen} />
+      </Empty>
+    </div>
   );
 }
