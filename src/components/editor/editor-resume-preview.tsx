@@ -9,7 +9,7 @@ import { ResumeDocument } from "./resume-document";
 import { resumeToPreview } from "./resume-to-preview";
 
 /**
- * The paper preview, driven by the open résumé in the store. The editor sidebar
+ * The paper preview, driven by the open résumé in the store. `EditorPanels`
  * owns loading the document (`useEditorResume`), so this only reads `open` and
  * projects it through the `resumeToPreview` adapter into the résumé's template.
  *

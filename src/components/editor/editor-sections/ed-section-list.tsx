@@ -2,7 +2,6 @@
 
 import { Accordion } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useEditorResume } from "@/hooks/use-editor-resume";
 import { useResumeStore } from "@/lib/store";
 import { EditorSectionCertifications } from "./ed-section-certifications/ed-section-certifications";
 import { EditorSectionEducation } from "./ed-section-education/ed-section-education";
@@ -15,7 +14,7 @@ import { EditorSectionSummary } from "./ed-section-summary/ed-section-summary";
 const SKELETONS = [1, 2, 3, 4, 5, 6];
 
 export function EditorSectionList() {
-  const openStatus = useEditorResume();
+  const openStatus = useResumeStore((state) => state.openStatus);
   const open = useResumeStore((state) => state.open);
 
   if (!open) {
