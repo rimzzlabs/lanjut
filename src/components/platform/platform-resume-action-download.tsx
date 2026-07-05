@@ -44,7 +44,7 @@ export function PlatformResumeActionDownload(
 
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-sm">
         <DialogHeader>
           <DialogTitle>Download {props.resume.title}</DialogTitle>
           <DialogDescription>

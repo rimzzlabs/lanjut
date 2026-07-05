@@ -1,11 +1,17 @@
 "use client";
 
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Download } from "lucide-react";
-import { useState } from "react";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
 import {
   EXPORT_FORMATS,
   type ExportFormat,
 } from "@/components/editor/download-resume";
+import {
+  type DownloadFileForm,
+  downloadFileSchema,
+} from "@/lib/forms/download";
 import { Button } from "../ui/button";
 import { Field, FieldLabel } from "../ui/field";
 import {
@@ -23,62 +29,80 @@ interface PlatformResumeDownloadFormProps {
   onSubmit: (format: ExportFormat, fileName: string) => void;
 }
 
-/**
- * The format + file name form shared by every download surface (editor navbar
- * popover, library card dialog). Remount via `key` to re-seed the file name.
- */
 export function PlatformResumeDownloadForm(
   props: PlatformResumeDownloadFormProps,
 ) {
-  const [format, setFormat] = useState<ExportFormat>("pdf");
-  const [fileName, setFileName] = useState(props.defaultFileName);
+  const form = useForm<DownloadFileForm>({
+    resolver: standardSchemaResolver(downloadFileSchema),
+    defaultValues: { format: "pdf", fileName: props.defaultFileName },
+    mode: "onChange",
+  });
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      form.setFocus("fileName", { shouldSelect: true });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [form]);
+
+  const onSubmit = form.handleSubmit((values) => {
+    props.onSubmit(values.format, values.fileName);
+  });
+  const format = form.watch("format");
 
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        props.onSubmit(format, fileName);
-      }}
-    >
+    <form onSubmit={onSubmit}>
       <Field>
         <FieldLabel>Format</FieldLabel>
-        <ToggleGroup
-          variant="outline"
-          spacing={0}
-          className="w-full"
-          value={[format]}
-          onValueChange={(value) => {
-            const next = value[0] as ExportFormat | undefined;
-            if (next) setFormat(next);
-          }}
-        >
-          {EXPORT_FORMATS.map((value) => (
-            <ToggleGroupItem key={value} value={value} className="flex-1">
-              {value.toUpperCase()}
-            </ToggleGroupItem>
-          ))}
-        </ToggleGroup>
+        <Controller
+          control={form.control}
+          name="format"
+          render={({ field }) => (
+            <ToggleGroup
+              variant="outline"
+              spacing={0}
+              className="w-full"
+              value={[field.value]}
+              onValueChange={(value) => {
+                const next = value[0] as ExportFormat | undefined;
+                if (next) field.onChange(next);
+              }}
+            >
+              {EXPORT_FORMATS.map((value) => (
+                <ToggleGroupItem key={value} value={value} className="flex-1">
+                  {value.toUpperCase()}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
+          )}
+        />
       </Field>
 
-      <Field className="mt-3">
-        <FieldLabel htmlFor="download-file-name">File name</FieldLabel>
-        <InputGroup>
-          <InputGroupInput
-            id="download-file-name"
-            value={fileName}
-            placeholder="resume"
-            onChange={(event) => setFileName(event.target.value)}
-          />
-          <InputGroupAddon align="inline-end">
-            <InputGroupText>.{format}</InputGroupText>
-          </InputGroupAddon>
-        </InputGroup>
-      </Field>
+      <Controller
+        control={form.control}
+        name="fileName"
+        render={({ field, fieldState }) => (
+          <Field className="mt-3">
+            <FieldLabel htmlFor={field.name}>File name</FieldLabel>
+            <InputGroup>
+              <InputGroupInput
+                aria-invalid={fieldState.invalid}
+                id={field.name}
+                placeholder="Senior Frontend Engineer"
+                {...field}
+              />
+              <InputGroupAddon align="inline-end">
+                <InputGroupText>.{format}</InputGroupText>
+              </InputGroupAddon>
+            </InputGroup>
+          </Field>
+        )}
+      />
 
       <Button
         type="submit"
         className="mt-3 w-full"
-        disabled={props.generating || !fileName.trim()}
+        disabled={props.generating || !form.formState.isValid}
       >
         {props.generating ? <Spinner /> : <Download />} Download
       </Button>
