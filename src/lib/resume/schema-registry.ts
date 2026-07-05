@@ -94,7 +94,7 @@ export const HEADER_SCHEMA: FieldSchema[] = [
 ];
 
 /**
- * The closed, code-defined set of Section types (ADR-0001). Users add, reorder,
+ * The closed, code-defined set of Section types. Users add, reorder,
  * relabel, and fill Sections but can never define new Field structures. Adding a
  * type is a deliberate code change so parseability is answered before it ships.
  */

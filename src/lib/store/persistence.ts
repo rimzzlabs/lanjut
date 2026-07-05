@@ -20,7 +20,7 @@ async function persistOpenNow(): Promise<void> {
 }
 
 /**
- * The single debounced whole-document write (ADR-0003). Edits to the open Resume
+ * The single debounced whole-document write. Edits to the open Resume
  * schedule this; it collapses a burst of edits into one IndexedDB put ~500ms
  * after the last change. Leading is off so the first keystroke doesn't write.
  */

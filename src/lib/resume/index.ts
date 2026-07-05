@@ -6,7 +6,7 @@ export {
   createEmptySection,
   emptyRichTextValue,
 } from "./factory";
-export { needsMigration, runMigrations } from "./migrations";
+export { needsMigration, readSchemaVersion, runMigrations } from "./migrations";
 export {
   type FieldSchema,
   getSectionSchema,

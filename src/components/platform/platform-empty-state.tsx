@@ -18,9 +18,13 @@ import { PlatformResumeCreateDialog } from "./platform-resume-create-dialog";
 export function PlatformEmptyState() {
   const index = useResumeStore((state) => state.index);
   const indexStatus = useResumeStore((state) => state.indexStatus);
+  const unreadableCount = useResumeStore((state) => state.unreadableCount);
   const [open, setOpen] = useState(false);
 
-  if (indexStatus !== "ready" || index.length > 0) return null;
+  // With unreadable documents present, "No résumés yet" would be a lie.
+  if (indexStatus !== "ready" || index.length > 0 || unreadableCount > 0) {
+    return null;
+  }
 
   return (
     <div className="min-h-[calc(100vh-16rem)] grid place-items-center">

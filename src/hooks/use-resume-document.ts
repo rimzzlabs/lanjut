@@ -16,9 +16,11 @@ export function useResumeDocument(id: string, updatedAt: string) {
   // biome-ignore lint/correctness/useExhaustiveDependencies: `updatedAt` is a deliberate re-fetch trigger — the id alone doesn't change when the document is edited.
   useEffect(() => {
     let cancelled = false;
-    void getResume(id).then((document) => {
-      if (!cancelled) setResume(document ?? null);
-    });
+    void getResume(id)
+      .catch(() => undefined)
+      .then((document) => {
+        if (!cancelled) setResume(document ?? null);
+      });
     return () => {
       cancelled = true;
     };

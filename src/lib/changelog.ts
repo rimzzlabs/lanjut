@@ -14,6 +14,7 @@ export const CHANGELOG: ChangelogEntry[] = [
     version: "0.4.0",
     date: "2026-07-05",
     highlights: [
+      "Your saved résumés are safer during app updates: a backup copy is kept on your device before any data-format upgrade, and a résumé the app can't read yet is flagged with a notice instead of disappearing.",
       "A guided tour now walks you through the dashboard, the templates, and the editor on your first visit.",
       "The landing page walks through how Lanjut works, ending with a one-click way to start a new résumé.",
       "Found a bug or missing a feature? Report it from the sidebar — we prefill the GitHub issue for you.",

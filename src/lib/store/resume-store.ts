@@ -19,13 +19,15 @@ import {
   setOpenResumeGetter,
 } from "./persistence";
 
-type IndexStatus = "idle" | "loading" | "ready";
+type IndexStatus = "idle" | "loading" | "ready" | "error";
 type OpenStatus = "idle" | "loading" | "ready" | "missing";
 
 interface ResumeStoreState {
   /** The lightweight Library list, newest first. Not the full document bodies. */
   index: readonly ResumeIndexEntry[];
   indexStatus: IndexStatus;
+  /** Documents that failed migration (see ResumeIndexResult). Still on disk. */
+  unreadableCount: number;
   /** The single fully-hydrated open document, or null when none is open. */
   open: Resume | null;
   openStatus: OpenStatus;
@@ -63,13 +65,22 @@ function syncIndexEntry(
 export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
   index: [],
   indexStatus: "idle",
+  unreadableCount: 0,
   open: null,
   openStatus: "idle",
 
   async hydrateIndex() {
     set({ indexStatus: "loading" });
-    const index = await listResumeIndex();
-    set({ index, indexStatus: "ready" });
+    try {
+      const result = await listResumeIndex();
+      set({
+        index: result.entries,
+        unreadableCount: result.unreadableCount,
+        indexStatus: "ready",
+      });
+    } catch {
+      set({ indexStatus: "error" });
+    }
   },
 
   async createResume(title, templateId) {
@@ -127,7 +138,9 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     if (get().open?.id === id) return;
     await flushOpenResumePersist();
     set({ openStatus: "loading" });
-    const resume = await getResume(id);
+    // A document that fails migration reads as missing rather than leaving the
+    // editor stuck on "loading"; the raw document stays untouched on disk.
+    const resume = await getResume(id).catch(() => undefined);
     if (!resume) {
       set({ open: null, openStatus: "missing" });
       return;

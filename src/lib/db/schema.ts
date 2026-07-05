@@ -6,15 +6,32 @@ const DB_NAME = "lanjut";
 /**
  * IndexedDB structural version. Governs object stores and indexes ONLY — document
  * field-shape changes are versioned separately by the in-document schemaVersion
- * and its migration ladder (see ADR-0002). Bump this only when adding/changing a
- * store or index, never for a field-shape change.
+ * and its migration ladder (see docs/schema-migrations.md). Bump this only when
+ * adding/changing a store or index, never for a field-shape change.
+ *
+ * v2: adds the `backups` store for raw pre-migration document snapshots.
  */
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 /** Keys used in the single-value `app` meta store. */
 export const META_KEYS = {
   lastOpenedResumeId: "lastOpenedResumeId",
 } as const;
+
+/**
+ * A raw pre-migration snapshot of a résumé document, written before the first
+ * read that steps it up the ladder — so a buggy or lossy migration is always
+ * recoverable. Keyed by `${resumeId}@v${schemaVersion}`: one snapshot per
+ * document per ladder crossing.
+ */
+export interface ResumeBackup {
+  resumeId: string;
+  schemaVersion: number;
+  /** ISO 8601. */
+  backedUpAt: string;
+  /** The document exactly as it was persisted, before any migration ran. */
+  doc: unknown;
+}
 
 export interface LanjutDB extends DBSchema {
   resumes: {
@@ -26,6 +43,10 @@ export interface LanjutDB extends DBSchema {
   app: {
     key: string;
     value: string;
+  };
+  backups: {
+    key: string;
+    value: ResumeBackup;
   };
 }
 
@@ -50,6 +71,9 @@ export function getDb(): Promise<IDBPDatabase<LanjutDB>> {
         }
         if (!db.objectStoreNames.contains("app")) {
           db.createObjectStore("app");
+        }
+        if (!db.objectStoreNames.contains("backups")) {
+          db.createObjectStore("backups");
         }
       },
     });

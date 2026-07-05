@@ -5,6 +5,7 @@ import { useResumeSearchQuery } from "@/hooks/use-resume-search";
 import { filterResumeIndex } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 import { PlatformResumeGridEmptySearch } from "./platform-resume-grid-empty-search";
+import { PlatformResumeGridError } from "./platform-resume-grid-error";
 import { PlatformResumeGridItem } from "./platform-resume-grid-item";
 import { PlatformResumeGridItemNew } from "./platform-resume-grid-item-new";
 import { PlatformResumeGridSkeleton } from "./platform-resume-grid-skeleton";
@@ -15,6 +16,7 @@ export function PlatformResumeGrid() {
   const indexStatus = useResumeStore((state) => state.indexStatus);
   const [query] = useResumeSearchQuery();
 
+  if (indexStatus === "error") return <PlatformResumeGridError />;
   if (indexStatus !== "ready") return <PlatformResumeGridSkeleton />;
   if (index.length === 0) return null;
 

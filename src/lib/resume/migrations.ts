@@ -8,7 +8,10 @@ type ResumeDoc = Record<string, unknown>;
 /**
  * A forward-only migration from version N to N+1, keyed by N. Each step is a pure
  * JSON→JSON function over a plain document, testable with fixtures — never runs
- * inside idb's onupgradeneeded (that governs store structure only; see ADR-0002).
+ * inside idb's onupgradeneeded (that governs store structure only; see
+ * docs/schema-migrations.md). Steps must bail out (keep the original data) when a
+ * document does not match the shape they expect — a mis-stamped schemaVersion
+ * must degrade to a no-op, never to blanked or replaced fields.
  */
 type Migration = (doc: ResumeDoc) => ResumeDoc;
 
@@ -58,8 +61,15 @@ const migrateV1toV2: Migration = (doc) => {
   const header = next.header as
     | { fields?: Record<string, unknown> }
     | undefined;
-  if (header) {
-    const hf = header.fields ?? {};
+  // "in" checks guard against a doc already in v2 shape but stamped v1:
+  // remapping from absent v1 keys would blank every field.
+  if (
+    header?.fields &&
+    ("fullName" in header.fields ||
+      "headline" in header.fields ||
+      "location" in header.fields)
+  ) {
+    const hf = header.fields;
     const { firstName, lastName } = splitName(fieldValue(hf.fullName));
     const { city, province, country } = splitLocation(fieldValue(hf.location));
     header.fields = {
@@ -83,6 +93,7 @@ const migrateV1toV2: Migration = (doc) => {
       }
       for (const entry of section.entries as Array<Record<string, unknown>>) {
         const ef = (entry.fields ?? {}) as Record<string, unknown>;
+        if (!("role" in ef) && !("highlights" in ef)) continue;
         entry.fields = {
           title: plainField(fieldValue(ef.role)),
           company: plainField(fieldValue(ef.company)),
@@ -128,8 +139,14 @@ const migrateV2toV3: Migration = (doc) => {
   for (const section of sections as Array<Record<string, unknown>>) {
     if (section.type !== "skills") continue;
     const entries = Array.isArray(section.entries) ? section.entries : [];
-    const body = (entries[0] as { fields?: { body?: { value?: unknown } } })
-      ?.fields?.body?.value;
+    const first = entries[0] as
+      | { fields?: Record<string, unknown> }
+      | undefined;
+    // Entries without a `body` field are not the v2 single-body shape (likely a
+    // mis-stamped doc already at v3+) — replacing them would destroy real skills.
+    if (first?.fields && !("body" in first.fields)) continue;
+    const body = (first?.fields?.body as { value?: unknown } | undefined)
+      ?.value;
 
     const names: string[] = [];
     if (
@@ -230,8 +247,10 @@ const LADDER: Record<number, Migration> = {
   4: migrateV4toV5,
 };
 
-function readVersion(doc: ResumeDoc): number {
-  return G.isNumber(doc.schemaVersion) ? doc.schemaVersion : 0;
+/** The persisted schemaVersion of a raw document; 0 when absent or malformed. */
+export function readSchemaVersion(raw: unknown): number {
+  const doc = raw as ResumeDoc | null | undefined;
+  return G.isNumber(doc?.schemaVersion) ? doc.schemaVersion : 0;
 }
 
 /**
@@ -241,7 +260,7 @@ function readVersion(doc: ResumeDoc): number {
  */
 export function runMigrations(raw: unknown): Resume {
   let doc = raw as ResumeDoc;
-  let version = readVersion(doc);
+  let version = readSchemaVersion(doc);
 
   if (version > CURRENT_SCHEMA_VERSION) {
     throw new Error(
@@ -264,5 +283,5 @@ export function runMigrations(raw: unknown): Resume {
 
 /** Whether a persisted document is below the current version and will be migrated. */
 export function needsMigration(raw: unknown): boolean {
-  return readVersion(raw as ResumeDoc) < CURRENT_SCHEMA_VERSION;
+  return readSchemaVersion(raw) < CURRENT_SCHEMA_VERSION;
 }

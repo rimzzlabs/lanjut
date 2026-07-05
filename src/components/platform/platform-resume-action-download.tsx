@@ -30,7 +30,7 @@ export function PlatformResumeActionDownload(
   async function handleDownload(format: ExportFormat, fileName: string) {
     setGenerating(true);
     try {
-      const document = await getResume(props.resume.id);
+      const document = await getResume(props.resume.id).catch(() => undefined);
       if (!document) {
         setMissing(true);
         return;
