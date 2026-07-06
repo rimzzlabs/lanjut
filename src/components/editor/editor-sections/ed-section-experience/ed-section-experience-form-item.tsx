@@ -18,7 +18,6 @@ import type { ExperienceFormValues } from "../resume-form-adapter";
 
 interface EditorSectionExperienceFormItemProps {
   index: number;
-  deletable: boolean;
   control: Control<ExperienceFormValues>;
   onRemoveField: (index: number) => void;
 }
@@ -45,17 +44,15 @@ export function EditorSectionExperienceFormItem(
               <FieldLabel htmlFor={field.name}>Job Title</FieldLabel>
               <div className="flex items-center gap-2">
                 <Input placeholder="UX Engineer" {...field} id={field.name} />
-                {props.deletable && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon-sm"
-                    onClick={onRemove}
-                  >
-                    <Trash className="size-3.5 stroke-destructive" />
-                    <span className="sr-only">Remove</span>
-                  </Button>
-                )}
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon-sm"
+                  onClick={onRemove}
+                >
+                  <Trash className="size-3.5 stroke-destructive" />
+                  <span className="sr-only">Remove</span>
+                </Button>
               </div>
               <FieldError errors={[fieldState.error]} />
             </Field>

@@ -9,6 +9,7 @@ import {
 } from "@/lib/db";
 import {
   cloneResumeAsNew,
+  createEmptyResume,
   type Resume,
   type ResumeIndexEntry,
   SEED_RESUME,
@@ -22,6 +23,12 @@ import {
 type IndexStatus = "idle" | "loading" | "ready" | "error";
 type OpenStatus = "idle" | "loading" | "ready" | "missing";
 
+interface CreateResumeOptions {
+  templateId?: string;
+  /** Seed the document with the example content; false starts blank. */
+  prefill?: boolean;
+}
+
 interface ResumeStoreState {
   /** The lightweight Library list, newest first. Not the full document bodies. */
   index: readonly ResumeIndexEntry[];
@@ -33,7 +40,10 @@ interface ResumeStoreState {
   openStatus: OpenStatus;
 
   hydrateIndex: () => Promise<void>;
-  createResume: (title: string, templateId?: string) => Promise<Resume>;
+  createResume: (
+    title: string,
+    options?: CreateResumeOptions,
+  ) => Promise<Resume>;
   renameResume: (id: string, title: string) => Promise<void>;
   duplicateResume: (id: string) => Promise<Resume | undefined>;
   removeResume: (id: string) => Promise<void>;
@@ -83,9 +93,12 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     }
   },
 
-  async createResume(title, templateId) {
-    const resume = cloneResumeAsNew(SEED_RESUME, S.trim(title));
-    if (templateId) resume.templateId = templateId;
+  async createResume(title, options) {
+    const resume =
+      options?.prefill === false
+        ? createEmptyResume(S.trim(title))
+        : cloneResumeAsNew(SEED_RESUME, S.trim(title));
+    if (options?.templateId) resume.templateId = options.templateId;
     await putResume(resume);
     await setLastOpenedResumeId(resume.id);
     set((state) => ({

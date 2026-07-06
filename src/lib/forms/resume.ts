@@ -22,3 +22,10 @@ export const resumeTitleSchema = z.object({
 });
 
 export type ResumeTitleForm = z.infer<typeof resumeTitleSchema>;
+
+/** The create dialog adds the pre-fill opt-out on top of the shared title field. */
+export const resumeCreateSchema = resumeTitleSchema.extend({
+  prefill: z.boolean(),
+});
+
+export type ResumeCreateForm = z.infer<typeof resumeCreateSchema>;

@@ -51,7 +51,7 @@ export function createEmptySection(type: SectionType): Section {
     id: nanoid(),
     type,
     title: schema.defaultTitle,
-    entries: [createEmptyEntry(type)],
+    entries: [],
   };
 }
 
@@ -60,9 +60,9 @@ export function createEmptyHeader(): Header {
 }
 
 /**
- * A blank structural document: Header plus one empty Entry per core Section.
- * The primary create path seeds the Seed fixture instead (see seed.ts); this is
- * the deferred "blank resume" option.
+ * A blank structural document: Header plus every core Section with zero
+ * entries. Backs the create dialog's opt-out from pre-filling; the default
+ * create path seeds the Seed fixture instead (see seed.ts).
  */
 export function createEmptyResume(title: string): Resume {
   const now = new Date().toISOString();

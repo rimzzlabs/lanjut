@@ -17,7 +17,6 @@ import type { OrganizationsFormValues } from "../resume-form-adapter";
 
 interface EditorSectionOrganizationsFormItemProps {
   index: number;
-  deletable: boolean;
   control: Control<OrganizationsFormValues>;
   onRemoveField: (index: number) => void;
 }
@@ -48,17 +47,15 @@ export function EditorSectionOrganizationsFormItem(
                   {...field}
                   id={field.name}
                 />
-                {props.deletable && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon-sm"
-                    onClick={onRemove}
-                  >
-                    <Trash className="size-3.5 stroke-destructive" />
-                    <span className="sr-only">Remove</span>
-                  </Button>
-                )}
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon-sm"
+                  onClick={onRemove}
+                >
+                  <Trash className="size-3.5 stroke-destructive" />
+                  <span className="sr-only">Remove</span>
+                </Button>
               </div>
               <FieldError errors={[fieldState.error]} />
             </Field>

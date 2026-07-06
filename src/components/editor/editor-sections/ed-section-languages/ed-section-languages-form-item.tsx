@@ -22,7 +22,6 @@ const LANGUAGE_LEVELS = [
 
 interface EditorSectionLanguagesFormItemProps {
   index: number;
-  deletable: boolean;
   control: Control<LanguagesFormValues>;
   onRemoveField: (index: number) => void;
 }
@@ -44,18 +43,16 @@ export function EditorSectionLanguagesFormItem(
           )}
         />
 
-        {props.deletable && (
-          <Button
-            type="button"
-            variant="outline"
-            size="icon-sm"
-            className="md:hidden"
-            onClick={() => props.onRemoveField(props.index)}
-          >
-            <Trash className="size-3.5 stroke-destructive" />
-            <span className="sr-only">Remove language</span>
-          </Button>
-        )}
+        <Button
+          type="button"
+          variant="outline"
+          size="icon-sm"
+          className="md:hidden"
+          onClick={() => props.onRemoveField(props.index)}
+        >
+          <Trash className="size-3.5 stroke-destructive" />
+          <span className="sr-only">Remove language</span>
+        </Button>
       </div>
 
       <Controller
@@ -80,18 +77,16 @@ export function EditorSectionLanguagesFormItem(
         )}
       />
 
-      {props.deletable && (
-        <Button
-          type="button"
-          variant="outline"
-          size="icon-sm"
-          className="max-md:hidden"
-          onClick={() => props.onRemoveField(props.index)}
-        >
-          <Trash className="size-3.5 stroke-destructive" />
-          <span className="sr-only">Remove language</span>
-        </Button>
-      )}
+      <Button
+        type="button"
+        variant="outline"
+        size="icon-sm"
+        className="max-md:hidden"
+        onClick={() => props.onRemoveField(props.index)}
+      >
+        <Trash className="size-3.5 stroke-destructive" />
+        <span className="sr-only">Remove language</span>
+      </Button>
     </div>
   );
 }

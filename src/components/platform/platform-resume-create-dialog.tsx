@@ -7,8 +7,8 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   RESUME_TITLE_MAX_LENGTH,
-  type ResumeTitleForm,
-  resumeTitleSchema,
+  type ResumeCreateForm,
+  resumeCreateSchema,
 } from "@/lib/forms/resume";
 import { useResumeStore } from "@/lib/store";
 import { DEFAULT_TEMPLATE_ID, resolveTemplateId } from "@/lib/templates";
@@ -22,6 +22,7 @@ import {
   ResponsiveDialogTitle,
 } from "../shared/responsive-dialog";
 import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
 import {
   Field,
   FieldDescription,
@@ -53,15 +54,18 @@ export function PlatformResumeCreateDialog(
   const [templateId, setTemplateId] = useState(() =>
     resolveTemplateId(props.templateId ?? DEFAULT_TEMPLATE_ID),
   );
-  const form = useForm<ResumeTitleForm>({
-    resolver: standardSchemaResolver(resumeTitleSchema),
-    defaultValues: { title: props.initialTitle ?? "" },
+  const form = useForm<ResumeCreateForm>({
+    resolver: standardSchemaResolver(resumeCreateSchema),
+    defaultValues: { title: props.initialTitle ?? "", prefill: true },
     mode: "onChange",
   });
 
   const onSubmit = form.handleSubmit(async (values) => {
-    const resume = await createResume(values.title, templateId);
-    form.reset({ title: "" });
+    const resume = await createResume(values.title, {
+      templateId,
+      prefill: values.prefill,
+    });
+    form.reset({ title: "", prefill: true });
     props.onOpenChange(false);
     router.push(`/platform/editor/${resume.id}`);
   });
@@ -104,6 +108,28 @@ export function PlatformResumeCreateDialog(
                   </FieldDescription>
 
                   <FieldError errors={[fieldState.error]} />
+                </Field>
+              )}
+            />
+
+            <Controller
+              control={form.control}
+              name="prefill"
+              render={({ field }) => (
+                <Field orientation="horizontal">
+                  <Checkbox
+                    id="create-resume-prefill"
+                    name={field.name}
+                    checked={field.value}
+                    onCheckedChange={(checked) =>
+                      field.onChange(checked === true)
+                    }
+                    onBlur={field.onBlur}
+                    ref={field.ref}
+                  />
+                  <FieldLabel htmlFor="create-resume-prefill">
+                    Pre-fill with example content
+                  </FieldLabel>
                 </Field>
               )}
             />

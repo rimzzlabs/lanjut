@@ -21,7 +21,6 @@ const PROFICIENCY_LEVELS = [
 
 interface EditorSectionSkillsFormItemProps {
   index: number;
-  deletable: boolean;
   control: Control<SkillsFormValues>;
   onRemoveField: (index: number) => void;
 }
@@ -43,18 +42,16 @@ export function EditorSectionSkillsFormItem(
           )}
         />
 
-        {props.deletable && (
-          <Button
-            type="button"
-            variant="outline"
-            size="icon-sm"
-            className="md:hidden"
-            onClick={() => props.onRemoveField(props.index)}
-          >
-            <Trash className="size-3.5 stroke-destructive" />
-            <span className="sr-only">Remove skill</span>
-          </Button>
-        )}
+        <Button
+          type="button"
+          variant="outline"
+          size="icon-sm"
+          className="md:hidden"
+          onClick={() => props.onRemoveField(props.index)}
+        >
+          <Trash className="size-3.5 stroke-destructive" />
+          <span className="sr-only">Remove skill</span>
+        </Button>
       </div>
 
       <Controller
@@ -79,18 +76,16 @@ export function EditorSectionSkillsFormItem(
         )}
       />
 
-      {props.deletable && (
-        <Button
-          type="button"
-          variant="outline"
-          size="icon-sm"
-          className="max-md:hidden"
-          onClick={() => props.onRemoveField(props.index)}
-        >
-          <Trash className="size-3.5 stroke-destructive" />
-          <span className="sr-only">Remove skill</span>
-        </Button>
-      )}
+      <Button
+        type="button"
+        variant="outline"
+        size="icon-sm"
+        className="max-md:hidden"
+        onClick={() => props.onRemoveField(props.index)}
+      >
+        <Trash className="size-3.5 stroke-destructive" />
+        <span className="sr-only">Remove skill</span>
+      </Button>
     </div>
   );
 }

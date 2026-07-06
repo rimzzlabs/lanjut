@@ -162,8 +162,14 @@ export function applySummaryValues(
   draft: Resume,
   values: SummaryFormValues,
 ): void {
-  const entry = sectionOfType(draft, "summary")?.entries[0];
-  if (entry) entry.fields.body = rich(values.summary);
+  const section = sectionOfType(draft, "summary");
+  if (!section) return;
+  const entry = section.entries[0];
+  if (entry) {
+    entry.fields.body = rich(values.summary);
+    return;
+  }
+  section.entries = [{ id: nanoid(), fields: { body: rich(values.summary) } }];
 }
 
 // --- Experience (repeating section entries) --------------------------------

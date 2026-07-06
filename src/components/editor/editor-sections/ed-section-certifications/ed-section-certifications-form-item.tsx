@@ -16,7 +16,6 @@ import type { CertificationsFormValues } from "../resume-form-adapter";
 
 interface EditorSectionCertificationsFormItemProps {
   index: number;
-  deletable: boolean;
   control: Control<CertificationsFormValues>;
   onRemoveField: (index: number) => void;
 }
@@ -46,17 +45,15 @@ export function EditorSectionCertificationsFormItem(
                   {...field}
                   id={field.name}
                 />
-                {props.deletable && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon-sm"
-                    onClick={onRemove}
-                  >
-                    <Trash className="size-3.5 stroke-destructive" />
-                    <span className="sr-only">Remove</span>
-                  </Button>
-                )}
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon-sm"
+                  onClick={onRemove}
+                >
+                  <Trash className="size-3.5 stroke-destructive" />
+                  <span className="sr-only">Remove</span>
+                </Button>
               </div>
               <FieldError errors={[fieldState.error]} />
             </Field>

@@ -77,7 +77,6 @@ export function EditorSectionExperienceForm() {
             <EditorSectionExperienceFormItem
               key={field.id}
               control={form.control}
-              deletable={fields.length > 1}
               index={index}
               onRemoveField={remove}
             />
