@@ -11,6 +11,15 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "0.5.0",
+    date: "2026-07-06",
+    highlights: [
+      "Switch templates without leaving the editor: the new Layout tab shows your résumé rendered in every template, and one click applies your pick.",
+      'Start from scratch when you want to: untick "Pre-fill with example content" in the create dialog to begin with a blank document instead of the example résumé.',
+      "Sections can now be emptied completely: every entry has a delete button, and removing the last one simply drops the section from the preview until you add another.",
+    ],
+  },
+  {
     version: "0.4.0",
     date: "2026-07-05",
     highlights: [
