@@ -2,7 +2,6 @@
 
 import { PenLine } from "lucide-react";
 import { Button } from "../ui/button";
-import { ScrollArea } from "../ui/scroll-area";
 import {
   Sheet,
   SheetContent,
@@ -36,9 +35,9 @@ export function EditorSheet() {
           <SheetTitle>Editor</SheetTitle>
           <SheetDescription>Resume Editor</SheetDescription>
         </SheetHeader>
-        <ScrollArea className="min-h-0 flex-1">
+        <div className="min-h-0 flex-1">
           <EditorSidebarContent />
-        </ScrollArea>
+        </div>
       </SheetContent>
     </Sheet>
   );
