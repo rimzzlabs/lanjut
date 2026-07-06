@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0](https://github.com/rimzzlabs/lanjut/compare/v0.4.1...v0.5.0) (2026-07-06)
+
+
+### Features
+
+* add a layout tab to switch templates from the editor ([#54](https://github.com/rimzzlabs/lanjut/issues/54)) ([974bda4](https://github.com/rimzzlabs/lanjut/commit/974bda459b0af37ef56808302e734c79e76f9262))
+* allow creating a blank resume from the create dialog ([#56](https://github.com/rimzzlabs/lanjut/issues/56)) ([5d687ee](https://github.com/rimzzlabs/lanjut/commit/5d687ee51676d6779fefdb6de5bccef6073f25e8))
+
 ## [0.4.1](https://github.com/rimzzlabs/lanjut/compare/v0.4.0...v0.4.1) (2026-07-05)
 
 
