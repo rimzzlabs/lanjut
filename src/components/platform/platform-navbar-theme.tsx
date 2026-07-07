@@ -42,11 +42,7 @@ export function PlatformNavbarTheme() {
       <Tooltip>
         <TooltipTrigger
           suppressHydrationWarning
-          render={
-            <DropdownMenuTrigger
-              render={<Button variant="outline" className="max-lg:hidden" />}
-            />
-          }
+          render={<DropdownMenuTrigger render={<Button variant="outline" />} />}
         >
           <selected.icon /> {t(selected.value)}
         </TooltipTrigger>
