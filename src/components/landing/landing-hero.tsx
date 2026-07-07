@@ -46,7 +46,7 @@ export function LandingHero() {
 
       <motion.h1
         variants={itemVariants}
-        className="mb-4 text-4xl leading-[1.08] font-bold tracking-tight sm:text-5xl md:mb-6 md:text-6xl lg:text-7xl bg-linear-to-r from-primary to-violet-800 bg-clip-text text-transparent"
+        className="mb-4 text-4xl leading-[1.08] font-bold tracking-tight sm:text-5xl md:mb-6 md:text-6xl lg:text-7xl bg-linear-to-r from-primary to-sky-800 bg-clip-text text-transparent dark:from-emerald-200 dark:to-cyan-400"
       >
         <span className="sr-only">Lanjut, ATS Resume builder:</span> Land The
         Interview,
