@@ -3,6 +3,7 @@
 import { Plus } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { SortableList } from "@/components/shared/sortable-list";
 import { Button } from "@/components/ui/button";
 import {
   FieldDescription,
@@ -30,7 +31,7 @@ export function EditorSectionLanguagesForm() {
   const form = useForm<LanguagesFormValues>({
     defaultValues: open ? toLanguagesValues(open) : { languages: [] },
   });
-  const { fields, prepend, remove } = useFieldArray({
+  const { fields, prepend, remove, move } = useFieldArray({
     control: form.control,
     name: "languages",
   });
@@ -41,6 +42,11 @@ export function EditorSectionLanguagesForm() {
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);
+
+  function handleReorder(from: number, to: number) {
+    move(from, to);
+    updateOpen((draft) => applyLanguagesValues(draft, form.getValues()));
+  }
 
   if (!open) return null;
 
@@ -60,16 +66,22 @@ export function EditorSectionLanguagesForm() {
           <Plus /> Add Language
         </Button>
 
-        <FieldGroup className="gap-2">
-          {fields.map((field, index) => (
-            <EditorSectionLanguagesFormItem
-              key={field.id}
-              control={form.control}
-              index={index}
-              onRemoveField={remove}
-            />
-          ))}
-        </FieldGroup>
+        <SortableList
+          items={fields.map((field) => field.id)}
+          onReorder={handleReorder}
+        >
+          <FieldGroup className="gap-2">
+            {fields.map((field, index) => (
+              <EditorSectionLanguagesFormItem
+                key={field.id}
+                id={field.id}
+                control={form.control}
+                index={index}
+                onRemoveField={remove}
+              />
+            ))}
+          </FieldGroup>
+        </SortableList>
       </FieldSet>
     </form>
   );

@@ -3,6 +3,7 @@
 import { Plus } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { SortableList } from "@/components/shared/sortable-list";
 import { Button } from "@/components/ui/button";
 import {
   FieldDescription,
@@ -30,7 +31,7 @@ export function EditorSectionSkillsForm() {
   const form = useForm<SkillsFormValues>({
     defaultValues: open ? toSkillsValues(open) : { skills: [] },
   });
-  const { fields, prepend, remove } = useFieldArray({
+  const { fields, prepend, remove, move } = useFieldArray({
     control: form.control,
     name: "skills",
   });
@@ -41,6 +42,11 @@ export function EditorSectionSkillsForm() {
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);
+
+  function handleReorder(from: number, to: number) {
+    move(from, to);
+    updateOpen((draft) => applySkillsValues(draft, form.getValues()));
+  }
 
   return (
     <form>
@@ -58,16 +64,22 @@ export function EditorSectionSkillsForm() {
           <Plus /> Add Skill
         </Button>
 
-        <FieldGroup className="gap-2">
-          {fields.map((field, index) => (
-            <EditorSectionSkillsFormItem
-              key={field.id}
-              control={form.control}
-              index={index}
-              onRemoveField={remove}
-            />
-          ))}
-        </FieldGroup>
+        <SortableList
+          items={fields.map((field) => field.id)}
+          onReorder={handleReorder}
+        >
+          <FieldGroup className="gap-2">
+            {fields.map((field, index) => (
+              <EditorSectionSkillsFormItem
+                key={field.id}
+                id={field.id}
+                control={form.control}
+                index={index}
+                onRemoveField={remove}
+              />
+            ))}
+          </FieldGroup>
+        </SortableList>
       </FieldSet>
     </form>
   );
