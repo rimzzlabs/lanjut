@@ -15,6 +15,7 @@ export const CHANGELOG: ChangelogEntry[] = [
     date: "2026-07-08",
     highlights: [
       "Reorder your skills and languages: grab the handle next to an entry and drag it into place, or use the keyboard to move it. The new order flows straight into the preview and every export.",
+      "Empty sections now tell you so: instead of a lone button, each section without entries shows a short prompt for what to add.",
     ],
   },
   {
