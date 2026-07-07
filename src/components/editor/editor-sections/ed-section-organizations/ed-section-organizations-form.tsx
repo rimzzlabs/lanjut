@@ -1,8 +1,9 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Plus, Users } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import {
   FieldDescription,
@@ -71,16 +72,24 @@ export function EditorSectionOrganizationsForm() {
           <Plus /> Add Organization Experience
         </Button>
 
-        <FieldGroup className="gap-4">
-          {fields.map((field, index) => (
-            <EditorSectionOrganizationsFormItem
-              key={field.id}
-              control={form.control}
-              index={index}
-              onRemoveField={remove}
-            />
-          ))}
-        </FieldGroup>
+        {fields.length === 0 ? (
+          <EmptyState
+            icon={Users}
+            title="No organizations yet"
+            description="Add volunteer, student, or community roles here."
+          />
+        ) : (
+          <FieldGroup className="gap-4">
+            {fields.map((field, index) => (
+              <EditorSectionOrganizationsFormItem
+                key={field.id}
+                control={form.control}
+                index={index}
+                onRemoveField={remove}
+              />
+            ))}
+          </FieldGroup>
+        )}
       </FieldSet>
     </form>
   );

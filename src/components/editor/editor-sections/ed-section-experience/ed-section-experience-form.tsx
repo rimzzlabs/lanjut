@@ -1,8 +1,9 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Briefcase, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import {
   FieldDescription,
@@ -72,16 +73,24 @@ export function EditorSectionExperienceForm() {
           <Plus /> Add Professional Experience
         </Button>
 
-        <FieldGroup className="gap-4">
-          {fields.map((field, index) => (
-            <EditorSectionExperienceFormItem
-              key={field.id}
-              control={form.control}
-              index={index}
-              onRemoveField={remove}
-            />
-          ))}
-        </FieldGroup>
+        {fields.length === 0 ? (
+          <EmptyState
+            icon={Briefcase}
+            title="No experience yet"
+            description="Add your roles to build out your work history."
+          />
+        ) : (
+          <FieldGroup className="gap-4">
+            {fields.map((field, index) => (
+              <EditorSectionExperienceFormItem
+                key={field.id}
+                control={form.control}
+                index={index}
+                onRemoveField={remove}
+              />
+            ))}
+          </FieldGroup>
+        )}
       </FieldSet>
     </form>
   );

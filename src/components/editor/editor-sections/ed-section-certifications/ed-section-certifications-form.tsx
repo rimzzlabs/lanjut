@@ -1,8 +1,9 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Award, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import {
   FieldDescription,
@@ -60,16 +61,24 @@ export function EditorSectionCertificationsForm() {
           <Plus /> Add Certification
         </Button>
 
-        <FieldGroup className="gap-4">
-          {fields.map((field, index) => (
-            <EditorSectionCertificationsFormItem
-              key={field.id}
-              control={form.control}
-              index={index}
-              onRemoveField={remove}
-            />
-          ))}
-        </FieldGroup>
+        {fields.length === 0 ? (
+          <EmptyState
+            icon={Award}
+            title="No certifications yet"
+            description="Add licenses and certifications you've earned."
+          />
+        ) : (
+          <FieldGroup className="gap-4">
+            {fields.map((field, index) => (
+              <EditorSectionCertificationsFormItem
+                key={field.id}
+                control={form.control}
+                index={index}
+                onRemoveField={remove}
+              />
+            ))}
+          </FieldGroup>
+        )}
       </FieldSet>
     </form>
   );

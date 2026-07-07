@@ -1,8 +1,9 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Languages, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { EmptyState } from "@/components/shared/empty-state";
 import { SortableList } from "@/components/shared/sortable-list";
 import { Button } from "@/components/ui/button";
 import {
@@ -66,22 +67,30 @@ export function EditorSectionLanguagesForm() {
           <Plus /> Add Language
         </Button>
 
-        <SortableList
-          items={fields.map((field) => field.id)}
-          onReorder={handleReorder}
-        >
-          <FieldGroup className="gap-2">
-            {fields.map((field, index) => (
-              <EditorSectionLanguagesFormItem
-                key={field.id}
-                id={field.id}
-                control={form.control}
-                index={index}
-                onRemoveField={remove}
-              />
-            ))}
-          </FieldGroup>
-        </SortableList>
+        {fields.length === 0 ? (
+          <EmptyState
+            icon={Languages}
+            title="No languages yet"
+            description="Add the languages you speak and your proficiency."
+          />
+        ) : (
+          <SortableList
+            items={fields.map((field) => field.id)}
+            onReorder={handleReorder}
+          >
+            <FieldGroup className="gap-2">
+              {fields.map((field, index) => (
+                <EditorSectionLanguagesFormItem
+                  key={field.id}
+                  id={field.id}
+                  control={form.control}
+                  index={index}
+                  onRemoveField={remove}
+                />
+              ))}
+            </FieldGroup>
+          </SortableList>
+        )}
       </FieldSet>
     </form>
   );

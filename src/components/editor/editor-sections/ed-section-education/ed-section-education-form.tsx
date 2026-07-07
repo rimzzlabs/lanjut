@@ -1,8 +1,9 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { GraduationCap, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import {
   FieldDescription,
@@ -68,16 +69,24 @@ export function EditorSectionEducationForm() {
           <Plus /> Add Education
         </Button>
 
-        <FieldGroup className="gap-4">
-          {fields.map((field, index) => (
-            <EditorSectionEducationFormItem
-              key={field.id}
-              control={form.control}
-              index={index}
-              onRemoveField={remove}
-            />
-          ))}
-        </FieldGroup>
+        {fields.length === 0 ? (
+          <EmptyState
+            icon={GraduationCap}
+            title="No education yet"
+            description="Add your degrees, schools, and courses."
+          />
+        ) : (
+          <FieldGroup className="gap-4">
+            {fields.map((field, index) => (
+              <EditorSectionEducationFormItem
+                key={field.id}
+                control={form.control}
+                index={index}
+                onRemoveField={remove}
+              />
+            ))}
+          </FieldGroup>
+        )}
       </FieldSet>
     </form>
   );

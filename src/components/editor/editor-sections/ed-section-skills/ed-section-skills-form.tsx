@@ -1,8 +1,9 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Plus, Zap } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { EmptyState } from "@/components/shared/empty-state";
 import { SortableList } from "@/components/shared/sortable-list";
 import { Button } from "@/components/ui/button";
 import {
@@ -64,22 +65,30 @@ export function EditorSectionSkillsForm() {
           <Plus /> Add Skill
         </Button>
 
-        <SortableList
-          items={fields.map((field) => field.id)}
-          onReorder={handleReorder}
-        >
-          <FieldGroup className="gap-2">
-            {fields.map((field, index) => (
-              <EditorSectionSkillsFormItem
-                key={field.id}
-                id={field.id}
-                control={form.control}
-                index={index}
-                onRemoveField={remove}
-              />
-            ))}
-          </FieldGroup>
-        </SortableList>
+        {fields.length === 0 ? (
+          <EmptyState
+            icon={Zap}
+            title="No skills yet"
+            description="Add the tools and technologies you work with."
+          />
+        ) : (
+          <SortableList
+            items={fields.map((field) => field.id)}
+            onReorder={handleReorder}
+          >
+            <FieldGroup className="gap-2">
+              {fields.map((field, index) => (
+                <EditorSectionSkillsFormItem
+                  key={field.id}
+                  id={field.id}
+                  control={form.control}
+                  index={index}
+                  onRemoveField={remove}
+                />
+              ))}
+            </FieldGroup>
+          </SortableList>
+        )}
       </FieldSet>
     </form>
   );
