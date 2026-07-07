@@ -21,7 +21,7 @@ export function EditorPanels(props: { children: ReactNode }) {
   if (isDesktop) {
     return (
       <div className={PANELS_CONTAINER}>
-        <ResizablePanelGroup>
+        <ResizablePanelGroup style={{ overflow: "hidden" }}>
           <ResizablePanel defaultSize="68%" minSize="40%" maxSize="72%">
             <EditorPreviewScroll>{props.children}</EditorPreviewScroll>
           </ResizablePanel>

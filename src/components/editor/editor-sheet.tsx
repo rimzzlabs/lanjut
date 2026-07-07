@@ -35,7 +35,7 @@ export function EditorSheet() {
           <SheetTitle>Editor</SheetTitle>
           <SheetDescription>Resume Editor</SheetDescription>
         </SheetHeader>
-        <div className="min-h-0 flex-1">
+        <div className="flex-1">
           <EditorSidebarContent />
         </div>
       </SheetContent>

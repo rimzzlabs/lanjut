@@ -43,22 +43,24 @@ export function EditorLayoutTemplateList() {
   }
 
   return (
-    <RadioGroup
-      value={resolveTemplateId(open.templateId)}
-      onValueChange={(value) => {
-        updateOpen((draft) => {
-          draft.templateId = value as string;
-        });
-      }}
-      className="grid grid-cols-2 gap-3 px-4"
-    >
-      {TEMPLATES.map((template) => (
-        <EditorLayoutTemplateItem
-          key={template.id}
-          template={template}
-          preview={preview}
-        />
-      ))}
-    </RadioGroup>
+    <div className="pb-4 lg:pb-6">
+      <RadioGroup
+        value={resolveTemplateId(open.templateId)}
+        onValueChange={(value) => {
+          updateOpen((draft) => {
+            draft.templateId = value as string;
+          });
+        }}
+        className="grid grid-cols-2 gap-3 px-4"
+      >
+        {TEMPLATES.map((template) => (
+          <EditorLayoutTemplateItem
+            key={template.id}
+            template={template}
+            preview={preview}
+          />
+        ))}
+      </RadioGroup>
+    </div>
   );
 }

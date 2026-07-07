@@ -21,8 +21,8 @@ export function EditorSidebarContent() {
   const onTabChange = (next: string) => setTab(next);
 
   return (
-    <div className="flex h-full flex-col py-6">
-      <Tabs className="min-h-0 flex-1" value={tab} onValueChange={onTabChange}>
+    <div className="flex flex-col py-6">
+      <Tabs value={tab} onValueChange={onTabChange}>
         <div className="shrink-0 px-4">
           <TabsList>
             {TABS.map((t) => (
@@ -33,15 +33,23 @@ export function EditorSidebarContent() {
           </TabsList>
         </div>
 
-        <ScrollArea id="tour-editor-sections" className="min-h-0 flex-1">
-          <TabsContent value="editor">
+        <TabsContent value="editor">
+          <ScrollArea
+            id="tour-editor-sections"
+            className="h-[calc(100vh-4.126rem)] xl:h-[calc(100vh-7rem)]"
+          >
             <EditorSectionList />
-          </TabsContent>
+          </ScrollArea>
+        </TabsContent>
 
-          <TabsContent value="layout" className="py-4">
+        <TabsContent value="layout">
+          <ScrollArea
+            id="tour-editor-sections"
+            className="h-[calc(100vh-4.126rem)] xl:h-[calc(100vh-7rem)]"
+          >
             <EditorLayoutTemplateList />
-          </TabsContent>
-        </ScrollArea>
+          </ScrollArea>
+        </TabsContent>
       </Tabs>
     </div>
   );

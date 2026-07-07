@@ -12,6 +12,7 @@ export function EditorSidebar() {
       defaultSize={open ? "36%" : "38%"}
       minSize={open ? "28%" : "30%"}
       maxSize="40%"
+      style={{ maxHeight: "auto", height: "auto", overflow: "hidden" }}
     >
       <EditorSidebarContent />
     </ResizablePanel>
