@@ -11,6 +11,13 @@ export interface ChangelogEntry {
  */
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "0.6.0",
+    date: "2026-07-08",
+    highlights: [
+      "Reorder your skills and languages: grab the handle next to an entry and drag it into place, or use the keyboard to move it. The new order flows straight into the preview and every export.",
+    ],
+  },
+  {
     version: "0.5.0",
     date: "2026-07-06",
     highlights: [
