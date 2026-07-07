@@ -2,34 +2,8 @@
 
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { type ReactNode, useId } from "react";
-
-type Step = {
-  kicker: string;
-  title: string;
-  description: string;
-};
-
-const STEPS: Step[] = [
-  {
-    kicker: "01 · Template",
-    title: "Pick a template",
-    description:
-      "Start from a template you like. Each one only changes typography, spacing, and accents; the structure underneath stays ATS-safe.",
-  },
-  {
-    kicker: "02 · Content",
-    title: "Type it once",
-    description:
-      "Fill structured sections: experience, education, skills. Every change lands in your browser's storage and nowhere else.",
-  },
-  {
-    kicker: "03 · Export",
-    title: "Survive the parser",
-    description:
-      "Download PDF, DOCX, or plain text, and any extractor reads it back in the order you wrote it. That's the whole trick.",
-  },
-];
 
 const terminalVariants: Variants = {
   hidden: {},
@@ -43,6 +17,7 @@ const terminalLineVariants: Variants = {
 
 export function LandingHowItWorks() {
   const reduceMotion = useReducedMotion();
+  const t = useTranslations("howItWorks");
 
   return (
     <section
@@ -57,19 +32,23 @@ export function LandingHowItWorks() {
         className="text-center"
       >
         <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
-          How it works
+          {t("heading")}
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground text-balance sm:text-base">
-          The same résumé at every stage: what you type, what recruiters see,
-          and what the parser reads back.
+          {t("subheading")}
         </p>
       </motion.div>
 
       <div className="mt-10 space-y-10 md:mt-16 md:space-y-0">
-        <HowItWorksRow step={STEPS[0]} reduceMotion={reduceMotion}>
+        <HowItWorksRow
+          kicker={t("step1Kicker")}
+          title={t("step1Title")}
+          description={t("step1Description")}
+          reduceMotion={reduceMotion}
+        >
           <HowItWorksScreenshot
             src="/lanjut-templates.png"
-            alt="The Lanjut template gallery showing the same résumé in different typographic styles"
+            alt={t("screenshotTemplatesAlt")}
             width={2880}
             height={1800}
           />
@@ -77,10 +56,16 @@ export function LandingHowItWorks() {
 
         <HowItWorksArrow flip={false} />
 
-        <HowItWorksRow step={STEPS[1]} flip reduceMotion={reduceMotion}>
+        <HowItWorksRow
+          kicker={t("step2Kicker")}
+          title={t("step2Title")}
+          description={t("step2Description")}
+          flip
+          reduceMotion={reduceMotion}
+        >
           <HowItWorksScreenshot
             src="/lanjut-editor.png"
-            alt="The Lanjut editor with a résumé preview beside structured sections"
+            alt={t("screenshotEditorAlt")}
             width={1437}
             height={871}
           />
@@ -88,7 +73,12 @@ export function LandingHowItWorks() {
 
         <HowItWorksArrow flip />
 
-        <HowItWorksRow step={STEPS[2]} reduceMotion={reduceMotion}>
+        <HowItWorksRow
+          kicker={t("step3Kicker")}
+          title={t("step3Title")}
+          description={t("step3Description")}
+          reduceMotion={reduceMotion}
+        >
           <ArtifactParserOutput />
         </HowItWorksRow>
       </div>
@@ -97,7 +87,9 @@ export function LandingHowItWorks() {
 }
 
 function HowItWorksRow(props: {
-  step: Step;
+  kicker: string;
+  title: string;
+  description: string;
   flip?: boolean;
   reduceMotion: boolean | null;
   children: ReactNode;
@@ -114,13 +106,13 @@ function HowItWorksRow(props: {
         className={props.flip ? "md:order-2 md:col-span-5" : "md:col-span-5"}
       >
         <p className="font-mono text-xs tracking-widest text-primary uppercase">
-          {props.step.kicker}
+          {props.kicker}
         </p>
         <h3 className="mt-2 text-xl font-bold tracking-tight sm:text-2xl">
-          {props.step.title}
+          {props.title}
         </h3>
         <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-          {props.step.description}
+          {props.description}
         </p>
       </div>
       <div
@@ -202,11 +194,13 @@ function HowItWorksArrow(props: { flip: boolean }) {
 }
 
 function ArtifactParserOutput() {
+  const t = useTranslations("howItWorks");
+
   return (
     <div className="overflow-hidden rounded-xl border border-stone-800 bg-stone-950 text-left shadow-md">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-800 px-4 py-2">
         <span className="font-mono text-[11px] text-stone-500">
-          what the ATS reads
+          {t("terminalCaption")}
         </span>
         <div className="flex gap-1.5 font-mono text-[10px] text-stone-400">
           <span className="rounded border border-stone-700 px-1.5 py-0.5">
@@ -250,7 +244,7 @@ function ArtifactParserOutput() {
           variants={terminalLineVariants}
           className="mt-3 text-teal-500"
         >
-          ✓ reading order intact
+          {t("terminalReadingOrder")}
         </motion.p>
       </motion.div>
     </div>

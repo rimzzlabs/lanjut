@@ -1,4 +1,5 @@
 import { Trash } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type Control, Controller } from "react-hook-form";
 import { SortableItem } from "@/components/shared/sortable-list";
 import { Button } from "@/components/ui/button";
@@ -30,8 +31,10 @@ interface EditorSectionSkillsFormItemProps {
 export function EditorSectionSkillsFormItem(
   props: EditorSectionSkillsFormItemProps,
 ) {
+  const t = useTranslations("editor.skills");
+
   return (
-    <SortableItem id={props.id} handleLabel="Reorder skill">
+    <SortableItem id={props.id} handleLabel={t("reorder")}>
       <div className="flex flex-col md:flex-row md:items-center gap-2">
         <div className="flex items-center gap-2">
           <Controller
@@ -39,7 +42,11 @@ export function EditorSectionSkillsFormItem(
             name={`skills.${props.index}.name`}
             render={({ field, fieldState }) => (
               <Field className="flex-1">
-                <Input placeholder="TypeScript" {...field} id={field.name} />
+                <Input
+                  placeholder={t("namePlaceholder")}
+                  {...field}
+                  id={field.name}
+                />
                 <FieldError errors={[fieldState.error]} />
               </Field>
             )}
@@ -53,7 +60,7 @@ export function EditorSectionSkillsFormItem(
             onClick={() => props.onRemoveField(props.index)}
           >
             <Trash className="size-3.5 stroke-destructive" />
-            <span className="sr-only">Remove skill</span>
+            <span className="sr-only">{t("remove")}</span>
           </Button>
         </div>
 
@@ -66,7 +73,7 @@ export function EditorSectionSkillsFormItem(
               onValueChange={(value) => field.onChange(value)}
             >
               <SelectTrigger className="w-[87.888%] md:w-36">
-                <SelectValue placeholder="Proficiency" />
+                <SelectValue placeholder={t("proficiency")} />
               </SelectTrigger>
               <SelectContent>
                 {PROFICIENCY_LEVELS.map((level) => (
@@ -87,7 +94,7 @@ export function EditorSectionSkillsFormItem(
           onClick={() => props.onRemoveField(props.index)}
         >
           <Trash className="size-3.5 stroke-destructive" />
-          <span className="sr-only">Remove skill</span>
+          <span className="sr-only">{t("remove")}</span>
         </Button>
       </div>
     </SortableItem>

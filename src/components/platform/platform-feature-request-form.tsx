@@ -2,11 +2,14 @@
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { ExternalLink, XIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useValidationTranslator } from "@/hooks/use-validation-translator";
 import {
+  createFeatureRequestSchema,
   FEATURE_LAYERS,
   type FeatureRequestForm,
-  featureRequestSchema,
 } from "@/lib/forms/feature-request";
 import { buildFeatureRequestUrl, issueTitle } from "@/lib/github-issue";
 import { emptyRichTextValue } from "@/lib/resume";
@@ -45,8 +48,12 @@ interface PlatformFeatureRequestFormProps {
 export function PlatformFeatureRequestForm(
   props: PlatformFeatureRequestFormProps,
 ) {
+  const t = useTranslations("forms.feature");
+  const tc = useTranslations("forms.common");
+  const tv = useValidationTranslator();
+  const schema = useMemo(() => createFeatureRequestSchema(tv), [tv]);
   const form = useForm<FeatureRequestForm>({
-    resolver: standardSchemaResolver(featureRequestSchema),
+    resolver: standardSchemaResolver(schema),
     defaultValues: {
       problem: emptyRichTextValue(),
       proposal: emptyRichTextValue(),
@@ -77,20 +84,17 @@ export function PlatformFeatureRequestForm(
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="feature-request-problem">
-                What problem does this solve?
+                {t("problem")}
               </FieldLabel>
               <RichTextEditor
                 id="feature-request-problem"
                 features={PROSE_FEATURES}
-                placeholder="When I tailor my résumé for different roles, I have to..."
+                placeholder={t("problemPlaceholder")}
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
               />
-              <FieldDescription>
-                Describe the situation where you needed this, rather than the
-                solution itself.
-              </FieldDescription>
+              <FieldDescription>{t("problemDescription")}</FieldDescription>
               <FieldError errors={[fieldState.error]} />
             </Field>
           )}
@@ -102,12 +106,12 @@ export function PlatformFeatureRequestForm(
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="feature-request-proposal">
-                Proposed solution
+                {t("proposal")}
               </FieldLabel>
               <RichTextEditor
                 id="feature-request-proposal"
                 features={PROSE_FEATURES}
-                placeholder="How do you imagine it working?"
+                placeholder={t("proposalPlaceholder")}
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
@@ -122,13 +126,13 @@ export function PlatformFeatureRequestForm(
           name="layer"
           render={({ field }) => (
             <Field>
-              <FieldLabel>Which layer does this touch?</FieldLabel>
+              <FieldLabel>{t("layer")}</FieldLabel>
               <Select
                 value={field.value}
                 onValueChange={(value) => field.onChange(value)}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Layer" />
+                  <SelectValue placeholder={t("layerPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent
                   alignItemWithTrigger={false}
@@ -151,11 +155,11 @@ export function PlatformFeatureRequestForm(
 
       <ResponsiveDialogFooter className="mt-6">
         <ResponsiveDialogClose type="button" variant="outline">
-          <XIcon /> Cancel
+          <XIcon /> {tc("cancel")}
         </ResponsiveDialogClose>
         <Button type="submit">
           <ExternalLink />
-          Open GitHub issue
+          {tc("openIssue")}
         </Button>
       </ResponsiveDialogFooter>
     </form>

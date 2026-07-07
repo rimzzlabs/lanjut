@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Accordion } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useResumeStore } from "@/lib/store";
@@ -17,12 +18,13 @@ const SKELETONS = [1, 2, 3, 4, 5, 6, 7];
 export function EditorSectionList() {
   const openStatus = useResumeStore((state) => state.openStatus);
   const open = useResumeStore((state) => state.open);
+  const t = useTranslations("editor.chrome");
 
   if (!open) {
     if (openStatus === "missing") {
       return (
         <p className="px-4 py-8 text-sm text-muted-foreground">
-          "Résumé not found."
+          {t("notFound")}
         </p>
       );
     }

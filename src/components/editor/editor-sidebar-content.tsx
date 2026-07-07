@@ -1,18 +1,21 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { parseAsString, useQueryState } from "nuqs";
 import { ScrollArea } from "../ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { EditorDocumentLanguage } from "./editor-document-language";
 import { EditorLayoutTemplateList } from "./editor-layout/ed-layout-template-list";
 import { EditorSectionList } from "./editor-sections/ed-section-list";
 
 const TABS = [
-  { value: "editor", label: "Editor" },
-  { value: "layout", label: "Layout" },
-  // { value: "latex", label: "LaTex", disabled: true },
+  { value: "editor", labelKey: "tabEditor" },
+  { value: "layout", labelKey: "tabLayout" },
+  // { value: "latex", labelKey: "tabLatex", disabled: true },
 ];
 
 export function EditorSidebarContent() {
+  const t = useTranslations("editor.chrome");
   const [tab, setTab] = useQueryState(
     "editor-tab",
     parseAsString.withDefault(TABS[0].value),
@@ -22,12 +25,14 @@ export function EditorSidebarContent() {
 
   return (
     <div className="flex flex-col py-6">
+      <EditorDocumentLanguage />
+
       <Tabs value={tab} onValueChange={onTabChange}>
         <div className="shrink-0 px-4">
           <TabsList>
-            {TABS.map((t) => (
-              <TabsTrigger key={t.value} value={t.value}>
-                {t.label}
+            {TABS.map((item) => (
+              <TabsTrigger key={item.value} value={item.value}>
+                {t(item.labelKey)}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -36,7 +41,7 @@ export function EditorSidebarContent() {
         <TabsContent value="editor">
           <ScrollArea
             id="tour-editor-sections"
-            className="h-[calc(100vh-4.126rem)] xl:h-[calc(100vh-7rem)]"
+            className="h-[calc(100vh-7rem)] xl:h-[calc(100vh-10.25rem)]"
           >
             <EditorSectionList />
           </ScrollArea>
@@ -45,7 +50,7 @@ export function EditorSidebarContent() {
         <TabsContent value="layout">
           <ScrollArea
             id="tour-editor-sections"
-            className="h-[calc(100vh-4.126rem)] xl:h-[calc(100vh-7rem)]"
+            className="h-[calc(100vh-7rem)] xl:h-[calc(100vh-10.25rem)]"
           >
             <EditorLayoutTemplateList />
           </ScrollArea>

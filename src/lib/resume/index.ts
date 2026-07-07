@@ -6,6 +6,7 @@ export {
   createEmptySection,
   emptyRichTextValue,
 } from "./factory";
+export { RESUME_LABELS, RESUME_LANGUAGES } from "./labels";
 export { needsMigration, readSchemaVersion, runMigrations } from "./migrations";
 export {
   type FieldSchema,
@@ -27,6 +28,7 @@ export {
   type PlainField,
   type Resume,
   type ResumeIndexEntry,
+  type ResumeLanguage,
   type RichTextField,
   type Section,
   type SectionType,

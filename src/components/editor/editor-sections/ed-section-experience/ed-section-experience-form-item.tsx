@@ -1,4 +1,5 @@
 import { Trash } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type Control, Controller } from "react-hook-form";
 import { UrlInput } from "@/components/shared/url-input";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ interface EditorSectionExperienceFormItemProps {
 export function EditorSectionExperienceFormItem(
   props: EditorSectionExperienceFormItemProps,
 ) {
+  const t = useTranslations("editor.experience");
   const onRemove = () => {
     props.onRemoveField(props.index);
   };
@@ -32,7 +34,7 @@ export function EditorSectionExperienceFormItem(
   return (
     <FieldSet className="not-last-of-type:pb-4 not-last-of-type:border-b">
       <FieldLegend className="sr-only" variant="label">
-        Experience {props.index + 1}
+        {t("itemLegend", { index: props.index + 1 })}
       </FieldLegend>
 
       <FieldGroup className="gap-3">
@@ -41,9 +43,13 @@ export function EditorSectionExperienceFormItem(
           name={`experiences.${props.index}.title`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>Job Title</FieldLabel>
+              <FieldLabel htmlFor={field.name}>{t("jobTitle")}</FieldLabel>
               <div className="flex items-center gap-2">
-                <Input placeholder="UX Engineer" {...field} id={field.name} />
+                <Input
+                  placeholder={t("jobTitlePlaceholder")}
+                  {...field}
+                  id={field.name}
+                />
                 <Button
                   type="button"
                   variant="outline"
@@ -51,7 +57,7 @@ export function EditorSectionExperienceFormItem(
                   onClick={onRemove}
                 >
                   <Trash className="size-3.5 stroke-destructive" />
-                  <span className="sr-only">Remove</span>
+                  <span className="sr-only">{t("remove")}</span>
                 </Button>
               </div>
               <FieldError errors={[fieldState.error]} />
@@ -65,8 +71,12 @@ export function EditorSectionExperienceFormItem(
             name={`experiences.${props.index}.company`}
             render={({ field, fieldState }) => (
               <Field>
-                <FieldLabel htmlFor={field.name}>Company</FieldLabel>
-                <Input placeholder="Acme Inc." {...field} id={field.name} />
+                <FieldLabel htmlFor={field.name}>{t("company")}</FieldLabel>
+                <Input
+                  placeholder={t("companyPlaceholder")}
+                  {...field}
+                  id={field.name}
+                />
                 <FieldError errors={[fieldState.error]} />
               </Field>
             )}
@@ -77,11 +87,13 @@ export function EditorSectionExperienceFormItem(
             name={`experiences.${props.index}.website`}
             render={({ field, fieldState }) => (
               <Field>
-                <FieldLabel htmlFor={field.name}>Company Website</FieldLabel>
+                <FieldLabel htmlFor={field.name}>
+                  {t("companyWebsite")}
+                </FieldLabel>
                 <UrlInput
                   id={field.name}
                   value={field.value}
-                  placeholder="acme.com"
+                  placeholder={t("companyWebsitePlaceholder")}
                   onChange={field.onChange}
                   onBlur={field.onBlur}
                 />
@@ -95,7 +107,7 @@ export function EditorSectionExperienceFormItem(
           control={props.control}
           startName={`experiences.${props.index}.startDate`}
           endName={`experiences.${props.index}.endDate`}
-          presentLabel="I currently work here"
+          presentLabel={t("present")}
         />
 
         <Controller
@@ -103,12 +115,12 @@ export function EditorSectionExperienceFormItem(
           name={`experiences.${props.index}.description`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>Summary</FieldLabel>
+              <FieldLabel htmlFor={field.name}>{t("summary")}</FieldLabel>
               <RichTextEditor
                 id={field.name}
                 value={field.value}
                 features={PROSE_FEATURES}
-                placeholder="Creating real-time application that...."
+                placeholder={t("summaryPlaceholder")}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
               />

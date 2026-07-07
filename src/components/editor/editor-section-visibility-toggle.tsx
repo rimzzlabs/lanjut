@@ -1,6 +1,7 @@
 "use client";
 
 import { Eye, EyeOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface EditorSectionVisibilityToggleProps {
   hidden: boolean;
@@ -11,6 +12,7 @@ export function EditorSectionVisibilityToggle({
   hidden,
   onToggle,
 }: EditorSectionVisibilityToggleProps) {
+  const t = useTranslations("editor.chrome");
   const Icon = hidden ? EyeOff : Eye;
   return (
     // biome-ignore lint/a11y/useKeyWithClickEvents: ignore
@@ -21,7 +23,7 @@ export function EditorSectionVisibilityToggle({
       aria-roledescription="Toggle"
       onClick={onToggle}
       aria-pressed={hidden}
-      aria-label={hidden ? "Show section" : "Hide section"}
+      aria-label={hidden ? t("showSection") : t("hideSection")}
       className="rounded p-1 text-muted-foreground/70 transition-colors hover:text-foreground"
     >
       <Icon className="size-5" />

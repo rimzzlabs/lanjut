@@ -1,9 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Separator } from "../ui/separator";
 import { SidebarHeader, SidebarTrigger } from "../ui/sidebar";
 
 export function PlatformSidebarHeader() {
+  const t = useTranslations("platform.sidebar");
+
   return (
     <SidebarHeader>
       <div className="flex items-center gap-2">
@@ -13,12 +16,12 @@ export function PlatformSidebarHeader() {
 
         <Link
           href="/"
-          aria-label="Lanjut - Home Page"
+          aria-label={t("home")}
           className="flex items-center gap-2"
         >
           <Image
             src="/favicon-512x512.png"
-            alt="Lanjut Logo"
+            alt={t("logoAlt")}
             width={280}
             height={68}
             className="size-7"
@@ -26,7 +29,7 @@ export function PlatformSidebarHeader() {
           <div className="flex flex-col">
             <span className="text-sm font-medium">Lanjut</span>
             <span className="text-xs text-muted-foreground">
-              <span className="sr-only">Local-First</span> ATS Resume Builder
+              <span className="sr-only">{t("localFirst")}</span> {t("tagline")}
             </span>
           </div>
         </Link>

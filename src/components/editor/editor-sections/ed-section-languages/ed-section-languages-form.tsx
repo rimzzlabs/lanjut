@@ -1,6 +1,7 @@
 "use client";
 
 import { Languages, Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -28,6 +29,8 @@ function emptyLanguage(): LanguageItemValues {
 export function EditorSectionLanguagesForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
+  const t = useTranslations("editor.languages");
+  const tc = useTranslations("editor.common");
 
   const form = useForm<LanguagesFormValues>({
     defaultValues: open ? toLanguagesValues(open) : { languages: [] },
@@ -54,9 +57,9 @@ export function EditorSectionLanguagesForm() {
   return (
     <form>
       <FieldSet className="gap-3">
-        <FieldLegend className="sr-only">Languages</FieldLegend>
+        <FieldLegend className="sr-only">{t("legend")}</FieldLegend>
         <FieldDescription className="sr-only">
-          Languages you speak
+          {t("legendDesc")}
         </FieldDescription>
         <Button
           type="button"
@@ -64,14 +67,15 @@ export function EditorSectionLanguagesForm() {
           variant="outline"
           className="w-full"
         >
-          <Plus /> Add Language
+          <Plus /> <span className="sr-only">{tc("add")} </span>
+          {t("add")}
         </Button>
 
         {fields.length === 0 ? (
           <EmptyState
             icon={Languages}
-            title="No languages yet"
-            description="Add the languages you speak and your proficiency."
+            title={t("emptyTitle")}
+            description={t("emptyDescription")}
           />
         ) : (
           <SortableList

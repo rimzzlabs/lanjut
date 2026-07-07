@@ -1,8 +1,8 @@
 "use client";
 
 import { Layout, LayoutTemplate } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -13,17 +13,18 @@ import {
 
 export function PlatformSidebarPlatform() {
   const pathname = usePathname();
+  const t = useTranslations("platform.sidebar");
 
   return (
     <SidebarGroup id="tour-sidebar-nav">
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>{t("platform")}</SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton
             isActive={pathname === "/platform"}
             render={<Link href="/platform" />}
           >
-            <Layout /> Dashboard
+            <Layout /> {t("dashboard")}
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem>
@@ -31,7 +32,7 @@ export function PlatformSidebarPlatform() {
             isActive={pathname.endsWith("/template")}
             render={<Link href="/platform/template" />}
           >
-            <LayoutTemplate /> Browse Template
+            <LayoutTemplate /> {t("browseTemplate")}
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>

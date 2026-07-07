@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,16 +12,17 @@ import {
 
 export function PlatformNavbarBreadcrumb() {
   const pathname = usePathname();
+  const t = useTranslations("platform.breadcrumb");
 
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
           {pathname.endsWith("/platform") ? (
-            <BreadcrumbPage>Platform</BreadcrumbPage>
+            <BreadcrumbPage>{t("platform")}</BreadcrumbPage>
           ) : (
             <BreadcrumbLink render={<Link href="/platform" />}>
-              Platform
+              {t("platform")}
             </BreadcrumbLink>
           )}
         </BreadcrumbItem>
@@ -30,7 +32,7 @@ export function PlatformNavbarBreadcrumb() {
             <BreadcrumbSeparator />
 
             <BreadcrumbItem>
-              <BreadcrumbPage>Editor</BreadcrumbPage>
+              <BreadcrumbPage>{t("editor")}</BreadcrumbPage>
             </BreadcrumbItem>
           </>
         )}
@@ -40,7 +42,7 @@ export function PlatformNavbarBreadcrumb() {
             <BreadcrumbSeparator />
 
             <BreadcrumbItem>
-              <BreadcrumbPage>Browse Templates</BreadcrumbPage>
+              <BreadcrumbPage>{t("browseTemplates")}</BreadcrumbPage>
             </BreadcrumbItem>
           </>
         )}

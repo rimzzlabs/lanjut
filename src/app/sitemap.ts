@@ -7,6 +7,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: SITE.url,
       changeFrequency: "monthly",
       priority: 1,
+      alternates: {
+        languages: {
+          en: SITE.url,
+          id: `${SITE.url}/id`,
+        },
+      },
     },
   ];
 }

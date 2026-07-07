@@ -1,3 +1,4 @@
+import { RESUME_LABELS } from "@/lib/resume/labels";
 import type {
   CertificateItemView,
   EducationItemView,
@@ -89,6 +90,7 @@ function hasLanguage(item: LanguageItemView): boolean {
  * filled in. Empty repeated entries are dropped before a section is weighed.
  */
 export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
+  const labels = RESUME_LABELS[resume.language];
   const blocks: ResumeBlock[] = [
     {
       id: "header",
@@ -100,7 +102,7 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
   ];
 
   if (!isRichEmpty(resume.summary)) {
-    blocks.push(heading("summary-heading", "Summary"), {
+    blocks.push(heading("summary-heading", labels.summary), {
       id: "summary-body",
       kind: "summary",
       body: resume.summary,
@@ -112,7 +114,7 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
   const experience = resume.experience.filter(hasExperience);
   if (experience.length > 0) {
     blocks.push(
-      heading("experience-heading", "Experience"),
+      heading("experience-heading", labels.experience),
       ...experience.map(
         (item, index): ResumeBlock => ({
           id: item.id,
@@ -130,7 +132,7 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
   const organizations = resume.organizations.filter(hasExperience);
   if (organizations.length > 0) {
     blocks.push(
-      heading("organizations-heading", "Organizations"),
+      heading("organizations-heading", labels.organizations),
       ...organizations.map(
         (item, index): ResumeBlock => ({
           id: item.id,
@@ -146,7 +148,7 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
   const education = resume.education.filter(hasEducation);
   if (education.length > 0) {
     blocks.push(
-      heading("education-heading", "Education"),
+      heading("education-heading", labels.education),
       ...education.map(
         (item, index): ResumeBlock => ({
           id: item.id,
@@ -162,7 +164,7 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
   const certificates = resume.certificates.filter(hasCertificate);
   if (certificates.length > 0) {
     blocks.push(
-      heading("certificates-heading", "Certificates"),
+      heading("certificates-heading", labels.certificates),
       ...certificates.map(
         (item, index): ResumeBlock => ({
           id: item.id,
@@ -177,7 +179,7 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
 
   const skills = resume.skills.filter(hasSkill);
   if (skills.length > 0) {
-    blocks.push(heading("skills-heading", "Skills"), {
+    blocks.push(heading("skills-heading", labels.skills), {
       id: "skills-body",
       kind: "skills",
       items: skills,
@@ -188,7 +190,7 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
 
   const languages = resume.languages.filter(hasLanguage);
   if (languages.length > 0) {
-    blocks.push(heading("languages-heading", "Languages"), {
+    blocks.push(heading("languages-heading", labels.languages), {
       id: "languages-body",
       kind: "languages",
       items: languages,

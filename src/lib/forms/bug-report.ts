@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { requiredRichTextDoc, richTextDoc } from "./rich-text";
 
+type Translator = (key: string) => string;
+
 /** Must match the `area` dropdown options in .github/ISSUE_TEMPLATE/bug-report.yml. */
 export const BUG_AREAS = [
   "Editor",
@@ -12,10 +14,12 @@ export const BUG_AREAS = [
   "Other",
 ] as const;
 
-export const bugReportSchema = z.object({
-  whatHappened: requiredRichTextDoc("Describe what went wrong."),
-  steps: richTextDoc,
-  area: z.enum(BUG_AREAS),
-});
+export function createBugReportSchema(t: Translator) {
+  return z.object({
+    whatHappened: requiredRichTextDoc(t("bugWhatHappened")),
+    steps: richTextDoc,
+    area: z.enum(BUG_AREAS),
+  });
+}
 
-export type BugReportForm = z.infer<typeof bugReportSchema>;
+export type BugReportForm = z.infer<ReturnType<typeof createBugReportSchema>>;

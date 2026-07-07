@@ -12,6 +12,7 @@ import {
   createEmptyResume,
   type Resume,
   type ResumeIndexEntry,
+  type ResumeLanguage,
   SEED_RESUME,
 } from "@/lib/resume";
 import {
@@ -27,6 +28,8 @@ interface CreateResumeOptions {
   templateId?: string;
   /** Seed the document with the example content; false starts blank. */
   prefill?: boolean;
+  /** Document label language; defaults to English when omitted. */
+  language?: ResumeLanguage;
 }
 
 interface ResumeStoreState {
@@ -99,6 +102,7 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
         ? createEmptyResume(S.trim(title))
         : cloneResumeAsNew(SEED_RESUME, S.trim(title));
     if (options?.templateId) resume.templateId = options.templateId;
+    if (options?.language) resume.language = options.language;
     await putResume(resume);
     await setLastOpenedResumeId(resume.id);
     set((state) => ({

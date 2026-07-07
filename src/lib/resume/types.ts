@@ -5,7 +5,10 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 6;
+export const CURRENT_SCHEMA_VERSION = 7;
+
+/** The language the rendered document's fixed labels (headings, dates) use. */
+export type ResumeLanguage = "en" | "id";
 
 export type FieldKind = "plain" | "richtext";
 
@@ -79,6 +82,12 @@ export interface Resume {
    * back to the default template for unknown ids.
    */
   templateId: string;
+  /**
+   * Presentation-layer language for the document's fixed labels (section
+   * headings, month names, "Present"). Independent of the app's UI locale and
+   * of the content the user types.
+   */
+  language: ResumeLanguage;
   header: Header;
   sections: Section[];
   /** ISO 8601. */

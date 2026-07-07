@@ -1,9 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { LanguageSwitcher } from "../shared/language-switcher";
 
 const YEAR = new Date().getFullYear();
 
 export function LandingFooter() {
+  const t = useTranslations("footer");
+
   return (
     <footer className="border-t">
       <div className="mx-auto flex w-11/12 max-w-5xl flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
@@ -18,26 +22,24 @@ export function LandingFooter() {
             />
             <span className="font-heading text-sm font-semibold">Lanjut</span>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Local-first: your résumé never leaves your browser.
-          </p>
+          <p className="text-xs text-muted-foreground">{t("tagline")}</p>
         </div>
 
         <nav
-          aria-label="Footer"
+          aria-label={t("ariaLabel")}
           className="flex items-center justify-center gap-6 text-sm text-muted-foreground"
         >
           <Link
             href="/platform"
             className="transition-colors hover:text-foreground"
           >
-            Start building
+            {t("startBuilding")}
           </Link>
           <Link
             href="/platform/template"
             className="transition-colors hover:text-foreground"
           >
-            Templates
+            {t("templates")}
           </Link>
           <a
             href="https://github.com/rimzzlabs/lanjut"
@@ -45,12 +47,13 @@ export function LandingFooter() {
             rel="noreferrer"
             className="transition-colors hover:text-foreground"
           >
-            GitHub
+            {t("github")}
           </a>
+          <LanguageSwitcher />
         </nav>
 
         <p className="text-center text-xs text-muted-foreground md:text-right">
-          © {YEAR} Lanjut. Open source, AGPL-3.0 licensed.
+          {t("rights", { year: YEAR })}
         </p>
       </div>
     </footer>

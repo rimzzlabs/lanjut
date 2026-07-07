@@ -1,8 +1,9 @@
 import type { BaseUIEvent } from "@base-ui/react";
 import { FileText, MoreVertical, Pen, Trash } from "lucide-react";
-import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { type MouseEvent, useState } from "react";
+import { Link } from "@/i18n/navigation";
 import type { ResumeIndexEntry } from "@/lib/resume";
 import { Button } from "../ui/button";
 import {
@@ -27,6 +28,7 @@ export function PlatformSidebarResumeItem({
 }: PlatformSidebarResumeItemProps) {
   const { id } = useParams<{ id?: string }>();
   const [open, setOpen] = useState({ rename: false, remove: false });
+  const t = useTranslations("platform.sidebar");
 
   const openRenameDialog = (e: BaseUIEvent<MouseEvent>) => {
     e.preventDefault();
@@ -63,18 +65,21 @@ export function PlatformSidebarResumeItem({
               <Button size="icon-xs" className="ml-auto" variant="ghost" />
             }
           >
-            <span className="sr-only">Menu</span>
+            <span className="sr-only">{t("itemMenu")}</span>
             <MoreVertical />
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="start" className="w-40">
             <DropdownMenuGroup>
               <DropdownMenuLabel className="text-pretty">
-                Modify <strong>{resume.title}</strong>
+                {t.rich("modify", {
+                  title: resume.title,
+                  b: (chunks) => <strong>{chunks}</strong>,
+                })}
               </DropdownMenuLabel>
               <DropdownMenuItem onClick={openRenameDialog}>
                 <Pen />
-                Rename
+                {t("rename")}
               </DropdownMenuItem>
 
               {id !== resume.id && (
@@ -85,7 +90,7 @@ export function PlatformSidebarResumeItem({
                     onClick={openRemoveDialog}
                   >
                     <Trash />
-                    Delete
+                    {t("delete")}
                   </DropdownMenuItem>
                 </>
               )}

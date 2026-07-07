@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useIssueReportStore } from "@/lib/store";
 import {
   ResponsiveDialog,
@@ -18,6 +19,7 @@ import { PlatformBugReportForm } from "./platform-bug-report-form";
 export function PlatformBugReportDialog() {
   const open = useIssueReportStore((state) => state.open);
   const setOpen = useIssueReportStore((state) => state.setOpen);
+  const t = useTranslations("forms.bug");
 
   return (
     <ResponsiveDialog
@@ -26,11 +28,9 @@ export function PlatformBugReportDialog() {
     >
       <ResponsiveDialogContent className="sm:max-w-lg">
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle>Report a bug</ResponsiveDialogTitle>
+          <ResponsiveDialogTitle>{t("title")}</ResponsiveDialogTitle>
           <ResponsiveDialogDescription className="text-balance">
-            This opens a prefilled GitHub issue for you to review and submit; a
-            GitHub account is required, and your browser details are filled in
-            for you.
+            {t("description")}
           </ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 

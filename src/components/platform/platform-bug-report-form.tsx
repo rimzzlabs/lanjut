@@ -2,12 +2,15 @@
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { ExternalLink, XIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useValidationTranslator } from "@/hooks/use-validation-translator";
+import { usePathname } from "@/i18n/navigation";
 import {
   BUG_AREAS,
   type BugReportForm,
-  bugReportSchema,
+  createBugReportSchema,
 } from "@/lib/forms/bug-report";
 import {
   areaForPathname,
@@ -49,8 +52,12 @@ interface PlatformBugReportFormProps {
 
 export function PlatformBugReportForm(props: PlatformBugReportFormProps) {
   const pathname = usePathname();
+  const t = useTranslations("forms.bug");
+  const tc = useTranslations("forms.common");
+  const tv = useValidationTranslator();
+  const schema = useMemo(() => createBugReportSchema(tv), [tv]);
   const form = useForm<BugReportForm>({
-    resolver: standardSchemaResolver(bugReportSchema),
+    resolver: standardSchemaResolver(schema),
     defaultValues: {
       whatHappened: emptyRichTextValue(),
       steps: emptyRichTextValue(),
@@ -84,12 +91,12 @@ export function PlatformBugReportForm(props: PlatformBugReportFormProps) {
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel htmlFor="bug-report-what-happened">
-                What happened?
+                {t("whatHappened")}
               </FieldLabel>
               <RichTextEditor
                 id="bug-report-what-happened"
                 features={PROSE_FEATURES}
-                placeholder="The editor preview goes blank when..."
+                placeholder={t("whatHappenedPlaceholder")}
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
@@ -104,20 +111,16 @@ export function PlatformBugReportForm(props: PlatformBugReportFormProps) {
           name="steps"
           render={({ field }) => (
             <Field>
-              <FieldLabel htmlFor="bug-report-steps">
-                Steps to reproduce
-              </FieldLabel>
+              <FieldLabel htmlFor="bug-report-steps">{t("steps")}</FieldLabel>
               <RichTextEditor
                 id="bug-report-steps"
                 features={PROSE_FEATURES}
-                placeholder="1. Create a résumé (a numbered list works great here)"
+                placeholder={t("stepsPlaceholder")}
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
               />
-              <FieldDescription>
-                Optional here; you can also fill this in on GitHub.
-              </FieldDescription>
+              <FieldDescription>{t("stepsDescription")}</FieldDescription>
             </Field>
           )}
         />
@@ -127,13 +130,13 @@ export function PlatformBugReportForm(props: PlatformBugReportFormProps) {
           name="area"
           render={({ field }) => (
             <Field>
-              <FieldLabel>Where does the bug show up?</FieldLabel>
+              <FieldLabel>{t("area")}</FieldLabel>
               <Select
                 value={field.value}
                 onValueChange={(value) => field.onChange(value)}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Area" />
+                  <SelectValue placeholder={t("areaPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent
                   alignItemWithTrigger={false}
@@ -156,11 +159,11 @@ export function PlatformBugReportForm(props: PlatformBugReportFormProps) {
 
       <ResponsiveDialogFooter className="mt-6">
         <ResponsiveDialogClose type="button" variant="outline">
-          <XIcon /> Cancel
+          <XIcon /> {tc("cancel")}
         </ResponsiveDialogClose>
         <Button type="submit">
           <ExternalLink />
-          Open GitHub issue
+          {tc("openIssue")}
         </Button>
       </ResponsiveDialogFooter>
     </form>

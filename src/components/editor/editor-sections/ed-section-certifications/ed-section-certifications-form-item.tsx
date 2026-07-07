@@ -1,4 +1,5 @@
 import { Trash } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type Control, Controller } from "react-hook-form";
 import { UrlInput } from "@/components/shared/url-input";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ interface EditorSectionCertificationsFormItemProps {
 export function EditorSectionCertificationsFormItem(
   props: EditorSectionCertificationsFormItemProps,
 ) {
+  const t = useTranslations("editor.certifications");
   const onRemove = () => {
     props.onRemoveField(props.index);
   };
@@ -30,7 +32,7 @@ export function EditorSectionCertificationsFormItem(
   return (
     <FieldSet className="not-last-of-type:pb-4 not-last-of-type:border-b">
       <FieldLegend className="sr-only" variant="label">
-        Certification {props.index + 1}
+        {t("itemLegend", { index: props.index + 1 })}
       </FieldLegend>
       <FieldGroup className="gap-3">
         <Controller
@@ -38,10 +40,10 @@ export function EditorSectionCertificationsFormItem(
           name={`certifications.${props.index}.name`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>Name</FieldLabel>
+              <FieldLabel htmlFor={field.name}>{t("name")}</FieldLabel>
               <div className="flex items-center gap-2">
                 <Input
-                  placeholder="AWS Certified Solutions Architect"
+                  placeholder={t("namePlaceholder")}
                   {...field}
                   id={field.name}
                 />
@@ -52,7 +54,7 @@ export function EditorSectionCertificationsFormItem(
                   onClick={onRemove}
                 >
                   <Trash className="size-3.5 stroke-destructive" />
-                  <span className="sr-only">Remove</span>
+                  <span className="sr-only">{t("remove")}</span>
                 </Button>
               </div>
               <FieldError errors={[fieldState.error]} />
@@ -65,9 +67,9 @@ export function EditorSectionCertificationsFormItem(
           name={`certifications.${props.index}.issuer`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>Issuer</FieldLabel>
+              <FieldLabel htmlFor={field.name}>{t("issuer")}</FieldLabel>
               <Input
-                placeholder="Amazon Web Services"
+                placeholder={t("issuerPlaceholder")}
                 {...field}
                 id={field.name}
               />
@@ -81,17 +83,15 @@ export function EditorSectionCertificationsFormItem(
           name={`certifications.${props.index}.url`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>Certificate URL</FieldLabel>
+              <FieldLabel htmlFor={field.name}>{t("url")}</FieldLabel>
               <UrlInput
                 id={field.name}
                 value={field.value}
-                placeholder="acme.com/cert"
+                placeholder={t("urlPlaceholder")}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
               />
-              <FieldDescription>
-                Link to the certificate or the issuer's site.
-              </FieldDescription>
+              <FieldDescription>{t("urlDesc")}</FieldDescription>
               <FieldError errors={[fieldState.error]} />
             </Field>
           )}

@@ -7,6 +7,7 @@
  * Data → adapter → consumer: these types are the consumer contract.
  */
 
+import type { ResumeLanguage } from "@/lib/resume/types";
 import type { RichBlock } from "./rich-content";
 
 export type ContactKind = "phone" | "email" | "website" | "location";
@@ -66,6 +67,8 @@ export interface LanguageItemView {
 }
 
 export interface ResumePreview {
+  /** Document language for fixed labels (headings, dates); drives localization. */
+  language: ResumeLanguage;
   header: HeaderView;
   summary: RichBlock[];
   experience: ExperienceItemView[];

@@ -1,6 +1,7 @@
 "use client";
 
 import { Inbox } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useHydrateResumeLibrary } from "@/hooks/use-hydrate-resume-library";
 import { useResumeStore } from "@/lib/store";
 import {
@@ -27,11 +28,12 @@ export function PlatformSidebarResume() {
   useHydrateResumeLibrary();
   const index = useResumeStore((state) => state.index);
   const indexStatus = useResumeStore((state) => state.indexStatus);
+  const t = useTranslations("platform.sidebar");
 
   return (
     <SidebarGroup id="tour-sidebar-resumes">
       <SidebarGroupLabel>
-        <span>My Résumé</span>
+        <span>{t("myResume")}</span>
 
         <PlatformSidebarResumeCreate />
       </SidebarGroupLabel>
@@ -52,9 +54,9 @@ export function PlatformSidebarResume() {
                     <Inbox className="size-3.5" />
                   </EmptyMedia>
 
-                  <EmptyTitle className="text-xs">No résumé yet</EmptyTitle>
+                  <EmptyTitle className="text-xs">{t("noResume")}</EmptyTitle>
                   <EmptyDescription className="text-[0.6875rem]">
-                    When you add résumé, they will be visible here.
+                    {t("noResumeDescription")}
                   </EmptyDescription>
                 </EmptyHeader>
               </EmptyContent>

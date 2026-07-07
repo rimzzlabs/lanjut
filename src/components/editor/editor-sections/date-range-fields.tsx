@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import {
   type Control,
   type FieldPath,
@@ -35,6 +36,7 @@ export function DateRangeFields<T extends FieldValues>(
     name: props.startName,
   });
   const end = useController({ control: props.control, name: props.endName });
+  const t = useTranslations("editor.dateRange");
   const isPresent = asString(end.field.value) === PRESENT_DATE;
   const presentId = `${end.field.name}-present`;
 
@@ -42,11 +44,11 @@ export function DateRangeFields<T extends FieldValues>(
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-[minmax(0,1fr)_max-content_minmax(0,1fr)] gap-3">
         <Field>
-          <FieldLabel htmlFor={start.field.name}>Start Date</FieldLabel>
+          <FieldLabel htmlFor={start.field.name}>{t("startDate")}</FieldLabel>
           <MonthYearMenu
             id={start.field.name}
             value={asString(start.field.value)}
-            placeholder="Start date"
+            placeholder={t("startPlaceholder")}
             onChange={start.field.onChange}
           />
           <FieldError errors={[start.fieldState.error]} />
@@ -55,7 +57,7 @@ export function DateRangeFields<T extends FieldValues>(
         <div className="mt-12 h-px w-2 bg-muted-foreground" />
 
         <Field>
-          <FieldLabel htmlFor={end.field.name}>End Date</FieldLabel>
+          <FieldLabel htmlFor={end.field.name}>{t("endDate")}</FieldLabel>
           {isPresent ? (
             <Button
               type="button"
@@ -63,13 +65,13 @@ export function DateRangeFields<T extends FieldValues>(
               disabled
               className="w-full justify-start font-normal text-muted-foreground"
             >
-              Present
+              {t("present")}
             </Button>
           ) : (
             <MonthYearMenu
               id={end.field.name}
               value={asString(end.field.value)}
-              placeholder="End date"
+              placeholder={t("endPlaceholder")}
               onChange={end.field.onChange}
             />
           )}

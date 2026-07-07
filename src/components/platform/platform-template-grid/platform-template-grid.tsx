@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   useTemplateSearchQuery,
   useTemplateSort,
@@ -10,13 +11,18 @@ import { PlatformTemplateGridItem } from "./platform-template-grid-item";
 export function PlatformTemplateGrid() {
   const [query] = useTemplateSearchQuery();
   const [sort] = useTemplateSort();
+  const t = useTranslations("platform.templates");
 
-  const results = sortTemplates(filterTemplates(TEMPLATES, query), sort);
+  const localized = TEMPLATES.map((template) => ({
+    ...template,
+    description: t(`descriptions.${template.id}`),
+  }));
+  const results = sortTemplates(filterTemplates(localized, query), sort);
 
   if (results.length === 0) {
     return (
       <p className="py-12 text-center text-sm text-muted-foreground">
-        No templates match “{query.trim()}”.
+        {t("noMatch", { query: query.trim() })}
       </p>
     );
   }

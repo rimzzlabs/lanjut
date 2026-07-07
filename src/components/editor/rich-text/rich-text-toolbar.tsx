@@ -2,6 +2,7 @@
 
 import { type Editor, useEditorState } from "@tiptap/react";
 import { Bold, Italic, List, ListOrdered } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Toggle } from "@/components/ui/toggle";
 import type { RichTextFeature } from "@/lib/resume/schema-registry";
 import { RichTextLinkPopover } from "./rich-text-link-popover";
@@ -12,6 +13,7 @@ interface RichTextToolbarProps {
 }
 
 export function RichTextToolbar(props: RichTextToolbarProps) {
+  const t = useTranslations("editor.richText");
   const state = useEditorState({
     editor: props.editor,
     selector: ({ editor }) => ({
@@ -30,7 +32,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
       {has("bold") && (
         <Toggle
           size="xs"
-          aria-label="Bold"
+          aria-label={t("bold")}
           pressed={state.bold}
           onPressedChange={() =>
             props.editor.chain().focus().toggleBold().run()
@@ -42,7 +44,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
       {has("italic") && (
         <Toggle
           size="xs"
-          aria-label="Italic"
+          aria-label={t("italic")}
           pressed={state.italic}
           onPressedChange={() =>
             props.editor.chain().focus().toggleItalic().run()
@@ -54,7 +56,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
       {has("bulletList") && (
         <Toggle
           size="xs"
-          aria-label="Bullet list"
+          aria-label={t("bulletList")}
           pressed={state.bulletList}
           onPressedChange={() =>
             props.editor.chain().focus().toggleBulletList().run()
@@ -66,7 +68,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
       {has("orderedList") && (
         <Toggle
           size="xs"
-          aria-label="Ordered list"
+          aria-label={t("orderedList")}
           pressed={state.orderedList}
           onPressedChange={() =>
             props.editor.chain().focus().toggleOrderedList().run()

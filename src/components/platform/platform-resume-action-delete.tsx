@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import {
   AlertDialog,
@@ -36,6 +37,8 @@ export function PlatformResumeActionDelete(
   const isMobile = useIsMobile();
   const removeResume = useResumeStore((state) => state.removeResume);
   const [pending, setPending] = useState(false);
+  const t = useTranslations("forms.delete");
+  const tc = useTranslations("forms.common");
 
   async function handleDelete() {
     setPending(true);
@@ -44,17 +47,12 @@ export function PlatformResumeActionDelete(
     props.onOpenChange(false);
   }
 
-  const title = (
-    <>
-      Delete <strong>{props.resume.title}</strong>?
-    </>
-  );
-  const description = (
-    <>
-      This will delete <strong>{props.resume.title}</strong>.{" "}
-      <strong>This action cannot be undone</strong>. Are you sure?
-    </>
-  );
+  const bold = (chunks: React.ReactNode) => <strong>{chunks}</strong>;
+  const title = t.rich("title", { title: props.resume.title, b: bold });
+  const description = t.rich("description", {
+    title: props.resume.title,
+    b: bold,
+  });
 
   if (isMobile) {
     return (
@@ -75,10 +73,10 @@ export function PlatformResumeActionDelete(
               onClick={handleDelete}
               disabled={pending}
             >
-              Delete
+              {tc("delete")}
             </Button>
             <DrawerClose render={<Button variant="outline" />}>
-              Cancel
+              {tc("cancel")}
             </DrawerClose>
           </DrawerFooter>
         </DrawerContent>
@@ -95,13 +93,13 @@ export function PlatformResumeActionDelete(
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{tc("cancel")}</AlertDialogCancel>
           <AlertDialogAction
             variant="destructive"
             onClick={handleDelete}
             disabled={pending}
           >
-            Delete
+            {tc("delete")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

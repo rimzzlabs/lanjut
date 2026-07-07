@@ -2,14 +2,17 @@
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Save, TextInitial, XIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useValidationTranslator } from "@/hooks/use-validation-translator";
+import { useRouter } from "@/i18n/navigation";
 import {
+  createResumeCreateSchema,
   RESUME_TITLE_MAX_LENGTH,
   type ResumeCreateForm,
-  resumeCreateSchema,
 } from "@/lib/forms/resume";
+import type { ResumeLanguage } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 import { DEFAULT_TEMPLATE_ID, resolveTemplateId } from "@/lib/templates";
 import {
@@ -50,12 +53,17 @@ export function PlatformResumeCreateDialog(
   props: PlatformResumeCreateDialogProps,
 ) {
   const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("forms.create");
+  const tc = useTranslations("forms.common");
+  const tv = useValidationTranslator();
   const createResume = useResumeStore((state) => state.createResume);
   const [templateId, setTemplateId] = useState(() =>
     resolveTemplateId(props.templateId ?? DEFAULT_TEMPLATE_ID),
   );
+  const schema = useMemo(() => createResumeCreateSchema(tv), [tv]);
   const form = useForm<ResumeCreateForm>({
-    resolver: standardSchemaResolver(resumeCreateSchema),
+    resolver: standardSchemaResolver(schema),
     defaultValues: { title: props.initialTitle ?? "", prefill: true },
     mode: "onChange",
   });
@@ -64,6 +72,7 @@ export function PlatformResumeCreateDialog(
     const resume = await createResume(values.title, {
       templateId,
       prefill: values.prefill,
+      language: locale as ResumeLanguage,
     });
     form.reset({ title: "", prefill: true });
     props.onOpenChange(false);
@@ -74,9 +83,9 @@ export function PlatformResumeCreateDialog(
     <ResponsiveDialog open={props.open} onOpenChange={props.onOpenChange}>
       <ResponsiveDialogContent className="sm:max-w-lg">
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle>Create a new resume</ResponsiveDialogTitle>
+          <ResponsiveDialogTitle>{t("title")}</ResponsiveDialogTitle>
           <ResponsiveDialogDescription className="text-balance">
-            You can create a new resume. But let&apos;s name your résumé first.
+            {t("description")}
           </ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 
@@ -88,7 +97,7 @@ export function PlatformResumeCreateDialog(
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="create-resume-title">
-                    Résumé label
+                    {t("label")}
                   </FieldLabel>
                   <InputGroup>
                     <InputGroupAddon>
@@ -97,15 +106,13 @@ export function PlatformResumeCreateDialog(
                     <InputGroupInput
                       id="create-resume-title"
                       maxLength={RESUME_TITLE_MAX_LENGTH}
-                      placeholder="Software Engineer"
+                      placeholder={t("placeholder")}
                       aria-invalid={fieldState.invalid}
                       {...field}
                     />
                   </InputGroup>
 
-                  <FieldDescription>
-                    At least 3 characters or more, maximum 100 chars at most.
-                  </FieldDescription>
+                  <FieldDescription>{t("fieldDescription")}</FieldDescription>
 
                   <FieldError errors={[fieldState.error]} />
                 </Field>
@@ -128,14 +135,14 @@ export function PlatformResumeCreateDialog(
                     ref={field.ref}
                   />
                   <FieldLabel htmlFor="create-resume-prefill">
-                    Pre-fill with example content
+                    {t("prefill")}
                   </FieldLabel>
                 </Field>
               )}
             />
 
             <Field>
-              <FieldLabel>Template</FieldLabel>
+              <FieldLabel>{t("template")}</FieldLabel>
               <PlatformTemplateRadioGroup
                 value={templateId}
                 onValueChange={setTemplateId}
@@ -145,11 +152,11 @@ export function PlatformResumeCreateDialog(
 
           <ResponsiveDialogFooter className="mt-6">
             <ResponsiveDialogClose type="button" variant="outline">
-              <XIcon /> Cancel
+              <XIcon /> {tc("cancel")}
             </ResponsiveDialogClose>
             <Button type="submit" disabled={form.formState.isSubmitting}>
               <Save />
-              Save
+              {tc("save")}
             </Button>
           </ResponsiveDialogFooter>
         </form>

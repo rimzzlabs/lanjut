@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useIssueReportStore } from "@/lib/store";
 import {
   ResponsiveDialog,
@@ -18,6 +19,7 @@ import { PlatformFeatureRequestForm } from "./platform-feature-request-form";
 export function PlatformFeatureRequestDialog() {
   const open = useIssueReportStore((state) => state.open);
   const setOpen = useIssueReportStore((state) => state.setOpen);
+  const t = useTranslations("forms.feature");
 
   return (
     <ResponsiveDialog
@@ -26,12 +28,9 @@ export function PlatformFeatureRequestDialog() {
     >
       <ResponsiveDialogContent className="sm:max-w-lg">
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle>Request a feature</ResponsiveDialogTitle>
+          <ResponsiveDialogTitle>{t("title")}</ResponsiveDialogTitle>
           <ResponsiveDialogDescription className="text-balance">
-            This opens a prefilled GitHub issue for you to review and submit; a
-            GitHub account is required. Note that résumé structure (tables,
-            columns, images) is out of scope by design; presentation is fair
-            game.
+            {t("description")}
           </ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 

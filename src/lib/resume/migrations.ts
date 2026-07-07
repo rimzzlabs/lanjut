@@ -276,6 +276,16 @@ const migrateV5toV6: Migration = (doc) => {
 };
 
 /**
+ * v6→v7: adds the document `language` for localized section headings and dates.
+ * Existing documents default to English, preserving their current output.
+ */
+const migrateV6toV7: Migration = (doc) => {
+  const next = structuredClone(doc);
+  if (next.language !== "en" && next.language !== "id") next.language = "en";
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -284,6 +294,7 @@ const LADDER: Record<number, Migration> = {
   3: migrateV3toV4,
   4: migrateV4toV5,
   5: migrateV5toV6,
+  6: migrateV6toV7,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

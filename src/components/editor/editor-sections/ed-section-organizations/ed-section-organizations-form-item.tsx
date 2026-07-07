@@ -1,4 +1,5 @@
 import { Trash } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type Control, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +25,7 @@ interface EditorSectionOrganizationsFormItemProps {
 export function EditorSectionOrganizationsFormItem(
   props: EditorSectionOrganizationsFormItemProps,
 ) {
+  const t = useTranslations("editor.organizations");
   const onRemove = () => {
     props.onRemoveField(props.index);
   };
@@ -31,7 +33,7 @@ export function EditorSectionOrganizationsFormItem(
   return (
     <FieldSet className="not-last-of-type:pb-4 not-last-of-type:border-b">
       <FieldLegend className="sr-only" variant="label">
-        Organization {props.index + 1}
+        {t("itemLegend", { index: props.index + 1 })}
       </FieldLegend>
 
       <FieldGroup className="gap-3">
@@ -40,10 +42,10 @@ export function EditorSectionOrganizationsFormItem(
           name={`organizations.${props.index}.role`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>Role</FieldLabel>
+              <FieldLabel htmlFor={field.name}>{t("role")}</FieldLabel>
               <div className="flex items-center gap-2">
                 <Input
-                  placeholder="Head of Public Relations"
+                  placeholder={t("rolePlaceholder")}
                   {...field}
                   id={field.name}
                 />
@@ -54,7 +56,7 @@ export function EditorSectionOrganizationsFormItem(
                   onClick={onRemove}
                 >
                   <Trash className="size-3.5 stroke-destructive" />
-                  <span className="sr-only">Remove</span>
+                  <span className="sr-only">{t("remove")}</span>
                 </Button>
               </div>
               <FieldError errors={[fieldState.error]} />
@@ -67,9 +69,9 @@ export function EditorSectionOrganizationsFormItem(
           name={`organizations.${props.index}.organization`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>Organization</FieldLabel>
+              <FieldLabel htmlFor={field.name}>{t("organization")}</FieldLabel>
               <Input
-                placeholder="Student Executive Board"
+                placeholder={t("organizationPlaceholder")}
                 {...field}
                 id={field.name}
               />
@@ -82,7 +84,7 @@ export function EditorSectionOrganizationsFormItem(
           control={props.control}
           startName={`organizations.${props.index}.startDate`}
           endName={`organizations.${props.index}.endDate`}
-          presentLabel="I'm currently active here"
+          presentLabel={t("present")}
         />
 
         <Controller
@@ -90,12 +92,12 @@ export function EditorSectionOrganizationsFormItem(
           name={`organizations.${props.index}.description`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>Summary</FieldLabel>
+              <FieldLabel htmlFor={field.name}>{t("summary")}</FieldLabel>
               <RichTextEditor
                 id={field.name}
                 value={field.value}
                 features={PROSE_FEATURES}
-                placeholder="Organized events that...."
+                placeholder={t("summaryPlaceholder")}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
               />

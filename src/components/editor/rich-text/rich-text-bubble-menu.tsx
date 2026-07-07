@@ -3,6 +3,7 @@
 import { type Editor, useEditorState } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import { Bold, Italic } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Toggle } from "@/components/ui/toggle";
 import type { RichTextFeature } from "@/lib/resume/schema-registry";
 import { RichTextLinkPopover } from "./rich-text-link-popover";
@@ -13,6 +14,7 @@ interface RichTextBubbleMenuProps {
 }
 
 export function RichTextBubbleMenu(props: RichTextBubbleMenuProps) {
+  const t = useTranslations("editor.richText");
   const state = useEditorState({
     editor: props.editor,
     selector: ({ editor }) => ({
@@ -38,7 +40,7 @@ export function RichTextBubbleMenu(props: RichTextBubbleMenuProps) {
       {has("bold") && (
         <Toggle
           size="xs"
-          aria-label="Bold"
+          aria-label={t("bold")}
           pressed={state.bold}
           onPressedChange={() =>
             props.editor.chain().focus().toggleBold().run()
@@ -50,7 +52,7 @@ export function RichTextBubbleMenu(props: RichTextBubbleMenuProps) {
       {has("italic") && (
         <Toggle
           size="xs"
-          aria-label="Italic"
+          aria-label={t("italic")}
           pressed={state.italic}
           onPressedChange={() =>
             props.editor.chain().focus().toggleItalic().run()

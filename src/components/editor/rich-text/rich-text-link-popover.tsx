@@ -2,6 +2,7 @@
 
 import type { Editor } from "@tiptap/react";
 import { Link2, Link2Off } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,6 +29,7 @@ function normalizeUrl(input: string): string | null {
 export function RichTextLinkPopover(props: RichTextLinkPopoverProps) {
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState("");
+  const t = useTranslations("editor.richText");
 
   const onOpenChange = (next: boolean) => {
     setOpen(next);
@@ -51,7 +53,7 @@ export function RichTextLinkPopover(props: RichTextLinkPopoverProps) {
     <Popover open={open} onOpenChange={onOpenChange}>
       <PopoverTrigger
         render={
-          <Toggle size="xs" pressed={props.active} aria-label="Link">
+          <Toggle size="xs" pressed={props.active} aria-label={t("link")}>
             <Link2 />
           </Toggle>
         }
@@ -61,7 +63,7 @@ export function RichTextLinkPopover(props: RichTextLinkPopoverProps) {
           <Input
             autoFocus
             value={url}
-            placeholder="https://example.com"
+            placeholder={t("linkPlaceholder")}
             onChange={(event) => setUrl(event.target.value)}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
@@ -71,7 +73,7 @@ export function RichTextLinkPopover(props: RichTextLinkPopoverProps) {
             }}
           />
           <Button type="button" size="sm" onClick={apply}>
-            Apply
+            {t("apply")}
           </Button>
         </div>
         {props.active && (
@@ -82,7 +84,7 @@ export function RichTextLinkPopover(props: RichTextLinkPopoverProps) {
             className="justify-start gap-2"
             onClick={remove}
           >
-            <Link2Off /> Remove link
+            <Link2Off /> {t("removeLink")}
           </Button>
         )}
       </PopoverContent>

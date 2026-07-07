@@ -2,6 +2,8 @@
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Save, TextInitial, XIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   ResponsiveDialog,
@@ -25,10 +27,11 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import { useValidationTranslator } from "@/hooks/use-validation-translator";
 import {
+  createResumeTitleSchema,
   RESUME_TITLE_MAX_LENGTH,
   type ResumeTitleForm,
-  resumeTitleSchema,
 } from "@/lib/forms/resume";
 import { useResumeStore } from "@/lib/store";
 
@@ -42,8 +45,12 @@ export function PlatformResumeActionRename(
   props: PlatformResumeActionRenameProps,
 ) {
   const renameResume = useResumeStore((state) => state.renameResume);
+  const t = useTranslations("forms.rename");
+  const tc = useTranslations("forms.common");
+  const tv = useValidationTranslator();
+  const schema = useMemo(() => createResumeTitleSchema(tv), [tv]);
   const form = useForm<ResumeTitleForm>({
-    resolver: standardSchemaResolver(resumeTitleSchema),
+    resolver: standardSchemaResolver(schema),
     defaultValues: { title: props.resume.title },
     mode: "onTouched",
   });
@@ -59,10 +66,9 @@ export function PlatformResumeActionRename(
     <ResponsiveDialog open={props.open} onOpenChange={props.onOpenChange}>
       <ResponsiveDialogContent showCloseButton={false}>
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle>Rename </ResponsiveDialogTitle>
+          <ResponsiveDialogTitle>{t("title")}</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>
-            You can rename this resume label to whatever you want. If the value
-            of the label is same as before, it won&apos;t be saved.
+            {t("description")}
           </ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 
@@ -74,7 +80,7 @@ export function PlatformResumeActionRename(
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel htmlFor="rename-resume-title">
-                    Resume label
+                    {t("label")}
                   </FieldLabel>
                   <InputGroup>
                     <InputGroupAddon>
@@ -83,15 +89,13 @@ export function PlatformResumeActionRename(
                     <InputGroupInput
                       id="rename-resume-title"
                       maxLength={RESUME_TITLE_MAX_LENGTH}
-                      placeholder="e.g: Software Engineer"
+                      placeholder={t("placeholder")}
                       aria-invalid={fieldState.invalid}
                       {...field}
                     />
                   </InputGroup>
 
-                  <FieldDescription>
-                    At least 3 characters or up. Max 100 characters.
-                  </FieldDescription>
+                  <FieldDescription>{t("fieldDescription")}</FieldDescription>
 
                   <FieldError errors={[fieldState.error]} />
                 </Field>
@@ -101,11 +105,11 @@ export function PlatformResumeActionRename(
 
           <ResponsiveDialogFooter className="mt-6">
             <ResponsiveDialogClose type="button" variant="outline">
-              <XIcon /> Cancel
+              <XIcon /> {tc("cancel")}
             </ResponsiveDialogClose>
 
             <Button type="submit" disabled={form.formState.isSubmitting}>
-              <Save /> Save
+              <Save /> {tc("save")}
             </Button>
           </ResponsiveDialogFooter>
         </form>

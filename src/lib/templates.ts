@@ -16,7 +16,7 @@ export const DEFAULT_TEMPLATE_ID: TemplateId = "awal";
 export interface TemplateSummary {
   id: TemplateId;
   name: string;
-  description: string;
+  description?: string;
   /** ISO 8601: when the template was added, for "newest" sorting. */
   addedAt: string;
 }
@@ -37,48 +37,12 @@ export const TEMPLATE_SORTS: TemplateSort[] = [
 ];
 
 export const TEMPLATES: TemplateSummary[] = [
-  {
-    id: "awal",
-    name: "Awal",
-    description:
-      "A clean, single-column ATS-safe starter. Linear reading order, no columns or tables, with room for every section.",
-    addedAt: "2026-01-01T00:00:00.000Z",
-  },
-  {
-    id: "ketat",
-    name: "Ketat",
-    description:
-      "A compact serif classic: centered ruled section headings, right-aligned contact column, and italic dates. Dense without feeling cramped.",
-    addedAt: "2026-07-04T00:00:00.000Z",
-  },
-  {
-    id: "luasa",
-    name: "Luasa",
-    description:
-      "An airy minimalist layout: letterspaced headings, a single contact line, and slim accent bars. Generous whitespace throughout.",
-    addedAt: "2026-07-04T00:00:00.000Z",
-  },
-  {
-    id: "tebal",
-    name: "Tebal",
-    description:
-      "A bold, modern statement: oversized name, heavy uppercase headings over thick rules, and strong typographic hierarchy.",
-    addedAt: "2026-07-05T00:00:00.000Z",
-  },
-  {
-    id: "klasik",
-    name: "Klasik",
-    description:
-      "A traditional all-serif CV: centered name and contacts, quiet centered headings, and italic dates. Timeless and formal.",
-    addedAt: "2026-07-05T00:00:00.000Z",
-  },
-  {
-    id: "ketik",
-    name: "Ketik",
-    description:
-      "A typewriter-flavored technical look: monospace name, headings, and dates over a clean sans body. Built for developers.",
-    addedAt: "2026-07-05T00:00:00.000Z",
-  },
+  { id: "awal", name: "Awal", addedAt: "2026-01-01T00:00:00.000Z" },
+  { id: "ketat", name: "Ketat", addedAt: "2026-07-04T00:00:00.000Z" },
+  { id: "luasa", name: "Luasa", addedAt: "2026-07-04T00:00:00.000Z" },
+  { id: "tebal", name: "Tebal", addedAt: "2026-07-05T00:00:00.000Z" },
+  { id: "klasik", name: "Klasik", addedAt: "2026-07-05T00:00:00.000Z" },
+  { id: "ketik", name: "Ketik", addedAt: "2026-07-05T00:00:00.000Z" },
 ];
 
 export function filterTemplates(
@@ -90,7 +54,7 @@ export function filterTemplates(
   return templates.filter(
     (template) =>
       template.name.toLowerCase().includes(needle) ||
-      template.description.toLowerCase().includes(needle),
+      (template.description?.toLowerCase().includes(needle) ?? false),
   );
 }
 

@@ -16,6 +16,15 @@ export interface AppStep extends Step {
   scrollTop?: boolean;
 }
 
+export interface AppStepMeta extends Omit<AppStep, "title" | "content"> {
+  id: string;
+}
+
+export interface AppTourMeta {
+  tour: TourName;
+  steps: AppStepMeta[];
+}
+
 export interface AppTour {
   tour: TourName;
   steps: AppStep[];
@@ -30,9 +39,20 @@ export function tourForPathname(pathname: string): TourName {
 export function getTourStep(
   tourName: string | null,
   stepIndex: number,
-): AppStep | undefined {
-  const tour = TOURS.find((t) => t.tour === tourName);
+): AppStepMeta | undefined {
+  const tour = TOUR_STEPS.find((t) => t.tour === tourName);
   return tour?.steps[stepIndex];
+}
+
+export function localizeTours(t: (key: string) => string): AppTour[] {
+  return TOUR_STEPS.map((tour) => ({
+    tour: tour.tour,
+    steps: tour.steps.map((step) => ({
+      ...step,
+      title: t(`${tour.tour}.${step.id}.title`),
+      content: t(`${tour.tour}.${step.id}.content`),
+    })),
+  }));
 }
 
 const BASE_STEP = {
@@ -44,62 +64,50 @@ const BASE_STEP = {
 } satisfies Partial<Step>;
 
 // Library and template targets all sit at the top of a window-scrolled page.
-const TOP_STEP = { ...BASE_STEP, scrollTop: true } satisfies Partial<AppStep>;
+const TOP_STEP = {
+  ...BASE_STEP,
+  scrollTop: true,
+} satisfies Partial<AppStepMeta>;
 
-export const TOURS: AppTour[] = [
+export const TOUR_STEPS: AppTourMeta[] = [
   {
     tour: LIBRARY_TOUR,
     steps: [
+      { ...TOP_STEP, id: "welcome", sidebar: "closed" },
       {
         ...TOP_STEP,
-        sidebar: "closed",
-        title: "Welcome to Lanjut",
-        content:
-          "A free, local-first résumé builder. Everything you write stays in this browser; nothing is ever sent to a server.",
-      },
-      {
-        ...TOP_STEP,
+        id: "create",
         sidebar: "closed",
         selector: "#tour-create-resume",
         side: "bottom-right",
-        title: "Create a résumé",
-        content:
-          "Start a new résumé from here. You can keep as many as you like.",
       },
       {
         ...TOP_STEP,
+        id: "search",
         sidebar: "closed",
         selector: "#tour-search-resume",
         side: "bottom-left",
-        title: "Find it later",
-        content: "Search your library by title once it grows.",
       },
       {
         ...TOP_STEP,
+        id: "nav",
         sidebar: "open",
         selector: "#tour-sidebar-nav",
         side: "right",
-        title: "Get around",
-        content:
-          "Switch between your dashboard and the template gallery from here.",
       },
       {
         ...TOP_STEP,
+        id: "resumes",
         sidebar: "open",
         selector: "#tour-sidebar-resumes",
         side: "right",
-        title: "Your résumés",
-        content:
-          "Every résumé you create shows up here; pick one to jump into the editor.",
       },
       {
         ...TOP_STEP,
+        id: "replay",
         sidebar: "open",
         selector: "#tour-guide",
         side: "right",
-        title: "Replay anytime",
-        content:
-          "Rerun the guide for whichever page you are on with this button.",
       },
     ],
   },
@@ -108,28 +116,24 @@ export const TOURS: AppTour[] = [
     steps: [
       {
         ...TOP_STEP,
+        id: "browse",
         sidebar: "closed",
         selector: "#tour-template-grid > :first-child",
         side: "right",
-        title: "Browse templates",
-        content:
-          "Templates change presentation only: typography, spacing, accents. The structure stays linear so ATS parsers can always read your résumé.",
       },
       {
         ...TOP_STEP,
+        id: "search",
         sidebar: "closed",
         selector: "#tour-search-template",
         side: "bottom-left",
-        title: "Search",
-        content: "Look up a template by name.",
       },
       {
         ...TOP_STEP,
+        id: "sort",
         sidebar: "closed",
         selector: "#tour-sort-template",
         side: "bottom-right",
-        title: "Sort",
-        content: "Order the gallery by name or by newest.",
       },
     ],
   },
@@ -138,48 +142,34 @@ export const TOURS: AppTour[] = [
     steps: [
       {
         ...BASE_STEP,
+        id: "preview",
         selector: "#tour-editor-preview",
         side: "right",
-        title: "Live preview",
-        content:
-          "This paper is your résumé exactly as it will export. It updates as you type and is saved to this browser automatically.",
       },
       {
         ...BASE_STEP,
+        id: "sections",
         selector: "#tour-editor-sections",
         side: "left",
-        title: "Fill in your details",
-        content:
-          "Each section maps to a fixed, ATS-parseable structure. Work top to bottom.",
       },
       {
         ...BASE_STEP,
+        id: "download",
         selector: "#tour-download",
         side: "bottom-right",
-        title: "Download",
-        content:
-          "Export as PDF, DOCX, or plain text when you are ready to apply.",
       },
     ],
   },
   {
     tour: EDITOR_SHEET_TOUR,
     steps: [
+      { ...BASE_STEP, id: "preview", sidebar: "closed" },
       {
         ...BASE_STEP,
-        sidebar: "closed",
-        title: "Live preview",
-        content:
-          "This paper is your résumé exactly as it will export. It updates as you type and is saved to this browser automatically.",
-      },
-      {
-        ...BASE_STEP,
+        id: "edit",
         sidebar: "closed",
         selector: "#tour-editor-edit",
         side: "top-right",
-        title: "Fill in your details",
-        content:
-          "Tap Edit to open the section forms. Each section maps to a fixed, ATS-parseable structure.",
       },
     ],
   },

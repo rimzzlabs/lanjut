@@ -1,4 +1,5 @@
 import { Trash } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type Control, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +25,7 @@ interface EditorSectionEducationFormItemProps {
 export function EditorSectionEducationFormItem(
   props: EditorSectionEducationFormItemProps,
 ) {
+  const t = useTranslations("editor.education");
   const onRemove = () => {
     props.onRemoveField(props.index);
   };
@@ -31,7 +33,7 @@ export function EditorSectionEducationFormItem(
   return (
     <FieldSet className="not-last-of-type:pb-4 not-last-of-type:border-b">
       <FieldLegend className="sr-only" variant="label">
-        Education {props.index + 1}
+        {t("itemLegend", { index: props.index + 1 })}
       </FieldLegend>
       <FieldGroup className="gap-3">
         <Controller
@@ -39,10 +41,10 @@ export function EditorSectionEducationFormItem(
           name={`educations.${props.index}.institution`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>Institution</FieldLabel>
+              <FieldLabel htmlFor={field.name}>{t("institution")}</FieldLabel>
               <div className="flex items-center gap-2">
                 <Input
-                  placeholder="State University"
+                  placeholder={t("institutionPlaceholder")}
                   {...field}
                   id={field.name}
                 />
@@ -53,7 +55,7 @@ export function EditorSectionEducationFormItem(
                   onClick={onRemove}
                 >
                   <Trash className="size-3.5 stroke-destructive" />
-                  <span className="sr-only">Remove</span>
+                  <span className="sr-only">{t("remove")}</span>
                 </Button>
               </div>
               <FieldError errors={[fieldState.error]} />
@@ -67,9 +69,9 @@ export function EditorSectionEducationFormItem(
             name={`educations.${props.index}.degree`}
             render={({ field, fieldState }) => (
               <Field>
-                <FieldLabel htmlFor={field.name}>Degree</FieldLabel>
+                <FieldLabel htmlFor={field.name}>{t("degree")}</FieldLabel>
                 <Input
-                  placeholder="B.Sc. Computer Science"
+                  placeholder={t("degreePlaceholder")}
                   {...field}
                   id={field.name}
                 />
@@ -83,8 +85,12 @@ export function EditorSectionEducationFormItem(
             name={`educations.${props.index}.location`}
             render={({ field, fieldState }) => (
               <Field>
-                <FieldLabel htmlFor={field.name}>Location</FieldLabel>
-                <Input placeholder="Boston, MA" {...field} id={field.name} />
+                <FieldLabel htmlFor={field.name}>{t("location")}</FieldLabel>
+                <Input
+                  placeholder={t("locationPlaceholder")}
+                  {...field}
+                  id={field.name}
+                />
                 <FieldError errors={[fieldState.error]} />
               </Field>
             )}
@@ -95,7 +101,7 @@ export function EditorSectionEducationFormItem(
           control={props.control}
           startName={`educations.${props.index}.startDate`}
           endName={`educations.${props.index}.endDate`}
-          presentLabel="I currently study here"
+          presentLabel={t("present")}
         />
 
         <Controller
@@ -103,12 +109,12 @@ export function EditorSectionEducationFormItem(
           name={`educations.${props.index}.details`}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>Details</FieldLabel>
+              <FieldLabel htmlFor={field.name}>{t("details")}</FieldLabel>
               <RichTextEditor
                 id={field.name}
                 value={field.value}
                 features={PROSE_FEATURES}
-                placeholder="Graduated with honors. Relevant coursework…"
+                placeholder={t("detailsPlaceholder")}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
               />

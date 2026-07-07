@@ -1,9 +1,10 @@
 "use client";
 
 import { Bug, HelpCircle, HelpingHand } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useNextStep } from "nextstepjs";
 import { MEDIA_XL, useMediaQuery } from "@/hooks/use-media-query";
+import { usePathname } from "@/i18n/navigation";
 import { useIssueReportStore, useResumeStore } from "@/lib/store";
 import { EDITOR_SHEET_TOUR, EDITOR_TOUR, tourForPathname } from "@/lib/tour";
 import {
@@ -22,6 +23,7 @@ export function PlatformSidebarOther() {
   const isDesktop = useMediaQuery(MEDIA_XL);
   const { startNextStep } = useNextStep();
   const { isMobile, setOpenMobile } = useSidebar();
+  const t = useTranslations("platform.sidebar");
 
   const baseTour = tourForPathname(pathname);
   const tour =
@@ -30,7 +32,7 @@ export function PlatformSidebarOther() {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Other</SidebarGroupLabel>
+      <SidebarGroupLabel>{t("other")}</SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton
@@ -38,7 +40,7 @@ export function PlatformSidebarOther() {
             disabled={guideDisabled}
             onClick={() => startNextStep(tour)}
           >
-            <HelpCircle /> Guide
+            <HelpCircle /> {t("guide")}
           </SidebarMenuButton>
         </SidebarMenuItem>
 
@@ -49,7 +51,7 @@ export function PlatformSidebarOther() {
               setIssueReportOpen("bug");
             }}
           >
-            <Bug /> Report a bug
+            <Bug /> {t("reportBug")}
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem>
@@ -59,7 +61,7 @@ export function PlatformSidebarOther() {
               setIssueReportOpen("feature");
             }}
           >
-            <HelpingHand /> Feature request
+            <HelpingHand /> {t("featureRequest")}
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>

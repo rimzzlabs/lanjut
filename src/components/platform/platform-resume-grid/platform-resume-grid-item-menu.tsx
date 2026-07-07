@@ -1,6 +1,7 @@
 "use client";
 
 import { Download, MoreHorizontal, Pen, Trash } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Fragment, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +24,7 @@ interface PlatformResumeGridItemMenuProps {
 export function PlatformResumeGridItemMenu({
   resume,
 }: PlatformResumeGridItemMenuProps) {
+  const t = useTranslations("platform.grid");
   const [open, setOpen] = useState({
     rename: false,
     remove: false,
@@ -49,24 +51,24 @@ export function PlatformResumeGridItemMenu({
     <Fragment>
       <DropdownMenu>
         <DropdownMenuTrigger render={<Button size="icon-sm" variant="ghost" />}>
-          <span className="sr-only">Menu</span>
+          <span className="sr-only">{t("menu")}</span>
           <MoreHorizontal />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
-            <DropdownMenuLabel>Menu</DropdownMenuLabel>
+            <DropdownMenuLabel>{t("menu")}</DropdownMenuLabel>
             <DropdownMenuItem onClick={openRenameDialog}>
-              <Pen /> Rename
+              <Pen /> {t("rename")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={openDownloadDialog}>
               <Download />
-              Download
+              {t("download")}
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
 
             <DropdownMenuItem variant="destructive" onClick={openRemoveDialog}>
-              <Trash /> Delete
+              <Trash /> {t("delete")}
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>

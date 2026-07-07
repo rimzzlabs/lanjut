@@ -1,6 +1,7 @@
 "use client";
 
 import { Award, Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -27,6 +28,8 @@ function emptyCertification(): CertificationItemValues {
 export function EditorSectionCertificationsForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
+  const t = useTranslations("editor.certifications");
+  const tc = useTranslations("editor.common");
 
   const form = useForm<CertificationsFormValues>({
     defaultValues: open ? toCertificationsValues(open) : { certifications: [] },
@@ -48,9 +51,9 @@ export function EditorSectionCertificationsForm() {
   return (
     <form>
       <FieldSet className="gap-3">
-        <FieldLegend className="sr-only">Certifications</FieldLegend>
+        <FieldLegend className="sr-only">{t("legend")}</FieldLegend>
         <FieldDescription className="sr-only">
-          Licenses and certifications
+          {t("legendDesc")}
         </FieldDescription>
         <Button
           type="button"
@@ -58,14 +61,15 @@ export function EditorSectionCertificationsForm() {
           variant="outline"
           className="w-full"
         >
-          <Plus /> Add Certification
+          <Plus /> <span className="sr-only">{tc("add")} </span>
+          {t("add")}
         </Button>
 
         {fields.length === 0 ? (
           <EmptyState
             icon={Award}
-            title="No certifications yet"
-            description="Add licenses and certifications you've earned."
+            title={t("emptyTitle")}
+            description={t("emptyDescription")}
           />
         ) : (
           <FieldGroup className="gap-4">

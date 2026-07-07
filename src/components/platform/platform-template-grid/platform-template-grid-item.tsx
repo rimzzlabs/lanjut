@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ResumeThumbnail } from "@/components/editor/resume-thumbnail";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
@@ -26,6 +27,7 @@ export function PlatformTemplateGridItem({
   template,
 }: PlatformTemplateGridItemProps) {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("platform.templates");
 
   return (
     <Card size="sm" className="pt-0">
@@ -35,7 +37,7 @@ export function PlatformTemplateGridItem({
         </PlatformPaperFrame>
         <button
           type="button"
-          aria-label={`Use ${template.name}`}
+          aria-label={t("use", { name: template.name })}
           onClick={() => setOpen(true)}
           className="absolute inset-0 cursor-pointer focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
         />
@@ -50,7 +52,7 @@ export function PlatformTemplateGridItem({
 
       <CardFooter className="mt-auto">
         <Button size="lg" className="w-full" onClick={() => setOpen(true)}>
-          Use {template.name}
+          {t("use", { name: template.name })}
         </Button>
       </CardFooter>
 

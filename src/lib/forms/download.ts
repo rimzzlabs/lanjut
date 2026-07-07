@@ -1,8 +1,14 @@
 import { z } from "zod";
 
-export const downloadFileSchema = z.object({
-  format: z.enum(["pdf", "docx", "txt"]),
-  fileName: z.string().trim().min(1, "Name the file before downloading."),
-});
+type Translator = (key: string) => string;
 
-export type DownloadFileForm = z.infer<typeof downloadFileSchema>;
+export function createDownloadFileSchema(t: Translator) {
+  return z.object({
+    format: z.enum(["pdf", "docx", "txt"]),
+    fileName: z.string().trim().min(1, t("fileNameRequired")),
+  });
+}
+
+export type DownloadFileForm = z.infer<
+  ReturnType<typeof createDownloadFileSchema>
+>;

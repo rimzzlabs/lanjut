@@ -71,6 +71,7 @@ export function createEmptyResume(title: string): Resume {
     schemaVersion: CURRENT_SCHEMA_VERSION,
     title,
     templateId: "awal",
+    language: "en",
     header: createEmptyHeader(),
     sections: [
       createEmptySection("summary"),

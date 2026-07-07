@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { requiredRichTextDoc } from "./rich-text";
 
+type Translator = (key: string) => string;
+
 /** Must match the `layer` dropdown options in .github/ISSUE_TEMPLATE/feature-request.yml. */
 export const FEATURE_LAYERS = [
   "Presentation (typography, spacing, color, ordering)",
@@ -9,10 +11,14 @@ export const FEATURE_LAYERS = [
   "Other / not sure",
 ] as const;
 
-export const featureRequestSchema = z.object({
-  problem: requiredRichTextDoc("Describe the problem this would solve."),
-  proposal: requiredRichTextDoc("Describe how you imagine it working."),
-  layer: z.enum(FEATURE_LAYERS),
-});
+export function createFeatureRequestSchema(t: Translator) {
+  return z.object({
+    problem: requiredRichTextDoc(t("featureProblem")),
+    proposal: requiredRichTextDoc(t("featureProposal")),
+    layer: z.enum(FEATURE_LAYERS),
+  });
+}
 
-export type FeatureRequestForm = z.infer<typeof featureRequestSchema>;
+export type FeatureRequestForm = z.infer<
+  ReturnType<typeof createFeatureRequestSchema>
+>;

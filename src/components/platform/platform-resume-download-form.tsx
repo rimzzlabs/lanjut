@@ -2,15 +2,17 @@
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Download } from "lucide-react";
-import { useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   EXPORT_FORMATS,
   type ExportFormat,
 } from "@/components/editor/download-resume";
+import { useValidationTranslator } from "@/hooks/use-validation-translator";
 import {
+  createDownloadFileSchema,
   type DownloadFileForm,
-  downloadFileSchema,
 } from "@/lib/forms/download";
 import { Button } from "../ui/button";
 import { Field, FieldLabel } from "../ui/field";
@@ -32,8 +34,12 @@ interface PlatformResumeDownloadFormProps {
 export function PlatformResumeDownloadForm(
   props: PlatformResumeDownloadFormProps,
 ) {
+  const t = useTranslations("forms.download");
+  const tc = useTranslations("forms.common");
+  const tv = useValidationTranslator();
+  const schema = useMemo(() => createDownloadFileSchema(tv), [tv]);
   const form = useForm<DownloadFileForm>({
-    resolver: standardSchemaResolver(downloadFileSchema),
+    resolver: standardSchemaResolver(schema),
     defaultValues: { format: "pdf", fileName: props.defaultFileName },
     mode: "onChange",
   });
@@ -53,7 +59,7 @@ export function PlatformResumeDownloadForm(
   return (
     <form onSubmit={onSubmit}>
       <Field>
-        <FieldLabel>Format</FieldLabel>
+        <FieldLabel>{t("format")}</FieldLabel>
         <Controller
           control={form.control}
           name="format"
@@ -83,12 +89,12 @@ export function PlatformResumeDownloadForm(
         name="fileName"
         render={({ field, fieldState }) => (
           <Field className="mt-3">
-            <FieldLabel htmlFor={field.name}>File name</FieldLabel>
+            <FieldLabel htmlFor={field.name}>{t("fileName")}</FieldLabel>
             <InputGroup>
               <InputGroupInput
                 aria-invalid={fieldState.invalid}
                 id={field.name}
-                placeholder="Senior Frontend Engineer"
+                placeholder={t("fileNamePlaceholder")}
                 {...field}
               />
               <InputGroupAddon align="inline-end">
@@ -104,7 +110,7 @@ export function PlatformResumeDownloadForm(
         className="mt-3 w-full"
         disabled={props.generating || !form.formState.isValid}
       >
-        {props.generating ? <Spinner /> : <Download />} Download
+        {props.generating ? <Spinner /> : <Download />} {tc("download")}
       </Button>
     </form>
   );

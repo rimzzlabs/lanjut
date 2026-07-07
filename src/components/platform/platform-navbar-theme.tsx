@@ -2,6 +2,7 @@
 
 import { A, F, O, pipe } from "@mobily/ts-belt";
 import { Laptop2, Moon, Sun } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useIsClient } from "@/hooks/use-is-client";
 import { Button } from "../ui/button";
@@ -16,14 +17,15 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 const THEMES = [
-  { label: "System", value: "system", icon: Laptop2 },
-  { label: "Light", value: "light", icon: Sun },
-  { label: "Dark", value: "dark", icon: Moon },
+  { value: "system", icon: Laptop2 },
+  { value: "light", icon: Sun },
+  { value: "dark", icon: Moon },
 ] as const;
 
 export function PlatformNavbarTheme() {
   const mounted = useIsClient();
   const { theme, setTheme } = useTheme();
+  const t = useTranslations("platform.theme");
 
   const selected = pipe(
     THEMES,
@@ -46,18 +48,18 @@ export function PlatformNavbarTheme() {
             />
           }
         >
-          <selected.icon /> {selected.label}
+          <selected.icon /> {t(selected.value)}
         </TooltipTrigger>
 
-        <TooltipContent>Choose theme</TooltipContent>
+        <TooltipContent>{t("choose")}</TooltipContent>
       </Tooltip>
 
       <DropdownMenuContent align="end">
         <DropdownMenuGroup>
           <DropdownMenuRadioGroup value={theme} onValueChange={onChangeTheme}>
-            {THEMES.map((t) => (
-              <DropdownMenuRadioItem key={t.value} value={t.value}>
-                <t.icon /> {t.label}
+            {THEMES.map((item) => (
+              <DropdownMenuRadioItem key={item.value} value={item.value}>
+                <item.icon /> {t(item.value)}
               </DropdownMenuRadioItem>
             ))}
           </DropdownMenuRadioGroup>

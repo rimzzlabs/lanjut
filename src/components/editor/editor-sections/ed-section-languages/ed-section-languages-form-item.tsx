@@ -1,4 +1,5 @@
 import { Trash } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type Control, Controller } from "react-hook-form";
 import { SortableItem } from "@/components/shared/sortable-list";
 import { Button } from "@/components/ui/button";
@@ -31,8 +32,10 @@ interface EditorSectionLanguagesFormItemProps {
 export function EditorSectionLanguagesFormItem(
   props: EditorSectionLanguagesFormItemProps,
 ) {
+  const t = useTranslations("editor.languages");
+
   return (
-    <SortableItem id={props.id} handleLabel="Reorder language">
+    <SortableItem id={props.id} handleLabel={t("reorder")}>
       <div className="flex flex-col md:flex-row md:items-center gap-2">
         <div className="flex items-center gap-2">
           <Controller
@@ -40,7 +43,11 @@ export function EditorSectionLanguagesFormItem(
             name={`languages.${props.index}.name`}
             render={({ field, fieldState }) => (
               <Field className="flex-1">
-                <Input placeholder="English" {...field} id={field.name} />
+                <Input
+                  placeholder={t("namePlaceholder")}
+                  {...field}
+                  id={field.name}
+                />
                 <FieldError errors={[fieldState.error]} />
               </Field>
             )}
@@ -54,7 +61,7 @@ export function EditorSectionLanguagesFormItem(
             onClick={() => props.onRemoveField(props.index)}
           >
             <Trash className="size-3.5 stroke-destructive" />
-            <span className="sr-only">Remove language</span>
+            <span className="sr-only">{t("remove")}</span>
           </Button>
         </div>
 
@@ -67,7 +74,7 @@ export function EditorSectionLanguagesFormItem(
               onValueChange={(value) => field.onChange(value)}
             >
               <SelectTrigger className="w-[87.888%] md:w-40">
-                <SelectValue placeholder="Proficiency" />
+                <SelectValue placeholder={t("proficiency")} />
               </SelectTrigger>
               <SelectContent>
                 {LANGUAGE_LEVELS.map((level) => (
@@ -88,7 +95,7 @@ export function EditorSectionLanguagesFormItem(
           onClick={() => props.onRemoveField(props.index)}
         >
           <Trash className="size-3.5 stroke-destructive" />
-          <span className="sr-only">Remove language</span>
+          <span className="sr-only">{t("remove")}</span>
         </Button>
       </div>
     </SortableItem>

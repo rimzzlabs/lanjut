@@ -1,0 +1,502 @@
+{
+  "meta": {
+    "title": "Lanjut: Pembuat résumé ATS gratis dan local-first",
+    "description": "Lanjut adalah pembuat résumé open source gratis yang sepenuhnya berada di browser Anda; tanpa akun, tanpa unggahan. Atur gayanya bebas; setiap ekspor tersusun agar lolos sistem pelacakan pelamar."
+  },
+  "language": {
+    "label": "Bahasa",
+    "choose": "Pilih bahasa",
+    "en": "Bahasa Inggris",
+    "id": "Bahasa Indonesia"
+  },
+  "hero": {
+    "badge": "Gratis & open source",
+    "srHeading": "Lanjut, pembuat resume ATS:",
+    "headingLine1": "Dapatkan Panggilan Interview,",
+    "headingLine2": "Bukan Tumpukan Penolakan.",
+    "description": "Lanjut adalah pembuat résumé local-first yang sepenuhnya berjalan di browser Anda. Tanpa akun, tanpa unggahan. Atur gayanya sesuka Anda, dan setiap ekspor tersusun rapi agar lolos sistem pelacakan pelamar.",
+    "ctaPrimary": "Mulai buat gratis",
+    "ctaSecondary": "Lihat Template",
+    "stat1Value": "100%",
+    "stat1Label": "Local-first",
+    "stat2Value": "Tanpa",
+    "stat2Label": "Akun",
+    "stat3Value": "3",
+    "stat3Label": "Format ekspor"
+  },
+  "previewEditor": {
+    "heading": "Editor yang detail",
+    "description": "Bangun résumé yang aman untuk ATS di editor yang fokus. Tanpa AI asal-asalan, tanpa fitur yang membingungkan. Langsung ke inti, tanpa membuang waktu Anda.",
+    "imageAlt": "Editor Lanjut",
+    "caption": "Editor Résumé ATS Lanjut"
+  },
+  "howItWorks": {
+    "heading": "Cara kerjanya",
+    "subheading": "Résumé yang sama di setiap tahap: apa yang Anda ketik, apa yang dilihat perekrut, dan apa yang dibaca ulang oleh parser.",
+    "step1Kicker": "01 · Template",
+    "step1Title": "Pilih template",
+    "step1Description": "Mulai dari template yang Anda suka. Masing-masing hanya mengubah tipografi, spasi, dan aksen; struktur di baliknya tetap aman untuk ATS.",
+    "step2Kicker": "02 · Konten",
+    "step2Title": "Ketik sekali saja",
+    "step2Description": "Isi bagian terstruktur: pengalaman, pendidikan, keahlian. Setiap perubahan tersimpan di penyimpanan browser Anda dan tidak di tempat lain.",
+    "step3Kicker": "03 · Ekspor",
+    "step3Title": "Lolos dari parser",
+    "step3Description": "Unduh PDF, DOCX, atau teks biasa, dan setiap extractor membacanya kembali sesuai urutan yang Anda tulis. Itulah seluruh rahasianya.",
+    "screenshotTemplatesAlt": "Galeri template Lanjut yang menampilkan résumé yang sama dalam gaya tipografi berbeda",
+    "screenshotEditorAlt": "Editor Lanjut dengan pratinjau résumé di samping bagian-bagian terstruktur",
+    "terminalCaption": "yang dibaca ATS",
+    "terminalReadingOrder": "✓ urutan baca tetap utuh"
+  },
+  "closure": {
+    "kicker": "04 · Lamar",
+    "heading": "Lanjut. Resume. Résumé.",
+    "description": "Namanya adalah janjinya: lanjut berarti meneruskan. Pilih template atau mulai dari halaman kosong; keduanya gratis, open source, dan résumé Anda tidak pernah meninggalkan browser.",
+    "ctaPrimary": "Buat résumé Anda",
+    "ctaSecondary": "Lihat template"
+  },
+  "footer": {
+    "ariaLabel": "Footer",
+    "tagline": "Local-first: résumé Anda tidak pernah meninggalkan browser.",
+    "startBuilding": "Mulai membuat",
+    "templates": "Template",
+    "github": "GitHub",
+    "rights": "© {year} Lanjut. Open source, berlisensi AGPL-3.0."
+  },
+  "tour": {
+    "controls": {
+      "skip": "Lewati",
+      "back": "Kembali",
+      "next": "Lanjut",
+      "done": "Selesai"
+    },
+    "library": {
+      "welcome": {
+        "title": "Selamat datang di Lanjut",
+        "content": "Pembuat résumé gratis dan local-first. Semua yang Anda tulis tetap di browser ini; tidak ada yang pernah dikirim ke server."
+      },
+      "create": {
+        "title": "Buat résumé",
+        "content": "Mulai résumé baru dari sini. Anda bisa menyimpan sebanyak yang Anda mau."
+      },
+      "search": {
+        "title": "Temukan nanti",
+        "content": "Cari pustaka Anda berdasarkan judul saat koleksinya bertambah."
+      },
+      "nav": {
+        "title": "Berpindah halaman",
+        "content": "Beralih antara dasbor dan galeri template dari sini."
+      },
+      "resumes": {
+        "title": "Résumé Anda",
+        "content": "Setiap résumé yang Anda buat muncul di sini; pilih salah satu untuk masuk ke editor."
+      },
+      "replay": {
+        "title": "Putar ulang kapan saja",
+        "content": "Jalankan ulang panduan untuk halaman yang sedang Anda buka dengan tombol ini."
+      }
+    },
+    "template": {
+      "browse": {
+        "title": "Jelajahi template",
+        "content": "Template hanya mengubah presentasi: tipografi, spasi, aksen. Strukturnya tetap linear agar parser ATS selalu dapat membaca résumé Anda."
+      },
+      "search": {
+        "title": "Cari",
+        "content": "Cari template berdasarkan nama."
+      },
+      "sort": {
+        "title": "Urutkan",
+        "content": "Urutkan galeri berdasarkan nama atau yang terbaru."
+      }
+    },
+    "editor": {
+      "preview": {
+        "title": "Pratinjau langsung",
+        "content": "Kertas ini adalah résumé Anda persis seperti yang akan diekspor. Diperbarui saat Anda mengetik dan otomatis tersimpan di browser ini."
+      },
+      "sections": {
+        "title": "Isi detail Anda",
+        "content": "Setiap bagian mengikuti struktur tetap yang dapat dibaca ATS. Kerjakan dari atas ke bawah."
+      },
+      "download": {
+        "title": "Unduh",
+        "content": "Ekspor sebagai PDF, DOCX, atau teks biasa saat Anda siap melamar."
+      }
+    },
+    "editor-sheet": {
+      "preview": {
+        "title": "Pratinjau langsung",
+        "content": "Kertas ini adalah résumé Anda persis seperti yang akan diekspor. Diperbarui saat Anda mengetik dan otomatis tersimpan di browser ini."
+      },
+      "edit": {
+        "title": "Isi detail Anda",
+        "content": "Ketuk Edit untuk membuka formulir bagian. Setiap bagian mengikuti struktur tetap yang dapat dibaca ATS."
+      }
+    }
+  },
+  "platform": {
+    "breadcrumb": {
+      "platform": "Platform",
+      "editor": "Editor",
+      "browseTemplates": "Jelajahi Template"
+    },
+    "theme": {
+      "system": "Sistem",
+      "light": "Terang",
+      "dark": "Gelap",
+      "choose": "Pilih tema",
+      "appearance": "Tampilan",
+      "chooseAppearance": "Pilih Tampilan"
+    },
+    "changelog": {
+      "whatsNew": "Yang baru",
+      "description": "Peningkatan terbaru untuk Lanjut, dengan bahasa yang sederhana.",
+      "latest": "Terbaru",
+      "fullChangelog": "Changelog lengkap di GitHub",
+      "entries": {
+        "0_6_0": [
+          "Ubah urutan keahlian dan bahasa Anda: pegang gagang di samping entri lalu seret ke posisinya, atau gunakan keyboard untuk memindahkannya. Urutan baru langsung mengalir ke pratinjau dan setiap ekspor.",
+          "Bagian kosong kini memberi tahu Anda: alih-alih tombol sendirian, setiap bagian tanpa entri menampilkan petunjuk singkat tentang apa yang bisa ditambahkan.",
+          "Judul hero di halaman depan kini memiliki gradien yang disegarkan, disesuaikan untuk mode terang maupun gelap."
+        ],
+        "0_5_0": [
+          "Ganti template tanpa meninggalkan editor: tab Tata Letak yang baru menampilkan résumé Anda dalam setiap template, dan satu klik menerapkan pilihan Anda.",
+          "Mulai dari nol saat Anda mau: hapus centang \"Isi otomatis dengan contoh konten\" di dialog pembuatan untuk memulai dengan dokumen kosong alih-alih contoh résumé.",
+          "Bagian kini bisa dikosongkan sepenuhnya: setiap entri memiliki tombol hapus, dan menghapus yang terakhir cukup menghilangkan bagian itu dari pratinjau sampai Anda menambahkan lagi."
+        ],
+        "0_4_0": [
+          "Bagian Pengalaman Organisasi baru: tampilkan peran sukarelawan, mahasiswa, dan komunitas dengan tanggal dan sorotan, sama seperti pengalaman kerja. Muncul di setiap template dan ekspor, dan résumé Anda yang sudah ada mendapatkannya secara otomatis.",
+          "Résumé tersimpan Anda lebih aman saat pembaruan aplikasi: salinan cadangan disimpan di perangkat Anda sebelum peningkatan format data apa pun, dan résumé yang belum dapat dibaca aplikasi ditandai dengan pemberitahuan alih-alih hilang.",
+          "Tur berpemandu kini memandu Anda melalui dasbor, template, dan editor pada kunjungan pertama Anda.",
+          "Halaman depan menjelaskan cara kerja Lanjut, diakhiri dengan cara satu klik untuk memulai résumé baru.",
+          "Menemukan bug atau butuh fitur? Laporkan dari bilah sisi; kami mengisi otomatis isu GitHub untuk Anda.",
+          "Di ponsel Anda, dialog kini terbuka sebagai laci yang lebih mudah dijangkau dan disingkirkan dengan geseran."
+        ],
+        "0_3_0": [
+          "Jelajahi template di halaman tersendiri, dengan pencarian dan pengurutan.",
+          "Lima template baru: Ketat, Luasa, Tebal, Klasik, dan Ketik.",
+          "Kartu template dan résumé kini menampilkan gambar mini langsung dari dokumen asli Anda.",
+          "Bilah sisi menyorot posisi Anda, dan setiap résumé mendapat menu aksi cepat."
+        ],
+        "0_2_0": [
+          "Ekspor résumé Anda sebagai PDF, DOCX, atau teks biasa.",
+          "Tebal, miring, tautan, dan daftar kini tampil di pratinjau langsung.",
+          "Editor mencakup seluruh rangkaian bagian: ringkasan, pengalaman, pendidikan, keahlian, sertifikat, dan bahasa."
+        ]
+      }
+    },
+    "download": {
+      "trigger": "Résumé",
+      "srDownload": "Unduh",
+      "title": "Unduh résumé",
+      "description": "Pilih format dan beri nama berkas Anda."
+    },
+    "menu": {
+      "label": "Menu",
+      "downloadResume": "Unduh Résumé"
+    },
+    "sidebar": {
+      "home": "Lanjut - Halaman Utama",
+      "logoAlt": "Logo Lanjut",
+      "localFirst": "Local-First",
+      "tagline": "Pembuat Resume ATS",
+      "platform": "Platform",
+      "dashboard": "Dasbor",
+      "browseTemplate": "Jelajahi Template",
+      "other": "Lainnya",
+      "guide": "Panduan",
+      "reportBug": "Laporkan bug",
+      "featureRequest": "Permintaan fitur",
+      "myResume": "Résumé Saya",
+      "createResume": "Buat Résumé",
+      "noResume": "Belum ada résumé",
+      "noResumeDescription": "Saat Anda menambahkan résumé, semuanya akan terlihat di sini.",
+      "itemMenu": "Menu",
+      "modify": "Ubah <b>{title}</b>",
+      "rename": "Ganti nama",
+      "delete": "Hapus"
+    },
+    "toolbar": {
+      "searchResume": "Cari résumé Anda",
+      "resume": "Résumé",
+      "searchTemplates": "Cari template",
+      "sortNameAsc": "Nama (A–Z)",
+      "sortNameDesc": "Nama (Z–A)",
+      "sortNewest": "Terbaru"
+    },
+    "emptyState": {
+      "title": "Belum ada résumé",
+      "description": "Belum ada yang tersimpan di perangkat ini. Mulai dari template, atau buat résumé kosong.",
+      "browseTemplates": "Jelajahi template",
+      "newResume": "Résumé baru"
+    },
+    "unreadable": {
+      "title": "Beberapa résumé memerlukan versi aplikasi yang lebih baru",
+      "description": "{count, plural, other {# résumé}} disimpan oleh versi Lanjut yang lebih baru dari yang dijalankan tab ini. Semuanya tetap tersimpan aman di perangkat ini. Segarkan halaman untuk memperbarui aplikasi dan melihatnya kembali."
+    },
+    "grid": {
+      "emptyTitle": "Tidak ada résumé yang cocok",
+      "create": "Buat “{query}”",
+      "errorTitle": "Gagal memuat résumé Anda",
+      "errorDescription": "Tidak ada yang dihapus. Pustaka hanya gagal dimuat dari penyimpanan browser ini. Segarkan halaman untuk mencoba lagi.",
+      "open": "Buka {title}",
+      "edited": "Diedit",
+      "menu": "Menu",
+      "rename": "Ganti nama",
+      "download": "Unduh",
+      "delete": "Hapus",
+      "newResume": "Résumé baru"
+    },
+    "templates": {
+      "noMatch": "Tidak ada template yang cocok dengan “{query}”.",
+      "use": "Gunakan {name}",
+      "useTemplate": "Gunakan template {name}",
+      "descriptions": {
+        "awal": "Templat awal yang bersih, satu kolom, dan aman untuk ATS. Urutan baca linear, tanpa kolom atau tabel, dengan ruang untuk setiap bagian.",
+        "ketat": "Klasik serif yang ringkas: judul bagian bergaris di tengah, kolom kontak rata kanan, dan tanggal miring. Padat tanpa terasa sesak.",
+        "luasa": "Tata letak minimalis yang lapang: judul berspasi lebar, satu baris kontak, dan bilah aksen tipis. Ruang kosong yang leluasa di seluruh bagian.",
+        "tebal": "Pernyataan yang tebal dan modern: nama berukuran besar, judul huruf kapital tebal di atas garis tebal, dan hierarki tipografi yang kuat.",
+        "klasik": "CV serif tradisional: nama dan kontak di tengah, judul yang tenang di tengah, dan tanggal miring. Abadi dan formal.",
+        "ketik": "Tampilan teknis bernuansa mesin tik: nama, judul, dan tanggal monospace di atas isi sans yang bersih. Dibuat untuk developer."
+      }
+    }
+  },
+  "forms": {
+    "common": {
+      "cancel": "Batal",
+      "save": "Simpan",
+      "delete": "Hapus",
+      "download": "Unduh",
+      "openIssue": "Buka isu GitHub"
+    },
+    "validation": {
+      "titleMin": "Gunakan minimal {min} karakter.",
+      "titleMax": "Maksimal {max} karakter.",
+      "fileNameRequired": "Beri nama berkas sebelum mengunduh.",
+      "bugWhatHappened": "Jelaskan apa yang salah.",
+      "featureProblem": "Jelaskan masalah yang ingin diselesaikan.",
+      "featureProposal": "Jelaskan bagaimana Anda membayangkannya bekerja."
+    },
+    "create": {
+      "title": "Buat résumé baru",
+      "description": "Anda dapat membuat résumé baru. Tapi mari beri nama résumé Anda dulu.",
+      "label": "Label résumé",
+      "placeholder": "Software Engineer",
+      "fieldDescription": "Minimal 3 karakter, maksimal 100 karakter.",
+      "prefill": "Isi otomatis dengan contoh konten",
+      "template": "Template"
+    },
+    "rename": {
+      "title": "Ganti nama",
+      "description": "Anda dapat mengganti label résumé ini menjadi apa pun. Jika nilainya sama seperti sebelumnya, perubahan tidak akan disimpan.",
+      "label": "Label résumé",
+      "placeholder": "mis: Software Engineer",
+      "fieldDescription": "Minimal 3 karakter. Maksimal 100 karakter."
+    },
+    "delete": {
+      "title": "Hapus <b>{title}</b>?",
+      "description": "Ini akan menghapus <b>{title}</b>. <b>Tindakan ini tidak dapat dibatalkan</b>. Anda yakin?"
+    },
+    "download": {
+      "title": "Unduh {title}",
+      "description": "Pilih format dan beri nama berkas Anda. Ekspor dibuat di browser Anda.",
+      "missing": "Résumé ini tidak dapat dimuat dari penyimpanan browser ini.",
+      "drawerTitle": "Unduh résumé",
+      "drawerDescription": "Pilih format dan beri nama berkas Anda.",
+      "format": "Format",
+      "fileName": "Nama berkas",
+      "fileNamePlaceholder": "Senior Frontend Engineer"
+    },
+    "bug": {
+      "title": "Laporkan bug",
+      "description": "Ini membuka isu GitHub yang sudah terisi untuk Anda tinjau dan kirim; diperlukan akun GitHub, dan detail browser Anda sudah diisikan.",
+      "whatHappened": "Apa yang terjadi?",
+      "whatHappenedPlaceholder": "Pratinjau editor menjadi kosong ketika...",
+      "steps": "Langkah untuk mereproduksi",
+      "stepsPlaceholder": "1. Buat résumé (daftar bernomor cocok di sini)",
+      "stepsDescription": "Opsional di sini; Anda juga bisa mengisinya di GitHub.",
+      "area": "Di mana bug muncul?",
+      "areaPlaceholder": "Area"
+    },
+    "feature": {
+      "title": "Ajukan fitur",
+      "description": "Ini membuka isu GitHub yang sudah terisi untuk Anda tinjau dan kirim; diperlukan akun GitHub. Perhatikan bahwa struktur résumé (tabel, kolom, gambar) memang di luar cakupan; presentasi bebas diusulkan.",
+      "problem": "Masalah apa yang diselesaikan ini?",
+      "problemPlaceholder": "Saat menyesuaikan résumé untuk peran berbeda, saya harus...",
+      "problemDescription": "Jelaskan situasi saat Anda membutuhkan ini, bukan solusinya.",
+      "proposal": "Solusi yang diusulkan",
+      "proposalPlaceholder": "Bagaimana Anda membayangkannya bekerja?",
+      "layer": "Lapisan mana yang tersentuh?",
+      "layerPlaceholder": "Lapisan"
+    }
+  },
+  "editor": {
+    "common": {
+      "add": "Tambah"
+    },
+    "layout": {
+      "documentLanguage": "Bahasa dokumen"
+    },
+    "chrome": {
+      "edit": "Edit",
+      "editorTitle": "Editor",
+      "editorDescription": "Editor Résumé",
+      "tabEditor": "Editor",
+      "tabLayout": "Tata Letak",
+      "notFound": "Résumé tidak ditemukan",
+      "didYouMean": "maksud Anda:",
+      "notExist": "Résumé ini tidak ada di penyimpanan browser ini.",
+      "headTo": "atau menuju ke",
+      "dashboard": "Dasbor",
+      "or": "atau",
+      "browseTemplates": "Jelajahi Template",
+      "showSection": "Tampilkan bagian",
+      "hideSection": "Sembunyikan bagian"
+    },
+    "dateRange": {
+      "startDate": "Tanggal Mulai",
+      "startPlaceholder": "Tanggal mulai",
+      "endDate": "Tanggal Selesai",
+      "endPlaceholder": "Tanggal selesai",
+      "present": "Sekarang"
+    },
+    "personal": {
+      "accordionTitle": "Informasi Pribadi",
+      "personalInfo": "Informasi Pribadi",
+      "personalInfoDesc": "Agar HRD dapat mengenali Anda",
+      "firstName": "Nama depan",
+      "firstNamePlaceholder": "John",
+      "lastName": "Nama belakang",
+      "lastNamePlaceholder": "Doe",
+      "jobTitle": "Jabatan",
+      "jobTitlePlaceholder": "UX Engineer",
+      "contactInfo": "Informasi Kontak",
+      "contactInfoDesc": "Agar HRD dapat menghubungi Anda dengan mudah",
+      "email": "Alamat email",
+      "emailPlaceholder": "john@acme.inc",
+      "phone": "Nomor telepon",
+      "phonePlaceholder": "+62812345678",
+      "website": "Situs web",
+      "websitePlaceholder": "rimzzlabs.com",
+      "location": "Lokasi",
+      "locationDesc": "Dari mana asal Anda?",
+      "city": "Kota",
+      "cityPlaceholder": "Pandeglang",
+      "province": "Provinsi",
+      "provincePlaceholder": "Banten",
+      "country": "Negara",
+      "countryPlaceholder": "Indonesia"
+    },
+    "summary": {
+      "accordionTitle": "Ringkasan Profesional",
+      "label": "Ringkasan Profesional",
+      "placeholder": "Saya seorang UX engineer yang antusias. Membuat pengalaman yang menarik secara visual..."
+    },
+    "experience": {
+      "accordionTitle": "Pengalaman Profesional",
+      "legend": "Pengalaman Profesional",
+      "legendDesc": "Jelaskan pengalaman Anda sebelumnya",
+      "add": "Pengalaman Profesional",
+      "emptyTitle": "Belum ada pengalaman",
+      "emptyDescription": "Tambahkan peran Anda untuk menyusun riwayat kerja.",
+      "itemLegend": "Pengalaman {index}",
+      "jobTitle": "Jabatan",
+      "jobTitlePlaceholder": "UX Engineer",
+      "company": "Perusahaan",
+      "companyPlaceholder": "Acme Inc.",
+      "companyWebsite": "Situs web perusahaan",
+      "companyWebsitePlaceholder": "acme.com",
+      "present": "Saya masih bekerja di sini",
+      "summary": "Ringkasan",
+      "summaryPlaceholder": "Membuat aplikasi real-time yang....",
+      "remove": "Hapus"
+    },
+    "organizations": {
+      "accordionTitle": "Pengalaman Organisasi",
+      "legend": "Pengalaman Organisasi",
+      "legendDesc": "Jelaskan peran sukarelawan, mahasiswa, dan komunitas Anda",
+      "add": "Pengalaman Organisasi",
+      "emptyTitle": "Belum ada organisasi",
+      "emptyDescription": "Tambahkan peran sukarelawan, mahasiswa, atau komunitas di sini.",
+      "itemLegend": "Organisasi {index}",
+      "role": "Peran",
+      "rolePlaceholder": "Head of Public Relations",
+      "organization": "Organisasi",
+      "organizationPlaceholder": "Student Executive Board",
+      "present": "Saya masih aktif di sini",
+      "summary": "Ringkasan",
+      "summaryPlaceholder": "Mengorganisir acara yang....",
+      "remove": "Hapus"
+    },
+    "education": {
+      "accordionTitle": "Pendidikan",
+      "legend": "Pendidikan",
+      "legendDesc": "Tempat Anda menempuh pendidikan",
+      "add": "Pendidikan",
+      "emptyTitle": "Belum ada pendidikan",
+      "emptyDescription": "Tambahkan gelar, sekolah, dan kursus Anda.",
+      "itemLegend": "Pendidikan {index}",
+      "institution": "Institusi",
+      "institutionPlaceholder": "State University",
+      "degree": "Gelar",
+      "degreePlaceholder": "B.Sc. Computer Science",
+      "location": "Lokasi",
+      "locationPlaceholder": "Boston, MA",
+      "present": "Saya masih belajar di sini",
+      "details": "Detail",
+      "detailsPlaceholder": "Lulus dengan predikat cum laude. Mata kuliah relevan…",
+      "remove": "Hapus"
+    },
+    "certifications": {
+      "accordionTitle": "Sertifikat",
+      "legend": "Sertifikat",
+      "legendDesc": "Lisensi dan sertifikat",
+      "add": "Sertifikat",
+      "emptyTitle": "Belum ada sertifikat",
+      "emptyDescription": "Tambahkan lisensi dan sertifikat yang Anda peroleh.",
+      "itemLegend": "Sertifikat {index}",
+      "name": "Nama",
+      "namePlaceholder": "AWS Certified Solutions Architect",
+      "issuer": "Penerbit",
+      "issuerPlaceholder": "Amazon Web Services",
+      "url": "URL Sertifikat",
+      "urlPlaceholder": "acme.com/cert",
+      "urlDesc": "Tautan ke sertifikat atau situs penerbit.",
+      "remove": "Hapus"
+    },
+    "skills": {
+      "accordionTitle": "Keahlian",
+      "legend": "Keahlian",
+      "legendDesc": "Cantumkan keahlian Anda",
+      "add": "Keahlian",
+      "emptyTitle": "Belum ada keahlian",
+      "emptyDescription": "Tambahkan alat dan teknologi yang Anda gunakan.",
+      "namePlaceholder": "TypeScript",
+      "proficiency": "Tingkat",
+      "reorder": "Ubah urutan keahlian",
+      "remove": "Hapus keahlian"
+    },
+    "languages": {
+      "accordionTitle": "Bahasa",
+      "legend": "Bahasa",
+      "legendDesc": "Bahasa yang Anda kuasai",
+      "add": "Bahasa",
+      "emptyTitle": "Belum ada bahasa",
+      "emptyDescription": "Tambahkan bahasa yang Anda kuasai dan tingkatnya.",
+      "namePlaceholder": "English",
+      "proficiency": "Tingkat",
+      "reorder": "Ubah urutan bahasa",
+      "remove": "Hapus bahasa"
+    },
+    "richText": {
+      "bold": "Tebal",
+      "italic": "Miring",
+      "bulletList": "Daftar poin",
+      "orderedList": "Daftar bernomor",
+      "link": "Tautan",
+      "linkPlaceholder": "https://example.com",
+      "apply": "Terapkan",
+      "removeLink": "Hapus tautan"
+    }
+  }
+}

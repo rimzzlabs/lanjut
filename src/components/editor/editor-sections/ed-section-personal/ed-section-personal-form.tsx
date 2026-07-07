@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { PhoneNumberInput } from "@/components/shared/phone-number-input";
@@ -24,6 +25,7 @@ import {
 export function EditorSectionPersonalForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
+  const t = useTranslations("editor.personal");
   const form = useForm<PersonalFormValues>({
     defaultValues: open ? toPersonalValues(open) : undefined,
   });
@@ -44,10 +46,10 @@ export function EditorSectionPersonalForm() {
       <FieldGroup>
         <FieldSet>
           <FieldLegend variant="label" className="sr-only">
-            Personal Informaton
+            {t("personalInfo")}
           </FieldLegend>
           <FieldDescription className="sr-only">
-            So HR can identify you
+            {t("personalInfoDesc")}
           </FieldDescription>
           <FieldGroup>
             <div className="grid grid-cols-2 gap-2">
@@ -56,8 +58,14 @@ export function EditorSectionPersonalForm() {
                 name="firstName"
                 render={({ field, fieldState }) => (
                   <Field>
-                    <FieldLabel htmlFor={field.name}>First name</FieldLabel>
-                    <Input placeholder="John" {...field} id={field.name} />
+                    <FieldLabel htmlFor={field.name}>
+                      {t("firstName")}
+                    </FieldLabel>
+                    <Input
+                      placeholder={t("firstNamePlaceholder")}
+                      {...field}
+                      id={field.name}
+                    />
                     <FieldError errors={[fieldState.error]} />
                   </Field>
                 )}
@@ -67,8 +75,14 @@ export function EditorSectionPersonalForm() {
                 name="lastName"
                 render={({ field, fieldState }) => (
                   <Field>
-                    <FieldLabel htmlFor={field.name}>Last name</FieldLabel>
-                    <Input placeholder="Doe" {...field} id={field.name} />
+                    <FieldLabel htmlFor={field.name}>
+                      {t("lastName")}
+                    </FieldLabel>
+                    <Input
+                      placeholder={t("lastNamePlaceholder")}
+                      {...field}
+                      id={field.name}
+                    />
                     <FieldError errors={[fieldState.error]} />
                   </Field>
                 )}
@@ -80,8 +94,12 @@ export function EditorSectionPersonalForm() {
               name="jobTitle"
               render={({ field, fieldState }) => (
                 <Field>
-                  <FieldLabel htmlFor={field.name}>Job Title</FieldLabel>
-                  <Input placeholder="UX Engineer" {...field} id={field.name} />
+                  <FieldLabel htmlFor={field.name}>{t("jobTitle")}</FieldLabel>
+                  <Input
+                    placeholder={t("jobTitlePlaceholder")}
+                    {...field}
+                    id={field.name}
+                  />
                   <FieldError errors={[fieldState.error]} />
                 </Field>
               )}
@@ -91,10 +109,10 @@ export function EditorSectionPersonalForm() {
 
         <FieldSet>
           <FieldLegend variant="label" className="sr-only">
-            Contact Information
+            {t("contactInfo")}
           </FieldLegend>
           <FieldDescription className="sr-only">
-            So HR can reach you easily
+            {t("contactInfoDesc")}
           </FieldDescription>
           <FieldGroup>
             <div className="grid gap-6 2xl:grid-cols-2 2xl:gap-3">
@@ -103,9 +121,9 @@ export function EditorSectionPersonalForm() {
                 name="email"
                 render={({ field, fieldState }) => (
                   <Field>
-                    <FieldLabel htmlFor={field.name}>Email address</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>{t("email")}</FieldLabel>
                     <Input
-                      placeholder="john@acme.inc"
+                      placeholder={t("emailPlaceholder")}
                       {...field}
                       id={field.name}
                     />
@@ -118,11 +136,11 @@ export function EditorSectionPersonalForm() {
                 name="phone"
                 render={({ field, fieldState }) => (
                   <Field>
-                    <FieldLabel htmlFor={field.name}>Phone Number</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>{t("phone")}</FieldLabel>
                     <PhoneNumberInput
                       id={field.name}
                       value={field.value}
-                      placeholder="+62812345678"
+                      placeholder={t("phonePlaceholder")}
                       onChange={field.onChange}
                       onBlur={field.onBlur}
                     />
@@ -136,11 +154,11 @@ export function EditorSectionPersonalForm() {
               name="website"
               render={({ field, fieldState }) => (
                 <Field>
-                  <FieldLabel htmlFor={field.name}>Website</FieldLabel>
+                  <FieldLabel htmlFor={field.name}>{t("website")}</FieldLabel>
                   <UrlInput
                     id={field.name}
                     value={field.value}
-                    placeholder="rimzzlabs.com"
+                    placeholder={t("websitePlaceholder")}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                   />
@@ -153,10 +171,10 @@ export function EditorSectionPersonalForm() {
 
         <FieldSet>
           <FieldLegend variant="label" className="sr-only">
-            Location
+            {t("location")}
           </FieldLegend>
           <FieldDescription className="sr-only">
-            Where are you from?
+            {t("locationDesc")}
           </FieldDescription>
           <FieldGroup>
             <div className="grid grid-cols-2 gap-3">
@@ -165,9 +183,9 @@ export function EditorSectionPersonalForm() {
                 name="city"
                 render={({ field, fieldState }) => (
                   <Field>
-                    <FieldLabel htmlFor={field.name}>City</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>{t("city")}</FieldLabel>
                     <Input
-                      placeholder="Pandeglang"
+                      placeholder={t("cityPlaceholder")}
                       {...field}
                       id={field.name}
                     />
@@ -180,8 +198,14 @@ export function EditorSectionPersonalForm() {
                 name="province"
                 render={({ field, fieldState }) => (
                   <Field>
-                    <FieldLabel htmlFor={field.name}>Province</FieldLabel>
-                    <Input placeholder="Banten" {...field} id={field.name} />
+                    <FieldLabel htmlFor={field.name}>
+                      {t("province")}
+                    </FieldLabel>
+                    <Input
+                      placeholder={t("provincePlaceholder")}
+                      {...field}
+                      id={field.name}
+                    />
                     <FieldError errors={[fieldState.error]} />
                   </Field>
                 )}
@@ -193,8 +217,12 @@ export function EditorSectionPersonalForm() {
               name="country"
               render={({ field, fieldState }) => (
                 <Field>
-                  <FieldLabel htmlFor={field.name}>Country</FieldLabel>
-                  <Input placeholder="Indonesia" {...field} id={field.name} />
+                  <FieldLabel htmlFor={field.name}>{t("country")}</FieldLabel>
+                  <Input
+                    placeholder={t("countryPlaceholder")}
+                    {...field}
+                    id={field.name}
+                  />
                   <FieldError errors={[fieldState.error]} />
                 </Field>
               )}

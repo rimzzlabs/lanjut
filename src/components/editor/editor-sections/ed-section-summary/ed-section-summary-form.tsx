@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -20,6 +21,7 @@ import {
 export function EditorSectionSummaryForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
+  const t = useTranslations("editor.summary");
   const form = useForm<SummaryFormValues>({
     defaultValues: open ? toSummaryValues(open) : undefined,
   });
@@ -43,12 +45,12 @@ export function EditorSectionSummaryForm() {
           name="summary"
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>Professional Summary</FieldLabel>
+              <FieldLabel htmlFor={field.name}>{t("label")}</FieldLabel>
               <RichTextEditor
                 id={field.name}
                 value={field.value}
                 features={PROSE_FEATURES}
-                placeholder="I'm a passionate UX engineer. Creating visually engaging..."
+                placeholder={t("placeholder")}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
               />

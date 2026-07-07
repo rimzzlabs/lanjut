@@ -1,8 +1,9 @@
 "use client";
 
 import { FilePlus, Inbox, Search } from "lucide-react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { Link } from "@/i18n/navigation";
 import { useResumeStore } from "@/lib/store";
 import { Button } from "../ui/button";
 import {
@@ -20,6 +21,7 @@ export function PlatformEmptyState() {
   const indexStatus = useResumeStore((state) => state.indexStatus);
   const unreadableCount = useResumeStore((state) => state.unreadableCount);
   const [open, setOpen] = useState(false);
+  const t = useTranslations("platform.emptyState");
 
   // With unreadable documents present, "No résumés yet" would be a lie.
   if (indexStatus !== "ready" || index.length > 0 || unreadableCount > 0) {
@@ -35,21 +37,18 @@ export function PlatformEmptyState() {
               <Inbox />
             </EmptyMedia>
 
-            <EmptyTitle>No résumés yet</EmptyTitle>
-            <EmptyDescription>
-              Nothing is saved on this device yet. Start from a template, or
-              create a blank résumé.
-            </EmptyDescription>
+            <EmptyTitle>{t("title")}</EmptyTitle>
+            <EmptyDescription>{t("description")}</EmptyDescription>
 
             <div className="inline-flex items-center gap-2">
               <Button
                 nativeButton={false}
                 render={<Link href="/platform/template" />}
               >
-                <Search /> Browse templates
+                <Search /> {t("browseTemplates")}
               </Button>
               <Button variant="secondary" onClick={() => setOpen(true)}>
-                <FilePlus /> New résumé
+                <FilePlus /> {t("newResume")}
               </Button>
             </div>
           </EmptyHeader>

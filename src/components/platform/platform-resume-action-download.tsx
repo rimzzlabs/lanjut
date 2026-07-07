@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import {
   downloadResume,
@@ -26,6 +27,7 @@ export function PlatformResumeActionDownload(
 ) {
   const [generating, setGenerating] = useState(false);
   const [missing, setMissing] = useState(false);
+  const t = useTranslations("forms.download");
 
   async function handleDownload(format: ExportFormat, fileName: string) {
     setGenerating(true);
@@ -47,18 +49,15 @@ export function PlatformResumeActionDownload(
       <ResponsiveDialogContent className="sm:max-w-sm">
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle>
-            Download {props.resume.title}
+            {t("title", { title: props.resume.title })}
           </ResponsiveDialogTitle>
           <ResponsiveDialogDescription>
-            Pick a format and name your file. The export is generated in your
-            browser.
+            {t("description")}
           </ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 
         {missing ? (
-          <p className="text-sm text-destructive">
-            This résumé could not be loaded from this browser's storage.
-          </p>
+          <p className="text-sm text-destructive">{t("missing")}</p>
         ) : (
           <PlatformResumeDownloadForm
             key={props.resume.title}

@@ -1,15 +1,15 @@
 import { TriangleAlert } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export function PlatformResumeGridError() {
+  const t = useTranslations("platform.grid");
+
   return (
     <Alert variant="destructive">
       <TriangleAlert />
-      <AlertTitle>Couldn&rsquo;t load your résumés</AlertTitle>
-      <AlertDescription>
-        Nothing was deleted. The library just failed to load from this
-        browser&rsquo;s storage. Refresh the page to try again.
-      </AlertDescription>
+      <AlertTitle>{t("errorTitle")}</AlertTitle>
+      <AlertDescription>{t("errorDescription")}</AlertDescription>
     </Alert>
   );
 }

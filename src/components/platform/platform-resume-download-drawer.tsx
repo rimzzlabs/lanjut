@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useResumeDownload } from "@/hooks/use-resume-download";
 import {
   Drawer,
@@ -15,15 +16,14 @@ export function PlatformResumeDownloadDrawer(props: {
   onOpenChange: (open: boolean) => void;
 }) {
   const { resume, generating, download } = useResumeDownload();
+  const t = useTranslations("forms.download");
 
   return (
     <Drawer showSwipeHandle open={props.open} onOpenChange={props.onOpenChange}>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Download résumé</DrawerTitle>
-          <DrawerDescription>
-            Pick a format and name your file.
-          </DrawerDescription>
+          <DrawerTitle>{t("drawerTitle")}</DrawerTitle>
+          <DrawerDescription>{t("drawerDescription")}</DrawerDescription>
         </DrawerHeader>
 
         <div className="px-4 pb-6">

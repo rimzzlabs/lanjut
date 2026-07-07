@@ -2,8 +2,9 @@
 
 import { ArrowRight, FileText, Search } from "lucide-react";
 import { motion, type Variants } from "motion/react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -26,6 +27,8 @@ const itemVariants: Variants = {
 };
 
 export function LandingHero() {
+  const t = useTranslations("hero");
+
   return (
     <motion.section
       variants={containerVariants}
@@ -40,7 +43,7 @@ export function LandingHero() {
         />
         <span className="relative inline-flex items-center gap-2 rounded-full border border-primary/40 bg-muted px-3 py-1 text-xs font-medium text-muted-foreground sm:px-4 sm:py-1.5 sm:text-sm">
           <FileText className="size-3.5 sm:size-4" />
-          Free &amp; open source
+          {t("badge")}
         </span>
       </motion.div>
 
@@ -48,19 +51,16 @@ export function LandingHero() {
         variants={itemVariants}
         className="mb-4 text-4xl leading-[1.08] font-bold tracking-tight sm:text-5xl md:mb-6 md:text-6xl lg:text-7xl bg-linear-to-r from-primary to-sky-800 bg-clip-text text-transparent dark:from-emerald-200 dark:to-cyan-400"
       >
-        <span className="sr-only">Lanjut, ATS Resume builder:</span> Land The
-        Interview,
+        <span className="sr-only">{t("srHeading")}</span> {t("headingLine1")}
         <br />
-        Not The Reject Pile.
+        {t("headingLine2")}
       </motion.h1>
 
       <motion.p
         variants={itemVariants}
         className="mb-8 max-w-2xl text-base text-foreground/70 text-balance sm:text-lg md:mb-10"
       >
-        Lanjut is a local-first résumé builder that stays entirely in your
-        browser. No account, nothing uploaded. Style it freely, and every export
-        is structured to sail through applicant tracking systems.
+        {t("description")}
       </motion.p>
 
       <motion.div
@@ -73,7 +73,7 @@ export function LandingHero() {
           nativeButton={false}
           render={<Link href="/platform" />}
         >
-          Start building free
+          {t("ctaPrimary")}
           <ArrowRight />
         </Button>
         <Button
@@ -83,7 +83,7 @@ export function LandingHero() {
           render={<Link href="/platform/template" />}
         >
           <Search />
-          Browse Templates
+          {t("ctaSecondary")}
         </Button>
       </motion.div>
 
@@ -93,21 +93,23 @@ export function LandingHero() {
       >
         <div>
           <div className="text-xl font-bold text-foreground sm:text-2xl">
-            100%
+            {t("stat1Value")}
           </div>
-          <div>Local-first</div>
+          <div>{t("stat1Label")}</div>
         </div>
         <div className="h-8 w-px bg-border" />
         <div>
           <div className="text-xl font-bold text-foreground sm:text-2xl">
-            No
+            {t("stat2Value")}
           </div>
-          <div>Accounts</div>
+          <div>{t("stat2Label")}</div>
         </div>
         <div className="h-8 w-px bg-border" />
         <div>
-          <div className="text-xl font-bold text-foreground sm:text-2xl">3</div>
-          <div>Export formats</div>
+          <div className="text-xl font-bold text-foreground sm:text-2xl">
+            {t("stat3Value")}
+          </div>
+          <div>{t("stat3Label")}</div>
         </div>
       </motion.div>
     </motion.section>

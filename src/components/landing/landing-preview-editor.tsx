@@ -2,9 +2,11 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export function LandingPreviewEditor() {
   const reduceMotion = useReducedMotion();
+  const t = useTranslations("previewEditor");
 
   return (
     <section className="mx-auto w-11/12 max-w-5xl pb-24 text-center md:pb-32">
@@ -15,12 +17,10 @@ export function LandingPreviewEditor() {
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
-          A fine-grained editor
+          {t("heading")}
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground text-balance sm:text-base">
-          Build your ATS-safe résumé in a focused editor. No AI slop, no
-          overwhelming features. Straight to the point, without wasting your
-          time.
+          {t("description")}
         </p>
       </motion.div>
 
@@ -39,15 +39,13 @@ export function LandingPreviewEditor() {
       >
         <Image
           src="/lanjut-editor.png"
-          alt="Lanjut Editor"
-          title="Lanjut Editor"
+          alt={t("imageAlt")}
+          title={t("imageAlt")}
           width={1437}
           height={871}
           className="w-full aspect-video rounded-lg border object-scale-down object-top"
         />
-        <figcaption className="sr-only">
-          Lanjut&apos;s ATS Resume Editor
-        </figcaption>
+        <figcaption className="sr-only">{t("caption")}</figcaption>
       </motion.figure>
     </section>
   );

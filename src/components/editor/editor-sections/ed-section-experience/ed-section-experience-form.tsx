@@ -1,6 +1,7 @@
 "use client";
 
 import { Briefcase, Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -35,6 +36,8 @@ function emptyExperience(): ExperienceItemValues {
 export function EditorSectionExperienceForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
+  const t = useTranslations("editor.experience");
+  const tc = useTranslations("editor.common");
 
   const form = useForm<ExperienceFormValues>({
     defaultValues: open ? toExperienceValues(open) : { experiences: [] },
@@ -60,9 +63,9 @@ export function EditorSectionExperienceForm() {
   return (
     <form>
       <FieldSet className="gap-3">
-        <FieldLegend className="sr-only">Professional Experience</FieldLegend>
+        <FieldLegend className="sr-only">{t("legend")}</FieldLegend>
         <FieldDescription className="sr-only">
-          Describe your past experience
+          {t("legendDesc")}
         </FieldDescription>
         <Button
           type="button"
@@ -70,14 +73,15 @@ export function EditorSectionExperienceForm() {
           variant="outline"
           className="w-full"
         >
-          <Plus /> Add Professional Experience
+          <Plus /> <span className="sr-only">{tc("add")} </span>
+          {t("add")}
         </Button>
 
         {fields.length === 0 ? (
           <EmptyState
             icon={Briefcase}
-            title="No experience yet"
-            description="Add your roles to build out your work history."
+            title={t("emptyTitle")}
+            description={t("emptyDescription")}
           />
         ) : (
           <FieldGroup className="gap-4">

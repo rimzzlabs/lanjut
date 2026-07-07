@@ -2,6 +2,7 @@
 
 import { Radio as RadioPrimitive } from "@base-ui/react/radio";
 import { CheckIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { TemplateSummary } from "@/lib/templates";
 import type { ResumePreview } from "../resume-preview";
 import { ResumeThumbnail } from "../resume-thumbnail";
@@ -12,10 +13,12 @@ interface EditorLayoutTemplateItemProps {
 }
 
 export function EditorLayoutTemplateItem(props: EditorLayoutTemplateItemProps) {
+  const t = useTranslations("platform.templates");
+
   return (
     <RadioPrimitive.Root
       value={props.template.id}
-      aria-label={`Use ${props.template.name} template`}
+      aria-label={t("useTemplate", { name: props.template.name })}
       className="group/template flex cursor-pointer flex-col overflow-hidden rounded-xl border text-left outline-none transition-colors hover:border-ring/50 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 data-checked:border-primary data-checked:ring-1 data-checked:ring-primary"
     >
       <div
@@ -31,7 +34,9 @@ export function EditorLayoutTemplateItem(props: EditorLayoutTemplateItemProps) {
       </div>
 
       <p className="text-xs text-muted-foreground px-3 py-2">
-        <span className="line-clamp-2">{props.template.description}</span>
+        <span className="line-clamp-2">
+          {t(`descriptions.${props.template.id}`)}
+        </span>
       </p>
 
       <p className="flex items-center gap-1.5 px-3 pb-2 pt-1 text-sm font-medium">

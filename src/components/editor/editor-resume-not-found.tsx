@@ -1,8 +1,9 @@
 "use client";
 
 import { FileQuestion } from "lucide-react";
-import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { nearestResumeById } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 
@@ -16,6 +17,7 @@ export function EditorResumeNotFound() {
   const params = useParams<{ id?: string }>();
   const index = useResumeStore((state) => state.index);
   const suggestion = nearestResumeById(index, params?.id ?? "");
+  const t = useTranslations("editor.chrome");
 
   return (
     <div className="mx-auto flex aspect-210/297 w-full max-w-[794px] flex-col items-center justify-center gap-1.5 rounded border bg-white text-sm text-neutral-600 shadow-sm">
@@ -23,11 +25,11 @@ export function EditorResumeNotFound() {
         <FileQuestion className="size-5" />
       </div>
 
-      <p className="font-medium text-neutral-950">Résumé not found</p>
+      <p className="font-medium text-neutral-950">{t("notFound")}</p>
 
       {suggestion ? (
         <p>
-          did you mean:{" "}
+          {t("didYouMean")}{" "}
           <Link
             href={`/platform/editor/${suggestion.id}`}
             className="font-medium text-primary underline-offset-4 hover:underline"
@@ -37,23 +39,23 @@ export function EditorResumeNotFound() {
           ?
         </p>
       ) : (
-        <p>This résumé doesn&apos;t exist in this browser&apos;s storage.</p>
+        <p>{t("notExist")}</p>
       )}
 
       <p className="text-xs text-neutral-500">
-        or head to{" "}
+        {t("headTo")}{" "}
         <Link
           href="/platform"
           className="font-medium text-primary underline-offset-4 hover:underline"
         >
-          Dashboard
+          {t("dashboard")}
         </Link>{" "}
-        or{" "}
+        {t("or")}{" "}
         <Link
           href="/platform/template"
           className="font-medium text-primary underline-offset-4 hover:underline"
         >
-          Browse Templates
+          {t("browseTemplates")}
         </Link>
       </p>
     </div>

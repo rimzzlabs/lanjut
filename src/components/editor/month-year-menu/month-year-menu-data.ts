@@ -61,6 +61,25 @@ export function formatMonthYear(
 const MONTH_INDEX = new Map(MONTHS.map((month, index) => [month.value, index]));
 
 /**
+ * Renders a stored date value into a document language: the English month token
+ * is swapped for its `months` equivalent and `PRESENT_DATE` for `present`. Meant
+ * for display only; the stored value stays the canonical English token.
+ */
+export function localizeDateValue(
+  value: string,
+  months: string[],
+  present: string,
+): string {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  if (trimmed === PRESENT_DATE) return present;
+  const { month, year } = parseMonthYear(trimmed);
+  const index = month ? MONTH_INDEX.get(month) : undefined;
+  const localizedMonth = index !== undefined ? months[index] : month;
+  return [localizedMonth, year].filter(Boolean).join(" ");
+}
+
+/**
  * A comparable ordinal for a stored "MMM YYYY" / "YYYY" value, used to sort
  * entries newest-first. `PRESENT_DATE`, empty, and unparseable values rank as the
  * most recent, so a freshly added (undated) row is treated as the latest.

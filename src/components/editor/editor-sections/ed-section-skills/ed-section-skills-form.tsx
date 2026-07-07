@@ -1,6 +1,7 @@
 "use client";
 
 import { Plus, Zap } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -28,6 +29,8 @@ function emptySkill(): SkillItemValues {
 export function EditorSectionSkillsForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
+  const t = useTranslations("editor.skills");
+  const tc = useTranslations("editor.common");
 
   const form = useForm<SkillsFormValues>({
     defaultValues: open ? toSkillsValues(open) : { skills: [] },
@@ -52,9 +55,9 @@ export function EditorSectionSkillsForm() {
   return (
     <form>
       <FieldSet className="gap-3">
-        <FieldLegend className="sr-only">Skills</FieldLegend>
+        <FieldLegend className="sr-only">{t("legend")}</FieldLegend>
         <FieldDescription className="sr-only">
-          List your skills
+          {t("legendDesc")}
         </FieldDescription>
         <Button
           type="button"
@@ -62,14 +65,15 @@ export function EditorSectionSkillsForm() {
           variant="outline"
           className="w-full"
         >
-          <Plus /> Add Skill
+          <Plus /> <span className="sr-only">{tc("add")} </span>
+          {t("add")}
         </Button>
 
         {fields.length === 0 ? (
           <EmptyState
             icon={Zap}
-            title="No skills yet"
-            description="Add the tools and technologies you work with."
+            title={t("emptyTitle")}
+            description={t("emptyDescription")}
           />
         ) : (
           <SortableList

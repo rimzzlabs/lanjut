@@ -1,6 +1,7 @@
 "use client";
 
 import { PenLine } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
 import {
   Sheet,
@@ -13,6 +14,8 @@ import {
 import { EditorSidebarContent } from "./editor-sidebar-content";
 
 export function EditorSheet() {
+  const t = useTranslations("editor.chrome");
+
   return (
     <Sheet>
       <SheetTrigger
@@ -24,7 +27,7 @@ export function EditorSheet() {
           />
         }
       >
-        <PenLine /> Edit
+        <PenLine /> {t("edit")}
       </SheetTrigger>
 
       <SheetContent
@@ -32,8 +35,8 @@ export function EditorSheet() {
         className="data-[side=right]:w-11/12 md:data-[side=right]:w-3/4 gap-0 sm:max-w-lg"
       >
         <SheetHeader className="sr-only">
-          <SheetTitle>Editor</SheetTitle>
-          <SheetDescription>Resume Editor</SheetDescription>
+          <SheetTitle>{t("editorTitle")}</SheetTitle>
+          <SheetDescription>{t("editorDescription")}</SheetDescription>
         </SheetHeader>
         <div className="flex-1">
           <EditorSidebarContent />

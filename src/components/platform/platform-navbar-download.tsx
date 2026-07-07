@@ -2,6 +2,7 @@
 
 import { Download } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useResumeDownload } from "@/hooks/use-resume-download";
 import { Button } from "../ui/button";
@@ -17,6 +18,7 @@ import { PlatformResumeDownloadForm } from "./platform-resume-download-form";
 
 export function PlatformNavbarDownload() {
   const pathname = usePathname();
+  const t = useTranslations("platform.download");
   const { resume, generating, download } = useResumeDownload();
   const [popoverOpen, setPopoverOpen] = useState(false);
 
@@ -33,14 +35,13 @@ export function PlatformNavbarDownload() {
           />
         }
       >
-        <Download /> <span className="sr-only">Download</span> Résumé
+        <Download /> <span className="sr-only">{t("srDownload")}</span>{" "}
+        {t("trigger")}
       </PopoverTrigger>
       <PopoverContent align="end">
         <PopoverHeader>
-          <PopoverTitle>Download résumé</PopoverTitle>
-          <PopoverDescription>
-            Pick a format and name your file.
-          </PopoverDescription>
+          <PopoverTitle>{t("title")}</PopoverTitle>
+          <PopoverDescription>{t("description")}</PopoverDescription>
         </PopoverHeader>
 
         <PlatformResumeDownloadForm

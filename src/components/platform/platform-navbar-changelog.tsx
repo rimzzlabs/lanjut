@@ -1,7 +1,7 @@
 "use client";
 
-import { format } from "date-fns";
 import { ArrowUpRight, Sparkles } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 import { useIsClient } from "@/hooks/use-is-client";
 import {
@@ -24,6 +24,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export function PlatformNavbarChangelog() {
   const mounted = useIsClient();
+  const t = useTranslations("platform.changelog");
   const [open, setOpen] = useState(false);
   const lastSeenVersion = useChangelogStore((state) => state.lastSeenVersion);
 
@@ -51,7 +52,7 @@ export function PlatformNavbarChangelog() {
           }
         >
           <Sparkles />
-          <span className="sr-only">What&apos;s new</span>
+          <span className="sr-only">{t("whatsNew")}</span>
           {hasUnseen && (
             <span
               aria-hidden
@@ -59,15 +60,13 @@ export function PlatformNavbarChangelog() {
             />
           )}
         </TooltipTrigger>
-        <TooltipContent>What&apos;s new</TooltipContent>
+        <TooltipContent>{t("whatsNew")}</TooltipContent>
       </Tooltip>
 
       <SheetContent side="right">
         <SheetHeader>
-          <SheetTitle>What&apos;s new</SheetTitle>
-          <SheetDescription>
-            The latest improvements to Lanjut, in plain language.
-          </SheetDescription>
+          <SheetTitle>{t("whatsNew")}</SheetTitle>
+          <SheetDescription>{t("description")}</SheetDescription>
         </SheetHeader>
 
         <ul className="flex-1 space-y-8 overflow-y-auto px-6 pb-6">
@@ -87,7 +86,7 @@ export function PlatformNavbarChangelog() {
             rel="noreferrer"
             className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            Full changelog on GitHub
+            {t("fullChangelog")}
             <ArrowUpRight className="size-4" />
           </a>
         </SheetFooter>
@@ -100,6 +99,12 @@ function PlatformNavbarChangelogEntry(props: {
   entry: ChangelogEntry;
   isLatest: boolean;
 }) {
+  const t = useTranslations("platform.changelog");
+  const formatter = useFormatter();
+  const highlights = t.raw(
+    `entries.${props.entry.version.replace(/\./g, "_")}`,
+  ) as string[];
+
   return (
     <li>
       <div className="flex items-center gap-2">
@@ -108,15 +113,19 @@ function PlatformNavbarChangelogEntry(props: {
         </span>
         {props.isLatest && (
           <span className="rounded-md bg-primary/10 px-1.5 py-0.5 text-xs font-medium text-primary">
-            Latest
+            {t("latest")}
           </span>
         )}
         <span className="text-xs text-muted-foreground">
-          {format(new Date(props.entry.date), "MMM d, yyyy")}
+          {formatter.dateTime(new Date(props.entry.date), {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
         </span>
       </div>
       <ul className="mt-3 list-disc space-y-2 pl-4 text-sm text-foreground/80">
-        {props.entry.highlights.map((highlight) => (
+        {highlights.map((highlight) => (
           <li key={highlight}>{highlight}</li>
         ))}
       </ul>

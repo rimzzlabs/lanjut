@@ -1,11 +1,13 @@
 "use client";
 
 import { FilePlus2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { PlatformResumeCreateDialog } from "../platform-resume-create-dialog";
 
 export function PlatformResumeGridItemNew() {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("platform.grid");
 
   return (
     <>
@@ -17,7 +19,7 @@ export function PlatformResumeGridItemNew() {
         <span className="flex size-10 items-center justify-center rounded-xl border bg-muted/60">
           <FilePlus2 className="size-4" />
         </span>
-        <span className="text-sm font-medium">New résumé</span>
+        <span className="text-sm font-medium">{t("newResume")}</span>
       </button>
 
       <PlatformResumeCreateDialog open={open} onOpenChange={setOpen} />

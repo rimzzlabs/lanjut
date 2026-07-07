@@ -1,5 +1,9 @@
+import { RESUME_LABELS } from "@/lib/resume/labels";
 import type { Field, Resume, Section } from "@/lib/resume/types";
-import { dateSortValue } from "./month-year-menu/month-year-menu-data";
+import {
+  dateSortValue,
+  localizeDateValue,
+} from "./month-year-menu/month-year-menu-data";
 import type { ContactView, HeaderView, ResumePreview } from "./resume-preview";
 import { type RichBlock, tiptapToRichBlocks } from "./rich-content";
 
@@ -86,8 +90,17 @@ function toHeaderView(resume: Resume): HeaderView {
  */
 export function resumeToPreview(resume: Resume): ResumePreview {
   const summaryBody = sectionOfType(resume, "summary")?.entries[0]?.fields.body;
+  const labels = RESUME_LABELS[resume.language];
+  const localizeDates = <T extends { startDate: string; endDate: string }>(
+    item: T,
+  ): T => ({
+    ...item,
+    startDate: localizeDateValue(item.startDate, labels.months, labels.present),
+    endDate: localizeDateValue(item.endDate, labels.months, labels.present),
+  });
 
   return {
+    language: resume.language,
     header: toHeaderView(resume),
     summary: richBlocks(summaryBody),
     experience: (sectionOfType(resume, "experience")?.entries ?? [])
@@ -103,7 +116,8 @@ export function resumeToPreview(resume: Resume): ResumePreview {
           description: richBlocks(entry.fields.description),
         };
       })
-      .sort(byRecency),
+      .sort(byRecency)
+      .map(localizeDates),
     organizations: (sectionOfType(resume, "organizations")?.entries ?? [])
       .map((entry) => ({
         id: entry.id,
@@ -113,7 +127,8 @@ export function resumeToPreview(resume: Resume): ResumePreview {
         endDate: plain(entry.fields.endDate),
         description: richBlocks(entry.fields.description),
       }))
-      .sort(byRecency),
+      .sort(byRecency)
+      .map(localizeDates),
     education: (sectionOfType(resume, "education")?.entries ?? [])
       .map((entry) => ({
         id: entry.id,
@@ -123,7 +138,8 @@ export function resumeToPreview(resume: Resume): ResumePreview {
         endDate: plain(entry.fields.endDate),
         details: richBlocks(entry.fields.details),
       }))
-      .sort(byRecency),
+      .sort(byRecency)
+      .map(localizeDates),
     certificates: (sectionOfType(resume, "certifications")?.entries ?? []).map(
       (entry) => {
         const url = plain(entry.fields.url);

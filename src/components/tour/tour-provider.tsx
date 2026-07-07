@@ -1,9 +1,10 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { NextStep, NextStepProvider } from "nextstepjs";
-import type { PropsWithChildren } from "react";
+import { type PropsWithChildren, useMemo } from "react";
 import { useSidebarStore, useTourStore } from "@/lib/store";
-import { getTourStep, TOURS } from "@/lib/tour";
+import { getTourStep, localizeTours } from "@/lib/tour";
 import { TourCard } from "./tour-card";
 
 const SIDEBAR_SETTLE_MS = 400;
@@ -39,10 +40,13 @@ function handleTourEnd() {
 }
 
 export function TourProvider(props: PropsWithChildren) {
+  const t = useTranslations("tour");
+  const tours = useMemo(() => localizeTours(t), [t]);
+
   return (
     <NextStepProvider>
       <NextStep
-        steps={TOURS}
+        steps={tours}
         cardComponent={TourCard}
         onStart={handleTourStart}
         onStepChange={handleStepChange}

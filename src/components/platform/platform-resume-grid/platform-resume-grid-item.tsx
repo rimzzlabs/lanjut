@@ -1,5 +1,4 @@
-import { format, formatDistanceStrict } from "date-fns";
-import Link from "next/link";
+import { useFormatter, useTranslations } from "next-intl";
 import {
   Card,
   CardAction,
@@ -12,6 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Link } from "@/i18n/navigation";
 import type { ResumeIndexEntry } from "@/lib/resume";
 import { PlatformResumeGridItemMenu } from "./platform-resume-grid-item-menu";
 import { PlatformResumeGridItemThumbnail } from "./platform-resume-grid-item-thumbnail";
@@ -23,6 +23,8 @@ interface PlatformResumeGridItemProps {
 export function PlatformResumeGridItem({
   resume,
 }: PlatformResumeGridItemProps) {
+  const t = useTranslations("platform.grid");
+  const formatter = useFormatter();
   const updatedAt = new Date(resume.updatedAt);
   const href = `/platform/editor/${resume.id}`;
 
@@ -32,7 +34,7 @@ export function PlatformResumeGridItem({
         <PlatformResumeGridItemThumbnail resume={resume} />
         <Link
           href={href}
-          aria-label={`Open ${resume.title}`}
+          aria-label={t("open", { title: resume.title })}
           className="absolute inset-0 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
         />
       </div>
@@ -47,14 +49,19 @@ export function PlatformResumeGridItem({
           </Link>
         </CardTitle>
         <CardDescription className="text-xs">
-          Edited{" "}
+          {t("edited")}{" "}
           <Tooltip>
             <TooltipTrigger render={<time dateTime={resume.updatedAt} />}>
-              {formatDistanceStrict(updatedAt, Date.now(), { addSuffix: true })}
+              {formatter.relativeTime(updatedAt, Date.now())}
             </TooltipTrigger>
 
             <TooltipContent>
-              {format(updatedAt, "EEE, dd MMM yyyy")}
+              {formatter.dateTime(updatedAt, {
+                weekday: "short",
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })}
             </TooltipContent>
           </Tooltip>
         </CardDescription>
