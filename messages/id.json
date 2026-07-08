@@ -148,12 +148,14 @@
       "chooseAppearance": "Pilih Tampilan"
     },
     "changelog": {
-      "whatsNew": "Yang baru",
+      "whatsNew": "Apa yang baru",
       "description": "Peningkatan terbaru untuk Lanjut, dijelaskan dengan bahasa yang mudah.",
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
         "0_6_0": [
+          "Lanjut sekarang bisa Bahasa Indonesia. Ganti seluruh tampilan antara Bahasa Inggris dan Indonesia kapan saja lewat tombol bahasa di bilah navigasi.",
+          "Tiap resume bisa punya bahasanya sendiri: pilih Bahasa Inggris atau Indonesia per dokumen, dan judul bagian serta tanggal di ekspor PDF, DOCX, dan TXT kamu mengikuti pilihan itu.",
           "Atur ulang urutan keahlian dan bahasa: tahan pegangan di samping entri lalu geser ke posisinya, atau pindahkan pakai keyboard. Urutan barunya langsung diterapkan ke pratinjau dan semua ekspor.",
           "Bagian yang masih kosong kini ada keterangannya: daripada cuma tombol, tiap bagian tanpa isi menampilkan petunjuk singkat tentang apa yang bisa kamu tambahkan.",
           "Judul utama di halaman depan punya gradien warna baru yang lebih segar, cocok untuk mode terang maupun gelap."
