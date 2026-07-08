@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.6.0](https://github.com/rimzzlabs/lanjut/compare/v0.5.0...v0.6.0) (2026-07-08)
+
+
+### Features
+
+* internationalize the app with english and indonesian ([#67](https://github.com/rimzzlabs/lanjut/issues/67)) ([400614e](https://github.com/rimzzlabs/lanjut/commit/400614e7639a8a41ce1f5390bad356a03a312621))
+* reorder skills and languages by drag and drop ([#62](https://github.com/rimzzlabs/lanjut/issues/62)) ([95e3fa8](https://github.com/rimzzlabs/lanjut/commit/95e3fa86a2cea63674e369093d09bee7597f04b5))
+* show an empty state in editor sections with no entries ([#64](https://github.com/rimzzlabs/lanjut/issues/64)) ([bf590b1](https://github.com/rimzzlabs/lanjut/commit/bf590b16c0a99d377a3fb40ec1f2103b4a763c38))
+
+
+### Bug Fixes
+
+* contain editor sidebar scrolling within its own panel ([#65](https://github.com/rimzzlabs/lanjut/issues/65)) ([18ee4b1](https://github.com/rimzzlabs/lanjut/commit/18ee4b179f91c02320f6ca355d85d563cb37cec8))
+
+
+### Documentation
+
+* note hero gradient refresh in changelog ([d9c98ff](https://github.com/rimzzlabs/lanjut/commit/d9c98ffd1926ed62947d589c0a4a760379591615))
+
 ## [0.5.0](https://github.com/rimzzlabs/lanjut/compare/v0.4.1...v0.5.0) (2026-07-06)
 
 
