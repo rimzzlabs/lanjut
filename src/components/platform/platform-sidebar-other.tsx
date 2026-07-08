@@ -1,6 +1,6 @@
 "use client";
 
-import { Bug, HelpCircle, HelpingHand } from "lucide-react";
+import { Bug, HelpCircle, Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useNextStep } from "nextstepjs";
 import { MEDIA_XL, useMediaQuery } from "@/hooks/use-media-query";
@@ -61,7 +61,7 @@ export function PlatformSidebarOther() {
               setIssueReportOpen("feature");
             }}
           >
-            <HelpingHand /> {t("featureRequest")}
+            <Send /> {t("featureRequest")}
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>

@@ -9,7 +9,7 @@ export function TourCard(props: CardComponentProps) {
   const isLastStep = props.currentStep === props.totalSteps - 1;
 
   return (
-    <div className="w-72 rounded-2xl border bg-popover p-4 text-popover-foreground shadow-lg">
+    <div className="w-80 rounded-2xl border bg-popover p-4 text-popover-foreground shadow-lg">
       <h2 className="text-sm font-semibold tracking-tight">
         {props.step.title}
       </h2>

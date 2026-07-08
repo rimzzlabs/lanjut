@@ -11,7 +11,7 @@ export function useLocaleSwitch() {
 
   const switchLocale = (next: string) => {
     startTransition(() => {
-      router.replace(pathname, { locale: next as Locale });
+      router.replace(pathname, { locale: next as Locale, scroll: false });
     });
   };
 

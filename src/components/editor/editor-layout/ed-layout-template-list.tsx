@@ -43,7 +43,7 @@ export function EditorLayoutTemplateList() {
   }
 
   return (
-    <div className="pb-4 lg:pb-6">
+    <div className="py-4 lg:pb-6">
       <RadioGroup
         value={resolveTemplateId(open.templateId)}
         onValueChange={(value) => {
