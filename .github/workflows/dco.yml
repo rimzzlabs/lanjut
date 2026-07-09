@@ -1,0 +1,49 @@
+name: DCO
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  DCO:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Verify every commit is signed off by its author
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          failed=0
+          for sha in $(git rev-list --no-merges "$BASE_SHA..$HEAD_SHA"); do
+            author_name=$(git log -1 --format='%an' "$sha")
+            author_email=$(git log -1 --format='%ae' "$sha")
+            case "$author_name" in
+              *"[bot]")
+                echo "skip  $(git log -1 --format='%h %s' "$sha") (bot commit)"
+                continue
+                ;;
+            esac
+            if git log -1 --format='%(trailers:key=Signed-off-by,valueonly)' "$sha" | grep -qiF "<$author_email>"; then
+              echo "ok    $(git log -1 --format='%h %s' "$sha")"
+            else
+              echo "FAIL  $(git log -1 --format='%h %s' "$sha")"
+              echo "      missing trailer: Signed-off-by: $author_name <$author_email>"
+              failed=1
+            fi
+          done
+          if [ "$failed" -ne 0 ]; then
+            echo ""
+            echo "Every commit must carry a Signed-off-by trailer matching its author (Developer Certificate of Origin)."
+            echo "Sign off new commits with: git commit -s"
+            echo "Fix this branch with:      git rebase --signoff \$(git merge-base HEAD origin/main) && git push --force-with-lease"
+            echo "See CONTRIBUTING.md for details."
+            exit 1
+          fi

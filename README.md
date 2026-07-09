@@ -96,10 +96,10 @@ Changes to the export path are gated by `pnpm validate:exports`, which regenerat
 
 Bug reports and feature requests go through the issue forms; note the scope rules there: presentation is customizable, structure is not, and accounts/server storage are non-goals.
 
-Commit messages follow Conventional Commits via commitlint and commitizen. Run `pnpm commit` instead of `git commit` to use the prompt. Pre-commit hooks (husky + lint-staged) run lint and format checks before any commit is accepted. PR titles follow the same convention with a fully lowercase subject; they become the squash-merge commit.
+Commit messages follow Conventional Commits via commitlint and commitizen, and every commit must be signed off (`git commit -s`) under the Developer Certificate of Origin. Run `pnpm commit` instead of `git commit` to use the prompt. Pre-commit hooks (husky + lint-staged) run lint and format checks before any commit is accepted. PR titles follow the same convention with a fully lowercase subject; they become the squash-merge commit.
 
-See `AGENTS.md` for architecture rules and code conventions before submitting a PR.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow (setup, branches, commits, DCO, releases) and `AGENTS.md` for architecture rules and code conventions before submitting a PR.
 
 ## License
 
-[AGPL-3.0-only](LICENSE). Copyright © 2026 Rizki Citra.
+[AGPL-3.0-only](LICENSE). Copyright © 2026 Lanjut Contributors.
