@@ -164,6 +164,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_8_0": [
+          "Tampilkan keahlianmu dalam satu kolom atau dua: tombol baru di bagian Keahlian mengganti tata letaknya, dan pilihanmu ikut terbawa ke pratinjau dan semua ekspor.",
+          "Editor kini menampilkan entri dari yang terbaru lebih dulu, sesuai urutannya di pratinjau, jadi formulir dan resume kamu selalu sejalan.",
+          "Halaman depan punya bilah navigasi baru, lengkap dengan menu yang rapi saat dibuka di ponsel.",
+          "Berpindah antar halaman kini menampilkan bilah progres tipis di bagian atas, jadi kamu langsung dapat feedback saat halaman dimuat."
+        ],
         "0_7_0": [
           "Ada bagian Magang baru: tulis pengalaman magang sebagai entri terpisah dari pekerjaan tetap, dengan kolom yang sama seperti Pengalaman.",
           "Ada bagian Proyek baru: pamerkan proyek sampingan, kontribusi open-source, atau apa pun yang pernah kamu rilis, lengkap dengan nama, tautan, tanggal, dan deskripsi.",

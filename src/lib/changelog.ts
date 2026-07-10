@@ -10,6 +10,7 @@ export interface ChangelogEntry {
  * highlights in both locale files as part of each release PR.
  */
 export const CHANGELOG: ChangelogEntry[] = [
+  { version: "0.8.0", date: "2026-07-11" },
   { version: "0.7.0", date: "2026-07-10" },
   { version: "0.6.0", date: "2026-07-08" },
   { version: "0.5.0", date: "2026-07-06" },

@@ -164,6 +164,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_8_0": [
+          "Show your skills in one column or two: a new toggle in the Skills section switches the layout, and your choice carries through to the preview and every export.",
+          "The editor now lists your entries newest first, matching the order they appear in the preview, so the forms and your resume always line up.",
+          "The landing page has a new navigation bar, with a menu that opens cleanly on mobile.",
+          "Moving between pages now shows a slim progress bar at the top, so you get instant feedback while a page loads."
+        ],
         "0_7_0": [
           "New Internship section: list internships as their own entries, separate from full-time roles, with the same fields as Experience.",
           "New Projects section: give side projects, open-source work, and anything you've shipped their own space, each with a name, link, dates, and description.",
