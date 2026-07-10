@@ -432,6 +432,25 @@
       "summaryPlaceholder": "Membuat internal tooling yang....",
       "remove": "Hapus"
     },
+    "projects": {
+      "accordionTitle": "Proyek",
+      "legend": "Proyek",
+      "legendDesc": "Pamerin hal-hal yang udah kamu bikin",
+      "add": "Proyek",
+      "emptyTitle": "Belum ada proyek",
+      "emptyDescription": "Tambahin proyek sampingan, kerjaan open-source, atau apa pun yang udah kamu rilis.",
+      "itemLegend": "Proyek {index}",
+      "name": "Nama proyek",
+      "namePlaceholder": "react-a11y-kit",
+      "role": "Peran",
+      "rolePlaceholder": "Maintainer",
+      "url": "URL proyek",
+      "urlPlaceholder": "github.com/kamu/proyek",
+      "present": "Masih jalan",
+      "summary": "Deskripsi",
+      "summaryPlaceholder": "Fungsinya apa, kamu bikin apa, dampaknya....",
+      "remove": "Hapus"
+    },
     "organizations": {
       "accordionTitle": "Organisasi",
       "legend": "Pengalaman Organisasi",

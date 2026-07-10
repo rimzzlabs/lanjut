@@ -432,6 +432,25 @@
       "summaryPlaceholder": "Built internal tooling that....",
       "remove": "Remove"
     },
+    "projects": {
+      "accordionTitle": "Projects",
+      "legend": "Projects",
+      "legendDesc": "Show off the things you've built",
+      "add": "Project",
+      "emptyTitle": "No projects yet",
+      "emptyDescription": "Add side projects, open-source work, or things you've shipped.",
+      "itemLegend": "Project {index}",
+      "name": "Project name",
+      "namePlaceholder": "react-a11y-kit",
+      "role": "Role",
+      "rolePlaceholder": "Maintainer",
+      "url": "Project URL",
+      "urlPlaceholder": "github.com/you/project",
+      "present": "This is ongoing",
+      "summary": "Description",
+      "summaryPlaceholder": "What it does, what you built, the impact....",
+      "remove": "Remove"
+    },
     "organizations": {
       "accordionTitle": "Organization",
       "legend": "Organization Experience",

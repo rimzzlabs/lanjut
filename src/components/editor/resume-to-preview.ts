@@ -153,6 +153,21 @@ export function resumeToPreview(resume: Resume): ResumePreview {
       })
       .sort(byRecency)
       .map(localizeDates),
+    projects: (sectionOfType(resume, "projects")?.entries ?? [])
+      .map((entry) => {
+        const website = plain(entry.fields.website);
+        return {
+          id: entry.id,
+          role: plain(entry.fields.title),
+          company: plain(entry.fields.company),
+          companyHref: website ? withHttps(website) : undefined,
+          startDate: plain(entry.fields.startDate),
+          endDate: plain(entry.fields.endDate),
+          description: richBlocks(entry.fields.description),
+        };
+      })
+      .sort(byRecency)
+      .map(localizeDates),
     organizations: (sectionOfType(resume, "organizations")?.entries ?? [])
       .map((entry) => ({
         id: entry.id,

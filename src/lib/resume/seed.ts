@@ -267,6 +267,37 @@ export const SEED_RESUME: Resume = {
       ],
     },
     {
+      id: "seed-projects",
+      type: "projects",
+      title: "Projects",
+      entries: [
+        {
+          id: "seed-projects-1",
+          fields: {
+            title: plain("react-a11y-kit"),
+            company: plain("Creator & maintainer"),
+            website: plain("github.com/johndoe/react-a11y-kit"),
+            startDate: plain("2020"),
+            endDate: plain("Present"),
+            description: prose(
+              ul(
+                li(
+                  t("Open-source accessibility toolkit for React with "),
+                  b("2k+ stars"),
+                  t(" and 40+ contributors."),
+                ),
+                li(
+                  t(
+                    "Ships audited, WCAG-compliant primitives adopted across several production design systems.",
+                  ),
+                ),
+              ),
+            ),
+          },
+        },
+      ],
+    },
+    {
       id: "seed-organizations",
       type: "organizations",
       title: "Organizations",

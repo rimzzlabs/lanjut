@@ -145,6 +145,22 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
     );
   }
 
+  const projects = resume.projects.filter(hasExperience);
+  if (projects.length > 0) {
+    blocks.push(
+      heading("projects-heading", labels.projects),
+      ...projects.map(
+        (item, index): ResumeBlock => ({
+          id: item.id,
+          kind: "experience",
+          item,
+          gapBefore: entryGap(index),
+          keepWithNext: false,
+        }),
+      ),
+    );
+  }
+
   const organizations = resume.organizations.filter(hasExperience);
   if (organizations.length > 0) {
     blocks.push(

@@ -79,6 +79,12 @@ export interface ResumePreview {
    */
   internship: ExperienceItemView[];
   /**
+   * Project entries reuse `ExperienceItemView`: `role` holds the project name
+   * and `company` the contributor role, so they render through the experience
+   * path in every template and export; only the section heading differs.
+   */
+  projects: ExperienceItemView[];
+  /**
    * Organization entries (volunteer, student, community roles) are
    * presentationally identical to experience entries, so they reuse
    * `ExperienceItemView` (`company` holds the organization name) and every

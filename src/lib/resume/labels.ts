@@ -6,6 +6,7 @@ interface DocumentLabels {
   summary: string;
   experience: string;
   internship: string;
+  projects: string;
   organizations: string;
   education: string;
   certificates: string;
@@ -27,6 +28,7 @@ export const RESUME_LABELS: Record<ResumeLanguage, DocumentLabels> = {
     summary: "Summary",
     experience: "Experience",
     internship: "Internship",
+    projects: "Projects",
     organizations: "Organizations",
     education: "Education",
     certificates: "Certificates",
@@ -52,6 +54,7 @@ export const RESUME_LABELS: Record<ResumeLanguage, DocumentLabels> = {
     summary: "Ringkasan",
     experience: "Pengalaman",
     internship: "Magang",
+    projects: "Proyek",
     organizations: "Organisasi",
     education: "Pendidikan",
     certificates: "Sertifikat",
