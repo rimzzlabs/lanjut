@@ -21,6 +21,7 @@ interface EditorSectionExperienceFormItemProps {
   index: number;
   control: Control<ExperienceFormValues>;
   onRemoveField: (index: number) => void;
+  onDatesCommit: () => void;
 }
 
 export function EditorSectionExperienceFormItem(
@@ -32,7 +33,7 @@ export function EditorSectionExperienceFormItem(
   };
 
   return (
-    <FieldSet className="not-last-of-type:pb-4 not-last-of-type:border-b">
+    <FieldSet>
       <FieldLegend className="sr-only" variant="label">
         {t("itemLegend", { index: props.index + 1 })}
       </FieldLegend>
@@ -108,6 +109,7 @@ export function EditorSectionExperienceFormItem(
           startName={`experiences.${props.index}.startDate`}
           endName={`experiences.${props.index}.endDate`}
           presentLabel={t("present")}
+          onCommit={props.onDatesCommit}
         />
 
         <Controller

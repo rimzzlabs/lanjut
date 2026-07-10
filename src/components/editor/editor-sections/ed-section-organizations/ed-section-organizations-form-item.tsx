@@ -20,6 +20,7 @@ interface EditorSectionOrganizationsFormItemProps {
   index: number;
   control: Control<OrganizationsFormValues>;
   onRemoveField: (index: number) => void;
+  onDatesCommit: () => void;
 }
 
 export function EditorSectionOrganizationsFormItem(
@@ -31,7 +32,7 @@ export function EditorSectionOrganizationsFormItem(
   };
 
   return (
-    <FieldSet className="not-last-of-type:pb-4 not-last-of-type:border-b">
+    <FieldSet>
       <FieldLegend className="sr-only" variant="label">
         {t("itemLegend", { index: props.index + 1 })}
       </FieldLegend>
@@ -85,6 +86,7 @@ export function EditorSectionOrganizationsFormItem(
           startName={`organizations.${props.index}.startDate`}
           endName={`organizations.${props.index}.endDate`}
           presentLabel={t("present")}
+          onCommit={props.onDatesCommit}
         />
 
         <Controller

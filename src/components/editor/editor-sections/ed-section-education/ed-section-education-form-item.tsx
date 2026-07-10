@@ -20,6 +20,7 @@ interface EditorSectionEducationFormItemProps {
   index: number;
   control: Control<EducationFormValues>;
   onRemoveField: (index: number) => void;
+  onDatesCommit: () => void;
 }
 
 export function EditorSectionEducationFormItem(
@@ -31,7 +32,7 @@ export function EditorSectionEducationFormItem(
   };
 
   return (
-    <FieldSet className="not-last-of-type:pb-4 not-last-of-type:border-b">
+    <FieldSet>
       <FieldLegend className="sr-only" variant="label">
         {t("itemLegend", { index: props.index + 1 })}
       </FieldLegend>
@@ -102,6 +103,7 @@ export function EditorSectionEducationFormItem(
           startName={`educations.${props.index}.startDate`}
           endName={`educations.${props.index}.endDate`}
           presentLabel={t("present")}
+          onCommit={props.onDatesCommit}
         />
 
         <Controller

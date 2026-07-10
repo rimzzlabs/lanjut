@@ -1,10 +1,8 @@
 import { RESUME_LABELS } from "@/lib/resume/labels";
 import type { Field, Resume, Section } from "@/lib/resume/types";
-import {
-  dateSortValue,
-  localizeDateValue,
-} from "./month-year-menu/month-year-menu-data";
+import { localizeDateValue } from "./month-year-menu/month-year-menu-data";
 import type { ContactView, HeaderView, ResumePreview } from "./resume-preview";
+import { byRecency } from "./resume-sort";
 import { type RichBlock, tiptapToRichBlocks } from "./rich-content";
 
 function plain(field: Field | undefined): string {
@@ -25,25 +23,6 @@ function sectionOfType(
 /** A stored URL is domain-only (see `UrlInput`); restore the scheme for links. */
 function withHttps(value: string): string {
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
-}
-
-/** `a === b` first guards against `Infinity - Infinity` (NaN) for ongoing dates. */
-function compareDesc(a: number, b: number): number {
-  return a === b ? 0 : b - a;
-}
-
-/**
- * Orders dated entries newest-first: end date descending, then start date. An
- * ongoing ("Present") or undated entry ranks as the most recent, so a just-added
- * row surfaces at the top until the user dates it.
- */
-function byRecency(
-  a: { startDate: string; endDate: string },
-  b: { startDate: string; endDate: string },
-): number {
-  const end = compareDesc(dateSortValue(a.endDate), dateSortValue(b.endDate));
-  if (end !== 0) return end;
-  return compareDesc(dateSortValue(a.startDate), dateSortValue(b.startDate));
 }
 
 function toHeaderView(resume: Resume): HeaderView {

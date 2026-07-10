@@ -2,18 +2,18 @@
 
 import { Briefcase, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
-import {
-  FieldDescription,
-  FieldGroup,
-  FieldLegend,
-  FieldSet,
-} from "@/components/ui/field";
+import { FieldDescription, FieldLegend, FieldSet } from "@/components/ui/field";
 import { emptyRichTextValue } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
+import {
+  AnimatedEntryList,
+  type AnimatedEntryListHandle,
+} from "../animated-entry-list";
+import { repositionByRecency } from "../date-sort";
 import {
   applyExperienceValues,
   type ExperienceFormValues,
@@ -42,10 +42,11 @@ export function EditorSectionExperienceForm() {
   const form = useForm<ExperienceFormValues>({
     defaultValues: open ? toExperienceValues(open) : { experiences: [] },
   });
-  const { fields, prepend, remove } = useFieldArray({
+  const { fields, prepend, remove, move } = useFieldArray({
     control: form.control,
     name: "experiences",
   });
+  const listRef = useRef<AnimatedEntryListHandle>(null);
 
   // The field array owns the list; every form change (including add/remove)
   // rebuilds the store entries. Subscribing to the form and writing to the
@@ -57,6 +58,13 @@ export function EditorSectionExperienceForm() {
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);
+
+  const handleDatesCommit = (index: number) => {
+    requestAnimationFrame(() => {
+      const to = repositionByRecency(index, form.getValues().experiences, move);
+      if (to !== null) listRef.current?.scrollToIndex(to);
+    });
+  };
 
   if (!open) return null;
 
@@ -84,16 +92,18 @@ export function EditorSectionExperienceForm() {
             description={t("emptyDescription")}
           />
         ) : (
-          <FieldGroup className="gap-4">
-            {fields.map((field, index) => (
+          <AnimatedEntryList
+            ref={listRef}
+            ids={fields.map((field) => field.id)}
+            renderItem={(_, index) => (
               <EditorSectionExperienceFormItem
-                key={field.id}
                 control={form.control}
                 index={index}
                 onRemoveField={remove}
+                onDatesCommit={() => handleDatesCommit(index)}
               />
-            ))}
-          </FieldGroup>
+            )}
+          />
         )}
       </FieldSet>
     </form>

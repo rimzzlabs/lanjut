@@ -2,6 +2,7 @@ import type { JSONContent } from "@tiptap/core";
 import { nanoid } from "nanoid";
 import { emptyRichTextValue } from "@/lib/resume";
 import type { Entry, Field, Resume, Section } from "@/lib/resume/types";
+import { byRecency } from "../resume-sort";
 
 export interface PersonalFormValues {
   firstName: string;
@@ -206,14 +207,16 @@ export function experienceEntries(resume: Resume): Entry[] {
 
 export function toExperienceValues(resume: Resume): ExperienceFormValues {
   return {
-    experiences: experienceEntries(resume).map((entry) => ({
-      title: plainValue(entry.fields.title),
-      company: plainValue(entry.fields.company),
-      website: plainValue(entry.fields.website),
-      startDate: plainValue(entry.fields.startDate),
-      endDate: plainValue(entry.fields.endDate),
-      description: richValue(entry.fields.description),
-    })),
+    experiences: experienceEntries(resume)
+      .map((entry) => ({
+        title: plainValue(entry.fields.title),
+        company: plainValue(entry.fields.company),
+        website: plainValue(entry.fields.website),
+        startDate: plainValue(entry.fields.startDate),
+        endDate: plainValue(entry.fields.endDate),
+        description: richValue(entry.fields.description),
+      }))
+      .sort(byRecency),
   };
 }
 
@@ -244,14 +247,16 @@ export function internshipEntries(resume: Resume): Entry[] {
 
 export function toInternshipValues(resume: Resume): InternshipFormValues {
   return {
-    internships: internshipEntries(resume).map((entry) => ({
-      title: plainValue(entry.fields.title),
-      company: plainValue(entry.fields.company),
-      website: plainValue(entry.fields.website),
-      startDate: plainValue(entry.fields.startDate),
-      endDate: plainValue(entry.fields.endDate),
-      description: richValue(entry.fields.description),
-    })),
+    internships: internshipEntries(resume)
+      .map((entry) => ({
+        title: plainValue(entry.fields.title),
+        company: plainValue(entry.fields.company),
+        website: plainValue(entry.fields.website),
+        startDate: plainValue(entry.fields.startDate),
+        endDate: plainValue(entry.fields.endDate),
+        description: richValue(entry.fields.description),
+      }))
+      .sort(byRecency),
   };
 }
 
@@ -282,14 +287,16 @@ export function projectEntries(resume: Resume): Entry[] {
 
 export function toProjectsValues(resume: Resume): ProjectsFormValues {
   return {
-    projects: projectEntries(resume).map((entry) => ({
-      title: plainValue(entry.fields.title),
-      company: plainValue(entry.fields.company),
-      website: plainValue(entry.fields.website),
-      startDate: plainValue(entry.fields.startDate),
-      endDate: plainValue(entry.fields.endDate),
-      description: richValue(entry.fields.description),
-    })),
+    projects: projectEntries(resume)
+      .map((entry) => ({
+        title: plainValue(entry.fields.title),
+        company: plainValue(entry.fields.company),
+        website: plainValue(entry.fields.website),
+        startDate: plainValue(entry.fields.startDate),
+        endDate: plainValue(entry.fields.endDate),
+        description: richValue(entry.fields.description),
+      }))
+      .sort(byRecency),
   };
 }
 
@@ -320,13 +327,15 @@ export function organizationEntries(resume: Resume): Entry[] {
 
 export function toOrganizationsValues(resume: Resume): OrganizationsFormValues {
   return {
-    organizations: organizationEntries(resume).map((entry) => ({
-      role: plainValue(entry.fields.role),
-      organization: plainValue(entry.fields.organization),
-      startDate: plainValue(entry.fields.startDate),
-      endDate: plainValue(entry.fields.endDate),
-      description: richValue(entry.fields.description),
-    })),
+    organizations: organizationEntries(resume)
+      .map((entry) => ({
+        role: plainValue(entry.fields.role),
+        organization: plainValue(entry.fields.organization),
+        startDate: plainValue(entry.fields.startDate),
+        endDate: plainValue(entry.fields.endDate),
+        description: richValue(entry.fields.description),
+      }))
+      .sort(byRecency),
   };
 }
 
@@ -356,14 +365,16 @@ export function educationEntries(resume: Resume): Entry[] {
 
 export function toEducationValues(resume: Resume): EducationFormValues {
   return {
-    educations: educationEntries(resume).map((entry) => ({
-      institution: plainValue(entry.fields.institution),
-      degree: plainValue(entry.fields.degree),
-      location: plainValue(entry.fields.location),
-      startDate: plainValue(entry.fields.startDate),
-      endDate: plainValue(entry.fields.endDate),
-      details: richValue(entry.fields.details),
-    })),
+    educations: educationEntries(resume)
+      .map((entry) => ({
+        institution: plainValue(entry.fields.institution),
+        degree: plainValue(entry.fields.degree),
+        location: plainValue(entry.fields.location),
+        startDate: plainValue(entry.fields.startDate),
+        endDate: plainValue(entry.fields.endDate),
+        details: richValue(entry.fields.details),
+      }))
+      .sort(byRecency),
   };
 }
 
