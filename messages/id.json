@@ -241,6 +241,7 @@
       "errorTitle": "Gagal memuat resume kamu",
       "errorDescription": "Tenang, nggak ada yang kehapus. Pustakanya cuma gagal dimuat dari penyimpanan browser ini. Segarin halaman buat coba lagi.",
       "open": "Buka {title}",
+      "emptyDocument": "Resume kosong, belum ada isinya",
       "edited": "Diedit",
       "menu": "Menu",
       "rename": "Ganti nama",
