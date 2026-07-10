@@ -198,6 +198,49 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
       },
     ],
   },
+  projects: {
+    type: "projects",
+    defaultTitle: "Projects",
+    singleton: false,
+    fields: [
+      {
+        key: "title",
+        label: "Project name",
+        kind: "plain",
+        placeholder: "react-a11y-kit",
+      },
+      {
+        key: "company",
+        label: "Role",
+        kind: "plain",
+        placeholder: "Maintainer",
+      },
+      {
+        key: "website",
+        label: "Project URL",
+        kind: "plain",
+        placeholder: "github.com/you/project",
+      },
+      {
+        key: "startDate",
+        label: "Start date",
+        kind: "plain",
+        placeholder: "Jan 2023",
+      },
+      {
+        key: "endDate",
+        label: "End date",
+        kind: "plain",
+        placeholder: "Present",
+      },
+      {
+        key: "description",
+        label: "Description",
+        kind: "richtext",
+        features: PROSE_FEATURES,
+      },
+    ],
+  },
   organizations: {
     type: "organizations",
     defaultTitle: "Organizations",

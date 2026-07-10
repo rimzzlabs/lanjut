@@ -4,6 +4,7 @@ import {
   Backpack,
   Briefcase,
   CircleUserRound,
+  FolderGit2,
   GraduationCap,
   Languages,
   type LucideIcon,
@@ -15,6 +16,7 @@ export type EditorSectionId =
   | "personal-details"
   | "experience"
   | "internship"
+  | "projects"
   | "organizations"
   | "education"
   | "skills"
@@ -45,6 +47,7 @@ export const EDITOR_SECTIONS: EditorSectionDescriptor[] = [
   },
   { id: "experience", label: "Experience", icon: Briefcase, required: false },
   { id: "internship", label: "Internship", icon: Backpack, required: false },
+  { id: "projects", label: "Projects", icon: FolderGit2, required: false },
   {
     id: "organizations",
     label: "Organizations",

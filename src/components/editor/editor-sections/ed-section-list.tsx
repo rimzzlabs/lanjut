@@ -11,6 +11,7 @@ import { EditorSectionInternship } from "./ed-section-internship/ed-section-inte
 import { EditorSectionLanguages } from "./ed-section-languages/ed-section-languages";
 import { EditorSectionOrganizations } from "./ed-section-organizations/ed-section-organizations";
 import { EditorSectionPersonal } from "./ed-section-personal/ed-section-personal";
+import { EditorSectionProjects } from "./ed-section-projects/ed-section-projects";
 import { EditorSectionSkills } from "./ed-section-skills/ed-section-skills";
 import { EditorSectionSummary } from "./ed-section-summary/ed-section-summary";
 
@@ -51,6 +52,7 @@ export function EditorSectionList() {
       <EditorSectionSummary />
       <EditorSectionExperience />
       <EditorSectionInternship />
+      <EditorSectionProjects />
       <EditorSectionOrganizations />
       <EditorSectionEducation />
       <EditorSectionCertifications />
