@@ -43,7 +43,7 @@ export function LandingPreviewEditor() {
           title={t("imageAlt")}
           width={1437}
           height={871}
-          className="w-full aspect-video rounded-lg border object-scale-down object-top"
+          className="w-full aspect-video rounded-lg border object-cover"
         />
         <figcaption className="sr-only">{t("caption")}</figcaption>
       </motion.figure>

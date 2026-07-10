@@ -61,6 +61,17 @@
     "github": "GitHub",
     "rights": "© {year} Lanjut. Open source, berlisensi AGPL-3.0."
   },
+  "nav": {
+    "skipToContent": "Lewati ke konten utama",
+    "dashboard": "Dasbor",
+    "templates": "Template",
+    "createResume": "Buat resume",
+    "openMenu": "Buka menu",
+    "menuTitle": "Menu",
+    "menuDescription": "Jelajahi Lanjut dan langsung mulai bikin resume.",
+    "display": "Tampilan",
+    "close": "Tutup"
+  },
   "tour": {
     "controls": {
       "skip": "Lewati",

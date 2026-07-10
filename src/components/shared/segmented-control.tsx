@@ -42,7 +42,7 @@ export function SegmentedControl(props: SegmentedControlProps) {
         if (value) props.onValueChange(value);
       }}
       className={cn(
-        "inline-flex w-fit items-center rounded-lg border bg-muted p-0.5",
+        "inline-flex w-fit items-center rounded-2xl border bg-muted p-0.5",
         props.className,
       )}
     >
@@ -54,7 +54,7 @@ export function SegmentedControl(props: SegmentedControlProps) {
             value={item.value}
             aria-label={item.ariaLabel ?? item.label}
             className={cn(
-              "relative inline-flex h-7 min-w-9 cursor-pointer items-center justify-center rounded-md px-2.5 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring/50",
+              "relative inline-flex h-6 min-w-9 cursor-pointer items-center justify-center rounded-xl px-2.5 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring/50",
               active
                 ? "text-foreground"
                 : "text-muted-foreground hover:text-foreground",
@@ -64,7 +64,7 @@ export function SegmentedControl(props: SegmentedControlProps) {
               <motion.span
                 aria-hidden
                 layoutId={layoutId}
-                className="absolute inset-0 rounded-md bg-background shadow-sm"
+                className="absolute inset-0 rounded-xl bg-background shadow-sm"
                 transition={
                   reduceMotion
                     ? { duration: 0 }
