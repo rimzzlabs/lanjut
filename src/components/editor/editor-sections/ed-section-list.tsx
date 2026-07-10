@@ -7,6 +7,7 @@ import { useResumeStore } from "@/lib/store";
 import { EditorSectionCertifications } from "./ed-section-certifications/ed-section-certifications";
 import { EditorSectionEducation } from "./ed-section-education/ed-section-education";
 import { EditorSectionExperience } from "./ed-section-experience/ed-section-experience";
+import { EditorSectionInternship } from "./ed-section-internship/ed-section-internship";
 import { EditorSectionLanguages } from "./ed-section-languages/ed-section-languages";
 import { EditorSectionOrganizations } from "./ed-section-organizations/ed-section-organizations";
 import { EditorSectionPersonal } from "./ed-section-personal/ed-section-personal";
@@ -49,6 +50,7 @@ export function EditorSectionList() {
       <EditorSectionPersonal />
       <EditorSectionSummary />
       <EditorSectionExperience />
+      <EditorSectionInternship />
       <EditorSectionOrganizations />
       <EditorSectionEducation />
       <EditorSectionCertifications />

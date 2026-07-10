@@ -390,12 +390,12 @@
       "countryPlaceholder": "Indonesia"
     },
     "summary": {
-      "accordionTitle": "Ringkasan Profesional",
+      "accordionTitle": "Ringkasan",
       "label": "Ringkasan Profesional",
       "placeholder": "Saya seorang UX engineer yang antusias. Bikin pengalaman yang menarik secara visual..."
     },
     "experience": {
-      "accordionTitle": "Pengalaman Profesional",
+      "accordionTitle": "Pengalaman Kerja",
       "legend": "Pengalaman Profesional",
       "legendDesc": "Ceritain pengalaman kamu sebelumnya",
       "add": "Pengalaman Profesional",
@@ -413,8 +413,27 @@
       "summaryPlaceholder": "Membuat aplikasi real-time yang....",
       "remove": "Hapus"
     },
+    "internship": {
+      "accordionTitle": "Magang",
+      "legend": "Magang",
+      "legendDesc": "Tambahin pengalaman magang kamu",
+      "add": "Magang",
+      "emptyTitle": "Belum ada magang",
+      "emptyDescription": "Tambahin magang buat nunjukin pengalaman awal kamu.",
+      "itemLegend": "Magang {index}",
+      "role": "Posisi",
+      "rolePlaceholder": "Frontend Engineering Intern",
+      "company": "Perusahaan",
+      "companyPlaceholder": "Acme Inc.",
+      "companyWebsite": "Situs web perusahaan",
+      "companyWebsitePlaceholder": "acme.com",
+      "present": "Masih magang di sini sekarang",
+      "summary": "Ringkasan",
+      "summaryPlaceholder": "Membuat internal tooling yang....",
+      "remove": "Hapus"
+    },
     "organizations": {
-      "accordionTitle": "Pengalaman Organisasi",
+      "accordionTitle": "Organisasi",
       "legend": "Pengalaman Organisasi",
       "legendDesc": "Ceritain peran sukarelawan, mahasiswa, dan komunitas kamu",
       "add": "Pengalaman Organisasi",
