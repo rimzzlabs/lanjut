@@ -1,4 +1,5 @@
 import { RESUME_LABELS } from "@/lib/resume/labels";
+import type { SectionColumns } from "@/lib/resume/types";
 import type {
   CertificateItemView,
   EducationItemView,
@@ -35,7 +36,7 @@ export type ResumeBlock = BlockMeta &
     | { kind: "experience"; item: ExperienceItemView }
     | { kind: "education"; item: EducationItemView }
     | { kind: "certificate"; item: CertificateItemView }
-    | { kind: "skills"; items: SkillItemView[] }
+    | { kind: "skills"; items: SkillItemView[]; columns: SectionColumns }
     | { kind: "languages"; items: LanguageItemView[] }
   );
 
@@ -215,6 +216,7 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
       id: "skills-body",
       kind: "skills",
       items: skills,
+      columns: resume.skillsColumns,
       gapBefore: GAP.body,
       keepWithNext: false,
     });

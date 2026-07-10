@@ -178,7 +178,7 @@ function TebalBlock(props: { block: ResumeBlock }) {
     case "certificate":
       return <TebalCertificate item={block.item} />;
     case "skills":
-      return <PdfGrid items={block.items} />;
+      return <PdfGrid items={block.items} columns={block.columns} />;
     case "languages":
       return <PdfGrid items={block.items} />;
   }

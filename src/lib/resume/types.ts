@@ -5,10 +5,17 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 9;
+export const CURRENT_SCHEMA_VERSION = 10;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
+
+/**
+ * Presentation-only column count for grid-rendered sections (skills). Governs the
+ * on-screen preview and PDF visual layout only; it never changes reading order,
+ * and inherently linear exports (docx, plain text) ignore it.
+ */
+export type SectionColumns = 1 | 2;
 
 export type FieldKind = "plain" | "richtext";
 
@@ -59,6 +66,11 @@ export interface Section {
   type: SectionType;
   title: string;
   entries: Entry[];
+  /**
+   * Presentation-only column count for grid-rendered sections (skills). Absent on
+   * non-grid sections; renderers default to a two-column grid when unset.
+   */
+  columns?: SectionColumns;
 }
 
 /**

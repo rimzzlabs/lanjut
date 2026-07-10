@@ -47,12 +47,15 @@ export function createEmptyEntry(type: SectionType): Entry {
 
 export function createEmptySection(type: SectionType): Section {
   const schema = getSectionSchema(type);
-  return {
+  const section: Section = {
     id: nanoid(),
     type,
     title: schema.defaultTitle,
     entries: [],
   };
+  // The Skills grid is column-toggleable; new sections start two-column.
+  if (type === "skills") section.columns = 2;
+  return section;
 }
 
 export function createEmptyHeader(): Header {

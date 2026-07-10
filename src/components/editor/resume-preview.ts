@@ -7,7 +7,7 @@
  * Data → adapter → consumer: these types are the consumer contract.
  */
 
-import type { ResumeLanguage } from "@/lib/resume/types";
+import type { ResumeLanguage, SectionColumns } from "@/lib/resume/types";
 import type { RichBlock } from "./rich-content";
 
 export type ContactKind = "phone" | "email" | "website" | "location";
@@ -94,5 +94,7 @@ export interface ResumePreview {
   education: EducationItemView[];
   certificates: CertificateItemView[];
   skills: SkillItemView[];
+  /** Presentation-only column count for the skills grid; defaults to two. */
+  skillsColumns: SectionColumns;
   languages: LanguageItemView[];
 }

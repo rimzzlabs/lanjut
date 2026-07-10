@@ -392,6 +392,7 @@ export const SEED_RESUME: Resume = {
       id: "seed-skills",
       type: "skills",
       title: "Skills",
+      columns: 2,
       entries: [
         {
           id: "seed-skills-1",

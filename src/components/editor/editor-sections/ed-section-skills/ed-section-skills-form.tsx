@@ -21,6 +21,7 @@ import {
   toSkillsValues,
 } from "../resume-form-adapter";
 import { EditorSectionSkillsFormItem } from "./ed-section-skills-form-item";
+import { SkillsColumnsToggle } from "./skills-columns-toggle";
 
 function emptySkill(): SkillItemValues {
   return { name: "", level: "" };
@@ -76,22 +77,25 @@ export function EditorSectionSkillsForm() {
             description={t("emptyDescription")}
           />
         ) : (
-          <SortableList
-            items={fields.map((field) => field.id)}
-            onReorder={handleReorder}
-          >
-            <FieldGroup className="gap-2">
-              {fields.map((field, index) => (
-                <EditorSectionSkillsFormItem
-                  key={field.id}
-                  id={field.id}
-                  control={form.control}
-                  index={index}
-                  onRemoveField={remove}
-                />
-              ))}
-            </FieldGroup>
-          </SortableList>
+          <>
+            <SkillsColumnsToggle />
+            <SortableList
+              items={fields.map((field) => field.id)}
+              onReorder={handleReorder}
+            >
+              <FieldGroup className="gap-2">
+                {fields.map((field, index) => (
+                  <EditorSectionSkillsFormItem
+                    key={field.id}
+                    id={field.id}
+                    control={form.control}
+                    index={index}
+                    onRemoveField={remove}
+                  />
+                ))}
+              </FieldGroup>
+            </SortableList>
+          </>
         )}
       </FieldSet>
     </form>

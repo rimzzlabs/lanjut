@@ -189,7 +189,7 @@ function KetatBlock(props: { block: ResumeBlock }) {
     case "certificate":
       return <KetatCertificate item={block.item} />;
     case "skills":
-      return <PdfGrid items={block.items} />;
+      return <PdfGrid items={block.items} columns={block.columns} />;
     case "languages":
       return <PdfGrid items={block.items} />;
   }

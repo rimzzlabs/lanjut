@@ -208,6 +208,7 @@ export function resumeToPreview(resume: Resume): ResumePreview {
       name: plain(entry.fields.name),
       proficiency: plain(entry.fields.level),
     })),
+    skillsColumns: sectionOfType(resume, "skills")?.columns ?? 2,
     languages: (sectionOfType(resume, "languages")?.entries ?? []).map(
       (entry) => ({
         id: entry.id,
