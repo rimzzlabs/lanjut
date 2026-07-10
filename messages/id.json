@@ -153,6 +153,11 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_7_0": [
+          "Ada bagian Magang baru: tulis pengalaman magang sebagai entri terpisah dari pekerjaan tetap, dengan kolom yang sama seperti Pengalaman.",
+          "Ada bagian Proyek baru: pamerkan proyek sampingan, kontribusi open-source, atau apa pun yang pernah kamu rilis, lengkap dengan nama, tautan, tanggal, dan deskripsi.",
+          "Resume yang masih kosong kini menampilkan pratinjau samar di pustaka, bukan kartu putih polos, jadi resume baru tetap terlihat rapi sebelum kamu mulai mengisinya."
+        ],
         "0_6_0": [
           "Lanjut sekarang bisa Bahasa Indonesia. Ganti seluruh tampilan antara Bahasa Inggris dan Indonesia kapan saja lewat tombol bahasa di bilah navigasi.",
           "Tiap resume bisa punya bahasanya sendiri: pilih Bahasa Inggris atau Indonesia per dokumen, dan judul bagian serta tanggal di ekspor PDF, DOCX, dan TXT kamu mengikuti pilihan itu.",

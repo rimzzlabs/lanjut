@@ -153,6 +153,11 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_7_0": [
+          "New Internship section: list internships as their own entries, separate from full-time roles, with the same fields as Experience.",
+          "New Projects section: give side projects, open-source work, and anything you've shipped their own space, each with a name, link, dates, and description.",
+          "A blank résumé now shows a preview placeholder in your library instead of an empty white card, so a new résumé looks intentional until you start writing."
+        ],
         "0_6_0": [
           "Lanjut now speaks Bahasa Indonesia. Switch the entire interface between English and Indonesian anytime with the language toggle in the navbar.",
           "Give each résumé its own language: pick English or Indonesian per document, and the section headings and dates in your PDF, DOCX, and TXT exports follow that choice.",
