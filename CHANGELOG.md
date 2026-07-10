@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.8.0](https://github.com/rimzzlabs/lanjut/compare/v0.7.0...v0.8.0) (2026-07-10)
+
+
+### Features
+
+* add a landing navbar with a mobile menu and skip link ([#79](https://github.com/rimzzlabs/lanjut/issues/79)) ([71344c2](https://github.com/rimzzlabs/lanjut/commit/71344c2aa1a9c7e9d006c22e560e125ad097a842))
+* add a one or two column toggle to the resume skills section ([#75](https://github.com/rimzzlabs/lanjut/issues/75)) ([7d78d36](https://github.com/rimzzlabs/lanjut/commit/7d78d36d2a16a7fb82e0ab7e2bcf83907b5bdbee))
+* refresh landing screenshots and add json-ld structured data ([#78](https://github.com/rimzzlabs/lanjut/issues/78)) ([99489e1](https://github.com/rimzzlabs/lanjut/commit/99489e11f9651a66c8e5de3e9c86dd47ea609d79))
+* show a progress bar during page navigation ([#80](https://github.com/rimzzlabs/lanjut/issues/80)) ([1ebd262](https://github.com/rimzzlabs/lanjut/commit/1ebd262908a860d483c092e85d38bb0db914adbd))
+
+
+### Bug Fixes
+
+* sort editor entry forms newest-first to match the preview ([#77](https://github.com/rimzzlabs/lanjut/issues/77)) ([4f0f201](https://github.com/rimzzlabs/lanjut/commit/4f0f201a4e7f5989c3516cfe000757e1a86b4b5e))
+
+
+### Documentation
+
+* add the 0.8.0 changelog entry for the what's new sheet ([#81](https://github.com/rimzzlabs/lanjut/issues/81)) ([25dc1d6](https://github.com/rimzzlabs/lanjut/commit/25dc1d6f84b48538984f074c60757680e526e246))
+
 ## [0.7.0](https://github.com/rimzzlabs/lanjut/compare/v0.6.0...v0.7.0) (2026-07-10)
 
 
