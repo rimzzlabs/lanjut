@@ -4,6 +4,7 @@ import { LandingClosure } from "@/components/landing/landing-closure";
 import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingHero } from "@/components/landing/landing-hero";
 import { LandingHowItWorks } from "@/components/landing/landing-how-it-works";
+import { LandingNavbar } from "@/components/landing/landing-navbar";
 import { LandingPreviewEditor } from "@/components/landing/landing-preview-editor";
 import { StructuredData } from "@/components/shared/structured-data";
 import { type Locale, routing } from "@/i18n/routing";
@@ -32,6 +33,7 @@ export default async function Home(props: {
   const { locale } = await props.params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "meta" });
+  const tNav = await getTranslations({ locale, namespace: "nav" });
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -63,8 +65,16 @@ export default async function Home(props: {
 
   return (
     <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:border focus:bg-background focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring"
+      >
+        {tNav("skipToContent")}
+      </a>
+
       <StructuredData json={structuredData} />
-      <main>
+      <LandingNavbar />
+      <main id="main">
         <LandingHero />
         <LandingPreviewEditor />
         <LandingHowItWorks />

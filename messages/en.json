@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Lanjut: Free, local-first ATS résumé builder",
-    "description": "Lanjut is a free, open-source résumé builder that stays entirely in your browser; no account, nothing uploaded. Style it freely; every export is structured to sail through applicant tracking systems."
+    "title": "Lanjut: Free, local-first ATS resume builder",
+    "description": "Lanjut is a free, open-source resume builder that stays entirely in your browser; no account, nothing uploaded. Style it freely; every export is structured to sail through applicant tracking systems."
   },
   "language": {
     "label": "Language",
@@ -13,7 +13,7 @@
     "srHeading": "Lanjut, ATS Resume builder:",
     "headingLine1": "Land The Interview,",
     "headingLine2": "Not The Reject Pile.",
-    "description": "Lanjut is a local-first résumé builder that stays entirely in your browser. No account, nothing uploaded. Style it freely, and every export is structured to sail through applicant tracking systems.",
+    "description": "Lanjut is a local-first resume builder that stays entirely in your browser. No account, nothing uploaded. Style it freely, and every export is structured to sail through applicant tracking systems.",
     "ctaPrimary": "Start building free",
     "ctaSecondary": "Browse Templates",
     "stat1Value": "100%",
@@ -25,13 +25,13 @@
   },
   "previewEditor": {
     "heading": "A fine-grained editor",
-    "description": "Build your ATS-safe résumé in a focused editor. No AI slop, no overwhelming features. Straight to the point, without wasting your time.",
+    "description": "Build your ATS-safe resume in a focused editor. No AI slop, no overwhelming features. Straight to the point, without wasting your time.",
     "imageAlt": "Lanjut Editor",
     "caption": "Lanjut's ATS Resume Editor"
   },
   "howItWorks": {
     "heading": "How it works",
-    "subheading": "The same résumé at every stage: what you type, what recruiters see, and what the parser reads back.",
+    "subheading": "The same resume at every stage: what you type, what recruiters see, and what the parser reads back.",
     "step1Kicker": "01 · Template",
     "step1Title": "Pick a template",
     "step1Description": "Start from a template you like. Each one only changes typography, spacing, and accents; the structure underneath stays ATS-safe.",
@@ -41,25 +41,36 @@
     "step3Kicker": "03 · Export",
     "step3Title": "Survive the parser",
     "step3Description": "Download PDF, DOCX, or plain text, and any extractor reads it back in the order you wrote it. That's the whole trick.",
-    "screenshotTemplatesAlt": "The Lanjut template gallery showing the same résumé in different typographic styles",
-    "screenshotEditorAlt": "The Lanjut editor with a résumé preview beside structured sections",
+    "screenshotTemplatesAlt": "The Lanjut template gallery showing the same resume in different typographic styles",
+    "screenshotEditorAlt": "The Lanjut editor with a resume preview beside structured sections",
     "terminalCaption": "what the ATS reads",
     "terminalReadingOrder": "✓ reading order intact"
   },
   "closure": {
     "kicker": "04 · Apply",
-    "heading": "Lanjut. Resume. Résumé.",
-    "description": "The name is the pitch: lanjut means continue. Pick a template or start from a blank page; either way it's free, open source, and your résumé never leaves your browser.",
-    "ctaPrimary": "Create your résumé",
+    "heading": "Lanjut. Resume. Resume.",
+    "description": "The name is the pitch: lanjut means continue. Pick a template or start from a blank page; either way it's free, open source, and your resume never leaves your browser.",
+    "ctaPrimary": "Create your resume",
     "ctaSecondary": "Browse templates"
   },
   "footer": {
     "ariaLabel": "Footer",
-    "tagline": "Local-first: your résumé never leaves your browser.",
+    "tagline": "Local-first: your resume never leaves your browser.",
     "startBuilding": "Start building",
     "templates": "Templates",
     "github": "GitHub",
     "rights": "© {year} Lanjut. Open source, AGPL-3.0 licensed."
+  },
+  "nav": {
+    "skipToContent": "Skip to main content",
+    "dashboard": "Dashboard",
+    "templates": "Templates",
+    "createResume": "Create Resume",
+    "openMenu": "Open menu",
+    "menuTitle": "Menu",
+    "menuDescription": "Browse Lanjut and jump into the resume builder.",
+    "display": "Display",
+    "close": "Close"
   },
   "tour": {
     "controls": {
@@ -71,11 +82,11 @@
     "library": {
       "welcome": {
         "title": "Welcome to Lanjut",
-        "content": "A free, local-first résumé builder. Everything you write stays in this browser; nothing is ever sent to a server."
+        "content": "A free, local-first resume builder. Everything you write stays in this browser; nothing is ever sent to a server."
       },
       "create": {
-        "title": "Create a résumé",
-        "content": "Start a new résumé from here. You can keep as many as you like."
+        "title": "Create a resume",
+        "content": "Start a new resume from here. You can keep as many as you like."
       },
       "search": {
         "title": "Find it later",
@@ -87,7 +98,7 @@
       },
       "resumes": {
         "title": "Your résumés",
-        "content": "Every résumé you create shows up here; pick one to jump into the editor."
+        "content": "Every resume you create shows up here; pick one to jump into the editor."
       },
       "replay": {
         "title": "Replay anytime",
@@ -97,7 +108,7 @@
     "template": {
       "browse": {
         "title": "Browse templates",
-        "content": "Templates change presentation only: typography, spacing, accents. The structure stays linear so ATS parsers can always read your résumé."
+        "content": "Templates change presentation only: typography, spacing, accents. The structure stays linear so ATS parsers can always read your resume."
       },
       "search": {
         "title": "Search",
@@ -111,7 +122,7 @@
     "editor": {
       "preview": {
         "title": "Live preview",
-        "content": "This paper is your résumé exactly as it will export. It updates as you type and is saved to this browser automatically."
+        "content": "This paper is your resume exactly as it will export. It updates as you type and is saved to this browser automatically."
       },
       "sections": {
         "title": "Fill in your details",
@@ -125,7 +136,7 @@
     "editor-sheet": {
       "preview": {
         "title": "Live preview",
-        "content": "This paper is your résumé exactly as it will export. It updates as you type and is saved to this browser automatically."
+        "content": "This paper is your resume exactly as it will export. It updates as you type and is saved to this browser automatically."
       },
       "edit": {
         "title": "Fill in your details",
@@ -156,50 +167,50 @@
         "0_7_0": [
           "New Internship section: list internships as their own entries, separate from full-time roles, with the same fields as Experience.",
           "New Projects section: give side projects, open-source work, and anything you've shipped their own space, each with a name, link, dates, and description.",
-          "A blank résumé now shows a preview placeholder in your library instead of an empty white card, so a new résumé looks intentional until you start writing."
+          "A blank resume now shows a preview placeholder in your library instead of an empty white card, so a new resume looks intentional until you start writing."
         ],
         "0_6_0": [
           "Lanjut now speaks Bahasa Indonesia. Switch the entire interface between English and Indonesian anytime with the language toggle in the navbar.",
-          "Give each résumé its own language: pick English or Indonesian per document, and the section headings and dates in your PDF, DOCX, and TXT exports follow that choice.",
+          "Give each resume its own language: pick English or Indonesian per document, and the section headings and dates in your PDF, DOCX, and TXT exports follow that choice.",
           "Reorder your skills and languages: grab the handle next to an entry and drag it into place, or use the keyboard to move it. The new order flows straight into the preview and every export.",
           "Empty sections now tell you so: instead of a lone button, each section without entries shows a short prompt for what to add.",
           "The landing page hero heading has a refreshed gradient, tuned for both light and dark mode."
         ],
         "0_5_0": [
-          "Switch templates without leaving the editor: the new Layout tab shows your résumé rendered in every template, and one click applies your pick.",
-          "Start from scratch when you want to: untick \"Pre-fill with example content\" in the create dialog to begin with a blank document instead of the example résumé.",
+          "Switch templates without leaving the editor: the new Layout tab shows your resume rendered in every template, and one click applies your pick.",
+          "Start from scratch when you want to: untick \"Pre-fill with example content\" in the create dialog to begin with a blank document instead of the example resume.",
           "Sections can now be emptied completely: every entry has a delete button, and removing the last one simply drops the section from the preview until you add another."
         ],
         "0_4_0": [
           "New Organization section: showcase volunteer, student, and community roles with dates and highlights, just like work experience. It shows up in every template and export, and your existing résumés get it automatically.",
-          "Your saved résumés are safer during app updates: a backup copy is kept on your device before any data-format upgrade, and a résumé the app can't read yet is flagged with a notice instead of disappearing.",
+          "Your saved résumés are safer during app updates: a backup copy is kept on your device before any data-format upgrade, and a resume the app can't read yet is flagged with a notice instead of disappearing.",
           "A guided tour now walks you through the dashboard, the templates, and the editor on your first visit.",
-          "The landing page walks through how Lanjut works, ending with a one-click way to start a new résumé.",
+          "The landing page walks through how Lanjut works, ending with a one-click way to start a new resume.",
           "Found a bug or missing a feature? Report it from the sidebar; we prefill the GitHub issue for you.",
           "On your phone, dialogs now open as drawers that are easier to reach and swipe away."
         ],
         "0_3_0": [
           "Browse templates on their own page, with search and sorting.",
           "Five new templates: Ketat, Luasa, Tebal, Klasik, and Ketik.",
-          "Template and résumé cards now show a live thumbnail of your actual document.",
-          "The sidebar highlights where you are, and each résumé gets a quick actions menu."
+          "Template and resume cards now show a live thumbnail of your actual document.",
+          "The sidebar highlights where you are, and each resume gets a quick actions menu."
         ],
         "0_2_0": [
-          "Export your résumé as PDF, DOCX, or plain text.",
+          "Export your resume as PDF, DOCX, or plain text.",
           "Bold, italics, links, and lists now show up in the live preview.",
           "The editor covers the full section set: summary, experience, education, skills, certifications, and languages."
         ]
       }
     },
     "download": {
-      "trigger": "Résumé",
+      "trigger": "Resume",
       "srDownload": "Download",
-      "title": "Download résumé",
+      "title": "Download resume",
       "description": "Pick a format and name your file."
     },
     "menu": {
       "label": "Menu",
-      "downloadResume": "Download Résumé"
+      "downloadResume": "Download Resume"
     },
     "sidebar": {
       "home": "Lanjut - Home Page",
@@ -213,10 +224,10 @@
       "guide": "Guide",
       "reportBug": "Report a bug",
       "featureRequest": "Feature request",
-      "myResume": "My Résumé",
-      "createResume": "Create Résumé",
-      "noResume": "No résumé yet",
-      "noResumeDescription": "When you add résumé, they will be visible here.",
+      "myResume": "My Resume",
+      "createResume": "Create Resume",
+      "noResume": "No resume yet",
+      "noResumeDescription": "When you add resume, they will be visible here.",
       "itemMenu": "Menu",
       "modify": "Modify <b>{title}</b>",
       "rename": "Rename",
@@ -224,7 +235,7 @@
     },
     "toolbar": {
       "searchResume": "Search your resume",
-      "resume": "Résumé",
+      "resume": "Resume",
       "searchTemplates": "Search templates",
       "sortNameAsc": "Name (A–Z)",
       "sortNameDesc": "Name (Z–A)",
@@ -232,13 +243,13 @@
     },
     "emptyState": {
       "title": "No résumés yet",
-      "description": "Nothing is saved on this device yet. Start from a template, or create a blank résumé.",
+      "description": "Nothing is saved on this device yet. Start from a template, or create a blank resume.",
       "browseTemplates": "Browse templates",
-      "newResume": "New résumé"
+      "newResume": "New resume"
     },
     "unreadable": {
       "title": "Some résumés need a newer version of the app",
-      "description": "{count, plural, one {# résumé was} other {# résumés were}} saved by a newer version of Lanjut than the one this tab is running. They are still stored safely on this device. Refresh the page to update the app and see them again."
+      "description": "{count, plural, one {# resume was} other {# résumés were}} saved by a newer version of Lanjut than the one this tab is running. They are still stored safely on this device. Refresh the page to update the app and see them again."
     },
     "grid": {
       "emptyTitle": "No résumés match",
@@ -246,13 +257,13 @@
       "errorTitle": "Couldn't load your résumés",
       "errorDescription": "Nothing was deleted. The library just failed to load from this browser's storage. Refresh the page to try again.",
       "open": "Open {title}",
-      "emptyDocument": "Blank résumé, nothing added yet",
+      "emptyDocument": "Blank resume, nothing added yet",
       "edited": "Edited",
       "menu": "Menu",
       "rename": "Rename",
       "download": "Download",
       "delete": "Delete",
-      "newResume": "New résumé"
+      "newResume": "New resume"
     },
     "templates": {
       "noMatch": "No templates match “{query}”.",
@@ -286,8 +297,8 @@
     },
     "create": {
       "title": "Create a new resume",
-      "description": "You can create a new resume. But let's name your résumé first.",
-      "label": "Résumé label",
+      "description": "You can create a new resume. But let's name your resume first.",
+      "label": "Resume label",
       "placeholder": "Software Engineer",
       "fieldDescription": "At least 3 characters or more, maximum 100 chars at most.",
       "prefill": "Pre-fill with example content",
@@ -307,8 +318,8 @@
     "download": {
       "title": "Download {title}",
       "description": "Pick a format and name your file. The export is generated in your browser.",
-      "missing": "This résumé could not be loaded from this browser's storage.",
-      "drawerTitle": "Download résumé",
+      "missing": "This resume could not be loaded from this browser's storage.",
+      "drawerTitle": "Download resume",
       "drawerDescription": "Pick a format and name your file.",
       "format": "Format",
       "fileName": "File name",
@@ -320,16 +331,16 @@
       "whatHappened": "What happened?",
       "whatHappenedPlaceholder": "The editor preview goes blank when...",
       "steps": "Steps to reproduce",
-      "stepsPlaceholder": "1. Create a résumé (a numbered list works great here)",
+      "stepsPlaceholder": "1. Create a resume (a numbered list works great here)",
       "stepsDescription": "Optional here; you can also fill this in on GitHub.",
       "area": "Where does the bug show up?",
       "areaPlaceholder": "Area"
     },
     "feature": {
       "title": "Request a feature",
-      "description": "This opens a prefilled GitHub issue for you to review and submit; a GitHub account is required. Note that résumé structure (tables, columns, images) is out of scope by design; presentation is fair game.",
+      "description": "This opens a prefilled GitHub issue for you to review and submit; a GitHub account is required. Note that resume structure (tables, columns, images) is out of scope by design; presentation is fair game.",
       "problem": "What problem does this solve?",
-      "problemPlaceholder": "When I tailor my résumé for different roles, I have to...",
+      "problemPlaceholder": "When I tailor my resume for different roles, I have to...",
       "problemDescription": "Describe the situation where you needed this, rather than the solution itself.",
       "proposal": "Proposed solution",
       "proposalPlaceholder": "How do you imagine it working?",
@@ -350,9 +361,9 @@
       "editorDescription": "Resume Editor",
       "tabEditor": "Editor",
       "tabLayout": "Layout",
-      "notFound": "Résumé not found",
+      "notFound": "Resume not found",
       "didYouMean": "did you mean:",
-      "notExist": "This résumé doesn't exist in this browser's storage.",
+      "notExist": "This resume doesn't exist in this browser's storage.",
       "headTo": "or head to",
       "dashboard": "Dashboard",
       "or": "or",
