@@ -234,6 +234,39 @@ export const SEED_RESUME: Resume = {
       ],
     },
     {
+      id: "seed-internship",
+      type: "internship",
+      title: "Internship",
+      entries: [
+        {
+          id: "seed-internship-1",
+          fields: {
+            title: plain("Frontend Engineering Intern"),
+            company: plain("Hooli"),
+            website: plain("hooli.example.com"),
+            startDate: plain("Jun 2015"),
+            endDate: plain("Aug 2015"),
+            description: prose(
+              ul(
+                li(
+                  t("Shipped a customer-facing settings page in "),
+                  b("React"),
+                  t(", used by the full beta cohort by the end of the summer."),
+                ),
+                li(
+                  t(
+                    "Wrote the team's first component unit tests, lifting coverage on the shared UI package to ",
+                  ),
+                  b("70%"),
+                  t("."),
+                ),
+              ),
+            ),
+          },
+        },
+      ],
+    },
+    {
       id: "seed-organizations",
       type: "organizations",
       title: "Organizations",

@@ -73,6 +73,12 @@ export interface ResumePreview {
   summary: RichBlock[];
   experience: ExperienceItemView[];
   /**
+   * Internship entries are structurally identical to experience (same fields),
+   * so they reuse `ExperienceItemView` and every renderer's experience path;
+   * only the section heading differs.
+   */
+  internship: ExperienceItemView[];
+  /**
    * Organization entries (volunteer, student, community roles) are
    * presentationally identical to experience entries, so they reuse
    * `ExperienceItemView` (`company` holds the organization name) and every

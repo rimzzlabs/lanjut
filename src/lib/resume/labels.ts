@@ -5,6 +5,7 @@ export const RESUME_LANGUAGES: ResumeLanguage[] = ["en", "id"];
 interface DocumentLabels {
   summary: string;
   experience: string;
+  internship: string;
   organizations: string;
   education: string;
   certificates: string;
@@ -25,6 +26,7 @@ export const RESUME_LABELS: Record<ResumeLanguage, DocumentLabels> = {
   en: {
     summary: "Summary",
     experience: "Experience",
+    internship: "Internship",
     organizations: "Organizations",
     education: "Education",
     certificates: "Certificates",
@@ -49,6 +51,7 @@ export const RESUME_LABELS: Record<ResumeLanguage, DocumentLabels> = {
   id: {
     summary: "Ringkasan",
     experience: "Pengalaman",
+    internship: "Magang",
     organizations: "Organisasi",
     education: "Pendidikan",
     certificates: "Sertifikat",

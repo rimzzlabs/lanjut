@@ -155,6 +155,49 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
       },
     ],
   },
+  internship: {
+    type: "internship",
+    defaultTitle: "Internship",
+    singleton: false,
+    fields: [
+      {
+        key: "title",
+        label: "Role",
+        kind: "plain",
+        placeholder: "Frontend Engineering Intern",
+      },
+      {
+        key: "company",
+        label: "Company",
+        kind: "plain",
+        placeholder: "Acme Inc.",
+      },
+      {
+        key: "website",
+        label: "Company website",
+        kind: "plain",
+        placeholder: "acme.com",
+      },
+      {
+        key: "startDate",
+        label: "Start date",
+        kind: "plain",
+        placeholder: "Jan 2023",
+      },
+      {
+        key: "endDate",
+        label: "End date",
+        kind: "plain",
+        placeholder: "Present",
+      },
+      {
+        key: "description",
+        label: "Description",
+        kind: "richtext",
+        features: PROSE_FEATURES,
+      },
+    ],
+  },
   organizations: {
     type: "organizations",
     defaultTitle: "Organizations",

@@ -32,6 +32,19 @@ export interface ExperienceFormValues {
   experiences: ExperienceItemValues[];
 }
 
+export interface InternshipItemValues {
+  title: string;
+  company: string;
+  website: string;
+  startDate: string;
+  endDate: string;
+  description: JSONContent;
+}
+
+export interface InternshipFormValues {
+  internships: InternshipItemValues[];
+}
+
 export interface OrganizationItemValues {
   role: string;
   organization: string;
@@ -198,6 +211,44 @@ export function applyExperienceValues(
   const section = sectionOfType(draft, "experience");
   if (!section) return;
   section.entries = values.experiences.map((item, index) => ({
+    id: entryId(section, index),
+    fields: {
+      title: plain(item.title),
+      company: plain(item.company),
+      website: plain(item.website),
+      startDate: plain(item.startDate),
+      endDate: plain(item.endDate),
+      description: rich(item.description),
+    },
+  }));
+}
+
+// --- Internship (repeating section entries) ---------------------------------
+
+export function internshipEntries(resume: Resume): Entry[] {
+  return sectionOfType(resume, "internship")?.entries ?? [];
+}
+
+export function toInternshipValues(resume: Resume): InternshipFormValues {
+  return {
+    internships: internshipEntries(resume).map((entry) => ({
+      title: plainValue(entry.fields.title),
+      company: plainValue(entry.fields.company),
+      website: plainValue(entry.fields.website),
+      startDate: plainValue(entry.fields.startDate),
+      endDate: plainValue(entry.fields.endDate),
+      description: richValue(entry.fields.description),
+    })),
+  };
+}
+
+export function applyInternshipValues(
+  draft: Resume,
+  values: InternshipFormValues,
+): void {
+  const section = sectionOfType(draft, "internship");
+  if (!section) return;
+  section.entries = values.internships.map((item, index) => ({
     id: entryId(section, index),
     fields: {
       title: plain(item.title),

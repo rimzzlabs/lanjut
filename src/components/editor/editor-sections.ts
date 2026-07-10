@@ -1,6 +1,7 @@
 import {
   AlignLeft,
   Award,
+  Backpack,
   Briefcase,
   CircleUserRound,
   GraduationCap,
@@ -13,6 +14,7 @@ import {
 export type EditorSectionId =
   | "personal-details"
   | "experience"
+  | "internship"
   | "organizations"
   | "education"
   | "skills"
@@ -42,6 +44,7 @@ export const EDITOR_SECTIONS: EditorSectionDescriptor[] = [
     required: true,
   },
   { id: "experience", label: "Experience", icon: Briefcase, required: false },
+  { id: "internship", label: "Internship", icon: Backpack, required: false },
   {
     id: "organizations",
     label: "Organizations",

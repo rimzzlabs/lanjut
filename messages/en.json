@@ -166,7 +166,7 @@
           "Sections can now be emptied completely: every entry has a delete button, and removing the last one simply drops the section from the preview until you add another."
         ],
         "0_4_0": [
-          "New Organization Experience section: showcase volunteer, student, and community roles with dates and highlights, just like work experience. It shows up in every template and export, and your existing résumés get it automatically.",
+          "New Organization section: showcase volunteer, student, and community roles with dates and highlights, just like work experience. It shows up in every template and export, and your existing résumés get it automatically.",
           "Your saved résumés are safer during app updates: a backup copy is kept on your device before any data-format upgrade, and a résumé the app can't read yet is flagged with a notice instead of disappearing.",
           "A guided tour now walks you through the dashboard, the templates, and the editor on your first visit.",
           "The landing page walks through how Lanjut works, ending with a one-click way to start a new résumé.",
@@ -413,8 +413,27 @@
       "summaryPlaceholder": "Creating real-time application that....",
       "remove": "Remove"
     },
+    "internship": {
+      "accordionTitle": "Internship",
+      "legend": "Internship",
+      "legendDesc": "Add internships you've completed",
+      "add": "Internship",
+      "emptyTitle": "No internships yet",
+      "emptyDescription": "Add internships to show early hands-on experience.",
+      "itemLegend": "Internship {index}",
+      "role": "Role",
+      "rolePlaceholder": "Frontend Engineering Intern",
+      "company": "Company",
+      "companyPlaceholder": "Acme Inc.",
+      "companyWebsite": "Company Website",
+      "companyWebsitePlaceholder": "acme.com",
+      "present": "I'm currently interning here",
+      "summary": "Summary",
+      "summaryPlaceholder": "Built internal tooling that....",
+      "remove": "Remove"
+    },
     "organizations": {
-      "accordionTitle": "Organization Experience",
+      "accordionTitle": "Organization",
       "legend": "Organization Experience",
       "legendDesc": "Describe your volunteer, student, and community roles",
       "add": "Organization Experience",

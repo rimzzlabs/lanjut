@@ -127,8 +127,24 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
     );
   }
 
-  // Organization entries reuse the "experience" block kind: they render
-  // identically in every template and export, only the section heading differs.
+  // Internship and organization entries reuse the "experience" block kind: they
+  // render identically in every template and export, only the heading differs.
+  const internship = resume.internship.filter(hasExperience);
+  if (internship.length > 0) {
+    blocks.push(
+      heading("internship-heading", labels.internship),
+      ...internship.map(
+        (item, index): ResumeBlock => ({
+          id: item.id,
+          kind: "experience",
+          item,
+          gapBefore: entryGap(index),
+          keepWithNext: false,
+        }),
+      ),
+    );
+  }
+
   const organizations = resume.organizations.filter(hasExperience);
   if (organizations.length > 0) {
     blocks.push(

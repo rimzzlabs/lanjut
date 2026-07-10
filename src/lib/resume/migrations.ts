@@ -286,6 +286,45 @@ const migrateV6toV7: Migration = (doc) => {
 };
 
 /**
+ * v7→v8: adds the Internship section (structurally identical to Experience, only
+ * the heading differs). Existing documents gain it (with one empty entry) if it
+ * is not already present, so the new editor form has somewhere to write.
+ */
+const migrateV7toV8: Migration = (doc) => {
+  const next = structuredClone(doc);
+  const sections = Array.isArray(next.sections)
+    ? (next.sections as Array<Record<string, unknown>>)
+    : [];
+
+  if (!sections.some((s) => s.type === "internship")) {
+    sections.push({
+      id: nanoid(),
+      type: "internship",
+      title: "Internship",
+      entries: [
+        {
+          id: nanoid(),
+          fields: {
+            title: plainField(""),
+            company: plainField(""),
+            website: plainField(""),
+            startDate: plainField(""),
+            endDate: plainField(""),
+            description: {
+              kind: "richtext",
+              value: { type: "doc", content: [{ type: "paragraph" }] },
+            },
+          },
+        },
+      ],
+    });
+  }
+
+  next.sections = sections;
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -295,6 +334,7 @@ const LADDER: Record<number, Migration> = {
   4: migrateV4toV5,
   5: migrateV5toV6,
   6: migrateV6toV7,
+  7: migrateV7toV8,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */
