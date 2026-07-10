@@ -21,6 +21,7 @@ interface EditorSectionInternshipFormItemProps {
   index: number;
   control: Control<InternshipFormValues>;
   onRemoveField: (index: number) => void;
+  onDatesCommit: () => void;
 }
 
 export function EditorSectionInternshipFormItem(
@@ -32,7 +33,7 @@ export function EditorSectionInternshipFormItem(
   };
 
   return (
-    <FieldSet className="not-last-of-type:pb-4 not-last-of-type:border-b">
+    <FieldSet>
       <FieldLegend className="sr-only" variant="label">
         {t("itemLegend", { index: props.index + 1 })}
       </FieldLegend>
@@ -108,6 +109,7 @@ export function EditorSectionInternshipFormItem(
           startName={`internships.${props.index}.startDate`}
           endName={`internships.${props.index}.endDate`}
           presentLabel={t("present")}
+          onCommit={props.onDatesCommit}
         />
 
         <Controller

@@ -19,6 +19,7 @@ import {
 interface MonthYearMenuProps {
   value: string | undefined;
   onChange: (value: string) => void;
+  onClose?: () => void;
   placeholder?: string;
   id?: string;
 }
@@ -35,7 +36,11 @@ export function MonthYearMenu(props: MonthYearMenuProps) {
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu
+      onOpenChange={(open) => {
+        if (!open) props.onClose?.();
+      }}
+    >
       <DropdownMenuTrigger
         render={
           <Button

@@ -21,6 +21,7 @@ interface EditorSectionProjectsFormItemProps {
   index: number;
   control: Control<ProjectsFormValues>;
   onRemoveField: (index: number) => void;
+  onDatesCommit: () => void;
 }
 
 export function EditorSectionProjectsFormItem(
@@ -32,7 +33,7 @@ export function EditorSectionProjectsFormItem(
   };
 
   return (
-    <FieldSet className="not-last-of-type:pb-4 not-last-of-type:border-b">
+    <FieldSet>
       <FieldLegend className="sr-only" variant="label">
         {t("itemLegend", { index: props.index + 1 })}
       </FieldLegend>
@@ -106,6 +107,7 @@ export function EditorSectionProjectsFormItem(
           startName={`projects.${props.index}.startDate`}
           endName={`projects.${props.index}.endDate`}
           presentLabel={t("present")}
+          onCommit={props.onDatesCommit}
         />
 
         <Controller

@@ -17,6 +17,7 @@ interface DateRangeFieldsProps<T extends FieldValues> {
   endName: FieldPath<T>;
   /** Checkbox label, e.g. "I currently work here". */
   presentLabel: string;
+  onCommit?: () => void;
 }
 
 function asString(value: unknown): string {
@@ -50,6 +51,7 @@ export function DateRangeFields<T extends FieldValues>(
             value={asString(start.field.value)}
             placeholder={t("startPlaceholder")}
             onChange={start.field.onChange}
+            onClose={props.onCommit}
           />
           <FieldError errors={[start.fieldState.error]} />
         </Field>
@@ -73,6 +75,7 @@ export function DateRangeFields<T extends FieldValues>(
               value={asString(end.field.value)}
               placeholder={t("endPlaceholder")}
               onChange={end.field.onChange}
+              onClose={props.onCommit}
             />
           )}
           <FieldError errors={[end.fieldState.error]} />
@@ -83,9 +86,10 @@ export function DateRangeFields<T extends FieldValues>(
         <Checkbox
           id={presentId}
           checked={isPresent}
-          onCheckedChange={(checked) =>
-            end.field.onChange(checked ? PRESENT_DATE : "")
-          }
+          onCheckedChange={(checked) => {
+            end.field.onChange(checked ? PRESENT_DATE : "");
+            props.onCommit?.();
+          }}
         />
         <FieldLabel htmlFor={presentId} className="font-normal">
           {props.presentLabel}
