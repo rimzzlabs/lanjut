@@ -67,7 +67,7 @@ export default async function Home(props: {
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:border focus:bg-background focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring"
+        className="fixed top-4 left-4 -translate-y-40 focus:translate-0 z-50 rounded-md border bg-background px-4 py-2 text-sm font-medium shadow-lg outline-none ring-2 ring-ring transition"
       >
         {tNav("skipToContent")}
       </a>
