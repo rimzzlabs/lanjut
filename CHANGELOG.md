@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.7.0](https://github.com/rimzzlabs/lanjut/compare/v0.6.0...v0.7.0) (2026-07-10)
+
+
+### Features
+
+* add a projects section to the resume editor ([#72](https://github.com/rimzzlabs/lanjut/issues/72)) ([5262917](https://github.com/rimzzlabs/lanjut/commit/52629179fddc86ac5b28da3b5ee26928a9435036))
+* add a tooltip to the sidebar create resume button ([#73](https://github.com/rimzzlabs/lanjut/issues/73)) ([ff580c4](https://github.com/rimzzlabs/lanjut/commit/ff580c4da33885ff4093514dd1d52388373dcc08))
+* add an internship section to the resume editor ([#71](https://github.com/rimzzlabs/lanjut/issues/71)) ([7d0a8c1](https://github.com/rimzzlabs/lanjut/commit/7d0a8c15b6bf4ef183e0ccbae043be211c32afbb))
+* show a ghost placeholder for blank resume cards ([#69](https://github.com/rimzzlabs/lanjut/issues/69)) ([d0cf5cd](https://github.com/rimzzlabs/lanjut/commit/d0cf5cd3e5620e9ff098987ba6ff4277c632f9df))
+
+
+### Documentation
+
+* add the 0.7.0 changelog entry for the what's new sheet ([#74](https://github.com/rimzzlabs/lanjut/issues/74)) ([b5742eb](https://github.com/rimzzlabs/lanjut/commit/b5742eb7d32d5d23dd6fb12ded8b339e3446c4b5))
+
 ## [0.6.0](https://github.com/rimzzlabs/lanjut/compare/v0.5.0...v0.6.0) (2026-07-08)
 
 
