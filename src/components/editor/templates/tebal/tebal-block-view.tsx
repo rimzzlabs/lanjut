@@ -29,7 +29,7 @@ export function TebalBlockView(props: TebalBlockViewProps) {
     case "certificate":
       return <TebalCertificateItem {...block.item} />;
     case "skills":
-      return <ResumeSkillsList items={block.items} />;
+      return <ResumeSkillsList items={block.items} columns={block.columns} />;
     case "languages":
       return <ResumeLanguagesList items={block.items} />;
   }

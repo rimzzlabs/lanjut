@@ -31,7 +31,7 @@ export function KlasikBlockView(props: KlasikBlockViewProps) {
     case "skills":
       return (
         <div className="font-serif">
-          <ResumeSkillsList items={block.items} />
+          <ResumeSkillsList items={block.items} columns={block.columns} />
         </div>
       );
     case "languages":

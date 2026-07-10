@@ -364,6 +364,25 @@ const migrateV8toV9: Migration = (doc) => {
 };
 
 /**
+ * v9→v10: adds the presentation-only `columns` count to the Skills section so its
+ * grid can be toggled between one and two columns. Existing documents default to
+ * two, preserving their current layout. Bail-safe: no Skills section means no-op.
+ */
+const migrateV9toV10: Migration = (doc) => {
+  const next = structuredClone(doc);
+  const sections = Array.isArray(next.sections)
+    ? (next.sections as Array<Record<string, unknown>>)
+    : [];
+
+  const skills = sections.find((s) => s.type === "skills");
+  if (skills && skills.columns !== 1 && skills.columns !== 2) {
+    skills.columns = 2;
+  }
+
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -375,6 +394,7 @@ const LADDER: Record<number, Migration> = {
   6: migrateV6toV7,
   7: migrateV7toV8,
   8: migrateV8toV9,
+  9: migrateV9toV10,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

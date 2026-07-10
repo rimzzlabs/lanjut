@@ -519,7 +519,12 @@
       "namePlaceholder": "TypeScript",
       "proficiency": "Proficiency",
       "reorder": "Reorder skill",
-      "remove": "Remove skill"
+      "remove": "Remove skill",
+      "columnsLabel": "Columns",
+      "columnsOne": "1",
+      "columnsOneAria": "One column",
+      "columnsTwo": "2",
+      "columnsTwoAria": "Two columns"
     },
     "languages": {
       "accordionTitle": "Languages",
