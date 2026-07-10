@@ -84,6 +84,26 @@ function toHeaderView(resume: Resume): HeaderView {
 }
 
 /**
+ * True when a preview carries no user content: an untouched document that would
+ * render as a blank sheet. Callers surface a placeholder instead of the empty page.
+ */
+export function isResumePreviewEmpty(preview: ResumePreview): boolean {
+  const { header } = preview;
+  return (
+    !header.fullName &&
+    !header.headline &&
+    header.contacts.length === 0 &&
+    preview.summary.length === 0 &&
+    preview.experience.length === 0 &&
+    preview.organizations.length === 0 &&
+    preview.education.length === 0 &&
+    preview.certificates.length === 0 &&
+    preview.skills.length === 0 &&
+    preview.languages.length === 0
+  );
+}
+
+/**
  * Projects the persisted `Resume` onto the `ResumePreview` view-model the "Awal"
  * template renders. This is the single Resume → presentation seam: preview
  * components never read the storage schema directly.

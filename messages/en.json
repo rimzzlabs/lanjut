@@ -241,6 +241,7 @@
       "errorTitle": "Couldn't load your résumés",
       "errorDescription": "Nothing was deleted. The library just failed to load from this browser's storage. Refresh the page to try again.",
       "open": "Open {title}",
+      "emptyDocument": "Blank résumé, nothing added yet",
       "edited": "Edited",
       "menu": "Menu",
       "rename": "Rename",
