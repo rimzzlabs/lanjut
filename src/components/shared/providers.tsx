@@ -1,5 +1,6 @@
 "use client";
 
+import { ProgressProvider } from "@bprogress/next/app";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { type PropsWithChildren, useEffect } from "react";
@@ -18,7 +19,13 @@ export function Providers({ children }: PropsWithChildren) {
         enableColorScheme
         disableTransitionOnChange
       >
-        <TooltipProvider>{children}</TooltipProvider>
+        <ProgressProvider
+          height="2px"
+          color="var(--primary)"
+          options={{ showSpinner: false }}
+        >
+          <TooltipProvider>{children}</TooltipProvider>
+        </ProgressProvider>
       </ThemeProvider>
     </NuqsAdapter>
   );
