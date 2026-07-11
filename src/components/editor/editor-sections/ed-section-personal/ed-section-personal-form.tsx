@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { LinkedinInput } from "@/components/shared/linkedin-input";
 import { PhoneNumberInput } from "@/components/shared/phone-number-input";
 import { UrlInput } from "@/components/shared/url-input";
 import {
@@ -159,6 +160,23 @@ export function EditorSectionPersonalForm() {
                     id={field.name}
                     value={field.value}
                     placeholder={t("websitePlaceholder")}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                  />
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
+              )}
+            />
+            <Controller
+              control={form.control}
+              name="linkedin"
+              render={({ field, fieldState }) => (
+                <Field>
+                  <FieldLabel htmlFor={field.name}>{t("linkedin")}</FieldLabel>
+                  <LinkedinInput
+                    id={field.name}
+                    value={field.value}
+                    placeholder={t("linkedinPlaceholder")}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                   />

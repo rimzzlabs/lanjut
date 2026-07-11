@@ -78,6 +78,12 @@ export const HEADER_SCHEMA: FieldSchema[] = [
     kind: "plain",
     placeholder: "https://doe.dev",
   },
+  {
+    key: "linkedin",
+    label: "LinkedIn",
+    kind: "plain",
+    placeholder: "johndoe",
+  },
   { key: "city", label: "City", kind: "plain", placeholder: "San Francisco" },
   {
     key: "province",

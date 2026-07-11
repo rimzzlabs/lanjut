@@ -1,4 +1,4 @@
-import { Globe, Mail, MapPin, Phone } from "lucide-react";
+import { Globe, Link, Mail, MapPin, Phone } from "lucide-react";
 import type {
   ContactKind,
   ContactView,
@@ -9,6 +9,7 @@ const CONTACT_ICON: Record<ContactKind, typeof Phone> = {
   phone: Phone,
   email: Mail,
   website: Globe,
+  linkedin: Link,
   location: MapPin,
 };
 

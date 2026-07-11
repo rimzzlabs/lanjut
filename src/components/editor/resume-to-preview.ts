@@ -50,6 +50,11 @@ function toHeaderView(resume: Resume): HeaderView {
     const url = withHttps(website);
     contacts.push({ kind: "website", value: url, href: url });
   }
+  const linkedin = plain(fields.linkedin);
+  if (linkedin) {
+    const url = withHttps(linkedin);
+    contacts.push({ kind: "linkedin", value: url, href: url });
+  }
   const location = [
     plain(fields.city),
     plain(fields.province),
