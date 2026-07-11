@@ -10,7 +10,12 @@
 import type { ResumeLanguage, SectionColumns } from "@/lib/resume/types";
 import type { RichBlock } from "./rich-content";
 
-export type ContactKind = "phone" | "email" | "website" | "location";
+export type ContactKind =
+  | "phone"
+  | "email"
+  | "website"
+  | "linkedin"
+  | "location";
 
 export interface ContactView {
   kind: ContactKind;

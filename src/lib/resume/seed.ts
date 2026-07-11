@@ -61,6 +61,7 @@ export const SEED_RESUME: Resume = {
       email: plain("john.doe@example.com"),
       phone: plain("+15550101234"),
       website: plain("johndoe.dev"),
+      linkedin: plain("linkedin.com/in/johndoe"),
       city: plain("San Francisco"),
       province: plain("California"),
       country: plain("United States"),

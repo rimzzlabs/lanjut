@@ -402,6 +402,8 @@
       "phonePlaceholder": "+62812345678",
       "website": "Website",
       "websitePlaceholder": "rimzzlabs.com",
+      "linkedin": "LinkedIn",
+      "linkedinPlaceholder": "johndoe",
       "location": "Location",
       "locationDesc": "Where are you from?",
       "city": "City",

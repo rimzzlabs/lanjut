@@ -383,6 +383,22 @@ const migrateV9toV10: Migration = (doc) => {
 };
 
 /**
+ * v10→v11: adds the header `linkedin` field. Existing documents gain it (empty)
+ * so the new personal-info input has somewhere to write. Bail-safe: a document
+ * without header fields, or one that already carries `linkedin`, is left as-is.
+ */
+const migrateV10toV11: Migration = (doc) => {
+  const next = structuredClone(doc);
+  const header = next.header as
+    | { fields?: Record<string, unknown> }
+    | undefined;
+  if (header?.fields && !("linkedin" in header.fields)) {
+    header.fields.linkedin = plainField("");
+  }
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -395,6 +411,7 @@ const LADDER: Record<number, Migration> = {
   7: migrateV7toV8,
   8: migrateV8toV9,
   9: migrateV9toV10,
+  10: migrateV10toV11,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */
