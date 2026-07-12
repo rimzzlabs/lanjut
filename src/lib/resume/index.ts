@@ -1,5 +1,8 @@
+export { convertCustomSection } from "./custom-section";
 export {
   cloneResumeAsNew,
+  createCustomEntry,
+  createCustomSection,
   createEmptyEntry,
   createEmptyHeader,
   createEmptyResume,
@@ -10,8 +13,10 @@ export { RESUME_LABELS, RESUME_LANGUAGES } from "./labels";
 export { needsMigration, readSchemaVersion, runMigrations } from "./migrations";
 export {
   CANONICAL_SECTION_ORDER,
+  CUSTOM_LIST_FIELDS,
   canonicalSectionIndex,
   type FieldSchema,
+  getCustomFields,
   getSectionSchema,
   HEADER_SCHEMA,
   isReorderableSection,
@@ -25,6 +30,7 @@ export { filterResumeIndex, nearestResumeById } from "./search";
 export { SEED_RESUME } from "./seed";
 export {
   CURRENT_SCHEMA_VERSION,
+  type CustomVariant,
   type Entry,
   type Field,
   type FieldKey,

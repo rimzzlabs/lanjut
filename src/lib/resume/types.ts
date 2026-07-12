@@ -58,6 +58,13 @@ export type SectionType =
   | "custom";
 
 /**
+ * How a `custom` Section presents its content. `rich` is a single rich-text body
+ * (like Summary); `list` is repeatable entries (like Experience). Only custom
+ * Sections carry this; core Sections have a fixed presentation and omit it.
+ */
+export type CustomVariant = "rich" | "list";
+
+/**
  * A typed, reorderable unit below the Header. `title` is presentation/label data
  * only; relabeling never changes the Section's parse shape or Field schema.
  */
@@ -71,6 +78,12 @@ export interface Section {
    * non-grid sections; renderers default to a two-column grid when unset.
    */
   columns?: SectionColumns;
+  /**
+   * Presentation variant for `custom` Sections only: `rich` (a single rich-text
+   * body) or `list` (repeatable entries). Absent on core Sections; the custom
+   * factory always sets it, and renderers treat an unset value as `rich`.
+   */
+  variant?: CustomVariant;
 }
 
 /**

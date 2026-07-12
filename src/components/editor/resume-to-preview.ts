@@ -5,7 +5,12 @@ import {
 } from "@/lib/resume/schema-registry";
 import type { Field, Resume, Section } from "@/lib/resume/types";
 import { localizeDateValue } from "./month-year-menu/month-year-menu-data";
-import type { ContactView, HeaderView, ResumePreview } from "./resume-preview";
+import type {
+  ContactView,
+  CustomSectionView,
+  HeaderView,
+  ResumePreview,
+} from "./resume-preview";
 import { byRecency } from "./resume-sort";
 import { type RichBlock, tiptapToRichBlocks } from "./rich-content";
 
@@ -87,7 +92,8 @@ export function isResumePreviewEmpty(preview: ResumePreview): boolean {
     preview.education.length === 0 &&
     preview.certificates.length === 0 &&
     preview.skills.length === 0 &&
-    preview.languages.length === 0
+    preview.languages.length === 0 &&
+    preview.customSections.length === 0
   );
 }
 
@@ -109,11 +115,43 @@ export function resumeToPreview(resume: Resume): ResumePreview {
 
   const sectionOrder = resume.sections
     .filter((section) => isReorderableSection(section.type))
-    .map((section) => section.type as ReorderableSectionType);
+    .map((section) => ({
+      type: section.type as ReorderableSectionType,
+      id: section.id,
+    }));
+
+  const customSections: CustomSectionView[] = resume.sections
+    .filter((section) => section.type === "custom")
+    .map((section) => {
+      const variant = section.variant ?? "rich";
+      return {
+        id: section.id,
+        title: section.title,
+        variant,
+        body:
+          variant === "rich" ? richBlocks(section.entries[0]?.fields.body) : [],
+        // Custom list entries keep document order (no recency sort): they are
+        // freeform and often carry no dates.
+        entries:
+          variant === "list"
+            ? section.entries
+                .map((entry) => ({
+                  id: entry.id,
+                  role: plain(entry.fields.title),
+                  company: plain(entry.fields.subtitle),
+                  startDate: plain(entry.fields.startDate),
+                  endDate: plain(entry.fields.endDate),
+                  description: richBlocks(entry.fields.description),
+                }))
+                .map(localizeDates)
+            : [],
+      };
+    });
 
   return {
     language: resume.language,
     sectionOrder,
+    customSections,
     header: toHeaderView(resume),
     summary: richBlocks(summaryBody),
     experience: (sectionOfType(resume, "experience")?.entries ?? [])

@@ -299,7 +299,8 @@
       "fileNameRequired": "Name the file before downloading.",
       "bugWhatHappened": "Describe what went wrong.",
       "featureProblem": "Describe the problem this would solve.",
-      "featureProposal": "Describe how you imagine it working."
+      "featureProposal": "Describe how you imagine it working.",
+      "sectionTitleRequired": "Enter a section name."
     },
     "create": {
       "title": "Create a new resume",
@@ -377,7 +378,8 @@
       "showSection": "Show section",
       "hideSection": "Hide section",
       "reorderSection": "Reorder section",
-      "resetOrder": "Reset section order"
+      "resetOrder": "Reset section order",
+      "addSection": "Custom Section"
     },
     "dateRange": {
       "startDate": "Start Date",
@@ -568,6 +570,37 @@
       "linkPlaceholder": "https://example.com",
       "apply": "Apply",
       "removeLink": "Remove link"
+    },
+    "custom": {
+      "defaultTitle": "Custom section",
+      "variantLabel": "Layout",
+      "variantText": "Text",
+      "variantTextAria": "Single text block",
+      "variantList": "List",
+      "variantListAria": "List of entries",
+      "menuLabel": "Section options",
+      "rename": "Rename",
+      "remove": "Delete",
+      "addHeading": "Add a section",
+      "addDescription": "Name your new section. You can rename it later.",
+      "renameHeading": "Rename section",
+      "renameDescription": "Give this section a new name.",
+      "nameLabel": "Section name",
+      "namePlaceholder": "Name this section",
+      "bodyLabel": "Content",
+      "bodyPlaceholder": "Write the section content…",
+      "addEntry": "Add entry",
+      "emptyTitle": "No entries yet",
+      "emptyDescription": "Add an entry to fill in this section.",
+      "itemLegend": "Entry {index}",
+      "entryTitle": "Title",
+      "entryTitlePlaceholder": "Entry title",
+      "entrySubtitle": "Subtitle",
+      "entrySubtitlePlaceholder": "Entry subtitle",
+      "present": "This is ongoing",
+      "entryDescription": "Description",
+      "entryDescriptionPlaceholder": "Add details…",
+      "removeEntry": "Remove entry"
     }
   }
 }

@@ -8,7 +8,11 @@
  */
 
 import type { ReorderableSectionType } from "@/lib/resume/schema-registry";
-import type { ResumeLanguage, SectionColumns } from "@/lib/resume/types";
+import type {
+  CustomVariant,
+  ResumeLanguage,
+  SectionColumns,
+} from "@/lib/resume/types";
 import type { RichBlock } from "./rich-content";
 
 export type ContactKind =
@@ -72,15 +76,38 @@ export interface LanguageItemView {
   proficiency: string;
 }
 
+/**
+ * A user-defined custom section. `rich` renders its `body` like Summary; `list`
+ * renders its `entries` through the experience path. Both are carried so the
+ * block builder can pick by `variant`, and each is addressed by `id` from the
+ * section order (unlike core sections, several custom sections can coexist).
+ */
+export interface CustomSectionView {
+  id: string;
+  title: string;
+  variant: CustomVariant;
+  body: RichBlock[];
+  entries: ExperienceItemView[];
+}
+
+/** A reference to a reorderable section in reading order, addressable by id. */
+export interface SectionRef {
+  type: ReorderableSectionType;
+  id: string;
+}
+
 export interface ResumePreview {
   /** Document language for fixed labels (headings, dates); drives localization. */
   language: ResumeLanguage;
   /**
    * The reorderable sections in document (reading) order. Drives the order blocks
-   * are emitted in after the pinned Header and Summary. A type appears at most
-   * once; empty sections stay in the list and are gated out at block-build time.
+   * are emitted in after the pinned Header and Summary. Core types appear at most
+   * once; `custom` may repeat, so each ref carries the section `id` used to look
+   * it up in `customSections`. Empty sections are gated out at block-build time.
    */
-  sectionOrder: ReorderableSectionType[];
+  sectionOrder: SectionRef[];
+  /** Custom sections by id, resolved from `sectionOrder` refs of type `custom`. */
+  customSections: CustomSectionView[];
   header: HeaderView;
   summary: RichBlock[];
   experience: ExperienceItemView[];

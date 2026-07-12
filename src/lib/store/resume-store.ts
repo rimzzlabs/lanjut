@@ -8,8 +8,11 @@ import {
   setLastOpenedResumeId,
 } from "@/lib/db";
 import {
+  type CustomVariant,
   canonicalSectionIndex,
   cloneResumeAsNew,
+  convertCustomSection,
+  createCustomSection,
   createEmptyResume,
   isReorderableSection,
   type Resume,
@@ -63,6 +66,14 @@ interface ResumeStoreState {
   reorderSections: (from: number, to: number) => void;
   /** Restore sections to the canonical reading order (the default). */
   resetSectionOrder: () => void;
+  /** Append a new custom section (rich variant) with the given title; returns its id. */
+  addCustomSection: (title: string) => string;
+  /** Rename a custom section by id; no-op for a core or missing section. */
+  renameCustomSection: (id: string, title: string) => void;
+  /** Remove a custom section by id; no-op for a core or missing section. */
+  removeCustomSection: (id: string) => void;
+  /** Switch a custom section's variant, converting its content across. */
+  setCustomVariant: (id: string, variant: CustomVariant) => void;
   /** Force any pending write to commit now (e.g. before navigating away). */
   flush: () => Promise<void>;
 }
@@ -222,6 +233,45 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
       // at the end. Pinned sections already sort to their fixed slots.
       draft.sections.sort(
         (a, b) => canonicalSectionIndex(a.type) - canonicalSectionIndex(b.type),
+      );
+    });
+  },
+
+  addCustomSection(title) {
+    const section = createCustomSection("rich", title);
+    get().updateOpen((draft) => {
+      draft.sections.push(section);
+    });
+    return section.id;
+  },
+
+  renameCustomSection(id, title) {
+    get().updateOpen((draft) => {
+      const section = draft.sections.find(
+        (s) => s.id === id && s.type === "custom",
+      );
+      if (section) section.title = title;
+    });
+  },
+
+  removeCustomSection(id) {
+    get().updateOpen((draft) => {
+      const index = draft.sections.findIndex(
+        (section) => section.id === id && section.type === "custom",
+      );
+      if (index !== -1) draft.sections.splice(index, 1);
+    });
+  },
+
+  setCustomVariant(id, variant) {
+    get().updateOpen((draft) => {
+      const index = draft.sections.findIndex(
+        (section) => section.id === id && section.type === "custom",
+      );
+      if (index === -1) return;
+      draft.sections[index] = convertCustomSection(
+        draft.sections[index],
+        variant,
       );
     });
   },

@@ -299,7 +299,8 @@
       "fileNameRequired": "Kasih nama berkasnya dulu sebelum unduh.",
       "bugWhatHappened": "Ceritain apa yang salah.",
       "featureProblem": "Ceritain masalah yang mau diselesaikan.",
-      "featureProposal": "Ceritain gimana kamu ngebayanginnya jalan."
+      "featureProposal": "Ceritain gimana kamu ngebayanginnya jalan.",
+      "sectionTitleRequired": "Isi nama bagian."
     },
     "create": {
       "title": "Buat resume baru",
@@ -377,7 +378,8 @@
       "showSection": "Tampilkan bagian",
       "hideSection": "Sembunyikan bagian",
       "reorderSection": "Ubah urutan bagian",
-      "resetOrder": "Setel ulang urutan bagian"
+      "resetOrder": "Setel ulang urutan bagian",
+      "addSection": "Bagian Khusus"
     },
     "dateRange": {
       "startDate": "Tanggal Mulai",
@@ -568,6 +570,37 @@
       "linkPlaceholder": "https://example.com",
       "apply": "Terapkan",
       "removeLink": "Hapus tautan"
+    },
+    "custom": {
+      "defaultTitle": "Bagian khusus",
+      "variantLabel": "Tata letak",
+      "variantText": "Teks",
+      "variantTextAria": "Satu blok teks",
+      "variantList": "Daftar",
+      "variantListAria": "Daftar entri",
+      "menuLabel": "Opsi bagian",
+      "rename": "Ganti nama",
+      "remove": "Hapus",
+      "addHeading": "Tambah bagian",
+      "addDescription": "Beri nama bagian barumu. Bisa diganti nanti.",
+      "renameHeading": "Ganti nama bagian",
+      "renameDescription": "Beri nama baru untuk bagian ini.",
+      "nameLabel": "Nama bagian",
+      "namePlaceholder": "Beri nama bagian ini",
+      "bodyLabel": "Konten",
+      "bodyPlaceholder": "Tulis konten bagian…",
+      "addEntry": "Tambah entri",
+      "emptyTitle": "Belum ada entri",
+      "emptyDescription": "Tambah entri untuk mengisi bagian ini.",
+      "itemLegend": "Entri {index}",
+      "entryTitle": "Judul",
+      "entryTitlePlaceholder": "Judul entri",
+      "entrySubtitle": "Subjudul",
+      "entrySubtitlePlaceholder": "Subjudul entri",
+      "present": "Masih berlangsung",
+      "entryDescription": "Deskripsi",
+      "entryDescriptionPlaceholder": "Tambah detail…",
+      "removeEntry": "Hapus entri"
     }
   }
 }

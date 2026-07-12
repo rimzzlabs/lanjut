@@ -3,6 +3,7 @@ import type { ReorderableSectionType } from "@/lib/resume/schema-registry";
 import type { SectionColumns } from "@/lib/resume/types";
 import type {
   CertificateItemView,
+  CustomSectionView,
   EducationItemView,
   ExperienceItemView,
   HeaderView,
@@ -190,6 +191,40 @@ function languagesBlocks(
   ];
 }
 
+// A custom section reuses existing block kinds: `rich` renders like Summary
+// (heading + one rich-text block), `list` renders like Experience (heading +
+// entries). Omitted when it has no content, so an empty custom section is hidden.
+function customBlocks(view: CustomSectionView): ResumeBlock[] {
+  const headingId = `custom-${view.id}-heading`;
+  if (view.variant === "list") {
+    const entries = view.entries.filter(hasExperience);
+    if (entries.length === 0) return [];
+    return [
+      heading(headingId, view.title),
+      ...entries.map(
+        (item, index): ResumeBlock => ({
+          id: item.id,
+          kind: "experience",
+          item,
+          gapBefore: entryGap(index),
+          keepWithNext: false,
+        }),
+      ),
+    ];
+  }
+  if (isRichEmpty(view.body)) return [];
+  return [
+    heading(headingId, view.title),
+    {
+      id: `custom-${view.id}-body`,
+      kind: "summary",
+      body: view.body,
+      gapBefore: GAP.body,
+      keepWithNext: false,
+    },
+  ];
+}
+
 /**
  * Builds the linear block sequence. The Header and Summary are pinned at the top;
  * every other section is emitted in the document's `sectionOrder` (the user's
@@ -218,7 +253,10 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
     });
   }
 
-  const emitters: Record<ReorderableSectionType, () => ResumeBlock[]> = {
+  const emitters: Record<
+    Exclude<ReorderableSectionType, "custom">,
+    () => ResumeBlock[]
+  > = {
     experience: () =>
       experienceLikeBlocks(
         resume.experience,
@@ -249,12 +287,19 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
     skills: () =>
       skillsBlocks(resume.skills, resume.skillsColumns, labels.skills),
     languages: () => languagesBlocks(resume.languages, labels.languages),
-    // Custom sections carry no preview data yet; wired up in a later increment.
-    custom: () => [],
   };
 
-  for (const type of resume.sectionOrder) {
-    blocks.push(...emitters[type]());
+  const customById = new Map(
+    resume.customSections.map((section) => [section.id, section]),
+  );
+
+  for (const ref of resume.sectionOrder) {
+    if (ref.type === "custom") {
+      const view = customById.get(ref.id);
+      if (view) blocks.push(...customBlocks(view));
+    } else {
+      blocks.push(...emitters[ref.type]());
+    }
   }
 
   return blocks;

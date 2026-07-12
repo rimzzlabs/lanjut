@@ -1,4 +1,4 @@
-import type { FieldKey, SectionType } from "./types";
+import type { CustomVariant, FieldKey, SectionType } from "./types";
 
 /**
  * The allowed TipTap features for a richtext Field: the Restricted schema
@@ -375,17 +375,14 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
       },
     ],
   },
+  // A custom Section's Field shape depends on its `variant`; the registry lists
+  // the `rich` (default) fields. Use `getCustomFields(variant)` for the actual
+  // per-entry shape and `CUSTOM_LIST_FIELDS` for the `list` variant.
   custom: {
     type: "custom",
     defaultTitle: "Custom Section",
     singleton: false,
     fields: [
-      {
-        key: "title",
-        label: "Title",
-        kind: "plain",
-        placeholder: "Certification",
-      },
       {
         key: "body",
         label: "Body",
@@ -395,6 +392,37 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
     ],
   },
 };
+
+/** The per-entry Field shape of a `list`-variant custom Section (experience-like). */
+export const CUSTOM_LIST_FIELDS: FieldSchema[] = [
+  { key: "title", label: "Title", kind: "plain", placeholder: "Award name" },
+  {
+    key: "subtitle",
+    label: "Subtitle",
+    kind: "plain",
+    placeholder: "Issuer or place",
+  },
+  {
+    key: "startDate",
+    label: "Start date",
+    kind: "plain",
+    placeholder: "Jan 2023",
+  },
+  { key: "endDate", label: "End date", kind: "plain", placeholder: "Present" },
+  {
+    key: "description",
+    label: "Description",
+    kind: "richtext",
+    features: PROSE_FEATURES,
+  },
+];
+
+/** The per-entry Field shape for a custom Section in the given variant. */
+export function getCustomFields(variant: CustomVariant): FieldSchema[] {
+  return variant === "list"
+    ? CUSTOM_LIST_FIELDS
+    : SECTION_REGISTRY.custom.fields;
+}
 
 export function getSectionSchema(type: SectionType): SectionSchema {
   return SECTION_REGISTRY[type];

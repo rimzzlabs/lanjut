@@ -487,3 +487,74 @@ export function applyLanguagesValues(
     fields: { name: plain(item.name), level: plain(item.level) },
   }));
 }
+
+// --- Custom sections (addressed by id; shape depends on the variant) --------
+
+function sectionById(resume: Resume, id: string): Section | undefined {
+  return resume.sections.find((section) => section.id === id);
+}
+
+export interface CustomBodyFormValues {
+  body: JSONContent;
+}
+
+export function toCustomBodyValues(section: Section): CustomBodyFormValues {
+  return { body: richValue(section.entries[0]?.fields.body) };
+}
+
+// The section title is managed outside the form (add/rename dialogs), so these
+// adapters only own the content and never touch `section.title`.
+export function applyCustomBodyValues(
+  draft: Resume,
+  id: string,
+  values: CustomBodyFormValues,
+): void {
+  const section = sectionById(draft, id);
+  if (!section || section.type !== "custom") return;
+  section.entries = [
+    { id: entryId(section, 0), fields: { body: rich(values.body) } },
+  ];
+}
+
+export interface CustomListItemValues {
+  title: string;
+  subtitle: string;
+  startDate: string;
+  endDate: string;
+  description: JSONContent;
+}
+
+export interface CustomListFormValues {
+  entries: CustomListItemValues[];
+}
+
+export function toCustomListValues(section: Section): CustomListFormValues {
+  return {
+    entries: section.entries.map((entry) => ({
+      title: plainValue(entry.fields.title),
+      subtitle: plainValue(entry.fields.subtitle),
+      startDate: plainValue(entry.fields.startDate),
+      endDate: plainValue(entry.fields.endDate),
+      description: richValue(entry.fields.description),
+    })),
+  };
+}
+
+export function applyCustomListValues(
+  draft: Resume,
+  id: string,
+  values: CustomListFormValues,
+): void {
+  const section = sectionById(draft, id);
+  if (!section || section.type !== "custom") return;
+  section.entries = values.entries.map((item, index) => ({
+    id: entryId(section, index),
+    fields: {
+      title: plain(item.title),
+      subtitle: plain(item.subtitle),
+      startDate: plain(item.startDate),
+      endDate: plain(item.endDate),
+      description: rich(item.description),
+    },
+  }));
+}

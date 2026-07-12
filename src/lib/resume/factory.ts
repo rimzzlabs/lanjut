@@ -3,11 +3,13 @@ import type { JSONContent } from "@tiptap/core";
 import { nanoid } from "nanoid";
 import {
   type FieldSchema,
+  getCustomFields,
   getSectionSchema,
   HEADER_SCHEMA,
 } from "./schema-registry";
 import {
   CURRENT_SCHEMA_VERSION,
+  type CustomVariant,
   type Entry,
   type Field,
   type FieldKey,
@@ -56,6 +58,28 @@ export function createEmptySection(type: SectionType): Section {
   // The Skills grid is column-toggleable; new sections start two-column.
   if (type === "skills") section.columns = 2;
   return section;
+}
+
+/** An empty entry shaped for a custom Section in the given variant. */
+export function createCustomEntry(variant: CustomVariant): Entry {
+  return { id: nanoid(), fields: fieldsFromSchema(getCustomFields(variant)) };
+}
+
+/**
+ * A new custom Section: a variant (default `rich`), a default heading the user
+ * can rename, and one starter entry shaped for that variant.
+ */
+export function createCustomSection(
+  variant: CustomVariant = "rich",
+  title: string = getSectionSchema("custom").defaultTitle,
+): Section {
+  return {
+    id: nanoid(),
+    type: "custom",
+    title,
+    variant,
+    entries: [createCustomEntry(variant)],
+  };
 }
 
 export function createEmptyHeader(): Header {

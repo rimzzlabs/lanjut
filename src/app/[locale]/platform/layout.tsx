@@ -22,7 +22,10 @@ export default function PlatformLayout({ children }: PropsWithChildren) {
           <PlatformSidebar />
         </Sidebar>
 
-        <SidebarInset>
+        {/* min-w-0 lets this flex-1 region shrink instead of being forced wide
+            by its content (e.g. a long custom-section title), which otherwise
+            pushes the layout past the viewport. */}
+        <SidebarInset className="min-w-0">
           <PlatformNavbar />
           {children}
         </SidebarInset>
