@@ -7,6 +7,7 @@
  * Data → adapter → consumer: these types are the consumer contract.
  */
 
+import type { ReorderableSectionType } from "@/lib/resume/schema-registry";
 import type { ResumeLanguage, SectionColumns } from "@/lib/resume/types";
 import type { RichBlock } from "./rich-content";
 
@@ -74,6 +75,12 @@ export interface LanguageItemView {
 export interface ResumePreview {
   /** Document language for fixed labels (headings, dates); drives localization. */
   language: ResumeLanguage;
+  /**
+   * The reorderable sections in document (reading) order. Drives the order blocks
+   * are emitted in after the pinned Header and Summary. A type appears at most
+   * once; empty sections stay in the list and are gated out at block-build time.
+   */
+  sectionOrder: ReorderableSectionType[];
   header: HeaderView;
   summary: RichBlock[];
   experience: ExperienceItemView[];

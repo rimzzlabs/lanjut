@@ -399,6 +399,51 @@ const migrateV10toV11: Migration = (doc) => {
 };
 
 /**
+ * The reading order Sections are normalized to at v12. Inlined (not imported from
+ * the registry) so this step stays a frozen snapshot: it must always sort to the
+ * v12 order even if the registry's canonical order later changes. Types absent
+ * here sort last, keeping their original relative order.
+ */
+const V12_SECTION_ORDER = [
+  "summary",
+  "experience",
+  "internship",
+  "projects",
+  "organizations",
+  "education",
+  "certifications",
+  "skills",
+  "languages",
+  "custom",
+];
+
+/**
+ * v11→v12: normalizes `sections[]` into the canonical reading order. Rendering
+ * moves from a hardcoded section sequence to one driven by this array's order, so
+ * existing documents (written in assorted creation orders) are sorted here to
+ * preserve their current on-screen output; nothing moves until the user drags a
+ * section. Bail-safe: a missing/non-array `sections` is left untouched, and the
+ * sort is stable so unrecognized types keep their relative position at the end.
+ */
+const migrateV11toV12: Migration = (doc) => {
+  const next = structuredClone(doc);
+  if (!Array.isArray(next.sections)) return next;
+
+  const rank = (section: unknown): number => {
+    const type = G.isObject(section)
+      ? (section as { type?: unknown }).type
+      : null;
+    const index = G.isString(type) ? V12_SECTION_ORDER.indexOf(type) : -1;
+    return index === -1 ? V12_SECTION_ORDER.length : index;
+  };
+
+  next.sections = [...(next.sections as unknown[])].sort(
+    (a, b) => rank(a) - rank(b),
+  );
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -412,6 +457,7 @@ const LADDER: Record<number, Migration> = {
   8: migrateV8toV9,
   9: migrateV9toV10,
   10: migrateV10toV11,
+  11: migrateV11toV12,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

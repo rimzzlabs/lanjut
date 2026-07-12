@@ -375,7 +375,9 @@
       "or": "atau",
       "browseTemplates": "Jelajahi Template",
       "showSection": "Tampilkan bagian",
-      "hideSection": "Sembunyikan bagian"
+      "hideSection": "Sembunyikan bagian",
+      "reorderSection": "Ubah urutan bagian",
+      "resetOrder": "Setel ulang urutan bagian"
     },
     "dateRange": {
       "startDate": "Tanggal Mulai",

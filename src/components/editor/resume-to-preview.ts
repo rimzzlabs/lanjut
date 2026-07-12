@@ -1,4 +1,8 @@
 import { RESUME_LABELS } from "@/lib/resume/labels";
+import {
+  isReorderableSection,
+  type ReorderableSectionType,
+} from "@/lib/resume/schema-registry";
 import type { Field, Resume, Section } from "@/lib/resume/types";
 import { localizeDateValue } from "./month-year-menu/month-year-menu-data";
 import type { ContactView, HeaderView, ResumePreview } from "./resume-preview";
@@ -103,8 +107,13 @@ export function resumeToPreview(resume: Resume): ResumePreview {
     endDate: localizeDateValue(item.endDate, labels.months, labels.present),
   });
 
+  const sectionOrder = resume.sections
+    .filter((section) => isReorderableSection(section.type))
+    .map((section) => section.type as ReorderableSectionType);
+
   return {
     language: resume.language,
+    sectionOrder,
     header: toHeaderView(resume),
     summary: richBlocks(summaryBody),
     experience: (sectionOfType(resume, "experience")?.entries ?? [])

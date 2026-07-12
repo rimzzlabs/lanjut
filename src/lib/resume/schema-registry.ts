@@ -399,3 +399,47 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
 export function getSectionSchema(type: SectionType): SectionSchema {
   return SECTION_REGISTRY[type];
 }
+
+/**
+ * The canonical reading order of every Section type, Summary first. This is the
+ * order a freshly created document is authored in and the order the migration
+ * ladder normalizes existing documents to, so that switching the render pipeline
+ * from a hardcoded sequence to a data-driven one (driven by `sections[]` order)
+ * is a visual no-op until the user reorders. `custom` is appended last.
+ */
+export const CANONICAL_SECTION_ORDER: SectionType[] = [
+  "summary",
+  "experience",
+  "internship",
+  "projects",
+  "organizations",
+  "education",
+  "certifications",
+  "skills",
+  "languages",
+  "custom",
+];
+
+/**
+ * Section types the user can drag to reorder. Summary is pinned directly below
+ * the Header (which is not a Section at all), so neither participates in
+ * reordering; every other type does, in `CANONICAL_SECTION_ORDER` order.
+ */
+export type ReorderableSectionType = Exclude<SectionType, "summary">;
+
+export const REORDERABLE_SECTION_TYPES: ReorderableSectionType[] =
+  CANONICAL_SECTION_ORDER.filter(
+    (type): type is ReorderableSectionType => type !== "summary",
+  );
+
+const REORDERABLE_SECTION_SET = new Set<SectionType>(REORDERABLE_SECTION_TYPES);
+
+export function isReorderableSection(type: SectionType): boolean {
+  return REORDERABLE_SECTION_SET.has(type);
+}
+
+/** Sort key for a Section type; unknown types sort last, preserving their order. */
+export function canonicalSectionIndex(type: string): number {
+  const index = CANONICAL_SECTION_ORDER.indexOf(type as SectionType);
+  return index === -1 ? CANONICAL_SECTION_ORDER.length : index;
+}

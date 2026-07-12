@@ -1,9 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
+import { SortableList } from "@/components/shared/sortable-list";
 import { Accordion } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
+import { isReorderableSection, type SectionType } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
+import { cn } from "@/lib/utils";
 import { EditorSectionCertifications } from "./ed-section-certifications/ed-section-certifications";
 import { EditorSectionEducation } from "./ed-section-education/ed-section-education";
 import { EditorSectionExperience } from "./ed-section-experience/ed-section-experience";
@@ -14,12 +18,29 @@ import { EditorSectionPersonal } from "./ed-section-personal/ed-section-personal
 import { EditorSectionProjects } from "./ed-section-projects/ed-section-projects";
 import { EditorSectionSkills } from "./ed-section-skills/ed-section-skills";
 import { EditorSectionSummary } from "./ed-section-summary/ed-section-summary";
+import {
+  EditorSectionSortableItem,
+  SECTION_TRIGGER_INSET,
+} from "./editor-section-sortable-item";
 
 const SKELETONS = [1, 2, 3, 4, 5, 6, 7];
+
+/** Maps each reorderable section type to its accordion editor. */
+const SECTION_EDITORS: Partial<Record<SectionType, () => ReactNode>> = {
+  experience: EditorSectionExperience,
+  internship: EditorSectionInternship,
+  projects: EditorSectionProjects,
+  organizations: EditorSectionOrganizations,
+  education: EditorSectionEducation,
+  certifications: EditorSectionCertifications,
+  skills: EditorSectionSkills,
+  languages: EditorSectionLanguages,
+};
 
 export function EditorSectionList() {
   const openStatus = useResumeStore((state) => state.openStatus);
   const open = useResumeStore((state) => state.open);
+  const reorderSections = useResumeStore((state) => state.reorderSections);
   const t = useTranslations("editor.chrome");
 
   if (!open) {
@@ -44,20 +65,40 @@ export function EditorSectionList() {
     );
   }
 
+  const reorderable = open.sections.filter((section) =>
+    isReorderableSection(section.type),
+  );
+
   // Keyed by the open résumé so a load/switch remounts the forms; this is how
-  // the uncontrolled rich-text editors pick up the loaded document.
+  // the uncontrolled rich-text editors pick up the loaded document. Personal
+  // Details (the Header) and Summary are pinned; the rest drag to reorder.
   return (
     <Accordion key={open.id} multiple className="border-none">
-      <EditorSectionPersonal />
-      <EditorSectionSummary />
-      <EditorSectionExperience />
-      <EditorSectionInternship />
-      <EditorSectionProjects />
-      <EditorSectionOrganizations />
-      <EditorSectionEducation />
-      <EditorSectionCertifications />
-      <EditorSectionSkills />
-      <EditorSectionLanguages />
+      <div className={cn("not-last:border-b", SECTION_TRIGGER_INSET)}>
+        <EditorSectionPersonal />
+      </div>
+      <div className={cn("not-last:border-b", SECTION_TRIGGER_INSET)}>
+        <EditorSectionSummary />
+      </div>
+      <SortableList
+        items={reorderable.map((section) => section.id)}
+        onReorder={reorderSections}
+        remeasureWhileDragging
+      >
+        {reorderable.map((section) => {
+          const Editor = SECTION_EDITORS[section.type];
+          if (!Editor) return null;
+          return (
+            <EditorSectionSortableItem
+              key={section.id}
+              id={section.id}
+              handleLabel={t("reorderSection")}
+            >
+              <Editor />
+            </EditorSectionSortableItem>
+          );
+        })}
+      </SortableList>
     </Accordion>
   );
 }

@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { EditorDocumentLanguage } from "./editor-document-language";
 import { EditorLayoutTemplateList } from "./editor-layout/ed-layout-template-list";
 import { EditorSectionList } from "./editor-sections/ed-section-list";
+import { EditorSectionOrderReset } from "./editor-sections/ed-section-order-reset";
 
 const TABS = [
   { value: "editor", labelKey: "tabEditor" },
@@ -28,7 +29,7 @@ export function EditorSidebarContent() {
       <EditorDocumentLanguage />
 
       <Tabs value={tab} onValueChange={onTabChange}>
-        <div className="shrink-0 px-4">
+        <div className="flex shrink-0 items-center gap-2 px-4">
           <TabsList>
             {TABS.map((item) => (
               <TabsTrigger key={item.value} value={item.value}>
@@ -36,6 +37,7 @@ export function EditorSidebarContent() {
               </TabsTrigger>
             ))}
           </TabsList>
+          <EditorSectionOrderReset />
         </div>
 
         <TabsContent value="editor">

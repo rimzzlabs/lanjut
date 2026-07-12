@@ -1,4 +1,5 @@
 import { RESUME_LABELS } from "@/lib/resume/labels";
+import type { ReorderableSectionType } from "@/lib/resume/schema-registry";
 import type { SectionColumns } from "@/lib/resume/types";
 import type {
   CertificateItemView,
@@ -85,10 +86,115 @@ function hasLanguage(item: LanguageItemView): boolean {
   return Boolean(item.name);
 }
 
+// Internship, project, and organization entries reuse the "experience" block
+// kind: they render identically in every template and export, only the heading
+// differs. Each emitter drops empty entries first, then omits the whole section
+// (heading included) when nothing is left, so a sparse résumé shows only filled
+// sections.
+function experienceLikeBlocks(
+  items: ExperienceItemView[],
+  headingId: string,
+  label: string,
+): ResumeBlock[] {
+  const filtered = items.filter(hasExperience);
+  if (filtered.length === 0) return [];
+  return [
+    heading(headingId, label),
+    ...filtered.map(
+      (item, index): ResumeBlock => ({
+        id: item.id,
+        kind: "experience",
+        item,
+        gapBefore: entryGap(index),
+        keepWithNext: false,
+      }),
+    ),
+  ];
+}
+
+function educationBlocks(
+  items: EducationItemView[],
+  label: string,
+): ResumeBlock[] {
+  const filtered = items.filter(hasEducation);
+  if (filtered.length === 0) return [];
+  return [
+    heading("education-heading", label),
+    ...filtered.map(
+      (item, index): ResumeBlock => ({
+        id: item.id,
+        kind: "education",
+        item,
+        gapBefore: entryGap(index),
+        keepWithNext: false,
+      }),
+    ),
+  ];
+}
+
+function certificateBlocks(
+  items: CertificateItemView[],
+  label: string,
+): ResumeBlock[] {
+  const filtered = items.filter(hasCertificate);
+  if (filtered.length === 0) return [];
+  return [
+    heading("certificates-heading", label),
+    ...filtered.map(
+      (item, index): ResumeBlock => ({
+        id: item.id,
+        kind: "certificate",
+        item,
+        gapBefore: entryGap(index),
+        keepWithNext: false,
+      }),
+    ),
+  ];
+}
+
+function skillsBlocks(
+  items: SkillItemView[],
+  columns: SectionColumns,
+  label: string,
+): ResumeBlock[] {
+  const filtered = items.filter(hasSkill);
+  if (filtered.length === 0) return [];
+  return [
+    heading("skills-heading", label),
+    {
+      id: "skills-body",
+      kind: "skills",
+      items: filtered,
+      columns,
+      gapBefore: GAP.body,
+      keepWithNext: false,
+    },
+  ];
+}
+
+function languagesBlocks(
+  items: LanguageItemView[],
+  label: string,
+): ResumeBlock[] {
+  const filtered = items.filter(hasLanguage);
+  if (filtered.length === 0) return [];
+  return [
+    heading("languages-heading", label),
+    {
+      id: "languages-body",
+      kind: "languages",
+      items: filtered,
+      gapBefore: GAP.body,
+      keepWithNext: false,
+    },
+  ];
+}
+
 /**
- * Builds the linear block sequence, omitting any section (heading included)
- * that has no meaningful content, so a sparse résumé shows only what the user
- * filled in. Empty repeated entries are dropped before a section is weighed.
+ * Builds the linear block sequence. The Header and Summary are pinned at the top;
+ * every other section is emitted in the document's `sectionOrder` (the user's
+ * reordering), so pagination, PDF, and text export all follow the same order.
+ * Sections with no meaningful content are omitted (heading included).
  */
 export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
   const labels = RESUME_LABELS[resume.language];
@@ -112,125 +218,43 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
     });
   }
 
-  const experience = resume.experience.filter(hasExperience);
-  if (experience.length > 0) {
-    blocks.push(
-      heading("experience-heading", labels.experience),
-      ...experience.map(
-        (item, index): ResumeBlock => ({
-          id: item.id,
-          kind: "experience",
-          item,
-          gapBefore: entryGap(index),
-          keepWithNext: false,
-        }),
+  const emitters: Record<ReorderableSectionType, () => ResumeBlock[]> = {
+    experience: () =>
+      experienceLikeBlocks(
+        resume.experience,
+        "experience-heading",
+        labels.experience,
       ),
-    );
-  }
-
-  // Internship and organization entries reuse the "experience" block kind: they
-  // render identically in every template and export, only the heading differs.
-  const internship = resume.internship.filter(hasExperience);
-  if (internship.length > 0) {
-    blocks.push(
-      heading("internship-heading", labels.internship),
-      ...internship.map(
-        (item, index): ResumeBlock => ({
-          id: item.id,
-          kind: "experience",
-          item,
-          gapBefore: entryGap(index),
-          keepWithNext: false,
-        }),
+    internship: () =>
+      experienceLikeBlocks(
+        resume.internship,
+        "internship-heading",
+        labels.internship,
       ),
-    );
-  }
-
-  const projects = resume.projects.filter(hasExperience);
-  if (projects.length > 0) {
-    blocks.push(
-      heading("projects-heading", labels.projects),
-      ...projects.map(
-        (item, index): ResumeBlock => ({
-          id: item.id,
-          kind: "experience",
-          item,
-          gapBefore: entryGap(index),
-          keepWithNext: false,
-        }),
+    projects: () =>
+      experienceLikeBlocks(
+        resume.projects,
+        "projects-heading",
+        labels.projects,
       ),
-    );
-  }
-
-  const organizations = resume.organizations.filter(hasExperience);
-  if (organizations.length > 0) {
-    blocks.push(
-      heading("organizations-heading", labels.organizations),
-      ...organizations.map(
-        (item, index): ResumeBlock => ({
-          id: item.id,
-          kind: "experience",
-          item,
-          gapBefore: entryGap(index),
-          keepWithNext: false,
-        }),
+    organizations: () =>
+      experienceLikeBlocks(
+        resume.organizations,
+        "organizations-heading",
+        labels.organizations,
       ),
-    );
-  }
+    education: () => educationBlocks(resume.education, labels.education),
+    certifications: () =>
+      certificateBlocks(resume.certificates, labels.certificates),
+    skills: () =>
+      skillsBlocks(resume.skills, resume.skillsColumns, labels.skills),
+    languages: () => languagesBlocks(resume.languages, labels.languages),
+    // Custom sections carry no preview data yet; wired up in a later increment.
+    custom: () => [],
+  };
 
-  const education = resume.education.filter(hasEducation);
-  if (education.length > 0) {
-    blocks.push(
-      heading("education-heading", labels.education),
-      ...education.map(
-        (item, index): ResumeBlock => ({
-          id: item.id,
-          kind: "education",
-          item,
-          gapBefore: entryGap(index),
-          keepWithNext: false,
-        }),
-      ),
-    );
-  }
-
-  const certificates = resume.certificates.filter(hasCertificate);
-  if (certificates.length > 0) {
-    blocks.push(
-      heading("certificates-heading", labels.certificates),
-      ...certificates.map(
-        (item, index): ResumeBlock => ({
-          id: item.id,
-          kind: "certificate",
-          item,
-          gapBefore: entryGap(index),
-          keepWithNext: false,
-        }),
-      ),
-    );
-  }
-
-  const skills = resume.skills.filter(hasSkill);
-  if (skills.length > 0) {
-    blocks.push(heading("skills-heading", labels.skills), {
-      id: "skills-body",
-      kind: "skills",
-      items: skills,
-      columns: resume.skillsColumns,
-      gapBefore: GAP.body,
-      keepWithNext: false,
-    });
-  }
-
-  const languages = resume.languages.filter(hasLanguage);
-  if (languages.length > 0) {
-    blocks.push(heading("languages-heading", labels.languages), {
-      id: "languages-body",
-      kind: "languages",
-      items: languages,
-      gapBefore: GAP.body,
-      keepWithNext: false,
-    });
+  for (const type of resume.sectionOrder) {
+    blocks.push(...emitters[type]());
   }
 
   return blocks;

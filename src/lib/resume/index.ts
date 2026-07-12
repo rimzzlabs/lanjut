@@ -9,9 +9,14 @@ export {
 export { RESUME_LABELS, RESUME_LANGUAGES } from "./labels";
 export { needsMigration, readSchemaVersion, runMigrations } from "./migrations";
 export {
+  CANONICAL_SECTION_ORDER,
+  canonicalSectionIndex,
   type FieldSchema,
   getSectionSchema,
   HEADER_SCHEMA,
+  isReorderableSection,
+  REORDERABLE_SECTION_TYPES,
+  type ReorderableSectionType,
   type RichTextFeature,
   SECTION_REGISTRY,
   type SectionSchema,

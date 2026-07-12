@@ -375,7 +375,9 @@
       "or": "or",
       "browseTemplates": "Browse Templates",
       "showSection": "Show section",
-      "hideSection": "Hide section"
+      "hideSection": "Hide section",
+      "reorderSection": "Reorder section",
+      "resetOrder": "Reset section order"
     },
     "dateRange": {
       "startDate": "Start Date",

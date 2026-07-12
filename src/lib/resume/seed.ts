@@ -390,6 +390,37 @@ export const SEED_RESUME: Resume = {
       ],
     },
     {
+      id: "seed-certifications",
+      type: "certifications",
+      title: "Certifications",
+      entries: [
+        {
+          id: "seed-certifications-1",
+          fields: {
+            name: plain("AWS Certified Solutions Architect – Associate"),
+            issuer: plain("Amazon Web Services"),
+            url: plain("aws.amazon.com/verification"),
+          },
+        },
+        {
+          id: "seed-certifications-2",
+          fields: {
+            name: plain("Meta Front-End Developer"),
+            issuer: plain("Coursera"),
+            url: plain("coursera.org/verify/meta-frontend"),
+          },
+        },
+        {
+          id: "seed-certifications-3",
+          fields: {
+            name: plain("Certified Professional in Web Accessibility (CPACC)"),
+            issuer: plain("IAAP"),
+            url: plain("accessibilityassociation.org"),
+          },
+        },
+      ],
+    },
+    {
       id: "seed-skills",
       type: "skills",
       title: "Skills",
@@ -451,37 +482,6 @@ export const SEED_RESUME: Resume = {
           fields: {
             name: plain("CI/CD & Docker"),
             level: plain("Intermediate"),
-          },
-        },
-      ],
-    },
-    {
-      id: "seed-certifications",
-      type: "certifications",
-      title: "Certifications",
-      entries: [
-        {
-          id: "seed-certifications-1",
-          fields: {
-            name: plain("AWS Certified Solutions Architect – Associate"),
-            issuer: plain("Amazon Web Services"),
-            url: plain("aws.amazon.com/verification"),
-          },
-        },
-        {
-          id: "seed-certifications-2",
-          fields: {
-            name: plain("Meta Front-End Developer"),
-            issuer: plain("Coursera"),
-            url: plain("coursera.org/verify/meta-frontend"),
-          },
-        },
-        {
-          id: "seed-certifications-3",
-          fields: {
-            name: plain("Certified Professional in Web Accessibility (CPACC)"),
-            issuer: plain("IAAP"),
-            url: plain("accessibilityassociation.org"),
           },
         },
       ],

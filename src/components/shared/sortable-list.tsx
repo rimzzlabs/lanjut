@@ -5,6 +5,7 @@ import {
   DndContext,
   type DragEndEvent,
   KeyboardSensor,
+  MeasuringStrategy,
   PointerSensor,
   useSensor,
   useSensors,
@@ -23,6 +24,12 @@ import { cn } from "@/lib/utils";
 interface SortableListProps {
   items: string[];
   onReorder: (from: number, to: number) => void;
+  /**
+   * Continuously re-measure items while dragging. Enable when a row changes size
+   * mid-drag (e.g. an accordion section that collapses as it is picked up) so the
+   * drop targets and layout track the new height instead of the start-of-drag one.
+   */
+  remeasureWhileDragging?: boolean;
   children: ReactNode;
 }
 
@@ -48,6 +55,11 @@ export function SortableList(props: SortableListProps) {
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
+      measuring={
+        props.remeasureWhileDragging
+          ? { droppable: { strategy: MeasuringStrategy.Always } }
+          : undefined
+      }
     >
       <SortableContext
         items={props.items}

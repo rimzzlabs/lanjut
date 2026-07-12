@@ -8,8 +8,10 @@ import {
   setLastOpenedResumeId,
 } from "@/lib/db";
 import {
+  canonicalSectionIndex,
   cloneResumeAsNew,
   createEmptyResume,
+  isReorderableSection,
   type Resume,
   type ResumeIndexEntry,
   type ResumeLanguage,
@@ -53,6 +55,14 @@ interface ResumeStoreState {
   openResume: (id: string) => Promise<void>;
   /** Apply an edit to the open document; schedules a debounced persist. */
   updateOpen: (recipe: (draft: Resume) => void) => void;
+  /**
+   * Move a reorderable section from one position to another. Indices are into the
+   * reorderable subset (Summary and the Header are pinned and excluded); pinned
+   * sections keep their slots.
+   */
+  reorderSections: (from: number, to: number) => void;
+  /** Restore sections to the canonical reading order (the default). */
+  resetSectionOrder: () => void;
   /** Force any pending write to commit now (e.g. before navigating away). */
   flush: () => Promise<void>;
 }
@@ -177,6 +187,43 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
       index: syncIndexEntry(state.index, draft),
     }));
     scheduleOpenResumePersist();
+  },
+
+  reorderSections(from, to) {
+    get().updateOpen((draft) => {
+      // Indices address the reorderable subset; map them onto absolute positions
+      // in `sections` so pinned sections (Summary) keep their slots untouched.
+      const slots = draft.sections.reduce<number[]>((acc, section, index) => {
+        if (isReorderableSection(section.type)) acc.push(index);
+        return acc;
+      }, []);
+      if (
+        from < 0 ||
+        to < 0 ||
+        from >= slots.length ||
+        to >= slots.length ||
+        from === to
+      ) {
+        return;
+      }
+      const moving = draft.sections[slots[from]];
+      const reordered = slots.map((slot) => draft.sections[slot]);
+      reordered.splice(from, 1);
+      reordered.splice(to, 0, moving);
+      slots.forEach((slot, index) => {
+        draft.sections[slot] = reordered[index];
+      });
+    });
+  },
+
+  resetSectionOrder() {
+    get().updateOpen((draft) => {
+      // Stable sort by canonical index; unknown types keep their relative order
+      // at the end. Pinned sections already sort to their fixed slots.
+      draft.sections.sort(
+        (a, b) => canonicalSectionIndex(a.type) - canonicalSectionIndex(b.type),
+      );
+    });
   },
 
   flush() {
