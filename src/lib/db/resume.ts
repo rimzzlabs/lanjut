@@ -61,6 +61,8 @@ export async function getResume(id: string): Promise<Resume | undefined> {
 export async function deleteResume(id: string): Promise<void> {
   const db = await getDb();
   await db.delete("resumes", id);
+  // Import leftovers are keyed by the same id; drop them with the document.
+  await db.delete("leftovers", id);
 }
 
 /**

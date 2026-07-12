@@ -128,9 +128,9 @@
         "title": "Fill in your details",
         "content": "Each section maps to a fixed, ATS-parseable structure. Work top to bottom."
       },
-      "download": {
-        "title": "Download",
-        "content": "Export as PDF, DOCX, or plain text when you are ready to apply."
+      "document": {
+        "title": "Document",
+        "content": "Export your résumé, switch its language, or import from a PDF, all from the Document tab."
       }
     },
     "editor-sheet": {
@@ -303,13 +303,16 @@
       "sectionTitleRequired": "Enter a section name."
     },
     "create": {
-      "title": "Create a new resume",
-      "description": "You can create a new resume. But let's name your resume first.",
-      "label": "Resume label",
+      "title": "Create a new résumé",
+      "description": "Name it, choose where to start, and pick a template.",
+      "label": "Résumé name",
       "placeholder": "Software Engineer",
-      "fieldDescription": "At least 3 characters or more, maximum 100 chars at most.",
-      "prefill": "Pre-fill with example content",
-      "template": "Template"
+      "template": "Template",
+      "sourceLabel": "Start from",
+      "sourceSample": "Sample",
+      "sourceEmpty": "Blank",
+      "sourceImport": "Import PDF",
+      "submit": "Create résumé"
     },
     "rename": {
       "title": "Rename",
@@ -353,6 +356,20 @@
       "proposalPlaceholder": "How do you imagine it working?",
       "layer": "Which layer does this touch?",
       "layerPlaceholder": "Layer"
+    },
+    "import": {
+      "dropPrompt": "Drop a PDF here, or click to browse",
+      "hint": "Your file is read on your device and never uploaded.",
+      "parsing": "Reading your résumé…",
+      "parsed": "Ready to import",
+      "remove": "Remove file",
+      "errorNotPdf": "Only PDF files are supported.",
+      "errorTooLarge": "That file is too large. The limit is 10 MB.",
+      "errorEmpty": "This PDF has no readable text. It looks scanned; try exporting a text-based PDF.",
+      "errorEncrypted": "This PDF is password-protected. Remove the password and try again.",
+      "errorGeneric": "We couldn't read this PDF. Try a different file.",
+      "disclaimer": "Importing is best-effort and can miss or misplace details. If something comes out wrong, it would really help if you",
+      "reportIssue": "report an issue"
     }
   },
   "editor": {
@@ -379,7 +396,8 @@
       "hideSection": "Hide section",
       "reorderSection": "Reorder section",
       "resetOrder": "Reset section order",
-      "addSection": "Custom Section"
+      "addSection": "Custom Section",
+      "tabDocument": "Document"
     },
     "dateRange": {
       "startDate": "Start Date",
@@ -601,6 +619,22 @@
       "entryDescription": "Description",
       "entryDescriptionPlaceholder": "Add details…",
       "removeEntry": "Remove entry"
+    },
+    "leftovers": {
+      "button": "Unplaced text ({count})",
+      "title": "Text we couldn't place",
+      "description": "The import couldn't fit these into a section. Copy anything worth keeping, then dismiss.",
+      "copy": "Copy",
+      "close": "Close",
+      "dismiss": "Dismiss all"
+    },
+    "document": {
+      "downloadHeading": "Download",
+      "importHeading": "Import résumé",
+      "importHint": "Bring in details from an existing PDF résumé. It's read on your device and never uploaded.",
+      "replacePrompt": "This résumé already has content. Replace it, or keep it and create a new one?",
+      "replace": "Replace this one",
+      "createNew": "Create new"
     }
   }
 }

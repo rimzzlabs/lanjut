@@ -154,9 +154,9 @@ export const TOUR_STEPS: AppTourMeta[] = [
       },
       {
         ...BASE_STEP,
-        id: "download",
-        selector: "#tour-download",
-        side: "bottom-right",
+        id: "document",
+        selector: "#tour-document-tab",
+        side: "left",
       },
     ],
   },
