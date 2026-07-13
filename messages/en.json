@@ -566,7 +566,8 @@
       "columnsOne": "1",
       "columnsOneAria": "One column",
       "columnsTwo": "2",
-      "columnsTwoAria": "Two columns"
+      "columnsTwoAria": "Two columns",
+      "proficiencyLabel": "Show proficiency"
     },
     "languages": {
       "accordionTitle": "Languages",
@@ -577,6 +578,12 @@
       "emptyDescription": "Add the languages you speak and your proficiency.",
       "namePlaceholder": "English",
       "proficiency": "Proficiency",
+      "proficiencyLabel": "Show proficiency",
+      "columnsLabel": "Columns",
+      "columnsOne": "1",
+      "columnsOneAria": "One column",
+      "columnsTwo": "2",
+      "columnsTwoAria": "Two columns",
       "reorder": "Reorder language",
       "remove": "Remove language"
     },

@@ -30,6 +30,8 @@ export function ResumeBlockView(props: ResumeBlockViewProps) {
     case "skills":
       return <ResumeSkillsList items={block.items} columns={block.columns} />;
     case "languages":
-      return <ResumeLanguagesList items={block.items} />;
+      return (
+        <ResumeLanguagesList items={block.items} columns={block.columns} />
+      );
   }
 }

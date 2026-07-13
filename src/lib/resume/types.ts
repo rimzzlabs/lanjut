@@ -5,15 +5,15 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 12;
+export const CURRENT_SCHEMA_VERSION = 14;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
 
 /**
- * Presentation-only column count for grid-rendered sections (skills). Governs the
- * on-screen preview and PDF visual layout only; it never changes reading order,
- * and inherently linear exports (docx, plain text) ignore it.
+ * Presentation-only column count for grid-rendered sections (skills, languages).
+ * Governs the on-screen preview and PDF visual layout only; it never changes
+ * reading order, and inherently linear exports (docx, plain text) ignore it.
  */
 export type SectionColumns = 1 | 2;
 
@@ -74,10 +74,16 @@ export interface Section {
   title: string;
   entries: Entry[];
   /**
-   * Presentation-only column count for grid-rendered sections (skills). Absent on
-   * non-grid sections; renderers default to a two-column grid when unset.
+   * Presentation-only column count for grid-rendered sections (skills, languages).
+   * Absent on non-grid sections; renderers default to a two-column grid when unset.
    */
   columns?: SectionColumns;
+  /**
+   * Presentation-only toggle for the Skills and Languages sections: when false,
+   * per-entry proficiency is hidden from the preview and every export. Absent on
+   * other sections; renderers treat an unset value as `true` (proficiency shown).
+   */
+  showProficiency?: boolean;
   /**
    * Presentation variant for `custom` Sections only: `rich` (a single rich-text
    * body) or `list` (repeatable entries). Absent on core Sections; the custom

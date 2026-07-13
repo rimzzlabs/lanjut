@@ -444,6 +444,48 @@ const migrateV11toV12: Migration = (doc) => {
 };
 
 /**
+ * v12→v13: adds the presentation-only `showProficiency` toggle to the Skills and
+ * Languages sections so per-entry levels can be hidden. Existing documents default
+ * to true, preserving their current output. Bail-safe: a missing section is a
+ * no-op, and a section already carrying the flag is left as-is.
+ */
+const migrateV12toV13: Migration = (doc) => {
+  const next = structuredClone(doc);
+  const sections = Array.isArray(next.sections)
+    ? (next.sections as Array<Record<string, unknown>>)
+    : [];
+
+  for (const section of sections) {
+    if (section.type !== "skills" && section.type !== "languages") continue;
+    if (typeof section.showProficiency !== "boolean") {
+      section.showProficiency = true;
+    }
+  }
+
+  return next;
+};
+
+/**
+ * v13→v14: adds the presentation-only `columns` count to the Languages section so
+ * its grid can be toggled between one and two columns, matching Skills. Existing
+ * documents default to two, preserving their current layout. Bail-safe: no
+ * Languages section means no-op.
+ */
+const migrateV13toV14: Migration = (doc) => {
+  const next = structuredClone(doc);
+  const sections = Array.isArray(next.sections)
+    ? (next.sections as Array<Record<string, unknown>>)
+    : [];
+
+  const languages = sections.find((s) => s.type === "languages");
+  if (languages && languages.columns !== 1 && languages.columns !== 2) {
+    languages.columns = 2;
+  }
+
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -458,6 +500,8 @@ const LADDER: Record<number, Migration> = {
   9: migrateV9toV10,
   10: migrateV10toV11,
   11: migrateV11toV12,
+  12: migrateV12toV13,
+  13: migrateV13toV14,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

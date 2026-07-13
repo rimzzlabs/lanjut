@@ -566,7 +566,8 @@
       "columnsOne": "1",
       "columnsOneAria": "Satu kolom",
       "columnsTwo": "2",
-      "columnsTwoAria": "Dua kolom"
+      "columnsTwoAria": "Dua kolom",
+      "proficiencyLabel": "Tampilkan tingkat"
     },
     "languages": {
       "accordionTitle": "Bahasa",
@@ -577,6 +578,12 @@
       "emptyDescription": "Tambahin bahasa yang kamu kuasai dan tingkatnya.",
       "namePlaceholder": "English",
       "proficiency": "Tingkat",
+      "proficiencyLabel": "Tampilkan tingkat",
+      "columnsLabel": "Kolom",
+      "columnsOne": "1",
+      "columnsOneAria": "Satu kolom",
+      "columnsTwo": "2",
+      "columnsTwoAria": "Dua kolom",
       "reorder": "Ubah urutan bahasa",
       "remove": "Hapus bahasa"
     },

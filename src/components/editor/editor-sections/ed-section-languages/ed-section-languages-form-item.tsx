@@ -25,6 +25,7 @@ const LANGUAGE_LEVELS = [
 interface EditorSectionLanguagesFormItemProps {
   id: string;
   index: number;
+  showProficiency: boolean;
   control: Control<LanguagesFormValues>;
   onRemoveField: (index: number) => void;
 }
@@ -37,7 +38,10 @@ export function EditorSectionLanguagesFormItem(
   return (
     <SortableItem id={props.id} handleLabel={t("reorder")}>
       <div className="flex flex-col md:flex-row md:items-center gap-2">
-        <div className="flex items-center gap-2">
+        <div
+          data-proficiency={props.showProficiency}
+          className="flex items-center gap-2 flex-1"
+        >
           <Controller
             control={props.control}
             name={`languages.${props.index}.name`}
@@ -65,27 +69,29 @@ export function EditorSectionLanguagesFormItem(
           </Button>
         </div>
 
-        <Controller
-          control={props.control}
-          name={`languages.${props.index}.level`}
-          render={({ field }) => (
-            <Select
-              value={field.value || null}
-              onValueChange={(value) => field.onChange(value)}
-            >
-              <SelectTrigger className="w-[87.888%] md:w-40">
-                <SelectValue placeholder={t("proficiency")} />
-              </SelectTrigger>
-              <SelectContent>
-                {LANGUAGE_LEVELS.map((level) => (
-                  <SelectItem key={level} value={level}>
-                    {level}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
-        />
+        {props.showProficiency && (
+          <Controller
+            control={props.control}
+            name={`languages.${props.index}.level`}
+            render={({ field }) => (
+              <Select
+                value={field.value || null}
+                onValueChange={(value) => field.onChange(value)}
+              >
+                <SelectTrigger className="w-[87.888%] md:w-40">
+                  <SelectValue placeholder={t("proficiency")} />
+                </SelectTrigger>
+                <SelectContent>
+                  {LANGUAGE_LEVELS.map((level) => (
+                    <SelectItem key={level} value={level}>
+                      {level}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
+        )}
 
         <Button
           type="button"

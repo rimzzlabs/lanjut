@@ -425,6 +425,7 @@ export const SEED_RESUME: Resume = {
       type: "skills",
       title: "Skills",
       columns: 2,
+      showProficiency: true,
       entries: [
         {
           id: "seed-skills-1",
@@ -490,6 +491,8 @@ export const SEED_RESUME: Resume = {
       id: "seed-languages",
       type: "languages",
       title: "Languages",
+      columns: 2,
+      showProficiency: true,
       entries: [
         {
           id: "seed-languages-1",
