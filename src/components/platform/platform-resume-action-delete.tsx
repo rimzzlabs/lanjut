@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,7 +22,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useResumeStore } from "@/lib/store";
+import { deleteResumeWithUndo } from "./platform-resume-delete-undo";
 
 interface PlatformResumeActionDeleteProps {
   open: boolean;
@@ -35,15 +34,14 @@ export function PlatformResumeActionDelete(
   props: PlatformResumeActionDeleteProps,
 ) {
   const isMobile = useIsMobile();
-  const removeResume = useResumeStore((state) => state.removeResume);
-  const [pending, setPending] = useState(false);
   const t = useTranslations("forms.delete");
   const tc = useTranslations("forms.common");
 
-  async function handleDelete() {
-    setPending(true);
-    await removeResume(props.resume.id);
-    setPending(false);
+  function handleDelete() {
+    deleteResumeWithUndo(props.resume.id, {
+      deleted: t("toast", { title: props.resume.title }),
+      undo: tc("undo"),
+    });
     props.onOpenChange(false);
   }
 
@@ -68,11 +66,7 @@ export function PlatformResumeActionDelete(
           </DrawerHeader>
 
           <DrawerFooter>
-            <Button
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={pending}
-            >
+            <Button variant="destructive" onClick={handleDelete}>
               {tc("delete")}
             </Button>
             <DrawerClose render={<Button variant="outline" />}>
@@ -94,11 +88,7 @@ export function PlatformResumeActionDelete(
 
         <AlertDialogFooter>
           <AlertDialogCancel>{tc("cancel")}</AlertDialogCancel>
-          <AlertDialogAction
-            variant="destructive"
-            onClick={handleDelete}
-            disabled={pending}
-          >
+          <AlertDialogAction variant="destructive" onClick={handleDelete}>
             {tc("delete")}
           </AlertDialogAction>
         </AlertDialogFooter>

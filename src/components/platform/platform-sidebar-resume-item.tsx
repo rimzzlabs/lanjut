@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import { type MouseEvent, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import type { ResumeIndexEntry } from "@/lib/resume";
-import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +14,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
+import {
+  SidebarMenuAction,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "../ui/sidebar";
 import { PlatformResumeActionDelete } from "./platform-resume-action-delete";
 import { PlatformResumeActionRename } from "./platform-resume-action-rename";
 
@@ -55,49 +58,42 @@ export function PlatformSidebarResumeItem({
       >
         <FileText />
         <span className="truncate">{resume.title}</span>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-            render={
-              <Button size="icon-xs" className="ml-auto" variant="ghost" />
-            }
-          >
-            <span className="sr-only">{t("itemMenu")}</span>
-            <MoreVertical />
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent align="start" className="w-40">
-            <DropdownMenuGroup>
-              <DropdownMenuLabel className="text-pretty">
-                {t.rich("modify", {
-                  title: resume.title,
-                  b: (chunks) => <strong>{chunks}</strong>,
-                })}
-              </DropdownMenuLabel>
-              <DropdownMenuItem onClick={openRenameDialog}>
-                <Pen />
-                {t("rename")}
-              </DropdownMenuItem>
-
-              {id !== resume.id && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    variant="destructive"
-                    onClick={openRemoveDialog}
-                  >
-                    <Trash />
-                    {t("delete")}
-                  </DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </SidebarMenuButton>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger render={<SidebarMenuAction />}>
+          <span className="sr-only">{t("itemMenu")}</span>
+          <MoreVertical />
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align="start" className="w-40">
+          <DropdownMenuGroup>
+            <DropdownMenuLabel className="text-pretty">
+              {t.rich("modify", {
+                title: resume.title,
+                b: (chunks) => <strong>{chunks}</strong>,
+              })}
+            </DropdownMenuLabel>
+            <DropdownMenuItem onClick={openRenameDialog}>
+              <Pen />
+              {t("rename")}
+            </DropdownMenuItem>
+
+            {id !== resume.id && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  variant="destructive"
+                  onClick={openRemoveDialog}
+                >
+                  <Trash />
+                  {t("delete")}
+                </DropdownMenuItem>
+              </>
+            )}
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       <PlatformResumeActionRename
         key={resume.title}
