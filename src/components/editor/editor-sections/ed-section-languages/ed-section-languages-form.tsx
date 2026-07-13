@@ -21,6 +21,8 @@ import {
   toLanguagesValues,
 } from "../resume-form-adapter";
 import { EditorSectionLanguagesFormItem } from "./ed-section-languages-form-item";
+import { LanguagesColumnsToggle } from "./languages-columns-toggle";
+import { LanguagesProficiencyToggle } from "./languages-proficiency-toggle";
 
 function emptyLanguage(): LanguageItemValues {
   return { name: "", level: "" };
@@ -29,6 +31,8 @@ function emptyLanguage(): LanguageItemValues {
 export function EditorSectionLanguagesForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
+  const showProficiency =
+    open?.sections.find((s) => s.type === "languages")?.showProficiency ?? true;
   const t = useTranslations("editor.languages");
   const tc = useTranslations("editor.common");
 
@@ -78,22 +82,27 @@ export function EditorSectionLanguagesForm() {
             description={t("emptyDescription")}
           />
         ) : (
-          <SortableList
-            items={fields.map((field) => field.id)}
-            onReorder={handleReorder}
-          >
-            <FieldGroup className="gap-2">
-              {fields.map((field, index) => (
-                <EditorSectionLanguagesFormItem
-                  key={field.id}
-                  id={field.id}
-                  control={form.control}
-                  index={index}
-                  onRemoveField={remove}
-                />
-              ))}
-            </FieldGroup>
-          </SortableList>
+          <>
+            <LanguagesColumnsToggle />
+            <LanguagesProficiencyToggle />
+            <SortableList
+              items={fields.map((field) => field.id)}
+              onReorder={handleReorder}
+            >
+              <FieldGroup className="gap-2">
+                {fields.map((field, index) => (
+                  <EditorSectionLanguagesFormItem
+                    key={field.id}
+                    id={field.id}
+                    control={form.control}
+                    index={index}
+                    showProficiency={showProficiency}
+                    onRemoveField={remove}
+                  />
+                ))}
+              </FieldGroup>
+            </SortableList>
+          </>
         )}
       </FieldSet>
     </form>

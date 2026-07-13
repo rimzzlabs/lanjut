@@ -148,6 +148,11 @@ export function resumeToPreview(resume: Resume): ResumePreview {
       };
     });
 
+  const skillsShowProficiency =
+    sectionOfType(resume, "skills")?.showProficiency ?? true;
+  const languagesShowProficiency =
+    sectionOfType(resume, "languages")?.showProficiency ?? true;
+
   return {
     language: resume.language,
     sectionOrder,
@@ -234,18 +239,22 @@ export function resumeToPreview(resume: Resume): ResumePreview {
         };
       },
     ),
+    // Hiding proficiency is presentation-only: blank it here, the single view
+    // chokepoint, so every downstream renderer (preview, PDF, docx, plain text)
+    // drops it without threading a flag through each one.
     skills: (sectionOfType(resume, "skills")?.entries ?? []).map((entry) => ({
       id: entry.id,
       name: plain(entry.fields.name),
-      proficiency: plain(entry.fields.level),
+      proficiency: skillsShowProficiency ? plain(entry.fields.level) : "",
     })),
     skillsColumns: sectionOfType(resume, "skills")?.columns ?? 2,
     languages: (sectionOfType(resume, "languages")?.entries ?? []).map(
       (entry) => ({
         id: entry.id,
         name: plain(entry.fields.name),
-        proficiency: plain(entry.fields.level),
+        proficiency: languagesShowProficiency ? plain(entry.fields.level) : "",
       }),
     ),
+    languagesColumns: sectionOfType(resume, "languages")?.columns ?? 2,
   };
 }

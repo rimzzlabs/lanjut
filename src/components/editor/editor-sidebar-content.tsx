@@ -16,7 +16,7 @@ const TABS = [
   { value: "document", labelKey: "tabDocument", id: "tour-document-tab" },
 ];
 
-const PANEL_HEIGHT = "h-[calc(100vh-7rem)] xl:h-[calc(100vh-10.25rem)]";
+const PANEL_HEIGHT = "h-[calc(100vh-7rem)] xl:h-[calc(100vh-7.625rem)]";
 
 export function EditorSidebarContent() {
   const t = useTranslations("editor.chrome");

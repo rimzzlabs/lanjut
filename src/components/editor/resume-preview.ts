@@ -136,4 +136,6 @@ export interface ResumePreview {
   /** Presentation-only column count for the skills grid; defaults to two. */
   skillsColumns: SectionColumns;
   languages: LanguageItemView[];
+  /** Presentation-only column count for the languages grid; defaults to two. */
+  languagesColumns: SectionColumns;
 }

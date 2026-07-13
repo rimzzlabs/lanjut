@@ -39,7 +39,7 @@ export type ResumeBlock = BlockMeta &
     | { kind: "education"; item: EducationItemView }
     | { kind: "certificate"; item: CertificateItemView }
     | { kind: "skills"; items: SkillItemView[]; columns: SectionColumns }
-    | { kind: "languages"; items: LanguageItemView[] }
+    | { kind: "languages"; items: LanguageItemView[]; columns: SectionColumns }
   );
 
 const GAP = {
@@ -175,6 +175,7 @@ function skillsBlocks(
 
 function languagesBlocks(
   items: LanguageItemView[],
+  columns: SectionColumns,
   label: string,
 ): ResumeBlock[] {
   const filtered = items.filter(hasLanguage);
@@ -185,6 +186,7 @@ function languagesBlocks(
       id: "languages-body",
       kind: "languages",
       items: filtered,
+      columns,
       gapBefore: GAP.body,
       keepWithNext: false,
     },
@@ -286,7 +288,12 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
       certificateBlocks(resume.certificates, labels.certificates),
     skills: () =>
       skillsBlocks(resume.skills, resume.skillsColumns, labels.skills),
-    languages: () => languagesBlocks(resume.languages, labels.languages),
+    languages: () =>
+      languagesBlocks(
+        resume.languages,
+        resume.languagesColumns,
+        labels.languages,
+      ),
   };
 
   const customById = new Map(
