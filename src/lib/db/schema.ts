@@ -10,8 +10,9 @@ const DB_NAME = "lanjut";
  * adding/changing a store or index, never for a field-shape change.
  *
  * v2: adds the `backups` store for raw pre-migration document snapshots.
+ * v3: adds the `leftovers` store for import text that could not be placed.
  */
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 
 /** Keys used in the single-value `app` meta store. */
 export const META_KEYS = {
@@ -33,6 +34,17 @@ export interface ResumeBackup {
   doc: unknown;
 }
 
+/**
+ * Text chunks a PDF import could not confidently place into the structured
+ * document (fragments before the first heading, scrambled crumbs). Kept beside
+ * the document, not inside it, so the clean structural shape is never polluted;
+ * surfaced in the editor for the user to copy in or dismiss. Keyed by resumeId.
+ */
+export interface ImportLeftovers {
+  resumeId: string;
+  items: string[];
+}
+
 export interface LanjutDB extends DBSchema {
   resumes: {
     key: string;
@@ -47,6 +59,10 @@ export interface LanjutDB extends DBSchema {
   backups: {
     key: string;
     value: ResumeBackup;
+  };
+  leftovers: {
+    key: string;
+    value: ImportLeftovers;
   };
 }
 
@@ -74,6 +90,9 @@ export function getDb(): Promise<IDBPDatabase<LanjutDB>> {
         }
         if (!db.objectStoreNames.contains("backups")) {
           db.createObjectStore("backups");
+        }
+        if (!db.objectStoreNames.contains("leftovers")) {
+          db.createObjectStore("leftovers", { keyPath: "resumeId" });
         }
       },
     });

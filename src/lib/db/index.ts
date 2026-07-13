@@ -1,4 +1,9 @@
 export {
+  deleteLeftovers,
+  getLeftovers,
+  putLeftovers,
+} from "./leftovers";
+export {
   deleteResume,
   getLastOpenedResumeId,
   getResume,
@@ -9,6 +14,7 @@ export {
 } from "./resume";
 export {
   getDb,
+  type ImportLeftovers,
   type LanjutDB,
   META_KEYS,
   type ResumeBackup,

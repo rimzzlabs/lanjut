@@ -29,10 +29,14 @@ export type ResumeTitleForm = z.infer<
   ReturnType<typeof createResumeTitleSchema>
 >;
 
-/** The create dialog adds the pre-fill opt-out on top of the shared title field. */
+/** Where a newly created document's starting content comes from. */
+export const RESUME_SOURCES = ["sample", "empty", "import"] as const;
+export type ResumeSource = (typeof RESUME_SOURCES)[number];
+
+/** The create dialog adds the content-source choice on top of the title field. */
 export function createResumeCreateSchema(t: Translator) {
   return createResumeTitleSchema(t).extend({
-    prefill: z.boolean(),
+    source: z.enum(RESUME_SOURCES),
   });
 }
 

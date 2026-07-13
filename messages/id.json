@@ -128,9 +128,9 @@
         "title": "Isi detail kamu",
         "content": "Tiap bagian ngikutin struktur tetap yang kebaca ATS. Kerjain dari atas ke bawah."
       },
-      "download": {
-        "title": "Unduh",
-        "content": "Ekspor jadi PDF, DOCX, atau teks biasa pas kamu udah siap ngelamar."
+      "document": {
+        "title": "Dokumen",
+        "content": "Ekspor resume, ganti bahasanya, atau impor dari PDF, semua dari tab Dokumen."
       }
     },
     "editor-sheet": {
@@ -304,12 +304,15 @@
     },
     "create": {
       "title": "Buat resume baru",
-      "description": "Yuk bikin resume baru. Tapi kasih nama dulu resume-nya.",
-      "label": "Label resume",
+      "description": "Kasih nama, pilih titik awal, lalu pilih template.",
+      "label": "Nama resume",
       "placeholder": "Software Engineer",
-      "fieldDescription": "Minimal 3 karakter, maksimal 100 karakter.",
-      "prefill": "Isi otomatis dengan contoh konten",
-      "template": "Template"
+      "template": "Template",
+      "sourceLabel": "Mulai dari",
+      "sourceSample": "Contoh",
+      "sourceEmpty": "Kosong",
+      "sourceImport": "Impor PDF",
+      "submit": "Buat resume"
     },
     "rename": {
       "title": "Ganti nama",
@@ -353,6 +356,20 @@
       "proposalPlaceholder": "Gimana kamu ngebayanginnya jalan?",
       "layer": "Lapisan mana yang kena?",
       "layerPlaceholder": "Lapisan"
+    },
+    "import": {
+      "dropPrompt": "Taruh PDF di sini, atau klik untuk pilih",
+      "hint": "File kamu dibaca di perangkatmu dan nggak pernah diunggah.",
+      "parsing": "Membaca resume kamu…",
+      "parsed": "Siap diimpor",
+      "remove": "Hapus file",
+      "errorNotPdf": "Cuma file PDF yang didukung.",
+      "errorTooLarge": "File-nya kegedean. Maksimal 10 MB.",
+      "errorEmpty": "PDF ini nggak ada teks yang kebaca. Kelihatannya hasil scan; coba ekspor PDF berbasis teks.",
+      "errorEncrypted": "PDF ini dikunci password. Hapus dulu passwordnya lalu coba lagi.",
+      "errorGeneric": "Kami nggak bisa baca PDF ini. Coba file lain.",
+      "disclaimer": "Impor sifatnya best-effort dan bisa saja melewatkan atau salah menempatkan detail. Kalau ada yang keliru, sangat membantu kalau kamu",
+      "reportIssue": "laporkan masalahnya"
     }
   },
   "editor": {
@@ -379,7 +396,8 @@
       "hideSection": "Sembunyikan bagian",
       "reorderSection": "Ubah urutan bagian",
       "resetOrder": "Setel ulang urutan bagian",
-      "addSection": "Bagian Khusus"
+      "addSection": "Bagian Khusus",
+      "tabDocument": "Dokumen"
     },
     "dateRange": {
       "startDate": "Tanggal Mulai",
@@ -601,6 +619,22 @@
       "entryDescription": "Deskripsi",
       "entryDescriptionPlaceholder": "Tambah detail…",
       "removeEntry": "Hapus entri"
+    },
+    "leftovers": {
+      "button": "Teks tak tertempatkan ({count})",
+      "title": "Teks yang nggak bisa ditempatkan",
+      "description": "Impor nggak bisa memasukkan ini ke bagian mana pun. Salin yang mau kamu simpan, lalu buang.",
+      "copy": "Salin",
+      "close": "Tutup",
+      "dismiss": "Buang semua"
+    },
+    "document": {
+      "downloadHeading": "Unduh",
+      "importHeading": "Impor resume",
+      "importHint": "Ambil detail dari resume PDF yang sudah ada. Dibaca di perangkatmu dan nggak pernah diunggah.",
+      "replacePrompt": "Resume ini sudah ada isinya. Ganti isinya, atau simpan lalu buat yang baru?",
+      "replace": "Ganti yang ini",
+      "createNew": "Buat baru"
     }
   }
 }

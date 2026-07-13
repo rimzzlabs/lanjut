@@ -4,7 +4,6 @@ import { LanguageSwitcher } from "../shared/language-switcher";
 import { SidebarTrigger } from "../ui/sidebar";
 import { PlatformNavbarBreadcrumb } from "./platform-navbar-breadcrumb";
 import { PlatformNavbarChangelog } from "./platform-navbar-changelog";
-import { PlatformNavbarDownload } from "./platform-navbar-download";
 import { PlatformNavbarTheme } from "./platform-navbar-theme";
 
 export function PlatformNavbar() {
@@ -19,7 +18,6 @@ export function PlatformNavbar() {
             <PlatformNavbarChangelog />
             <PlatformNavbarTheme />
           </div>
-          <PlatformNavbarDownload />
           <LanguageSwitcher />
         </div>
       </nav>

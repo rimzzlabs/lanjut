@@ -1,9 +1,11 @@
 import { A, pipe, S } from "@mobily/ts-belt";
+import { nanoid } from "nanoid";
 import { create } from "zustand";
 import {
   deleteResume as dbDeleteResume,
   getResume,
   listResumeIndex,
+  putLeftovers,
   putResume,
   setLastOpenedResumeId,
 } from "@/lib/db";
@@ -31,8 +33,13 @@ type OpenStatus = "idle" | "loading" | "ready" | "missing";
 
 interface CreateResumeOptions {
   templateId?: string;
-  /** Seed the document with the example content; false starts blank. */
-  prefill?: boolean;
+  /**
+   * Where the starting content comes from: the sample fixture (default), a blank
+   * document, or a parsed PDF import. When `import`, `imported` carries the
+   * already-parsed document and its leftovers.
+   */
+  source?: "sample" | "empty" | "import";
+  imported?: { resume: Resume; leftovers: string[] };
   /** Document label language; defaults to English when omitted. */
   language?: ResumeLanguage;
 }
@@ -46,6 +53,8 @@ interface ResumeStoreState {
   /** The single fully-hydrated open document, or null when none is open. */
   open: Resume | null;
   openStatus: OpenStatus;
+  /** Bumped whenever a document's import leftovers change, so views re-read them. */
+  leftoversVersion: number;
 
   hydrateIndex: () => Promise<void>;
   createResume: (
@@ -74,6 +83,15 @@ interface ResumeStoreState {
   removeCustomSection: (id: string) => void;
   /** Switch a custom section's variant, converting its content across. */
   setCustomVariant: (id: string, variant: CustomVariant) => void;
+  /**
+   * Overwrite the open document's content (header + sections) with a parsed PDF
+   * import, keeping its id, title, template, and language, and store the import's
+   * leftovers against it. For importing into an existing document in place.
+   */
+  replaceOpenWithImport: (imported: {
+    resume: Resume;
+    leftovers: string[];
+  }) => void;
   /** Force any pending write to commit now (e.g. before navigating away). */
   flush: () => Promise<void>;
 }
@@ -102,6 +120,7 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
   unreadableCount: 0,
   open: null,
   openStatus: "idle",
+  leftoversVersion: 0,
 
   async hydrateIndex() {
     set({ indexStatus: "loading" });
@@ -118,13 +137,24 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
   },
 
   async createResume(title, options) {
-    const resume =
-      options?.prefill === false
-        ? createEmptyResume(S.trim(title))
-        : cloneResumeAsNew(SEED_RESUME, S.trim(title));
+    const trimmed = S.trim(title);
+    let resume: Resume;
+    if (options?.source === "import" && options.imported) {
+      // The imported document is already parsed; adopt it, retitle it, and give
+      // it a fresh id so it never collides with the fixture's placeholder ids.
+      resume = { ...options.imported.resume, id: nanoid(), title: trimmed };
+    } else if (options?.source === "empty") {
+      resume = createEmptyResume(trimmed);
+    } else {
+      resume = cloneResumeAsNew(SEED_RESUME, trimmed);
+    }
     if (options?.templateId) resume.templateId = options.templateId;
     if (options?.language) resume.language = options.language;
     await putResume(resume);
+    if (options?.source === "import" && options.imported) {
+      await putLeftovers(resume.id, options.imported.leftovers);
+      set((state) => ({ leftoversVersion: state.leftoversVersion + 1 }));
+    }
     await setLastOpenedResumeId(resume.id);
     set((state) => ({
       index: syncIndexEntry(state.index, resume),
@@ -274,6 +304,17 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
         variant,
       );
     });
+  },
+
+  replaceOpenWithImport(imported) {
+    const current = get().open;
+    if (!current) return;
+    get().updateOpen((draft) => {
+      draft.header = structuredClone(imported.resume.header);
+      draft.sections = structuredClone(imported.resume.sections);
+    });
+    void putLeftovers(current.id, imported.leftovers);
+    set((state) => ({ leftoversVersion: state.leftoversVersion + 1 }));
   },
 
   flush() {
