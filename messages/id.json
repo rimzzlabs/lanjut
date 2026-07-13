@@ -548,6 +548,7 @@
       "url": "URL Sertifikat",
       "urlPlaceholder": "acme.com/cert",
       "urlDesc": "Tautan ke sertifikat atau situs penerbitnya.",
+      "reorder": "Ubah urutan sertifikat",
       "remove": "Hapus"
     },
     "skills": {

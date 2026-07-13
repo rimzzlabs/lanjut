@@ -548,6 +548,7 @@
       "url": "Certificate URL",
       "urlPlaceholder": "acme.com/cert",
       "urlDesc": "Link to the certificate or the issuer's site.",
+      "reorder": "Reorder certification",
       "remove": "Remove"
     },
     "skills": {

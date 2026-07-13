@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { EmptyState } from "@/components/shared/empty-state";
+import { SortableList } from "@/components/shared/sortable-list";
 import { Button } from "@/components/ui/button";
 import {
   FieldDescription,
@@ -34,7 +35,7 @@ export function EditorSectionCertificationsForm() {
   const form = useForm<CertificationsFormValues>({
     defaultValues: open ? toCertificationsValues(open) : { certifications: [] },
   });
-  const { fields, prepend, remove } = useFieldArray({
+  const { fields, prepend, remove, move } = useFieldArray({
     control: form.control,
     name: "certifications",
   });
@@ -45,6 +46,11 @@ export function EditorSectionCertificationsForm() {
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);
+
+  function handleReorder(from: number, to: number) {
+    move(from, to);
+    updateOpen((draft) => applyCertificationsValues(draft, form.getValues()));
+  }
 
   if (!open) return null;
 
@@ -72,16 +78,23 @@ export function EditorSectionCertificationsForm() {
             description={t("emptyDescription")}
           />
         ) : (
-          <FieldGroup className="gap-4">
-            {fields.map((field, index) => (
-              <EditorSectionCertificationsFormItem
-                key={field.id}
-                control={form.control}
-                index={index}
-                onRemoveField={remove}
-              />
-            ))}
-          </FieldGroup>
+          <SortableList
+            items={fields.map((field) => field.id)}
+            onReorder={handleReorder}
+          >
+            <FieldGroup className="gap-4">
+              {fields.map((field, index) => (
+                <EditorSectionCertificationsFormItem
+                  key={field.id}
+                  id={field.id}
+                  control={form.control}
+                  index={index}
+                  isLast={index === fields.length - 1}
+                  onRemoveField={remove}
+                />
+              ))}
+            </FieldGroup>
+          </SortableList>
         )}
       </FieldSet>
     </form>
