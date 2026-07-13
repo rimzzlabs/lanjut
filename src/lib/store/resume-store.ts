@@ -64,6 +64,10 @@ interface ResumeStoreState {
   renameResume: (id: string, title: string) => Promise<void>;
   duplicateResume: (id: string) => Promise<Resume | undefined>;
   removeResume: (id: string) => Promise<void>;
+  /** Drop a résumé from the index without touching disk; returns it for undo. */
+  detachResume: (id: string) => ResumeIndexEntry | undefined;
+  /** Re-insert a detached index entry, newest-first. */
+  restoreResume: (entry: ResumeIndexEntry) => void;
   openResume: (id: string) => Promise<void>;
   /** Apply an edit to the open document; schedules a debounced persist. */
   updateOpen: (recipe: (draft: Resume) => void) => void;
@@ -200,6 +204,27 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
         openStatus: isOpen ? "idle" : state.openStatus,
       };
     });
+  },
+
+  detachResume(id) {
+    const entry = get().index.find((item) => item.id === id);
+    if (!entry) return undefined;
+    set((state) => ({
+      index: A.reject(state.index, (item) => item.id === id),
+    }));
+    return entry;
+  },
+
+  restoreResume(entry) {
+    set((state) => ({
+      index: pipe(
+        state.index,
+        A.reject((item) => item.id === entry.id),
+        A.prepend(entry),
+        A.sortBy((item) => item.updatedAt),
+        A.reverse,
+      ),
+    }));
   },
 
   async openResume(id) {

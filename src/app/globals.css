@@ -167,3 +167,11 @@
     height: 0;
   }
 }
+
+/* Fit sonner's fixed icon slot to the countdown ring and add a gap. Unlayered on
+   purpose: sonner injects [data-icon] unlayered, which beats any @layer rule. */
+[data-sonner-toast][data-styled="true"].resume-delete-toast [data-icon] {
+  width: auto;
+  height: auto;
+  margin-right: 0.5rem;
+}
