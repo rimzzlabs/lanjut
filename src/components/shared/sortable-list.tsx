@@ -74,6 +74,18 @@ export function SortableList(props: SortableListProps) {
 interface SortableItemProps {
   id: string;
   handleLabel: string;
+  /**
+   * Cross-axis alignment of the handle against the row. "center" (default)
+   * suits a compact single-line row; "start" top-aligns for a multi-field
+   * card, where the handle should sit on the first field rather than the
+   * card's vertical middle.
+   */
+  align?: "center" | "start";
+  /**
+   * Extra classes for the handle, e.g. a top margin that drops it onto a
+   * field's input when a label sits above it. Wins over the default via twMerge.
+   */
+  handleClassName?: string;
   children: ReactNode;
 }
 
@@ -87,18 +99,25 @@ export function SortableItem(props: SortableItemProps) {
     isDragging,
   } = useSortable({ id: props.id });
 
+  const align = props.align ?? "center";
+
   return (
     <div
       ref={setNodeRef}
       style={{ transform: CSS.Transform.toString(transform), transition }}
       className={cn(
-        "flex items-start gap-2 md:items-center",
+        "flex items-start gap-2",
+        align === "center" && "md:items-center",
         isDragging && "relative z-10 opacity-60",
       )}
     >
       <button
         type="button"
-        className="mt-1.5 flex size-8 shrink-0 touch-none items-center justify-center rounded-md text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:mt-0 cursor-grab active:cursor-grabbing"
+        className={cn(
+          "mt-1.5 flex size-8 shrink-0 touch-none items-center justify-center rounded-md text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring cursor-grab active:cursor-grabbing",
+          align === "center" && "md:mt-0",
+          props.handleClassName,
+        )}
         aria-label={props.handleLabel}
         {...attributes}
         {...listeners}
