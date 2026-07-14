@@ -137,6 +137,7 @@ function HowItWorksScreenshot(props: {
         alt={props.alt}
         width={props.width}
         height={props.height}
+        sizes="(max-width: 768px) 100vw, 600px"
         className="w-full rounded-lg border object-cover object-top"
       />
       <figcaption className="sr-only">{props.alt}</figcaption>

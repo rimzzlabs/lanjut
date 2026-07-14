@@ -43,6 +43,7 @@ export function LandingPreviewEditor() {
           title={t("imageAlt")}
           width={1437}
           height={871}
+          sizes="(max-width: 1024px) 100vw, 1024px"
           className="w-full aspect-video rounded-lg border object-cover"
         />
         <figcaption className="sr-only">{t("caption")}</figcaption>
