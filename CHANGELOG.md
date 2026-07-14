@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.2](https://github.com/rimzzlabs/lanjut/compare/v0.9.1...v0.9.2) (2026-07-14)
+
+
+### Bug Fixes
+
+* right-size landing images and correct language toggle a11y ([#97](https://github.com/rimzzlabs/lanjut/issues/97)) ([5a56069](https://github.com/rimzzlabs/lanjut/commit/5a56069ad2b388ef511ccc7a0f2cbc39248de108))
+
 ## [0.9.1](https://github.com/rimzzlabs/lanjut/compare/v0.9.0...v0.9.1) (2026-07-14)
 
 
