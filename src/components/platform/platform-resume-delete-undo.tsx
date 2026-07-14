@@ -9,19 +9,12 @@ interface UndoMessages {
   undo: string;
 }
 
-// Runs the timer outside React so it survives the résumé card unmounting when
-// the entry leaves the index.
-export function deleteResumeWithUndo(id: string, messages: UndoMessages) {
+// The résumé is deleted from disk right away so it can never resurface, even if
+// the page is left mid-window. Undo restores the removed document.
+export async function deleteResumeWithUndo(id: string, messages: UndoMessages) {
   const store = useResumeStore.getState();
-  const entry = store.detachResume(id);
-  if (!entry) return;
-
-  let settled = false;
-  const timer = setTimeout(() => {
-    if (settled) return;
-    settled = true;
-    void store.removeResume(id);
-  }, UNDO_WINDOW_MS);
+  const removed = await store.removeResume(id);
+  if (!removed) return;
 
   toast(messages.deleted, {
     duration: UNDO_WINDOW_MS,
@@ -30,10 +23,7 @@ export function deleteResumeWithUndo(id: string, messages: UndoMessages) {
     action: {
       label: messages.undo,
       onClick: () => {
-        if (settled) return;
-        settled = true;
-        clearTimeout(timer);
-        store.restoreResume(entry);
+        void store.restoreResume(removed);
       },
     },
   });
