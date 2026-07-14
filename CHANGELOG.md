@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.9.0](https://github.com/rimzzlabs/lanjut/compare/v0.8.0...v0.9.0) (2026-07-14)
+
+
+### Features
+
+* add custom résumé sections ([#85](https://github.com/rimzzlabs/lanjut/issues/85)) ([826dbfc](https://github.com/rimzzlabs/lanjut/commit/826dbfcfda593c8d872271ed67af68dacb54a78d))
+* add linkedin field to personal information ([#82](https://github.com/rimzzlabs/lanjut/issues/82)) ([4b92da3](https://github.com/rimzzlabs/lanjut/commit/4b92da392de4e52d919c9742688c8bd44a05e220))
+* add proficiency toggles and language column layout ([#88](https://github.com/rimzzlabs/lanjut/issues/88)) ([c1a0be8](https://github.com/rimzzlabs/lanjut/commit/c1a0be888bb566fe8f662f5137ef46ab60c7fb24))
+* duplicate a résumé from the library and sidebar menus ([#92](https://github.com/rimzzlabs/lanjut/issues/92)) ([ab81f93](https://github.com/rimzzlabs/lanjut/commit/ab81f936e55c5decf7413e5c17a5508bcb22056f))
+* import an existing résumé from a pdf ([#86](https://github.com/rimzzlabs/lanjut/issues/86)) ([7be0efe](https://github.com/rimzzlabs/lanjut/commit/7be0efe04320333455081a91d17b4776ea7fd052))
+* reorder certifications by drag and drop ([#87](https://github.com/rimzzlabs/lanjut/issues/87)) ([c6a0853](https://github.com/rimzzlabs/lanjut/commit/c6a0853f2fc1fee72fc2a70e0998624706fe33be))
+* reorder resume sections by drag and drop ([#84](https://github.com/rimzzlabs/lanjut/issues/84)) ([96ab89f](https://github.com/rimzzlabs/lanjut/commit/96ab89f9529e932ab62688cce2fd25c8c90915a7))
+* undo résumé deletion with a countdown toast ([#89](https://github.com/rimzzlabs/lanjut/issues/89)) ([e364d34](https://github.com/rimzzlabs/lanjut/commit/e364d34918825f57c0844dbff30bf8ad197c98d3))
+
+
+### Bug Fixes
+
+* add horizontal padding to the create dialog fields ([#91](https://github.com/rimzzlabs/lanjut/issues/91)) ([bfea5f7](https://github.com/rimzzlabs/lanjut/commit/bfea5f76c0c43b0bdf76f8ce9ced56c433099b3e))
+* group proficiency options and tidy the sidebar résumé menu ([#90](https://github.com/rimzzlabs/lanjut/issues/90)) ([17dbdec](https://github.com/rimzzlabs/lanjut/commit/17dbdec0900dacb9badb46980ae6298aaf5fc149))
+
+
+### Refactors
+
+* rework the changelog and standardize resume copy ([#94](https://github.com/rimzzlabs/lanjut/issues/94)) ([a6f02c1](https://github.com/rimzzlabs/lanjut/commit/a6f02c1fde029e6fd21e51166aee346381bef695))
+* streamline the landing navbar and theme toggle ([#93](https://github.com/rimzzlabs/lanjut/issues/93)) ([8e6e962](https://github.com/rimzzlabs/lanjut/commit/8e6e962464d2754c7a73f68e19fce24709d90105))
+
 ## [0.8.0](https://github.com/rimzzlabs/lanjut/compare/v0.7.0...v0.8.0) (2026-07-10)
 
 
