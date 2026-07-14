@@ -23,8 +23,25 @@ jobs:
 
       - run: pnpm lint
 
+      - run: pnpm typecheck
+
       - run: pnpm validate:exports
 
-      # Same production build the release workflow runs, so open-next
-      # incompatibilities surface on the PR instead of at deploy time.
+  build:
+    # Regular PRs skip the expensive open-next build; only the release-please PR
+    # builds it, so open-next incompatibilities surface before the release deploys.
+    if: startsWith(github.head_ref, 'release-please--')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
       - run: pnpm exec opennextjs-cloudflare build
