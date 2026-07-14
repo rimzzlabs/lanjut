@@ -237,6 +237,8 @@
       "itemMenu": "Menu",
       "modify": "Ubah <b>{title}</b>",
       "rename": "Ganti nama",
+      "duplicate": "Duplikat",
+      "copyOf": "Salinan dari {title}",
       "delete": "Hapus"
     },
     "toolbar": {
@@ -267,6 +269,8 @@
       "edited": "Diedit",
       "menu": "Menu",
       "rename": "Ganti nama",
+      "duplicate": "Duplikat",
+      "copyOf": "Salinan dari {title}",
       "download": "Unduh",
       "delete": "Hapus",
       "newResume": "Resume baru"

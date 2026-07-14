@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, MoreHorizontal, Pen, Trash } from "lucide-react";
+import { Copy, Download, MoreHorizontal, Pen, Trash } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Fragment, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useResumeStore } from "@/lib/store";
 import { PlatformResumeActionDelete } from "../platform-resume-action-delete";
 import { PlatformResumeActionDownload } from "../platform-resume-action-download";
 import { PlatformResumeActionRename } from "../platform-resume-action-rename";
@@ -25,11 +26,16 @@ export function PlatformResumeGridItemMenu({
   resume,
 }: PlatformResumeGridItemMenuProps) {
   const t = useTranslations("platform.grid");
+  const duplicateResume = useResumeStore((state) => state.duplicateResume);
   const [open, setOpen] = useState({
     rename: false,
     remove: false,
     download: false,
   });
+
+  const onDuplicate = () => {
+    void duplicateResume(resume.id, t("copyOf", { title: resume.title }));
+  };
 
   const openRemoveDialog = () => setOpen((prev) => ({ ...prev, remove: true }));
   const onOpenRemove = (next: boolean) => {
@@ -59,6 +65,9 @@ export function PlatformResumeGridItemMenu({
             <DropdownMenuLabel>{t("menu")}</DropdownMenuLabel>
             <DropdownMenuItem onClick={openRenameDialog}>
               <Pen /> {t("rename")}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onDuplicate}>
+              <Copy /> {t("duplicate")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={openDownloadDialog}>
               <Download />

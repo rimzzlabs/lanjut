@@ -62,7 +62,7 @@ interface ResumeStoreState {
     options?: CreateResumeOptions,
   ) => Promise<Resume>;
   renameResume: (id: string, title: string) => Promise<void>;
-  duplicateResume: (id: string) => Promise<Resume | undefined>;
+  duplicateResume: (id: string, title: string) => Promise<Resume | undefined>;
   removeResume: (id: string) => Promise<void>;
   /** Drop a résumé from the index without touching disk; returns it for undo. */
   detachResume: (id: string) => ResumeIndexEntry | undefined;
@@ -184,11 +184,11 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     }));
   },
 
-  async duplicateResume(id) {
+  async duplicateResume(id, title) {
     const current = get().open;
     const source = current?.id === id ? current : await getResume(id);
     if (!source) return undefined;
-    const copy = cloneResumeAsNew(source, `${source.title} (copy)`);
+    const copy = cloneResumeAsNew(source, title);
     await putResume(copy);
     set((state) => ({ index: syncIndexEntry(state.index, copy) }));
     return copy;
