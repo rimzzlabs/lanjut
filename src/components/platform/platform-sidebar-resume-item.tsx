@@ -61,14 +61,16 @@ export function PlatformSidebarResumeItem({
       </SidebarMenuButton>
 
       <DropdownMenu>
-        <DropdownMenuTrigger render={<SidebarMenuAction />}>
+        <DropdownMenuTrigger
+          render={<SidebarMenuAction className="right-3.5" />}
+        >
           <span className="sr-only">{t("itemMenu")}</span>
           <MoreVertical />
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="start" className="w-40">
+        <DropdownMenuContent align="start">
           <DropdownMenuGroup>
-            <DropdownMenuLabel className="text-pretty">
+            <DropdownMenuLabel className="sr-only">
               {t.rich("modify", {
                 title: resume.title,
                 b: (chunks) => <strong>{chunks}</strong>,
