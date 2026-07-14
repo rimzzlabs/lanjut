@@ -237,6 +237,8 @@
       "itemMenu": "Menu",
       "modify": "Modify <b>{title}</b>",
       "rename": "Rename",
+      "duplicate": "Duplicate",
+      "copyOf": "Copy of {title}",
       "delete": "Delete"
     },
     "toolbar": {
@@ -267,6 +269,8 @@
       "edited": "Edited",
       "menu": "Menu",
       "rename": "Rename",
+      "duplicate": "Duplicate",
+      "copyOf": "Copy of {title}",
       "download": "Download",
       "delete": "Delete",
       "newResume": "New resume"

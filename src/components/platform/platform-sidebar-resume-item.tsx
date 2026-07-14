@@ -1,10 +1,11 @@
 import type { BaseUIEvent } from "@base-ui/react";
-import { FileText, MoreVertical, Pen, Trash } from "lucide-react";
+import { Copy, FileText, MoreVertical, Pen, Trash } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { type MouseEvent, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import type { ResumeIndexEntry } from "@/lib/resume";
+import { useResumeStore } from "@/lib/store";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,8 +31,13 @@ export function PlatformSidebarResumeItem({
   resume,
 }: PlatformSidebarResumeItemProps) {
   const { id } = useParams<{ id?: string }>();
+  const duplicateResume = useResumeStore((state) => state.duplicateResume);
   const [open, setOpen] = useState({ rename: false, remove: false });
   const t = useTranslations("platform.sidebar");
+
+  const onDuplicate = () => {
+    void duplicateResume(resume.id, t("copyOf", { title: resume.title }));
+  };
 
   const openRenameDialog = (e: BaseUIEvent<MouseEvent>) => {
     e.preventDefault();
@@ -79,6 +85,10 @@ export function PlatformSidebarResumeItem({
             <DropdownMenuItem onClick={openRenameDialog}>
               <Pen />
               {t("rename")}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onDuplicate}>
+              <Copy />
+              {t("duplicate")}
             </DropdownMenuItem>
 
             {id !== resume.id && (
