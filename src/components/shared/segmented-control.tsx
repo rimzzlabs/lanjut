@@ -48,11 +48,17 @@ export function SegmentedControl(props: SegmentedControlProps) {
     >
       {props.items.map((item) => {
         const active = item.value === props.value;
+        // The accessible name must contain the visible label (WCAG 2.5.3), so
+        // fold the short label into the fuller aria label rather than replacing it.
+        const accessibleName =
+          item.ariaLabel && item.ariaLabel !== item.label
+            ? `${item.ariaLabel} (${item.label})`
+            : item.label;
         return (
           <Toggle
             key={item.value}
             value={item.value}
-            aria-label={item.ariaLabel ?? item.label}
+            aria-label={accessibleName}
             className={cn(
               "relative inline-flex h-6 min-w-9 cursor-pointer items-center justify-center rounded-xl px-2.5 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring/50",
               active
