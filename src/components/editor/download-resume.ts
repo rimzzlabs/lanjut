@@ -1,10 +1,7 @@
 import type { Resume } from "@/lib/resume";
 import { resolveTemplateId } from "@/lib/templates";
+import type { ExportFormat } from "./export-format";
 import { resumeToPreview } from "./resume-to-preview";
-
-export type ExportFormat = "pdf" | "docx" | "txt";
-
-export const EXPORT_FORMATS: ExportFormat[] = ["pdf", "docx", "txt"];
 
 /**
  * Exports `resume` in the chosen format and triggers the browser download.

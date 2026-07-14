@@ -8,7 +8,7 @@ import { Controller, useForm } from "react-hook-form";
 import {
   EXPORT_FORMATS,
   type ExportFormat,
-} from "@/components/editor/download-resume";
+} from "@/components/editor/export-format";
 import { useValidationTranslator } from "@/hooks/use-validation-translator";
 import {
   createDownloadFileSchema,
