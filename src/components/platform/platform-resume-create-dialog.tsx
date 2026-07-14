@@ -104,7 +104,7 @@ export function PlatformResumeCreateDialog(
           className="md:grid md:min-h-0 md:flex-1 md:grid-rows-[minmax(0,1fr)_auto]"
         >
           <ScrollArea className="md:-mr-2 md:min-h-0 md:pr-2">
-            <FieldGroup className="py-2">
+            <FieldGroup className="py-2 px-1">
               <Controller
                 control={form.control}
                 name="title"
