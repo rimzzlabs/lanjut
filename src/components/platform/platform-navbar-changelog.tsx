@@ -128,7 +128,7 @@ function PlatformNavbarChangelogEntry(props: {
   const panelId = useId();
   const highlights = t.raw(
     `entries.${props.entry.version.replace(/\./g, "_")}`,
-  ) as string[];
+  ) as Array<{ title: string; description: string }>;
 
   const itemVariants = {
     hidden: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 },
@@ -212,11 +212,18 @@ function PlatformNavbarChangelogEntry(props: {
               variants={listVariants}
               initial="hidden"
               animate="visible"
-              className="space-y-4 pb-4 text-sm text-foreground/80"
+              className="space-y-3.5 pb-4 text-sm"
             >
               {highlights.map((highlight) => (
-                <motion.li key={highlight} variants={itemVariants}>
-                  {highlight}
+                <motion.li
+                  key={highlight.title}
+                  variants={itemVariants}
+                  className="space-y-0.5"
+                >
+                  <p className="font-medium text-foreground">
+                    {highlight.title}
+                  </p>
+                  <p className="text-foreground/70">{highlight.description}</p>
                 </motion.li>
               ))}
             </motion.ul>

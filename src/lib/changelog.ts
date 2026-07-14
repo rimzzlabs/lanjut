@@ -4,12 +4,12 @@ export interface ChangelogEntry {
 }
 
 /**
- * Release metadata for the "What's new" sheet, newest first. The per-version
- * highlight text lives in the `platform.changelog.entries` messages, keyed by
- * version with dots replaced by underscores. Add an entry here plus its
- * highlights in both locale files as part of each release PR.
+ * Release metadata for the "What's new" sheet, newest first. Each version's
+ * highlights live in the `platform.changelog.entries` messages, keyed by version
+ * with dots replaced by underscores, as a list of { title, description }.
  */
 export const CHANGELOG: ChangelogEntry[] = [
+  { version: "0.9.0", date: "2026-07-14" },
   { version: "0.8.0", date: "2026-07-11" },
   { version: "0.7.0", date: "2026-07-10" },
   { version: "0.6.0", date: "2026-07-08" },
