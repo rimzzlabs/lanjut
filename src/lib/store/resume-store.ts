@@ -63,11 +63,10 @@ interface ResumeStoreState {
   ) => Promise<Resume>;
   renameResume: (id: string, title: string) => Promise<void>;
   duplicateResume: (id: string, title: string) => Promise<Resume | undefined>;
-  removeResume: (id: string) => Promise<void>;
-  /** Drop a résumé from the index without touching disk; returns it for undo. */
-  detachResume: (id: string) => ResumeIndexEntry | undefined;
-  /** Re-insert a detached index entry, newest-first. */
-  restoreResume: (entry: ResumeIndexEntry) => void;
+  /** Delete a résumé from disk and index; returns the removed document for undo. */
+  removeResume: (id: string) => Promise<Resume | undefined>;
+  /** Re-insert a removed document (undo), writing it back to disk. */
+  restoreResume: (resume: Resume) => Promise<void>;
   openResume: (id: string) => Promise<void>;
   /** Apply an edit to the open document; schedules a debounced persist. */
   updateOpen: (recipe: (draft: Resume) => void) => void;
@@ -195,7 +194,8 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
   },
 
   async removeResume(id) {
-    await dbDeleteResume(id);
+    const current = get().open;
+    const removed = current?.id === id ? current : await getResume(id);
     set((state) => {
       const isOpen = state.open?.id === id;
       return {
@@ -204,27 +204,13 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
         openStatus: isOpen ? "idle" : state.openStatus,
       };
     });
+    await dbDeleteResume(id);
+    return removed;
   },
 
-  detachResume(id) {
-    const entry = get().index.find((item) => item.id === id);
-    if (!entry) return undefined;
-    set((state) => ({
-      index: A.reject(state.index, (item) => item.id === id),
-    }));
-    return entry;
-  },
-
-  restoreResume(entry) {
-    set((state) => ({
-      index: pipe(
-        state.index,
-        A.reject((item) => item.id === entry.id),
-        A.prepend(entry),
-        A.sortBy((item) => item.updatedAt),
-        A.reverse,
-      ),
-    }));
+  async restoreResume(resume) {
+    await putResume(resume);
+    set((state) => ({ index: syncIndexEntry(state.index, resume) }));
   },
 
   async openResume(id) {

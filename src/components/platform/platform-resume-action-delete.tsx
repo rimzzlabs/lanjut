@@ -38,7 +38,7 @@ export function PlatformResumeActionDelete(
   const tc = useTranslations("forms.common");
 
   function handleDelete() {
-    deleteResumeWithUndo(props.resume.id, {
+    void deleteResumeWithUndo(props.resume.id, {
       deleted: t("toast", { title: props.resume.title }),
       undo: tc("undo"),
     });
