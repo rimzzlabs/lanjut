@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useTheme } from "next-themes";
 import { NextStep, NextStepProvider } from "nextstepjs";
 import { type PropsWithChildren, useMemo } from "react";
 import { useSidebarStore, useTourStore } from "@/lib/store";
@@ -42,6 +43,8 @@ function handleTourEnd() {
 export function TourProvider(props: PropsWithChildren) {
   const t = useTranslations("tour");
   const tours = useMemo(() => localizeTours(t), [t]);
+  const { resolvedTheme } = useTheme();
+  const isDarkMode = resolvedTheme === "dark";
 
   return (
     <NextStepProvider>
@@ -54,6 +57,8 @@ export function TourProvider(props: PropsWithChildren) {
         onSkip={handleTourEnd}
         noInViewScroll
         disableConsoleLogs
+        shadowRgb={isDarkMode ? "255, 255, 255" : "0, 0, 0"}
+        shadowOpacity={isDarkMode ? "0.15" : "0.2"}
       >
         {props.children}
       </NextStep>
