@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -82,11 +83,13 @@ export function EditorSectionLanguagesFormItem(
                   <SelectValue placeholder={t("proficiency")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {LANGUAGE_LEVELS.map((level) => (
-                    <SelectItem key={level} value={level}>
-                      {level}
-                    </SelectItem>
-                  ))}
+                  <SelectGroup>
+                    {LANGUAGE_LEVELS.map((level) => (
+                      <SelectItem key={level} value={level}>
+                        {level}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
             )}
