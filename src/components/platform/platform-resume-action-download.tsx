@@ -2,10 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import {
-  downloadResume,
-  type ExportFormat,
-} from "@/components/editor/download-resume";
+import type { ExportFormat } from "@/components/editor/export-format";
+import { useResumeExporter } from "@/hooks/use-resume-exporter";
 import { getResume } from "@/lib/db";
 import {
   ResponsiveDialog,
@@ -25,22 +23,23 @@ interface PlatformResumeActionDownloadProps {
 export function PlatformResumeActionDownload(
   props: PlatformResumeActionDownloadProps,
 ) {
-  const [generating, setGenerating] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [missing, setMissing] = useState(false);
   const t = useTranslations("forms.download");
+  const { runExport, exporting, exporter } = useResumeExporter();
 
   async function handleDownload(format: ExportFormat, fileName: string) {
-    setGenerating(true);
+    setLoading(true);
     try {
       const document = await getResume(props.resume.id).catch(() => undefined);
       if (!document) {
         setMissing(true);
         return;
       }
-      await downloadResume(document, format, fileName);
-      props.onOpenChange(false);
+      const ok = await runExport(document, format, fileName);
+      if (ok) props.onOpenChange(false);
     } finally {
-      setGenerating(false);
+      setLoading(false);
     }
   }
 
@@ -62,12 +61,13 @@ export function PlatformResumeActionDownload(
           <PlatformResumeDownloadForm
             key={props.resume.title}
             defaultFileName={props.resume.title}
-            generating={generating}
+            generating={loading || exporting}
             onSubmit={(format, fileName) =>
               void handleDownload(format, fileName)
             }
           />
         )}
+        {exporter}
       </ResponsiveDialogContent>
     </ResponsiveDialog>
   );
