@@ -48,7 +48,7 @@
   },
   "closure": {
     "kicker": "04 · Apply",
-    "heading": "Lanjut. Resume. Resume.",
+    "heading": "Lanjut. Resume. Résumé.",
     "description": "The name is the pitch: lanjut means continue. Pick a template or start from a blank page; either way it's free, open source, and your resume never leaves your browser.",
     "ctaPrimary": "Create your resume",
     "ctaSecondary": "Browse templates"
@@ -97,7 +97,7 @@
         "content": "Switch between your dashboard and the template gallery from here."
       },
       "resumes": {
-        "title": "Your résumés",
+        "title": "Your resumes",
         "content": "Every resume you create shows up here; pick one to jump into the editor."
       },
       "replay": {
@@ -130,7 +130,7 @@
       },
       "document": {
         "title": "Document",
-        "content": "Export your résumé, switch its language, or import from a PDF, all from the Document tab."
+        "content": "Export your resume, switch its language, or import from a PDF, all from the Document tab."
       }
     },
     "editor-sheet": {
@@ -160,51 +160,165 @@
     },
     "changelog": {
       "whatsNew": "What's new",
-      "description": "The latest improvements to Lanjut, in plain language.",
+      "description": "The latest from Lanjut",
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_9_0": [
+          {
+            "title": "Import from PDF",
+            "description": "Start a new resume from an existing PDF. Lanjut reads it in your browser and fills the sections for you to tidy up."
+          },
+          {
+            "title": "Custom sections",
+            "description": "Add your own sections beyond the built-in set, either as a rich text block or a list of entries."
+          },
+          {
+            "title": "Reorder certifications",
+            "description": "Drag certifications into the order you want, the same way skills and languages already work."
+          },
+          {
+            "title": "Hide proficiency",
+            "description": "Turn the proficiency level off on skills and languages when you would rather just list them, with a toggle in each section."
+          },
+          {
+            "title": "Language columns",
+            "description": "Show your languages in one column or two, matching the layout control already in Skills."
+          },
+          {
+            "title": "Undo a deletion",
+            "description": "Deleting a resume now waits ten seconds and shows an Undo, so an accidental delete is easy to take back."
+          },
+          {
+            "title": "Duplicate a resume",
+            "description": "Copy any resume from its menu to branch a new version without starting over."
+          }
+        ],
         "0_8_0": [
-          "Show your skills in one column or two: a new toggle in the Skills section switches the layout, and your choice carries through to the preview and every export.",
-          "The editor now lists your entries newest first, matching the order they appear in the preview, so the forms and your resume always line up.",
-          "The landing page has a new navigation bar, with a menu that opens cleanly on mobile.",
-          "Moving between pages now shows a slim progress bar at the top, so you get instant feedback while a page loads."
+          {
+            "title": "Skills column layout",
+            "description": "A toggle in the Skills section switches between one and two columns, and your choice carries through to the preview and every export."
+          },
+          {
+            "title": "Newest entries first",
+            "description": "The editor lists your entries newest first, matching the order they appear in the preview, so the forms and your resume always line up."
+          },
+          {
+            "title": "New landing navbar",
+            "description": "The landing page has a new navigation bar, with a menu that opens cleanly on mobile."
+          },
+          {
+            "title": "Page load progress",
+            "description": "Moving between pages shows a slim progress bar at the top, so you get instant feedback while a page loads."
+          }
         ],
         "0_7_0": [
-          "New Internship section: list internships as their own entries, separate from full-time roles, with the same fields as Experience.",
-          "New Projects section: give side projects, open-source work, and anything you've shipped their own space, each with a name, link, dates, and description.",
-          "A blank resume now shows a preview placeholder in your library instead of an empty white card, so a new resume looks intentional until you start writing."
+          {
+            "title": "Internship section",
+            "description": "List internships as their own entries, separate from full-time roles, with the same fields as Experience."
+          },
+          {
+            "title": "Projects section",
+            "description": "Give side projects, open-source work, and anything you have shipped their own space, each with a name, link, dates, and description."
+          },
+          {
+            "title": "Blank resume preview",
+            "description": "A blank resume shows a preview placeholder in your library instead of an empty white card, so a new resume looks intentional until you start writing."
+          }
         ],
         "0_6_0": [
-          "Lanjut now speaks Bahasa Indonesia. Switch the entire interface between English and Indonesian anytime with the language toggle in the navbar.",
-          "Give each resume its own language: pick English or Indonesian per document, and the section headings and dates in your PDF, DOCX, and TXT exports follow that choice.",
-          "Reorder your skills and languages: grab the handle next to an entry and drag it into place, or use the keyboard to move it. The new order flows straight into the preview and every export.",
-          "Empty sections now tell you so: instead of a lone button, each section without entries shows a short prompt for what to add.",
-          "The landing page hero heading has a refreshed gradient, tuned for both light and dark mode."
+          {
+            "title": "Bahasa Indonesia",
+            "description": "Switch the entire interface between English and Indonesian anytime with the language toggle in the navbar."
+          },
+          {
+            "title": "Per-resume language",
+            "description": "Pick English or Indonesian per document, and the section headings and dates in your PDF, DOCX, and TXT exports follow that choice."
+          },
+          {
+            "title": "Reorder skills and languages",
+            "description": "Grab the handle next to an entry and drag it into place, or use the keyboard to move it. The new order flows straight into the preview and every export."
+          },
+          {
+            "title": "Empty section prompts",
+            "description": "Instead of a lone button, each section without entries shows a short prompt for what to add."
+          },
+          {
+            "title": "Refreshed hero gradient",
+            "description": "The landing page hero heading has a new gradient, tuned for both light and dark mode."
+          }
         ],
         "0_5_0": [
-          "Switch templates without leaving the editor: the new Layout tab shows your resume rendered in every template, and one click applies your pick.",
-          "Start from scratch when you want to: untick \"Pre-fill with example content\" in the create dialog to begin with a blank document instead of the example resume.",
-          "Sections can now be emptied completely: every entry has a delete button, and removing the last one simply drops the section from the preview until you add another."
+          {
+            "title": "Switch templates in the editor",
+            "description": "The new Layout tab shows your resume rendered in every template, and one click applies your pick."
+          },
+          {
+            "title": "Start from a blank resume",
+            "description": "Untick “Pre-fill with example content” in the create dialog to begin with a blank document instead of the example resume."
+          },
+          {
+            "title": "Emptyable sections",
+            "description": "Every entry has a delete button, and removing the last one drops the section from the preview until you add another."
+          }
         ],
         "0_4_0": [
-          "New Organization section: showcase volunteer, student, and community roles with dates and highlights, just like work experience. It shows up in every template and export, and your existing résumés get it automatically.",
-          "Your saved résumés are safer during app updates: a backup copy is kept on your device before any data-format upgrade, and a resume the app can't read yet is flagged with a notice instead of disappearing.",
-          "A guided tour now walks you through the dashboard, the templates, and the editor on your first visit.",
-          "The landing page walks through how Lanjut works, ending with a one-click way to start a new resume.",
-          "Found a bug or missing a feature? Report it from the sidebar; we prefill the GitHub issue for you.",
-          "On your phone, dialogs now open as drawers that are easier to reach and swipe away."
+          {
+            "title": "Organization section",
+            "description": "Showcase volunteer, student, and community roles with dates and highlights, just like work experience. It shows up in every template and export, and existing resumes get it automatically."
+          },
+          {
+            "title": "Safer app updates",
+            "description": "A backup copy is kept on your device before any data-format upgrade, and a resume the app cannot read yet is flagged with a notice instead of disappearing."
+          },
+          {
+            "title": "Guided tour",
+            "description": "A guided tour walks you through the dashboard, the templates, and the editor on your first visit."
+          },
+          {
+            "title": "Landing page walkthrough",
+            "description": "The landing page walks through how Lanjut works, ending with a one-click way to start a new resume."
+          },
+          {
+            "title": "Report bugs and requests",
+            "description": "Report a bug or feature request from the sidebar; we prefill the GitHub issue for you."
+          },
+          {
+            "title": "Mobile drawers",
+            "description": "On your phone, dialogs open as drawers that are easier to reach and swipe away."
+          }
         ],
         "0_3_0": [
-          "Browse templates on their own page, with search and sorting.",
-          "Five new templates: Ketat, Luasa, Tebal, Klasik, and Ketik.",
-          "Template and resume cards now show a live thumbnail of your actual document.",
-          "The sidebar highlights where you are, and each resume gets a quick actions menu."
+          {
+            "title": "Template browser",
+            "description": "Browse templates on their own page, with search and sorting."
+          },
+          {
+            "title": "Five new templates",
+            "description": "Ketat, Luasa, Tebal, Klasik, and Ketik."
+          },
+          {
+            "title": "Live thumbnails",
+            "description": "Template and resume cards show a live thumbnail of your actual document."
+          },
+          {
+            "title": "Sidebar and quick actions",
+            "description": "The sidebar highlights where you are, and each resume gets a quick actions menu."
+          }
         ],
         "0_2_0": [
-          "Export your resume as PDF, DOCX, or plain text.",
-          "Bold, italics, links, and lists now show up in the live preview.",
-          "The editor covers the full section set: summary, experience, education, skills, certifications, and languages."
+          {
+            "title": "Export your resume",
+            "description": "Save your resume as PDF, DOCX, or plain text."
+          },
+          {
+            "title": "Rich text in the preview",
+            "description": "Bold, italics, links, and lists show up in the live preview."
+          },
+          {
+            "title": "Full editor sections",
+            "description": "The editor covers summary, experience, education, skills, certifications, and languages."
+          }
         ]
       }
     },
@@ -250,19 +364,19 @@
       "sortNewest": "Newest"
     },
     "emptyState": {
-      "title": "No résumés yet",
+      "title": "No resumes yet",
       "description": "Nothing is saved on this device yet. Start from a template, or create a blank resume.",
       "browseTemplates": "Browse templates",
       "newResume": "New resume"
     },
     "unreadable": {
-      "title": "Some résumés need a newer version of the app",
-      "description": "{count, plural, one {# resume was} other {# résumés were}} saved by a newer version of Lanjut than the one this tab is running. They are still stored safely on this device. Refresh the page to update the app and see them again."
+      "title": "Some resumes need a newer version of the app",
+      "description": "{count, plural, one {# resume was} other {# resumes were}} saved by a newer version of Lanjut than the one this tab is running. They are still stored safely on this device. Refresh the page to update the app and see them again."
     },
     "grid": {
-      "emptyTitle": "No résumés match",
+      "emptyTitle": "No resumes match",
       "create": "Create “{query}”",
-      "errorTitle": "Couldn't load your résumés",
+      "errorTitle": "Couldn't load your resumes",
       "errorDescription": "Nothing was deleted. The library just failed to load from this browser's storage. Refresh the page to try again.",
       "open": "Open {title}",
       "emptyDocument": "Blank resume, nothing added yet",
@@ -308,16 +422,16 @@
       "sectionTitleRequired": "Enter a section name."
     },
     "create": {
-      "title": "Create a new résumé",
+      "title": "Create a new resume",
       "description": "Name it, choose where to start, and pick a template.",
-      "label": "Résumé name",
+      "label": "Resume name",
       "placeholder": "Software Engineer",
       "template": "Template",
       "sourceLabel": "Start from",
       "sourceSample": "Sample",
       "sourceEmpty": "Blank",
       "sourceImport": "Import PDF",
-      "submit": "Create résumé"
+      "submit": "Create resume"
     },
     "rename": {
       "title": "Rename",
@@ -366,7 +480,7 @@
     "import": {
       "dropPrompt": "Drop a PDF here, or click to browse",
       "hint": "Your file is read on your device and never uploaded.",
-      "parsing": "Reading your résumé…",
+      "parsing": "Reading your resume…",
       "parsed": "Ready to import",
       "remove": "Remove file",
       "errorNotPdf": "Only PDF files are supported.",
@@ -644,9 +758,9 @@
     },
     "document": {
       "downloadHeading": "Download",
-      "importHeading": "Import résumé",
-      "importHint": "Bring in details from an existing PDF résumé. It's read on your device and never uploaded.",
-      "replacePrompt": "This résumé already has content. Replace it, or keep it and create a new one?",
+      "importHeading": "Import resume",
+      "importHint": "Bring in details from an existing PDF resume. It's read on your device and never uploaded.",
+      "replacePrompt": "This resume already has content. Replace it, or keep it and create a new one?",
       "replace": "Replace this one",
       "createNew": "Create new"
     }

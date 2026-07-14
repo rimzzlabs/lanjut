@@ -48,7 +48,7 @@
   },
   "closure": {
     "kicker": "04 · Lamar",
-    "heading": "Lanjut. Resume. Resume.",
+    "heading": "Lanjut. Resume. Résumé.",
     "description": "Namanya udah jadi janjinya: lanjut artinya terus maju. Pilih template atau mulai dari halaman kosong; dua-duanya gratis, open source, dan resume kamu nggak pernah keluar dari browser.",
     "ctaPrimary": "Buat resume kamu",
     "ctaSecondary": "Intip template"
@@ -160,51 +160,165 @@
     },
     "changelog": {
       "whatsNew": "Apa yang baru",
-      "description": "Peningkatan terbaru untuk Lanjut, dijelaskan dengan bahasa yang mudah.",
+      "description": "Yang terbaru dari Lanjut",
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_9_0": [
+          {
+            "title": "Impor dari PDF",
+            "description": "Mulai resume baru dari PDF yang sudah ada. Lanjut membacanya di browser kamu dan mengisi bagian-bagiannya untuk kamu rapikan."
+          },
+          {
+            "title": "Bagian kustom",
+            "description": "Tambahkan bagianmu sendiri di luar set bawaan, bisa berupa blok teks kaya atau daftar entri."
+          },
+          {
+            "title": "Atur ulang sertifikat",
+            "description": "Seret sertifikat ke urutan yang kamu mau, sama seperti keahlian dan bahasa."
+          },
+          {
+            "title": "Sembunyikan tingkat",
+            "description": "Matikan tingkat kemahiran di keahlian dan bahasa kalau kamu cukup ingin menampilkan daftarnya saja, lewat tombol di tiap bagian."
+          },
+          {
+            "title": "Kolom bahasa",
+            "description": "Tampilkan bahasa dalam satu kolom atau dua, sama seperti kontrol tata letak yang sudah ada di Keahlian."
+          },
+          {
+            "title": "Urungkan penghapusan",
+            "description": "Menghapus resume kini menunggu sepuluh detik dan menampilkan Urungkan, jadi salah hapus gampang dibatalkan."
+          },
+          {
+            "title": "Duplikat resume",
+            "description": "Salin resume mana pun dari menunya untuk membuat versi baru tanpa mulai dari awal."
+          }
+        ],
         "0_8_0": [
-          "Tampilkan keahlianmu dalam satu kolom atau dua: tombol baru di bagian Keahlian mengganti tata letaknya, dan pilihanmu ikut terbawa ke pratinjau dan semua ekspor.",
-          "Editor kini menampilkan entri dari yang terbaru lebih dulu, sesuai urutannya di pratinjau, jadi formulir dan resume kamu selalu sejalan.",
-          "Halaman depan punya bilah navigasi baru, lengkap dengan menu yang rapi saat dibuka di ponsel.",
-          "Berpindah antar halaman kini menampilkan bilah progres tipis di bagian atas, jadi kamu langsung dapat feedback saat halaman dimuat."
+          {
+            "title": "Tata letak kolom keahlian",
+            "description": "Tombol di bagian Keahlian mengganti antara satu dan dua kolom, dan pilihanmu ikut terbawa ke pratinjau dan semua ekspor."
+          },
+          {
+            "title": "Entri terbaru lebih dulu",
+            "description": "Editor menampilkan entri dari yang terbaru lebih dulu, sesuai urutannya di pratinjau, jadi formulir dan resume kamu selalu sejalan."
+          },
+          {
+            "title": "Bilah navigasi baru",
+            "description": "Halaman depan punya bilah navigasi baru, lengkap dengan menu yang rapi saat dibuka di ponsel."
+          },
+          {
+            "title": "Progres pemuatan halaman",
+            "description": "Berpindah antar halaman menampilkan bilah progres tipis di bagian atas, jadi kamu langsung dapat feedback saat halaman dimuat."
+          }
         ],
         "0_7_0": [
-          "Ada bagian Magang baru: tulis pengalaman magang sebagai entri terpisah dari pekerjaan tetap, dengan kolom yang sama seperti Pengalaman.",
-          "Ada bagian Proyek baru: pamerkan proyek sampingan, kontribusi open-source, atau apa pun yang pernah kamu rilis, lengkap dengan nama, tautan, tanggal, dan deskripsi.",
-          "Resume yang masih kosong kini menampilkan pratinjau samar di pustaka, bukan kartu putih polos, jadi resume baru tetap terlihat rapi sebelum kamu mulai mengisinya."
+          {
+            "title": "Bagian Magang",
+            "description": "Tulis pengalaman magang sebagai entri terpisah dari pekerjaan tetap, dengan kolom yang sama seperti Pengalaman."
+          },
+          {
+            "title": "Bagian Proyek",
+            "description": "Pamerkan proyek sampingan, kontribusi open-source, atau apa pun yang pernah kamu rilis, lengkap dengan nama, tautan, tanggal, dan deskripsi."
+          },
+          {
+            "title": "Pratinjau resume kosong",
+            "description": "Resume yang masih kosong menampilkan pratinjau samar di pustaka, bukan kartu putih polos, jadi resume baru tetap terlihat rapi sebelum kamu mulai mengisinya."
+          }
         ],
         "0_6_0": [
-          "Lanjut sekarang bisa Bahasa Indonesia. Ganti seluruh tampilan antara Bahasa Inggris dan Indonesia kapan saja lewat tombol bahasa di bilah navigasi.",
-          "Tiap resume bisa punya bahasanya sendiri: pilih Bahasa Inggris atau Indonesia per dokumen, dan judul bagian serta tanggal di ekspor PDF, DOCX, dan TXT kamu mengikuti pilihan itu.",
-          "Atur ulang urutan keahlian dan bahasa: tahan pegangan di samping entri lalu geser ke posisinya, atau pindahkan pakai keyboard. Urutan barunya langsung diterapkan ke pratinjau dan semua ekspor.",
-          "Bagian yang masih kosong kini ada keterangannya: daripada cuma tombol, tiap bagian tanpa isi menampilkan petunjuk singkat tentang apa yang bisa kamu tambahkan.",
-          "Judul utama di halaman depan punya gradien warna baru yang lebih segar, cocok untuk mode terang maupun gelap."
+          {
+            "title": "Bahasa Indonesia",
+            "description": "Ganti seluruh tampilan antara Bahasa Inggris dan Indonesia kapan saja lewat tombol bahasa di bilah navigasi."
+          },
+          {
+            "title": "Bahasa per resume",
+            "description": "Pilih Bahasa Inggris atau Indonesia per dokumen, dan judul bagian serta tanggal di ekspor PDF, DOCX, dan TXT kamu mengikuti pilihan itu."
+          },
+          {
+            "title": "Atur ulang keahlian dan bahasa",
+            "description": "Tahan pegangan di samping entri lalu geser ke posisinya, atau pindahkan pakai keyboard. Urutan barunya langsung diterapkan ke pratinjau dan semua ekspor."
+          },
+          {
+            "title": "Petunjuk bagian kosong",
+            "description": "Daripada cuma tombol, tiap bagian tanpa isi menampilkan petunjuk singkat tentang apa yang bisa kamu tambahkan."
+          },
+          {
+            "title": "Gradien hero baru",
+            "description": "Judul utama di halaman depan punya gradien warna baru yang lebih segar, cocok untuk mode terang maupun gelap."
+          }
         ],
         "0_5_0": [
-          "Ganti template tanpa keluar dari editor: tab Tata Letak yang baru menampilkan resume kamu dalam setiap template, dan satu klik langsung menerapkan pilihanmu.",
-          "Mau mulai dari nol? Hilangkan centang \"Isi otomatis dengan contoh konten\" saat membuat resume, supaya kamu mulai dari dokumen kosong, bukan contoh.",
-          "Sekarang bagian bisa dikosongkan sepenuhnya: tiap entri punya tombol hapus, dan saat entri terakhir dihapus, bagian itu otomatis hilang dari pratinjau sampai kamu menambah lagi."
+          {
+            "title": "Ganti template di editor",
+            "description": "Tab Tata Letak yang baru menampilkan resume kamu dalam setiap template, dan satu klik langsung menerapkan pilihanmu."
+          },
+          {
+            "title": "Mulai dari resume kosong",
+            "description": "Hilangkan centang “Isi otomatis dengan contoh konten” saat membuat resume, supaya kamu mulai dari dokumen kosong, bukan contoh."
+          },
+          {
+            "title": "Bagian bisa dikosongkan",
+            "description": "Tiap entri punya tombol hapus, dan saat entri terakhir dihapus, bagian itu otomatis hilang dari pratinjau sampai kamu menambah lagi."
+          }
         ],
         "0_4_0": [
-          "Bagian Pengalaman Organisasi yang baru: tampilkan peran sukarelawan, mahasiswa, dan komunitas lengkap dengan tanggal dan poin pentingnya, sama seperti pengalaman kerja. Muncul di setiap template dan ekspor, dan resume lama kamu mendapatkannya secara otomatis.",
-          "Resume yang tersimpan lebih aman saat aplikasi diperbarui: salinan cadangan disimpan di perangkatmu sebelum setiap perubahan format data, dan resume yang belum bisa dibaca aplikasi diberi tanda pemberitahuan, bukannya hilang.",
-          "Tur berpemandu kini menuntun kamu mengelilingi dasbor, template, dan editor saat pertama kali berkunjung.",
-          "Halaman depan menjelaskan cara kerja Lanjut, dan ditutup dengan tombol satu klik untuk mulai membuat resume baru.",
-          "Menemukan bug atau butuh fitur? Laporkan dari bilah sisi; kami sudah menyiapkan isu GitHub-nya untuk kamu.",
-          "Di ponsel, dialog kini terbuka sebagai laci yang lebih mudah dijangkau dan bisa digeser untuk menutup."
+          {
+            "title": "Bagian Organisasi",
+            "description": "Tampilkan peran sukarelawan, mahasiswa, dan komunitas lengkap dengan tanggal dan poin pentingnya, sama seperti pengalaman kerja. Muncul di setiap template dan ekspor, dan resume lama kamu mendapatkannya secara otomatis."
+          },
+          {
+            "title": "Pembaruan aplikasi lebih aman",
+            "description": "Salinan cadangan disimpan di perangkatmu sebelum setiap perubahan format data, dan resume yang belum bisa dibaca aplikasi diberi tanda pemberitahuan, bukannya hilang."
+          },
+          {
+            "title": "Tur berpemandu",
+            "description": "Tur berpemandu menuntun kamu mengelilingi dasbor, template, dan editor saat pertama kali berkunjung."
+          },
+          {
+            "title": "Panduan halaman depan",
+            "description": "Halaman depan menjelaskan cara kerja Lanjut, dan ditutup dengan tombol satu klik untuk mulai membuat resume baru."
+          },
+          {
+            "title": "Laporkan bug dan permintaan",
+            "description": "Laporkan bug atau permintaan fitur dari bilah sisi; kami sudah menyiapkan isu GitHub-nya untuk kamu."
+          },
+          {
+            "title": "Laci di ponsel",
+            "description": "Di ponsel, dialog terbuka sebagai laci yang lebih mudah dijangkau dan bisa digeser untuk menutup."
+          }
         ],
         "0_3_0": [
-          "Jelajahi template di halaman tersendiri, lengkap dengan pencarian dan pengurutan.",
-          "Lima template baru: Ketat, Luasa, Tebal, Klasik, dan Ketik.",
-          "Kartu template dan resume kini menampilkan gambar kecil langsung dari dokumen asli kamu.",
-          "Bilah sisi menyorot posisi kamu, dan tiap resume punya menu aksi cepat."
+          {
+            "title": "Penjelajah template",
+            "description": "Jelajahi template di halaman tersendiri, lengkap dengan pencarian dan pengurutan."
+          },
+          {
+            "title": "Lima template baru",
+            "description": "Ketat, Luasa, Tebal, Klasik, dan Ketik."
+          },
+          {
+            "title": "Gambar kecil langsung",
+            "description": "Kartu template dan resume menampilkan gambar kecil langsung dari dokumen asli kamu."
+          },
+          {
+            "title": "Bilah sisi dan aksi cepat",
+            "description": "Bilah sisi menyorot posisi kamu, dan tiap resume punya menu aksi cepat."
+          }
         ],
         "0_2_0": [
-          "Ekspor resume kamu ke PDF, DOCX, atau teks biasa.",
-          "Teks tebal, miring, tautan, dan daftar kini tampil di pratinjau langsung.",
-          "Editor mencakup semua bagian: ringkasan, pengalaman, pendidikan, keahlian, sertifikat, dan bahasa."
+          {
+            "title": "Ekspor resume",
+            "description": "Simpan resume kamu ke PDF, DOCX, atau teks biasa."
+          },
+          {
+            "title": "Teks kaya di pratinjau",
+            "description": "Teks tebal, miring, tautan, dan daftar tampil di pratinjau langsung."
+          },
+          {
+            "title": "Semua bagian editor",
+            "description": "Editor mencakup ringkasan, pengalaman, pendidikan, keahlian, sertifikat, dan bahasa."
+          }
         ]
       }
     },

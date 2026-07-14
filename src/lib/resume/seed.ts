@@ -48,7 +48,7 @@ function prose(...blocks: JSONContent[]): Field {
 export const SEED_RESUME: Resume = {
   id: "seed",
   schemaVersion: CURRENT_SCHEMA_VERSION,
-  title: "Untitled résumé",
+  title: "Untitled resume",
   templateId: "awal",
   language: "en",
   createdAt: "2026-01-01T00:00:00.000Z",
