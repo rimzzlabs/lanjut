@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.1](https://github.com/rimzzlabs/lanjut/compare/v0.9.0...v0.9.1) (2026-07-14)
+
+
+### Bug Fixes
+
+* keep pdf and docx export off the server worker bundle ([#95](https://github.com/rimzzlabs/lanjut/issues/95)) ([94780bc](https://github.com/rimzzlabs/lanjut/commit/94780bce5c590792d4a8d47c6ee1bf361a342429))
+
 ## [0.9.0](https://github.com/rimzzlabs/lanjut/compare/v0.8.0...v0.9.0) (2026-07-14)
 
 
