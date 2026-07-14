@@ -1,4 +1,4 @@
-import { Layout, LayoutTemplate, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { PlatformNavbarTheme } from "../platform/platform-navbar-theme";
@@ -42,7 +42,6 @@ export function LandingNavbarSheet() {
             className="h-12 justify-normal rounded-none border-x-0 border-t border-b-0 border-border px-0"
             render={<Link href="/platform" />}
           >
-            <Layout />
             {t("dashboard")}
           </Button>
 
@@ -53,7 +52,6 @@ export function LandingNavbarSheet() {
             className="h-12 justify-normal rounded-none border-x-0 border-y border-border px-0"
             render={<Link href="/platform/template" />}
           >
-            <LayoutTemplate />
             {t("templates")}
           </Button>
         </nav>

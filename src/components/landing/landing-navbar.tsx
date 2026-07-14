@@ -1,4 +1,3 @@
-import { FilePlus, Layout, LayoutTemplate } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { PlatformNavbarTheme } from "../platform/platform-navbar-theme";
@@ -20,7 +19,6 @@ export function LandingNavbar() {
             nativeButton={false}
             render={<Link href="/platform" />}
           >
-            <Layout />
             {t("dashboard")}
           </Button>
 
@@ -31,24 +29,13 @@ export function LandingNavbar() {
             nativeButton={false}
             render={<Link href="/platform/template" />}
           >
-            <LayoutTemplate />
             {t("templates")}
           </Button>
         </nav>
 
         <nav className="ml-auto inline-flex items-center gap-2">
-          <div className="inline-flex items-center gap-2 max-md:hidden">
-            <LanguageSwitcher />
-            <PlatformNavbarTheme />
-          </div>
-          <Button
-            nativeButton={false}
-            render={<Link href="/platform?create=true" />}
-            className="bg-linear-to-br from-primary to-sky-800 text-background dark:from-emerald-200 dark:to-cyan-400"
-          >
-            <FilePlus />
-            {t("createResume")}
-          </Button>
+          <LanguageSwitcher />
+          <PlatformNavbarTheme />
         </nav>
         <LandingNavbarSheet />
       </div>

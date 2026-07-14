@@ -1,7 +1,7 @@
 "use client";
 
 import { A, F, O, pipe } from "@mobily/ts-belt";
-import { Laptop2, Moon, Sun } from "lucide-react";
+import { Laptop2, Loader2, Moon, Sun } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useIsClient } from "@/hooks/use-is-client";
@@ -14,6 +14,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { Skeleton } from "../ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 const THEMES = [
@@ -35,7 +36,12 @@ export function PlatformNavbarTheme() {
 
   const onChangeTheme = (next: string) => setTheme(next);
 
-  if (!mounted) return null;
+  if (!mounted)
+    return (
+      <Button disabled variant="outline">
+        <Loader2 className="animate-spin" /> <Skeleton className="h-4 w-12" />
+      </Button>
+    );
 
   return (
     <DropdownMenu modal={false}>
