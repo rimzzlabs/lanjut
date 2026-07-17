@@ -1,6 +1,6 @@
 import { Link, StyleSheet, Text, View } from "@react-pdf/renderer";
 import type { ComponentProps } from "react";
-import type { InlineRun, RichBlock } from "../rich-content";
+import type { InlineRun, RichBlock } from "@/lib/resume/rich-content";
 import { PDF_COLORS } from "./pdf-fonts";
 
 type PdfStyle = ComponentProps<typeof View>["style"];

@@ -1,5 +1,7 @@
 import { RESUME_LABELS } from "@/lib/resume/labels";
+import { type RichBlock, tiptapToRichBlocks } from "@/lib/resume/rich-content";
 import {
+  getSectionSchema,
   isReorderableSection,
   type ReorderableSectionType,
 } from "@/lib/resume/schema-registry";
@@ -10,9 +12,9 @@ import type {
   CustomSectionView,
   HeaderView,
   ResumePreview,
+  SectionHeadings,
 } from "./resume-preview";
 import { byRecency } from "./resume-sort";
-import { type RichBlock, tiptapToRichBlocks } from "./rich-content";
 
 function plain(field: Field | undefined): string {
   return field?.kind === "plain" ? field.value.trim() : "";
@@ -32,6 +34,22 @@ function sectionOfType(
 /** A stored URL is domain-only (see `UrlInput`); restore the scheme for links. */
 function withHttps(value: string): string {
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
+}
+
+/**
+ * A stored title equal to the registry default means "never renamed": it
+ * renders as the document-language label, which is how language switching
+ * relabels headings. Anything else is a deliberate rename (via the Code tab)
+ * and wins over the language label.
+ */
+function effectiveHeading(
+  resume: Resume,
+  type: keyof SectionHeadings,
+  fallback: string,
+): string {
+  const title = sectionOfType(resume, type)?.title.trim();
+  if (!title || title === getSectionSchema(type).defaultTitle) return fallback;
+  return title;
 }
 
 function toHeaderView(resume: Resume): HeaderView {
@@ -153,8 +171,29 @@ export function resumeToPreview(resume: Resume): ResumePreview {
   const languagesShowProficiency =
     sectionOfType(resume, "languages")?.showProficiency ?? true;
 
+  const headings: SectionHeadings = {
+    summary: effectiveHeading(resume, "summary", labels.summary),
+    experience: effectiveHeading(resume, "experience", labels.experience),
+    internship: effectiveHeading(resume, "internship", labels.internship),
+    projects: effectiveHeading(resume, "projects", labels.projects),
+    organizations: effectiveHeading(
+      resume,
+      "organizations",
+      labels.organizations,
+    ),
+    education: effectiveHeading(resume, "education", labels.education),
+    certifications: effectiveHeading(
+      resume,
+      "certifications",
+      labels.certificates,
+    ),
+    skills: effectiveHeading(resume, "skills", labels.skills),
+    languages: effectiveHeading(resume, "languages", labels.languages),
+  };
+
   return {
     language: resume.language,
+    headings,
     sectionOrder,
     customSections,
     header: toHeaderView(resume),

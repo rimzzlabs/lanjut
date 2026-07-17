@@ -168,6 +168,10 @@
           {
             "title": "Kirim masukan tanpa akun GitHub",
             "description": "Laporin bug atau ajukan fitur langsung dari aplikasi; isu GitHub-nya kami buatin atas nama yang kamu isi, dijaga verifikasi singkat."
+          },
+          {
+            "title": "Ekspor dan impor JSON dan YAML",
+            "description": "Salin atau unduh resume kamu sebagai JSON atau YAML, dan impor keduanya kembali tanpa kehilangan apa pun. Teks kaya dibawa sebagai markdown sederhana."
           }
         ],
         "0_9_0": [
@@ -446,7 +450,7 @@
       "sourceLabel": "Mulai dari",
       "sourceSample": "Contoh",
       "sourceEmpty": "Kosong",
-      "sourceImport": "Impor PDF",
+      "sourceImport": "Impor file",
       "submit": "Buat resume"
     },
     "rename": {
@@ -492,18 +496,19 @@
       "layerPlaceholder": "Lapisan"
     },
     "import": {
-      "dropPrompt": "Taruh PDF di sini, atau klik untuk pilih",
+      "dropPrompt": "Taruh file PDF, JSON, atau YAML di sini, atau klik untuk pilih",
       "hint": "File kamu dibaca di perangkatmu dan nggak pernah diunggah.",
       "parsing": "Membaca resume kamu…",
       "parsed": "Siap diimpor",
       "remove": "Hapus file",
-      "errorNotPdf": "Cuma file PDF yang didukung.",
+      "errorUnsupported": "Cuma file PDF, JSON, dan YAML yang didukung.",
       "errorTooLarge": "File-nya kegedean. Maksimal 10 MB.",
       "errorEmpty": "PDF ini nggak ada teks yang kebaca. Kelihatannya hasil scan; coba ekspor PDF berbasis teks.",
       "errorEncrypted": "PDF ini dikunci password. Hapus dulu passwordnya lalu coba lagi.",
       "errorGeneric": "Kami nggak bisa baca PDF ini. Coba file lain.",
       "disclaimer": "Impor sifatnya best-effort dan bisa saja melewatkan atau salah menempatkan detail. Kalau ada yang keliru, sangat membantu kalau kamu",
-      "reportIssue": "laporkan masalahnya"
+      "reportIssue": "laporkan masalahnya",
+      "errorInvalidData": "File ini bukan ekspor resume yang valid."
     }
   },
   "editor": {
@@ -773,10 +778,16 @@
     "document": {
       "downloadHeading": "Unduh",
       "importHeading": "Impor resume",
-      "importHint": "Ambil detail dari resume PDF yang sudah ada. Dibaca di perangkatmu dan nggak pernah diunggah.",
+      "importHint": "Ambil detail dari resume PDF yang sudah ada, atau pulihkan ekspor JSON atau YAML. Dibaca di perangkatmu dan nggak pernah diunggah.",
       "replacePrompt": "Resume ini sudah ada isinya. Ganti isinya, atau simpan lalu buat yang baru?",
       "replace": "Ganti yang ini",
-      "createNew": "Buat baru"
+      "createNew": "Buat baru",
+      "copyHeading": "Salin",
+      "copyHint": "Salin resume ini ke clipboard sebagai teks terstruktur. Teks kaya dibawa sebagai markdown sederhana, dan menempelkannya ke impor akan memulihkannya persis.",
+      "copyJson": "JSON",
+      "copyYaml": "YAML",
+      "copied": "Disalin ke clipboard",
+      "copyFailed": "Nggak bisa menyalin ke clipboard."
     }
   }
 }

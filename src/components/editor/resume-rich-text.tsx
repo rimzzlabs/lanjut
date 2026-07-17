@@ -1,5 +1,5 @@
+import type { InlineRun, RichBlock } from "@/lib/resume/rich-content";
 import { cn } from "@/lib/utils";
-import type { InlineRun, RichBlock } from "./rich-content";
 
 function RichRun(props: InlineRun) {
   let node: React.ReactNode = props.text;

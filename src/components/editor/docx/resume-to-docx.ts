@@ -6,9 +6,9 @@ import {
   TabStopType,
   TextRun,
 } from "docx";
+import type { InlineRun, RichBlock } from "@/lib/resume/rich-content";
 import { buildResumeBlocks } from "../resume-blocks";
 import type { ContactView, HeaderView, ResumePreview } from "../resume-preview";
-import type { InlineRun, RichBlock } from "../rich-content";
 
 const MUTED = "525252";
 /** Right page edge in twips for A4 with default 1-inch margins (11906 − 2·1440). */

@@ -38,9 +38,9 @@ import { ScrollArea } from "../ui/scroll-area";
 import { PlatformResumeImportDropzone } from "./platform-resume-import-dropzone";
 import { PlatformTemplateRadioGroup } from "./platform-template-radio-group";
 
-/** Strip a PDF filename down to a résumé title. */
+/** Strip an imported file's name down to a résumé title. */
 function titleFromFileName(name: string): string {
-  return name.replace(/\.pdf$/i, "").trim() || name;
+  return name.replace(/\.(pdf|json|ya?ml)$/i, "").trim() || name;
 }
 
 interface PlatformResumeCreateDialogProps {

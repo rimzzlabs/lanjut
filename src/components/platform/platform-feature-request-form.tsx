@@ -18,12 +18,12 @@ import {
   submitFeedback,
 } from "@/lib/github-issue";
 import { emptyRichTextValue } from "@/lib/resume";
-import { PROSE_FEATURES } from "@/lib/resume/schema-registry";
 import {
   richBlocksToMarkdown,
   richBlocksToText,
   tiptapToRichBlocks,
-} from "../editor/rich-content";
+} from "@/lib/resume/rich-content";
+import { PROSE_FEATURES } from "@/lib/resume/schema-registry";
 import { RichTextEditor } from "../editor/rich-text/rich-text-editor";
 import {
   ResponsiveDialogClose,

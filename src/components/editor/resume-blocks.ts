@@ -1,4 +1,4 @@
-import { RESUME_LABELS } from "@/lib/resume/labels";
+import { isRichEmpty, type RichBlock } from "@/lib/resume/rich-content";
 import type { ReorderableSectionType } from "@/lib/resume/schema-registry";
 import type { SectionColumns } from "@/lib/resume/types";
 import type {
@@ -11,7 +11,6 @@ import type {
   ResumePreview,
   SkillItemView,
 } from "./resume-preview";
-import { isRichEmpty, type RichBlock } from "./rich-content";
 
 /**
  * Pagination metadata shared by every block. `keepWithNext` glues a block to the
@@ -234,7 +233,7 @@ function customBlocks(view: CustomSectionView): ResumeBlock[] {
  * Sections with no meaningful content are omitted (heading included).
  */
 export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
-  const labels = RESUME_LABELS[resume.language];
+  const { headings } = resume;
   const blocks: ResumeBlock[] = [
     {
       id: "header",
@@ -246,7 +245,7 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
   ];
 
   if (!isRichEmpty(resume.summary)) {
-    blocks.push(heading("summary-heading", labels.summary), {
+    blocks.push(heading("summary-heading", headings.summary), {
       id: "summary-body",
       kind: "summary",
       body: resume.summary,
@@ -263,36 +262,36 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
       experienceLikeBlocks(
         resume.experience,
         "experience-heading",
-        labels.experience,
+        headings.experience,
       ),
     internship: () =>
       experienceLikeBlocks(
         resume.internship,
         "internship-heading",
-        labels.internship,
+        headings.internship,
       ),
     projects: () =>
       experienceLikeBlocks(
         resume.projects,
         "projects-heading",
-        labels.projects,
+        headings.projects,
       ),
     organizations: () =>
       experienceLikeBlocks(
         resume.organizations,
         "organizations-heading",
-        labels.organizations,
+        headings.organizations,
       ),
-    education: () => educationBlocks(resume.education, labels.education),
+    education: () => educationBlocks(resume.education, headings.education),
     certifications: () =>
-      certificateBlocks(resume.certificates, labels.certificates),
+      certificateBlocks(resume.certificates, headings.certifications),
     skills: () =>
-      skillsBlocks(resume.skills, resume.skillsColumns, labels.skills),
+      skillsBlocks(resume.skills, resume.skillsColumns, headings.skills),
     languages: () =>
       languagesBlocks(
         resume.languages,
         resume.languagesColumns,
-        labels.languages,
+        headings.languages,
       ),
   };
 

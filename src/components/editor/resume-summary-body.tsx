@@ -1,5 +1,5 @@
+import type { RichBlock } from "@/lib/resume/rich-content";
 import { ResumeRichText } from "./resume-rich-text";
-import type { RichBlock } from "./rich-content";
 
 interface ResumeSummaryBodyProps {
   body: RichBlock[];

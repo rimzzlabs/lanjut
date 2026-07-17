@@ -11,9 +11,9 @@ import type { ResumeLanguage } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 import { isResumePreviewEmpty, resumeToPreview } from "./resume-to-preview";
 
-/** Strip a PDF filename down to a résumé title. */
+/** Strip an imported file's name down to a résumé title. */
 function titleFromFileName(name: string): string {
-  return name.replace(/\.pdf$/i, "").trim() || name;
+  return name.replace(/\.(pdf|json|ya?ml)$/i, "").trim() || name;
 }
 
 interface Pending {
@@ -22,7 +22,7 @@ interface Pending {
 }
 
 /**
- * Import a PDF into the editor. When the open document already has content the
+ * Import a PDF or JSON export into the editor. When the open document already has content the
  * user chooses to replace it in place or create a separate new résumé; a blank
  * document is filled directly without asking.
  */

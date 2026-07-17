@@ -14,6 +14,18 @@ export async function downloadResume(
   format: ExportFormat,
   fileName: string,
 ): Promise<void> {
+  if (format === "json") {
+    const { downloadResumeJson } = await import("./download-resume-json");
+    downloadResumeJson(resume, fileName);
+    return;
+  }
+
+  if (format === "yaml") {
+    const { downloadResumeYaml } = await import("./download-resume-yaml");
+    downloadResumeYaml(resume, fileName);
+    return;
+  }
+
   const preview = resumeToPreview(resume);
 
   if (format === "pdf") {

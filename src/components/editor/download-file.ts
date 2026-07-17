@@ -5,7 +5,7 @@
  */
 export function safeFileName(name: string): string {
   const cleaned = name
-    .replace(/\.(pdf|docx|txt)$/i, "")
+    .replace(/\.(pdf|docx|txt|json|ya?ml)$/i, "")
     .replace(/[\\/:*?"<>|]+/g, "-")
     .trim();
   return cleaned || "resume";
