@@ -164,6 +164,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_10_0": [
+          {
+            "title": "Feedback without a GitHub account",
+            "description": "Report a bug or request a feature right from the app; we file the GitHub issue for you under the name you provide, guarded by a quick verification."
+          }
+        ],
         "0_9_0": [
           {
             "title": "Import from PDF",
@@ -418,8 +424,18 @@
       "fileNameRequired": "Name the file before downloading.",
       "bugWhatHappened": "Describe what went wrong.",
       "featureProblem": "Describe the problem this would solve.",
-      "featureProposal": "Describe how you imagine it working.",
-      "sectionTitleRequired": "Enter a section name."
+      "sectionTitleRequired": "Enter a section name.",
+      "reporterNameRequired": "Tell us your name first.",
+      "verificationRequired": "Finish the quick verification first."
+    },
+    "direct": {
+      "name": "Your name",
+      "namePlaceholder": "e.g. Sinta",
+      "nameDescription": "Shown on the public GitHub issue so we know who it's from.",
+      "send": "Send it for me",
+      "githubAlt": "Have a GitHub account? Open a prefilled issue instead.",
+      "sentToast": "Sent! Thank you; we filed the GitHub issue for you.",
+      "errorToast": "Couldn't send it. Try again, or use the GitHub button."
     },
     "create": {
       "title": "Create a new resume",
@@ -457,23 +473,21 @@
     },
     "bug": {
       "title": "Report a bug",
-      "description": "This opens a prefilled GitHub issue for you to review and submit; a GitHub account is required, and your browser details are filled in for you.",
+      "description": "Send it right here and we'll file the GitHub issue for you; no account needed. If you have a GitHub account, you can open a prefilled issue yourself instead.",
+      "descriptionGitHubOnly": "This opens a prefilled GitHub issue for you to review and submit; a GitHub account is required, and your browser details are filled in for you.",
       "whatHappened": "What happened?",
       "whatHappenedPlaceholder": "The editor preview goes blank when...",
-      "steps": "Steps to reproduce",
-      "stepsPlaceholder": "1. Create a resume (a numbered list works great here)",
-      "stepsDescription": "Optional here; you can also fill this in on GitHub.",
+      "whatHappenedDescription": "Include the steps to reproduce it; a numbered list works great.",
       "area": "Where does the bug show up?",
       "areaPlaceholder": "Area"
     },
     "feature": {
       "title": "Request a feature",
-      "description": "This opens a prefilled GitHub issue for you to review and submit; a GitHub account is required. Note that resume structure (tables, columns, images) is out of scope by design; presentation is fair game.",
+      "description": "Send it right here and we'll file the GitHub issue for you; no account needed. Note that resume structure (tables, columns, images) is out of scope by design; presentation is fair game.",
+      "descriptionGitHubOnly": "This opens a prefilled GitHub issue for you to review and submit; a GitHub account is required. Note that resume structure (tables, columns, images) is out of scope by design; presentation is fair game.",
       "problem": "What problem does this solve?",
       "problemPlaceholder": "When I tailor my resume for different roles, I have to...",
       "problemDescription": "Describe the situation where you needed this, rather than the solution itself.",
-      "proposal": "Proposed solution",
-      "proposalPlaceholder": "How do you imagine it working?",
       "layer": "Which layer does this touch?",
       "layerPlaceholder": "Layer"
     },

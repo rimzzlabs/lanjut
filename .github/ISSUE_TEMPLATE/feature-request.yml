@@ -16,17 +16,10 @@ body:
     validations:
       required: true
   - type: textarea
-    id: proposal
-    attributes:
-      label: Proposed solution
-      description: How do you imagine it working?
-    validations:
-      required: true
-  - type: textarea
     id: alternatives
     attributes:
       label: Alternatives considered
-      description: Workarounds you use today, or other ways this could be solved.
+      description: Workarounds you use today, or other ways this could be solved. If you have a specific solution in mind, sketch it here.
   - type: dropdown
     id: layer
     attributes:

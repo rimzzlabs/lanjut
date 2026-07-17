@@ -40,7 +40,10 @@ jobs:
 
       - run: pnpm validate:exports
 
+      # Public Turnstile site key, inlined at build time.
       - run: pnpm exec opennextjs-cloudflare build
+        env:
+          NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
 
       - name: Deploy ${{ needs.release-please.outputs.tag_name }} to Cloudflare Workers
         run: pnpm exec opennextjs-cloudflare deploy

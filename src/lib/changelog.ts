@@ -9,6 +9,7 @@ export interface ChangelogEntry {
  * with dots replaced by underscores, as a list of { title, description }.
  */
 export const CHANGELOG: ChangelogEntry[] = [
+  { version: "0.10.0", date: "2026-07-17" },
   { version: "0.9.0", date: "2026-07-14" },
   { version: "0.8.0", date: "2026-07-11" },
   { version: "0.7.0", date: "2026-07-10" },

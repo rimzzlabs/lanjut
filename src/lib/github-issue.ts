@@ -1,20 +1,21 @@
 import type { BUG_AREAS } from "./forms/bug-report";
 import type { FEATURE_LAYERS } from "./forms/feature-request";
+import type { FeedbackPayload } from "./forms/feedback";
 
-const NEW_ISSUE_URL = "https://github.com/rimzzlabs/lanjut/issues/new";
+export const GITHUB_REPO = "rimzzlabs/lanjut";
+
+const NEW_ISSUE_URL = `https://github.com/${GITHUB_REPO}/issues/new`;
 const TITLE_SUBJECT_MAX_LENGTH = 72;
 
 export interface BugReportIssue {
   title: string;
   whatHappened: string;
-  steps: string;
   area: (typeof BUG_AREAS)[number];
 }
 
 export interface FeatureRequestIssue {
   title: string;
   problem: string;
-  proposal: string;
   layer: (typeof FEATURE_LAYERS)[number];
 }
 
@@ -53,7 +54,6 @@ export function buildBugReportUrl(issue: BugReportIssue): string {
     template: "bug-report.yml",
     title: issue.title,
     "what-happened": issue.whatHappened,
-    steps: issue.steps,
     area: issue.area,
     browser: navigator.userAgent,
   });
@@ -64,7 +64,29 @@ export function buildFeatureRequestUrl(issue: FeatureRequestIssue): string {
     template: "feature-request.yml",
     title: issue.title,
     problem: issue.problem,
-    proposal: issue.proposal,
     layer: issue.layer,
   });
+}
+
+export interface FeedbackResult {
+  ok: boolean;
+  url?: string;
+}
+
+/** Files the issue server-side on behalf of the reporter; no GitHub account needed. */
+export async function submitFeedback(
+  payload: FeedbackPayload,
+): Promise<FeedbackResult> {
+  try {
+    const response = await fetch("/api/feedback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) return { ok: false };
+    const data = (await response.json()) as { url?: string };
+    return { ok: true, url: data.url };
+  } catch {
+    return { ok: false };
+  }
 }

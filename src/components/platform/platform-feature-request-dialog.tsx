@@ -9,6 +9,7 @@ import {
   ResponsiveDialogHeader,
   ResponsiveDialogTitle,
 } from "../shared/responsive-dialog";
+import { TURNSTILE_SITE_KEY } from "../shared/turnstile";
 import { PlatformFeatureRequestForm } from "./platform-feature-request-form";
 
 /**
@@ -26,11 +27,11 @@ export function PlatformFeatureRequestDialog() {
       open={open === "feature"}
       onOpenChange={(next) => setOpen(next ? "feature" : null)}
     >
-      <ResponsiveDialogContent className="sm:max-w-lg">
-        <ResponsiveDialogHeader>
+      <ResponsiveDialogContent className="flex max-h-[min(35rem,calc(100dvh-3rem))] flex-col gap-4 overflow-hidden sm:max-w-lg">
+        <ResponsiveDialogHeader className="md:shrink-0">
           <ResponsiveDialogTitle>{t("title")}</ResponsiveDialogTitle>
           <ResponsiveDialogDescription className="text-balance">
-            {t("description")}
+            {t(TURNSTILE_SITE_KEY ? "description" : "descriptionGitHubOnly")}
           </ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 

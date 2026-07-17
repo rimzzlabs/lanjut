@@ -13,9 +13,10 @@ export const FEATURE_LAYERS = [
 
 export function createFeatureRequestSchema(t: Translator) {
   return z.object({
-    problem: requiredRichTextDoc(t("featureProblem")),
-    proposal: requiredRichTextDoc(t("featureProposal")),
+    name: z.string().trim().min(1, t("reporterNameRequired")).max(80),
     layer: z.enum(FEATURE_LAYERS),
+    problem: requiredRichTextDoc(t("featureProblem")),
+    turnstileToken: z.string().min(1, t("verificationRequired")),
   });
 }
 
