@@ -784,6 +784,7 @@
       "createNew": "Create new",
       "copyHeading": "Copy",
       "copyHint": "Copy this resume to the clipboard as structured text. Rich text travels as simple markdown, and pasting it into an import restores it exactly.",
+      "copyAs": "Copy as",
       "copyJson": "JSON",
       "copyYaml": "YAML",
       "copied": "Copied to clipboard",

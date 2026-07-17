@@ -31,8 +31,8 @@ export function EditorDocumentCopy() {
         onClick={() => void copy(() => resumeToJson(open))}
       >
         <Copy />
-        <span className="sr-only">{t("copyJson")}</span>
-        <span aria-hidden="true">JSON</span>
+        <span className="sr-only">{t("copyAs")} </span>
+        {t("copyJson")}
       </Button>
       <Button
         type="button"
@@ -41,8 +41,8 @@ export function EditorDocumentCopy() {
         onClick={() => void copy(() => resumeToYaml(open))}
       >
         <Copy />
-        <span className="sr-only">{t("copyYaml")}</span>
-        <span aria-hidden="true">YAML</span>
+        <span className="sr-only">{t("copyAs")} </span>
+        {t("copyYaml")}
       </Button>
     </div>
   );

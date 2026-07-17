@@ -784,6 +784,7 @@
       "createNew": "Buat baru",
       "copyHeading": "Salin",
       "copyHint": "Salin resume ini ke clipboard sebagai teks terstruktur. Teks kaya dibawa sebagai markdown sederhana, dan menempelkannya ke impor akan memulihkannya persis.",
+      "copyAs": "Salin sebagai",
       "copyJson": "JSON",
       "copyYaml": "YAML",
       "copied": "Disalin ke clipboard",
