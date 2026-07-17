@@ -1,7 +1,9 @@
 "use client";
 
+import { AnimatePresence } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { TemplateId } from "@/lib/templates";
+import { ResumeAnimatedBlock } from "./resume-animated-block";
 import { buildResumeBlocks } from "./resume-blocks";
 import { A4, CONTENT_HEIGHT_PX, CONTENT_WIDTH_PX } from "./resume-geometry";
 import { ResumePage } from "./resume-page";
@@ -112,22 +114,30 @@ export function ResumeDocument(props: ResumeDocumentProps) {
             transformOrigin: "top left",
           }}
         >
-          {pages.map((pageBlocks, index, items) => (
-            <ResumePage
-              page={index + 1}
-              total={items.length}
-              key={pageBlocks[0].id}
-            >
-              {pageBlocks.map((block, index) => (
-                <div
-                  key={block.id}
-                  style={{ marginTop: index === 0 ? 0 : block.gapBefore }}
-                >
-                  <BlockView block={block} />
-                </div>
-              ))}
-            </ResumePage>
-          ))}
+          {pages.map((pageBlocks, index, items) => {
+            // The page's identity is its position in the stack: keying by index
+            // keeps the container stable while blocks reflow through it, so a
+            // changed first block animates instead of remounting the page.
+            const signature = pageBlocks.map((block) => block.id).join("|");
+            return (
+              // biome-ignore lint/suspicious/noArrayIndexKey: pages have no id; position is their identity
+              <ResumePage page={index + 1} total={items.length} key={index}>
+                <AnimatePresence initial={false} mode="popLayout">
+                  {pageBlocks.map((block, blockIndex) => (
+                    <ResumeAnimatedBlock
+                      key={block.id}
+                      layoutDependency={signature}
+                      style={{
+                        marginTop: blockIndex === 0 ? 0 : block.gapBefore,
+                      }}
+                    >
+                      <BlockView block={block} />
+                    </ResumeAnimatedBlock>
+                  ))}
+                </AnimatePresence>
+              </ResumePage>
+            );
+          })}
         </div>
       </div>
     </div>
