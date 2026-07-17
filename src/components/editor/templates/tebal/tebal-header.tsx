@@ -15,7 +15,11 @@ export function TebalHeader(props: HeaderView) {
       {props.contacts.length > 0 && (
         <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs">
           {props.contacts.map((contact) => (
-            <ResumeHeaderContact key={contact.kind} {...contact} />
+            <ResumeHeaderContact
+              key={contact.kind}
+              showIcons={props.showIcons}
+              {...contact}
+            />
           ))}
         </ul>
       )}

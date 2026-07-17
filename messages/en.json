@@ -176,6 +176,10 @@
           {
             "title": "Hide sections",
             "description": "Every section, Summary included, now has an eye toggle in the editor list. Hidden sections keep their content but drop out of the preview and every export until you show them again."
+          },
+          {
+            "title": "Hide contact icons",
+            "description": "A new toggle in the Document tab hides the small icons next to your contact details, for a plainer header in the preview and PDF. Your contact text always stays."
           }
         ],
         "0_9_0": [
@@ -520,7 +524,8 @@
       "add": "Add"
     },
     "layout": {
-      "documentLanguage": "Document language"
+      "documentLanguage": "Document language",
+      "documentIcons": "Show contact icons"
     },
     "chrome": {
       "edit": "Edit",

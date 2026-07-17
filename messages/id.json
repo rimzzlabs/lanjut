@@ -176,6 +176,10 @@
           {
             "title": "Sembunyikan bagian",
             "description": "Setiap bagian, termasuk Ringkasan, sekarang punya toggle mata di daftar editor. Bagian yang disembunyikan tetap menyimpan isinya tapi hilang dari pratinjau dan semua ekspor sampai kamu tampilkan lagi."
+          },
+          {
+            "title": "Sembunyikan ikon kontak",
+            "description": "Toggle baru di tab Dokumen menyembunyikan ikon kecil di samping detail kontak kamu, biar header lebih polos di pratinjau dan PDF. Teks kontaknya selalu tetap ada."
           }
         ],
         "0_9_0": [
@@ -520,7 +524,8 @@
       "add": "Tambah"
     },
     "layout": {
-      "documentLanguage": "Bahasa dokumen"
+      "documentLanguage": "Bahasa dokumen",
+      "documentIcons": "Tampilkan ikon kontak"
     },
     "chrome": {
       "edit": "Edit",

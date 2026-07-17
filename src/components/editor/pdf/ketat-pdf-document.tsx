@@ -102,7 +102,9 @@ function KetatHeader(props: { header: HeaderView }) {
             ) : (
               <Text>{contact.value}</Text>
             )}
-            <PdfContactIcon kind={contact.kind} />
+            {props.header.showIcons ? (
+              <PdfContactIcon kind={contact.kind} />
+            ) : null}
           </View>
         ))}
       </View>

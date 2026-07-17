@@ -88,6 +88,7 @@ export const interchangeSchema = z
     title: z.string().optional(),
     template: z.string().optional(),
     language: z.enum(["en", "id"]).optional(),
+    showIcons: z.boolean().optional(),
     header: entryShape(HEADER_SCHEMA).optional(),
     sections: z.array(sectionSchema).optional(),
   })

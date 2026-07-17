@@ -29,6 +29,7 @@ export interface ResumeContent {
   title?: string;
   templateId?: string;
   language?: ResumeLanguage;
+  showIcons?: boolean;
   header: Header;
   sections: Section[];
 }
@@ -111,6 +112,7 @@ export function resumeToInterchange(resume: Resume): InterchangeResume {
     title: resume.title,
     template: resume.templateId,
     language: resume.language,
+    showIcons: resume.showIcons ?? true,
     header,
     sections: resume.sections.map(sectionToInterchange),
   };
@@ -211,6 +213,7 @@ export function interchangeToContent(data: InterchangeResume): ResumeContent {
     title: data.title?.trim() || undefined,
     templateId: data.template,
     language: data.language,
+    showIcons: data.showIcons,
     header,
     sections,
   };

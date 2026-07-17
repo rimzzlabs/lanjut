@@ -91,7 +91,12 @@ function toHeaderView(resume: Resume): HeaderView {
     .join(", ");
   if (location) contacts.push({ kind: "location", value: location });
 
-  return { fullName, headline: plain(fields.jobTitle), contacts };
+  return {
+    fullName,
+    headline: plain(fields.jobTitle),
+    contacts,
+    showIcons: resume.showIcons ?? true,
+  };
 }
 
 /**
