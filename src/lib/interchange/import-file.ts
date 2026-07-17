@@ -24,6 +24,7 @@ function buildImportedResume(
   resume.templateId = parsed.content.templateId ?? options.templateId;
   resume.language = parsed.content.language ?? options.language;
   resume.showIcons = parsed.content.showIcons ?? true;
+  resume.sectionSpacing = parsed.content.sectionSpacing ?? 0;
   if (parsed.content.title) resume.title = parsed.content.title;
   return { ok: true, resume, leftovers: [] };
 }

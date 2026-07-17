@@ -5,7 +5,7 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 16;
+export const CURRENT_SCHEMA_VERSION = 17;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
@@ -135,6 +135,13 @@ export interface Resume {
    * value as `true`; templates that never draw icons ignore it.
    */
   showIcons?: boolean;
+  /**
+   * Presentation-only extra vertical space above each section heading, in
+   * rendering units (px on screen, pt in PDF), added on top of the template's
+   * baseline rhythm. 0 or unset keeps the template's current spacing; the
+   * editor only offers increases, never a value below the baseline.
+   */
+  sectionSpacing?: number;
   header: Header;
   sections: Section[];
   /** ISO 8601. */

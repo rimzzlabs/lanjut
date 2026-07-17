@@ -180,6 +180,10 @@
           {
             "title": "Sembunyikan ikon kontak",
             "description": "Toggle baru di tab Dokumen menyembunyikan ikon kecil di samping detail kontak kamu, biar header lebih polos di pratinjau dan PDF. Teks kontaknya selalu tetap ada."
+          },
+          {
+            "title": "Jarak antarbagian",
+            "description": "Slider di tab Dokumen menambah ruang napas di atas setiap bagian, di pratinjau maupun PDF. Tampilan ringkas bawaan template jadi batas bawahnya; kamu hanya bisa melonggarkan, tidak bisa merapatkan."
           }
         ],
         "0_9_0": [
@@ -525,7 +529,8 @@
     },
     "layout": {
       "documentLanguage": "Bahasa dokumen",
-      "documentIcons": "Tampilkan ikon kontak"
+      "documentIcons": "Tampilkan ikon kontak",
+      "sectionSpacing": "Jarak antarbagian"
     },
     "chrome": {
       "edit": "Edit",

@@ -180,6 +180,10 @@
           {
             "title": "Hide contact icons",
             "description": "A new toggle in the Document tab hides the small icons next to your contact details, for a plainer header in the preview and PDF. Your contact text always stays."
+          },
+          {
+            "title": "Section spacing",
+            "description": "A slider in the Document tab adds breathing room above every section, in the preview and the PDF alike. Each template's compact look stays the floor; you can only open it up, never squeeze it tighter."
           }
         ],
         "0_9_0": [
@@ -525,7 +529,8 @@
     },
     "layout": {
       "documentLanguage": "Document language",
-      "documentIcons": "Show contact icons"
+      "documentIcons": "Show contact icons",
+      "sectionSpacing": "Section spacing"
     },
     "chrome": {
       "edit": "Edit",

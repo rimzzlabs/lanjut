@@ -111,6 +111,11 @@ export type SectionHeadings = Record<
 export interface ResumePreview {
   /** Document language for fixed labels (headings, dates); drives localization. */
   language: ResumeLanguage;
+  /**
+   * Presentation-only extra space above each section heading (px on screen,
+   * pt in PDF), on top of the template's baseline rhythm; 0 = baseline.
+   */
+  sectionSpacing: number;
   headings: SectionHeadings;
   /**
    * The reorderable sections in document (reading) order. Drives the order blocks
