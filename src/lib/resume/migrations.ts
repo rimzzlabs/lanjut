@@ -519,6 +519,20 @@ const migrateV15toV16: Migration = (doc) => {
 };
 
 /**
+ * v16→v17: adds the presentation-only document-level `sectionSpacing` (extra
+ * space above section headings). Existing documents default to 0, preserving
+ * their current output. Bail-safe: a document already carrying a number is
+ * left as-is.
+ */
+const migrateV16toV17: Migration = (doc) => {
+  const next = structuredClone(doc);
+  if (typeof next.sectionSpacing !== "number") {
+    next.sectionSpacing = 0;
+  }
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -537,6 +551,7 @@ const LADDER: Record<number, Migration> = {
   13: migrateV13toV14,
   14: migrateV14toV15,
   15: migrateV15toV16,
+  16: migrateV16toV17,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

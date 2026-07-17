@@ -112,6 +112,7 @@ export function createEmptyResume(title: string): Resume {
     templateId: "awal",
     language: "en",
     showIcons: true,
+    sectionSpacing: 0,
     header: createEmptyHeader(),
     sections: [
       createEmptySection("summary"),

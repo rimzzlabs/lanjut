@@ -6,6 +6,7 @@ import { EditorDocumentDownload } from "./editor-document-download";
 import { EditorDocumentIcon } from "./editor-document-icon";
 import { EditorDocumentImport } from "./editor-document-import";
 import { EditorDocumentLanguage } from "./editor-document-language";
+import { EditorDocumentSpacing } from "./editor-document-spacing";
 
 /** The Document tab: document-level actions (language, export, import). */
 export function EditorDocumentPanel() {
@@ -15,6 +16,7 @@ export function EditorDocumentPanel() {
       <section className="flex flex-col gap-3 py-4">
         <EditorDocumentLanguage />
         <EditorDocumentIcon />
+        <EditorDocumentSpacing />
       </section>
 
       <section className="py-4">

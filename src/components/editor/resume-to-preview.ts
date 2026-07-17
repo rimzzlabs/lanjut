@@ -203,6 +203,9 @@ export function resumeToPreview(resume: Resume): ResumePreview {
 
   return {
     language: resume.language,
+    // Clamped so a hand-edited document can widen spacing but never collapse
+    // a template below its baseline or blow up pagination.
+    sectionSpacing: Math.min(60, Math.max(0, resume.sectionSpacing ?? 0)),
     headings,
     sectionOrder,
     customSections,
