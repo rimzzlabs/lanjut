@@ -1,19 +1,16 @@
-import { Globe, Link, Mail, MapPin, Phone } from "lucide-react";
-import type { ContactKind, ContactView } from "./resume-preview";
+import { ResumeContactIcon } from "./resume-contact-icon";
+import type { ContactView } from "./resume-preview";
 
-const CONTACT_ICON: Record<ContactKind, typeof Phone> = {
-  phone: Phone,
-  email: Mail,
-  website: Globe,
-  linkedin: Link,
-  location: MapPin,
-};
-
-export function ResumeHeaderContact(props: ContactView) {
-  const Icon = CONTACT_ICON[props.kind];
+export function ResumeHeaderContact(
+  props: ContactView & { showIcons: boolean },
+) {
   return (
     <li className="flex items-center gap-2">
-      <Icon className="size-3.5 shrink-0 text-muted-foreground" aria-hidden />
+      <ResumeContactIcon
+        kind={props.kind}
+        show={props.showIcons}
+        className="text-muted-foreground"
+      />
       {props.href ? (
         <a href={props.href} className="hover:underline">
           {props.value}

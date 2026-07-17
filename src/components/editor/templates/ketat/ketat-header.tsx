@@ -1,20 +1,7 @@
-import { Globe, Link, Mail, MapPin, Phone } from "lucide-react";
-import type {
-  ContactKind,
-  ContactView,
-  HeaderView,
-} from "../../resume-preview";
+import { ResumeContactIcon } from "../../resume-contact-icon";
+import type { ContactView, HeaderView } from "../../resume-preview";
 
-const CONTACT_ICON: Record<ContactKind, typeof Phone> = {
-  phone: Phone,
-  email: Mail,
-  website: Globe,
-  linkedin: Link,
-  location: MapPin,
-};
-
-function KetatHeaderContact(props: ContactView) {
-  const Icon = CONTACT_ICON[props.kind];
+function KetatHeaderContact(props: ContactView & { showIcons: boolean }) {
   return (
     <li className="flex items-center justify-end gap-2">
       {props.href ? (
@@ -24,7 +11,7 @@ function KetatHeaderContact(props: ContactView) {
       ) : (
         <span>{props.value}</span>
       )}
-      <Icon className="size-3.5 shrink-0" aria-hidden />
+      <ResumeContactIcon kind={props.kind} show={props.showIcons} edge="end" />
     </li>
   );
 }
@@ -43,7 +30,11 @@ export function KetatHeader(props: HeaderView) {
 
       <ul className="space-y-1.5 text-xs">
         {props.contacts.map((contact) => (
-          <KetatHeaderContact key={contact.kind} {...contact} />
+          <KetatHeaderContact
+            key={contact.kind}
+            showIcons={props.showIcons}
+            {...contact}
+          />
         ))}
       </ul>
     </header>

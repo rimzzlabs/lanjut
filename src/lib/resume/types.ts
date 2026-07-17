@@ -5,7 +5,7 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 15;
+export const CURRENT_SCHEMA_VERSION = 16;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
@@ -128,6 +128,13 @@ export interface Resume {
    * of the content the user types.
    */
   language: ResumeLanguage;
+  /**
+   * Presentation-only toggle for the header's contact icons: when false, icon
+   * glyphs are omitted from the preview and PDF export. Contact text is always
+   * kept, so parsing and text exports are unaffected. Renderers treat an unset
+   * value as `true`; templates that never draw icons ignore it.
+   */
+  showIcons?: boolean;
   header: Header;
   sections: Section[];
   /** ISO 8601. */

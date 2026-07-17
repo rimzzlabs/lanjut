@@ -506,6 +506,19 @@ const migrateV14toV15: Migration = (doc) => {
 };
 
 /**
+ * v15→v16: adds the presentation-only document-level `showIcons` toggle for the
+ * header's contact icons. Existing documents default to true, preserving their
+ * current output. Bail-safe: a document already carrying a boolean is left as-is.
+ */
+const migrateV15toV16: Migration = (doc) => {
+  const next = structuredClone(doc);
+  if (typeof next.showIcons !== "boolean") {
+    next.showIcons = true;
+  }
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -523,6 +536,7 @@ const LADDER: Record<number, Migration> = {
   12: migrateV12toV13,
   13: migrateV13toV14,
   14: migrateV14toV15,
+  15: migrateV15toV16,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

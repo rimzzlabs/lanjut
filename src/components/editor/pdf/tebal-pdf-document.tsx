@@ -83,7 +83,9 @@ function TebalHeader(props: { header: HeaderView }) {
         <View style={styles.contactRowWrap}>
           {props.header.contacts.map((contact) => (
             <View key={contact.kind} style={styles.contactRow}>
-              <PdfContactIcon kind={contact.kind} />
+              {props.header.showIcons ? (
+                <PdfContactIcon kind={contact.kind} />
+              ) : null}
               {contact.href ? (
                 <Link src={contact.href} style={styles.linkPlain}>
                   {contact.value}

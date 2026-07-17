@@ -28,6 +28,18 @@ export function resolveTemplateId(id: string): TemplateId {
     : DEFAULT_TEMPLATE_ID;
 }
 
+/** Templates whose headers draw contact icon glyphs; the rest render text-only contacts. */
+const TEMPLATE_IDS_WITH_CONTACT_ICONS: TemplateId[] = [
+  "awal",
+  "ketat",
+  "tebal",
+];
+
+/** Whether a persisted template id renders contact icons. Unknown ids resolve to the default template first, matching renderer fallback. */
+export function templateHasContactIcons(id: string): boolean {
+  return TEMPLATE_IDS_WITH_CONTACT_ICONS.includes(resolveTemplateId(id));
+}
+
 export type TemplateSort = "name-asc" | "name-desc" | "newest";
 
 export const TEMPLATE_SORTS: TemplateSort[] = [

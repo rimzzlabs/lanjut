@@ -11,7 +11,11 @@ export function ResumeHeader(props: HeaderView) {
 
       <ul className="space-y-1 text-xs">
         {props.contacts.map((contact) => (
-          <ResumeHeaderContact key={contact.kind} {...contact} />
+          <ResumeHeaderContact
+            key={contact.kind}
+            showIcons={props.showIcons}
+            {...contact}
+          />
         ))}
       </ul>
     </header>

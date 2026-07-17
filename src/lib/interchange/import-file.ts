@@ -23,6 +23,7 @@ function buildImportedResume(
   resume.sections = parsed.content.sections;
   resume.templateId = parsed.content.templateId ?? options.templateId;
   resume.language = parsed.content.language ?? options.language;
+  resume.showIcons = parsed.content.showIcons ?? true;
   if (parsed.content.title) resume.title = parsed.content.title;
   return { ok: true, resume, leftovers: [] };
 }

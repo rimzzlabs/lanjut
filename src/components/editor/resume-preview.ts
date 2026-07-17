@@ -34,6 +34,8 @@ export interface HeaderView {
   fullName: string;
   headline: string;
   contacts: ContactView[];
+  /** Presentation-only: whether contact icon glyphs are drawn; defaults to true. */
+  showIcons: boolean;
 }
 
 export interface ExperienceItemView {
