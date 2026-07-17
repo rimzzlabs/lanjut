@@ -1,6 +1,6 @@
+import { richBlocksToText } from "@/lib/resume/rich-content";
 import { buildResumeBlocks } from "./resume-blocks";
 import type { ResumePreview } from "./resume-preview";
-import { richBlocksToText } from "./rich-content";
 
 function dateRange(start: string, end: string): string {
   if (!start && !end) return "";

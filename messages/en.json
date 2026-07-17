@@ -168,6 +168,10 @@
           {
             "title": "Feedback without a GitHub account",
             "description": "Report a bug or request a feature right from the app; we file the GitHub issue for you under the name you provide, guarded by a quick verification."
+          },
+          {
+            "title": "JSON and YAML export and import",
+            "description": "Copy or download your resume as JSON or YAML, and import either back losslessly. Rich text travels as simple markdown."
           }
         ],
         "0_9_0": [
@@ -446,7 +450,7 @@
       "sourceLabel": "Start from",
       "sourceSample": "Sample",
       "sourceEmpty": "Blank",
-      "sourceImport": "Import PDF",
+      "sourceImport": "Import a file",
       "submit": "Create resume"
     },
     "rename": {
@@ -492,18 +496,19 @@
       "layerPlaceholder": "Layer"
     },
     "import": {
-      "dropPrompt": "Drop a PDF here, or click to browse",
+      "dropPrompt": "Drop a PDF, JSON, or YAML file here, or click to browse",
       "hint": "Your file is read on your device and never uploaded.",
       "parsing": "Reading your resume…",
       "parsed": "Ready to import",
       "remove": "Remove file",
-      "errorNotPdf": "Only PDF files are supported.",
+      "errorUnsupported": "Only PDF, JSON, and YAML files are supported.",
       "errorTooLarge": "That file is too large. The limit is 10 MB.",
       "errorEmpty": "This PDF has no readable text. It looks scanned; try exporting a text-based PDF.",
       "errorEncrypted": "This PDF is password-protected. Remove the password and try again.",
       "errorGeneric": "We couldn't read this PDF. Try a different file.",
       "disclaimer": "Importing is best-effort and can miss or misplace details. If something comes out wrong, it would really help if you",
-      "reportIssue": "report an issue"
+      "reportIssue": "report an issue",
+      "errorInvalidData": "This file isn't a valid resume export."
     }
   },
   "editor": {
@@ -773,10 +778,17 @@
     "document": {
       "downloadHeading": "Download",
       "importHeading": "Import resume",
-      "importHint": "Bring in details from an existing PDF resume. It's read on your device and never uploaded.",
+      "importHint": "Bring in details from an existing PDF resume, or restore a JSON or YAML export. It's read on your device and never uploaded.",
       "replacePrompt": "This resume already has content. Replace it, or keep it and create a new one?",
       "replace": "Replace this one",
-      "createNew": "Create new"
+      "createNew": "Create new",
+      "copyHeading": "Copy",
+      "copyHint": "Copy this resume to the clipboard as structured text. Rich text travels as simple markdown, and pasting it into an import restores it exactly.",
+      "copyAs": "Copy as",
+      "copyJson": "JSON",
+      "copyYaml": "YAML",
+      "copied": "Copied to clipboard",
+      "copyFailed": "Couldn't copy to the clipboard."
     }
   }
 }

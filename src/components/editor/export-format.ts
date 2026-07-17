@@ -1,3 +1,9 @@
-export type ExportFormat = "pdf" | "docx" | "txt";
+export type ExportFormat = "pdf" | "docx" | "txt" | "json" | "yaml";
 
-export const EXPORT_FORMATS: ExportFormat[] = ["pdf", "docx", "txt"];
+export const EXPORT_FORMATS: ExportFormat[] = [
+  "pdf",
+  "docx",
+  "txt",
+  "json",
+  "yaml",
+];

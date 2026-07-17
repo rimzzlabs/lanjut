@@ -7,13 +7,13 @@
  * Data → adapter → consumer: these types are the consumer contract.
  */
 
+import type { RichBlock } from "@/lib/resume/rich-content";
 import type { ReorderableSectionType } from "@/lib/resume/schema-registry";
 import type {
   CustomVariant,
   ResumeLanguage,
   SectionColumns,
 } from "@/lib/resume/types";
-import type { RichBlock } from "./rich-content";
 
 export type ContactKind =
   | "phone"
@@ -96,9 +96,20 @@ export interface SectionRef {
   id: string;
 }
 
+/**
+ * The effective heading per core section: the stored section title when the
+ * user renamed it away from the registry default (only possible through the
+ * Code tab), otherwise the document-language label.
+ */
+export type SectionHeadings = Record<
+  "summary" | Exclude<ReorderableSectionType, "custom">,
+  string
+>;
+
 export interface ResumePreview {
   /** Document language for fixed labels (headings, dates); drives localization. */
   language: ResumeLanguage;
+  headings: SectionHeadings;
   /**
    * The reorderable sections in document (reading) order. Drives the order blocks
    * are emitted in after the pinned Header and Summary. Core types appear at most

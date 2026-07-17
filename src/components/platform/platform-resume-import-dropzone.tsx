@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, Loader2, UploadCloud, X } from "lucide-react";
+import { FileText, Loader2, Upload, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { type FileRejection, useDropzone } from "react-dropzone";
@@ -13,10 +13,11 @@ import { Button } from "../ui/button";
 const MAX_BYTES = 10 * 1024 * 1024;
 
 type ErrorKey =
-  | "errorNotPdf"
+  | "errorUnsupported"
   | "errorTooLarge"
   | "errorEmpty"
   | "errorEncrypted"
+  | "errorInvalidData"
   | "errorGeneric";
 
 interface PlatformResumeImportDropzoneProps {
@@ -50,7 +51,7 @@ export function PlatformResumeImportDropzone(
         const tooLarge = rejections[0].errors.some(
           (e) => e.code === "file-too-large",
         );
-        setError(tooLarge ? "errorTooLarge" : "errorNotPdf");
+        setError(tooLarge ? "errorTooLarge" : "errorUnsupported");
         reset();
         return;
       }
@@ -62,26 +63,43 @@ export function PlatformResumeImportDropzone(
       setParsing(true);
       onParsingChange(true);
 
-      const buffer = await file.arrayBuffer();
-      const result = await runPdfImport(buffer, {
+      const options = {
         title: file.name,
         language: locale as ResumeLanguage,
         templateId: "awal",
-      });
+      };
+      let result: ({ ok: true } & ParseResult) | null = null;
+      let failure: ErrorKey = "errorGeneric";
+      if (/\.(json|ya?ml)$/i.test(file.name)) {
+        const { importResumeFromJson, importResumeFromYaml } = await import(
+          "@/lib/interchange"
+        );
+        const importFile = /\.json$/i.test(file.name)
+          ? importResumeFromJson
+          : importResumeFromYaml;
+        const imported = importFile(await file.text(), options);
+        if (imported.ok) result = imported;
+        else failure = "errorInvalidData";
+      } else {
+        const imported = await runPdfImport(await file.arrayBuffer(), options);
+        if (imported.ok) result = imported;
+        else {
+          failure =
+            imported.reason === "empty"
+              ? "errorEmpty"
+              : imported.reason === "encrypted"
+                ? "errorEncrypted"
+                : "errorGeneric";
+        }
+      }
 
       setParsing(false);
       onParsingChange(false);
-      if (result.ok) {
+      if (result) {
         onParsed(file, result);
         return;
       }
-      setError(
-        result.reason === "empty"
-          ? "errorEmpty"
-          : result.reason === "encrypted"
-            ? "errorEncrypted"
-            : "errorGeneric",
-      );
+      setError(failure);
       setFileName(null);
       onCleared();
     },
@@ -90,7 +108,11 @@ export function PlatformResumeImportDropzone(
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { "application/pdf": [".pdf"] },
+    accept: {
+      "application/pdf": [".pdf"],
+      "application/json": [".json"],
+      "application/yaml": [".yaml", ".yml"],
+    },
     maxFiles: 1,
     maxSize: MAX_BYTES,
     multiple: false,
@@ -130,8 +152,8 @@ export function PlatformResumeImportDropzone(
         )}
       >
         <input {...getInputProps()} />
-        <UploadCloud className="size-6 text-muted-foreground" />
-        <p className="text-sm font-medium">{t("dropPrompt")}</p>
+        <Upload className="size-6 text-muted-foreground" />
+        <p className="text-sm font-medium text-balance">{t("dropPrompt")}</p>
         <p className="text-xs text-muted-foreground text-balance">
           {t("hint")}
         </p>
