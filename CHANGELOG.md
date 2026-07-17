@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.3](https://github.com/rimzzlabs/lanjut/compare/v0.9.2...v0.9.3) (2026-07-17)
+
+
+### Bug Fixes
+
+* delete résumé from storage immediately with in-memory undo ([#99](https://github.com/rimzzlabs/lanjut/issues/99)) ([6c40aa9](https://github.com/rimzzlabs/lanjut/commit/6c40aa99a06437dfaaec060da5d1f7b51ba983c6))
+* tint the guided tour overlay to match the theme ([#101](https://github.com/rimzzlabs/lanjut/issues/101)) ([0b753b6](https://github.com/rimzzlabs/lanjut/commit/0b753b68979d211d9c250f9e2fbdf3aa89f9c014))
+
 ## [0.9.2](https://github.com/rimzzlabs/lanjut/compare/v0.9.1...v0.9.2) (2026-07-14)
 
 
