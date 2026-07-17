@@ -36,6 +36,9 @@ export const TEMPLATE_SORTS: TemplateSort[] = [
   "newest",
 ];
 
+/** Shared by the Browse Templates page and the create dialog, so both list templates in the same order. */
+export const DEFAULT_TEMPLATE_SORT: TemplateSort = "name-asc";
+
 export const TEMPLATES: TemplateSummary[] = [
   { id: "awal", name: "Awal", addedAt: "2026-01-01T00:00:00.000Z" },
   { id: "ketat", name: "Ketat", addedAt: "2026-07-04T00:00:00.000Z" },
