@@ -7,12 +7,15 @@ import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { SEED_RESUME } from "@/lib/resume";
 import {
+  DEFAULT_TEMPLATE_SORT,
+  sortTemplates,
   TEMPLATES,
   type TemplateId,
   type TemplateSummary,
 } from "@/lib/templates";
 
 const SEED_PREVIEW = resumeToPreview(SEED_RESUME);
+const SORTED_TEMPLATES = sortTemplates(TEMPLATES, DEFAULT_TEMPLATE_SORT);
 
 const DOTTED_SURFACE =
   "bg-[radial-gradient(color-mix(in_oklab,var(--color-foreground)_7%,transparent)_1px,transparent_1px)] bg-size-[0.5rem_0.5rem]";
@@ -31,7 +34,7 @@ export function PlatformTemplateRadioGroup(
       onValueChange={(value) => props.onValueChange(value as TemplateId)}
       className="grid grid-cols-2 gap-2.5 sm:grid-cols-3"
     >
-      {TEMPLATES.map((template) => (
+      {SORTED_TEMPLATES.map((template) => (
         <PlatformTemplateRadioCard key={template.id} template={template} />
       ))}
     </RadioGroup>

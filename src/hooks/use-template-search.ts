@@ -1,7 +1,7 @@
 "use client";
 
 import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
-import { TEMPLATE_SORTS } from "@/lib/templates";
+import { DEFAULT_TEMPLATE_SORT, TEMPLATE_SORTS } from "@/lib/templates";
 
 /**
  * Browse-Templates search query, held in the `q` URL param so it survives reload
@@ -21,7 +21,7 @@ export function useTemplateSort() {
   return useQueryState(
     "sort",
     parseAsStringLiteral(TEMPLATE_SORTS)
-      .withDefault("name-asc")
+      .withDefault(DEFAULT_TEMPLATE_SORT)
       .withOptions({ clearOnDefault: true }),
   );
 }
