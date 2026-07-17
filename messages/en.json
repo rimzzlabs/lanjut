@@ -172,6 +172,10 @@
           {
             "title": "JSON and YAML export and import",
             "description": "Copy or download your resume as JSON or YAML, and import either back losslessly. Rich text travels as simple markdown."
+          },
+          {
+            "title": "Hide sections",
+            "description": "Every section, Summary included, now has an eye toggle in the editor list. Hidden sections keep their content but drop out of the preview and every export until you show them again."
           }
         ],
         "0_9_0": [

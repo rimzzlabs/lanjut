@@ -121,7 +121,10 @@ export function isResumePreviewEmpty(preview: ResumePreview): boolean {
  * components never read the storage schema directly.
  */
 export function resumeToPreview(resume: Resume): ResumePreview {
-  const summaryBody = sectionOfType(resume, "summary")?.entries[0]?.fields.body;
+  const summarySection = sectionOfType(resume, "summary");
+  const summaryBody = summarySection?.hidden
+    ? undefined
+    : summarySection?.entries[0]?.fields.body;
   const labels = RESUME_LABELS[resume.language];
   const localizeDates = <T extends { startDate: string; endDate: string }>(
     item: T,
@@ -131,8 +134,10 @@ export function resumeToPreview(resume: Resume): ResumePreview {
     endDate: localizeDateValue(item.endDate, labels.months, labels.present),
   });
 
+  // Hidden sections drop out of the emitted order entirely, so no renderer
+  // (preview, PDF, docx, plain text) ever sees their heading or entries.
   const sectionOrder = resume.sections
-    .filter((section) => isReorderableSection(section.type))
+    .filter((section) => isReorderableSection(section.type) && !section.hidden)
     .map((section) => ({
       type: section.type as ReorderableSectionType,
       id: section.id,

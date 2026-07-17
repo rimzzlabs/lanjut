@@ -172,6 +172,10 @@
           {
             "title": "Ekspor dan impor JSON dan YAML",
             "description": "Salin atau unduh resume kamu sebagai JSON atau YAML, dan impor keduanya kembali tanpa kehilangan apa pun. Teks kaya dibawa sebagai markdown sederhana."
+          },
+          {
+            "title": "Sembunyikan bagian",
+            "description": "Setiap bagian, termasuk Ringkasan, sekarang punya toggle mata di daftar editor. Bagian yang disembunyikan tetap menyimpan isinya tapi hilang dari pratinjau dan semua ekspor sampai kamu tampilkan lagi."
           }
         ],
         "0_9_0": [
