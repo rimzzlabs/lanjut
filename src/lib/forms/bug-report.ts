@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { requiredRichTextDoc, richTextDoc } from "./rich-text";
+import { requiredRichTextDoc } from "./rich-text";
 
 type Translator = (key: string) => string;
 
@@ -16,9 +16,10 @@ export const BUG_AREAS = [
 
 export function createBugReportSchema(t: Translator) {
   return z.object({
-    whatHappened: requiredRichTextDoc(t("bugWhatHappened")),
-    steps: richTextDoc,
+    name: z.string().trim().min(1, t("reporterNameRequired")).max(80),
     area: z.enum(BUG_AREAS),
+    whatHappened: requiredRichTextDoc(t("bugWhatHappened")),
+    turnstileToken: z.string().min(1, t("verificationRequired")),
   });
 }
 

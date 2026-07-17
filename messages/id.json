@@ -164,6 +164,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_10_0": [
+          {
+            "title": "Kirim masukan tanpa akun GitHub",
+            "description": "Laporin bug atau ajukan fitur langsung dari aplikasi; isu GitHub-nya kami buatin atas nama yang kamu isi, dijaga verifikasi singkat."
+          }
+        ],
         "0_9_0": [
           {
             "title": "Impor dari PDF",
@@ -418,8 +424,18 @@
       "fileNameRequired": "Kasih nama berkasnya dulu sebelum unduh.",
       "bugWhatHappened": "Ceritain apa yang salah.",
       "featureProblem": "Ceritain masalah yang mau diselesaikan.",
-      "featureProposal": "Ceritain gimana kamu ngebayanginnya jalan.",
-      "sectionTitleRequired": "Isi nama bagian."
+      "sectionTitleRequired": "Isi nama bagian.",
+      "reporterNameRequired": "Isi nama kamu dulu, ya.",
+      "verificationRequired": "Selesain verifikasi singkatnya dulu, ya."
+    },
+    "direct": {
+      "name": "Nama kamu",
+      "namePlaceholder": "mis. Sinta",
+      "nameDescription": "Ditampilin di isu GitHub publik biar kami tahu ini dari siapa.",
+      "send": "Kirimin buat aku",
+      "githubAlt": "Punya akun GitHub? Buka aja isu yang udah keisi.",
+      "sentToast": "Terkirim! Makasih ya; isu GitHub-nya udah kami buatin.",
+      "errorToast": "Gagal ngirim. Coba lagi, atau pakai tombol GitHub."
     },
     "create": {
       "title": "Buat resume baru",
@@ -457,23 +473,21 @@
     },
     "bug": {
       "title": "Laporin bug",
-      "description": "Ini bakal buka isu GitHub yang udah keisi buat kamu tinjau dan kirim; butuh akun GitHub, dan detail browser kamu udah diisiin otomatis.",
+      "description": "Kirim langsung dari sini dan isu GitHub-nya kami buatin; nggak perlu akun. Kalau kamu punya akun GitHub, bisa juga buka isu yang udah keisi dan kirim sendiri.",
+      "descriptionGitHubOnly": "Ini bakal buka isu GitHub yang udah keisi buat kamu tinjau dan kirim; butuh akun GitHub, dan detail browser kamu udah diisiin otomatis.",
       "whatHappened": "Apa yang terjadi?",
       "whatHappenedPlaceholder": "Pratinjau editor jadi kosong pas...",
-      "steps": "Langkah buat ngereproduksi",
-      "stepsPlaceholder": "1. Buat resume (daftar bernomor cocok banget di sini)",
-      "stepsDescription": "Opsional kok di sini; bisa juga kamu isi nanti di GitHub.",
+      "whatHappenedDescription": "Sertain juga langkah buat ngereproduksinya; daftar bernomor cocok banget.",
       "area": "Di mana bug-nya muncul?",
       "areaPlaceholder": "Area"
     },
     "feature": {
       "title": "Ajukan fitur baru",
-      "description": "Ini bakal buka GitHub Issue yang udah keisi buat kamu tinjau dan kirim; butuh akun GitHub. Oh iya, struktur resume (tabel, kolom, gambar) emang di luar cakupan; tapi presentasi bebas kamu usulin.",
+      "description": "Kirim langsung dari sini dan isu GitHub-nya kami buatin; nggak perlu akun. Oh iya, struktur resume (tabel, kolom, gambar) emang di luar cakupan; tapi presentasi bebas kamu usulin.",
+      "descriptionGitHubOnly": "Ini bakal buka GitHub Issue yang udah keisi buat kamu tinjau dan kirim; butuh akun GitHub. Oh iya, struktur resume (tabel, kolom, gambar) emang di luar cakupan; tapi presentasi bebas kamu usulin.",
       "problem": "Masalah apa yang diselesaikan ini?",
       "problemPlaceholder": "Pas nyesuaiin resume buat peran yang beda-beda, aku harus...",
       "problemDescription": "Ceritain situasi pas kamu butuh ini, bukan solusinya.",
-      "proposal": "Solusi yang diusulkan",
-      "proposalPlaceholder": "Gimana kamu ngebayanginnya jalan?",
       "layer": "Lapisan mana yang kena?",
       "layerPlaceholder": "Lapisan"
     },
