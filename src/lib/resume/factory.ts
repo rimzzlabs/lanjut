@@ -54,6 +54,7 @@ export function createEmptySection(type: SectionType): Section {
     type,
     title: schema.defaultTitle,
     entries: [],
+    hidden: false,
   };
   // The Skills grid is column-toggleable; new sections start two-column and
   // show per-skill proficiency until the user hides it.
@@ -89,6 +90,7 @@ export function createCustomSection(
     title,
     variant,
     entries: [createCustomEntry(variant)],
+    hidden: false,
   };
 }
 

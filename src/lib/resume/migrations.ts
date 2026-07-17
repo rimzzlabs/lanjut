@@ -486,6 +486,26 @@ const migrateV13toV14: Migration = (doc) => {
 };
 
 /**
+ * v14→v15: adds the presentation-only `hidden` visibility toggle to every
+ * section. Existing documents default to false, preserving their current
+ * output. Bail-safe: a section already carrying a boolean flag is left as-is.
+ */
+const migrateV14toV15: Migration = (doc) => {
+  const next = structuredClone(doc);
+  const sections = Array.isArray(next.sections)
+    ? (next.sections as Array<Record<string, unknown>>)
+    : [];
+
+  for (const section of sections) {
+    if (typeof section.hidden !== "boolean") {
+      section.hidden = false;
+    }
+  }
+
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -502,6 +522,7 @@ const LADDER: Record<number, Migration> = {
   11: migrateV11toV12,
   12: migrateV12toV13,
   13: migrateV13toV14,
+  14: migrateV14toV15,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

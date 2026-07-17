@@ -34,6 +34,7 @@ function entryShape(fields: FieldSchema[]) {
 const summarySection = z.strictObject({
   type: z.literal("summary"),
   title: z.string().optional(),
+  hidden: z.boolean().optional(),
   body: scalarString.optional(),
 });
 
@@ -41,6 +42,7 @@ function listSection<T extends SectionType>(type: T) {
   return z.strictObject({
     type: z.literal(type),
     title: z.string().optional(),
+    hidden: z.boolean().optional(),
     entries: z.array(entryShape(SECTION_REGISTRY[type].fields)).optional(),
   });
 }
@@ -50,6 +52,7 @@ function gridSection<T extends SectionType>(type: T) {
   return z.strictObject({
     type: z.literal(type),
     title: z.string().optional(),
+    hidden: z.boolean().optional(),
     entries: z.array(entryShape(SECTION_REGISTRY[type].fields)).optional(),
     columns: z.union([z.literal(1), z.literal(2)]).optional(),
     showProficiency: z.boolean().optional(),
@@ -60,6 +63,7 @@ const customSection = z.strictObject({
   type: z.literal("custom"),
   variant: z.enum(["rich", "list"]).optional(),
   title: z.string().optional(),
+  hidden: z.boolean().optional(),
   body: scalarString.optional(),
   entries: z.array(entryShape(CUSTOM_LIST_FIELDS)).optional(),
 });

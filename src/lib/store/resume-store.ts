@@ -87,6 +87,12 @@ interface ResumeStoreState {
   /** Switch a custom section's variant, converting its content across. */
   setCustomVariant: (id: string, variant: CustomVariant) => void;
   /**
+   * Toggle a section's presentation-only visibility. Hidden sections keep
+   * their content and slot in the list; they are only omitted from the
+   * preview and exports.
+   */
+  toggleSectionVisibility: (id: string) => void;
+  /**
    * Overwrite the open document's content (header + sections) with a parsed PDF
    * import, keeping its id, title, template, and language, and store the import's
    * leftovers against it. For importing into an existing document in place.
@@ -314,6 +320,13 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
         draft.sections[index],
         variant,
       );
+    });
+  },
+
+  toggleSectionVisibility(id) {
+    get().updateOpen((draft) => {
+      const section = draft.sections.find((s) => s.id === id);
+      if (section) section.hidden = !section.hidden;
     });
   },
 

@@ -5,7 +5,7 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 14;
+export const CURRENT_SCHEMA_VERSION = 15;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
@@ -90,6 +90,13 @@ export interface Section {
    * factory always sets it, and renderers treat an unset value as `rich`.
    */
   variant?: CustomVariant;
+  /**
+   * Presentation-only visibility toggle: when true the Section is omitted from
+   * the preview and every export. Content and ordering are kept, so showing it
+   * again restores exactly what was there. Renderers treat an unset value as
+   * visible. The Header is not a Section and can never be hidden.
+   */
+  hidden?: boolean;
 }
 
 /**

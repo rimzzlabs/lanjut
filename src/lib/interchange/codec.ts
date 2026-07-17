@@ -57,6 +57,7 @@ function sectionToInterchange(section: Section): InterchangeSection {
     return {
       type: "summary",
       title: section.title,
+      hidden: section.hidden ?? false,
       body: fieldToString(section.entries[0]?.fields.body),
     };
   }
@@ -67,6 +68,7 @@ function sectionToInterchange(section: Section): InterchangeSection {
         type: "custom",
         variant,
         title: section.title,
+        hidden: section.hidden ?? false,
         body: fieldToString(section.entries[0]?.fields.body),
       };
     }
@@ -74,6 +76,7 @@ function sectionToInterchange(section: Section): InterchangeSection {
       type: "custom",
       variant,
       title: section.title,
+      hidden: section.hidden ?? false,
       entries: section.entries.map((entry) =>
         entryToValues(entry, CUSTOM_LIST_FIELDS),
       ),
@@ -83,6 +86,7 @@ function sectionToInterchange(section: Section): InterchangeSection {
   const base = {
     type: section.type,
     title: section.title,
+    hidden: section.hidden ?? false,
     entries: section.entries.map((entry) => entryToValues(entry, fields)),
   };
   if (section.type === "skills" || section.type === "languages") {
@@ -141,6 +145,7 @@ function interchangeToSection(item: InterchangeSection): Section {
   if (item.type === "summary") {
     const section = createEmptySection("summary");
     if (item.title) section.title = item.title;
+    if (item.hidden !== undefined) section.hidden = item.hidden;
     if (item.body !== undefined) {
       section.entries = [bodyEntry("summary", item.body)];
     }
@@ -149,6 +154,7 @@ function interchangeToSection(item: InterchangeSection): Section {
   if (item.type === "custom") {
     const variant = item.variant ?? "rich";
     const section = createCustomSection(variant, item.title || undefined);
+    if (item.hidden !== undefined) section.hidden = item.hidden;
     if (variant === "rich") {
       if (item.body !== undefined) {
         section.entries = [bodyEntry("custom", item.body)];
@@ -162,6 +168,7 @@ function interchangeToSection(item: InterchangeSection): Section {
   }
   const section = createEmptySection(item.type);
   if (item.title) section.title = item.title;
+  if (item.hidden !== undefined) section.hidden = item.hidden;
   const fields = getSectionSchema(item.type).fields;
   section.entries = (item.entries ?? []).map((values) =>
     fillEntry(createEmptyEntry(item.type), fields, values),
