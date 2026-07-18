@@ -9,33 +9,28 @@ export function LandingPreviewEditor() {
   const t = useTranslations("previewEditor");
 
   return (
-    <section className="mx-auto w-11/12 max-w-5xl pb-24 text-center md:pb-32">
+    <section className="mx-auto w-11/12 max-w-5xl pb-24 md:pb-32">
       <motion.div
-        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="max-w-2xl"
       >
-        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
+        <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
           {t("heading")}
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground text-balance sm:text-base">
+        <p className="mt-4 text-base text-foreground/70 sm:text-lg">
           {t("description")}
         </p>
       </motion.div>
 
       <motion.figure
-        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
+        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
-        transition={{
-          type: "spring",
-          stiffness: 120,
-          damping: 22,
-          mass: 0.9,
-          opacity: { duration: 0.4, ease: "easeOut" },
-        }}
-        className="mt-8 rounded-xl border bg-muted/40 bg-[radial-gradient(color-mix(in_oklab,var(--color-foreground)_7%,transparent)_1px,transparent_1px)] bg-size-[0.625rem_0.625rem] p-2 shadow-2xl shadow-primary/10 md:mt-12 md:rounded-2xl md:p-3"
+        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        className="mt-10 border border-foreground/15 bg-card p-2 md:mt-12 md:p-3"
       >
         <Image
           src="/lanjut-editor.png"
@@ -44,9 +39,11 @@ export function LandingPreviewEditor() {
           width={1437}
           height={871}
           sizes="(max-width: 1024px) 100vw, 1024px"
-          className="w-full aspect-video rounded-lg border object-cover"
+          className="aspect-video w-full border border-foreground/10 object-cover"
         />
-        <figcaption className="sr-only">{t("caption")}</figcaption>
+        <figcaption className="mt-2 px-1 font-mono text-xs text-muted-foreground">
+          {t("caption")}
+        </figcaption>
       </motion.figure>
     </section>
   );

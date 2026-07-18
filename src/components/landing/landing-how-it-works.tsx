@@ -3,11 +3,11 @@
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { type ReactNode, useId } from "react";
+import type { ReactNode } from "react";
 
 const terminalVariants: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.14, delayChildren: 0.2 } },
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
 };
 
 const terminalLineVariants: Variants = {
@@ -25,21 +25,21 @@ export function LandingHowItWorks() {
       className="mx-auto w-11/12 max-w-5xl pb-24 md:pb-32"
     >
       <motion.div
-        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="text-center"
+        viewport={{ once: true, amount: 0.4 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="max-w-2xl"
       >
-        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
+        <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
           {t("heading")}
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground text-balance sm:text-base">
+        <p className="mt-4 text-base text-foreground/70 sm:text-lg">
           {t("subheading")}
         </p>
       </motion.div>
 
-      <div className="mt-10 space-y-10 md:mt-16 md:space-y-0">
+      <div className="mt-14 md:mt-20">
         <HowItWorksRow
           kicker={t("step1Kicker")}
           title={t("step1Title")}
@@ -53,8 +53,6 @@ export function LandingHowItWorks() {
             height={1800}
           />
         </HowItWorksRow>
-
-        <HowItWorksArrow flip={false} />
 
         <HowItWorksRow
           kicker={t("step2Kicker")}
@@ -70,8 +68,6 @@ export function LandingHowItWorks() {
             height={871}
           />
         </HowItWorksRow>
-
-        <HowItWorksArrow flip />
 
         <HowItWorksRow
           kicker={t("step3Kicker")}
@@ -99,19 +95,19 @@ function HowItWorksRow(props: {
       initial={props.reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="grid items-center gap-5 md:grid-cols-12 md:gap-10"
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="grid items-center gap-6 border-t border-foreground/15 py-12 md:grid-cols-12 md:gap-12 md:py-16"
     >
       <div
         className={props.flip ? "md:order-2 md:col-span-5" : "md:col-span-5"}
       >
-        <p className="font-mono text-xs tracking-widest text-primary uppercase">
+        <p className="font-mono text-xs tracking-[0.18em] text-primary uppercase">
           {props.kicker}
         </p>
-        <h3 className="mt-2 text-xl font-bold tracking-tight sm:text-2xl">
+        <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight sm:text-3xl">
           {props.title}
         </h3>
-        <p className="mt-3 text-sm text-muted-foreground sm:text-base">
+        <p className="mt-3 text-sm text-foreground/70 sm:text-base">
           {props.description}
         </p>
       </div>
@@ -131,66 +127,17 @@ function HowItWorksScreenshot(props: {
   height: number;
 }) {
   return (
-    <figure className="rounded-xl border bg-muted/40 bg-[radial-gradient(color-mix(in_oklab,var(--color-foreground)_7%,transparent)_1px,transparent_1px)] bg-size-[0.625rem_0.625rem] p-2 shadow-xl shadow-primary/10">
+    <figure className="border border-foreground/15 bg-card p-2">
       <Image
         src={props.src}
         alt={props.alt}
         width={props.width}
         height={props.height}
         sizes="(max-width: 768px) 100vw, 600px"
-        className="w-full rounded-lg border object-cover object-top"
+        className="w-full border border-foreground/10 object-cover object-top"
       />
       <figcaption className="sr-only">{props.alt}</figcaption>
     </figure>
-  );
-}
-
-function HowItWorksArrow(props: { flip: boolean }) {
-  const markerId = useId();
-
-  return (
-    <div
-      aria-hidden
-      className="my-4 hidden justify-center text-muted-foreground/50 md:flex"
-    >
-      <svg
-        aria-hidden="true"
-        width="240"
-        height="88"
-        viewBox="0 0 240 88"
-        fill="none"
-        className={props.flip ? "-scale-x-100" : undefined}
-      >
-        <defs>
-          <marker
-            id={markerId}
-            viewBox="0 0 10 10"
-            refX="7"
-            refY="5"
-            markerWidth="5"
-            markerHeight="5"
-            orient="auto-start-reverse"
-          >
-            <path
-              d="M1 1 L9 5 L1 9"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </marker>
-        </defs>
-        <path
-          d="M228 6 C 176 66, 74 14, 14 76"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeDasharray="5 6"
-          strokeLinecap="round"
-          markerEnd={`url(#${markerId})`}
-        />
-      </svg>
-    </div>
   );
 }
 
@@ -198,36 +145,24 @@ function ArtifactParserOutput() {
   const t = useTranslations("howItWorks");
 
   return (
-    <div className="overflow-hidden rounded-xl border border-stone-800 bg-stone-950 text-left shadow-md">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-800 px-4 py-2">
-        <span className="font-mono text-[11px] text-stone-500">
-          {t("terminalCaption")}
-        </span>
-        <div className="flex gap-1.5 font-mono text-[10px] text-stone-400">
-          <span className="rounded border border-stone-700 px-1.5 py-0.5">
-            .pdf
-          </span>
-          <span className="rounded border border-stone-700 px-1.5 py-0.5">
-            .docx
-          </span>
-          <span className="rounded border border-stone-700 px-1.5 py-0.5">
-            .txt
-          </span>
-        </div>
-      </div>
+    <figure>
+      <figcaption className="mb-2 flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-muted-foreground">
+        <span>{t("terminalCaption")}</span>
+        <span className="tabular-nums">.pdf · .docx · .txt</span>
+      </figcaption>
       <motion.div
         variants={terminalVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
-        className="p-4 font-mono text-xs leading-relaxed sm:p-5 sm:text-sm"
+        className="border border-stone-800 bg-stone-950 p-4 text-left font-mono text-xs leading-relaxed sm:p-5 sm:text-sm dark:border-stone-700"
       >
         <motion.p variants={terminalLineVariants} className="text-stone-500">
           $ pdftotext resume.pdf -
         </motion.p>
         <motion.p
           variants={terminalLineVariants}
-          className="mt-3 text-teal-400"
+          className="mt-3 text-emerald-400"
         >
           EXPERIENCE
         </motion.p>
@@ -243,11 +178,11 @@ function ArtifactParserOutput() {
         </motion.p>
         <motion.p
           variants={terminalLineVariants}
-          className="mt-3 text-teal-500"
+          className="mt-3 text-emerald-500"
         >
           {t("terminalReadingOrder")}
         </motion.p>
       </motion.div>
-    </div>
+    </figure>
   );
 }

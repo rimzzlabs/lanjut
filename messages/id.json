@@ -20,7 +20,7 @@
     "stat1Label": "Local-first",
     "stat2Value": "Tanpa",
     "stat2Label": "Akun",
-    "stat3Value": "3",
+    "stat3Value": "5",
     "stat3Label": "Format ekspor"
   },
   "previewEditor": {
@@ -162,7 +162,7 @@
   },
   "platform": {
     "breadcrumb": {
-      "platform": "Platform",
+      "platform": "Dasbor",
       "editor": "Editor",
       "browseTemplates": "Jelajahi Template"
     },

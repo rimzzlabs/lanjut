@@ -20,7 +20,7 @@
     "stat1Label": "Local-first",
     "stat2Value": "No",
     "stat2Label": "Accounts",
-    "stat3Value": "3",
+    "stat3Value": "5",
     "stat3Label": "Export formats"
   },
   "previewEditor": {
@@ -162,7 +162,7 @@
   },
   "platform": {
     "breadcrumb": {
-      "platform": "Platform",
+      "platform": "Dashboard",
       "editor": "Editor",
       "browseTemplates": "Browse Templates"
     },

@@ -13,22 +13,22 @@ export function LandingClosure() {
   return (
     <section className="mx-auto w-11/12 max-w-5xl pb-24 md:pb-32">
       <motion.div
-        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="rounded-2xl border bg-muted/40 bg-[radial-gradient(color-mix(in_oklab,var(--color-foreground)_7%,transparent)_1px,transparent_1px)] bg-size-[0.625rem_0.625rem] px-6 py-14 text-center shadow-xl shadow-primary/10 md:py-20"
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="border-y-2 border-foreground py-16 md:py-24"
       >
-        <p className="font-mono text-xs tracking-widest text-primary uppercase">
+        <p className="font-mono text-xs tracking-[0.18em] text-primary uppercase">
           {t("kicker")}
         </p>
-        <h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
+        <h2 className="mt-4 max-w-3xl font-display text-[clamp(2rem,5vw,3.75rem)] leading-[1.04] font-semibold tracking-tight text-balance">
           {t("heading")}
         </h2>
-        <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground text-balance sm:text-base">
+        <p className="mt-5 max-w-2xl text-base text-foreground/70 sm:text-lg">
           {t("description")}
         </p>
-        <div className="mx-auto mt-8 flex w-full max-w-xs flex-col justify-center gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:gap-4">
+        <div className="mt-9 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:gap-4">
           <Button
             size="lg"
             className="gap-2"

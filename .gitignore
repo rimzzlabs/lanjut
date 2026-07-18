@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+.hallmark/
 
 # debug
 npm-debug.log*

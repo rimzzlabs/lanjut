@@ -15,9 +15,19 @@ export async function generateMetadata(props: {
   return { title: t("dashboard") };
 }
 
-export default function PlatformPage() {
+export default async function PlatformPage(props: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await props.params;
+  const t = await getTranslations({ locale, namespace: "platform.sidebar" });
+
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col gap-4 p-4 md:p-6">
+      <header className="border-b border-border pb-4">
+        <h1 className="text-xl font-semibold tracking-tight">
+          {t("myResume")}
+        </h1>
+      </header>
       <Suspense>
         <PlatformResumeToolbar />
         <PlatformResumeUnreadableNotice />

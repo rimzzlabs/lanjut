@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Fraunces, Geist, Geist_Mono, Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -19,6 +19,14 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Editorial display serif, scoped to marketing headings via `font-display`.
+// Roman only; the résumé document keeps its own font system.
+const fraunces = Fraunces({
+  variable: "--font-display",
+  subsets: ["latin"],
+  style: "normal",
 });
 
 const OG_LOCALE: Record<Locale, string> = {
@@ -62,11 +70,15 @@ export async function generateMetadata(props: {
       title: t("title"),
       description: t("description"),
       locale: OG_LOCALE[locale],
+      images: [
+        { url: `/og/${locale}.png`, width: 1200, height: 630, alt: t("title") },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
+      images: [`/og/${locale}.png`],
     },
     icons: {
       icon: [
@@ -82,7 +94,7 @@ export async function generateMetadata(props: {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#1f7a70",
+  themeColor: "#1c6b4f",
 };
 
 export default async function RootLayout(props: {
@@ -106,6 +118,7 @@ export default async function RootLayout(props: {
         "antialiased",
         geistSans.variable,
         geistMono.variable,
+        fraunces.variable,
         "font-sans",
         inter.variable,
       )}
