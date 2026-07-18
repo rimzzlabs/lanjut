@@ -25,7 +25,10 @@ export function EditorDocumentStyleReset() {
       !open.font &&
       (open.sectionSpacing ?? 0) === 0 &&
       (open.letterSpacing ?? 0) === 0 &&
-      open.lineHeight == null
+      open.lineHeight == null &&
+      (open.nameScale ?? 1) === 1 &&
+      (open.titleScale ?? 1) === 1 &&
+      (open.bodyScale ?? 1) === 1
     );
   });
   const hasOpen = useResumeStore((state) => state.open !== null);
@@ -41,6 +44,9 @@ export function EditorDocumentStyleReset() {
       draft.letterSpacing = 0;
       delete draft.font;
       delete draft.lineHeight;
+      delete draft.nameScale;
+      delete draft.titleScale;
+      delete draft.bodyScale;
     });
   };
 

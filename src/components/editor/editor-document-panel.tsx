@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { EditorDocumentCopy } from "./editor-document-copy";
 import { EditorDocumentDownload } from "./editor-document-download";
 import { EditorDocumentFont } from "./editor-document-font";
+import { EditorDocumentFontSize } from "./editor-document-font-size";
 import { EditorDocumentIcon } from "./editor-document-icon";
 import { EditorDocumentImport } from "./editor-document-import";
 import { EditorDocumentLanguage } from "./editor-document-language";
@@ -25,6 +26,7 @@ export function EditorDocumentPanel() {
         <EditorDocumentIcon />
         <EditorDocumentLanguage />
         <EditorDocumentFont />
+        <EditorDocumentFontSize />
         <EditorDocumentSpacing />
         <EditorDocumentLineHeight />
         <EditorDocumentLetterSpacing />

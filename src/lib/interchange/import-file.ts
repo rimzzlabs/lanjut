@@ -30,6 +30,15 @@ function buildImportedResume(
   if (parsed.content.lineHeight !== undefined) {
     resume.lineHeight = parsed.content.lineHeight;
   }
+  if (parsed.content.nameScale !== undefined) {
+    resume.nameScale = parsed.content.nameScale;
+  }
+  if (parsed.content.titleScale !== undefined) {
+    resume.titleScale = parsed.content.titleScale;
+  }
+  if (parsed.content.bodyScale !== undefined) {
+    resume.bodyScale = parsed.content.bodyScale;
+  }
   if (parsed.content.title) resume.title = parsed.content.title;
   return { ok: true, resume, leftovers: [] };
 }

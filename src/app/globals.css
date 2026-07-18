@@ -126,6 +126,41 @@
   --sidebar-ring: oklch(0.58 0.031 107.3);
 }
 
+/* Résumé font-size scaling. Each utility multiplies a fixed baseline size by
+   the document's per-group scale variable (default 1 via the fallback), so the
+   Name / Section title / Body sliders resize their group while keeping every
+   template's built-in proportions. See resumeTypographyStyle. */
+@utility resume-name-xl {
+  font-size: calc(1.25rem * var(--resume-name-scale, 1));
+}
+@utility resume-name-2xl {
+  font-size: calc(1.5rem * var(--resume-name-scale, 1));
+}
+@utility resume-name-3xl {
+  font-size: calc(1.875rem * var(--resume-name-scale, 1));
+}
+@utility resume-name-sm {
+  font-size: calc(0.875rem * var(--resume-name-scale, 1));
+}
+@utility resume-name-base {
+  font-size: calc(1rem * var(--resume-name-scale, 1));
+}
+@utility resume-title-base {
+  font-size: calc(1rem * var(--resume-title-scale, 1));
+}
+@utility resume-title-sm {
+  font-size: calc(0.875rem * var(--resume-title-scale, 1));
+}
+@utility resume-title-xs {
+  font-size: calc(0.75rem * var(--resume-title-scale, 1));
+}
+@utility resume-body-sm {
+  font-size: calc(0.875rem * var(--resume-body-scale, 1));
+}
+@utility resume-body-xs {
+  font-size: calc(0.75rem * var(--resume-body-scale, 1));
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -93,6 +93,9 @@ export const interchangeSchema = z
     font: z.string().optional(),
     letterSpacing: z.number().min(-0.5).max(0.5).optional(),
     lineHeight: z.number().min(1.2).max(2).optional(),
+    nameScale: z.number().min(0.8).max(1.2).optional(),
+    titleScale: z.number().min(0.8).max(1.2).optional(),
+    bodyScale: z.number().min(0.8).max(1.2).optional(),
     header: entryShape(HEADER_SCHEMA).optional(),
     sections: z.array(sectionSchema).optional(),
   })

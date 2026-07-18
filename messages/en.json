@@ -192,6 +192,10 @@
           {
             "title": "Line height and letter spacing",
             "description": "Two more sliders in the Document tab, resting at each template's real values: tighten or loosen line height and letter spacing either way, both bounded to the range where PDF text still extracts cleanly, so your styling never costs you ATS parsing."
+          },
+          {
+            "title": "Font size controls",
+            "description": "Resize your name, section headings, and body text independently from the Document tab. Each slider scales its group on top of the template's proportions, so a bigger name never flattens the rest, and the preview and PDF stay in step."
           }
         ],
         "0_9_0": [
@@ -545,7 +549,10 @@
       "fontSerif": "Serif",
       "fontMono": "Mono",
       "lineHeight": "Line height",
-      "letterSpacing": "Letter spacing"
+      "letterSpacing": "Letter spacing",
+      "fontSizeName": "Name size",
+      "fontSizeTitle": "Heading size",
+      "fontSizeBody": "Body size"
     },
     "chrome": {
       "edit": "Edit",

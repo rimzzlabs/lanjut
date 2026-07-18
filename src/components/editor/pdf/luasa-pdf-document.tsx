@@ -15,65 +15,88 @@ import type {
   HeaderView,
   ResumePreview,
 } from "../resume-preview";
-import { PdfFontContext, pdfTypography, usePdfFontFamily } from "./pdf-font";
+import {
+  type FontScales,
+  fontScales,
+  NO_SCALE,
+  PdfFontContext,
+  PdfStylesContext,
+  pdfTypography,
+  usePdfFontFamily,
+  usePdfStyles,
+} from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfRichText } from "./pdf-rich-text";
 
-const styles = StyleSheet.create({
-  page: {
-    paddingVertical: 44,
-    paddingHorizontal: 48,
-    fontFamily: "Inter",
-    fontSize: 9,
-    color: PDF_COLORS.foreground,
-    lineHeight: 1.45,
-  },
-  accentBar: {
-    borderLeftWidth: 1.5,
-    borderLeftColor: PDF_COLORS.foreground,
-    paddingLeft: 12,
-  },
-  softBar: {
-    borderLeftWidth: 1.5,
-    borderLeftColor: PDF_COLORS.border,
-    paddingLeft: 12,
-  },
-  // No letterSpacing anywhere in PDF styles: react-pdf places letter-spaced
-  // glyphs individually, which destroys word boundaries in text extraction.
-  name: {
-    fontFamily: "Lora",
-    fontSize: 18,
-    textTransform: "uppercase",
-    lineHeight: 1.25,
-  },
-  headline: {
-    marginTop: 1,
-    fontFamily: "Lora",
-    fontSize: 10,
-    color: PDF_COLORS.muted,
-  },
-  contactLine: { marginTop: 3, fontSize: 9, color: PDF_COLORS.muted },
-  linkMuted: { color: PDF_COLORS.muted, textDecoration: "none" },
-  heading: {
-    fontFamily: "Lora",
-    fontSize: 9.5,
-    fontWeight: 700,
-    textTransform: "uppercase",
-  },
-  entryRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "baseline",
-    gap: 8,
-  },
-  entryTitle: { fontSize: 9.5, textTransform: "uppercase" },
-  entryDate: { fontSize: 9, color: PDF_COLORS.muted, flexShrink: 0 },
-  subtitle: { fontSize: 9, fontStyle: "italic", color: PDF_COLORS.muted },
-  body: { marginTop: 3 },
-});
+// Font sizes are multiplied by the document's per-group scales (name, title,
+// body); every other value is fixed. At NO_SCALE this is the baseline sheet.
+const makeStyles = (s: FontScales) =>
+  StyleSheet.create({
+    page: {
+      paddingVertical: 44,
+      paddingHorizontal: 48,
+      fontFamily: "Inter",
+      fontSize: 9 * s.body,
+      color: PDF_COLORS.foreground,
+      lineHeight: 1.45,
+    },
+    accentBar: {
+      borderLeftWidth: 1.5,
+      borderLeftColor: PDF_COLORS.foreground,
+      paddingLeft: 12,
+    },
+    softBar: {
+      borderLeftWidth: 1.5,
+      borderLeftColor: PDF_COLORS.border,
+      paddingLeft: 12,
+    },
+    // No letterSpacing anywhere in PDF styles: react-pdf places letter-spaced
+    // glyphs individually, which destroys word boundaries in text extraction.
+    name: {
+      fontFamily: "Lora",
+      fontSize: 18 * s.name,
+      textTransform: "uppercase",
+      lineHeight: 1.25,
+    },
+    headline: {
+      marginTop: 1,
+      fontFamily: "Lora",
+      fontSize: 10 * s.name,
+      color: PDF_COLORS.muted,
+    },
+    contactLine: {
+      marginTop: 3,
+      fontSize: 9 * s.body,
+      color: PDF_COLORS.muted,
+    },
+    linkMuted: { color: PDF_COLORS.muted, textDecoration: "none" },
+    heading: {
+      fontFamily: "Lora",
+      fontSize: 9.5 * s.title,
+      fontWeight: 700,
+      textTransform: "uppercase",
+    },
+    entryRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "baseline",
+      gap: 8,
+    },
+    entryTitle: { fontSize: 9.5 * s.body, textTransform: "uppercase" },
+    entryDate: { fontSize: 9 * s.body, color: PDF_COLORS.muted, flexShrink: 0 },
+    subtitle: {
+      fontSize: 9 * s.body,
+      fontStyle: "italic",
+      color: PDF_COLORS.muted,
+    },
+    body: { marginTop: 3 },
+  });
+
+const baseStyles = makeStyles(NO_SCALE);
 
 function LuasaContactLine(props: { contacts: ContactView[] }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <Text style={styles.contactLine}>
       {props.contacts.map((contact, index) => (
@@ -93,6 +116,7 @@ function LuasaContactLine(props: { contacts: ContactView[] }) {
 }
 
 function LuasaHeader(props: { header: HeaderView }) {
+  const styles = usePdfStyles(baseStyles);
   const serif = usePdfFontFamily("Lora");
   return (
     <View style={styles.accentBar}>
@@ -112,6 +136,7 @@ function LuasaHeader(props: { header: HeaderView }) {
 }
 
 function LuasaExperience(props: { item: ExperienceItemView }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <View>
       <View style={styles.entryRow}>
@@ -135,6 +160,7 @@ function LuasaExperience(props: { item: ExperienceItemView }) {
 }
 
 function LuasaEducation(props: { item: EducationItemView }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <View style={styles.softBar}>
       <View style={styles.entryRow}>
@@ -150,6 +176,7 @@ function LuasaEducation(props: { item: EducationItemView }) {
 }
 
 function LuasaCertificate(props: { item: CertificateItemView }) {
+  const styles = usePdfStyles(baseStyles);
   const range = dateRange(props.item.startDate, props.item.endDate);
   return (
     <View style={styles.softBar}>
@@ -171,6 +198,7 @@ function LuasaCertificate(props: { item: CertificateItemView }) {
 }
 
 function LuasaBlock(props: { block: ResumeBlock }) {
+  const styles = usePdfStyles(baseStyles);
   const serif = usePdfFontFamily("Lora");
   const { block } = props;
   switch (block.kind) {
@@ -209,24 +237,29 @@ function LuasaBlock(props: { block: ResumeBlock }) {
 export function LuasaPdfDocument(props: { preview: ResumePreview }) {
   const blocks = buildResumeBlocks(props.preview);
   const typography = pdfTypography(props.preview);
+  const styles = makeStyles(fontScales(props.preview));
   return (
     <PdfFontContext.Provider value={typography.family}>
-      <Document>
-        <Page
-          size="A4"
-          style={typography.page ? [styles.page, typography.page] : styles.page}
-        >
-          {blocks.map((block) => (
-            <View
-              key={block.id}
-              style={{ marginTop: block.gapBefore }}
-              minPresenceAhead={block.keepWithNext ? 48 : 0}
-            >
-              <LuasaBlock block={block} />
-            </View>
-          ))}
-        </Page>
-      </Document>
+      <PdfStylesContext.Provider value={styles}>
+        <Document>
+          <Page
+            size="A4"
+            style={
+              typography.page ? [styles.page, typography.page] : styles.page
+            }
+          >
+            {blocks.map((block) => (
+              <View
+                key={block.id}
+                style={{ marginTop: block.gapBefore }}
+                minPresenceAhead={block.keepWithNext ? 48 : 0}
+              >
+                <LuasaBlock block={block} />
+              </View>
+            ))}
+          </Page>
+        </Document>
+      </PdfStylesContext.Provider>
     </PdfFontContext.Provider>
   );
 }

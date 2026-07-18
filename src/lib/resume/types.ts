@@ -5,7 +5,7 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 19;
+export const CURRENT_SCHEMA_VERSION = 20;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
@@ -166,6 +166,21 @@ export interface Resume {
    * leading) still win over the document value.
    */
   lineHeight?: number;
+  /**
+   * Presentation-only font-size scale for the person's name and the job-title
+   * headline beneath it, multiplying each template's baseline size. 1 or unset
+   * is the template default; bounded to 0.8..1.2. A multiplier (not an absolute
+   * size) so every template keeps its own proportions.
+   */
+  nameScale?: number;
+  /** Presentation-only font-size scale for section headings; see `nameScale`. */
+  titleScale?: number;
+  /**
+   * Presentation-only font-size scale for body text (summary, entries, contact,
+   * skills, languages), multiplying each template's baseline body sizes so
+   * their internal hierarchy is preserved; see `nameScale`.
+   */
+  bodyScale?: number;
   header: Header;
   sections: Section[];
   /** ISO 8601. */

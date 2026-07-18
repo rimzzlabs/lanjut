@@ -5,12 +5,12 @@ export function KlasikExperienceItem(props: ExperienceItemView) {
   return (
     <article className="font-serif">
       <div className="flex items-baseline justify-between gap-4">
-        <h3 className="text-sm font-semibold">{props.role}</h3>
-        <span className="shrink-0 text-xs italic text-muted-foreground">
+        <h3 className="resume-body-sm font-semibold">{props.role}</h3>
+        <span className="shrink-0 resume-body-xs italic text-muted-foreground">
           {props.startDate} – {props.endDate}
         </span>
       </div>
-      <p className="text-xs text-muted-foreground">
+      <p className="resume-body-xs text-muted-foreground">
         {props.companyHref ? (
           <a href={props.companyHref} className="hover:underline">
             {props.company}

@@ -15,67 +15,86 @@ import type {
   HeaderView,
   ResumePreview,
 } from "../resume-preview";
-import { PdfFontContext, pdfTypography, usePdfFontFamily } from "./pdf-font";
+import {
+  type FontScales,
+  fontScales,
+  NO_SCALE,
+  PdfFontContext,
+  PdfStylesContext,
+  pdfTypography,
+  usePdfFontFamily,
+  usePdfStyles,
+} from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfRichText } from "./pdf-rich-text";
 
-const styles = StyleSheet.create({
-  page: {
-    paddingVertical: 40,
-    paddingHorizontal: 44,
-    fontFamily: "Inter",
-    fontSize: 9,
-    color: PDF_COLORS.foreground,
-    lineHeight: 1.4,
-  },
-  name: {
-    fontFamily: "GeistMono",
-    fontSize: 16,
-    fontWeight: 700,
-    lineHeight: 1.25,
-  },
-  headline: {
-    marginTop: 2,
-    fontFamily: "GeistMono",
-    fontSize: 10,
-    color: PDF_COLORS.muted,
-  },
-  contactLine: {
-    marginTop: 4,
-    fontFamily: "GeistMono",
-    fontSize: 8,
-    color: PDF_COLORS.muted,
-  },
-  linkMuted: { color: PDF_COLORS.muted, textDecoration: "none" },
-  heading: {
-    fontFamily: "GeistMono",
-    fontSize: 9.5,
-    fontWeight: 700,
-    textTransform: "uppercase",
-    borderBottomWidth: 0.75,
-    borderBottomStyle: "dashed",
-    borderBottomColor: PDF_COLORS.border,
-    paddingBottom: 3,
-  },
-  entryRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "baseline",
-    gap: 8,
-  },
-  entryTitle: { fontFamily: "GeistMono", fontSize: 9, fontWeight: 700 },
-  entryDate: {
-    fontFamily: "GeistMono",
-    fontSize: 8,
-    color: PDF_COLORS.muted,
-    flexShrink: 0,
-  },
-  subtitle: { fontSize: 9, color: PDF_COLORS.muted },
-  body: { marginTop: 3 },
-});
+// Font sizes are multiplied by the document's per-group scales (name, title,
+// body); every other value is fixed. At NO_SCALE this is the baseline sheet.
+const makeStyles = (s: FontScales) =>
+  StyleSheet.create({
+    page: {
+      paddingVertical: 40,
+      paddingHorizontal: 44,
+      fontFamily: "Inter",
+      fontSize: 9 * s.body,
+      color: PDF_COLORS.foreground,
+      lineHeight: 1.4,
+    },
+    name: {
+      fontFamily: "GeistMono",
+      fontSize: 16 * s.name,
+      fontWeight: 700,
+      lineHeight: 1.25,
+    },
+    headline: {
+      marginTop: 2,
+      fontFamily: "GeistMono",
+      fontSize: 10 * s.name,
+      color: PDF_COLORS.muted,
+    },
+    contactLine: {
+      marginTop: 4,
+      fontFamily: "GeistMono",
+      fontSize: 8 * s.body,
+      color: PDF_COLORS.muted,
+    },
+    linkMuted: { color: PDF_COLORS.muted, textDecoration: "none" },
+    heading: {
+      fontFamily: "GeistMono",
+      fontSize: 9.5 * s.title,
+      fontWeight: 700,
+      textTransform: "uppercase",
+      borderBottomWidth: 0.75,
+      borderBottomStyle: "dashed",
+      borderBottomColor: PDF_COLORS.border,
+      paddingBottom: 3,
+    },
+    entryRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "baseline",
+      gap: 8,
+    },
+    entryTitle: {
+      fontFamily: "GeistMono",
+      fontSize: 9 * s.body,
+      fontWeight: 700,
+    },
+    entryDate: {
+      fontFamily: "GeistMono",
+      fontSize: 8 * s.body,
+      color: PDF_COLORS.muted,
+      flexShrink: 0,
+    },
+    subtitle: { fontSize: 9 * s.body, color: PDF_COLORS.muted },
+    body: { marginTop: 3 },
+  });
+
+const baseStyles = makeStyles(NO_SCALE);
 
 function KetikContactLine(props: { contacts: ContactView[] }) {
+  const styles = usePdfStyles(baseStyles);
   const mono = usePdfFontFamily("GeistMono");
   return (
     <Text style={[styles.contactLine, { fontFamily: mono }]}>
@@ -96,6 +115,7 @@ function KetikContactLine(props: { contacts: ContactView[] }) {
 }
 
 function KetikHeader(props: { header: HeaderView }) {
+  const styles = usePdfStyles(baseStyles);
   const mono = usePdfFontFamily("GeistMono");
   return (
     <View>
@@ -115,6 +135,7 @@ function KetikHeader(props: { header: HeaderView }) {
 }
 
 function KetikExperience(props: { item: ExperienceItemView }) {
+  const styles = usePdfStyles(baseStyles);
   const mono = usePdfFontFamily("GeistMono");
   return (
     <View>
@@ -141,6 +162,7 @@ function KetikExperience(props: { item: ExperienceItemView }) {
 }
 
 function KetikEducation(props: { item: EducationItemView }) {
+  const styles = usePdfStyles(baseStyles);
   const mono = usePdfFontFamily("GeistMono");
   return (
     <View>
@@ -159,6 +181,7 @@ function KetikEducation(props: { item: EducationItemView }) {
 }
 
 function KetikCertificate(props: { item: CertificateItemView }) {
+  const styles = usePdfStyles(baseStyles);
   const mono = usePdfFontFamily("GeistMono");
   const range = dateRange(props.item.startDate, props.item.endDate);
   return (
@@ -183,6 +206,7 @@ function KetikCertificate(props: { item: CertificateItemView }) {
 }
 
 function KetikBlock(props: { block: ResumeBlock }) {
+  const styles = usePdfStyles(baseStyles);
   const mono = usePdfFontFamily("GeistMono");
   const { block } = props;
   switch (block.kind) {
@@ -218,24 +242,29 @@ function KetikBlock(props: { block: ResumeBlock }) {
 export function KetikPdfDocument(props: { preview: ResumePreview }) {
   const blocks = buildResumeBlocks(props.preview);
   const typography = pdfTypography(props.preview);
+  const styles = makeStyles(fontScales(props.preview));
   return (
     <PdfFontContext.Provider value={typography.family}>
-      <Document>
-        <Page
-          size="A4"
-          style={typography.page ? [styles.page, typography.page] : styles.page}
-        >
-          {blocks.map((block) => (
-            <View
-              key={block.id}
-              style={{ marginTop: block.gapBefore }}
-              minPresenceAhead={block.keepWithNext ? 48 : 0}
-            >
-              <KetikBlock block={block} />
-            </View>
-          ))}
-        </Page>
-      </Document>
+      <PdfStylesContext.Provider value={styles}>
+        <Document>
+          <Page
+            size="A4"
+            style={
+              typography.page ? [styles.page, typography.page] : styles.page
+            }
+          >
+            {blocks.map((block) => (
+              <View
+                key={block.id}
+                style={{ marginTop: block.gapBefore }}
+                minPresenceAhead={block.keepWithNext ? 48 : 0}
+              >
+                <KetikBlock block={block} />
+              </View>
+            ))}
+          </Page>
+        </Document>
+      </PdfStylesContext.Provider>
     </PdfFontContext.Provider>
   );
 }

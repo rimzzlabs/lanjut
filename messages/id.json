@@ -192,6 +192,10 @@
           {
             "title": "Tinggi baris dan jarak antarhuruf",
             "description": "Dua slider baru di tab Dokumen yang berangkat dari nilai asli tiap template: rapatkan atau longgarkan tinggi baris dan jarak antarhuruf ke dua arah, keduanya dibatasi pada rentang di mana teks PDF masih terekstrak bersih, jadi gaya kamu nggak pernah mengorbankan parsing ATS."
+          },
+          {
+            "title": "Kontrol ukuran font",
+            "description": "Ubah ukuran nama, judul bagian, dan teks isi secara terpisah dari tab Dokumen. Tiap slider menskalakan kelompoknya di atas proporsi template, jadi nama yang lebih besar nggak pernah meratakan sisanya, dan pratinjau serta PDF tetap selaras."
           }
         ],
         "0_9_0": [
@@ -545,7 +549,10 @@
       "fontSerif": "Serif",
       "fontMono": "Mono",
       "lineHeight": "Tinggi baris",
-      "letterSpacing": "Jarak antarhuruf"
+      "letterSpacing": "Jarak antarhuruf",
+      "fontSizeName": "Ukuran nama",
+      "fontSizeTitle": "Ukuran judul",
+      "fontSizeBody": "Ukuran isi"
     },
     "chrome": {
       "edit": "Edit",

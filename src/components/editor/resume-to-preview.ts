@@ -37,6 +37,11 @@ function withHttps(value: string): string {
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
 }
 
+/** Font-size multiplier, defaulting to 1 and bounded to the editor's range. */
+function clampScale(value: number | undefined): number {
+  return Math.min(1.2, Math.max(0.8, value ?? 1));
+}
+
 /**
  * A stored title equal to the registry default means "never renamed": it
  * renders as the document-language label, which is how language switching
@@ -216,6 +221,10 @@ export function resumeToPreview(resume: Resume): ResumePreview {
       resume.lineHeight != null
         ? Math.min(2, Math.max(1.2, resume.lineHeight))
         : null,
+    // Clamped so a hand-edited document keeps template proportions readable.
+    nameScale: clampScale(resume.nameScale),
+    titleScale: clampScale(resume.titleScale),
+    bodyScale: clampScale(resume.bodyScale),
     headings,
     sectionOrder,
     customSections,
