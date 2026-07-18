@@ -20,6 +20,36 @@ export function usePdfFontFamily(fallback: string): string {
   return useContext(PdfFontContext) ?? fallback;
 }
 
+/** Per-group font-size multipliers a PDF template applies to its baseline sizes. */
+export interface FontScales {
+  name: number;
+  title: number;
+  body: number;
+}
+
+/** Identity scales: renders each template at its baseline sizes. */
+export const NO_SCALE: FontScales = { name: 1, title: 1, body: 1 };
+
+export function fontScales(preview: ResumePreview): FontScales {
+  return {
+    name: preview.nameScale,
+    title: preview.titleScale,
+    body: preview.bodyScale,
+  };
+}
+
+/**
+ * Carries a template's font-size-scaled StyleSheet to its nested block
+ * components, so they read scaled styles from context instead of the module
+ * baseline and never thread a `styles` prop. Each template narrows the value
+ * to its own sheet via `usePdfStyles`.
+ */
+export const PdfStylesContext = createContext<unknown>(null);
+
+export function usePdfStyles<T>(fallback: T): T {
+  return (useContext(PdfStylesContext) as T | null) ?? fallback;
+}
+
 interface PdfTypography {
   /** Override family for PdfFontContext, or null for template families. */
   family: string | null;

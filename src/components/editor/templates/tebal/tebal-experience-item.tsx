@@ -5,12 +5,12 @@ export function TebalExperienceItem(props: ExperienceItemView) {
   return (
     <article>
       <div className="flex items-baseline justify-between gap-4">
-        <h3 className="text-sm font-bold">{props.role}</h3>
-        <span className="shrink-0 text-xs font-semibold text-muted-foreground">
+        <h3 className="resume-body-sm font-bold">{props.role}</h3>
+        <span className="shrink-0 resume-body-xs font-semibold text-muted-foreground">
           {props.startDate} – {props.endDate}
         </span>
       </div>
-      <p className="text-xs font-medium text-muted-foreground">
+      <p className="resume-body-xs font-medium text-muted-foreground">
         {props.companyHref ? (
           <a href={props.companyHref} className="hover:underline">
             {props.company}

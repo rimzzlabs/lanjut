@@ -15,57 +15,74 @@ import type {
   ResumePreview,
 } from "../resume-preview";
 import { PdfContactIcon } from "./pdf-contact-icon";
-import { pdfTypography } from "./pdf-font";
+import {
+  type FontScales,
+  fontScales,
+  NO_SCALE,
+  PdfStylesContext,
+  pdfTypography,
+  usePdfStyles,
+} from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfRichText } from "./pdf-rich-text";
 
-const styles = StyleSheet.create({
-  page: {
-    paddingVertical: 40,
-    paddingHorizontal: 44,
-    fontFamily: "Inter",
-    fontSize: 9,
-    color: PDF_COLORS.foreground,
-    lineHeight: 1.4,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    gap: 16,
-  },
-  headerLeft: { flexShrink: 1 },
-  name: { fontSize: 18, fontWeight: 700, lineHeight: 1.25 },
-  headline: { marginTop: 2, fontSize: 10.5, color: PDF_COLORS.muted },
-  headerRight: { alignItems: "flex-start", gap: 3 },
-  contactRow: { flexDirection: "row", alignItems: "center", gap: 4 },
-  linkPlain: { color: PDF_COLORS.foreground, textDecoration: "none" },
-  heading: {
-    fontSize: 10,
-    fontWeight: 600,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-    paddingBottom: 2,
-    borderBottomWidth: 0.75,
-    borderBottomStyle: "dotted",
-    borderBottomColor: PDF_COLORS.border,
-    marginBottom: 4,
-  },
-  entryRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "baseline",
-    gap: 8,
-  },
-  entryTitle: { fontSize: 9.5, fontWeight: 600 },
-  entryDate: { fontSize: 9, color: PDF_COLORS.muted, flexShrink: 0 },
-  subtitle: { fontSize: 9, color: PDF_COLORS.muted },
-  subtitleLink: { color: PDF_COLORS.muted, textDecoration: "none" },
-  body: { marginTop: 3 },
-});
+// Font sizes are multiplied by the document's per-group scales (name, title,
+// body); every other value is fixed. At NO_SCALE this is the baseline sheet.
+const makeStyles = (s: FontScales) =>
+  StyleSheet.create({
+    page: {
+      paddingVertical: 40,
+      paddingHorizontal: 44,
+      fontFamily: "Inter",
+      fontSize: 9 * s.body,
+      color: PDF_COLORS.foreground,
+      lineHeight: 1.4,
+    },
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
+      gap: 16,
+    },
+    headerLeft: { flexShrink: 1 },
+    name: { fontSize: 18 * s.name, fontWeight: 700, lineHeight: 1.25 },
+    headline: {
+      marginTop: 2,
+      fontSize: 10.5 * s.name,
+      color: PDF_COLORS.muted,
+    },
+    headerRight: { alignItems: "flex-start", gap: 3 },
+    contactRow: { flexDirection: "row", alignItems: "center", gap: 4 },
+    linkPlain: { color: PDF_COLORS.foreground, textDecoration: "none" },
+    heading: {
+      fontSize: 10 * s.title,
+      fontWeight: 600,
+      textTransform: "uppercase",
+      letterSpacing: 0.5,
+      paddingBottom: 2,
+      borderBottomWidth: 0.75,
+      borderBottomStyle: "dotted",
+      borderBottomColor: PDF_COLORS.border,
+      marginBottom: 4,
+    },
+    entryRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "baseline",
+      gap: 8,
+    },
+    entryTitle: { fontSize: 9.5 * s.body, fontWeight: 600 },
+    entryDate: { fontSize: 9 * s.body, color: PDF_COLORS.muted, flexShrink: 0 },
+    subtitle: { fontSize: 9 * s.body, color: PDF_COLORS.muted },
+    subtitleLink: { color: PDF_COLORS.muted, textDecoration: "none" },
+    body: { marginTop: 3 },
+  });
+
+const baseStyles = makeStyles(NO_SCALE);
 
 function PdfHeader(props: { header: HeaderView }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <View style={styles.header}>
       <View style={styles.headerLeft}>
@@ -95,6 +112,7 @@ function PdfHeader(props: { header: HeaderView }) {
 }
 
 function PdfExperience(props: { item: ExperienceItemView }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <View>
       <View style={styles.entryRow}>
@@ -118,6 +136,7 @@ function PdfExperience(props: { item: ExperienceItemView }) {
 }
 
 function PdfEducation(props: { item: EducationItemView }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <View>
       <View style={styles.entryRow}>
@@ -133,6 +152,7 @@ function PdfEducation(props: { item: EducationItemView }) {
 }
 
 function PdfCertificate(props: { item: CertificateItemView }) {
+  const styles = usePdfStyles(baseStyles);
   const range = dateRange(props.item.startDate, props.item.endDate);
   return (
     <View>
@@ -154,6 +174,7 @@ function PdfCertificate(props: { item: CertificateItemView }) {
 }
 
 function PdfBlock(props: { block: ResumeBlock }) {
+  const styles = usePdfStyles(baseStyles);
   const { block } = props;
   switch (block.kind) {
     case "header":
@@ -185,22 +206,25 @@ function PdfBlock(props: { block: ResumeBlock }) {
 export function AwalPdfDocument(props: { preview: ResumePreview }) {
   const blocks = buildResumeBlocks(props.preview);
   const typography = pdfTypography(props.preview);
+  const styles = makeStyles(fontScales(props.preview));
   return (
-    <Document>
-      <Page
-        size="A4"
-        style={typography.page ? [styles.page, typography.page] : styles.page}
-      >
-        {blocks.map((block) => (
-          <View
-            key={block.id}
-            style={{ marginTop: block.gapBefore }}
-            minPresenceAhead={block.keepWithNext ? 48 : 0}
-          >
-            <PdfBlock block={block} />
-          </View>
-        ))}
-      </Page>
-    </Document>
+    <PdfStylesContext.Provider value={styles}>
+      <Document>
+        <Page
+          size="A4"
+          style={typography.page ? [styles.page, typography.page] : styles.page}
+        >
+          {blocks.map((block) => (
+            <View
+              key={block.id}
+              style={{ marginTop: block.gapBefore }}
+              minPresenceAhead={block.keepWithNext ? 48 : 0}
+            >
+              <PdfBlock block={block} />
+            </View>
+          ))}
+        </Page>
+      </Document>
+    </PdfStylesContext.Provider>
   );
 }

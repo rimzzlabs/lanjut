@@ -4,7 +4,7 @@ export function KetikCertificateItem(props: CertificateItemView) {
   return (
     <article>
       <div className="flex items-baseline justify-between gap-4">
-        <h3 className="font-mono text-xs font-bold">
+        <h3 className="font-mono resume-body-xs font-bold">
           {props.href ? (
             <a href={props.href} className="hover:underline">
               {props.title}
@@ -19,7 +19,7 @@ export function KetikCertificateItem(props: CertificateItemView) {
           </span>
         )}
       </div>
-      <p className="text-xs text-muted-foreground">{props.issuer}</p>
+      <p className="resume-body-xs text-muted-foreground">{props.issuer}</p>
     </article>
   );
 }

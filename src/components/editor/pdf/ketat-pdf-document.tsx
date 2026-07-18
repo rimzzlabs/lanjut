@@ -15,76 +15,91 @@ import type {
   ResumePreview,
 } from "../resume-preview";
 import { PdfContactIcon } from "./pdf-contact-icon";
-import { PdfFontContext, pdfTypography, usePdfFontFamily } from "./pdf-font";
+import {
+  type FontScales,
+  fontScales,
+  NO_SCALE,
+  PdfFontContext,
+  PdfStylesContext,
+  pdfTypography,
+  usePdfFontFamily,
+  usePdfStyles,
+} from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfRichText } from "./pdf-rich-text";
 
-const styles = StyleSheet.create({
-  page: {
-    paddingVertical: 40,
-    paddingHorizontal: 44,
-    fontFamily: "Inter",
-    fontSize: 9,
-    color: PDF_COLORS.foreground,
-    lineHeight: 1.4,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    gap: 24,
-  },
-  headerLeft: { flexShrink: 1 },
-  // No letterSpacing anywhere in PDF styles: react-pdf places letter-spaced
-  // glyphs individually, which destroys word boundaries in text extraction.
-  name: {
-    fontFamily: "Lora",
-    fontSize: 19,
-    textTransform: "uppercase",
-    lineHeight: 1.25,
-  },
-  headline: {
-    marginTop: 2,
-    fontFamily: "Lora",
-    fontSize: 11,
-    color: PDF_COLORS.muted,
-  },
-  headerRight: { alignItems: "flex-end", gap: 4 },
-  contactRow: { flexDirection: "row", alignItems: "center", gap: 4 },
-  linkPlain: { color: PDF_COLORS.foreground, textDecoration: "none" },
-  heading: {
-    borderTopWidth: 0.75,
-    borderTopColor: PDF_COLORS.border,
-    borderBottomWidth: 0.75,
-    borderBottomColor: PDF_COLORS.border,
-    paddingVertical: 4,
-    marginBottom: 4,
-  },
-  headingText: {
-    fontFamily: "Lora",
-    fontSize: 11.5,
-    textAlign: "center",
-  },
-  entryTitle: { fontSize: 9.5, fontWeight: 600 },
-  subtitleRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "baseline",
-    gap: 8,
-  },
-  subtitle: { fontSize: 9, color: PDF_COLORS.muted },
-  subtitleLink: { color: PDF_COLORS.muted, textDecoration: "none" },
-  entryDate: {
-    fontSize: 9,
-    fontStyle: "italic",
-    color: PDF_COLORS.muted,
-    flexShrink: 0,
-  },
-  body: { marginTop: 3 },
-});
+// Font sizes are multiplied by the document's per-group scales (name, title,
+// body); every other value is fixed. At NO_SCALE this is the baseline sheet.
+const makeStyles = (s: FontScales) =>
+  StyleSheet.create({
+    page: {
+      paddingVertical: 40,
+      paddingHorizontal: 44,
+      fontFamily: "Inter",
+      fontSize: 9 * s.body,
+      color: PDF_COLORS.foreground,
+      lineHeight: 1.4,
+    },
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
+      gap: 24,
+    },
+    headerLeft: { flexShrink: 1 },
+    // No letterSpacing anywhere in PDF styles: react-pdf places letter-spaced
+    // glyphs individually, which destroys word boundaries in text extraction.
+    name: {
+      fontFamily: "Lora",
+      fontSize: 19 * s.name,
+      textTransform: "uppercase",
+      lineHeight: 1.25,
+    },
+    headline: {
+      marginTop: 2,
+      fontFamily: "Lora",
+      fontSize: 11 * s.name,
+      color: PDF_COLORS.muted,
+    },
+    headerRight: { alignItems: "flex-end", gap: 4 },
+    contactRow: { flexDirection: "row", alignItems: "center", gap: 4 },
+    linkPlain: { color: PDF_COLORS.foreground, textDecoration: "none" },
+    heading: {
+      borderTopWidth: 0.75,
+      borderTopColor: PDF_COLORS.border,
+      borderBottomWidth: 0.75,
+      borderBottomColor: PDF_COLORS.border,
+      paddingVertical: 4,
+      marginBottom: 4,
+    },
+    headingText: {
+      fontFamily: "Lora",
+      fontSize: 11.5 * s.title,
+      textAlign: "center",
+    },
+    entryTitle: { fontSize: 9.5 * s.body, fontWeight: 600 },
+    subtitleRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "baseline",
+      gap: 8,
+    },
+    subtitle: { fontSize: 9 * s.body, color: PDF_COLORS.muted },
+    subtitleLink: { color: PDF_COLORS.muted, textDecoration: "none" },
+    entryDate: {
+      fontSize: 9 * s.body,
+      fontStyle: "italic",
+      color: PDF_COLORS.muted,
+      flexShrink: 0,
+    },
+    body: { marginTop: 3 },
+  });
+
+const baseStyles = makeStyles(NO_SCALE);
 
 function KetatHeader(props: { header: HeaderView }) {
+  const styles = usePdfStyles(baseStyles);
   const serif = usePdfFontFamily("Lora");
   return (
     <View style={styles.header}>
@@ -119,6 +134,7 @@ function KetatHeader(props: { header: HeaderView }) {
 }
 
 function KetatExperience(props: { item: ExperienceItemView }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <View>
       <Text style={styles.entryTitle}>{props.item.role}</Text>
@@ -142,6 +158,7 @@ function KetatExperience(props: { item: ExperienceItemView }) {
 }
 
 function KetatEducation(props: { item: EducationItemView }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <View>
       <Text style={styles.entryTitle}>{props.item.degree}</Text>
@@ -157,6 +174,7 @@ function KetatEducation(props: { item: EducationItemView }) {
 }
 
 function KetatCertificate(props: { item: CertificateItemView }) {
+  const styles = usePdfStyles(baseStyles);
   const range = dateRange(props.item.startDate, props.item.endDate);
   return (
     <View>
@@ -178,6 +196,7 @@ function KetatCertificate(props: { item: CertificateItemView }) {
 }
 
 function KetatBlock(props: { block: ResumeBlock }) {
+  const styles = usePdfStyles(baseStyles);
   const serif = usePdfFontFamily("Lora");
   const { block } = props;
   switch (block.kind) {
@@ -214,24 +233,29 @@ function KetatBlock(props: { block: ResumeBlock }) {
 export function KetatPdfDocument(props: { preview: ResumePreview }) {
   const blocks = buildResumeBlocks(props.preview);
   const typography = pdfTypography(props.preview);
+  const styles = makeStyles(fontScales(props.preview));
   return (
     <PdfFontContext.Provider value={typography.family}>
-      <Document>
-        <Page
-          size="A4"
-          style={typography.page ? [styles.page, typography.page] : styles.page}
-        >
-          {blocks.map((block) => (
-            <View
-              key={block.id}
-              style={{ marginTop: block.gapBefore }}
-              minPresenceAhead={block.keepWithNext ? 48 : 0}
-            >
-              <KetatBlock block={block} />
-            </View>
-          ))}
-        </Page>
-      </Document>
+      <PdfStylesContext.Provider value={styles}>
+        <Document>
+          <Page
+            size="A4"
+            style={
+              typography.page ? [styles.page, typography.page] : styles.page
+            }
+          >
+            {blocks.map((block) => (
+              <View
+                key={block.id}
+                style={{ marginTop: block.gapBefore }}
+                minPresenceAhead={block.keepWithNext ? 48 : 0}
+              >
+                <KetatBlock block={block} />
+              </View>
+            ))}
+          </Page>
+        </Document>
+      </PdfStylesContext.Provider>
     </PdfFontContext.Provider>
   );
 }

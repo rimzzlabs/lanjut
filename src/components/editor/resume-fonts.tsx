@@ -5,7 +5,12 @@ import type { ResumePreview } from "./resume-preview";
 
 type TypographySlice = Pick<
   ResumePreview,
-  "font" | "letterSpacing" | "lineHeight"
+  | "font"
+  | "letterSpacing"
+  | "lineHeight"
+  | "nameScale"
+  | "titleScale"
+  | "bodyScale"
 >;
 
 /**
@@ -41,6 +46,13 @@ export function resumeTypographyStyle(
   if (resume.letterSpacing !== 0) {
     style.letterSpacing = `${resume.letterSpacing}px`;
   }
+  // Per-group font-size multipliers; the resume-<group>-* utilities multiply
+  // each element's baseline size by these (default 1 via the class fallback).
+  const record = style as Record<string, unknown>;
+  if (resume.nameScale !== 1) record["--resume-name-scale"] = resume.nameScale;
+  if (resume.titleScale !== 1)
+    record["--resume-title-scale"] = resume.titleScale;
+  if (resume.bodyScale !== 1) record["--resume-body-scale"] = resume.bodyScale;
   return style;
 }
 

@@ -15,63 +15,76 @@ import type {
   HeaderView,
   ResumePreview,
 } from "../resume-preview";
-import { pdfTypography } from "./pdf-font";
+import {
+  type FontScales,
+  fontScales,
+  NO_SCALE,
+  PdfStylesContext,
+  pdfTypography,
+  usePdfStyles,
+} from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfRichText } from "./pdf-rich-text";
 
-const styles = StyleSheet.create({
-  page: {
-    paddingVertical: 44,
-    paddingHorizontal: 48,
-    fontFamily: "Lora",
-    fontSize: 9,
-    color: PDF_COLORS.foreground,
-    lineHeight: 1.45,
-  },
-  header: { alignItems: "center" },
-  name: { fontSize: 20, lineHeight: 1.25 },
-  headline: {
-    marginTop: 1,
-    fontSize: 10,
-    fontStyle: "italic",
-    color: PDF_COLORS.muted,
-  },
-  contactLine: {
-    marginTop: 4,
-    fontSize: 9,
-    color: PDF_COLORS.muted,
-    textAlign: "center",
-  },
-  linkMuted: { color: PDF_COLORS.muted, textDecoration: "none" },
-  heading: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: PDF_COLORS.border,
-    paddingBottom: 3,
-  },
-  headingText: {
-    fontSize: 10.5,
-    textTransform: "uppercase",
-    textAlign: "center",
-  },
-  entryRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "baseline",
-    gap: 8,
-  },
-  entryTitle: { fontSize: 9.5, fontWeight: 700 },
-  entryDate: {
-    fontSize: 9,
-    fontStyle: "italic",
-    color: PDF_COLORS.muted,
-    flexShrink: 0,
-  },
-  subtitle: { fontSize: 9, color: PDF_COLORS.muted },
-  body: { marginTop: 3 },
-});
+// Font sizes are multiplied by the document's per-group scales (name, title,
+// body); every other value is fixed. At NO_SCALE this is the baseline sheet.
+const makeStyles = (s: FontScales) =>
+  StyleSheet.create({
+    page: {
+      paddingVertical: 44,
+      paddingHorizontal: 48,
+      fontFamily: "Lora",
+      fontSize: 9 * s.body,
+      color: PDF_COLORS.foreground,
+      lineHeight: 1.45,
+    },
+    header: { alignItems: "center" },
+    name: { fontSize: 20 * s.name, lineHeight: 1.25 },
+    headline: {
+      marginTop: 1,
+      fontSize: 10 * s.name,
+      fontStyle: "italic",
+      color: PDF_COLORS.muted,
+    },
+    contactLine: {
+      marginTop: 4,
+      fontSize: 9 * s.body,
+      color: PDF_COLORS.muted,
+      textAlign: "center",
+    },
+    linkMuted: { color: PDF_COLORS.muted, textDecoration: "none" },
+    heading: {
+      borderBottomWidth: 0.5,
+      borderBottomColor: PDF_COLORS.border,
+      paddingBottom: 3,
+    },
+    headingText: {
+      fontSize: 10.5 * s.title,
+      textTransform: "uppercase",
+      textAlign: "center",
+    },
+    entryRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "baseline",
+      gap: 8,
+    },
+    entryTitle: { fontSize: 9.5 * s.body, fontWeight: 700 },
+    entryDate: {
+      fontSize: 9 * s.body,
+      fontStyle: "italic",
+      color: PDF_COLORS.muted,
+      flexShrink: 0,
+    },
+    subtitle: { fontSize: 9 * s.body, color: PDF_COLORS.muted },
+    body: { marginTop: 3 },
+  });
+
+const baseStyles = makeStyles(NO_SCALE);
 
 function KlasikContactLine(props: { contacts: ContactView[] }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <Text style={styles.contactLine}>
       {props.contacts.map((contact, index) => (
@@ -91,6 +104,7 @@ function KlasikContactLine(props: { contacts: ContactView[] }) {
 }
 
 function KlasikHeader(props: { header: HeaderView }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <View style={styles.header}>
       <Text style={styles.name}>{props.header.fullName}</Text>
@@ -105,6 +119,7 @@ function KlasikHeader(props: { header: HeaderView }) {
 }
 
 function KlasikExperience(props: { item: ExperienceItemView }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <View>
       <View style={styles.entryRow}>
@@ -128,6 +143,7 @@ function KlasikExperience(props: { item: ExperienceItemView }) {
 }
 
 function KlasikEducation(props: { item: EducationItemView }) {
+  const styles = usePdfStyles(baseStyles);
   return (
     <View>
       <View style={styles.entryRow}>
@@ -143,6 +159,7 @@ function KlasikEducation(props: { item: EducationItemView }) {
 }
 
 function KlasikCertificate(props: { item: CertificateItemView }) {
+  const styles = usePdfStyles(baseStyles);
   const range = dateRange(props.item.startDate, props.item.endDate);
   return (
     <View>
@@ -164,6 +181,7 @@ function KlasikCertificate(props: { item: CertificateItemView }) {
 }
 
 function KlasikBlock(props: { block: ResumeBlock }) {
+  const styles = usePdfStyles(baseStyles);
   const { block } = props;
   switch (block.kind) {
     case "header":
@@ -198,22 +216,25 @@ function KlasikBlock(props: { block: ResumeBlock }) {
 export function KlasikPdfDocument(props: { preview: ResumePreview }) {
   const blocks = buildResumeBlocks(props.preview);
   const typography = pdfTypography(props.preview);
+  const styles = makeStyles(fontScales(props.preview));
   return (
-    <Document>
-      <Page
-        size="A4"
-        style={typography.page ? [styles.page, typography.page] : styles.page}
-      >
-        {blocks.map((block) => (
-          <View
-            key={block.id}
-            style={{ marginTop: block.gapBefore }}
-            minPresenceAhead={block.keepWithNext ? 48 : 0}
-          >
-            <KlasikBlock block={block} />
-          </View>
-        ))}
-      </Page>
-    </Document>
+    <PdfStylesContext.Provider value={styles}>
+      <Document>
+        <Page
+          size="A4"
+          style={typography.page ? [styles.page, typography.page] : styles.page}
+        >
+          {blocks.map((block) => (
+            <View
+              key={block.id}
+              style={{ marginTop: block.gapBefore }}
+              minPresenceAhead={block.keepWithNext ? 48 : 0}
+            >
+              <KlasikBlock block={block} />
+            </View>
+          ))}
+        </Page>
+      </Document>
+    </PdfStylesContext.Provider>
   );
 }

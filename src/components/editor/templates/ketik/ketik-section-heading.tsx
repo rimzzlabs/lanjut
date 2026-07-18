@@ -4,7 +4,7 @@ interface KetikSectionHeadingProps {
 
 export function KetikSectionHeading(props: KetikSectionHeadingProps) {
   return (
-    <h2 className="border-b border-dashed border-muted-foreground/50 pb-1 font-mono text-xs font-bold uppercase">
+    <h2 className="border-b border-dashed border-muted-foreground/50 pb-1 font-mono resume-title-xs font-bold uppercase">
       {props.title}
     </h2>
   );

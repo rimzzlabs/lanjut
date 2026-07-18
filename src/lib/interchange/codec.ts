@@ -34,6 +34,9 @@ export interface ResumeContent {
   font?: string;
   letterSpacing?: number;
   lineHeight?: number;
+  nameScale?: number;
+  titleScale?: number;
+  bodyScale?: number;
   header: Header;
   sections: Section[];
 }
@@ -121,6 +124,9 @@ export function resumeToInterchange(resume: Resume): InterchangeResume {
     font: resume.font,
     letterSpacing: resume.letterSpacing ?? 0,
     lineHeight: resume.lineHeight,
+    nameScale: resume.nameScale,
+    titleScale: resume.titleScale,
+    bodyScale: resume.bodyScale,
     header,
     sections: resume.sections.map(sectionToInterchange),
   };
@@ -226,6 +232,9 @@ export function interchangeToContent(data: InterchangeResume): ResumeContent {
     font: data.font,
     letterSpacing: data.letterSpacing,
     lineHeight: data.lineHeight,
+    nameScale: data.nameScale,
+    titleScale: data.titleScale,
+    bodyScale: data.bodyScale,
     header,
     sections,
   };

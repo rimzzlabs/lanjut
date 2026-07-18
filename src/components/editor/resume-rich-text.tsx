@@ -46,7 +46,7 @@ export function ResumeRichText(props: ResumeRichTextProps) {
       className={cn(
         // The document's resolved line height (see resumeTypographyStyle), so
         // the on-screen body rhythm matches the PDF page's.
-        "space-y-1 text-xs leading-(--resume-line-height,1.4) text-muted-foreground",
+        "space-y-1 resume-body-xs leading-(--resume-line-height,1.4) text-muted-foreground",
         props.className,
       )}
     >

@@ -5,12 +5,12 @@ export function TebalEducationItem(props: EducationItemView) {
   return (
     <article>
       <div className="flex items-baseline justify-between gap-4">
-        <h3 className="text-sm font-bold">{props.degree}</h3>
-        <span className="shrink-0 text-xs font-semibold text-muted-foreground">
+        <h3 className="resume-body-sm font-bold">{props.degree}</h3>
+        <span className="shrink-0 resume-body-xs font-semibold text-muted-foreground">
           {props.startDate} – {props.endDate}
         </span>
       </div>
-      <p className="text-xs font-medium text-muted-foreground">
+      <p className="resume-body-xs font-medium text-muted-foreground">
         {props.institution}
       </p>
       <ResumeRichText blocks={props.details} className="mt-1" />

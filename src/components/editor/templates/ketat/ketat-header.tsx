@@ -20,15 +20,15 @@ export function KetatHeader(props: HeaderView) {
   return (
     <header className="flex flex-wrap items-start justify-between gap-6">
       <div className="min-w-0">
-        <h1 className="font-serif text-2xl uppercase tracking-wide">
+        <h1 className="font-serif resume-name-2xl uppercase tracking-wide">
           {props.fullName}
         </h1>
-        <p className="mt-1 font-serif text-base text-muted-foreground">
+        <p className="mt-1 font-serif resume-name-base text-muted-foreground">
           {props.headline}
         </p>
       </div>
 
-      <ul className="space-y-1.5 text-xs">
+      <ul className="space-y-1.5 resume-body-xs">
         {props.contacts.map((contact) => (
           <KetatHeaderContact
             key={contact.kind}

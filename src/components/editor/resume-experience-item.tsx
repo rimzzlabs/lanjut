@@ -5,13 +5,13 @@ export function ResumeExperienceItem(props: ExperienceItemView) {
   return (
     <article>
       <div className="flex items-baseline justify-between gap-4">
-        <h3 className="text-xs font-semibold">{props.role}</h3>
-        <span className="shrink-0 text-xs text-muted-foreground">
+        <h3 className="resume-body-xs font-semibold">{props.role}</h3>
+        <span className="shrink-0 resume-body-xs text-muted-foreground">
           {props.startDate} - {props.endDate}
         </span>
       </div>
 
-      <p className="text-xs text-muted-foreground">
+      <p className="resume-body-xs text-muted-foreground">
         {props.companyHref ? (
           <a href={props.companyHref} className="hover:underline">
             {props.company}

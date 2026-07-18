@@ -133,6 +133,13 @@ export interface ResumePreview {
    * template's baseline (TEMPLATE_LINE_HEIGHT).
    */
   lineHeight: number | null;
+  /**
+   * Per-group font-size multipliers over each template's baseline sizes
+   * (name+headline, section titles, body), clamped 0.8..1.2; 1 = default.
+   */
+  nameScale: number;
+  titleScale: number;
+  bodyScale: number;
   headings: SectionHeadings;
   /**
    * The reorderable sections in document (reading) order. Drives the order blocks

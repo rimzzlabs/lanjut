@@ -565,6 +565,22 @@ const migrateV18toV19: Migration = (doc) => {
 };
 
 /**
+ * v19→v20: adds the presentation-only per-group font-size scales. Absence means
+ * "template default" (scale 1), so existing documents need no new field; the
+ * step only clears a malformed non-number value. Bail-safe: everything else is
+ * left untouched.
+ */
+const migrateV19toV20: Migration = (doc) => {
+  const next = structuredClone(doc);
+  for (const key of ["nameScale", "titleScale", "bodyScale"] as const) {
+    if (next[key] !== undefined && !G.isNumber(next[key])) {
+      delete next[key];
+    }
+  }
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -586,6 +602,7 @@ const LADDER: Record<number, Migration> = {
   16: migrateV16toV17,
   17: migrateV17toV18,
   18: migrateV18toV19,
+  19: migrateV19toV20,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */
