@@ -112,8 +112,10 @@ export interface ResumePreview {
   /** Document language for fixed labels (headings, dates); drives localization. */
   language: ResumeLanguage;
   /**
-   * Presentation-only extra space above each section heading (px on screen,
-   * pt in PDF), on top of the template's baseline rhythm; 0 = baseline.
+   * Presentation-only space adjustment above each section heading (px on
+   * screen, pt in PDF), on top of the template's baseline rhythm; 0 =
+   * baseline, clamped to -24..60 so the gap can reach flush but never
+   * negative.
    */
   sectionSpacing: number;
   /**
@@ -121,6 +123,16 @@ export interface ResumePreview {
    * shipped families. Applies to the whole document in preview and PDF.
    */
   font: string | null;
+  /**
+   * Document-wide tracking (px on screen, pt in PDF), clamped to the
+   * extraction-safe -0.5..0.5 range; 0 = template default (no tracking).
+   */
+  letterSpacing: number;
+  /**
+   * Document-wide unitless line height (clamped 1.2..2), or null for the
+   * template's baseline (TEMPLATE_LINE_HEIGHT).
+   */
+  lineHeight: number | null;
   headings: SectionHeadings;
   /**
    * The reorderable sections in document (reading) order. Drives the order blocks

@@ -547,6 +547,24 @@ const migrateV17toV18: Migration = (doc) => {
 };
 
 /**
+ * v18→v19: adds the presentation-only document-wide typography settings.
+ * `letterSpacing` is stamped to 0 (no tracking), preserving current output;
+ * `lineHeight` stays absent because absence means "template default".
+ * Bail-safe: existing numbers are left as-is and a malformed `lineHeight` is
+ * cleared.
+ */
+const migrateV18toV19: Migration = (doc) => {
+  const next = structuredClone(doc);
+  if (typeof next.letterSpacing !== "number") {
+    next.letterSpacing = 0;
+  }
+  if (next.lineHeight !== undefined && !G.isNumber(next.lineHeight)) {
+    delete next.lineHeight;
+  }
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -567,6 +585,7 @@ const LADDER: Record<number, Migration> = {
   15: migrateV15toV16,
   16: migrateV16toV17,
   17: migrateV17toV18,
+  18: migrateV18toV19,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

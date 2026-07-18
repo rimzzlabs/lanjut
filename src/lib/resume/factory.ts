@@ -113,6 +113,7 @@ export function createEmptyResume(title: string): Resume {
     language: "en",
     showIcons: true,
     sectionSpacing: 0,
+    letterSpacing: 0,
     header: createEmptyHeader(),
     sections: [
       createEmptySection("summary"),

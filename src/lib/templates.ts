@@ -28,6 +28,21 @@ export function resolveTemplateId(id: string): TemplateId {
     : DEFAULT_TEMPLATE_ID;
 }
 
+/**
+ * Each template's baseline body line height. Mirrors the `lineHeight` in the
+ * template's PDF page style (src/components/editor/pdf/<id>-pdf-document.tsx);
+ * keep the two in sync. The editor's line-height slider rests here, and the
+ * preview body renders it so the on-screen rhythm matches the PDF.
+ */
+export const TEMPLATE_LINE_HEIGHT: Record<TemplateId, number> = {
+  awal: 1.4,
+  ketat: 1.4,
+  luasa: 1.45,
+  tebal: 1.4,
+  klasik: 1.45,
+  ketik: 1.4,
+};
+
 /** Templates whose headers draw contact icon glyphs; the rest render text-only contacts. */
 const TEMPLATE_IDS_WITH_CONTACT_ICONS: TemplateId[] = [
   "awal",

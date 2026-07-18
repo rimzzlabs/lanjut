@@ -89,8 +89,10 @@ export const interchangeSchema = z
     template: z.string().optional(),
     language: z.enum(["en", "id"]).optional(),
     showIcons: z.boolean().optional(),
-    sectionSpacing: z.number().int().min(0).max(60).optional(),
+    sectionSpacing: z.number().int().min(-24).max(60).optional(),
     font: z.string().optional(),
+    letterSpacing: z.number().min(-0.5).max(0.5).optional(),
+    lineHeight: z.number().min(1.2).max(2).optional(),
     header: entryShape(HEADER_SCHEMA).optional(),
     sections: z.array(sectionSchema).optional(),
   })

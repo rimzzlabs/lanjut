@@ -183,11 +183,15 @@
           },
           {
             "title": "Jarak antarbagian",
-            "description": "Slider di tab Dokumen menambah ruang napas di atas setiap bagian, di pratinjau maupun PDF. Tampilan ringkas bawaan template jadi batas bawahnya; kamu hanya bisa melonggarkan, tidak bisa merapatkan."
+            "description": "Slider di tab Dokumen mengatur ruang di atas setiap bagian, di pratinjau maupun PDF. Longgarkan biar tampilannya lega, atau rapatkan di bawah bawaan template sampai antarbagian saling menempel."
           },
           {
             "title": "Pilih font kamu",
             "description": "Pilih dari lima belas font yang aman untuk resume, dikelompokkan jadi sans, serif, dan mono, dan seluruh dokumen mengikutinya di pratinjau maupun PDF. Setiap template tetap pakai bawaannya sampai kamu memilih, dan pratinjau sekarang merender berkas font yang persis sama dengan yang disematkan di PDF."
+          },
+          {
+            "title": "Tinggi baris dan jarak antarhuruf",
+            "description": "Dua slider baru di tab Dokumen yang berangkat dari nilai asli tiap template: rapatkan atau longgarkan tinggi baris dan jarak antarhuruf ke dua arah, keduanya dibatasi pada rentang di mana teks PDF masih terekstrak bersih, jadi gaya kamu nggak pernah mengorbankan parsing ATS."
           }
         ],
         "0_9_0": [
@@ -536,10 +540,12 @@
       "documentIcons": "Tampilkan ikon kontak",
       "sectionSpacing": "Jarak antarbagian",
       "documentFont": "Font",
-      "fontTemplateDefault": "Bawaan",
+      "templateDefault": "Bawaan",
       "fontSans": "Sans",
       "fontSerif": "Serif",
-      "fontMono": "Mono"
+      "fontMono": "Mono",
+      "lineHeight": "Tinggi baris",
+      "letterSpacing": "Jarak antarhuruf"
     },
     "chrome": {
       "edit": "Edit",
@@ -805,6 +811,9 @@
       "replacePrompt": "Resume ini sudah ada isinya. Ganti isinya, atau simpan lalu buat yang baru?",
       "replace": "Ganti yang ini",
       "createNew": "Buat baru",
+      "stylingHeading": "Gaya dokumen",
+      "resetStyling": "Kembalikan ke bawaan",
+      "resetStylingHint": "Kembalikan gaya dokumen ke bawaan",
       "copyHeading": "Salin",
       "copyHint": "Salin resume ini ke clipboard sebagai teks terstruktur. Teks kaya dibawa sebagai markdown sederhana, dan menempelkannya ke impor akan memulihkannya persis.",
       "copyAs": "Salin sebagai",

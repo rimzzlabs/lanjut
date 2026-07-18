@@ -183,11 +183,15 @@
           },
           {
             "title": "Section spacing",
-            "description": "A slider in the Document tab adds breathing room above every section, in the preview and the PDF alike. Each template's compact look stays the floor; you can only open it up, never squeeze it tighter."
+            "description": "A slider in the Document tab adjusts the room above every section, in the preview and the PDF alike. Open it up for an airy layout, or tighten it below each template's default until sections sit flush."
           },
           {
             "title": "Choose your font",
             "description": "Pick from fifteen resume-safe fonts, grouped as sans, serif, and mono, and the whole document follows in the preview and the PDF. Every template keeps its own default until you choose, and the preview now renders the exact same font files the PDF embeds."
+          },
+          {
+            "title": "Line height and letter spacing",
+            "description": "Two more sliders in the Document tab, resting at each template's real values: tighten or loosen line height and letter spacing either way, both bounded to the range where PDF text still extracts cleanly, so your styling never costs you ATS parsing."
           }
         ],
         "0_9_0": [
@@ -536,10 +540,12 @@
       "documentIcons": "Show contact icons",
       "sectionSpacing": "Section spacing",
       "documentFont": "Font",
-      "fontTemplateDefault": "Default",
+      "templateDefault": "Default",
       "fontSans": "Sans",
       "fontSerif": "Serif",
-      "fontMono": "Mono"
+      "fontMono": "Mono",
+      "lineHeight": "Line height",
+      "letterSpacing": "Letter spacing"
     },
     "chrome": {
       "edit": "Edit",
@@ -805,6 +811,9 @@
       "replacePrompt": "This resume already has content. Replace it, or keep it and create a new one?",
       "replace": "Replace this one",
       "createNew": "Create new",
+      "stylingHeading": "Document styling",
+      "resetStyling": "Reset to defaults",
+      "resetStylingHint": "Reset document styling to default",
       "copyHeading": "Copy",
       "copyHint": "Copy this resume to the clipboard as structured text. Rich text travels as simple markdown, and pasting it into an import restores it exactly.",
       "copyAs": "Copy as",

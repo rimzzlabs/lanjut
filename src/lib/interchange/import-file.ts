@@ -26,6 +26,10 @@ function buildImportedResume(
   resume.showIcons = parsed.content.showIcons ?? true;
   resume.sectionSpacing = parsed.content.sectionSpacing ?? 0;
   if (parsed.content.font !== undefined) resume.font = parsed.content.font;
+  resume.letterSpacing = parsed.content.letterSpacing ?? 0;
+  if (parsed.content.lineHeight !== undefined) {
+    resume.lineHeight = parsed.content.lineHeight;
+  }
   if (parsed.content.title) resume.title = parsed.content.title;
   return { ok: true, resume, leftovers: [] };
 }

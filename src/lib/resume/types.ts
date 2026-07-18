@@ -5,7 +5,7 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 18;
+export const CURRENT_SCHEMA_VERSION = 19;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
@@ -136,10 +136,11 @@ export interface Resume {
    */
   showIcons?: boolean;
   /**
-   * Presentation-only extra vertical space above each section heading, in
-   * rendering units (px on screen, pt in PDF), added on top of the template's
-   * baseline rhythm. 0 or unset keeps the template's current spacing; the
-   * editor only offers increases, never a value below the baseline.
+   * Presentation-only vertical space adjustment above each section heading, in
+   * rendering units (px on screen, pt in PDF), applied on top of the
+   * template's baseline gap. 0 or unset keeps the template's current spacing.
+   * Bounded to -24..60: -24 cancels the 24-unit baseline exactly, so sections
+   * can collapse to flush but the gap never goes negative.
    */
   sectionSpacing?: number;
   /**
@@ -149,6 +150,22 @@ export interface Resume {
    * mean "template default" (the families the template ships with).
    */
   font?: string;
+  /**
+   * Presentation-only letter spacing (tracking) applied document-wide, in
+   * rendering units (px on screen, pt in PDF). Hard-bounded to -0.5..0.5:
+   * react-pdf places letter-spaced glyphs individually, and outside that range
+   * at the 8-9pt body sizes text extractors stop recovering word boundaries
+   * (splitting words when too wide, merging them when too tight), which would
+   * break ATS parsing. 0 or unset means the template default (no tracking).
+   */
+  letterSpacing?: number;
+  /**
+   * Presentation-only unitless line height applied document-wide, replacing
+   * the template's baseline (TEMPLATE_LINE_HEIGHT). Absent means "template
+   * default". Bounded to 1.2..2. Per-element accents (e.g. a name's tight
+   * leading) still win over the document value.
+   */
+  lineHeight?: number;
   header: Header;
   sections: Section[];
   /** ISO 8601. */
