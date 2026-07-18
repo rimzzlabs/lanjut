@@ -88,6 +88,17 @@ export function filterTemplates(
   );
 }
 
+/**
+ * The catalog in the default browse order. Every template grid (browse page's
+ * default sort, create dialog, editor Layout tab) renders this list so the
+ * surfaces can never drift apart; only the browse page re-sorts, and only when
+ * the user picks another sort.
+ */
+export const SORTED_TEMPLATES: TemplateSummary[] = sortTemplates(
+  TEMPLATES,
+  DEFAULT_TEMPLATE_SORT,
+);
+
 export function sortTemplates(
   templates: TemplateSummary[],
   sort: TemplateSort,

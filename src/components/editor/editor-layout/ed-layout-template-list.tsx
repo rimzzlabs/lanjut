@@ -5,7 +5,7 @@ import { RadioGroup } from "@/components/ui/radio-group";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SEED_RESUME } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
-import { resolveTemplateId, TEMPLATES } from "@/lib/templates";
+import { resolveTemplateId, SORTED_TEMPLATES } from "@/lib/templates";
 import { buildResumeBlocks } from "../resume-blocks";
 import { resumeToPreview } from "../resume-to-preview";
 import { EditorLayoutTemplateItem } from "./ed-layout-template-item";
@@ -53,7 +53,7 @@ export function EditorLayoutTemplateList() {
         }}
         className="grid grid-cols-2 gap-3 px-4"
       >
-        {TEMPLATES.map((template) => (
+        {SORTED_TEMPLATES.map((template) => (
           <EditorLayoutTemplateItem
             key={template.id}
             template={template}
