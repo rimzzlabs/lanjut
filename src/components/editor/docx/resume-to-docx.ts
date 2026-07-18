@@ -70,11 +70,14 @@ function sectionHeading(title: string): Paragraph {
 }
 
 /** A "Title …… Dates" row with the date right-aligned via a tab stop. */
-function titleRow(title: string, date: string): Paragraph {
+function titleRow(title: string, date: string, href?: string): Paragraph {
+  const titleRun = new TextRun({ text: title, bold: true, size: 19 });
   return new Paragraph({
     tabStops: [{ type: TabStopType.RIGHT, position: RIGHT_TAB }],
     children: [
-      new TextRun({ text: title, bold: true, size: 19 }),
+      href
+        ? new ExternalHyperlink({ link: href, children: [titleRun] })
+        : titleRun,
       ...(date ? [new TextRun({ text: `\t${date}`, color: MUTED })] : []),
     ],
   });
@@ -171,7 +174,11 @@ export function buildAwalDocx(preview: ResumePreview): Document {
       case "experience": {
         const item = block.item;
         children.push(
-          titleRow(item.role, dateRange(item.startDate, item.endDate)),
+          titleRow(
+            item.role,
+            dateRange(item.startDate, item.endDate),
+            item.roleHref,
+          ),
         );
         if (item.company)
           children.push(subtitle(item.company, item.companyHref));

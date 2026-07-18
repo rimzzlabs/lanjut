@@ -5,7 +5,15 @@ export function LuasaExperienceItem(props: ExperienceItemView) {
   return (
     <article>
       <div className="flex items-baseline justify-between gap-4">
-        <h3 className="resume-body-xs uppercase tracking-wide">{props.role}</h3>
+        <h3 className="resume-body-xs uppercase tracking-wide">
+          {props.roleHref ? (
+            <a href={props.roleHref} className="hover:underline">
+              {props.role}
+            </a>
+          ) : (
+            props.role
+          )}
+        </h3>
         <span className="shrink-0 resume-body-xs text-muted-foreground">
           {props.startDate} – {props.endDate}
         </span>

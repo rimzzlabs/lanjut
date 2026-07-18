@@ -141,7 +141,23 @@ function KetikExperience(props: { item: ExperienceItemView }) {
     <View>
       <View style={styles.entryRow}>
         <Text style={[styles.entryTitle, { fontFamily: mono }]}>
-          {props.item.role}
+          {props.item.roleHref ? (
+            <Link
+              src={props.item.roleHref}
+              style={[
+                styles.entryTitle,
+                {
+                  fontFamily: mono,
+                  color: PDF_COLORS.foreground,
+                  textDecoration: "none",
+                },
+              ]}
+            >
+              {props.item.role}
+            </Link>
+          ) : (
+            props.item.role
+          )}
         </Text>
         <Text style={[styles.entryDate, { fontFamily: mono }]}>
           {dateRange(props.item.startDate, props.item.endDate)}

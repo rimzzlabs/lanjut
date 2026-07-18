@@ -266,8 +266,8 @@ export function resumeToPreview(resume: Resume): ResumePreview {
         return {
           id: entry.id,
           role: plain(entry.fields.title),
+          roleHref: website ? withHttps(website) : undefined,
           company: plain(entry.fields.company),
-          companyHref: website ? withHttps(website) : undefined,
           startDate: plain(entry.fields.startDate),
           endDate: plain(entry.fields.endDate),
           description: richBlocks(entry.fields.description),

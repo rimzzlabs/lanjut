@@ -41,6 +41,7 @@ export interface HeaderView {
 export interface ExperienceItemView {
   id: string;
   role: string;
+  roleHref?: string;
   company: string;
   companyHref?: string;
   startDate: string;
@@ -162,7 +163,8 @@ export interface ResumePreview {
   /**
    * Project entries reuse `ExperienceItemView`: `role` holds the project name
    * and `company` the contributor role, so they render through the experience
-   * path in every template and export; only the section heading differs.
+   * path in every template and export; only the section heading differs. The
+   * project URL rides on `roleHref` (not `companyHref`).
    */
   projects: ExperienceItemView[];
   /**

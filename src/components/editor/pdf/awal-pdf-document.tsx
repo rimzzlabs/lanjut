@@ -116,7 +116,21 @@ function PdfExperience(props: { item: ExperienceItemView }) {
   return (
     <View>
       <View style={styles.entryRow}>
-        <Text style={styles.entryTitle}>{props.item.role}</Text>
+        <Text style={styles.entryTitle}>
+          {props.item.roleHref ? (
+            <Link
+              src={props.item.roleHref}
+              style={[
+                styles.entryTitle,
+                { color: PDF_COLORS.foreground, textDecoration: "none" },
+              ]}
+            >
+              {props.item.role}
+            </Link>
+          ) : (
+            props.item.role
+          )}
+        </Text>
         <Text style={styles.entryDate}>
           {dateRange(props.item.startDate, props.item.endDate)}
         </Text>

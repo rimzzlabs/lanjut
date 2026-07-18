@@ -137,7 +137,21 @@ function KetatExperience(props: { item: ExperienceItemView }) {
   const styles = usePdfStyles(baseStyles);
   return (
     <View>
-      <Text style={styles.entryTitle}>{props.item.role}</Text>
+      <Text style={styles.entryTitle}>
+        {props.item.roleHref ? (
+          <Link
+            src={props.item.roleHref}
+            style={[
+              styles.entryTitle,
+              { color: PDF_COLORS.foreground, textDecoration: "none" },
+            ]}
+          >
+            {props.item.role}
+          </Link>
+        ) : (
+          props.item.role
+        )}
+      </Text>
       <View style={styles.subtitleRow}>
         <Text style={styles.subtitle}>
           {props.item.companyHref ? (
