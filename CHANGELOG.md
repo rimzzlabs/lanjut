@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.1](https://github.com/rimzzlabs/lanjut/compare/v0.10.0...v0.10.1) (2026-07-18)
+
+
+### Bug Fixes
+
+* keep fi/fl pairs extractable in pdf export by disabling ligatures ([#125](https://github.com/rimzzlabs/lanjut/issues/125)) ([14e0a9e](https://github.com/rimzzlabs/lanjut/commit/14e0a9e598fadac2be79e57e5d7ebbebef60a212))
+* link the project name instead of the contributor role ([#123](https://github.com/rimzzlabs/lanjut/issues/123)) ([c8aede6](https://github.com/rimzzlabs/lanjut/commit/c8aede60a1de55a0cfad54e9e7a739feea0dc9c6))
+
 ## [0.10.0](https://github.com/rimzzlabs/lanjut/compare/v0.9.3...v0.10.0) (2026-07-18)
 
 
