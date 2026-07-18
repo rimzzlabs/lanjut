@@ -13,15 +13,21 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 ## Tech Stack
 
 - Next.js (App Router)
-- open-next on Cloudflare (hosting only, no server-side handling of user resume data)
+- open-next on Cloudflare (hosting only; the sole server surface is the `/api/feedback` route, which relays bug reports and feature requests and never receives resume content)
+- next-intl (internationalization; `[locale]` routing for English and Indonesian, `messages/*.json`, edge middleware)
 - shadcn (base-ui variant)
 - Tailwind CSS
 - [TipTap](https://tiptap.dev/docs) (rich text editing, restricted extension set)
+- react-hook-form + zod + @hookform/resolvers (forms; every field goes through Controller, schemas in `src/lib/forms`)
+- @dnd-kit (section and entry drag-to-reorder)
+- @react-pdf/renderer and docx (PDF and .docx export)
+- nextstepjs (guided tour)
 - motion/react (animation)
 - zustand (in-memory state)
 - IndexedDB via idb (persistence layer)
 - date-fns
 - @mobily/ts-belt (general utilities)
+- Biome (lint and format; not Prettier or ESLint)
 - commitlint + commitizen (commit message enforcement)
 - husky + lint-staged (pre-commit hooks)
 - nuqs (search params state)
@@ -30,7 +36,7 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 
 ## Architecture Rule: Two Layers
 
-1. Structural layer. Fixed section types (header, summary, experience, education, skills, custom sections from an approved list). Each field has a restricted TipTap schema: bold, italic, bullet list, ordered list, link. No tables, no multi-column layout, no text boxes, no inline images, no custom heading levels beyond what the section template defines.
+1. Structural layer. Fixed section types (header, summary, experience, internship, projects, organizations, education, certifications, skills, languages, plus custom sections from an approved variant list). The canonical type order and per-type field schemas live in `src/lib/resume/schema-registry.ts`. Each field has a restricted TipTap schema: bold, italic, bullet list, ordered list, link. No tables, no multi-column layout, no text boxes, no inline images, no custom heading levels beyond what the section template defines.
 
 2. Presentation layer. Typography, spacing, color, accent styles, section visual ordering. Fully customizable. Must never alter the underlying linear text structure used for parsing or export.
 
@@ -49,7 +55,7 @@ Any feature request that adds structural freedom (tables, columns, floating elem
 
 ## Reordering
 
-- Section and entry reordering (if/when built) changes ordering metadata only. It does not alter content schema.
+- Section reordering (drag-to-reorder via @dnd-kit, `reorderSections` in the store) changes ordering metadata only. It does not alter content schema. Summary is pinned below the Header and does not participate; every other section type is reorderable (`REORDERABLE_SECTION_TYPES` in `src/lib/resume/schema-registry.ts`). Entries within a section are not manually reordered; they sort by date.
 
 ## Export
 
