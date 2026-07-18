@@ -5,7 +5,15 @@ export function KetikExperienceItem(props: ExperienceItemView) {
   return (
     <article>
       <div className="flex items-baseline justify-between gap-4">
-        <h3 className="font-mono resume-body-xs font-bold">{props.role}</h3>
+        <h3 className="font-mono resume-body-xs font-bold">
+          {props.roleHref ? (
+            <a href={props.roleHref} className="hover:underline">
+              {props.role}
+            </a>
+          ) : (
+            props.role
+          )}
+        </h3>
         <span className="shrink-0 font-mono text-[0.6875rem] text-muted-foreground">
           {props.startDate} – {props.endDate}
         </span>

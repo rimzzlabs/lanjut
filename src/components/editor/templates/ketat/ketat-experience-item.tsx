@@ -4,7 +4,15 @@ import { ResumeRichText } from "../../resume-rich-text";
 export function KetatExperienceItem(props: ExperienceItemView) {
   return (
     <article>
-      <h3 className="resume-body-xs font-semibold">{props.role}</h3>
+      <h3 className="resume-body-xs font-semibold">
+        {props.roleHref ? (
+          <a href={props.roleHref} className="hover:underline">
+            {props.role}
+          </a>
+        ) : (
+          props.role
+        )}
+      </h3>
       <div className="flex items-baseline justify-between gap-4">
         <p className="resume-body-xs text-muted-foreground">
           {props.companyHref ? (
