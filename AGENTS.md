@@ -63,6 +63,17 @@ Any feature request that adds structural freedom (tables, columns, floating elem
 - Provide a plain text or .docx export path in addition to PDF. This is the actual ATS-safe submission format for many applicant tracking systems.
 - Before marking export work done, run output through at least one real parser test (Workday/Greenhouse test upload, or an open-source resume parser) and confirm fields map correctly.
 
+## Documentation
+
+- Docs are part of the change, not a follow-up. Before opening a PR, check whether the change makes any of these stale and update the affected ones in the same PR:
+  - `README.md`: user-facing features, template list, tech stack table, scripts.
+  - `AGENTS.md`: tech stack, section types, architecture rules, conventions.
+  - `design.md`: design system, tokens, routes, page-type families.
+  - `docs/schema-migrations.md`: any document-shape or `DB_VERSION` change.
+  - `docs/export-validation.md`: any change to the PDF/docx/txt export path.
+- Common triggers: adding or removing a dependency (tech stack lists), a new section type or field shape (section-type lists), a new user-facing capability (README features), a new script (scripts tables), a new route or server surface (`design.md`, the data-flow rule).
+- Verify every documented claim against the code before writing it. Describe what ships, not intended behavior. A doc that overstates the product is worse than a missing line.
+
 ## Commits
 
 - Use commitizen format via commitlint config. Do not bypass with --no-verify.
