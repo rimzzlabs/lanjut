@@ -1,4 +1,5 @@
 import type { Step } from "nextstepjs";
+import type { EditorTab } from "@/lib/store";
 
 export const LIBRARY_TOUR = "library";
 export const TEMPLATE_TOUR = "template";
@@ -14,6 +15,10 @@ export type TourName =
 export interface AppStep extends Step {
   sidebar?: "open" | "closed";
   scrollTop?: boolean;
+  /** Editor tab to switch to before the step anchors, so its content is shown. */
+  editorTab?: EditorTab;
+  /** Below xl, whether the editing sheet should be open for this step. */
+  sheet?: "open" | "closed";
 }
 
 export interface AppStepMeta extends Omit<AppStep, "title" | "content"> {
@@ -138,6 +143,8 @@ export const TOUR_STEPS: AppTourMeta[] = [
     ],
   },
   {
+    // Desktop: the sidebar is always visible, so each step just switches the
+    // tab it explains and anchors to that tab's content.
     tour: EDITOR_TOUR,
     steps: [
       {
@@ -149,27 +156,67 @@ export const TOUR_STEPS: AppTourMeta[] = [
       {
         ...BASE_STEP,
         id: "sections",
+        editorTab: "editor",
         selector: "#tour-editor-sections",
         side: "left",
       },
       {
         ...BASE_STEP,
+        id: "layout",
+        editorTab: "layout",
+        selector: "#tour-editor-layout",
+        side: "left",
+      },
+      {
+        ...BASE_STEP,
         id: "document",
-        selector: "#tour-document-tab",
+        editorTab: "document",
+        selector: "#tour-editor-document",
         side: "left",
       },
     ],
   },
   {
+    // Small screens: the sidebar lives in a sheet, so the tab steps open it
+    // first, then switch the tab, walking the same three tabs as desktop.
     tour: EDITOR_SHEET_TOUR,
     steps: [
-      { ...BASE_STEP, id: "preview", sidebar: "closed" },
+      {
+        ...BASE_STEP,
+        id: "preview",
+        sheet: "closed",
+        selector: "#tour-editor-preview",
+      },
       {
         ...BASE_STEP,
         id: "edit",
-        sidebar: "closed",
+        sheet: "closed",
         selector: "#tour-editor-edit",
         side: "top-right",
+      },
+      {
+        ...BASE_STEP,
+        id: "sections",
+        sheet: "open",
+        editorTab: "editor",
+        selector: "#tour-editor-sections",
+        side: "left",
+      },
+      {
+        ...BASE_STEP,
+        id: "layout",
+        sheet: "open",
+        editorTab: "layout",
+        selector: "#tour-editor-layout",
+        side: "left",
+      },
+      {
+        ...BASE_STEP,
+        id: "document",
+        sheet: "open",
+        editorTab: "document",
+        selector: "#tour-editor-document",
+        side: "left",
       },
     ],
   },
