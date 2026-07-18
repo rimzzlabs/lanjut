@@ -1,5 +1,39 @@
 # Changelog
 
+## [0.10.0](https://github.com/rimzzlabs/lanjut/compare/v0.9.3...v0.10.0) (2026-07-18)
+
+
+### Features
+
+* animate preview sections as they enter and leave ([#110](https://github.com/rimzzlabs/lanjut/issues/110)) ([18c06ab](https://github.com/rimzzlabs/lanjut/commit/18c06ab2cd2ff2cd946b94eb4558aaeaa4cae8c4))
+* choose the document font from the document tab ([#113](https://github.com/rimzzlabs/lanjut/issues/113)) ([62c02a6](https://github.com/rimzzlabs/lanjut/commit/62c02a6b6238416dbfd840d99ef8e46884216ecb))
+* export, copy, and import resumes as json and yaml ([#108](https://github.com/rimzzlabs/lanjut/issues/108)) ([6af7be8](https://github.com/rimzzlabs/lanjut/commit/6af7be8beb02642a8e34562f06da154a764976c1))
+* redesign landing and platform with build-time localized og images ([#121](https://github.com/rimzzlabs/lanjut/issues/121)) ([b8ce5f1](https://github.com/rimzzlabs/lanjut/commit/b8ce5f1e6284bd1e810d7fd6ca46e3a0afd0f327))
+* scale name, heading, and body font sizes from the document tab ([#117](https://github.com/rimzzlabs/lanjut/issues/117)) ([2590fc1](https://github.com/rimzzlabs/lanjut/commit/2590fc1809638cfc6b175cb9157d8849da415c7e))
+* send bug reports and feature requests without a github account ([#105](https://github.com/rimzzlabs/lanjut/issues/105)) ([4aa9451](https://github.com/rimzzlabs/lanjut/commit/4aa9451f3aec0251715b6c79f8c84a99b83f9969))
+* show a value bubble on slider thumbs while focused ([#118](https://github.com/rimzzlabs/lanjut/issues/118)) ([e1010b6](https://github.com/rimzzlabs/lanjut/commit/e1010b6a28900ef5910f2dfb815be4d8865946e5))
+* toggle contact icon visibility from the document tab ([#111](https://github.com/rimzzlabs/lanjut/issues/111)) ([e57eee6](https://github.com/rimzzlabs/lanjut/commit/e57eee6401c536961ef0e17c23ac87a83c4dc904))
+* toggle section visibility from the editor list ([#109](https://github.com/rimzzlabs/lanjut/issues/109)) ([c979545](https://github.com/rimzzlabs/lanjut/commit/c9795455dbd0e2e17fb8ebfbda00aa2d68797d84))
+* typography controls and styling reset in the document tab ([#114](https://github.com/rimzzlabs/lanjut/issues/114)) ([0cebf8f](https://github.com/rimzzlabs/lanjut/commit/0cebf8fdd3963920632112d74b700efaf64ea8c0))
+* walk the editor sidebar tabs in the guided tour ([#120](https://github.com/rimzzlabs/lanjut/issues/120)) ([b26bd51](https://github.com/rimzzlabs/lanjut/commit/b26bd51a4a63fe0d7d8c2dffd1da4ce30ae4fcba))
+* widen section spacing from the document tab ([#112](https://github.com/rimzzlabs/lanjut/issues/112)) ([d10e4df](https://github.com/rimzzlabs/lanjut/commit/d10e4dfefcf625fb2d1a3c4af484569171c2f3be))
+
+
+### Bug Fixes
+
+* align create-dialog template order with the browse page ([#107](https://github.com/rimzzlabs/lanjut/issues/107)) ([d7b4a20](https://github.com/rimzzlabs/lanjut/commit/d7b4a20b8f35520805dc98ee95ff85dd86b9e4bb))
+* align the layout tab template order with the other grids ([#116](https://github.com/rimzzlabs/lanjut/issues/116)) ([10ef5fc](https://github.com/rimzzlabs/lanjut/commit/10ef5fc4a530dc1fcee9adc4d295d20f223cf868))
+
+
+### Refactors
+
+* move the section order reset into the editor tab ([#115](https://github.com/rimzzlabs/lanjut/issues/115)) ([63da9cb](https://github.com/rimzzlabs/lanjut/commit/63da9cb686c2295ba0c71047424a51faf3867de9))
+
+
+### Documentation
+
+* align readme and agents with shipped features ([#122](https://github.com/rimzzlabs/lanjut/issues/122)) ([a1e5e4e](https://github.com/rimzzlabs/lanjut/commit/a1e5e4e458227c2aeaeb3b74f67a0a7a640c369d))
+
 ## [0.9.3](https://github.com/rimzzlabs/lanjut/compare/v0.9.2...v0.9.3) (2026-07-17)
 
 
