@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { TemplateId } from "@/lib/templates";
 import { buildResumeBlocks } from "./resume-blocks";
+import { ResumeFontFaces, resumeFontVars } from "./resume-fonts";
 import { A4 } from "./resume-geometry";
 import { ResumePage } from "./resume-page";
 import type { ResumePreview } from "./resume-preview";
@@ -46,8 +47,10 @@ export function ResumeThumbnail(props: ResumeThumbnailProps) {
       inert
       aria-hidden
       data-template={props.template}
-      className="pointer-events-none w-full select-none"
+      className="pointer-events-none w-full select-none font-sans"
+      style={resumeFontVars(props.resume.font)}
     >
+      <ResumeFontFaces />
       {scale > 0 && (
         <div style={{ height: A4.heightPx * scale }}>
           <div

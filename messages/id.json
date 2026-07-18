@@ -184,6 +184,10 @@
           {
             "title": "Jarak antarbagian",
             "description": "Slider di tab Dokumen menambah ruang napas di atas setiap bagian, di pratinjau maupun PDF. Tampilan ringkas bawaan template jadi batas bawahnya; kamu hanya bisa melonggarkan, tidak bisa merapatkan."
+          },
+          {
+            "title": "Pilih font kamu",
+            "description": "Pilih dari lima belas font yang aman untuk resume, dikelompokkan jadi sans, serif, dan mono, dan seluruh dokumen mengikutinya di pratinjau maupun PDF. Setiap template tetap pakai bawaannya sampai kamu memilih, dan pratinjau sekarang merender berkas font yang persis sama dengan yang disematkan di PDF."
           }
         ],
         "0_9_0": [
@@ -530,7 +534,12 @@
     "layout": {
       "documentLanguage": "Bahasa dokumen",
       "documentIcons": "Tampilkan ikon kontak",
-      "sectionSpacing": "Jarak antarbagian"
+      "sectionSpacing": "Jarak antarbagian",
+      "documentFont": "Font",
+      "fontTemplateDefault": "Bawaan",
+      "fontSans": "Sans",
+      "fontSerif": "Serif",
+      "fontMono": "Mono"
     },
     "chrome": {
       "edit": "Edit",

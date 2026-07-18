@@ -90,6 +90,7 @@ export const interchangeSchema = z
     language: z.enum(["en", "id"]).optional(),
     showIcons: z.boolean().optional(),
     sectionSpacing: z.number().int().min(0).max(60).optional(),
+    font: z.string().optional(),
     header: entryShape(HEADER_SCHEMA).optional(),
     sections: z.array(sectionSchema).optional(),
   })

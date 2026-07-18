@@ -533,6 +533,20 @@ const migrateV16toV17: Migration = (doc) => {
 };
 
 /**
+ * v17→v18: introduces the optional document-level `font` override. Absence is
+ * meaningful ("template default"), so existing documents need no new field;
+ * the step only clears a malformed non-string value. Bail-safe: everything
+ * else is left untouched.
+ */
+const migrateV17toV18: Migration = (doc) => {
+  const next = structuredClone(doc);
+  if (next.font !== undefined && !G.isString(next.font)) {
+    delete next.font;
+  }
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -552,6 +566,7 @@ const LADDER: Record<number, Migration> = {
   14: migrateV14toV15,
   15: migrateV15toV16,
   16: migrateV16toV17,
+  17: migrateV17toV18,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */
