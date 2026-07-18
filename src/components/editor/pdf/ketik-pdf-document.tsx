@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
+import { resolveFont } from "@/lib/fonts";
 import { buildResumeBlocks, type ResumeBlock } from "../resume-blocks";
 import type {
   CertificateItemView,
@@ -15,6 +16,7 @@ import type {
   HeaderView,
   ResumePreview,
 } from "../resume-preview";
+import { PdfFontContext, usePdfFontFamily } from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfRichText } from "./pdf-rich-text";
@@ -75,8 +77,9 @@ const styles = StyleSheet.create({
 });
 
 function KetikContactLine(props: { contacts: ContactView[] }) {
+  const mono = usePdfFontFamily("GeistMono");
   return (
-    <Text style={styles.contactLine}>
+    <Text style={[styles.contactLine, { fontFamily: mono }]}>
       {props.contacts.map((contact, index) => (
         <Text key={contact.kind}>
           {index > 0 ? " | " : ""}
@@ -94,11 +97,16 @@ function KetikContactLine(props: { contacts: ContactView[] }) {
 }
 
 function KetikHeader(props: { header: HeaderView }) {
+  const mono = usePdfFontFamily("GeistMono");
   return (
     <View>
-      <Text style={styles.name}>{props.header.fullName}</Text>
+      <Text style={[styles.name, { fontFamily: mono }]}>
+        {props.header.fullName}
+      </Text>
       {props.header.headline ? (
-        <Text style={styles.headline}>{props.header.headline}</Text>
+        <Text style={[styles.headline, { fontFamily: mono }]}>
+          {props.header.headline}
+        </Text>
       ) : null}
       {props.header.contacts.length > 0 ? (
         <KetikContactLine contacts={props.header.contacts} />
@@ -108,11 +116,14 @@ function KetikHeader(props: { header: HeaderView }) {
 }
 
 function KetikExperience(props: { item: ExperienceItemView }) {
+  const mono = usePdfFontFamily("GeistMono");
   return (
     <View>
       <View style={styles.entryRow}>
-        <Text style={styles.entryTitle}>{props.item.role}</Text>
-        <Text style={styles.entryDate}>
+        <Text style={[styles.entryTitle, { fontFamily: mono }]}>
+          {props.item.role}
+        </Text>
+        <Text style={[styles.entryDate, { fontFamily: mono }]}>
           {dateRange(props.item.startDate, props.item.endDate)}
         </Text>
       </View>
@@ -131,11 +142,14 @@ function KetikExperience(props: { item: ExperienceItemView }) {
 }
 
 function KetikEducation(props: { item: EducationItemView }) {
+  const mono = usePdfFontFamily("GeistMono");
   return (
     <View>
       <View style={styles.entryRow}>
-        <Text style={styles.entryTitle}>{props.item.degree}</Text>
-        <Text style={styles.entryDate}>
+        <Text style={[styles.entryTitle, { fontFamily: mono }]}>
+          {props.item.degree}
+        </Text>
+        <Text style={[styles.entryDate, { fontFamily: mono }]}>
           {dateRange(props.item.startDate, props.item.endDate)}
         </Text>
       </View>
@@ -146,11 +160,12 @@ function KetikEducation(props: { item: EducationItemView }) {
 }
 
 function KetikCertificate(props: { item: CertificateItemView }) {
+  const mono = usePdfFontFamily("GeistMono");
   const range = dateRange(props.item.startDate, props.item.endDate);
   return (
     <View>
       <View style={styles.entryRow}>
-        <Text style={styles.entryTitle}>
+        <Text style={[styles.entryTitle, { fontFamily: mono }]}>
           {props.item.href ? (
             <Link src={props.item.href} style={styles.linkMuted}>
               {props.item.title}
@@ -159,7 +174,9 @@ function KetikCertificate(props: { item: CertificateItemView }) {
             props.item.title
           )}
         </Text>
-        {range ? <Text style={styles.entryDate}>{range}</Text> : null}
+        {range ? (
+          <Text style={[styles.entryDate, { fontFamily: mono }]}>{range}</Text>
+        ) : null}
       </View>
       <Text style={styles.subtitle}>{props.item.issuer}</Text>
     </View>
@@ -167,12 +184,17 @@ function KetikCertificate(props: { item: CertificateItemView }) {
 }
 
 function KetikBlock(props: { block: ResumeBlock }) {
+  const mono = usePdfFontFamily("GeistMono");
   const { block } = props;
   switch (block.kind) {
     case "header":
       return <KetikHeader header={block.header} />;
     case "heading":
-      return <Text style={styles.heading}>{block.title}</Text>;
+      return (
+        <Text style={[styles.heading, { fontFamily: mono }]}>
+          {block.title}
+        </Text>
+      );
     case "summary":
       return <PdfRichText blocks={block.body} />;
     case "experience":
@@ -196,19 +218,25 @@ function KetikBlock(props: { block: ResumeBlock }) {
  */
 export function KetikPdfDocument(props: { preview: ResumePreview }) {
   const blocks = buildResumeBlocks(props.preview);
+  const family = resolveFont(props.preview.font ?? undefined)?.family ?? null;
   return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        {blocks.map((block) => (
-          <View
-            key={block.id}
-            style={{ marginTop: block.gapBefore }}
-            minPresenceAhead={block.keepWithNext ? 48 : 0}
-          >
-            <KetikBlock block={block} />
-          </View>
-        ))}
-      </Page>
-    </Document>
+    <PdfFontContext.Provider value={family}>
+      <Document>
+        <Page
+          size="A4"
+          style={family ? [styles.page, { fontFamily: family }] : styles.page}
+        >
+          {blocks.map((block) => (
+            <View
+              key={block.id}
+              style={{ marginTop: block.gapBefore }}
+              minPresenceAhead={block.keepWithNext ? 48 : 0}
+            >
+              <KetikBlock block={block} />
+            </View>
+          ))}
+        </Page>
+      </Document>
+    </PdfFontContext.Provider>
   );
 }

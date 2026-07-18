@@ -5,7 +5,7 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 17;
+export const CURRENT_SCHEMA_VERSION = 18;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
@@ -142,6 +142,13 @@ export interface Resume {
    * editor only offers increases, never a value below the baseline.
    */
   sectionSpacing?: number;
+  /**
+   * Presentation-layer font override for the whole document, referencing the
+   * font catalog (src/lib/fonts.ts) by id (e.g. "eb-garamond"). Kept a loose
+   * string so the schema doesn't couple to the catalog; absent or unknown ids
+   * mean "template default" (the families the template ships with).
+   */
+  font?: string;
   header: Header;
   sections: Section[];
   /** ISO 8601. */

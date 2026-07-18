@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { TemplateId } from "@/lib/templates";
 import { ResumeAnimatedBlock } from "./resume-animated-block";
 import { buildResumeBlocks } from "./resume-blocks";
+import { ResumeFontFaces, resumeFontVars } from "./resume-fonts";
 import { A4, CONTENT_HEIGHT_PX, CONTENT_WIDTH_PX } from "./resume-geometry";
 import { ResumePage } from "./resume-page";
 import { paginate } from "./resume-paginate";
@@ -88,7 +89,12 @@ export function ResumeDocument(props: ResumeDocumentProps) {
     pages.length * A4.heightPx + Math.max(0, pages.length - 1) * PAGE_GAP_PX;
 
   return (
-    <div ref={containerRef} className="w-full">
+    <div
+      ref={containerRef}
+      className="w-full font-sans"
+      style={resumeFontVars(props.resume.font)}
+    >
+      <ResumeFontFaces />
       <div
         ref={measureRef}
         aria-hidden

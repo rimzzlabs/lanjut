@@ -1,3 +1,4 @@
+import { resolveFont } from "@/lib/fonts";
 import { RESUME_LABELS } from "@/lib/resume/labels";
 import { type RichBlock, tiptapToRichBlocks } from "@/lib/resume/rich-content";
 import {
@@ -206,6 +207,7 @@ export function resumeToPreview(resume: Resume): ResumePreview {
     // Clamped so a hand-edited document can widen spacing but never collapse
     // a template below its baseline or blow up pagination.
     sectionSpacing: Math.min(60, Math.max(0, resume.sectionSpacing ?? 0)),
+    font: resolveFont(resume.font)?.id ?? null,
     headings,
     sectionOrder,
     customSections,

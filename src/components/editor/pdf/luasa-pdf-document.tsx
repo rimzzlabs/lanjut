@@ -6,6 +6,7 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
+import { resolveFont } from "@/lib/fonts";
 import { buildResumeBlocks, type ResumeBlock } from "../resume-blocks";
 import type {
   CertificateItemView,
@@ -15,6 +16,7 @@ import type {
   HeaderView,
   ResumePreview,
 } from "../resume-preview";
+import { PdfFontContext, usePdfFontFamily } from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfRichText } from "./pdf-rich-text";
@@ -92,11 +94,16 @@ function LuasaContactLine(props: { contacts: ContactView[] }) {
 }
 
 function LuasaHeader(props: { header: HeaderView }) {
+  const serif = usePdfFontFamily("Lora");
   return (
     <View style={styles.accentBar}>
-      <Text style={styles.name}>{props.header.fullName}</Text>
+      <Text style={[styles.name, { fontFamily: serif }]}>
+        {props.header.fullName}
+      </Text>
       {props.header.headline ? (
-        <Text style={styles.headline}>{props.header.headline}</Text>
+        <Text style={[styles.headline, { fontFamily: serif }]}>
+          {props.header.headline}
+        </Text>
       ) : null}
       {props.header.contacts.length > 0 ? (
         <LuasaContactLine contacts={props.header.contacts} />
@@ -165,12 +172,17 @@ function LuasaCertificate(props: { item: CertificateItemView }) {
 }
 
 function LuasaBlock(props: { block: ResumeBlock }) {
+  const serif = usePdfFontFamily("Lora");
   const { block } = props;
   switch (block.kind) {
     case "header":
       return <LuasaHeader header={block.header} />;
     case "heading":
-      return <Text style={styles.heading}>{block.title}</Text>;
+      return (
+        <Text style={[styles.heading, { fontFamily: serif }]}>
+          {block.title}
+        </Text>
+      );
     case "summary":
       return (
         <View style={styles.softBar}>
@@ -197,19 +209,25 @@ function LuasaBlock(props: { block: ResumeBlock }) {
  */
 export function LuasaPdfDocument(props: { preview: ResumePreview }) {
   const blocks = buildResumeBlocks(props.preview);
+  const family = resolveFont(props.preview.font ?? undefined)?.family ?? null;
   return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        {blocks.map((block) => (
-          <View
-            key={block.id}
-            style={{ marginTop: block.gapBefore }}
-            minPresenceAhead={block.keepWithNext ? 48 : 0}
-          >
-            <LuasaBlock block={block} />
-          </View>
-        ))}
-      </Page>
-    </Document>
+    <PdfFontContext.Provider value={family}>
+      <Document>
+        <Page
+          size="A4"
+          style={family ? [styles.page, { fontFamily: family }] : styles.page}
+        >
+          {blocks.map((block) => (
+            <View
+              key={block.id}
+              style={{ marginTop: block.gapBefore }}
+              minPresenceAhead={block.keepWithNext ? 48 : 0}
+            >
+              <LuasaBlock block={block} />
+            </View>
+          ))}
+        </Page>
+      </Document>
+    </PdfFontContext.Provider>
   );
 }

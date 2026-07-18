@@ -116,6 +116,11 @@ export interface ResumePreview {
    * pt in PDF), on top of the template's baseline rhythm; 0 = baseline.
    */
   sectionSpacing: number;
+  /**
+   * Resolved document font id from the catalog, or null for the template's
+   * shipped families. Applies to the whole document in preview and PDF.
+   */
+  font: string | null;
   headings: SectionHeadings;
   /**
    * The reorderable sections in document (reading) order. Drives the order blocks

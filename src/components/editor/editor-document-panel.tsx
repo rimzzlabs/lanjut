@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { EditorDocumentCopy } from "./editor-document-copy";
 import { EditorDocumentDownload } from "./editor-document-download";
+import { EditorDocumentFont } from "./editor-document-font";
 import { EditorDocumentIcon } from "./editor-document-icon";
 import { EditorDocumentImport } from "./editor-document-import";
 import { EditorDocumentLanguage } from "./editor-document-language";
@@ -15,6 +16,7 @@ export function EditorDocumentPanel() {
     <div className="flex flex-col divide-y px-4">
       <section className="flex flex-col gap-3 py-4">
         <EditorDocumentLanguage />
+        <EditorDocumentFont />
         <EditorDocumentIcon />
         <EditorDocumentSpacing />
       </section>
