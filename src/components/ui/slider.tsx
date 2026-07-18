@@ -2,6 +2,13 @@ import { Slider as SliderPrimitive } from "@base-ui/react/slider";
 
 import { cn } from "@/lib/utils";
 
+/** Trims float noise from stepped values so the thumb label reads cleanly. */
+function formatThumbValue(value: number): string {
+  return Number.isInteger(value)
+    ? String(value)
+    : String(Math.round(value * 100) / 100);
+}
+
 function Slider({
   className,
   defaultValue,
@@ -12,9 +19,13 @@ function Slider({
 }: SliderPrimitive.Root.Props) {
   const _values = Array.isArray(value)
     ? value
-    : Array.isArray(defaultValue)
-      ? defaultValue
-      : [min, max];
+    : typeof value === "number"
+      ? [value]
+      : Array.isArray(defaultValue)
+        ? defaultValue
+        : typeof defaultValue === "number"
+          ? [defaultValue]
+          : [min, max];
 
   return (
     <SliderPrimitive.Root
@@ -37,13 +48,24 @@ function Slider({
             className="bg-primary select-none data-horizontal:h-full data-vertical:w-full"
           />
         </SliderPrimitive.Track>
-        {Array.from({ length: _values.length }, (_, index) => (
+        {_values.map((thumbValue, index) => (
           <SliderPrimitive.Thumb
             data-slot="slider-thumb"
-            // biome-ignore lint/suspicious/noArrayIndexKey: ignore
+            // biome-ignore lint/suspicious/noArrayIndexKey: thumbs have no id; position is their identity
             key={index}
-            className="block size-4 shrink-0 rounded-lg bg-white shadow-md ring-1 ring-black/10 transition-[color,box-shadow] duration-200 select-none not-dark:bg-clip-padding hover:ring-4 hover:ring-ring/30 focus-visible:ring-4 focus-visible:ring-ring/30 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
-          />
+            index={index}
+            className="group/thumb block size-4 shrink-0 rounded-lg bg-white shadow-md ring-1 ring-black/10 transition-[color,box-shadow] duration-200 select-none not-dark:bg-clip-padding hover:ring-4 hover:ring-ring/30 focus-visible:ring-4 focus-visible:ring-ring/30 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
+          >
+            {/* Value label, shown while the thumb is focused (keyboard or drag)
+                and hidden on blur. aria-hidden: the value is already announced
+                via the thumb's aria-valuenow. */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 -translate-x-1/2 rounded-md bg-foreground px-1.5 py-0.5 text-[0.6875rem] font-medium leading-none text-background opacity-0 shadow-sm transition-opacity duration-150 group-focus-within/thumb:opacity-100"
+            >
+              {formatThumbValue(thumbValue)}
+            </span>
+          </SliderPrimitive.Thumb>
         ))}
       </SliderPrimitive.Control>
     </SliderPrimitive.Root>
