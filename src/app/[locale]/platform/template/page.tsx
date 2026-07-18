@@ -14,9 +14,19 @@ export async function generateMetadata(props: {
   return { title: t("browseTemplates") };
 }
 
-export default function PlatformTemplatePage() {
+export default async function PlatformTemplatePage(props: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await props.params;
+  const t = await getTranslations({ locale, namespace: "platform.breadcrumb" });
+
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col gap-4 p-4 md:p-6">
+      <header className="border-b border-border pb-4">
+        <h1 className="text-xl font-semibold tracking-tight">
+          {t("browseTemplates")}
+        </h1>
+      </header>
       <Suspense>
         <PlatformTemplateToolbar />
         <PlatformTemplateGrid />

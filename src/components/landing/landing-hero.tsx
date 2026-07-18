@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, FileText, Search } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 import { motion, type Variants } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -10,21 +10,24 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.12, delayChildren: 0.08 },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
   },
 };
+
+const STATS = [
+  { valueKey: "stat1Value", labelKey: "stat1Label" },
+  { valueKey: "stat2Value", labelKey: "stat2Label" },
+  { valueKey: "stat3Value", labelKey: "stat3Label" },
+] as const;
 
 export function LandingHero() {
   const t = useTranslations("hero");
@@ -34,38 +37,36 @@ export function LandingHero() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="w-11/12 mx-auto max-w-5xl flex min-h-[calc(100svh-2.5rem)] flex-col items-center justify-center py-20 text-center md:py-24"
+      className="mx-auto flex min-h-[calc(100svh-3.5rem)] w-11/12 max-w-5xl flex-col justify-center py-20 md:py-28"
     >
-      <motion.div variants={itemVariants} className="relative mb-4 md:mb-5">
-        <span
-          aria-hidden
-          className="absolute -inset-1 rounded-full bg-primary/25 blur-md animate-pulse motion-reduce:animate-none"
-        />
-        <span className="relative inline-flex items-center gap-2 rounded-full border border-primary/40 bg-muted px-3 py-1 text-xs font-medium text-muted-foreground sm:px-4 sm:py-1.5 sm:text-sm">
-          <FileText className="size-3.5 sm:size-4" />
-          {t("badge")}
-        </span>
-      </motion.div>
+      <motion.p
+        variants={itemVariants}
+        className="flex items-center gap-3 text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase"
+      >
+        <span aria-hidden className="h-px w-8 bg-primary" />
+        {t("badge")}
+      </motion.p>
 
       <motion.h1
         variants={itemVariants}
-        className="mb-4 text-4xl leading-[1.08] font-bold tracking-tight sm:text-5xl md:mb-6 md:text-6xl lg:text-7xl bg-linear-to-r from-primary to-sky-800 bg-clip-text text-transparent dark:from-emerald-200 dark:to-cyan-400"
+        className="mt-6 max-w-4xl font-display text-[clamp(2.5rem,7vw,5.25rem)] leading-[1.02] font-semibold tracking-tight text-balance wrap-anywhere"
       >
-        <span className="sr-only">{t("srHeading")}</span> {t("headingLine1")}
+        <span className="sr-only">{t("srHeading")}</span>
+        {t("headingLine1")}
         <br />
-        {t("headingLine2")}
+        <span className="text-primary">{t("headingLine2")}</span>
       </motion.h1>
 
       <motion.p
         variants={itemVariants}
-        className="mb-8 max-w-2xl text-base text-foreground/70 text-balance sm:text-lg md:mb-10"
+        className="mt-7 max-w-2xl text-base text-foreground/70 sm:text-lg"
       >
         {t("description")}
       </motion.p>
 
       <motion.div
         variants={itemVariants}
-        className="flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:gap-4"
+        className="mt-9 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
       >
         <Button
           size="lg"
@@ -87,31 +88,21 @@ export function LandingHero() {
         </Button>
       </motion.div>
 
-      <motion.div
+      <motion.dl
         variants={itemVariants}
-        className="mt-10 flex items-center gap-5 text-xs text-foreground/60 sm:gap-8 sm:text-sm md:mt-14"
+        className="mt-14 grid max-w-2xl grid-cols-3 divide-x divide-foreground/15 border-y border-foreground/15"
       >
-        <div>
-          <div className="text-xl font-bold text-foreground sm:text-2xl">
-            {t("stat1Value")}
+        {STATS.map((stat) => (
+          <div key={stat.labelKey} className="px-4 py-4 first:pl-0">
+            <dt className="font-display text-2xl font-semibold text-foreground sm:text-3xl">
+              {t(stat.valueKey)}
+            </dt>
+            <dd className="mt-1 text-xs text-muted-foreground sm:text-sm">
+              {t(stat.labelKey)}
+            </dd>
           </div>
-          <div>{t("stat1Label")}</div>
-        </div>
-        <div className="h-8 w-px bg-border" />
-        <div>
-          <div className="text-xl font-bold text-foreground sm:text-2xl">
-            {t("stat2Value")}
-          </div>
-          <div>{t("stat2Label")}</div>
-        </div>
-        <div className="h-8 w-px bg-border" />
-        <div>
-          <div className="text-xl font-bold text-foreground sm:text-2xl">
-            {t("stat3Value")}
-          </div>
-          <div>{t("stat3Label")}</div>
-        </div>
-      </motion.div>
+        ))}
+      </motion.dl>
     </motion.section>
   );
 }

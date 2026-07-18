@@ -8,25 +8,30 @@ export function LandingFooter() {
   const t = useTranslations("footer");
 
   return (
-    <footer className="border-t">
-      <div className="mx-auto flex w-11/12 max-w-5xl flex-col gap-6 py-10 md:flex-row md:items-center md:justify-between">
-        <div className="flex flex-col items-center gap-2 md:items-start">
-          <div className="flex items-center gap-2">
+    <footer className="border-t border-foreground/15">
+      <div className="mx-auto grid w-11/12 max-w-5xl gap-8 py-12 md:grid-cols-[1fr_auto] md:items-end">
+        <div>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 font-display text-lg font-semibold tracking-tight"
+          >
             <Image
               src="/favicon.svg"
               alt=""
-              width={20}
-              height={20}
-              className="size-5 rounded-[4px]"
+              width={22}
+              height={22}
+              className="size-5.5 rounded-[5px]"
             />
-            <span className="font-heading text-sm font-semibold">Lanjut</span>
-          </div>
-          <p className="text-xs text-muted-foreground">{t("tagline")}</p>
+            Lanjut
+          </Link>
+          <p className="mt-3 max-w-sm text-sm text-muted-foreground">
+            {t("tagline")}
+          </p>
         </div>
 
         <nav
           aria-label={t("ariaLabel")}
-          className="flex items-center justify-center gap-6 text-sm text-muted-foreground"
+          className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground"
         >
           <Link
             href="/platform"
@@ -49,8 +54,10 @@ export function LandingFooter() {
             {t("github")}
           </a>
         </nav>
+      </div>
 
-        <p className="text-center text-xs text-muted-foreground md:text-right">
+      <div className="border-t border-foreground/10">
+        <p className="mx-auto w-11/12 max-w-5xl py-5 font-mono text-xs text-muted-foreground">
           {t("rights", { year: YEAR })}
         </p>
       </div>
