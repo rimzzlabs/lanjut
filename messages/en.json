@@ -122,25 +122,41 @@
     "editor": {
       "preview": {
         "title": "Live preview",
-        "content": "This paper is your resume exactly as it will export. It updates as you type and is saved to this browser automatically."
+        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically."
       },
       "sections": {
-        "title": "Fill in your details",
-        "content": "Each section maps to a fixed, ATS-parseable structure. Work top to bottom."
+        "title": "Editor tab",
+        "content": "Fill in each section here. Drag to reorder them or hide the ones you don't need; the structure stays ATS-parseable underneath."
+      },
+      "layout": {
+        "title": "Layout tab",
+        "content": "Swap templates from the Layout tab. Each one restyles typography and spacing only, so your content and its reading order never change."
       },
       "document": {
-        "title": "Document",
-        "content": "Export your resume, switch its language, or import from a PDF, all from the Document tab."
+        "title": "Document tab",
+        "content": "Style the whole resume here: font, sizes, spacing, line height, and letter spacing. It's also where you switch language and export or import as PDF, DOCX, JSON, or YAML."
       }
     },
     "editor-sheet": {
       "preview": {
         "title": "Live preview",
-        "content": "This paper is your resume exactly as it will export. It updates as you type and is saved to this browser automatically."
+        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically."
       },
       "edit": {
-        "title": "Fill in your details",
-        "content": "Tap Edit to open the section forms. Each section maps to a fixed, ATS-parseable structure."
+        "title": "Open the editor",
+        "content": "Tap Edit anytime to open this panel and make changes."
+      },
+      "sections": {
+        "title": "Editor tab",
+        "content": "Fill in each section here. Drag to reorder them or hide the ones you don't need; the structure stays ATS-parseable underneath."
+      },
+      "layout": {
+        "title": "Layout tab",
+        "content": "Swap templates from the Layout tab. Each one restyles typography and spacing only, so your content and its reading order never change."
+      },
+      "document": {
+        "title": "Document tab",
+        "content": "Style the whole resume here: font, sizes, spacing, line height, and letter spacing. It's also where you switch language and export or import as PDF, DOCX, JSON, or YAML."
       }
     }
   },

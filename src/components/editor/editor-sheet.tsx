@@ -2,6 +2,7 @@
 
 import { PenLine } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useEditorChromeStore } from "@/lib/store";
 import { Button } from "../ui/button";
 import {
   Sheet,
@@ -15,9 +16,11 @@ import { EditorSidebarContent } from "./editor-sidebar-content";
 
 export function EditorSheet() {
   const t = useTranslations("editor.chrome");
+  const open = useEditorChromeStore((state) => state.sheetOpen);
+  const setSheetOpen = useEditorChromeStore((state) => state.setSheetOpen);
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setSheetOpen}>
       <SheetTrigger
         render={
           <Button

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { parseAsString, useQueryState } from "nuqs";
+import { type EditorTab, useEditorChromeStore } from "@/lib/store";
 import { ScrollArea } from "../ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { EditorDocumentPanel } from "./editor-document-panel";
@@ -20,12 +20,10 @@ const PANEL_HEIGHT = "h-[calc(100vh-7rem)] xl:h-[calc(100vh-7rem)]";
 
 export function EditorSidebarContent() {
   const t = useTranslations("editor.chrome");
-  const [tab, setTab] = useQueryState(
-    "editor-tab",
-    parseAsString.withDefault(TABS[0].value),
-  );
+  const tab = useEditorChromeStore((state) => state.activeTab);
+  const setActiveTab = useEditorChromeStore((state) => state.setActiveTab);
 
-  const onTabChange = (next: string) => setTab(next);
+  const onTabChange = (next: string) => setActiveTab(next as EditorTab);
 
   return (
     <div className="flex flex-col py-6">
@@ -55,13 +53,13 @@ export function EditorSidebarContent() {
         </TabsContent>
 
         <TabsContent value="layout">
-          <ScrollArea className={PANEL_HEIGHT}>
+          <ScrollArea id="tour-editor-layout" className={PANEL_HEIGHT}>
             <EditorLayoutTemplateList />
           </ScrollArea>
         </TabsContent>
 
         <TabsContent value="document">
-          <ScrollArea className={PANEL_HEIGHT}>
+          <ScrollArea id="tour-editor-document" className={PANEL_HEIGHT}>
             <EditorDocumentPanel />
           </ScrollArea>
         </TabsContent>

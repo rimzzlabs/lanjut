@@ -122,25 +122,41 @@
     "editor": {
       "preview": {
         "title": "Pratinjau langsung",
-        "content": "Kertas ini adalah resume kamu, persis seperti yang bakal diekspor. Update otomatis pas kamu ngetik dan langsung tersimpan di browser ini."
+        "content": "Ini pratinjau langsung kamu, persis seperti yang bakal diekspor. Update otomatis pas kamu ngetik dan langsung tersimpan di browser ini."
       },
       "sections": {
-        "title": "Isi detail kamu",
-        "content": "Tiap bagian ngikutin struktur tetap yang kebaca ATS. Kerjain dari atas ke bawah."
+        "title": "Tab Editor",
+        "content": "Isi tiap bagian di sini. Seret buat mengubah urutannya atau sembunyikan yang nggak kamu perlu; strukturnya tetap kebaca ATS di baliknya."
+      },
+      "layout": {
+        "title": "Tab Tata Letak",
+        "content": "Ganti template dari tab Tata Letak. Masing-masing cuma mengubah tipografi dan spasi, jadi konten dan urutan bacanya nggak pernah berubah."
       },
       "document": {
-        "title": "Dokumen",
-        "content": "Ekspor resume, ganti bahasanya, atau impor dari PDF, semua dari tab Dokumen."
+        "title": "Tab Dokumen",
+        "content": "Atur gaya seluruh resume di sini: font, ukuran, spasi, tinggi baris, dan jarak antarhuruf. Di sini juga kamu ganti bahasa dan ekspor atau impor sebagai PDF, DOCX, JSON, atau YAML."
       }
     },
     "editor-sheet": {
       "preview": {
         "title": "Pratinjau langsung",
-        "content": "Kertas ini adalah resume kamu, persis seperti yang bakal diekspor. Update otomatis pas kamu ngetik dan langsung tersimpan di browser ini."
+        "content": "Ini pratinjau langsung kamu, persis seperti yang bakal diekspor. Update otomatis pas kamu ngetik dan langsung tersimpan di browser ini."
       },
       "edit": {
-        "title": "Isi detail kamu",
-        "content": "Ketuk Edit buat buka formulir bagiannya. Tiap bagian ngikutin struktur tetap yang kebaca ATS."
+        "title": "Buka editor",
+        "content": "Ketuk Edit kapan aja buat buka panel ini dan mulai mengubah."
+      },
+      "sections": {
+        "title": "Tab Editor",
+        "content": "Isi tiap bagian di sini. Seret buat mengubah urutannya atau sembunyikan yang nggak kamu perlu; strukturnya tetap kebaca ATS di baliknya."
+      },
+      "layout": {
+        "title": "Tab Tata Letak",
+        "content": "Ganti template dari tab Tata Letak. Masing-masing cuma mengubah tipografi dan spasi, jadi konten dan urutan bacanya nggak pernah berubah."
+      },
+      "document": {
+        "title": "Tab Dokumen",
+        "content": "Atur gaya seluruh resume di sini: font, ukuran, spasi, tinggi baris, dan jarak antarhuruf. Di sini juga kamu ganti bahasa dan ekspor atau impor sebagai PDF, DOCX, JSON, atau YAML."
       }
     }
   },
