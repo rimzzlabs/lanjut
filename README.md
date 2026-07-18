@@ -14,7 +14,7 @@
 
 A resume builder split into two layers:
 
-- **Structural layer**: fixed section types (header, summary, experience, education, skills, languages, certificates) with a restricted rich-text schema per field. This keeps export output parseable by Applicant Tracking System (ATS) software.
+- **Structural layer**: fixed section types (header, summary, experience, internship, projects, organizations, education, certifications, skills, languages, plus custom sections from an approved list) with a restricted rich-text schema per field. This keeps export output parseable by Applicant Tracking System (ATS) software.
 - **Presentation layer**: typography, spacing, color, and theming. Fully customizable. Changes here never affect the underlying text structure used for parsing or export.
 
 Customization applies to how the resume looks. It does not extend to layouts that break ATS parsing (tables, multi-column body text, floating text boxes, embedded icons in text runs).
@@ -26,8 +26,15 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Résumé library with live first-page thumbnails, rename, and delete
 - Print-accurate A4 preview with automatic pagination
 - Rich text editing per field, scoped to ATS-safe formatting (bold, italic, lists, links)
-- Local persistence via IndexedDB, no data leaves the browser
+- Custom sections alongside the fixed types, all sharing the same restricted schema
+- Drag to reorder sections and toggle any section's visibility (entries within a section sort by date automatically)
+- Document-level presentation controls: font, font size, section spacing, line height, letter spacing, contact-icon visibility, and a one-click style reset
+- Available in English and Indonesian (`next-intl`)
 - Export to PDF (linear reading order preserved) and plain text / .docx
+- Copy, download, and re-import a résumé as JSON or YAML
+- Guided tour of the editor and library for first-time users
+- Send bug reports and feature requests in-app, no GitHub account required
+- Local persistence via IndexedDB, no data leaves the browser
 - Fully local: works offline after initial load
 
 ## Templates
@@ -49,15 +56,20 @@ Every template renders the same linear block sequence, so switching templates ne
 |---|---|
 | Framework | Next.js (App Router) |
 | Hosting | open-next on Cloudflare |
+| Internationalization | next-intl (English, Indonesian) |
 | UI components | shadcn (base-ui) |
 | Styling | Tailwind CSS |
 | Rich text editor | TipTap |
+| Forms | react-hook-form + zod |
+| Drag and drop | @dnd-kit |
+| Export | @react-pdf/renderer, docx |
 | Animation | motion/react |
 | State | zustand |
 | Search params state | nuqs |
 | Persistence | IndexedDB (via idb) |
 | Utilities | @mobily/ts-belt |
 | Dates | date-fns |
+| Lint / format | Biome |
 
 ## Getting Started
 
@@ -76,6 +88,7 @@ Open `http://localhost:3000`.
 |---|---|
 | `pnpm dev` | Start the dev server |
 | `pnpm lint` / `pnpm format` | Check / write with Biome |
+| `pnpm typecheck` | Generate Next types and run `tsc --noEmit` |
 | `pnpm validate:exports` | Regenerate PDF/DOCX/TXT from the seed résumé and verify extraction order and field mapping |
 | `pnpm preview` | Build with open-next and preview the Cloudflare worker locally |
 | `pnpm ship` | Build and deploy to Cloudflare |
