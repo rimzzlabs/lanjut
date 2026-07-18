@@ -308,13 +308,17 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
     }
   }
 
-  // Document-level section spacing widens only the gap above headings; the
+  // Document-level section spacing adjusts only the gap above headings; the
   // paginator and every PDF template consume `gapBefore`, so this single
-  // adjustment reaches all of them.
-  if (resume.sectionSpacing > 0) {
+  // adjustment reaches all of them. Floored at zero so a tightened document
+  // collapses sections to flush instead of overlapping them.
+  if (resume.sectionSpacing !== 0) {
     return blocks.map((block) =>
       block.kind === "heading"
-        ? { ...block, gapBefore: block.gapBefore + resume.sectionSpacing }
+        ? {
+            ...block,
+            gapBefore: Math.max(0, block.gapBefore + resume.sectionSpacing),
+          }
         : block,
     );
   }

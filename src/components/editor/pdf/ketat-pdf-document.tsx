@@ -6,7 +6,6 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import { resolveFont } from "@/lib/fonts";
 import { buildResumeBlocks, type ResumeBlock } from "../resume-blocks";
 import type {
   CertificateItemView,
@@ -16,7 +15,7 @@ import type {
   ResumePreview,
 } from "../resume-preview";
 import { PdfContactIcon } from "./pdf-contact-icon";
-import { PdfFontContext, usePdfFontFamily } from "./pdf-font";
+import { PdfFontContext, pdfTypography, usePdfFontFamily } from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfRichText } from "./pdf-rich-text";
@@ -214,13 +213,13 @@ function KetatBlock(props: { block: ResumeBlock }) {
  */
 export function KetatPdfDocument(props: { preview: ResumePreview }) {
   const blocks = buildResumeBlocks(props.preview);
-  const family = resolveFont(props.preview.font ?? undefined)?.family ?? null;
+  const typography = pdfTypography(props.preview);
   return (
-    <PdfFontContext.Provider value={family}>
+    <PdfFontContext.Provider value={typography.family}>
       <Document>
         <Page
           size="A4"
-          style={family ? [styles.page, { fontFamily: family }] : styles.page}
+          style={typography.page ? [styles.page, typography.page] : styles.page}
         >
           {blocks.map((block) => (
             <View

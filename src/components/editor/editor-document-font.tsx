@@ -34,7 +34,7 @@ export function EditorDocumentFont() {
   // base-ui's Select.Value renders the raw value unless the root gets a
   // value-to-label mapping.
   const items = {
-    [TEMPLATE_DEFAULT]: t("fontTemplateDefault"),
+    [TEMPLATE_DEFAULT]: t("templateDefault"),
     ...FONT_LABELS,
   };
 
@@ -58,13 +58,13 @@ export function EditorDocumentFont() {
         {t("documentFont")}
       </span>
       <Select value={font} onValueChange={onValueChange} items={items}>
-        <SelectTrigger aria-labelledby="document-font-label" className="w-44">
+        <SelectTrigger aria-labelledby="document-font-label">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
             <SelectItem value={TEMPLATE_DEFAULT}>
-              {t("fontTemplateDefault")}
+              {t("templateDefault")}
             </SelectItem>
           </SelectGroup>
           {CATEGORIES.map((category) => (

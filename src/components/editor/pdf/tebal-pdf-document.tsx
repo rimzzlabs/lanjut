@@ -6,7 +6,6 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import { resolveFont } from "@/lib/fonts";
 import { buildResumeBlocks, type ResumeBlock } from "../resume-blocks";
 import type {
   CertificateItemView,
@@ -16,6 +15,7 @@ import type {
   ResumePreview,
 } from "../resume-preview";
 import { PdfContactIcon } from "./pdf-contact-icon";
+import { pdfTypography } from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfRichText } from "./pdf-rich-text";
@@ -194,12 +194,12 @@ function TebalBlock(props: { block: ResumeBlock }) {
  */
 export function TebalPdfDocument(props: { preview: ResumePreview }) {
   const blocks = buildResumeBlocks(props.preview);
-  const family = resolveFont(props.preview.font ?? undefined)?.family;
+  const typography = pdfTypography(props.preview);
   return (
     <Document>
       <Page
         size="A4"
-        style={family ? [styles.page, { fontFamily: family }] : styles.page}
+        style={typography.page ? [styles.page, typography.page] : styles.page}
       >
         {blocks.map((block) => (
           <View
