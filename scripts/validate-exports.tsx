@@ -5,7 +5,15 @@
  * This is the automated "text-extraction test" (pdftotext-equivalent) that must
  * pass after any change to an export path. Run: `pnpm validate:exports`.
  */
-import { Font, renderToBuffer } from "@react-pdf/renderer";
+import { inflateSync } from "node:zlib";
+import {
+  Document,
+  Font,
+  Page,
+  renderToBuffer,
+  Text,
+  View,
+} from "@react-pdf/renderer";
 import { Packer } from "docx";
 import JSZip from "jszip";
 import { extractText, getDocumentProxy } from "unpdf";
@@ -60,7 +68,80 @@ function registerFonts(): void {
       { src: `${root}/public/fonts/GeistMono-Bold.ttf`, fontWeight: 700 },
     ],
   });
+  Font.register({
+    family: "Merriweather",
+    fonts: [
+      { src: `${root}/public/fonts/Merriweather-Regular.ttf`, fontWeight: 400 },
+      { src: `${root}/public/fonts/Merriweather-Bold.ttf`, fontWeight: 700 },
+    ],
+  });
   Font.registerHyphenationCallback((word) => [word]);
+}
+
+/**
+ * fi/fl-heavy probe. fontkit applies GSUB "liga"/"clig" by default, collapsing
+ * f+i and f+l into a single ligature glyph whose ToUnicode maps back to two
+ * codepoints. Readers that ignore the CMap then drop or garble the pair. The
+ * @react-pdf/textkit patch disables those features so each letter stays its own
+ * glyph with a single-codepoint ToUnicode, robust for every parser.
+ */
+const LIGATURE_PROBE = "fintech workflow office final affix fluent classified";
+
+/** ToUnicode destinations that a fi/fl ligature glyph would map back to. */
+const LIGATURE_MAPPINGS = [/0066\s*0069/i, /0066\s*006c/i];
+
+/**
+ * Fails if any embedded font maps a single glyph to the "fi" or "fl" codepoint
+ * pair, i.e. a ligature survived into the PDF. Inflates the FlateDecode streams
+ * (which include the ToUnicode CMaps) and scans their bfchar destinations.
+ */
+async function checkLigatureSafety(family: string): Promise<string[]> {
+  const buffer = await renderToBuffer(
+    <Document>
+      <Page style={{ padding: 40 }}>
+        <View>
+          <Text style={{ fontFamily: family, fontSize: 12 }}>
+            {LIGATURE_PROBE}
+          </Text>
+        </View>
+      </Page>
+    </Document>,
+  );
+  const label = `PDF ligatures (${family})`;
+  const errors: string[] = [];
+
+  const text = await extractPdfText(buffer);
+  for (const word of LIGATURE_PROBE.split(" ")) {
+    if (!text.toLowerCase().includes(word)) {
+      errors.push(`${label}: "${word}" missing from extracted text`);
+    }
+  }
+
+  const bytes = Buffer.from(buffer);
+  const streams = bytes
+    .toString("latin1")
+    .matchAll(/stream\r?\n([\s\S]*?)\r?\nendstream/g);
+  const cmaps: string[] = [];
+  for (const match of streams) {
+    let inflated: string;
+    try {
+      inflated = inflateSync(Buffer.from(match[1], "latin1")).toString(
+        "latin1",
+      );
+    } catch {
+      continue;
+    }
+    if (inflated.includes("beginbfchar")) cmaps.push(inflated);
+  }
+  for (const cmap of cmaps) {
+    if (LIGATURE_MAPPINGS.some((pattern) => pattern.test(cmap))) {
+      errors.push(
+        `${label}: a glyph maps back to an fi/fl pair (ligature not disabled)`,
+      );
+      break;
+    }
+  }
+  return errors;
 }
 
 /** Section headings in the order the linear document must present them. */
@@ -164,6 +245,14 @@ async function main(): Promise<void> {
   for (const [label, text] of outputs) {
     console.log(`${label}: extracted ${text.length} chars`);
     errors.push(...checkReadingOrder(text, label), ...checkFields(text, label));
+  }
+
+  for (const family of ["Lora", "Merriweather"]) {
+    const ligatureErrors = await checkLigatureSafety(family);
+    console.log(
+      `PDF ligatures (${family}): ${ligatureErrors.length === 0 ? "fi/fl stay separate glyphs" : "FAILED"}`,
+    );
+    errors.push(...ligatureErrors);
   }
 
   if (errors.length > 0) {

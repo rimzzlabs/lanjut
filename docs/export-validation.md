@@ -57,6 +57,17 @@ Decisions made to satisfy them:
   boundaries are destroyed and fields stop matching. `textTransform: "uppercase"`
   is fine (whole words survive; the gate matches fields case-insensitively). The
   DOM preview may still use CSS `tracking-*`; it is never text-extracted.
+- **Ligatures (`liga`/`clig`) are disabled in the PDF shaper.** fontkit collapses
+  `f`+`i` and `f`+`l` into a single ligature glyph whose ToUnicode maps back to two
+  codepoints; readers that ignore the CMap then drop or garble the pair (e.g.
+  `fintech` → `fntech`). This is done through a `pnpm patch` on `@react-pdf/textkit`
+  (`patches/@react-pdf__textkit@6.3.0.patch`) that passes `{ liga: false, clig: false }`
+  to the two `font.layout` calls, so each letter stays its own glyph with a
+  single-codepoint ToUnicode. GPOS kerning still applies; only the aesthetic glyph
+  merge is removed, so the visual result is near-identical. The gate renders an fi/fl
+  probe and fails if any
+  glyph maps back to an `fi`/`fl` pair, which also catches the patch silently dropping
+  on a `@react-pdf` upgrade. The DOM preview is HTML and keeps native ligatures.
 - **Location** relies on the parser. OpenResume, for one, only matches US-style
   `City, ST` with a **two-letter** state (regex `[A-Z][a-zA-Z\s]+, [A-Z]{2}`); a full
   "City, Province, Country" won't be detected as a location. This is a parser
