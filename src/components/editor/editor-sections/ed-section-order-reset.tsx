@@ -33,9 +33,8 @@ export function EditorSectionOrderReset() {
       <TooltipTrigger
         render={
           <Button
-            size="icon-xs"
+            size="icon-sm"
             variant="ghost"
-            className="ml-auto"
             disabled={disabled}
             onClick={() => resetSectionOrder()}
           />

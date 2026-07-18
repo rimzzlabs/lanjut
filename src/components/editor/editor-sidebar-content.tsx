@@ -40,11 +40,16 @@ export function EditorSidebarContent() {
               </TabsTrigger>
             ))}
           </TabsList>
-          <EditorSectionOrderReset />
         </div>
 
         <TabsContent value="editor">
           <ScrollArea id="tour-editor-sections" className={PANEL_HEIGHT}>
+            <div className="flex items-center justify-end px-4 pt-4">
+              <h3 className="text-sm font-medium sr-only">
+                {t("sectionsHeading")}
+              </h3>
+              <EditorSectionOrderReset />
+            </div>
             <EditorSectionList />
           </ScrollArea>
         </TabsContent>
