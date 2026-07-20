@@ -6,7 +6,11 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import { buildResumeBlocks, type ResumeBlock } from "../resume-blocks";
+import {
+  buildResumeBlocks,
+  isAtomicBlock,
+  type ResumeBlock,
+} from "../resume-blocks";
 import type {
   CertificateItemView,
   EducationItemView,
@@ -243,6 +247,7 @@ export function TebalPdfDocument(props: { preview: ResumePreview }) {
               key={block.id}
               style={{ marginTop: block.gapBefore }}
               minPresenceAhead={block.keepWithNext ? 48 : 0}
+              wrap={isAtomicBlock(block) ? false : undefined}
             >
               <TebalBlock block={block} />
             </View>

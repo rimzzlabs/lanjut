@@ -41,6 +41,22 @@ export type ResumeBlock = BlockMeta &
     | { kind: "languages"; items: LanguageItemView[]; columns: SectionColumns }
   );
 
+const ATOMIC_KINDS = new Set<ResumeBlock["kind"]>([
+  "experience",
+  "education",
+  "certificate",
+]);
+
+/**
+ * Entry blocks are indivisible: their title, subtitle, and body must never be
+ * split across a page break. The on-screen paginator already treats every block
+ * as one unit; PDF templates mark these with `wrap={false}` so react-pdf agrees,
+ * moving a whole entry to the next page rather than stranding its header.
+ */
+export function isAtomicBlock(block: ResumeBlock): boolean {
+  return ATOMIC_KINDS.has(block.kind);
+}
+
 const GAP = {
   /** Space above a section heading. */
   section: 24,

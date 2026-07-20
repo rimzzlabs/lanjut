@@ -62,6 +62,7 @@ Any feature request that adds structural freedom (tables, columns, floating elem
 - PDF export must preserve linear reading order. Do not use a method that achieves visual layout via absolute positioning that breaks text extraction order. Verify with a text-extraction test (e.g., pdftotext) after any change to the PDF generation path.
 - Provide a plain text or .docx export path in addition to PDF. This is the actual ATS-safe submission format for many applicant tracking systems.
 - Before marking export work done, run output through at least one real parser test (Workday/Greenhouse test upload, or an open-source resume parser) and confirm fields map correctly.
+- Entry blocks (experience, education, certificate, and the internship/projects/organizations and custom `list` sections that reuse the experience kind) must never split across a page break; their title, subtitle, and body stay on one page, matching the on-screen paginator which never splits a block. `isAtomicBlock` in `src/components/editor/resume-blocks.ts` is the source of truth; every PDF template's block wrapper sets `wrap={isAtomicBlock(block) ? false : undefined}`. A new PDF template MUST do the same, or its entries will orphan their header at a page foot. Apply `wrap={false}` only at the whole-entry level, never on the individual bullet rows in `pdf-rich-text.tsx` (that collapses list items on top of each other at a page boundary).
 
 ## Documentation
 
