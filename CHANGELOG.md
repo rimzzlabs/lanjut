@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.2](https://github.com/rimzzlabs/lanjut/compare/v0.10.1...v0.10.2) (2026-07-20)
+
+
+### Bug Fixes
+
+* keep pdf entries from splitting across page breaks ([#130](https://github.com/rimzzlabs/lanjut/issues/130)) ([0197c2a](https://github.com/rimzzlabs/lanjut/commit/0197c2ac65c4cb102f261e679c1eb48c35634e8f))
+
 ## [0.10.1](https://github.com/rimzzlabs/lanjut/compare/v0.10.0...v0.10.1) (2026-07-18)
 
 
