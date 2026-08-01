@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://github.com/rimzzlabs/lanjut/compare/v0.10.2...v0.11.0) (2026-08-01)
+
+
+### Features
+
+* add a company location to work experience ([#135](https://github.com/rimzzlabs/lanjut/issues/135)) ([ac382ab](https://github.com/rimzzlabs/lanjut/commit/ac382abc4c06f3d54fc1551bdd91fac85db51dad))
+
 ## [0.10.2](https://github.com/rimzzlabs/lanjut/compare/v0.10.1...v0.10.2) (2026-07-20)
 
 
