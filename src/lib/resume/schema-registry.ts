@@ -136,6 +136,12 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
         placeholder: "Acme Inc.",
       },
       {
+        key: "location",
+        label: "Location",
+        kind: "plain",
+        placeholder: "San Francisco, CA",
+      },
+      {
         key: "website",
         label: "Company website",
         kind: "plain",
@@ -177,6 +183,12 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
         label: "Company",
         kind: "plain",
         placeholder: "Acme Inc.",
+      },
+      {
+        key: "location",
+        label: "Location",
+        kind: "plain",
+        placeholder: "San Francisco, CA",
       },
       {
         key: "website",

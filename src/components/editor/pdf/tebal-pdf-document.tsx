@@ -11,6 +11,7 @@ import {
   isAtomicBlock,
   type ResumeBlock,
 } from "../resume-blocks";
+import { locationSuffix, withLocation } from "../resume-entry-location";
 import type {
   CertificateItemView,
   EducationItemView,
@@ -155,6 +156,7 @@ function TebalExperience(props: { item: ExperienceItemView }) {
         ) : (
           props.item.company
         )}
+        {locationSuffix(props.item.company, props.item.location)}
       </Text>
       <PdfRichText blocks={props.item.description} style={styles.body} />
     </View>
@@ -171,7 +173,9 @@ function TebalEducation(props: { item: EducationItemView }) {
           {dateRange(props.item.startDate, props.item.endDate)}
         </Text>
       </View>
-      <Text style={styles.subtitle}>{props.item.institution}</Text>
+      <Text style={styles.subtitle}>
+        {withLocation(props.item.institution, props.item.location)}
+      </Text>
       <PdfRichText blocks={props.item.details} style={styles.body} />
     </View>
   );

@@ -16,9 +16,9 @@ XML, and the serializer output for `.txt`. It then asserts:
 
 - **Reading order**: `Summary → Experience → Education → Certificates → Skills →
   Languages` appears in that order in every format.
-- **Field mapping**: name, headline, email, website, each employer, education,
-  certificate, a representative skill, and a language are all present in the extracted
-  text.
+- **Field mapping**: name, headline, email, website, each employer, an employer and a
+  school location, education, certificate, a representative skill, and a language are
+  all present in the extracted text.
 
 This is the pdftotext-equivalent text-extraction test required by `AGENTS.md`. **Run it
 after any change to an export path** (`pdf/`, `docx/`, `resume-to-text.ts`,
@@ -68,6 +68,10 @@ Decisions made to satisfy them:
   probe and fails if any
   glyph maps back to an `fi`/`fl` pair, which also catches the patch silently dropping
   on a `@react-pdf` upgrade. The DOM preview is HTML and keeps native ligatures.
+- **Entry locations join the subject with a comma** ("Acme Inc., San Francisco, CA"),
+  in the preview, PDF, docx, and text alike. They ride on the employer/institution
+  line rather than a column of their own, so the pair stays one contiguous phrase for
+  extractors, and a linked company keeps the hyperlink on the company name only.
 - **Location** relies on the parser. OpenResume, for one, only matches US-style
   `City, ST` with a **two-letter** state (regex `[A-Z][a-zA-Z\s]+, [A-Z]{2}`); a full
   "City, Province, Country" won't be detected as a location. This is a parser

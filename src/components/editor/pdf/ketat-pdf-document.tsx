@@ -11,6 +11,7 @@ import {
   isAtomicBlock,
   type ResumeBlock,
 } from "../resume-blocks";
+import { locationSuffix, withLocation } from "../resume-entry-location";
 import type {
   CertificateItemView,
   EducationItemView,
@@ -165,6 +166,7 @@ function KetatExperience(props: { item: ExperienceItemView }) {
           ) : (
             props.item.company
           )}
+          {locationSuffix(props.item.company, props.item.location)}
         </Text>
         <Text style={styles.entryDate}>
           {dateRange(props.item.startDate, props.item.endDate)}
@@ -181,7 +183,9 @@ function KetatEducation(props: { item: EducationItemView }) {
     <View>
       <Text style={styles.entryTitle}>{props.item.degree}</Text>
       <View style={styles.subtitleRow}>
-        <Text style={styles.subtitle}>{props.item.institution}</Text>
+        <Text style={styles.subtitle}>
+          {withLocation(props.item.institution, props.item.location)}
+        </Text>
         <Text style={styles.entryDate}>
           {dateRange(props.item.startDate, props.item.endDate)}
         </Text>

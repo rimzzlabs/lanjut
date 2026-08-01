@@ -85,6 +85,22 @@ export function EditorSectionInternshipFormItem(
 
           <Controller
             control={props.control}
+            name={`internships.${props.index}.location`}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor={field.name}>{t("location")}</FieldLabel>
+                <Input
+                  placeholder={t("locationPlaceholder")}
+                  {...field}
+                  id={field.name}
+                />
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            )}
+          />
+
+          <Controller
+            control={props.control}
             name={`internships.${props.index}.website`}
             render={({ field, fieldState }) => (
               <Field>

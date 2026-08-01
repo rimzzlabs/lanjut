@@ -1,3 +1,4 @@
+import { withLocation } from "../../resume-entry-location";
 import type { EducationItemView } from "../../resume-preview";
 import { ResumeRichText } from "../../resume-rich-text";
 
@@ -11,7 +12,7 @@ export function KlasikEducationItem(props: EducationItemView) {
         </span>
       </div>
       <p className="resume-body-xs text-muted-foreground">
-        {props.institution}
+        {withLocation(props.institution, props.location)}
       </p>
       <ResumeRichText blocks={props.details} className="mt-1 font-serif" />
     </article>

@@ -24,6 +24,7 @@ export interface SummaryFormValues {
 export interface ExperienceItemValues {
   title: string;
   company: string;
+  location: string;
   website: string;
   startDate: string;
   endDate: string;
@@ -37,6 +38,7 @@ export interface ExperienceFormValues {
 export interface InternshipItemValues {
   title: string;
   company: string;
+  location: string;
   website: string;
   startDate: string;
   endDate: string;
@@ -214,6 +216,7 @@ export function toExperienceValues(resume: Resume): ExperienceFormValues {
       .map((entry) => ({
         title: plainValue(entry.fields.title),
         company: plainValue(entry.fields.company),
+        location: plainValue(entry.fields.location),
         website: plainValue(entry.fields.website),
         startDate: plainValue(entry.fields.startDate),
         endDate: plainValue(entry.fields.endDate),
@@ -234,6 +237,7 @@ export function applyExperienceValues(
     fields: {
       title: plain(item.title),
       company: plain(item.company),
+      location: plain(item.location),
       website: plain(item.website),
       startDate: plain(item.startDate),
       endDate: plain(item.endDate),
@@ -254,6 +258,7 @@ export function toInternshipValues(resume: Resume): InternshipFormValues {
       .map((entry) => ({
         title: plainValue(entry.fields.title),
         company: plainValue(entry.fields.company),
+        location: plainValue(entry.fields.location),
         website: plainValue(entry.fields.website),
         startDate: plainValue(entry.fields.startDate),
         endDate: plainValue(entry.fields.endDate),
@@ -274,6 +279,7 @@ export function applyInternshipValues(
     fields: {
       title: plain(item.title),
       company: plain(item.company),
+      location: plain(item.location),
       website: plain(item.website),
       startDate: plain(item.startDate),
       endDate: plain(item.endDate),

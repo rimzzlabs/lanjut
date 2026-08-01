@@ -44,6 +44,12 @@ export interface ExperienceItemView {
   roleHref?: string;
   company: string;
   companyHref?: string;
+  /**
+   * Where the job was based, rendered after the company on the same line. Only
+   * the section kinds that carry a location field (experience, internship) set
+   * it; projects, organizations, and custom lists leave it absent.
+   */
+  location?: string;
   startDate: string;
   endDate: string;
   description: RichBlock[];
@@ -53,6 +59,8 @@ export interface EducationItemView {
   id: string;
   degree: string;
   institution: string;
+  /** Rendered after the institution on the same line; empty when unset. */
+  location: string;
   startDate: string;
   endDate: string;
   details: RichBlock[];

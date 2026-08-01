@@ -26,6 +26,7 @@ function emptyExperience(): ExperienceItemValues {
   return {
     title: "",
     company: "",
+    location: "",
     website: "",
     startDate: "",
     endDate: "",

@@ -8,6 +8,7 @@ import {
 } from "docx";
 import type { InlineRun, RichBlock } from "@/lib/resume/rich-content";
 import { buildResumeBlocks } from "../resume-blocks";
+import { locationSuffix, withLocation } from "../resume-entry-location";
 import type { ContactView, HeaderView, ResumePreview } from "../resume-preview";
 
 const MUTED = "525252";
@@ -83,13 +84,17 @@ function titleRow(title: string, date: string, href?: string): Paragraph {
   });
 }
 
-function subtitle(text: string, href?: string): Paragraph {
+/** A muted subtitle: an optionally linked subject, then a plain-text tail. */
+function subtitle(text: string, href?: string, suffix = ""): Paragraph {
   const child = new TextRun({ text, color: MUTED });
+  const subject = href
+    ? new ExternalHyperlink({ link: href, children: [child] })
+    : child;
   return new Paragraph({
     spacing: { after: 40 },
-    children: [
-      href ? new ExternalHyperlink({ link: href, children: [child] }) : child,
-    ],
+    children: suffix
+      ? [subject, new TextRun({ text: suffix, color: MUTED })]
+      : [subject],
   });
 }
 
@@ -180,8 +185,15 @@ export function buildAwalDocx(preview: ResumePreview): Document {
             item.roleHref,
           ),
         );
-        if (item.company)
-          children.push(subtitle(item.company, item.companyHref));
+        if (item.company || item.location) {
+          children.push(
+            subtitle(
+              item.company,
+              item.companyHref,
+              locationSuffix(item.company, item.location),
+            ),
+          );
+        }
         children.push(...richParagraphs(item.description));
         break;
       }
@@ -190,7 +202,8 @@ export function buildAwalDocx(preview: ResumePreview): Document {
         children.push(
           titleRow(item.degree, dateRange(item.startDate, item.endDate)),
         );
-        if (item.institution) children.push(subtitle(item.institution));
+        const school = withLocation(item.institution, item.location);
+        if (school) children.push(subtitle(school));
         children.push(...richParagraphs(item.details));
         break;
       }

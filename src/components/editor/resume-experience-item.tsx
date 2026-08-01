@@ -1,3 +1,4 @@
+import { locationSuffix } from "./resume-entry-location";
 import type { ExperienceItemView } from "./resume-preview";
 import { ResumeRichText } from "./resume-rich-text";
 
@@ -19,6 +20,7 @@ export function ResumeExperienceItem(props: ExperienceItemView) {
         ) : (
           props.company
         )}
+        {locationSuffix(props.company, props.location)}
       </p>
 
       <ResumeRichText blocks={props.description} className="mt-2" />
