@@ -180,6 +180,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_11_0": [
+          {
+            "title": "Lokasi perusahaan",
+            "description": "Entri pengalaman kerja dan magang sekarang punya kolom lokasi, tampil di samping nama perusahaan di pratinjau, PDF, dan semua ekspor lainnya. Lokasi pendidikan juga ikut tampil, nggak lagi cuma tersimpan diam-diam."
+          }
+        ],
         "0_10_0": [
           {
             "title": "Kirim masukan tanpa akun GitHub",
@@ -644,6 +650,8 @@
       "jobTitlePlaceholder": "UX Engineer",
       "company": "Perusahaan",
       "companyPlaceholder": "Acme Inc.",
+      "location": "Lokasi",
+      "locationPlaceholder": "Jakarta, Indonesia",
       "companyWebsite": "Situs web perusahaan",
       "companyWebsitePlaceholder": "acme.com",
       "present": "Masih kerja di sini sekarang",
@@ -663,6 +671,8 @@
       "rolePlaceholder": "Frontend Engineering Intern",
       "company": "Perusahaan",
       "companyPlaceholder": "Acme Inc.",
+      "location": "Lokasi",
+      "locationPlaceholder": "Jakarta, Indonesia",
       "companyWebsite": "Situs web perusahaan",
       "companyWebsitePlaceholder": "acme.com",
       "present": "Masih magang di sini sekarang",

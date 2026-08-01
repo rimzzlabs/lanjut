@@ -581,6 +581,31 @@ const migrateV19toV20: Migration = (doc) => {
 };
 
 /**
+ * v20→v21: Experience and Internship entries gain a `location` (the company's
+ * city). Existing entries are stamped with an empty value, so nothing renders
+ * until the user fills it in. Bail-safe: an entry already carrying a `location`
+ * keeps it, and anything that is not an entry-shaped object is skipped.
+ */
+const migrateV20toV21: Migration = (doc) => {
+  const next = structuredClone(doc);
+  const sections = next.sections;
+  if (!Array.isArray(sections)) return next;
+
+  for (const section of sections as Array<Record<string, unknown>>) {
+    const isJobSection =
+      section.type === "experience" || section.type === "internship";
+    if (!isJobSection || !Array.isArray(section.entries)) continue;
+    for (const entry of section.entries as Array<Record<string, unknown>>) {
+      if (!G.isObject(entry.fields)) continue;
+      const fields = entry.fields as Record<string, unknown>;
+      if (!("location" in fields)) fields.location = plainField("");
+    }
+  }
+
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -603,6 +628,7 @@ const LADDER: Record<number, Migration> = {
   17: migrateV17toV18,
   18: migrateV18toV19,
   19: migrateV19toV20,
+  20: migrateV20toV21,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

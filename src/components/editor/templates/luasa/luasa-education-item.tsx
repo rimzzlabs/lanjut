@@ -1,3 +1,4 @@
+import { withLocation } from "../../resume-entry-location";
 import type { EducationItemView } from "../../resume-preview";
 import { ResumeRichText } from "../../resume-rich-text";
 
@@ -13,7 +14,7 @@ export function LuasaEducationItem(props: EducationItemView) {
         </span>
       </div>
       <p className="resume-body-xs italic text-muted-foreground">
-        {props.institution}
+        {withLocation(props.institution, props.location)}
       </p>
       <ResumeRichText blocks={props.details} className="mt-1" />
     </article>

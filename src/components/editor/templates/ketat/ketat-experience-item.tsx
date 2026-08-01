@@ -1,3 +1,4 @@
+import { locationSuffix } from "../../resume-entry-location";
 import type { ExperienceItemView } from "../../resume-preview";
 import { ResumeRichText } from "../../resume-rich-text";
 
@@ -22,6 +23,7 @@ export function KetatExperienceItem(props: ExperienceItemView) {
           ) : (
             props.company
           )}
+          {locationSuffix(props.company, props.location)}
         </p>
         <span className="shrink-0 resume-body-xs italic text-muted-foreground">
           {props.startDate} – {props.endDate}

@@ -110,6 +110,7 @@ export const SEED_RESUME: Resume = {
           fields: {
             title: plain("Senior Frontend Engineer"),
             company: plain("Acme Corp"),
+            location: plain("San Francisco, CA"),
             website: plain("acme.example.com"),
             startDate: plain("Mar 2022"),
             endDate: plain("Present"),
@@ -169,6 +170,7 @@ export const SEED_RESUME: Resume = {
           fields: {
             title: plain("Frontend Engineer"),
             company: plain("Globex"),
+            location: plain("Remote"),
             website: plain("globex.example.com"),
             startDate: plain("Jul 2018"),
             endDate: plain("Feb 2022"),
@@ -209,6 +211,7 @@ export const SEED_RESUME: Resume = {
           fields: {
             title: plain("Junior Frontend Developer"),
             company: plain("Initech"),
+            location: plain("Austin, TX"),
             website: plain("initech.example.com"),
             startDate: plain("Aug 2016"),
             endDate: plain("Jun 2018"),
@@ -247,6 +250,7 @@ export const SEED_RESUME: Resume = {
           fields: {
             title: plain("Frontend Engineering Intern"),
             company: plain("Hooli"),
+            location: plain("Palo Alto, CA"),
             website: plain("hooli.example.com"),
             startDate: plain("Jun 2015"),
             endDate: plain("Aug 2015"),

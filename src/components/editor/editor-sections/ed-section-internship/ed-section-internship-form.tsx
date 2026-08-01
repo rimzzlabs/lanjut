@@ -26,6 +26,7 @@ function emptyInternship(): InternshipItemValues {
   return {
     title: "",
     company: "",
+    location: "",
     website: "",
     startDate: "",
     endDate: "",

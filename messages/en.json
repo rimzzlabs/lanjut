@@ -180,6 +180,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_11_0": [
+          {
+            "title": "Company location",
+            "description": "Experience and internship entries now carry a location, shown next to the employer in the preview, the PDF, and every other export. Education locations render too, instead of being kept out of sight."
+          }
+        ],
         "0_10_0": [
           {
             "title": "Feedback without a GitHub account",
@@ -644,6 +650,8 @@
       "jobTitlePlaceholder": "UX Engineer",
       "company": "Company",
       "companyPlaceholder": "Acme Inc.",
+      "location": "Location",
+      "locationPlaceholder": "San Francisco, CA",
       "companyWebsite": "Company Website",
       "companyWebsitePlaceholder": "acme.com",
       "present": "I currently work here",
@@ -663,6 +671,8 @@
       "rolePlaceholder": "Frontend Engineering Intern",
       "company": "Company",
       "companyPlaceholder": "Acme Inc.",
+      "location": "Location",
+      "locationPlaceholder": "San Francisco, CA",
       "companyWebsite": "Company Website",
       "companyWebsitePlaceholder": "acme.com",
       "present": "I'm currently interning here",

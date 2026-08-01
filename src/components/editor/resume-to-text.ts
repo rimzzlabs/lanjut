@@ -1,5 +1,6 @@
 import { richBlocksToText } from "@/lib/resume/rich-content";
 import { buildResumeBlocks } from "./resume-blocks";
+import { withLocation } from "./resume-entry-location";
 import type { ResumePreview } from "./resume-preview";
 
 function dateRange(start: string, end: string): string {
@@ -36,16 +37,28 @@ export function resumeToText(preview: ResumePreview): string {
         lines.push(...richBlocksToText(block.body));
         break;
       case "experience": {
-        const { role, company, startDate, endDate, description } = block.item;
-        lines.push(metaLine(role, company, dateRange(startDate, endDate)));
+        const { role, company, location, startDate, endDate, description } =
+          block.item;
+        lines.push(
+          metaLine(
+            role,
+            withLocation(company, location),
+            dateRange(startDate, endDate),
+          ),
+        );
         lines.push(...richBlocksToText(description));
         lines.push("");
         break;
       }
       case "education": {
-        const { degree, institution, startDate, endDate, details } = block.item;
+        const { degree, institution, location, startDate, endDate, details } =
+          block.item;
         lines.push(
-          metaLine(degree, institution, dateRange(startDate, endDate)),
+          metaLine(
+            degree,
+            withLocation(institution, location),
+            dateRange(startDate, endDate),
+          ),
         );
         lines.push(...richBlocksToText(details));
         lines.push("");
