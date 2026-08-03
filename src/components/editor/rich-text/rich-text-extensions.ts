@@ -9,6 +9,7 @@ import OrderedList from "@tiptap/extension-ordered-list";
 import Paragraph from "@tiptap/extension-paragraph";
 import Placeholder from "@tiptap/extension-placeholder";
 import Text from "@tiptap/extension-text";
+import { UndoRedo } from "@tiptap/extensions";
 import type { RichTextFeature } from "@/lib/resume/schema-registry";
 
 /**
@@ -22,7 +23,9 @@ export function buildRichTextExtensions(
   placeholder?: string,
 ): Extensions {
   const has = (feature: RichTextFeature) => features.includes(feature);
-  const extensions: Extensions = [Document, Paragraph, Text];
+  // UndoRedo is a plugin over the transaction stream, not a node or mark, so
+  // per-field history costs the schema nothing.
+  const extensions: Extensions = [Document, Paragraph, Text, UndoRedo];
 
   // Presentation-only decoration: renders empty-state text, adds no node or mark
   // to the schema, so it never affects parse/export structure.

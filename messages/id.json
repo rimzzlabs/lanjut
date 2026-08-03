@@ -790,6 +790,8 @@
       "remove": "Hapus bahasa"
     },
     "richText": {
+      "undo": "Urungkan",
+      "redo": "Ulangi",
       "bold": "Tebal",
       "italic": "Miring",
       "bulletList": "Daftar poin",

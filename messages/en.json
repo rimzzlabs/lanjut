@@ -790,6 +790,8 @@
       "remove": "Remove language"
     },
     "richText": {
+      "undo": "Undo",
+      "redo": "Redo",
       "bold": "Bold",
       "italic": "Italic",
       "bulletList": "Bullet list",
