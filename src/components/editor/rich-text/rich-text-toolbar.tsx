@@ -1,8 +1,10 @@
 "use client";
 
 import { type Editor, useEditorState } from "@tiptap/react";
-import { Bold, Italic, List, ListOrdered } from "lucide-react";
+import { Bold, Italic, List, ListOrdered, Redo2, Undo2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { Toggle } from "@/components/ui/toggle";
 import type { RichTextFeature } from "@/lib/resume/schema-registry";
 import { RichTextLinkPopover } from "./rich-text-link-popover";
@@ -22,6 +24,8 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
       bulletList: editor.isActive("bulletList"),
       orderedList: editor.isActive("orderedList"),
       link: editor.isActive("link"),
+      canUndo: editor.can().undo(),
+      canRedo: editor.can().redo(),
     }),
   });
 
@@ -29,6 +33,27 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
 
   return (
     <div className="flex items-center gap-0.5 rounded-md border border-input p-0.5">
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon-xs"
+        aria-label={t("undo")}
+        disabled={!state.canUndo}
+        onClick={() => props.editor.chain().focus().undo().run()}
+      >
+        <Undo2 />
+      </Button>
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon-xs"
+        aria-label={t("redo")}
+        disabled={!state.canRedo}
+        onClick={() => props.editor.chain().focus().redo().run()}
+      >
+        <Redo2 />
+      </Button>
+      <Separator orientation="vertical" className="mx-0.5 my-1" />
       {has("bold") && (
         <Toggle
           size="xs"
