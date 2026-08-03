@@ -45,9 +45,10 @@ export function EditorSectionList() {
   const reorderSections = useResumeStore((state) => state.reorderSections);
   const t = useTranslations("editor.chrome");
 
-  // Controlled accordion open-state. Item values are the section id for custom
-  // sections (so a newly added one can be opened by id) and base-ui-generated
-  // ids for the rest. Stale ids from another résumé simply match nothing.
+  // Controlled accordion open-state, single-open so only the section being
+  // edited is visible. Item values are the section id for custom sections (so a
+  // newly added one can be opened by id) and base-ui-generated ids for the rest.
+  // Stale ids from another résumé simply match nothing.
   const [openSections, setOpenSections] = useState<string[]>([]);
 
   if (!open) {
@@ -83,7 +84,6 @@ export function EditorSectionList() {
     <>
       <Accordion
         key={open.id}
-        multiple
         value={openSections}
         onValueChange={setOpenSections}
         className="border-none"
@@ -121,9 +121,7 @@ export function EditorSectionList() {
         </SortableList>
       </Accordion>
 
-      <EditorSectionCustomAdd
-        onAdded={(id) => setOpenSections((prev) => [...prev, id])}
-      />
+      <EditorSectionCustomAdd onAdded={(id) => setOpenSections([id])} />
     </>
   );
 }
