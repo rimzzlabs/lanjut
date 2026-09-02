@@ -55,6 +55,15 @@ interface ResumeStoreState {
   openStatus: OpenStatus;
   /** Bumped whenever a document's import leftovers change, so views re-read them. */
   leftoversVersion: number;
+  /**
+   * Bumped on every undo and redo. The section forms own their values (RHF
+   * writes into the store, never the reverse), so a rewind only reaches a
+   * mounted form by remounting it: the accordion keys on this counter the same
+   * way it already keys on the open document's id.
+   */
+  undoEpoch: number;
+  canUndo: boolean;
+  canRedo: boolean;
 
   hydrateIndex: () => Promise<void>;
   createResume: (
@@ -70,6 +79,10 @@ interface ResumeStoreState {
   openResume: (id: string) => Promise<void>;
   /** Apply an edit to the open document; schedules a debounced persist. */
   updateOpen: (recipe: (draft: Resume) => void) => void;
+  /** Rewind the open document one undo step; no-op when the history is empty. */
+  undo: () => void;
+  /** Reapply the last undone step; no-op when nothing was undone. */
+  redo: () => void;
   /**
    * Move a reorderable section from one position to another. Indices are into the
    * reorderable subset (Summary and the Header are pinned and excluded); pinned
@@ -105,6 +118,28 @@ interface ResumeStoreState {
   flush: () => Promise<void>;
 }
 
+const UNDO_LIMIT = 100;
+/**
+ * Edits landing within this window join the previous undo step. Form writes
+ * arrive once per keystroke and slider drags once per tick, so without
+ * coalescing a single word would cost a dozen undo presses.
+ */
+const UNDO_GROUP_MS = 600;
+
+// The stacks hold previous `open` snapshots by reference; `updateOpen` never
+// mutates a published document, it clones and replaces, so snapshots stay
+// frozen. Kept at module level so pushes do not re-render subscribers;
+// `canUndo`/`canRedo` mirror the stack heads into reactive state.
+let undoPast: Resume[] = [];
+let undoFuture: Resume[] = [];
+let undoGroupUntil = 0;
+
+function resetUndoHistory(): void {
+  undoPast = [];
+  undoFuture = [];
+  undoGroupUntil = 0;
+}
+
 function toIndexEntry(resume: Resume): ResumeIndexEntry {
   return { id: resume.id, title: resume.title, updatedAt: resume.updatedAt };
 }
@@ -130,6 +165,9 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
   open: null,
   openStatus: "idle",
   leftoversVersion: 0,
+  undoEpoch: 0,
+  canUndo: false,
+  canRedo: false,
 
   async hydrateIndex() {
     set({ indexStatus: "loading" });
@@ -165,10 +203,13 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
       set((state) => ({ leftoversVersion: state.leftoversVersion + 1 }));
     }
     await setLastOpenedResumeId(resume.id);
+    resetUndoHistory();
     set((state) => ({
       index: syncIndexEntry(state.index, resume),
       open: resume,
       openStatus: "ready",
+      canUndo: false,
+      canRedo: false,
     }));
     return resume;
   },
@@ -202,12 +243,15 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
   async removeResume(id) {
     const current = get().open;
     const removed = current?.id === id ? current : await getResume(id);
+    if (current?.id === id) resetUndoHistory();
     set((state) => {
       const isOpen = state.open?.id === id;
       return {
         index: A.reject(state.index, (item) => item.id === id),
         open: isOpen ? null : state.open,
         openStatus: isOpen ? "idle" : state.openStatus,
+        canUndo: isOpen ? false : state.canUndo,
+        canRedo: isOpen ? false : state.canRedo,
       };
     });
     await dbDeleteResume(id);
@@ -231,7 +275,8 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
       return;
     }
     await setLastOpenedResumeId(id);
-    set({ open: resume, openStatus: "ready" });
+    resetUndoHistory();
+    set({ open: resume, openStatus: "ready", canUndo: false, canRedo: false });
   },
 
   updateOpen(recipe) {
@@ -240,9 +285,52 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     const draft = structuredClone(current);
     recipe(draft);
     draft.updatedAt = new Date().toISOString();
+    const now = Date.now();
+    if (now > undoGroupUntil) {
+      undoPast.push(current);
+      if (undoPast.length > UNDO_LIMIT) undoPast.shift();
+    }
+    undoGroupUntil = now + UNDO_GROUP_MS;
+    undoFuture = [];
     set((state) => ({
       open: draft,
       index: syncIndexEntry(state.index, draft),
+      canUndo: true,
+      canRedo: false,
+    }));
+    scheduleOpenResumePersist();
+  },
+
+  undo() {
+    const current = get().open;
+    const previous = undoPast.pop();
+    if (!current || !previous) return;
+    undoFuture.push(current);
+    undoGroupUntil = 0;
+    const restored = { ...previous, updatedAt: new Date().toISOString() };
+    set((state) => ({
+      open: restored,
+      index: syncIndexEntry(state.index, restored),
+      undoEpoch: state.undoEpoch + 1,
+      canUndo: undoPast.length > 0,
+      canRedo: true,
+    }));
+    scheduleOpenResumePersist();
+  },
+
+  redo() {
+    const current = get().open;
+    const next = undoFuture.pop();
+    if (!current || !next) return;
+    undoPast.push(current);
+    undoGroupUntil = 0;
+    const restored = { ...next, updatedAt: new Date().toISOString() };
+    set((state) => ({
+      open: restored,
+      index: syncIndexEntry(state.index, restored),
+      undoEpoch: state.undoEpoch + 1,
+      canUndo: true,
+      canRedo: undoFuture.length > 0,
     }));
     scheduleOpenResumePersist();
   },

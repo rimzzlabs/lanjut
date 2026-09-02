@@ -595,7 +595,9 @@
       "resetOrder": "Reset section order",
       "sectionsHeading": "Sections",
       "addSection": "Custom Section",
-      "tabDocument": "Document"
+      "tabDocument": "Document",
+      "undo": "Undo",
+      "redo": "Redo"
     },
     "dateRange": {
       "startDate": "Start Date",

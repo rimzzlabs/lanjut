@@ -9,6 +9,7 @@ import { EditorImportLeftovers } from "./editor-import-leftovers";
 import { EditorLayoutTemplateList } from "./editor-layout/ed-layout-template-list";
 import { EditorSectionList } from "./editor-sections/ed-section-list";
 import { EditorSectionOrderReset } from "./editor-sections/ed-section-order-reset";
+import { EditorUndoRedo } from "./editor-undo-redo";
 
 const TABS = [
   { value: "editor", labelKey: "tabEditor" },
@@ -38,6 +39,9 @@ export function EditorSidebarContent() {
               </TabsTrigger>
             ))}
           </TabsList>
+          <div className="ml-auto">
+            <EditorUndoRedo />
+          </div>
         </div>
 
         <TabsContent value="editor">

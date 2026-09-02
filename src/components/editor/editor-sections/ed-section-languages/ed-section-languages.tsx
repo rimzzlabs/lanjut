@@ -12,7 +12,7 @@ export function EditorSectionLanguages() {
   const t = useTranslations("editor.languages");
 
   return (
-    <AccordionItem className="relative">
+    <AccordionItem value="languages" className="relative">
       <AccordionTrigger className="items-center gap-3">
         <Languages className="size-4" /> {t("accordionTitle")}
       </AccordionTrigger>

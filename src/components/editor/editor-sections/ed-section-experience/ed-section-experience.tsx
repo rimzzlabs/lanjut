@@ -12,7 +12,7 @@ export function EditorSectionExperience() {
   const t = useTranslations("editor.experience");
 
   return (
-    <AccordionItem className="relative">
+    <AccordionItem value="experience" className="relative">
       <AccordionTrigger className="items-center gap-3">
         <BriefcaseBusiness className="size-4" /> {t("accordionTitle")}
       </AccordionTrigger>

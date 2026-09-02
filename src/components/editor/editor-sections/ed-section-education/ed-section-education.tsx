@@ -12,7 +12,7 @@ export function EditorSectionEducation() {
   const t = useTranslations("editor.education");
 
   return (
-    <AccordionItem className="relative">
+    <AccordionItem value="education" className="relative">
       <AccordionTrigger className="items-center gap-3">
         <GraduationCap className="size-4" /> {t("accordionTitle")}
       </AccordionTrigger>
