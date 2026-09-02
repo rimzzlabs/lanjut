@@ -180,6 +180,20 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_12_0": [
+          {
+            "title": "Undo and redo",
+            "description": "Change your mind freely: every edit can now be undone and redone, from typing and deleted entries to section order and layout settings. Use the arrows beside the sidebar tabs or Ctrl/Cmd+Z, and each text field keeps its own history while you write."
+          },
+          {
+            "title": "One section at a time",
+            "description": "The editor list now keeps a single section open, so the form you are working in stays in view instead of pushing the others off screen."
+          },
+          {
+            "title": "Bug fixes",
+            "description": "Fixed three reported bugs: links in your exports now show as clickable, a stray dash no longer appears in the PDF contact line, and locations land in the right field when you import a PDF."
+          }
+        ],
         "0_11_0": [
           {
             "title": "Company location",

@@ -180,6 +180,20 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_12_0": [
+          {
+            "title": "Urungkan dan ulangi",
+            "description": "Bebas berubah pikiran: semua editan sekarang bisa diurungkan dan diulangi, dari ketikan, entri yang terhapus, sampai urutan section dan pengaturan layout. Pakai tombol panah di samping tab sidebar atau Ctrl/Cmd+Z, dan tiap kolom teks juga menyimpan riwayatnya sendiri selagi kamu menulis."
+          },
+          {
+            "title": "Satu section dalam satu waktu",
+            "description": "Daftar editor sekarang hanya membuka satu section, jadi form yang lagi kamu isi tetap kelihatan, nggak terdorong keluar layar."
+          },
+          {
+            "title": "Perbaikan bug",
+            "description": "Tiga bug yang dilaporkan sudah diperbaiki: tautan di hasil ekspor sekarang kelihatan bisa diklik, tanda minus nyasar di baris kontak PDF sudah hilang, dan lokasi masuk ke kolom yang benar saat impor PDF."
+          }
+        ],
         "0_11_0": [
           {
             "title": "Lokasi perusahaan",
