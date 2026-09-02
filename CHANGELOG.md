@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.12.0](https://github.com/rimzzlabs/lanjut/compare/v0.11.0...v0.12.0) (2026-09-02)
+
+
+### Features
+
+* add document-level undo and redo to the editor ([#149](https://github.com/rimzzlabs/lanjut/issues/149)) ([2d899c7](https://github.com/rimzzlabs/lanjut/commit/2d899c72e975a6e98657576155049f20878fb6ac))
+* add undo and redo to rich text fields ([#141](https://github.com/rimzzlabs/lanjut/issues/141)) ([94e95f4](https://github.com/rimzzlabs/lanjut/commit/94e95f4ce37474909f64d84f76ebbd45df628b5c))
+* keep only one editor section accordion open at a time ([#139](https://github.com/rimzzlabs/lanjut/issues/139)) ([501389b](https://github.com/rimzzlabs/lanjut/commit/501389bca50860b301f9699eae0da1eefca86d41))
+
+
+### Bug Fixes
+
+* extract the entry location when a pdf is imported ([#148](https://github.com/rimzzlabs/lanjut/issues/148)) ([53a4bca](https://github.com/rimzzlabs/lanjut/commit/53a4bca2df3d37e7fc9dad51d5a239602d0af740))
+* remove stray hyphen where the pdf contact line wraps ([#146](https://github.com/rimzzlabs/lanjut/issues/146)) ([1dc0ebb](https://github.com/rimzzlabs/lanjut/commit/1dc0ebbe540d6e1572b411d193bd3279cce6a10b))
+* underline links in the preview and every export ([#147](https://github.com/rimzzlabs/lanjut/issues/147)) ([eb802a0](https://github.com/rimzzlabs/lanjut/commit/eb802a0f8b04050cac4c5f3e633dcf9d257f8854))
+
+
+### Documentation
+
+* add the 0.12.0 changelog entry for the what's new sheet ([#150](https://github.com/rimzzlabs/lanjut/issues/150)) ([4522d88](https://github.com/rimzzlabs/lanjut/commit/4522d881f11ab823cc2c392fcc3e22bec5851bda))
+
 ## [0.11.0](https://github.com/rimzzlabs/lanjut/compare/v0.10.2...v0.11.0) (2026-08-01)
 
 
