@@ -1,6 +1,6 @@
 "use client";
 
-import { Undo2 } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
@@ -63,7 +63,7 @@ export function EditorDocumentStyleReset() {
         }
       >
         <span className="sr-only">{t("resetStyling")}</span>
-        <Undo2 />
+        <RefreshCw />
       </TooltipTrigger>
       <TooltipContent>
         <span>{t("resetStylingHint")}</span>

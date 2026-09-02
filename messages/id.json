@@ -595,7 +595,9 @@
       "resetOrder": "Setel ulang urutan bagian",
       "sectionsHeading": "Bagian",
       "addSection": "Bagian Khusus",
-      "tabDocument": "Dokumen"
+      "tabDocument": "Dokumen",
+      "undo": "Urungkan",
+      "redo": "Ulangi"
     },
     "dateRange": {
       "startDate": "Tanggal Mulai",

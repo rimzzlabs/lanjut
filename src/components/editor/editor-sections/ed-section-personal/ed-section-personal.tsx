@@ -11,7 +11,7 @@ export function EditorSectionPersonal() {
   const t = useTranslations("editor.personal");
 
   return (
-    <AccordionItem>
+    <AccordionItem value="personal">
       <AccordionTrigger className="items-center gap-3">
         <User2 className="size-4" />
         {t("accordionTitle")}

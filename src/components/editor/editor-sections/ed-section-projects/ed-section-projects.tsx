@@ -12,7 +12,7 @@ export function EditorSectionProjects() {
   const t = useTranslations("editor.projects");
 
   return (
-    <AccordionItem className="relative">
+    <AccordionItem value="projects" className="relative">
       <AccordionTrigger className="items-center gap-3">
         <FolderGit2 className="size-4" /> {t("accordionTitle")}
       </AccordionTrigger>

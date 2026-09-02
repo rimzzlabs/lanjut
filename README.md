@@ -26,6 +26,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Résumé library with live first-page thumbnails, rename, and delete
 - Print-accurate A4 preview with automatic pagination
 - Rich text editing per field, scoped to ATS-safe formatting (bold, italic, lists, links), with undo and redo per field
+- Document-level undo and redo across every edit (typing, reorder, layout, settings), from the editor toolbar or Ctrl/Cmd+Z
 - Custom sections alongside the fixed types, all sharing the same restricted schema
 - Drag to reorder sections and toggle any section's visibility (entries within a section sort by date automatically)
 - Document-level presentation controls: font, font size, section spacing, line height, letter spacing, contact-icon visibility, and a one-click style reset

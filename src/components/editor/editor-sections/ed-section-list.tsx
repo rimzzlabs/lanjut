@@ -42,12 +42,14 @@ const SECTION_EDITORS: Partial<Record<SectionType, () => ReactNode>> = {
 export function EditorSectionList() {
   const openStatus = useResumeStore((state) => state.openStatus);
   const open = useResumeStore((state) => state.open);
+  const undoEpoch = useResumeStore((state) => state.undoEpoch);
   const reorderSections = useResumeStore((state) => state.reorderSections);
   const t = useTranslations("editor.chrome");
 
   // Controlled accordion open-state, single-open so only the section being
   // edited is visible. Item values are the section id for custom sections (so a
-  // newly added one can be opened by id) and base-ui-generated ids for the rest.
+  // newly added one can be opened by id) and the section type for the rest;
+  // explicit values keep the open section open across the undo-epoch remount.
   // Stale ids from another résumé simply match nothing.
   const [openSections, setOpenSections] = useState<string[]>([]);
 
@@ -77,13 +79,15 @@ export function EditorSectionList() {
     isReorderableSection(section.type),
   );
 
-  // Keyed by the open résumé so a load/switch remounts the forms; this is how
-  // the uncontrolled rich-text editors pick up the loaded document. Personal
-  // Details (the Header) and Summary are pinned; the rest drag to reorder.
+  // Keyed by the open résumé and the undo epoch so a load, switch, undo, or
+  // redo remounts the forms; the forms own their values (RHF writes into the
+  // store, never the reverse), so a remount is the only way a rewound document
+  // reaches them and the uncontrolled rich-text editors. Personal Details (the
+  // Header) and Summary are pinned; the rest drag to reorder.
   return (
     <>
       <Accordion
-        key={open.id}
+        key={`${open.id}:${undoEpoch}`}
         value={openSections}
         onValueChange={setOpenSections}
         className="border-none"

@@ -11,6 +11,7 @@ import {
 import { ScrollArea } from "../ui/scroll-area";
 import { EditorSheet } from "./editor-sheet";
 import { EditorSidebar } from "./editor-sidebar";
+import { EditorUndoShortcuts } from "./editor-undo-shortcuts";
 
 const PANELS_CONTAINER = "h-[calc(100svh-3rem-1px)] min-h-0 overflow-hidden";
 
@@ -21,6 +22,7 @@ export function EditorPanels(props: { children: ReactNode }) {
   if (isDesktop) {
     return (
       <div className={PANELS_CONTAINER}>
+        <EditorUndoShortcuts />
         <ResizablePanelGroup style={{ overflow: "hidden" }}>
           <ResizablePanel defaultSize="68%" minSize="40%" maxSize="72%">
             <EditorPreviewScroll>{props.children}</EditorPreviewScroll>
@@ -36,6 +38,7 @@ export function EditorPanels(props: { children: ReactNode }) {
 
   return (
     <div className={PANELS_CONTAINER}>
+      <EditorUndoShortcuts />
       <EditorPreviewScroll>{props.children}</EditorPreviewScroll>
       {isDesktop === false && <EditorSheet />}
     </div>
