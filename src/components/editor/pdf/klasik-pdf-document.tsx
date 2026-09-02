@@ -58,7 +58,7 @@ const makeStyles = (s: FontScales) =>
       color: PDF_COLORS.muted,
       textAlign: "center",
     },
-    linkMuted: { color: PDF_COLORS.muted, textDecoration: "none" },
+    linkMuted: { color: PDF_COLORS.muted, textDecoration: "underline" },
     heading: {
       borderBottomWidth: 0.5,
       borderBottomColor: PDF_COLORS.border,
@@ -135,7 +135,7 @@ function KlasikExperience(props: { item: ExperienceItemView }) {
               src={props.item.roleHref}
               style={[
                 styles.entryTitle,
-                { color: PDF_COLORS.foreground, textDecoration: "none" },
+                { color: PDF_COLORS.foreground, textDecoration: "underline" },
               ]}
             >
               {props.item.role}

@@ -18,7 +18,7 @@ export function LuasaHeader(props: HeaderView) {
             <Fragment key={contact.kind}>
               {index > 0 && <span aria-hidden> • </span>}
               {contact.href ? (
-                <a href={contact.href} className="hover:underline">
+                <a href={contact.href} className="underline">
                   {contact.value}
                 </a>
               ) : (

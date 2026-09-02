@@ -69,7 +69,7 @@ const makeStyles = (s: FontScales) =>
     },
     headerRight: { alignItems: "flex-end", gap: 4 },
     contactRow: { flexDirection: "row", alignItems: "center", gap: 4 },
-    linkPlain: { color: PDF_COLORS.foreground, textDecoration: "none" },
+    linkPlain: { color: PDF_COLORS.foreground, textDecoration: "underline" },
     heading: {
       borderTopWidth: 0.75,
       borderTopColor: PDF_COLORS.border,
@@ -91,7 +91,7 @@ const makeStyles = (s: FontScales) =>
       gap: 8,
     },
     subtitle: { fontSize: 9 * s.body, color: PDF_COLORS.muted },
-    subtitleLink: { color: PDF_COLORS.muted, textDecoration: "none" },
+    subtitleLink: { color: PDF_COLORS.muted, textDecoration: "underline" },
     entryDate: {
       fontSize: 9 * s.body,
       fontStyle: "italic",
@@ -148,7 +148,7 @@ function KetatExperience(props: { item: ExperienceItemView }) {
             src={props.item.roleHref}
             style={[
               styles.entryTitle,
-              { color: PDF_COLORS.foreground, textDecoration: "none" },
+              { color: PDF_COLORS.foreground, textDecoration: "underline" },
             ]}
           >
             {props.item.role}

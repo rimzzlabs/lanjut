@@ -75,7 +75,7 @@ const makeStyles = (s: FontScales) =>
       fontSize: 9 * s.body,
       color: PDF_COLORS.muted,
     },
-    linkMuted: { color: PDF_COLORS.muted, textDecoration: "none" },
+    linkMuted: { color: PDF_COLORS.muted, textDecoration: "underline" },
     heading: {
       fontFamily: "Lora",
       fontSize: 9.5 * s.title,
@@ -154,7 +154,7 @@ function LuasaExperience(props: { item: ExperienceItemView }) {
               src={props.item.roleHref}
               style={[
                 styles.entryTitle,
-                { color: PDF_COLORS.foreground, textDecoration: "none" },
+                { color: PDF_COLORS.foreground, textDecoration: "underline" },
               ]}
             >
               {props.item.role}

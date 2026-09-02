@@ -64,7 +64,7 @@ const makeStyles = (s: FontScales) =>
       fontSize: 8 * s.body,
       color: PDF_COLORS.muted,
     },
-    linkMuted: { color: PDF_COLORS.muted, textDecoration: "none" },
+    linkMuted: { color: PDF_COLORS.muted, textDecoration: "underline" },
     heading: {
       fontFamily: "GeistMono",
       fontSize: 9.5 * s.title,
@@ -155,7 +155,7 @@ function KetikExperience(props: { item: ExperienceItemView }) {
                 {
                   fontFamily: mono,
                   color: PDF_COLORS.foreground,
-                  textDecoration: "none",
+                  textDecoration: "underline",
                 },
               ]}
             >
