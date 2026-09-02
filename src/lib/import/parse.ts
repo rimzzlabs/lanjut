@@ -363,10 +363,94 @@ function extractEntryHeader(lines: string[]): EntryHeader {
   };
 }
 
+// Legal-form suffixes that mark a comma tail as part of a company name.
+const COMPANY_SUFFIXES = new Set([
+  "inc",
+  "llc",
+  "llp",
+  "ltd",
+  "corp",
+  "co",
+  "gmbh",
+  "plc",
+  "pte",
+  "pt",
+  "tbk",
+  "cv",
+  "bv",
+  "sa",
+  "ag",
+  "ab",
+]);
+
+const WORKPLACE_WORDS = new Set(["remote", "hybrid", "onsite", "on-site"]);
+
+function isLocationSegment(segment: string): boolean {
+  return (
+    /^[A-Z]/.test(segment) &&
+    !/\d/.test(segment) &&
+    !segment.includes("&") &&
+    segment.split(/\s+/).length <= 3 &&
+    !COMPANY_SUFFIXES.has(segment.toLowerCase().replace(/\./g, ""))
+  );
+}
+
+/**
+ * Split "Acme Corp, San Francisco, CA" into a subject and a location tail.
+ * Exports join the company or institution with its location by ", ", but both
+ * halves can hold commas themselves, so a tail is only taken when it clearly
+ * reads as a place: a multi-part "City, Region[, Country]" tail, a region
+ * code, or a workplace word such as Remote. Anything ambiguous stays in the
+ * subject, which is the pre-split behavior.
+ */
+function splitSubtitleLocation(subtitle: string): {
+  subject: string;
+  location?: string;
+} {
+  const segments = pipe(
+    subtitle.split(","),
+    A.map(S.trim),
+    A.reject(S.isEmpty),
+  );
+  const maxTail = Math.min(3, segments.length - 1);
+  for (let take = maxTail; take >= 1; take -= 1) {
+    const tail = segments.slice(segments.length - take);
+    if (!tail.every(isLocationSegment)) continue;
+    if (take === 1) {
+      const only = tail[0];
+      const isWorkplaceWord = WORKPLACE_WORDS.has(only.toLowerCase());
+      const isRegionCode = /^[A-Z]{2,3}$/.test(only);
+      if (!isWorkplaceWord && !isRegionCode) continue;
+    }
+    return {
+      subject: segments.slice(0, segments.length - take).join(", "),
+      location: tail.join(", "),
+    };
+  }
+  return { subject: subtitle };
+}
+
+function fillSubtitle(
+  entry: ReturnType<typeof createEmptyEntry>,
+  subjectKey: string,
+  subtitle: string,
+  withLocation: boolean,
+): void {
+  if (!withLocation) {
+    entry.fields[subjectKey] = plain(subtitle);
+    return;
+  }
+  const { subject, location } = splitSubtitleLocation(subtitle);
+  entry.fields[subjectKey] = plain(subject);
+  if (location) entry.fields.location = plain(location);
+}
+
 function fillExperienceLike(section: Section, lines: string[]): void {
   const titleKey = section.type === "organizations" ? "role" : "title";
   const companyKey =
     section.type === "organizations" ? "organization" : "company";
+  const hasLocation =
+    section.type === "experience" || section.type === "internship";
   for (const entryLines of splitExperienceEntries(lines)) {
     const entry = createEmptyEntry(section.type);
     const range = findDateRange(entryLines);
@@ -376,7 +460,7 @@ function fillExperienceLike(section: Section, lines: string[]): void {
     }
     const { title, subtitle, descLines } = extractEntryHeader(entryLines);
     if (title) entry.fields[titleKey] = plain(title);
-    if (subtitle) entry.fields[companyKey] = plain(subtitle);
+    if (subtitle) fillSubtitle(entry, companyKey, subtitle, hasLocation);
     entry.fields.description = richFromLines(descLines);
     section.entries.push(entry);
   }
@@ -392,7 +476,7 @@ function fillEducation(section: Section, lines: string[]): void {
     }
     const { title, subtitle, descLines } = extractEntryHeader(entryLines);
     if (title) entry.fields.degree = plain(title);
-    if (subtitle) entry.fields.institution = plain(subtitle);
+    if (subtitle) fillSubtitle(entry, "institution", subtitle, true);
     entry.fields.details = richFromLines(descLines);
     section.entries.push(entry);
   }
