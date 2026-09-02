@@ -59,7 +59,7 @@ const makeStyles = (s: FontScales) =>
       rowGap: 3,
     },
     contactRow: { flexDirection: "row", alignItems: "center", gap: 4 },
-    linkPlain: { color: PDF_COLORS.foreground, textDecoration: "none" },
+    linkPlain: { color: PDF_COLORS.foreground, textDecoration: "underline" },
     heading: {
       borderTopWidth: 2,
       borderTopColor: PDF_COLORS.foreground,
@@ -88,7 +88,7 @@ const makeStyles = (s: FontScales) =>
       fontWeight: 600,
       color: PDF_COLORS.muted,
     },
-    subtitleLink: { color: PDF_COLORS.muted, textDecoration: "none" },
+    subtitleLink: { color: PDF_COLORS.muted, textDecoration: "underline" },
     body: { marginTop: 3 },
   });
 
@@ -135,7 +135,7 @@ function TebalExperience(props: { item: ExperienceItemView }) {
               src={props.item.roleHref}
               style={[
                 styles.entryTitle,
-                { color: PDF_COLORS.foreground, textDecoration: "none" },
+                { color: PDF_COLORS.foreground, textDecoration: "underline" },
               ]}
             >
               {props.item.role}

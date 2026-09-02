@@ -59,7 +59,7 @@ const makeStyles = (s: FontScales) =>
     },
     headerRight: { alignItems: "flex-start", gap: 3 },
     contactRow: { flexDirection: "row", alignItems: "center", gap: 4 },
-    linkPlain: { color: PDF_COLORS.foreground, textDecoration: "none" },
+    linkPlain: { color: PDF_COLORS.foreground, textDecoration: "underline" },
     heading: {
       fontSize: 10 * s.title,
       fontWeight: 600,
@@ -80,7 +80,7 @@ const makeStyles = (s: FontScales) =>
     entryTitle: { fontSize: 9.5 * s.body, fontWeight: 600 },
     entryDate: { fontSize: 9 * s.body, color: PDF_COLORS.muted, flexShrink: 0 },
     subtitle: { fontSize: 9 * s.body, color: PDF_COLORS.muted },
-    subtitleLink: { color: PDF_COLORS.muted, textDecoration: "none" },
+    subtitleLink: { color: PDF_COLORS.muted, textDecoration: "underline" },
     body: { marginTop: 3 },
   });
 
@@ -127,7 +127,7 @@ function PdfExperience(props: { item: ExperienceItemView }) {
               src={props.item.roleHref}
               style={[
                 styles.entryTitle,
-                { color: PDF_COLORS.foreground, textDecoration: "none" },
+                { color: PDF_COLORS.foreground, textDecoration: "underline" },
               ]}
             >
               {props.item.role}

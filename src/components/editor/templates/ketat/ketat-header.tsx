@@ -5,7 +5,7 @@ function KetatHeaderContact(props: ContactView & { showIcons: boolean }) {
   return (
     <li className="flex items-center justify-end gap-2">
       {props.href ? (
-        <a href={props.href} className="hover:underline">
+        <a href={props.href} className="underline">
           {props.value}
         </a>
       ) : (

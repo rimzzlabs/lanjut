@@ -6,7 +6,7 @@ export function ResumeCertificateItem(props: CertificateItemView) {
       <div className="group flex items-baseline justify-between gap-4">
         <h3 className="resume-body-xs font-semibold">
           {props.href ? (
-            <a href={props.href} className="hover:underline">
+            <a href={props.href} className="underline">
               {props.title}
             </a>
           ) : (

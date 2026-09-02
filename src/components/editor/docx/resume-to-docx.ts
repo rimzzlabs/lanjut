@@ -26,6 +26,7 @@ function inlineRuns(runs: InlineRun[]): (TextRun | ExternalHyperlink)[] {
       text: run.text,
       bold: run.bold,
       italics: run.italic,
+      underline: run.href ? {} : undefined,
     });
     return run.href
       ? new ExternalHyperlink({ link: run.href, children: [child] })
@@ -72,7 +73,12 @@ function sectionHeading(title: string): Paragraph {
 
 /** A "Title …… Dates" row with the date right-aligned via a tab stop. */
 function titleRow(title: string, date: string, href?: string): Paragraph {
-  const titleRun = new TextRun({ text: title, bold: true, size: 19 });
+  const titleRun = new TextRun({
+    text: title,
+    bold: true,
+    size: 19,
+    underline: href ? {} : undefined,
+  });
   return new Paragraph({
     tabStops: [{ type: TabStopType.RIGHT, position: RIGHT_TAB }],
     children: [
@@ -86,7 +92,11 @@ function titleRow(title: string, date: string, href?: string): Paragraph {
 
 /** A muted subtitle: an optionally linked subject, then a plain-text tail. */
 function subtitle(text: string, href?: string, suffix = ""): Paragraph {
-  const child = new TextRun({ text, color: MUTED });
+  const child = new TextRun({
+    text,
+    color: MUTED,
+    underline: href ? {} : undefined,
+  });
   const subject = href
     ? new ExternalHyperlink({ link: href, children: [child] })
     : child;
@@ -129,7 +139,10 @@ function contactRuns(contacts: ContactView[]): (TextRun | ExternalHyperlink)[] {
   const runs: (TextRun | ExternalHyperlink)[] = [];
   contacts.forEach((contact, index) => {
     if (index > 0) runs.push(new TextRun({ text: "   |   ", color: MUTED }));
-    const child = new TextRun({ text: contact.value });
+    const child = new TextRun({
+      text: contact.value,
+      underline: contact.href ? {} : undefined,
+    });
     runs.push(
       contact.href
         ? new ExternalHyperlink({ link: contact.href, children: [child] })

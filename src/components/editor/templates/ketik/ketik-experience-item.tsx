@@ -8,7 +8,7 @@ export function KetikExperienceItem(props: ExperienceItemView) {
       <div className="flex items-baseline justify-between gap-4">
         <h3 className="font-mono resume-body-xs font-bold">
           {props.roleHref ? (
-            <a href={props.roleHref} className="hover:underline">
+            <a href={props.roleHref} className="underline">
               {props.role}
             </a>
           ) : (
@@ -21,7 +21,7 @@ export function KetikExperienceItem(props: ExperienceItemView) {
       </div>
       <p className="resume-body-xs text-muted-foreground">
         {props.companyHref ? (
-          <a href={props.companyHref} className="hover:underline">
+          <a href={props.companyHref} className="underline">
             {props.company}
           </a>
         ) : (

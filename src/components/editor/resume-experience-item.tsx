@@ -14,7 +14,7 @@ export function ResumeExperienceItem(props: ExperienceItemView) {
 
       <p className="resume-body-xs text-muted-foreground">
         {props.companyHref ? (
-          <a href={props.companyHref} className="hover:underline">
+          <a href={props.companyHref} className="underline">
             {props.company}
           </a>
         ) : (

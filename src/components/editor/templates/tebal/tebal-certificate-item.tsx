@@ -6,7 +6,7 @@ export function TebalCertificateItem(props: CertificateItemView) {
       <div className="flex items-baseline justify-between gap-4">
         <h3 className="resume-body-sm font-bold">
           {props.href ? (
-            <a href={props.href} className="hover:underline">
+            <a href={props.href} className="underline">
               {props.title}
             </a>
           ) : (
