@@ -101,6 +101,7 @@ const baseStyles = makeStyles(NO_SCALE);
 function KetikContactLine(props: { contacts: ContactView[] }) {
   const styles = usePdfStyles(baseStyles);
   const mono = usePdfFontFamily("GeistMono");
+  // Single-spaced separator, same wrap fix as LuasaContactLine (#145).
   return (
     <Text style={[styles.contactLine, { fontFamily: mono }]}>
       {props.contacts.map((contact, index) => (

@@ -102,11 +102,14 @@ const baseStyles = makeStyles(NO_SCALE);
 
 function LuasaContactLine(props: { contacts: ContactView[] }) {
   const styles = usePdfStyles(baseStyles);
+  // Single spaces around the bullet are load-bearing: textkit marks any word
+  // not followed by exactly one plain space as a hyphenation point and injects
+  // a stray "-" when the line wraps there (#145).
   return (
     <Text style={styles.contactLine}>
       {props.contacts.map((contact, index) => (
         <Text key={contact.kind}>
-          {index > 0 ? "  •  " : ""}
+          {index > 0 ? " • " : ""}
           {contact.href ? (
             <Link src={contact.href} style={styles.linkMuted}>
               {contact.value}
