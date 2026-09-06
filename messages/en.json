@@ -23,12 +23,6 @@
     "stat3Value": "5",
     "stat3Label": "Export formats"
   },
-  "previewEditor": {
-    "heading": "A fine-grained editor",
-    "description": "Build your ATS-safe resume in a focused editor. No AI slop, no overwhelming features. Straight to the point, without wasting your time.",
-    "imageAlt": "Lanjut Editor",
-    "caption": "Lanjut's ATS Resume Editor"
-  },
   "howItWorks": {
     "heading": "How it works",
     "subheading": "The same resume at every stage: what you type, what recruiters see, and what the parser reads back.",
@@ -41,10 +35,7 @@
     "step3Kicker": "03 · Export",
     "step3Title": "Survive the parser",
     "step3Description": "Download PDF, DOCX, or plain text, and any extractor reads it back in the order you wrote it. That's the whole trick.",
-    "screenshotTemplatesAlt": "The Lanjut template gallery showing the same resume in different typographic styles",
-    "screenshotEditorAlt": "The Lanjut editor with a resume preview beside structured sections",
-    "terminalCaption": "what the ATS reads",
-    "terminalReadingOrder": "✓ reading order intact"
+    "liveCaption": "Live render, same engine as your PDF."
   },
   "closure": {
     "kicker": "04 · Apply",
@@ -894,5 +885,45 @@
       "copied": "Copied to clipboard",
       "copyFailed": "Couldn't copy to the clipboard."
     }
+  },
+  "tryIt": {
+    "kicker": "Try it right here",
+    "heading": "Type your name. Watch it become a resume.",
+    "description": "This is not a mockup. The page you see on the right is drawn by the same engine that renders the editor and prints your PDF, live, as you type.",
+    "firstName": "First name",
+    "firstNamePlaceholder": "John",
+    "lastName": "Last name",
+    "lastNamePlaceholder": "Doe",
+    "jobTitle": "Job title",
+    "jobTitlePlaceholder": "Senior Frontend Engineer",
+    "template": "Template",
+    "cta": "Create your resume",
+    "note": "Free, no account. Everything stays in your browser.",
+    "caption": "Rendered live by the export engine. Never a screenshot.",
+    "draftTitle": "My resume"
+  },
+  "values": {
+    "localTitle": "Yours, locally",
+    "localBody": "Your resume lives in your browser and nowhere else. No account, no server, no one reading over your shoulder.",
+    "parseTitle": "Machines read it right",
+    "parseBody": "Every template keeps one linear reading order, and every export is verified by real text extraction before it ships.",
+    "freeTitle": "Free and open source",
+    "freeBody": "The whole builder is open source and free to use. Inspect the code, file an issue, or run it yourself."
+  },
+  "parserProof": {
+    "caption": "Runs in your browser, on this page, right now",
+    "waiting": "waiting for you to scroll here…",
+    "rendering": "rendering resume.pdf",
+    "renderedKb": "done · {kb} KB",
+    "extracting": "extracting text with a real parser",
+    "extractedChars": "{chars} characters",
+    "checkName": "name “{name}” survives extraction",
+    "checkTitle": "job title survives extraction",
+    "checkEmployer": "employer “Acme Corp” survives extraction",
+    "checkEmail": "email address intact",
+    "checkOrder": "sections in reading order:",
+    "passed": "{count}/5 checks passed. This exact document is what an ATS reads.",
+    "failed": "the run hit an error in this browser. Try again.",
+    "rerun": "Run it again"
   }
 }

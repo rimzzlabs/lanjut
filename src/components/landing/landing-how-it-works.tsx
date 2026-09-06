@@ -1,19 +1,12 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "motion/react";
-import Image from "next/image";
+import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
-
-const terminalVariants: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
-};
-
-const terminalLineVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
-};
+import { cn } from "@/lib/utils";
+import { LandingLiveResume } from "./landing-live-resume";
+import { LandingParserProof } from "./landing-parser-proof";
+import { LandingTemplateFan } from "./landing-template-fan";
 
 export function LandingHowItWorks() {
   const reduceMotion = useReducedMotion();
@@ -46,12 +39,7 @@ export function LandingHowItWorks() {
           description={t("step1Description")}
           reduceMotion={reduceMotion}
         >
-          <HowItWorksScreenshot
-            src="/lanjut-templates.png"
-            alt={t("screenshotTemplatesAlt")}
-            width={2880}
-            height={1800}
-          />
+          <LandingTemplateFan />
         </HowItWorksRow>
 
         <HowItWorksRow
@@ -61,21 +49,22 @@ export function LandingHowItWorks() {
           flip
           reduceMotion={reduceMotion}
         >
-          <HowItWorksScreenshot
-            src="/lanjut-editor.png"
-            alt={t("screenshotEditorAlt")}
-            width={1437}
-            height={871}
-          />
+          <div>
+            <LandingLiveResume template="tebal" cropHeight={420} />
+            <p className="mt-2 px-1 font-mono text-xs text-muted-foreground">
+              {t("liveCaption")}
+            </p>
+          </div>
         </HowItWorksRow>
 
         <HowItWorksRow
           kicker={t("step3Kicker")}
           title={t("step3Title")}
           description={t("step3Description")}
+          alignStart
           reduceMotion={reduceMotion}
         >
-          <ArtifactParserOutput />
+          <LandingParserProof />
         </HowItWorksRow>
       </div>
     </section>
@@ -87,6 +76,8 @@ function HowItWorksRow(props: {
   title: string;
   description: string;
   flip?: boolean;
+  /** Top-align the columns; for rows whose visual grows taller than the copy. */
+  alignStart?: boolean;
   reduceMotion: boolean | null;
   children: ReactNode;
 }) {
@@ -96,7 +87,10 @@ function HowItWorksRow(props: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="grid items-center gap-6 border-t border-foreground/15 py-12 md:grid-cols-12 md:gap-12 md:py-16"
+      className={cn(
+        "grid gap-6 border-t border-foreground/15 py-12 md:grid-cols-12 md:gap-12 md:py-16",
+        props.alignStart ? "items-start" : "items-center",
+      )}
     >
       <div
         className={props.flip ? "md:order-2 md:col-span-5" : "md:col-span-5"}
@@ -117,72 +111,5 @@ function HowItWorksRow(props: {
         {props.children}
       </div>
     </motion.div>
-  );
-}
-
-function HowItWorksScreenshot(props: {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-}) {
-  return (
-    <figure className="border border-foreground/15 bg-card p-2">
-      <Image
-        src={props.src}
-        alt={props.alt}
-        width={props.width}
-        height={props.height}
-        sizes="(max-width: 768px) 100vw, 600px"
-        className="w-full border border-foreground/10 object-cover object-top"
-      />
-      <figcaption className="sr-only">{props.alt}</figcaption>
-    </figure>
-  );
-}
-
-function ArtifactParserOutput() {
-  const t = useTranslations("howItWorks");
-
-  return (
-    <figure>
-      <figcaption className="mb-2 flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-muted-foreground">
-        <span>{t("terminalCaption")}</span>
-        <span className="tabular-nums">.pdf · .docx · .txt</span>
-      </figcaption>
-      <motion.div
-        variants={terminalVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.5 }}
-        className="border border-stone-800 bg-stone-950 p-4 text-left font-mono text-xs leading-relaxed sm:p-5 sm:text-sm dark:border-stone-700"
-      >
-        <motion.p variants={terminalLineVariants} className="text-stone-500">
-          $ pdftotext resume.pdf -
-        </motion.p>
-        <motion.p
-          variants={terminalLineVariants}
-          className="mt-3 text-emerald-400"
-        >
-          EXPERIENCE
-        </motion.p>
-        <motion.p variants={terminalLineVariants} className="text-stone-200">
-          Senior Frontend Engineer, Acme Corp
-        </motion.p>
-        <motion.p variants={terminalLineVariants} className="text-stone-400">
-          Mar 2022 – Present
-        </motion.p>
-        <motion.p variants={terminalLineVariants} className="text-stone-200">
-          - Led migration of a 200k-line codebase to a typed component library,
-          cutting UI defects by 40%
-        </motion.p>
-        <motion.p
-          variants={terminalLineVariants}
-          className="mt-3 text-emerald-500"
-        >
-          {t("terminalReadingOrder")}
-        </motion.p>
-      </motion.div>
-    </figure>
   );
 }
