@@ -606,6 +606,21 @@ const migrateV20toV21: Migration = (doc) => {
 };
 
 /**
+ * v21→v22: the header gains an optional extra `link` field (portfolio, GitHub,
+ * and similar). Absence means empty; existing fields are untouched.
+ */
+const migrateV21toV22: Migration = (doc) => {
+  const next = structuredClone(doc);
+  const header = next.header as
+    | { fields?: Record<string, unknown> }
+    | undefined;
+  if (G.isObject(header?.fields) && !("link" in header.fields)) {
+    header.fields.link = plainField("");
+  }
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -629,6 +644,7 @@ const LADDER: Record<number, Migration> = {
   18: migrateV18toV19,
   19: migrateV19toV20,
   20: migrateV20toV21,
+  21: migrateV21toV22,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

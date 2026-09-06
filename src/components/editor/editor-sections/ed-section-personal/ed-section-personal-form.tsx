@@ -184,6 +184,23 @@ export function EditorSectionPersonalForm() {
                 </Field>
               )}
             />
+            <Controller
+              control={form.control}
+              name="link"
+              render={({ field, fieldState }) => (
+                <Field>
+                  <FieldLabel htmlFor={field.name}>{t("link")}</FieldLabel>
+                  <UrlInput
+                    id={field.name}
+                    value={field.value}
+                    placeholder={t("linkPlaceholder")}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                  />
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
+              )}
+            />
           </FieldGroup>
         </FieldSet>
 

@@ -20,6 +20,7 @@ export type ContactKind =
   | "email"
   | "website"
   | "linkedin"
+  | "link"
   | "location";
 
 export interface ContactView {

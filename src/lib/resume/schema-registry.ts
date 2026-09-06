@@ -84,6 +84,12 @@ export const HEADER_SCHEMA: FieldSchema[] = [
     kind: "plain",
     placeholder: "johndoe",
   },
+  {
+    key: "link",
+    label: "Link",
+    kind: "plain",
+    placeholder: "github.com/johndoe",
+  },
   { key: "city", label: "City", kind: "plain", placeholder: "San Francisco" },
   {
     key: "province",

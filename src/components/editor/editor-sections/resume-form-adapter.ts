@@ -12,6 +12,7 @@ export interface PersonalFormValues {
   phone: string;
   website: string;
   linkedin: string;
+  link: string;
   city: string;
   province: string;
   country: string;
@@ -160,6 +161,7 @@ export function toPersonalValues(resume: Resume): PersonalFormValues {
     phone: plainValue(fields.phone),
     website: plainValue(fields.website),
     linkedin: plainValue(fields.linkedin),
+    link: plainValue(fields.link),
     city: plainValue(fields.city),
     province: plainValue(fields.province),
     country: plainValue(fields.country),
@@ -178,6 +180,7 @@ export function applyPersonalValues(
   fields.phone = plain(values.phone);
   fields.website = plain(values.website);
   fields.linkedin = plain(values.linkedin);
+  fields.link = plain(values.link);
   fields.city = plain(values.city);
   fields.province = plain(values.province);
   fields.country = plain(values.country);
