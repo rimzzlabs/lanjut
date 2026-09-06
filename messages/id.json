@@ -173,6 +173,20 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_14_0": [
+          {
+            "title": "Pasang foto di header",
+            "description": "Sekarang kamu bisa pasang foto di resume. Sifatnya opsional dan mati secara bawaan. Tambahkan lewat Informasi Pribadi, lalu atur ukuran, kelengkungan sudut, dan posisinya. Foto ikut di ekspor PDF dan Word, dan teks resume kamu tetap terbaca penuh oleh parser."
+          },
+          {
+            "title": "Tampilan baru",
+            "description": "Lanjut punya logo baru dan halaman depan yang dibangun ulang. Pratinjau di sana dirender langsung dari template asli, jadi yang kamu lihat persis yang kamu dapat."
+          },
+          {
+            "title": "Dukung Lanjut",
+            "description": "Lanjut gratis dan akan selalu gratis. Kalau aplikasi ini membantu kamu, sekarang kamu bisa dukung pengembangannya lewat Saweria atau SociaBuzz, langsung dari sidebar atau footer."
+          }
+        ],
         "0_13_0": [
           {
             "title": "Satu tautan lagi di header",
