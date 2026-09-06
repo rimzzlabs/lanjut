@@ -50,6 +50,8 @@
     "startBuilding": "Mulai bikin",
     "templates": "Template",
     "github": "GitHub",
+    "support": "Dukung proyek ini:",
+    "supportAriaLabel": "Tautan donasi",
     "rights": "© {year} Lanjut. Open source, berlisensi AGPL-3.0."
   },
   "nav": {
@@ -408,6 +410,7 @@
       "dashboard": "Dasbor",
       "browseTemplate": "Jelajahi Template",
       "other": "Lainnya",
+      "support": "Dukungan",
       "guide": "Panduan",
       "reportBug": "Ada masalah?",
       "featureRequest": "Ajukan fitur",
