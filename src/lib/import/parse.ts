@@ -129,10 +129,17 @@ function fillHeader(
   const website = (allText.match(URL_G_RE) ?? []).find(
     (url) => !/linkedin\.com/i.test(url),
   );
+  // The extra link only comes from the preamble: anywhere else, a second URL
+  // is far more likely a company or project site from an entry.
+  const link = (preamble.join(" ").match(URL_G_RE) ?? []).find(
+    (url) =>
+      !/linkedin\.com/i.test(url) && url !== website && !url.includes("@"),
+  );
   if (email) fields.email = plain(email);
   if (phone) fields.phone = plain(phone);
   if (linkedin) fields.linkedin = plain(linkedin);
   if (website) fields.website = plain(website);
+  if (link) fields.link = plain(link);
 
   const named = pipe(
     preamble,
