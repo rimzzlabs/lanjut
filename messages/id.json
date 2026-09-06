@@ -23,12 +23,6 @@
     "stat3Value": "5",
     "stat3Label": "Format ekspor"
   },
-  "previewEditor": {
-    "heading": "Editor yang lengkap",
-    "description": "Bangun resume yang aman-ATS di editor yang fokus. Tanpa AI asal-asalan, tanpa fitur yang bikin pusing. Langsung ke intinya, tanpa buang-buang waktu kamu.",
-    "imageAlt": "Editor Lanjut",
-    "caption": "Editor Resume ATS Lanjut"
-  },
   "howItWorks": {
     "heading": "Cara kerjanya",
     "subheading": "Resume yang sama di tiap tahap: apa yang kamu ketik, apa yang dilihat perekrut, dan apa yang dibaca ulang parser.",
@@ -41,10 +35,7 @@
     "step3Kicker": "03 · Ekspor",
     "step3Title": "Lolos dari parser",
     "step3Description": "Unduh PDF, DOCX, atau teks biasa, dan tiap extractor bakal baca ulang persis seurutan yang kamu tulis. Itu aja rahasianya.",
-    "screenshotTemplatesAlt": "Galeri template Lanjut yang nampilin resume yang sama dalam gaya tipografi berbeda",
-    "screenshotEditorAlt": "Editor Lanjut dengan pratinjau resume di samping bagian-bagian terstruktur",
-    "terminalCaption": "yang dibaca ATS",
-    "terminalReadingOrder": "✓ urutan baca tetap utuh"
+    "liveCaption": "Render langsung, mesin yang sama dengan PDF-mu."
   },
   "closure": {
     "kicker": "04 · Lamar",
@@ -894,5 +885,45 @@
       "copied": "Disalin ke clipboard",
       "copyFailed": "Nggak bisa menyalin ke clipboard."
     }
+  },
+  "tryIt": {
+    "kicker": "Coba langsung di sini",
+    "heading": "Ketik namamu. Lihat jadi resume.",
+    "description": "Ini bukan mockup. Halaman di sebelah kanan digambar oleh mesin yang sama dengan editor dan PDF-mu, langsung, selagi kamu mengetik.",
+    "firstName": "Nama depan",
+    "firstNamePlaceholder": "Budi",
+    "lastName": "Nama belakang",
+    "lastNamePlaceholder": "Santoso",
+    "jobTitle": "Posisi",
+    "jobTitlePlaceholder": "Senior Frontend Engineer",
+    "template": "Template",
+    "cta": "Buat resume kamu",
+    "note": "Gratis, tanpa akun. Semuanya tersimpan di browser kamu.",
+    "caption": "Dirender langsung oleh mesin ekspor. Bukan tangkapan layar.",
+    "draftTitle": "Resume saya"
+  },
+  "values": {
+    "localTitle": "Milikmu, lokal",
+    "localBody": "Resume kamu hidup di browser kamu, bukan di tempat lain. Tanpa akun, tanpa server, tanpa yang mengintip.",
+    "parseTitle": "Mesin membacanya dengan benar",
+    "parseBody": "Semua template menjaga satu urutan baca linear, dan setiap ekspor diverifikasi lewat ekstraksi teks sungguhan sebelum dirilis.",
+    "freeTitle": "Gratis dan open source",
+    "freeBody": "Seluruh builder ini open source dan gratis. Periksa kodenya, laporkan masalah, atau jalankan sendiri."
+  },
+  "parserProof": {
+    "caption": "Berjalan di browser kamu, di halaman ini, sekarang",
+    "waiting": "menunggu kamu scroll ke sini…",
+    "rendering": "merender resume.pdf",
+    "renderedKb": "selesai · {kb} KB",
+    "extracting": "mengekstrak teks dengan parser sungguhan",
+    "extractedChars": "{chars} karakter",
+    "checkName": "nama “{name}” selamat dari ekstraksi",
+    "checkTitle": "posisi selamat dari ekstraksi",
+    "checkEmployer": "perusahaan “Acme Corp” selamat dari ekstraksi",
+    "checkEmail": "alamat email utuh",
+    "checkOrder": "urutan section terjaga:",
+    "passed": "{count}/5 pemeriksaan lolos. Dokumen inilah yang dibaca ATS.",
+    "failed": "proses gagal di browser ini. Coba lagi.",
+    "rerun": "Jalankan lagi"
   }
 }

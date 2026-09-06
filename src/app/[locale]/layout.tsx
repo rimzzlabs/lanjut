@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Geist, Geist_Mono, Inter } from "next/font/google";
+import {
+  Fraunces,
+  Geist,
+  Geist_Mono,
+  Inter,
+  Plus_Jakarta_Sans,
+} from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -19,6 +25,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Brand wordmark face ("Lanjut" next to the mark), scoped via `font-brand`.
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-brand",
+  subsets: ["latin"],
+  weight: ["700", "800"],
 });
 
 // Editorial display serif, scoped to marketing headings via `font-display`.
@@ -119,6 +132,7 @@ export default async function RootLayout(props: {
         geistSans.variable,
         geistMono.variable,
         fraunces.variable,
+        jakarta.variable,
         "font-sans",
         inter.variable,
       )}

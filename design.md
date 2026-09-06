@@ -50,6 +50,7 @@ state, focus ring, a single highlighted headline word. Never carpet a section in
 
 - Display: **Fraunces** (variable roman serif), weight ~600, style normal. Scoped to
   marketing headings via the `font-display` utility. Never italic on headings.
+- Brand wordmark: **Plus Jakarta Sans** bold, scoped via the `font-brand` utility.
 - Body / app UI: **Inter** (`--font-sans`).
 - Mono: **Geist Mono** (`--font-mono`) — kickers, captions, the parser specimen.
 - The résumé document keeps its own independent font system; do not couple it to these.
@@ -86,7 +87,7 @@ column is `w-11/12 max-w-5xl` centered.
 
 ## What pages MUST share
 
-- The wordmark (favicon mark + "Lanjut" set in the display serif on marketing, sans in app).
+- The wordmark (the Reading Line mark + "Lanjut" set in Plus Jakarta Sans bold, everywhere via `font-brand`).
 - The evergreen accent and its ≤5% placement.
 - The Inter body / Geist Mono pairing.
 - The CTA voice (button shape, radius `--radius` 0.4rem, icon placement).
