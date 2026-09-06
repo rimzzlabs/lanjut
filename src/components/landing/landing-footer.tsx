@@ -13,14 +13,14 @@ export function LandingFooter() {
         <div>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 font-display text-lg font-semibold tracking-tight"
+            className="inline-flex items-center gap-2 font-brand text-lg font-bold tracking-tight"
           >
             <Image
               src="/favicon.svg"
               alt=""
               width={22}
               height={22}
-              className="size-5.5 rounded-[5px]"
+              className="size-5.5"
             />
             Lanjut
           </Link>

@@ -30,10 +30,11 @@ const MUTED = "#6b7b71";
 const ACCENT = "#1c6b4f";
 
 // Evergreen recolour of public/favicon.svg, inlined so satori can render it.
-const MARK_SVG = `<svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg"><rect width="160" height="160" rx="32" fill="#1c6b4f"/><path d="M40,28 L100,28 L120,48 L120,132 L40,132 Z" fill="#faf9f4"/><path d="M100,28 L120,48 L100,48 Z" fill="#bfe3de"/><rect x="54" y="66" width="52" height="8" rx="4" fill="#1c6b4f"/><rect x="54" y="86" width="38" height="8" rx="4" fill="#9dccbf"/><path d="M54,108 L76,118 L54,128" fill="none" stroke="#1c6b4f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const MARK_SVG = `<svg width="160" height="160" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="tile"><circle cx="32" cy="32" r="32"/></clipPath></defs><circle cx="32" cy="32" r="32" fill="#1c6b4f"/><g clip-path="url(#tile)"><path d="M14 18 H42 C51 18 51 32 42 32 H22 C13 32 13 46 22 46 H72" fill="none" stroke="#faf9f4" stroke-width="6.5" stroke-linecap="round"/></g></svg>`;
 const MARK_SRC = `data:image/svg+xml;base64,${Buffer.from(MARK_SVG).toString("base64")}`;
 
 const fraunces = readFileSync(join(ROOT, "scripts/fraunces-semibold.ttf"));
+const jakarta = readFileSync(join(ROOT, "scripts/plus-jakarta-sans-bold.ttf"));
 
 function readMessages(locale: string): Messages {
   return JSON.parse(
@@ -62,7 +63,16 @@ function OgImage(props: { messages: Messages }) {
         <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
           {/** biome-ignore lint/performance/noImgElement: satori renders a plain img */}
           <img src={MARK_SRC} width={92} height={92} alt="" />
-          <span style={{ fontSize: 84, letterSpacing: "-2px" }}>Lanjut</span>
+          <span
+            style={{
+              fontFamily: "PlusJakartaSans",
+              fontWeight: 700,
+              fontSize: 80,
+              letterSpacing: "-2px",
+            }}
+          >
+            Lanjut
+          </span>
         </div>
         <span
           style={{
@@ -115,6 +125,12 @@ async function main() {
       ...SIZE,
       fonts: [
         { name: "Fraunces", data: fraunces, weight: 600, style: "normal" },
+        {
+          name: "PlusJakartaSans",
+          data: jakarta,
+          weight: 700,
+          style: "normal",
+        },
       ],
     });
     const png = Buffer.from(await response.arrayBuffer());
