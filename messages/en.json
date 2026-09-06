@@ -50,6 +50,8 @@
     "startBuilding": "Start building",
     "templates": "Templates",
     "github": "GitHub",
+    "support": "Support this project:",
+    "supportAriaLabel": "Donation links",
     "rights": "© {year} Lanjut. Open source, AGPL-3.0 licensed."
   },
   "nav": {
@@ -408,6 +410,7 @@
       "dashboard": "Dashboard",
       "browseTemplate": "Browse Template",
       "other": "Other",
+      "support": "Support",
       "guide": "Guide",
       "reportBug": "Report a bug",
       "featureRequest": "Feature request",

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { DONATION_LINKS } from "@/lib/site";
 
 const YEAR = new Date().getFullYear();
 
@@ -57,9 +58,47 @@ export function LandingFooter() {
       </div>
 
       <div className="border-t border-foreground/10">
-        <p className="mx-auto w-11/12 max-w-5xl py-5 font-mono text-xs text-muted-foreground">
-          {t("rights", { year: YEAR })}
-        </p>
+        <div className="mx-auto flex w-11/12 max-w-5xl flex-wrap items-center justify-between gap-x-6 gap-y-2 py-5">
+          <p className="font-mono text-xs text-muted-foreground">
+            {t("rights", { year: YEAR })}
+          </p>
+          <nav
+            aria-label={t("supportAriaLabel")}
+            className="flex items-center gap-x-4 text-xs text-muted-foreground"
+          >
+            <span>{t("support")}</span>
+            <a
+              href={DONATION_LINKS.saweria}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+            >
+              <Image
+                src="/brands/saweria.png"
+                alt=""
+                width={14}
+                height={14}
+                className="size-3.5"
+              />
+              Saweria
+            </a>
+            <a
+              href={DONATION_LINKS.sociabuzz}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+            >
+              <Image
+                src="/brands/sociabuzz.png"
+                alt=""
+                width={14}
+                height={14}
+                className="size-3.5"
+              />
+              SociaBuzz
+            </a>
+          </nav>
+        </div>
       </div>
     </footer>
   );
