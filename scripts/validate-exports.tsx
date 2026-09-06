@@ -160,6 +160,7 @@ const REQUIRED_FIELDS = [
   "Senior Frontend Engineer",
   "john.doe@example.com",
   "johndoe.dev",
+  "github.com/johndoe",
   "Acme Corp",
   "San Francisco, CA",
   "Globex",

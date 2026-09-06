@@ -640,6 +640,8 @@
       "websitePlaceholder": "rimzzlabs.com",
       "linkedin": "LinkedIn",
       "linkedinPlaceholder": "johndoe",
+      "link": "Tautan",
+      "linkPlaceholder": "github.com/johndoe",
       "location": "Lokasi",
       "locationDesc": "Kamu dari mana?",
       "city": "Kota",

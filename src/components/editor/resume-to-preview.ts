@@ -88,6 +88,11 @@ function toHeaderView(resume: Resume): HeaderView {
     const url = withHttps(linkedin);
     contacts.push({ kind: "linkedin", value: url, href: url });
   }
+  const link = plain(fields.link);
+  if (link) {
+    const url = withHttps(link);
+    contacts.push({ kind: "link", value: url, href: url });
+  }
   const location = [
     plain(fields.city),
     plain(fields.province),

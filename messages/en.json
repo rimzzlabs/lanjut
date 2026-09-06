@@ -640,6 +640,8 @@
       "websitePlaceholder": "rimzzlabs.com",
       "linkedin": "LinkedIn",
       "linkedinPlaceholder": "johndoe",
+      "link": "Link",
+      "linkPlaceholder": "github.com/johndoe",
       "location": "Location",
       "locationDesc": "Where are you from?",
       "city": "City",

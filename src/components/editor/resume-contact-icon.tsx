@@ -1,6 +1,6 @@
 "use client";
 
-import { Globe, Link, Mail, MapPin, Phone } from "lucide-react";
+import { ExternalLink, Globe, Link, Mail, MapPin, Phone } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 import type { ContactKind } from "./resume-preview";
@@ -12,6 +12,7 @@ const CONTACT_ICON: Record<ContactKind, typeof Phone> = {
   email: Mail,
   website: Globe,
   linkedin: Link,
+  link: ExternalLink,
   location: MapPin,
 };
 
