@@ -173,6 +173,20 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_14_0": [
+          {
+            "title": "Add a photo to your header",
+            "description": "You can now put a photo on your resume. It is optional and off by default. Add it in Personal Information, then pick the size, corner roundness, and position. It comes along in PDF and Word exports, and the text of your resume stays fully readable to parsers."
+          },
+          {
+            "title": "A fresh new look",
+            "description": "Lanjut has a new logo and a rebuilt landing page. The previews there are rendered by the real templates, so what you see is exactly what you get."
+          },
+          {
+            "title": "Support Lanjut",
+            "description": "Lanjut is free and always will be. If it helped you, you can now support development through Saweria or SociaBuzz, right from the sidebar or the footer."
+          }
+        ],
         "0_13_0": [
           {
             "title": "One more link in your header",
