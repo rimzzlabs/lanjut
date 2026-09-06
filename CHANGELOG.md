@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.13.0](https://github.com/rimzzlabs/lanjut/compare/v0.12.0...v0.13.0) (2026-09-06)
+
+
+### Features
+
+* add an optional extra link to the resume header ([#153](https://github.com/rimzzlabs/lanjut/issues/153)) ([08c2967](https://github.com/rimzzlabs/lanjut/commit/08c296731995bb1f094e9ceb619a2d7b6df742ed))
+* pick up the extra header link when a pdf is imported ([#155](https://github.com/rimzzlabs/lanjut/issues/155)) ([18df01d](https://github.com/rimzzlabs/lanjut/commit/18df01d846fccee29afa98f6a24ef2d1af221d6f))
+
+
+### Documentation
+
+* add the 0.13.0 changelog entry for the what's new sheet ([#156](https://github.com/rimzzlabs/lanjut/issues/156)) ([19fc485](https://github.com/rimzzlabs/lanjut/commit/19fc485c27db0c825da474a09fe90295f99eaab2))
+
 ## [0.12.0](https://github.com/rimzzlabs/lanjut/compare/v0.11.0...v0.12.0) (2026-09-02)
 
 
