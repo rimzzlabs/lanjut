@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.14.0](https://github.com/rimzzlabs/lanjut/compare/v0.13.0...v0.14.0) (2026-09-06)
+
+
+### Features
+
+* add an opt-in header photo with size, radius, and position controls ([#157](https://github.com/rimzzlabs/lanjut/issues/157)) ([247b29e](https://github.com/rimzzlabs/lanjut/commit/247b29eac38ba9fccbaf2a354b6c8c18928b9517))
+* add saweria and sociabuzz donation links to the sidebar and footer ([#160](https://github.com/rimzzlabs/lanjut/issues/160)) ([786181b](https://github.com/rimzzlabs/lanjut/commit/786181b403ec4e2c1bd569c52a8c0aeca4271504))
+* rebrand the mark and rebuild the landing around live renders ([#159](https://github.com/rimzzlabs/lanjut/issues/159)) ([06f749b](https://github.com/rimzzlabs/lanjut/commit/06f749b8ef804759c4bb51381c8ad346479fcfb9))
+
+
+### Documentation
+
+* add the 0.14.0 changelog entry for the what's new sheet ([#161](https://github.com/rimzzlabs/lanjut/issues/161)) ([cb14541](https://github.com/rimzzlabs/lanjut/commit/cb145413ba7e7a220d5267c3f3d079b7d5ec10b4))
+
 ## [0.13.0](https://github.com/rimzzlabs/lanjut/compare/v0.12.0...v0.13.0) (2026-09-06)
 
 
