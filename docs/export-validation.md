@@ -19,6 +19,10 @@ XML, and the serializer output for `.txt`. It then asserts:
 - **Field mapping**: name, headline, email, website, each employer, an employer and a
   school location, education, certificate, a representative skill, and a language are
   all present in the extracted text.
+- **Photo invariance**: rendering with the opt-in header photo must leave the
+  extracted text of every template PDF and the `.docx` byte-identical to the
+  photo-free output. The photo is presentation-only; if it ever shifts, drops, or
+  adds a character of extracted text, the gate fails.
 
 This is the pdftotext-equivalent text-extraction test required by `AGENTS.md`. **Run it
 after any change to an export path** (`pdf/`, `docx/`, `resume-to-text.ts`,

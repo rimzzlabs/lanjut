@@ -39,6 +39,15 @@ function buildImportedResume(
   if (parsed.content.bodyScale !== undefined) {
     resume.bodyScale = parsed.content.bodyScale;
   }
+  if (parsed.content.photoSize !== undefined) {
+    resume.photoSize = parsed.content.photoSize;
+  }
+  if (parsed.content.photoRadius !== undefined) {
+    resume.photoRadius = parsed.content.photoRadius;
+  }
+  if (parsed.content.photoAlign !== undefined) {
+    resume.photoAlign = parsed.content.photoAlign;
+  }
   if (parsed.content.title) resume.title = parsed.content.title;
   return { ok: true, resume, leftovers: [] };
 }

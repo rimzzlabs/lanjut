@@ -30,6 +30,7 @@ import {
 } from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
+import { PdfHeaderPhoto } from "./pdf-header-photo";
 import { PdfRichText } from "./pdf-rich-text";
 
 // Font sizes are multiplied by the document's per-group scales (name, title,
@@ -113,6 +114,7 @@ function KlasikHeader(props: { header: HeaderView }) {
   const styles = usePdfStyles(baseStyles);
   return (
     <View style={styles.header}>
+      <PdfHeaderPhoto header={props.header} centered />
       <Text style={styles.name}>{props.header.fullName}</Text>
       {props.header.headline ? (
         <Text style={styles.headline}>{props.header.headline}</Text>

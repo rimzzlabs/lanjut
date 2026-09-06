@@ -105,6 +105,10 @@ function toHeaderView(resume: Resume): HeaderView {
   return {
     fullName,
     headline: plain(fields.jobTitle),
+    photo: resume.header.photo,
+    photoSize: resume.photoSize ?? 56,
+    photoRadius: resume.photoRadius ?? 0,
+    photoAlign: resume.photoAlign ?? "top",
     contacts,
     showIcons: resume.showIcons ?? true,
   };

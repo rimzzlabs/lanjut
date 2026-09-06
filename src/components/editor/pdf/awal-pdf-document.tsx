@@ -30,6 +30,7 @@ import {
 } from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
+import { PdfHeaderPhoto } from "./pdf-header-photo";
 import { PdfRichText } from "./pdf-rich-text";
 
 // Font sizes are multiplied by the document's per-group scales (name, title,
@@ -90,11 +91,14 @@ function PdfHeader(props: { header: HeaderView }) {
   const styles = usePdfStyles(baseStyles);
   return (
     <View style={styles.header}>
-      <View style={styles.headerLeft}>
-        <Text style={styles.name}>{props.header.fullName}</Text>
-        {props.header.headline ? (
-          <Text style={styles.headline}>{props.header.headline}</Text>
-        ) : null}
+      <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 10 }}>
+        <PdfHeaderPhoto header={props.header} />
+        <View style={styles.headerLeft}>
+          <Text style={styles.name}>{props.header.fullName}</Text>
+          {props.header.headline ? (
+            <Text style={styles.headline}>{props.header.headline}</Text>
+          ) : null}
+        </View>
       </View>
       <View style={styles.headerRight}>
         {props.header.contacts.map((contact) => (

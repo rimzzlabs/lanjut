@@ -655,7 +655,19 @@
       "province": "Province",
       "provincePlaceholder": "Banten",
       "country": "Country",
-      "countryPlaceholder": "Indonesia"
+      "countryPlaceholder": "Indonesia",
+      "photo": "Photo",
+      "photoAdd": "Add photo",
+      "photoReplace": "Replace",
+      "photoRemove": "Remove",
+      "photoHint": "Optional. Common for applications in Indonesia; many ATS and US employers ignore or discourage photos. The text of your resume always stays fully readable to parsers.",
+      "photoError": "That file could not be read as an image.",
+      "photoSize": "Photo size",
+      "photoRadius": "Corner radius",
+      "photoAlign": "Position",
+      "photoAlignTop": "Top",
+      "photoAlignCenter": "Center",
+      "photoAlignBottom": "Bottom"
     },
     "summary": {
       "accordionTitle": "Professional Summary",

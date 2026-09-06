@@ -5,7 +5,7 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 22;
+export const CURRENT_SCHEMA_VERSION = 23;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
@@ -105,6 +105,12 @@ export interface Section {
  */
 export interface Header {
   fields: Record<FieldKey, Field>;
+  /**
+   * Opt-in portrait as a data URL, downscaled at upload. Absence means no
+   * photo. Presentation-only: it carries no text and every export ignores it
+   * for extraction purposes.
+   */
+  photo?: string;
 }
 
 /**
@@ -135,6 +141,23 @@ export interface Resume {
    * value as `true`; templates that never draw icons ignore it.
    */
   showIcons?: boolean;
+  /**
+   * Presentation-only size of the opt-in header photo, in rendering units (px
+   * on screen, scaled for PDF). Unset means the 56-unit default. Bounded to
+   * 40..96 by the editor slider and the interchange schema.
+   */
+  photoSize?: number;
+  /**
+   * Presentation-only corner radius of the header photo as a percentage of its
+   * size: 0 (unset) is a square, 50 a full circle. Bounded to 0..50.
+   */
+  photoRadius?: number;
+  /**
+   * Presentation-only vertical anchor of the header photo within the header
+   * strip, for the side-by-side templates. Unset means "top", which reads
+   * correctly at every header height. Centered templates (Klasik) ignore it.
+   */
+  photoAlign?: "top" | "center" | "bottom";
   /**
    * Presentation-only vertical space adjustment above each section heading, in
    * rendering units (px on screen, pt in PDF), applied on top of the

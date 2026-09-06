@@ -1,9 +1,11 @@
 import { Fragment } from "react";
+import { ResumeHeaderPhoto } from "../../resume-header-photo";
 import type { HeaderView } from "../../resume-preview";
 
 export function KlasikHeader(props: HeaderView) {
   return (
     <header className="text-center font-serif">
+      <ResumeHeaderPhoto header={props} className="mx-auto mb-2" />
       <h1 className="resume-name-2xl">{props.fullName}</h1>
       {props.headline && (
         <p className="mt-0.5 resume-name-sm italic text-muted-foreground">

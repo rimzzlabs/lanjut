@@ -42,6 +42,8 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 
 Any feature request that adds structural freedom (tables, columns, floating elements, decorative icons in text runs) is out of scope unless it is presentation-only and degrades gracefully to plain text in export.
 
+The one shipped example of that carve-out is the opt-in header photo: off by default, stored as a downscaled data URL on `header.photo`, rendered by each template's header (never absolutely positioned), embedded in PDF and DOCX, ignored by TXT. `scripts/validate-exports.tsx` enforces that adding a photo never changes the extracted text of any export.
+
 ## Data and Storage
 
 

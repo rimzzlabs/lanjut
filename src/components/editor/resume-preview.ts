@@ -34,6 +34,14 @@ export interface ContactView {
 export interface HeaderView {
   fullName: string;
   headline: string;
+  /** Opt-in portrait as a data URL; absent when the user has not added one. */
+  photo?: string;
+  /** Resolved photo size in preview px (default 56). */
+  photoSize: number;
+  /** Resolved photo corner radius, percent of size: 0 square, 50 circle. */
+  photoRadius: number;
+  /** Resolved vertical anchor of the photo within the header strip. */
+  photoAlign: "top" | "center" | "bottom";
   contacts: ContactView[];
   /** Presentation-only: whether contact icon glyphs are drawn; defaults to true. */
   showIcons: boolean;

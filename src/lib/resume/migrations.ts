@@ -621,6 +621,15 @@ const migrateV21toV22: Migration = (doc) => {
 };
 
 /**
+ * v22→v23: the header gains an optional opt-in `photo` (a data URL) and the
+ * document gains its presentation tokens `photoSize`, `photoRadius`, and
+ * `photoAlign`.
+ * Absence means no photo and the defaults, so nothing is reshaped; the step
+ * exists to stamp the version and keep the ladder gap-free.
+ */
+const migrateV22toV23: Migration = (doc) => structuredClone(doc);
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -645,6 +654,7 @@ const LADDER: Record<number, Migration> = {
   19: migrateV19toV20,
   20: migrateV20toV21,
   21: migrateV21toV22,
+  22: migrateV22toV23,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */
