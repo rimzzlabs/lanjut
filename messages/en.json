@@ -180,6 +180,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_13_0": [
+          {
+            "title": "One more link in your header",
+            "description": "A new optional Link field sits next to LinkedIn in Personal Information, for your portfolio, GitHub, or anything else. It shows in the preview and every export, and importing a PDF picks it up too."
+          }
+        ],
         "0_12_0": [
           {
             "title": "Undo and redo",

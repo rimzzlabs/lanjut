@@ -180,6 +180,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_13_0": [
+          {
+            "title": "Satu tautan lagi di header",
+            "description": "Ada kolom Tautan opsional baru di samping LinkedIn di Informasi Pribadi, untuk portofolio, GitHub, atau apa pun. Tampil di pratinjau dan semua ekspor, dan ikut terbaca saat impor PDF."
+          }
+        ],
         "0_12_0": [
           {
             "title": "Urungkan dan ulangi",
