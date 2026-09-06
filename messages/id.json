@@ -655,7 +655,19 @@
       "province": "Provinsi",
       "provincePlaceholder": "Banten",
       "country": "Negara",
-      "countryPlaceholder": "Indonesia"
+      "countryPlaceholder": "Indonesia",
+      "photo": "Foto",
+      "photoAdd": "Tambah foto",
+      "photoReplace": "Ganti",
+      "photoRemove": "Hapus",
+      "photoHint": "Opsional. Umum untuk lamaran di Indonesia; banyak ATS dan perusahaan luar mengabaikan atau tidak menyarankan foto. Teks resume kamu tetap terbaca penuh oleh parser.",
+      "photoError": "File itu tidak bisa dibaca sebagai gambar.",
+      "photoSize": "Ukuran foto",
+      "photoRadius": "Sudut foto",
+      "photoAlign": "Posisi",
+      "photoAlignTop": "Atas",
+      "photoAlignCenter": "Tengah",
+      "photoAlignBottom": "Bawah"
     },
     "summary": {
       "accordionTitle": "Ringkasan",

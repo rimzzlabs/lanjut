@@ -97,6 +97,14 @@ export const interchangeSchema = z
     titleScale: z.number().min(0.8).max(1.2).optional(),
     bodyScale: z.number().min(0.8).max(1.2).optional(),
     header: entryShape(HEADER_SCHEMA).optional(),
+    /** Opt-in portrait as a data URL; kept out of the header field map since it is not text. */
+    photo: z
+      .string()
+      .regex(/^data:image\/(?:jpeg|png);base64,[A-Za-z0-9+/=]+$/)
+      .optional(),
+    photoSize: z.number().min(40).max(96).optional(),
+    photoRadius: z.number().min(0).max(50).optional(),
+    photoAlign: z.enum(["top", "center", "bottom"]).optional(),
     sections: z.array(sectionSchema).optional(),
   })
   .superRefine((value, ctx) => {

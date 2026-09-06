@@ -2,6 +2,7 @@ import {
   BorderStyle,
   Document,
   ExternalHyperlink,
+  ImageRun,
   Paragraph,
   TabStopType,
   TextRun,
@@ -108,10 +109,31 @@ function subtitle(text: string, href?: string, suffix = ""): Paragraph {
   });
 }
 
+/**
+ * The photo data URL is a pre-cropped square JPEG from the upload path;
+ * decode the base64 payload for docx's ImageRun.
+ */
+function photoRun(photo: string, size: number): ImageRun | null {
+  const match = photo.match(/^data:image\/(jpeg|png);base64,(.+)$/);
+  if (!match) return null;
+  const bytes = Uint8Array.from(atob(match[2]), (char) => char.charCodeAt(0));
+  return new ImageRun({
+    type: match[1] === "png" ? "png" : "jpg",
+    data: bytes,
+    transformation: { width: size, height: size },
+  });
+}
+
 function headerParagraphs(header: HeaderView): Paragraph[] {
+  // The photo rides inside the name paragraph: no extra paragraph means the
+  // extracted text stays byte-identical with and without a photo.
+  const photo = header.photo ? photoRun(header.photo, header.photoSize) : null;
   const paragraphs: Paragraph[] = [
     new Paragraph({
-      children: [new TextRun({ text: header.fullName, bold: true, size: 36 })],
+      children: [
+        ...(photo ? [photo] : []),
+        new TextRun({ text: header.fullName, bold: true, size: 36 }),
+      ],
     }),
   ];
   if (header.headline) {

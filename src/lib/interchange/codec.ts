@@ -37,6 +37,9 @@ export interface ResumeContent {
   nameScale?: number;
   titleScale?: number;
   bodyScale?: number;
+  photoSize?: number;
+  photoRadius?: number;
+  photoAlign?: "top" | "center" | "bottom";
   header: Header;
   sections: Section[];
 }
@@ -128,6 +131,10 @@ export function resumeToInterchange(resume: Resume): InterchangeResume {
     titleScale: resume.titleScale,
     bodyScale: resume.bodyScale,
     header,
+    photo: resume.header.photo,
+    photoSize: resume.photoSize,
+    photoRadius: resume.photoRadius,
+    photoAlign: resume.photoAlign,
     sections: resume.sections.map(sectionToInterchange),
   };
 }
@@ -207,6 +214,8 @@ export function interchangeToContent(data: InterchangeResume): ResumeContent {
     }
   }
 
+  if (data.photo) header.photo = data.photo;
+
   const provided = (data.sections ?? []).map(interchangeToSection);
   // Summary is pinned first; core sections the document omits are appended
   // empty so the editor always has its full fixed set.
@@ -235,6 +244,9 @@ export function interchangeToContent(data: InterchangeResume): ResumeContent {
     nameScale: data.nameScale,
     titleScale: data.titleScale,
     bodyScale: data.bodyScale,
+    photoSize: data.photoSize,
+    photoRadius: data.photoRadius,
+    photoAlign: data.photoAlign,
     header,
     sections,
   };

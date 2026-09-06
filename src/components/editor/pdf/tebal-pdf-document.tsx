@@ -30,6 +30,7 @@ import {
 } from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
+import { PdfHeaderPhoto } from "./pdf-header-photo";
 import { PdfRichText } from "./pdf-rich-text";
 
 // Font sizes are multiplied by the document's per-group scales (name, title,
@@ -97,29 +98,32 @@ const baseStyles = makeStyles(NO_SCALE);
 function TebalHeader(props: { header: HeaderView }) {
   const styles = usePdfStyles(baseStyles);
   return (
-    <View>
-      <Text style={styles.name}>{props.header.fullName}</Text>
-      {props.header.headline ? (
-        <Text style={styles.headline}>{props.header.headline}</Text>
-      ) : null}
-      {props.header.contacts.length > 0 ? (
-        <View style={styles.contactRowWrap}>
-          {props.header.contacts.map((contact) => (
-            <View key={contact.kind} style={styles.contactRow}>
-              {props.header.showIcons ? (
-                <PdfContactIcon kind={contact.kind} />
-              ) : null}
-              {contact.href ? (
-                <Link src={contact.href} style={styles.linkPlain}>
-                  {contact.value}
-                </Link>
-              ) : (
-                <Text>{contact.value}</Text>
-              )}
-            </View>
-          ))}
-        </View>
-      ) : null}
+    <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 12 }}>
+      <PdfHeaderPhoto header={props.header} />
+      <View>
+        <Text style={styles.name}>{props.header.fullName}</Text>
+        {props.header.headline ? (
+          <Text style={styles.headline}>{props.header.headline}</Text>
+        ) : null}
+        {props.header.contacts.length > 0 ? (
+          <View style={styles.contactRowWrap}>
+            {props.header.contacts.map((contact) => (
+              <View key={contact.kind} style={styles.contactRow}>
+                {props.header.showIcons ? (
+                  <PdfContactIcon kind={contact.kind} />
+                ) : null}
+                {contact.href ? (
+                  <Link src={contact.href} style={styles.linkPlain}>
+                    {contact.value}
+                  </Link>
+                ) : (
+                  <Text>{contact.value}</Text>
+                )}
+              </View>
+            ))}
+          </View>
+        ) : null}
+      </View>
     </View>
   );
 }

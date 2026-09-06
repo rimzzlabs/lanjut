@@ -1,4 +1,5 @@
 import { ResumeContactIcon } from "../../resume-contact-icon";
+import { ResumeHeaderPhoto } from "../../resume-header-photo";
 import type { ContactView, HeaderView } from "../../resume-preview";
 
 function KetatHeaderContact(props: ContactView & { showIcons: boolean }) {
@@ -19,13 +20,16 @@ function KetatHeaderContact(props: ContactView & { showIcons: boolean }) {
 export function KetatHeader(props: HeaderView) {
   return (
     <header className="flex flex-wrap items-start justify-between gap-6">
-      <div className="min-w-0">
-        <h1 className="font-serif resume-name-2xl uppercase tracking-wide">
-          {props.fullName}
-        </h1>
-        <p className="mt-1 font-serif resume-name-base text-muted-foreground">
-          {props.headline}
-        </p>
+      <div className="flex min-w-0 items-start gap-4">
+        <ResumeHeaderPhoto header={props} />
+        <div className="min-w-0">
+          <h1 className="font-serif resume-name-2xl uppercase tracking-wide">
+            {props.fullName}
+          </h1>
+          <p className="mt-1 font-serif resume-name-base text-muted-foreground">
+            {props.headline}
+          </p>
+        </div>
       </div>
 
       <ul className="space-y-1.5 resume-body-xs">

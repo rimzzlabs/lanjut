@@ -220,6 +220,16 @@ async function extractDocxText(buffer: Buffer): Promise<string> {
     .replace(/&gt;/g, ">");
 }
 
+/** A tiny valid JPEG, enough for react-pdf and docx to embed. */
+const TEST_PHOTO = `data:image/jpeg;base64,${[
+  "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB",
+  "AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEB",
+  "AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAAR",
+  "CAACAAIDASIAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACv/EABQQAQAAAAAAAAAAAAAA",
+  "AAAAAAD/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwD",
+  "AQACEQMRAD8AfwD/2Q==",
+].join("")}`;
+
 async function main(): Promise<void> {
   registerFonts();
   const preview = resumeToPreview(SEED_RESUME);
@@ -249,6 +259,38 @@ async function main(): Promise<void> {
     console.log(`${label}: extracted ${text.length} chars`);
     errors.push(...checkReadingOrder(text, label), ...checkFields(text, label));
   }
+
+  // The opt-in photo is presentation-only: with a photo present, the extracted
+  // text of every template PDF and the DOCX must be identical to the
+  // photo-free output, or the photo has disturbed parsing.
+  const photoResume = structuredClone(SEED_RESUME);
+  photoResume.header.photo = TEST_PHOTO;
+  const photoPreview = resumeToPreview(photoResume);
+  const docxPlain = await extractDocxText(
+    await Packer.toBuffer(buildAwalDocx(preview)),
+  );
+  const docxPhoto = await extractDocxText(
+    await Packer.toBuffer(buildAwalDocx(photoPreview)),
+  );
+  if (docxPlain !== docxPhoto) {
+    errors.push("DOCX: adding a photo changed the extracted text");
+  }
+  for (const [template, PdfDocument] of Object.entries(
+    TEMPLATE_PDF_DOCUMENTS,
+  )) {
+    const plainText = await extractPdfText(
+      await renderToBuffer(<PdfDocument preview={preview} />),
+    );
+    const withPhoto = await extractPdfText(
+      await renderToBuffer(<PdfDocument preview={photoPreview} />),
+    );
+    if (plainText !== withPhoto) {
+      errors.push(
+        `PDF(${template}): adding a photo changed the extracted text`,
+      );
+    }
+  }
+  console.log("Photo invariance: extracted text identical with a photo");
 
   for (const family of ["Lora", "Merriweather"]) {
     const ligatureErrors = await checkLigatureSafety(family);

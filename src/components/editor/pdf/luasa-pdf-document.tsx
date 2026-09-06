@@ -32,6 +32,7 @@ import {
 } from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
+import { PdfHeaderPhoto } from "./pdf-header-photo";
 import { PdfRichText } from "./pdf-rich-text";
 
 // Font sizes are multiplied by the document's per-group scales (name, title,
@@ -127,18 +128,26 @@ function LuasaHeader(props: { header: HeaderView }) {
   const styles = usePdfStyles(baseStyles);
   const serif = usePdfFontFamily("Lora");
   return (
-    <View style={styles.accentBar}>
-      <Text style={[styles.name, { fontFamily: serif }]}>
-        {props.header.fullName}
-      </Text>
-      {props.header.headline ? (
-        <Text style={[styles.headline, { fontFamily: serif }]}>
-          {props.header.headline}
+    <View
+      style={[
+        styles.accentBar,
+        { flexDirection: "row", alignItems: "flex-start", gap: 10 },
+      ]}
+    >
+      <PdfHeaderPhoto header={props.header} />
+      <View>
+        <Text style={[styles.name, { fontFamily: serif }]}>
+          {props.header.fullName}
         </Text>
-      ) : null}
-      {props.header.contacts.length > 0 ? (
-        <LuasaContactLine contacts={props.header.contacts} />
-      ) : null}
+        {props.header.headline ? (
+          <Text style={[styles.headline, { fontFamily: serif }]}>
+            {props.header.headline}
+          </Text>
+        ) : null}
+        {props.header.contacts.length > 0 ? (
+          <LuasaContactLine contacts={props.header.contacts} />
+        ) : null}
+      </View>
     </View>
   );
 }

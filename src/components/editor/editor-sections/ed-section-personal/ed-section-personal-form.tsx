@@ -22,6 +22,7 @@ import {
   type PersonalFormValues,
   toPersonalValues,
 } from "../resume-form-adapter";
+import { EditorSectionPersonalPhoto } from "./ed-section-personal-photo";
 
 export function EditorSectionPersonalForm() {
   const open = useResumeStore((state) => state.open);
@@ -53,6 +54,7 @@ export function EditorSectionPersonalForm() {
             {t("personalInfoDesc")}
           </FieldDescription>
           <FieldGroup>
+            <EditorSectionPersonalPhoto />
             <div className="grid grid-cols-2 gap-2">
               <Controller
                 control={form.control}
