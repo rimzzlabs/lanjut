@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { DONATION_LINKS } from "@/lib/site";
+import { ExternalLink } from "../shared/external-link";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -21,7 +22,7 @@ export function PlatformSidebarSupport() {
         <SidebarMenuItem>
           <SidebarMenuButton
             render={
-              <a href={DONATION_LINKS.saweria} target="_blank" rel="noreferrer">
+              <ExternalLink href={DONATION_LINKS.saweria}>
                 <Image
                   src="/brands/saweria.png"
                   alt=""
@@ -30,18 +31,14 @@ export function PlatformSidebarSupport() {
                   className="size-4"
                 />
                 Saweria
-              </a>
+              </ExternalLink>
             }
           />
         </SidebarMenuItem>
         <SidebarMenuItem>
           <SidebarMenuButton
             render={
-              <a
-                href={DONATION_LINKS.sociabuzz}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <ExternalLink href={DONATION_LINKS.sociabuzz}>
                 <Image
                   src="/brands/sociabuzz.png"
                   alt=""
@@ -50,7 +47,7 @@ export function PlatformSidebarSupport() {
                   className="size-4"
                 />
                 SociaBuzz
-              </a>
+              </ExternalLink>
             }
           />
         </SidebarMenuItem>

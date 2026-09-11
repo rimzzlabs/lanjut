@@ -12,6 +12,7 @@ import {
 } from "@/lib/changelog";
 import { useChangelogStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { ExternalLink } from "../shared/external-link";
 import { Button } from "../ui/button";
 import {
   Sheet,
@@ -101,15 +102,13 @@ export function PlatformNavbarChangelog() {
         </div>
 
         <SheetFooter className="border-t">
-          <a
+          <ExternalLink
             href="https://github.com/rimzzlabs/lanjut/releases"
-            target="_blank"
-            rel="noreferrer"
             className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             {t("fullChangelog")}
             <ArrowUpRight className="size-4" />
-          </a>
+          </ExternalLink>
         </SheetFooter>
       </SheetContent>
     </Sheet>

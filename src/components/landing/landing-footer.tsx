@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { DONATION_LINKS } from "@/lib/site";
+import { ExternalLink } from "../shared/external-link";
 
 const YEAR = new Date().getFullYear();
 
@@ -46,14 +47,12 @@ export function LandingFooter() {
           >
             {t("templates")}
           </Link>
-          <a
+          <ExternalLink
             href="https://github.com/rimzzlabs/lanjut"
-            target="_blank"
-            rel="noreferrer"
             className="transition-colors hover:text-foreground"
           >
             {t("github")}
-          </a>
+          </ExternalLink>
         </nav>
       </div>
 
@@ -67,10 +66,8 @@ export function LandingFooter() {
             className="flex items-center gap-x-4 text-xs text-muted-foreground"
           >
             <span>{t("support")}</span>
-            <a
+            <ExternalLink
               href={DONATION_LINKS.saweria}
-              target="_blank"
-              rel="noreferrer"
               className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
             >
               <Image
@@ -81,11 +78,9 @@ export function LandingFooter() {
                 className="size-3.5"
               />
               Saweria
-            </a>
-            <a
+            </ExternalLink>
+            <ExternalLink
               href={DONATION_LINKS.sociabuzz}
-              target="_blank"
-              rel="noreferrer"
               className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
             >
               <Image
@@ -96,7 +91,7 @@ export function LandingFooter() {
                 className="size-3.5"
               />
               SociaBuzz
-            </a>
+            </ExternalLink>
           </nav>
         </div>
       </div>

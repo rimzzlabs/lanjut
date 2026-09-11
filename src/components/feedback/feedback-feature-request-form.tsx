@@ -18,6 +18,7 @@ import {
   issueTitle,
   submitFeedback,
 } from "@/lib/github-issue";
+import { openExternal } from "@/lib/open-external";
 import { emptyRichTextValue } from "@/lib/resume";
 import {
   richBlocksToMarkdown,
@@ -112,7 +113,7 @@ export function FeedbackFeatureRequestForm(
       problem: richBlocksToMarkdown(problem),
       layer: values.layer,
     });
-    window.open(url, "_blank", "noopener,noreferrer");
+    void openExternal(url);
     props.onSubmitted();
   }
 
