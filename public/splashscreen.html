@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lanjut</title>
+    <style>
+      /* The same face and subset next/font serves the app, copied here because a
+         static file cannot reference the hashed build output. */
+      @font-face {
+        font-family: "Plus Jakarta Sans";
+        font-style: normal;
+        font-weight: 700;
+        font-display: block;
+        src: url("/brand/plus-jakarta-sans-700.woff2") format("woff2");
+      }
+
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #fdfcf7;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+
+      .stack {
+        display: grid;
+        justify-items: center;
+        gap: 18px;
+      }
+
+      .mark {
+        width: 112px;
+        height: 112px;
+      }
+
+      .disc {
+        transform-origin: 32px 32px;
+        animation: rise 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+
+      .stroke {
+        stroke-dasharray: 120;
+        stroke-dashoffset: 120;
+        animation: draw 880ms cubic-bezier(0.65, 0, 0.35, 1) 240ms both;
+      }
+
+      .wordmark {
+        font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+        font-weight: 700;
+        font-size: 30px;
+        letter-spacing: -0.02em;
+        color: #0f2f26;
+        animation: pop 420ms cubic-bezier(0.22, 1, 0.36, 1) 1080ms both;
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: scale(0.88);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      @keyframes pop {
+        from {
+          opacity: 0;
+          transform: translateY(6px) scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .disc,
+        .stroke,
+        .wordmark {
+          animation: none;
+        }
+        .stroke {
+          stroke-dashoffset: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stack">
+      <svg
+        class="mark"
+        viewBox="0 0 64 64"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Lanjut"
+      >
+        <defs>
+          <clipPath id="tile"><circle cx="32" cy="32" r="32" /></clipPath>
+        </defs>
+        <circle class="disc" cx="32" cy="32" r="32" fill="#0e8a66" />
+        <g clip-path="url(#tile)">
+          <path
+            class="stroke"
+            d="M14 18 H42 C51 18 51 32 42 32 H22 C13 32 13 46 22 46 H72"
+            fill="none"
+            stroke="#ffffff"
+            stroke-width="6.5"
+            stroke-linecap="round"
+          />
+        </g>
+      </svg>
+      <div class="wordmark" aria-hidden="true">Lanjut</div>
+    </div>
+  </body>
+</html>

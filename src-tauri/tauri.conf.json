@@ -7,10 +7,22 @@
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
     "devUrl": "http://localhost:3000",
-    "frontendDist": "../out"
+    "frontendDist": "../.next-desktop"
   },
   "app": {
     "windows": [
+      {
+        "label": "splashscreen",
+        "url": "/splashscreen.html",
+        "title": "Lanjut",
+        "width": 460,
+        "height": 340,
+        "decorations": false,
+        "resizable": false,
+        "center": true,
+        "skipTaskbar": true,
+        "shadow": true
+      },
       {
         "label": "main",
         "title": "Lanjut (beta)",
@@ -20,7 +32,8 @@
         "minWidth": 960,
         "minHeight": 640,
         "useHttpsScheme": false,
-        "center": true
+        "center": true,
+        "visible": false
       }
     ],
     "security": {
