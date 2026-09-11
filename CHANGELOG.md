@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.1](https://github.com/rimzzlabs/lanjut/compare/v0.16.0...v0.16.1) (2026-09-11)
+
+
+### Bug Fixes
+
+* give the release job a token to upload the mac app ([#175](https://github.com/rimzzlabs/lanjut/issues/175)) ([03935f6](https://github.com/rimzzlabs/lanjut/commit/03935f61fec352d27c813ce547febae26e6e10e8))
+
 ## [0.16.0](https://github.com/rimzzlabs/lanjut/compare/v0.15.0...v0.16.0) (2026-09-11)
 
 
