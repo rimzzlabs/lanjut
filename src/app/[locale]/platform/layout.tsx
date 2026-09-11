@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import type { PropsWithChildren } from "react";
 import { PlatformBugReportDialog } from "@/components/platform/platform-bug-report-dialog";
 import { PlatformFeatureRequestDialog } from "@/components/platform/platform-feature-request-dialog";
@@ -14,7 +15,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function PlatformLayout({ children }: PropsWithChildren) {
+export default async function PlatformLayout(
+  props: PropsWithChildren<{ params: Promise<{ locale: string }> }>,
+) {
+  const { locale } = await props.params;
+  setRequestLocale(locale);
+
+  const children = props.children;
+
   return (
     <TourProvider>
       <PlatformSidebarProvider>

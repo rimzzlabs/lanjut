@@ -1,6 +1,8 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { parseAsString, useQueryState } from "nuqs";
+import { IS_DESKTOP } from "@/lib/build-target";
 
 /**
  * Reads the id of the résumé the editor is open on. The counterpart to
@@ -8,5 +10,7 @@ import { useParams } from "next/navigation";
  */
 export function useEditorId() {
   const params = useParams<{ id?: string }>();
-  return params?.id;
+  const [queryId] = useQueryState("id", parseAsString);
+
+  return IS_DESKTOP ? (queryId ?? undefined) : params?.id;
 }

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { EditorResumePreview } from "@/components/editor/editor-resume-preview";
-import { TourAutostartEditor } from "@/components/tour/tour-autostart-editor";
+import { EditorPageContent } from "@/components/editor/editor-page";
 
 export async function generateMetadata(props: {
   params: Promise<{ locale: string }>;
@@ -12,10 +11,5 @@ export async function generateMetadata(props: {
 }
 
 export default function EditorPage() {
-  return (
-    <>
-      <EditorResumePreview />
-      <TourAutostartEditor />
-    </>
-  );
+  return <EditorPageContent />;
 }

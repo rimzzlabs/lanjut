@@ -1,4 +1,5 @@
 import type { Step } from "nextstepjs";
+import { EDITOR_PATHNAME } from "@/lib/routes";
 import type { EditorTab } from "@/lib/store";
 
 export const LIBRARY_TOUR = "library";
@@ -36,7 +37,7 @@ export interface AppTour {
 }
 
 export function tourForPathname(pathname: string): TourName {
-  if (pathname.startsWith("/platform/editor")) return EDITOR_TOUR;
+  if (pathname.startsWith(EDITOR_PATHNAME)) return EDITOR_TOUR;
   if (pathname.startsWith("/platform/template")) return TEMPLATE_TOUR;
   return LIBRARY_TOUR;
 }
