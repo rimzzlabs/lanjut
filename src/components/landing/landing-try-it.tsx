@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "@/i18n/navigation";
+import { editorHref } from "@/lib/routes";
 import {
   type LandingDraft,
   useLandingDraftStore,
@@ -67,7 +68,7 @@ export function LandingTryIt() {
           templateId: template,
         },
       );
-      router.push(`/platform/editor/${resume.id}`);
+      router.push(editorHref(resume.id));
     } finally {
       setCreating(false);
     }

@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Link } from "@/i18n/navigation";
 import type { ResumeIndexEntry } from "@/lib/resume";
+import { editorHref } from "@/lib/routes";
 import { PlatformResumeGridItemMenu } from "./platform-resume-grid-item-menu";
 import { PlatformResumeGridItemThumbnail } from "./platform-resume-grid-item-thumbnail";
 
@@ -26,7 +27,7 @@ export function PlatformResumeGridItem({
   const t = useTranslations("platform.grid");
   const formatter = useFormatter();
   const updatedAt = new Date(resume.updatedAt);
-  const href = `/platform/editor/${resume.id}`;
+  const href = editorHref(resume.id);
 
   return (
     <Card size="sm" className="pt-0">

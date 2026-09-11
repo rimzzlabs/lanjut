@@ -1,10 +1,11 @@
 import type { BaseUIEvent } from "@base-ui/react";
 import { Copy, FileText, MoreVertical, Pen, Trash } from "lucide-react";
-import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { type MouseEvent, useState } from "react";
+import { useEditorId } from "@/hooks/use-editor-id";
 import { Link } from "@/i18n/navigation";
 import type { ResumeIndexEntry } from "@/lib/resume";
+import { editorHref } from "@/lib/routes";
 import { useResumeStore } from "@/lib/store";
 import {
   DropdownMenu,
@@ -30,7 +31,7 @@ interface PlatformSidebarResumeItemProps {
 export function PlatformSidebarResumeItem({
   resume,
 }: PlatformSidebarResumeItemProps) {
-  const { id } = useParams<{ id?: string }>();
+  const id = useEditorId();
   const duplicateResume = useResumeStore((state) => state.duplicateResume);
   const [open, setOpen] = useState({ rename: false, remove: false });
   const t = useTranslations("platform.sidebar");
@@ -60,7 +61,7 @@ export function PlatformSidebarResumeItem({
       <SidebarMenuButton
         isActive={id === resume.id}
         className="truncate"
-        render={<Link href={`/platform/editor/${resume.id}`} />}
+        render={<Link href={editorHref(resume.id)} />}
       >
         <FileText />
         <span className="truncate">{resume.title}</span>

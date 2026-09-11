@@ -15,6 +15,7 @@ import {
 } from "@/lib/forms/resume";
 import type { ParseResult } from "@/lib/import";
 import type { ResumeLanguage } from "@/lib/resume";
+import { editorHref } from "@/lib/routes";
 import { useResumeStore } from "@/lib/store";
 import { DEFAULT_TEMPLATE_ID, resolveTemplateId } from "@/lib/templates";
 import {
@@ -84,7 +85,7 @@ export function PlatformResumeCreateDialog(
     form.reset({ title: "", source: "sample" });
     setImported(null);
     props.onOpenChange(false);
-    router.push(`/platform/editor/${resume.id}`);
+    router.push(editorHref(resume.id));
   });
 
   const importIncomplete = source === "import" && (!imported || parsing);

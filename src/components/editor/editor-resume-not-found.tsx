@@ -1,22 +1,23 @@
 "use client";
 
 import { FileQuestion } from "lucide-react";
-import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useEditorId } from "@/hooks/use-editor-id";
 import { Link } from "@/i18n/navigation";
 import { nearestResumeById } from "@/lib/resume";
+import { editorHref } from "@/lib/routes";
 import { useResumeStore } from "@/lib/store";
 
 /**
- * The editor's missing-résumé state. When the route id doesn't resolve, the
- * library index is searched for the closest id within edit tolerance, a
+ * The editor's missing-résumé state. When the id in the URL doesn't resolve,
+ * the library index is searched for the closest id within edit tolerance, a
  * "did you mean" for mangled or truncated links. Deleted résumés (no near id)
  * fall back to the plain message.
  */
 export function EditorResumeNotFound() {
-  const params = useParams<{ id?: string }>();
+  const id = useEditorId();
   const index = useResumeStore((state) => state.index);
-  const suggestion = nearestResumeById(index, params?.id ?? "");
+  const suggestion = nearestResumeById(index, id ?? "");
   const t = useTranslations("editor.chrome");
 
   return (
@@ -31,7 +32,7 @@ export function EditorResumeNotFound() {
         <p>
           {t("didYouMean")}{" "}
           <Link
-            href={`/platform/editor/${suggestion.id}`}
+            href={editorHref(suggestion.id)}
             className="font-medium text-primary underline-offset-4 hover:underline"
           >
             {suggestion.title}
