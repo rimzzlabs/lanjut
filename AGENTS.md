@@ -65,6 +65,10 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   either orphans the résumés of everyone who already installed the app.
 - The window opens on `/en/platform/`. Tauri resolves a directory path by falling back
   to `<path>/index.html`, which is why the desktop build sets `trailingSlash`.
+- Every file the app hands to a user goes through `triggerDownload` in
+  `src/components/editor/download-file.ts`. A new export format that builds its own
+  anchor will work on the web and do nothing at all in the desktop app. The function
+  resolves false when the user cancels the save dialog, which is not an error.
 - Biome ignores `src-tauri`. Rust is formatted by `cargo fmt`, and the JSON config files
   are written by the Tauri CLI.
 

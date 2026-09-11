@@ -15,9 +15,9 @@ export async function downloadResumePdf(
   preview: ResumePreview,
   fileName: string,
   template: TemplateId,
-): Promise<void> {
+): Promise<boolean> {
   registerPdfFonts();
   const PdfDocument = TEMPLATE_PDF_DOCUMENTS[template];
   const blob = await pdf(<PdfDocument preview={preview} />).toBlob();
-  triggerDownload(blob, `${safeFileName(fileName)}.pdf`);
+  return triggerDownload(blob, `${safeFileName(fileName)}.pdf`);
 }

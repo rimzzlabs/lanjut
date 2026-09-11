@@ -13,37 +13,33 @@ export async function downloadResume(
   resume: Resume,
   format: ExportFormat,
   fileName: string,
-): Promise<void> {
+): Promise<boolean> {
   if (format === "json") {
     const { downloadResumeJson } = await import("./download-resume-json");
-    downloadResumeJson(resume, fileName);
-    return;
+    return downloadResumeJson(resume, fileName);
   }
 
   if (format === "yaml") {
     const { downloadResumeYaml } = await import("./download-resume-yaml");
-    downloadResumeYaml(resume, fileName);
-    return;
+    return downloadResumeYaml(resume, fileName);
   }
 
   const preview = resumeToPreview(resume);
 
   if (format === "pdf") {
     const { downloadResumePdf } = await import("./pdf/download-resume-pdf");
-    await downloadResumePdf(
+    return downloadResumePdf(
       preview,
       fileName,
       resolveTemplateId(resume.templateId),
     );
-    return;
   }
 
   if (format === "docx") {
     const { downloadResumeDocx } = await import("./docx/download-resume-docx");
-    await downloadResumeDocx(preview, fileName);
-    return;
+    return downloadResumeDocx(preview, fileName);
   }
 
   const { downloadResumeText } = await import("./download-resume-text");
-  downloadResumeText(preview, fileName);
+  return downloadResumeText(preview, fileName);
 }

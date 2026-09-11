@@ -11,7 +11,7 @@ import { buildAwalDocx } from "./resume-to-docx";
 export async function downloadResumeDocx(
   preview: ResumePreview,
   fileName: string,
-): Promise<void> {
+): Promise<boolean> {
   const blob = await Packer.toBlob(buildAwalDocx(preview));
-  triggerDownload(blob, `${safeFileName(fileName)}.docx`);
+  return triggerDownload(blob, `${safeFileName(fileName)}.docx`);
 }

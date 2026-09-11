@@ -12,6 +12,8 @@
           "url": "https://*"
         }
       ]
-    }
+    },
+    "dialog:allow-save",
+    "fs:allow-write-file"
   ]
 }
