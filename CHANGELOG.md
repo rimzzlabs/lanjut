@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.2](https://github.com/rimzzlabs/lanjut/compare/v0.16.1...v0.16.2) (2026-09-11)
+
+
+### Bug Fixes
+
+* lay out the desktop window correctly at startup ([#177](https://github.com/rimzzlabs/lanjut/issues/177)) ([a58e9fc](https://github.com/rimzzlabs/lanjut/commit/a58e9fc764d0663c9f03413c628faa454b40b6b7))
+
 ## [0.16.1](https://github.com/rimzzlabs/lanjut/compare/v0.16.0...v0.16.1) (2026-09-11)
 
 
