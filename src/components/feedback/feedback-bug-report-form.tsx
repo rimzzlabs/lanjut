@@ -23,6 +23,7 @@ import {
   issueTitle,
   submitFeedback,
 } from "@/lib/github-issue";
+import { openExternal } from "@/lib/open-external";
 import { emptyRichTextValue } from "@/lib/resume";
 import {
   richBlocksToMarkdown,
@@ -117,7 +118,7 @@ export function FeedbackBugReportForm(props: FeedbackBugReportFormProps) {
       whatHappened: richBlocksToMarkdown(whatHappened),
       area: values.area,
     });
-    window.open(url, "_blank", "noopener,noreferrer");
+    void openExternal(url);
     props.onSubmitted();
   }
 

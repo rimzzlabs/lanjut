@@ -13,6 +13,9 @@ if (!desktop) {
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
+  // Separate build caches. The two targets differ in pageExtensions,
+  // trailingSlash and localePrefix, so a cache written by one poisons the other.
+  distDir: desktop ? ".next-desktop" : ".next",
   output: desktop ? "export" : undefined,
   trailingSlash: desktop,
   images: { unoptimized: desktop },
