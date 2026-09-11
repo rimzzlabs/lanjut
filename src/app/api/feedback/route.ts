@@ -56,7 +56,7 @@ function buildIssue(
         "### Area",
         payload.area,
         "### Browser and OS",
-        browser ?? "_Unknown._",
+        payload.client ?? browser ?? "_Unknown._",
         reportedBy(payload.name),
       ].join("\n\n"),
     };
