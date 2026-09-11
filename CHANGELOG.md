@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.1](https://github.com/rimzzlabs/lanjut/compare/v0.17.0...v0.17.1) (2026-09-11)
+
+
+### Bug Fixes
+
+* restore the desktop layout and the updater artifacts ([#181](https://github.com/rimzzlabs/lanjut/issues/181)) ([43f2ab6](https://github.com/rimzzlabs/lanjut/commit/43f2ab653e913aa0197ea6c5c88f04b828043209))
+
 ## [0.17.0](https://github.com/rimzzlabs/lanjut/compare/v0.16.2...v0.17.0) (2026-09-11)
 
 
