@@ -9,12 +9,17 @@ export function useIsMobile() {
 
   React.useEffect(() => {
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    const read = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    mql.addEventListener("change", read);
+    // A window that is still hidden reports no usable width, and revealing it
+    // does not always fire a media query change. Re-read when the document
+    // comes on screen, or the first measurement stands for the whole session.
+    document.addEventListener("visibilitychange", read);
+    read();
+    return () => {
+      mql.removeEventListener("change", read);
+      document.removeEventListener("visibilitychange", read);
     };
-    mql.addEventListener("change", onChange);
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    return () => mql.removeEventListener("change", onChange);
   }, []);
 
   return !!isMobile;

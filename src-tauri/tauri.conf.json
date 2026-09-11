@@ -15,13 +15,14 @@
         "label": "splashscreen",
         "url": "/splashscreen.html",
         "title": "Lanjut",
-        "width": 460,
-        "height": 340,
+        "width": 1280,
+        "height": 860,
         "decorations": false,
         "resizable": false,
         "center": true,
         "skipTaskbar": true,
-        "shadow": true
+        "shadow": true,
+        "alwaysOnTop": true
       },
       {
         "label": "main",
@@ -32,8 +33,7 @@
         "minWidth": 960,
         "minHeight": 640,
         "useHttpsScheme": false,
-        "center": true,
-        "visible": false
+        "center": true
       }
     ],
     "security": {
