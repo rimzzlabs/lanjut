@@ -591,7 +591,8 @@
     "kindLabel": "Choose bug report or feature request",
     "sentTitle": "Thank you",
     "sentBody": "We filed the GitHub issue for you. You can close this window.",
-    "sendAnother": "Send another"
+    "sendAnother": "Send another",
+    "offlineToast": "You need to be online to send feedback. Check your connection and try again."
   },
   "editor": {
     "common": {

@@ -3,9 +3,10 @@
 import { Bug, HelpCircle, Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useNextStep } from "nextstepjs";
+import { useIssueReport } from "@/hooks/use-issue-report";
 import { MEDIA_XL, useMediaQuery } from "@/hooks/use-media-query";
 import { usePathname } from "@/i18n/navigation";
-import { useIssueReportStore, useResumeStore } from "@/lib/store";
+import { useResumeStore } from "@/lib/store";
 import { EDITOR_SHEET_TOUR, EDITOR_TOUR, tourForPathname } from "@/lib/tour";
 import {
   SidebarGroup,
@@ -19,7 +20,7 @@ import {
 export function PlatformSidebarOther() {
   const pathname = usePathname();
   const openStatus = useResumeStore((state) => state.openStatus);
-  const setIssueReportOpen = useIssueReportStore((state) => state.setOpen);
+  const openIssueReport = useIssueReport();
   const isDesktop = useMediaQuery(MEDIA_XL);
   const { startNextStep } = useNextStep();
   const { isMobile, setOpenMobile } = useSidebar();
@@ -48,7 +49,7 @@ export function PlatformSidebarOther() {
           <SidebarMenuButton
             onClick={() => {
               if (isMobile) setOpenMobile(false);
-              setIssueReportOpen("bug");
+              openIssueReport("bug");
             }}
           >
             <Bug /> {t("reportBug")}
@@ -58,7 +59,7 @@ export function PlatformSidebarOther() {
           <SidebarMenuButton
             onClick={() => {
               if (isMobile) setOpenMobile(false);
-              setIssueReportOpen("feature");
+              openIssueReport("feature");
             }}
           >
             <Send /> {t("featureRequest")}
