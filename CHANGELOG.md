@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/rimzzlabs/lanjut/compare/v0.16.2...v0.17.0) (2026-09-11)
+
+
+### Features
+
+* offer updates in the desktop app ([#179](https://github.com/rimzzlabs/lanjut/issues/179)) ([c6c2ca0](https://github.com/rimzzlabs/lanjut/commit/c6c2ca0171853b8a4247015ba8a51e058749b50a))
+
 ## [0.16.2](https://github.com/rimzzlabs/lanjut/compare/v0.16.1...v0.16.2) (2026-09-11)
 
 
