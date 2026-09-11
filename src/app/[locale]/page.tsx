@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LandingClosure } from "@/components/landing/landing-closure";
+import { LandingDesktop } from "@/components/landing/landing-desktop";
 import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingHero } from "@/components/landing/landing-hero";
 import { LandingHowItWorks } from "@/components/landing/landing-how-it-works";
@@ -80,6 +81,7 @@ export default async function Home(props: {
         <LandingTryIt />
         <LandingHowItWorks />
         <LandingValues />
+        <LandingDesktop />
         <LandingClosure />
       </main>
       <LandingFooter />

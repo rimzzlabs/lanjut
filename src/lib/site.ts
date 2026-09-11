@@ -12,3 +12,10 @@ export const DONATION_LINKS = {
   saweria: "https://saweria.co/rimzzlabs",
   sociabuzz: "https://sociabuzz.com/rimzzlabs/tribe",
 } as const;
+
+/**
+ * Where the desktop download points. The latest-release page rather than a
+ * pinned asset, so the link does not rot when a new version publishes.
+ */
+export const DESKTOP_RELEASE_URL =
+  "https://github.com/rimzzlabs/lanjut/releases/latest";

@@ -44,6 +44,13 @@
     "ctaPrimary": "Buat resume kamu",
     "ctaSecondary": "Intip template"
   },
+  "desktop": {
+    "kicker": "05 · Desktop",
+    "heading": "Atau simpan di Mac kamu",
+    "description": "Builder yang sama sebagai aplikasi native. Résumé kamu tersimpan di perangkat sendiri, dan tetap jalan waktu internet mati.",
+    "cta": "Unduh untuk macOS",
+    "gatekeeper": "Masih beta dan belum ditandatangani Apple, jadi macOS minta konfirmasi saat pertama kali dibuka."
+  },
   "footer": {
     "ariaLabel": "Footer",
     "tagline": "Local-first: resume kamu nggak pernah keluar dari browser.",
@@ -173,6 +180,16 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_16_0": [
+          {
+            "title": "Lanjut di Mac kamu",
+            "description": "Sekarang ada aplikasi Mac. Isinya builder yang sama, jalan di perangkat kamu sendiri, dan tetap bisa dipakai waktu internet mati. Résumé kamu tetap tersimpan di situ. Unduh lewat tautan di halaman depan. Masih beta dan belum ditandatangani Apple, jadi macOS akan minta konfirmasi saat pertama kali dibuka."
+          },
+          {
+            "title": "Halaman khusus masukan",
+            "description": "Laporan bug dan permintaan fitur sekarang punya halamannya sendiri, jadi bisa dikirim dari mana saja, termasuk dari aplikasi Mac. Kamu tetap tidak perlu akun GitHub."
+          }
+        ],
         "0_14_0": [
           {
             "title": "Pasang foto di header",

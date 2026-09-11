@@ -44,6 +44,13 @@
     "ctaPrimary": "Create your resume",
     "ctaSecondary": "Browse templates"
   },
+  "desktop": {
+    "kicker": "05 · Desktop",
+    "heading": "Or keep it on your Mac",
+    "description": "The same builder as a native app. Your résumés live on your own machine, and it keeps working with the network off.",
+    "cta": "Download for macOS",
+    "gatekeeper": "Beta, and not yet signed by Apple, so macOS asks you to confirm the first time you open it."
+  },
   "footer": {
     "ariaLabel": "Footer",
     "tagline": "Local-first: your resume never leaves your browser.",
@@ -173,6 +180,16 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_16_0": [
+          {
+            "title": "Lanjut on your Mac",
+            "description": "There is now a Mac app. It is the same builder you already use, running on your own machine, and it keeps working with the network off. Your resumes stay on that machine. Download it from the link on the home page. It is a beta and it is not signed by Apple yet, so macOS will ask you to confirm the first time you open it."
+          },
+          {
+            "title": "A page for feedback",
+            "description": "Bug reports and feature requests now have their own page, so you can send one from anywhere, including from the Mac app. You still do not need a GitHub account."
+          }
+        ],
         "0_14_0": [
           {
             "title": "Add a photo to your header",
