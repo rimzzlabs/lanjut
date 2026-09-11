@@ -35,6 +35,8 @@ pub fn run() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_os::init())
+        .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(PageLoaded(Mutex::new(Some(tx))))
         .on_page_load(|webview, payload| {
             if webview.label() != "main" || payload.event() != PageLoadEvent::Finished {

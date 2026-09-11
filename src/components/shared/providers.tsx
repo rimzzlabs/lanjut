@@ -9,6 +9,7 @@ import { registerResumeFlushListeners } from "@/lib/store";
 import { Toaster } from "../ui/sonner";
 import { TooltipProvider } from "../ui/tooltip";
 import { DesktopLocaleMemory } from "./desktop-locale-memory";
+import { DesktopUpdater } from "./desktop-updater";
 
 export function Providers({ children }: PropsWithChildren) {
   useEffect(() => registerResumeFlushListeners(), []);
@@ -16,6 +17,7 @@ export function Providers({ children }: PropsWithChildren) {
   return (
     <NuqsAdapter>
       {IS_DESKTOP ? <DesktopLocaleMemory /> : null}
+      {IS_DESKTOP ? <DesktopUpdater /> : null}
       <ThemeProvider
         attribute="class"
         defaultTheme="system"

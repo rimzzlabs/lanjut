@@ -74,6 +74,12 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 - A tagged release publishes one `.dmg` per architecture. The build is unsigned, so
   macOS refuses to open it until the quarantine attribute is cleared. That is a paid
   Apple membership away from being fixed, not a code change.
+- The updater verifies a signature. The public key lives in `tauri.conf.json` and the
+  private key lives only in the `TAURI_SIGNING_PRIVATE_KEY` repository secret. Tauri
+  does not check the public key at build time, so a wrong one fails silently at
+  runtime and every update check quietly does nothing.
+- An update check is a network call the user did not ask for. It runs at most once
+  every three days, a failure is silent, and nothing installs without a click.
 - Biome ignores `src-tauri`. Rust is formatted by `cargo fmt`, and the JSON config files
   are written by the Tauri CLI.
 
