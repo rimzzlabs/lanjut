@@ -4,15 +4,18 @@ import { ProgressProvider } from "@bprogress/next/app";
 import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { type PropsWithChildren, useEffect } from "react";
+import { IS_DESKTOP } from "@/lib/build-target";
 import { registerResumeFlushListeners } from "@/lib/store";
 import { Toaster } from "../ui/sonner";
 import { TooltipProvider } from "../ui/tooltip";
+import { DesktopLocaleMemory } from "./desktop-locale-memory";
 
 export function Providers({ children }: PropsWithChildren) {
   useEffect(() => registerResumeFlushListeners(), []);
 
   return (
     <NuqsAdapter>
+      {IS_DESKTOP ? <DesktopLocaleMemory /> : null}
       <ThemeProvider
         attribute="class"
         defaultTheme="system"

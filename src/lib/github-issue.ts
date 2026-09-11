@@ -1,6 +1,7 @@
 import type { BUG_AREAS } from "./forms/bug-report";
 import type { FEATURE_LAYERS } from "./forms/feature-request";
 import type { FeedbackPayload } from "./forms/feedback";
+import { EDITOR_PATHNAME } from "./routes";
 
 export const GITHUB_REPO = "rimzzlabs/lanjut";
 
@@ -20,7 +21,7 @@ export interface FeatureRequestIssue {
 }
 
 export function areaForPathname(pathname: string): (typeof BUG_AREAS)[number] {
-  if (pathname.startsWith("/platform/editor")) return "Editor";
+  if (pathname.startsWith(EDITOR_PATHNAME)) return "Editor";
   if (pathname.startsWith("/platform")) return "Dashboard / library";
   if (pathname === "/") return "Landing page";
   return "Other";
