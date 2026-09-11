@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/navigation";
 import type { ParseResult } from "@/lib/import";
 import type { ResumeLanguage } from "@/lib/resume";
+import { editorHref } from "@/lib/routes";
 import { useResumeStore } from "@/lib/store";
 import { isResumePreviewEmpty, resumeToPreview } from "./resume-to-preview";
 
@@ -72,7 +73,7 @@ export function EditorDocumentImport() {
       language: locale as ResumeLanguage,
     });
     reset();
-    router.push(`/platform/editor/${resume.id}`);
+    router.push(editorHref(resume.id));
   };
 
   return (

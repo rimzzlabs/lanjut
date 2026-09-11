@@ -1,19 +1,18 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useEffect } from "react";
+import { useEditorId } from "@/hooks/use-editor-id";
 import { registerResumeFlushListeners, useResumeStore } from "@/lib/store";
 
 /**
- * Loads the résumé addressed by the route `[id]` into the store and keeps it in
- * sync with navigation: opens on mount / id change (`openResume` flushes the
+ * Loads the résumé addressed by the URL into the store and keeps it in sync
+ * with navigation: opens on mount / id change (`openResume` flushes the
  * previously open document itself), flushes pending writes when leaving the
  * editor, and registers the page-lifecycle flush safety net. Synchronizing the
  * store with the route and IndexedDB is a legitimate external-system effect.
  */
 export function useEditorResume() {
-  const params = useParams<{ id: string }>();
-  const id = params?.id;
+  const id = useEditorId();
   const openResume = useResumeStore((state) => state.openResume);
   const flush = useResumeStore((state) => state.flush);
   const openStatus = useResumeStore((state) => state.openStatus);
