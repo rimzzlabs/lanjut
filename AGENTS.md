@@ -15,7 +15,7 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 - Next.js (App Router)
 - open-next on Cloudflare (hosting only; the sole server surface is the `/api/feedback` route, which relays bug reports and feature requests and never receives resume content)
 - Static desktop export selected by `LANJUT_TARGET=desktop`; no desktop runtime packages are part of the web application
-- Tauri 2 (desktop shell for Windows and macOS; `src-tauri/`, system webview, loads the static export from disk)
+- Tauri 2 (desktop shell for macOS; `src-tauri/`, system webview, loads the static export from disk)
 - next-intl (internationalization; `[locale]` routing for English and Indonesian, `messages/*.json`, edge middleware on web and explicit locale prefixes on desktop)
 - shadcn (base-ui variant)
 - Tailwind CSS
@@ -69,6 +69,11 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   `src/components/editor/download-file.ts`. A new export format that builds its own
   anchor will work on the web and do nothing at all in the desktop app. The function
   resolves false when the user cancels the save dialog, which is not an error.
+- macOS is the only desktop target. The shell has never been built or run on Windows,
+  so do not describe it as supported until it has been.
+- A tagged release publishes one `.dmg` per architecture. The build is unsigned, so
+  macOS refuses to open it until the quarantine attribute is cleared. That is a paid
+  Apple membership away from being fixed, not a code change.
 - Biome ignores `src-tauri`. Rust is formatted by `cargo fmt`, and the JSON config files
   are written by the Tauri CLI.
 

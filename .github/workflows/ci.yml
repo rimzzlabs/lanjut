@@ -45,3 +45,45 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm exec opennextjs-cloudflare build
+
+  desktop:
+    # The desktop app is not covered by the checks job, and a broken Rust shell or
+    # a misplaced static export is invisible to lint and typecheck. This builds
+    # both halves on a clean checkout, which is the only place a stale local
+    # artifact cannot hide a fault.
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build the static export
+        run: pnpm build
+        env:
+          LANJUT_TARGET: desktop
+
+      - name: Confirm the export is where the app loads it from
+        run: |
+          set -euo pipefail
+          dist=$(node -p "require('./src-tauri/tauri.conf.json').build.frontendDist")
+          resolved="src-tauri/${dist}"
+          test -f "${resolved}/en/platform/index.html" \
+            || { echo "frontendDist ${dist} has no exported page"; exit 1; }
+          test -f "${resolved}/splashscreen.html" \
+            || { echo "frontendDist ${dist} has no splash screen"; exit 1; }
+
+      - name: Build the desktop shell
+        run: cargo build --manifest-path src-tauri/Cargo.toml

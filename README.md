@@ -58,7 +58,7 @@ Every template renders the same linear block sequence, so switching templates ne
 |---|---|
 | Framework | Next.js (App Router) |
 | Build targets | open-next on Cloudflare (default), static export (`LANJUT_TARGET=desktop`) |
-| Desktop shell | Tauri 2 (Windows, macOS) |
+| Desktop shell | Tauri 2 (macOS) |
 | Internationalization | next-intl (English, Indonesian) |
 | UI components | shadcn (base-ui) |
 | Styling | Tailwind CSS |
