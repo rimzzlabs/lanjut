@@ -49,6 +49,15 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "createUpdaterArtifacts": true
+  },
+  "plugins": {
+    "updater": {
+      "endpoints": [
+        "https://github.com/rimzzlabs/lanjut/releases/latest/download/latest.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDI2QkY2MzNFMTY0MENCRUQKUldUdHkwQVdQbU8vSm9wOURaZ3l5OHFWWmZBRnhlU2MwY09RVDBwaGlZSHo5ZHVDRmRpOXhNZkgK"
+    }
   }
 }

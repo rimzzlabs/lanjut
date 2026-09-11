@@ -19,6 +19,9 @@
     "dialog:allow-save",
     "fs:allow-write-file",
     "os:allow-platform",
-    "os:allow-version"
+    "os:allow-version",
+    "updater:allow-check",
+    "updater:allow-download-and-install",
+    "process:allow-restart"
   ]
 }

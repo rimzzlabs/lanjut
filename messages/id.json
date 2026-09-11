@@ -51,6 +51,13 @@
     "cta": "Unduh untuk macOS",
     "gatekeeper": "Masih beta dan belum ditandatangani Apple, jadi macOS minta konfirmasi saat pertama kali dibuka."
   },
+  "updater": {
+    "title": "Lanjut {version} sudah tersedia",
+    "description": "Selain itu semuanya sudah terbaru. Pemasangan sebentar saja lalu aplikasi dibuka ulang.",
+    "install": "Pasang",
+    "later": "Nanti saja",
+    "installing": "Mengunduh pembaruan"
+  },
   "footer": {
     "ariaLabel": "Footer",
     "tagline": "Local-first: resume kamu nggak pernah keluar dari browser.",

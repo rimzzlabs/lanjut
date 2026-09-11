@@ -40,6 +40,8 @@
     "@tauri-apps/plugin-fs": "^2.5.2",
     "@tauri-apps/plugin-opener": "^2.5.5",
     "@tauri-apps/plugin-os": "^2.3.2",
+    "@tauri-apps/plugin-process": "^2.3.1",
+    "@tauri-apps/plugin-updater": "^2.11.0",
     "@tiptap/core": "^3.27.1",
     "@tiptap/extension-bold": "^3.27.1",
     "@tiptap/extension-bubble-menu": "^3.27.1",

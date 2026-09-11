@@ -51,6 +51,13 @@
     "cta": "Download for macOS",
     "gatekeeper": "Beta, and not yet signed by Apple, so macOS asks you to confirm the first time you open it."
   },
+  "updater": {
+    "title": "Lanjut {version} is available",
+    "description": "You are up to date otherwise. Installing takes a moment and reopens the app.",
+    "install": "Install",
+    "later": "Not now",
+    "installing": "Downloading the update"
+  },
   "footer": {
     "ariaLabel": "Footer",
     "tagline": "Local-first: your resume never leaves your browser.",
