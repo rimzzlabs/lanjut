@@ -93,7 +93,7 @@ Open `http://localhost:3000`.
 | `pnpm lint` / `pnpm format` | Check / write with Biome |
 | `pnpm typecheck` | Generate Next types and run `tsc --noEmit` |
 | `pnpm build` | Build the open-next Cloudflare target |
-| `LANJUT_TARGET=desktop pnpm build` | Build the static desktop assets into `out/` |
+| `LANJUT_TARGET=desktop pnpm build` | Build the static desktop assets into `.next-desktop/` |
 | `pnpm desktop:dev` | Run the desktop shell against the dev server |
 | `pnpm desktop:build` | Build the desktop app and installers |
 | `pnpm validate:exports` | Regenerate PDF/DOCX/TXT from the seed résumé and verify extraction order and field mapping |
