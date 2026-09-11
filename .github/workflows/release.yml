@@ -3,6 +3,13 @@ name: Release
 on:
   push:
     branches: [main]
+  # Lets the desktop app be built and attached to a tag that already exists,
+  # so a failed upload can be repaired without inventing a release.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to attach the macOS app to
+        required: true
 
 permissions:
   contents: write
@@ -11,11 +18,11 @@ permissions:
 
 jobs:
   release-please:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
-      release_id: ${{ steps.release.outputs.id }}
     steps:
       - id: release
         uses: googleapis/release-please-action@v5
@@ -53,18 +60,25 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
   desktop:
-    # Attaches the macOS app to the release release-please just created. One
-    # build per architecture rather than a universal binary, so nobody downloads
-    # twice the bytes they need. Windows is not built yet.
+    # Attaches the macOS app to the release, one build per architecture rather
+    # than a universal binary, so nobody downloads twice the bytes they need.
+    # Windows is not built yet.
     needs: release-please
-    if: needs.release-please.outputs.release_created == 'true'
+    if: >-
+      always() &&
+      (needs.release-please.outputs.release_created == 'true' ||
+       github.event_name == 'workflow_dispatch')
     runs-on: macos-latest
     strategy:
       fail-fast: false
       matrix:
         target: [aarch64-apple-darwin, x86_64-apple-darwin]
+    env:
+      TAG: ${{ inputs.tag || needs.release-please.outputs.tag_name }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || needs.release-please.outputs.tag_name }}
 
       - uses: pnpm/action-setup@v6
 
@@ -84,10 +98,19 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      # Resolved here rather than taken from the release-please output, so the
+      # manual path and the release path reach the action the same way.
+      - id: release
+        run: echo "id=$(gh release view "$TAG" --json databaseId --jq .databaseId)" >> "$GITHUB_OUTPUT"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: tauri-apps/tauri-action@v0
         env:
+          # The action uploads the bundle to the release, so it needs a token.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LANJUT_TARGET: desktop
           NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
         with:
-          releaseId: ${{ needs.release-please.outputs.release_id }}
+          releaseId: ${{ steps.release.outputs.id }}
           args: --target ${{ matrix.target }}
