@@ -1,11 +1,12 @@
 "use client";
 
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { ExternalLink, SendIcon, XIcon } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { type FormEvent, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useFeedbackClient } from "@/hooks/use-feedback-params";
 import { useValidationTranslator } from "@/hooks/use-validation-translator";
 import {
   createFeatureRequestSchema,
@@ -25,10 +26,6 @@ import {
 } from "@/lib/resume/rich-content";
 import { PROSE_FEATURES } from "@/lib/resume/schema-registry";
 import { RichTextEditor } from "../editor/rich-text/rich-text-editor";
-import {
-  ResponsiveDialogClose,
-  ResponsiveDialogFooter,
-} from "../shared/responsive-dialog";
 import { TURNSTILE_SITE_KEY, Turnstile } from "../shared/turnstile";
 import { Button } from "../ui/button";
 import {
@@ -48,22 +45,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Spinner } from "../ui/spinner";
+import { FeedbackFormActions } from "./feedback-form-actions";
+import {
+  FEEDBACK_SURFACE_CLASS,
+  type FeedbackSurface,
+} from "./feedback-surface";
 
-interface PlatformFeatureRequestFormProps {
+interface FeedbackFeatureRequestFormProps {
+  surface: FeedbackSurface;
   onSubmitted: () => void;
 }
 
-export function PlatformFeatureRequestForm(
-  props: PlatformFeatureRequestFormProps,
+export function FeedbackFeatureRequestForm(
+  props: FeedbackFeatureRequestFormProps,
 ) {
   const t = useTranslations("forms.feature");
-  const tc = useTranslations("forms.common");
   const td = useTranslations("forms.direct");
+  const client = useFeedbackClient();
   const tv = useValidationTranslator();
   const schema = useMemo(() => createFeatureRequestSchema(tv), [tv]);
   const [turnstileEpoch, setTurnstileEpoch] = useState(0);
   const directEnabled = Boolean(TURNSTILE_SITE_KEY);
+  const surfaceClass = FEEDBACK_SURFACE_CLASS[props.surface];
   const form = useForm<FeatureRequestForm>({
     resolver: standardSchemaResolver(schema),
     defaultValues: {
@@ -82,6 +85,7 @@ export function PlatformFeatureRequestForm(
     const result = await submitFeedback({
       kind: "feature",
       name: values.name,
+      client,
       turnstileToken: values.turnstileToken,
       summary: summary.slice(0, 120),
       problem: richBlocksToMarkdown(problem),
@@ -122,11 +126,8 @@ export function PlatformFeatureRequestForm(
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="md:grid md:min-h-0 md:flex-1 md:grid-rows-[minmax(0,1fr)_auto]"
-    >
-      <ScrollArea className="md:-mr-2 md:min-h-0 md:pr-2">
+    <form onSubmit={handleSubmit} className={surfaceClass.form}>
+      <ScrollArea className={surfaceClass.fields}>
         <FieldGroup className="px-1 py-2">
           {directEnabled && (
             <Controller
@@ -224,7 +225,7 @@ export function PlatformFeatureRequestForm(
             <Button
               type="button"
               variant="link"
-              className="h-auto self-start p-0"
+              className="h-auto items-start self-start whitespace-normal p-0 text-left"
               disabled={form.formState.isSubmitting}
               onClick={openGitHubIssue}
             >
@@ -234,22 +235,11 @@ export function PlatformFeatureRequestForm(
         </FieldGroup>
       </ScrollArea>
 
-      <ResponsiveDialogFooter className="mt-4 border-t pt-4 md:shrink-0">
-        <ResponsiveDialogClose type="button" variant="outline">
-          <XIcon /> {tc("cancel")}
-        </ResponsiveDialogClose>
-        {directEnabled ? (
-          <Button type="submit" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? <Spinner /> : <SendIcon />}
-            {td("send")}
-          </Button>
-        ) : (
-          <Button type="submit">
-            <ExternalLink />
-            {tc("openIssue")}
-          </Button>
-        )}
-      </ResponsiveDialogFooter>
+      <FeedbackFormActions
+        surface={props.surface}
+        directEnabled={directEnabled}
+        submitting={form.formState.isSubmitting}
+      />
     </form>
   );
 }

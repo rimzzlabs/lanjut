@@ -585,6 +585,14 @@
       "errorInvalidData": "File ini bukan ekspor resume yang valid."
     }
   },
+  "feedback": {
+    "metaTitle": "Kirim masukan",
+    "metaDescription": "Laporkan bug atau ajukan fitur. Kami yang membuatkan issue GitHub-nya, jadi kamu tidak perlu akun.",
+    "kindLabel": "Pilih laporan bug atau permintaan fitur",
+    "sentTitle": "Terima kasih",
+    "sentBody": "Issue GitHub sudah kami buatkan. Jendela ini boleh kamu tutup.",
+    "sendAnother": "Kirim lagi"
+  },
   "editor": {
     "common": {
       "add": "Tambah"

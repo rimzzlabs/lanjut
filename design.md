@@ -21,6 +21,10 @@ editorial
 - App pages (`/platform`, `/platform/template`): **Workbench-minimal**. A page header
   (title + hairline rule) over a toolbar over a grid. Function carries the page; no
   enrichment, no display serif.
+- Utility pages (`/feedback`): **Workbench-minimal**, single column, capped at
+  `max-w-xl`. A kind switch over a heading over the form. Reached from the
+  sidebar dialogs' own surface or opened directly by the desktop app, which
+  passes `kind`, `area`, and `client` as search params.
 - Content pages: none currently.
 
 ## Theme — "evergreen broadsheet"

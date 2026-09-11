@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useIssueReportStore } from "@/lib/store";
+import { FeedbackBugReportForm } from "../feedback/feedback-bug-report-form";
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -10,7 +11,6 @@ import {
   ResponsiveDialogTitle,
 } from "../shared/responsive-dialog";
 import { TURNSTILE_SITE_KEY } from "../shared/turnstile";
-import { PlatformBugReportForm } from "./platform-bug-report-form";
 
 /**
  * Rendered once at the platform layout level, outside the sidebar: on mobile
@@ -35,7 +35,10 @@ export function PlatformBugReportDialog() {
           </ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 
-        <PlatformBugReportForm onSubmitted={() => setOpen(null)} />
+        <FeedbackBugReportForm
+          surface="dialog"
+          onSubmitted={() => setOpen(null)}
+        />
       </ResponsiveDialogContent>
     </ResponsiveDialog>
   );
