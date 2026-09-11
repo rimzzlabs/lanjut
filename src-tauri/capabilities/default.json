@@ -5,6 +5,8 @@
   "windows": ["main"],
   "permissions": [
     "core:default",
+    "core:app:allow-version",
+    "core:webview:allow-create-webview-window",
     {
       "identifier": "opener:allow-open-url",
       "allow": [
@@ -14,6 +16,8 @@
       ]
     },
     "dialog:allow-save",
-    "fs:allow-write-file"
+    "fs:allow-write-file",
+    "os:allow-platform",
+    "os:allow-version"
   ]
 }

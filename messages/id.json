@@ -591,7 +591,8 @@
     "kindLabel": "Pilih laporan bug atau permintaan fitur",
     "sentTitle": "Terima kasih",
     "sentBody": "Issue GitHub sudah kami buatkan. Jendela ini boleh kamu tutup.",
-    "sendAnother": "Kirim lagi"
+    "sendAnother": "Kirim lagi",
+    "offlineToast": "Kamu perlu online untuk mengirim masukan. Cek koneksi lalu coba lagi."
   },
   "editor": {
     "common": {

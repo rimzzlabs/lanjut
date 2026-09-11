@@ -8,6 +8,7 @@ import { PlatformSidebar } from "@/components/platform/platform-sidebar";
 import { PlatformSidebarProvider } from "@/components/platform/platform-sidebar-provider";
 import { TourProvider } from "@/components/tour/tour-provider";
 import { Sidebar, SidebarInset } from "@/components/ui/sidebar";
+import { IS_DESKTOP } from "@/lib/build-target";
 
 // The platform is the local-first working area: its pages render each visitor's
 // own IndexedDB data, so there is nothing meaningful for crawlers to index.
@@ -38,8 +39,14 @@ export default async function PlatformLayout(
           {children}
         </SidebarInset>
 
-        <PlatformBugReportDialog />
-        <PlatformFeatureRequestDialog />
+        {/* The desktop app files feedback through a hosted window, so these
+            never open there and their bot-check widget cannot run on its origin. */}
+        {!IS_DESKTOP && (
+          <>
+            <PlatformBugReportDialog />
+            <PlatformFeatureRequestDialog />
+          </>
+        )}
       </PlatformSidebarProvider>
     </TourProvider>
   );
