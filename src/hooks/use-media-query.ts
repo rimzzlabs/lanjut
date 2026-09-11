@@ -7,10 +7,16 @@ export function useMediaQuery(query: string) {
 
   useEffect(() => {
     const mql = window.matchMedia(query);
-    const onChange = () => setMatches(mql.matches);
-    mql.addEventListener("change", onChange);
-    setMatches(mql.matches);
-    return () => mql.removeEventListener("change", onChange);
+    const read = () => setMatches(mql.matches);
+    mql.addEventListener("change", read);
+    // See use-mobile: a hidden window measures wrong and revealing it does not
+    // always fire a change event.
+    document.addEventListener("visibilitychange", read);
+    read();
+    return () => {
+      mql.removeEventListener("change", read);
+      document.removeEventListener("visibilitychange", read);
+    };
   }, [query]);
 
   return matches;

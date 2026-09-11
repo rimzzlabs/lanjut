@@ -56,10 +56,11 @@ pub fn run() {
                     let _ = window.set_background_color(Some(paper));
                 }
             }
-            // The main window starts hidden. Showing it on a timer alone put an
-            // empty frame on screen whenever the app took longer than the timer,
-            // so wait for the page itself and keep the timer only as a floor and
-            // a ceiling.
+            // The splash covers the main window rather than replacing it. A
+            // hidden window is not laid out, so anything that measured the
+            // viewport during startup read the wrong size and the layout came
+            // up wrong. The main window is now real from the first frame and
+            // simply sits behind the splash.
             std::thread::spawn(move || {
                 let started = Instant::now();
                 let _ = rx.recv_timeout(Duration::from_millis(SPLASH_MAX_MS));
@@ -70,12 +71,11 @@ pub fn run() {
                     std::thread::sleep(minimum - elapsed);
                 }
 
-                if let Some(main) = handle.get_webview_window("main") {
-                    let _ = main.show();
-                    let _ = main.set_focus();
-                }
                 if let Some(splash) = handle.get_webview_window("splashscreen") {
                     let _ = splash.close();
+                }
+                if let Some(main) = handle.get_webview_window("main") {
+                    let _ = main.set_focus();
                 }
             });
             Ok(())
