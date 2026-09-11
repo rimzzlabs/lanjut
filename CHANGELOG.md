@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.15.0](https://github.com/rimzzlabs/lanjut/compare/v0.14.0...v0.15.0) (2026-09-11)
+
+
+### Features
+
+* add a desktop splash window ([#171](https://github.com/rimzzlabs/lanjut/issues/171)) ([e8b96dc](https://github.com/rimzzlabs/lanjut/commit/e8b96dcbdd7583182a16621e8d41adc2a48af71f))
+* add a standalone feedback route with query prefill ([#165](https://github.com/rimzzlabs/lanjut/issues/165)) ([22d242a](https://github.com/rimzzlabs/lanjut/commit/22d242a61e4feecadb2dac6c3355e220ba2d7475))
+* add the desktop static export build target ([#166](https://github.com/rimzzlabs/lanjut/issues/166)) ([54fcbb6](https://github.com/rimzzlabs/lanjut/commit/54fcbb6b85e3824d2e7f4d6822efe7f6b38a94b0))
+* add the tauri desktop shell ([#167](https://github.com/rimzzlabs/lanjut/issues/167)) ([cf7273c](https://github.com/rimzzlabs/lanjut/commit/cf7273c3d5ffa0fad6fb7b2daf9558ed7e6b8abf))
+* file feedback from the desktop app ([#170](https://github.com/rimzzlabs/lanjut/issues/170)) ([cb7525c](https://github.com/rimzzlabs/lanjut/commit/cb7525c42e1860da1a8844fa4ac4ae5d979cf32e))
+
+
+### Bug Fixes
+
+* open external links from the desktop app ([#168](https://github.com/rimzzlabs/lanjut/issues/168)) ([5c03f7d](https://github.com/rimzzlabs/lanjut/commit/5c03f7d0d0bb5db8f517af3258d6417a251562e8))
+* save exported files from the desktop app ([#169](https://github.com/rimzzlabs/lanjut/issues/169)) ([15c11d9](https://github.com/rimzzlabs/lanjut/commit/15c11d99f7bae726c204dbaa74335e0083fc823d))
+
+
+### Refactors
+
+* route every editor link through one href builder and id hook ([#163](https://github.com/rimzzlabs/lanjut/issues/163)) ([06e352c](https://github.com/rimzzlabs/lanjut/commit/06e352c688a31cb8689584f3c33178bd0cde111b))
+
 ## [0.14.0](https://github.com/rimzzlabs/lanjut/compare/v0.13.0...v0.14.0) (2026-09-06)
 
 
