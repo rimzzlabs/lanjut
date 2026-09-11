@@ -187,6 +187,16 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_17_1": [
+          {
+            "title": "The Mac app can update itself",
+            "description": "When a new version is out, the Mac app now offers it to you. It looks at most once every few days, and nothing installs until you click."
+          },
+          {
+            "title": "Bug fixes",
+            "description": "In the Mac app the sidebar covered the page when the app opened, and the button that hides it did nothing. Both are fixed."
+          }
+        ],
         "0_16_0": [
           {
             "title": "Lanjut on your Mac",

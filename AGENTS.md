@@ -65,6 +65,13 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   either orphans the résumés of everyone who already installed the app.
 - The window opens on `/en/platform/`. Tauri resolves a directory path by falling back
   to `<path>/index.html`, which is why the desktop build sets `trailingSlash`.
+- `dangerousDisableAssetCspModification` lists `style-src` and must keep listing it.
+  Tauri appends a hash source to every directive it manages. A `style-src` that
+  carries a hash makes the browser ignore `'unsafe-inline'`. The app then drops every
+  `style` attribute in the exported HTML, and that includes the `--sidebar-width` that
+  carries the whole platform layout. Next.js cannot nonce those attributes in a static
+  export, so the two cannot both hold. `script-src` keeps its injection, which is the
+  directive that stops script execution.
 - Every file the app hands to a user goes through `triggerDownload` in
   `src/components/editor/download-file.ts`. A new export format that builds its own
   anchor will work on the web and do nothing at all in the desktop app. The function
@@ -78,6 +85,11 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   private key lives only in the `TAURI_SIGNING_PRIVATE_KEY` repository secret. Tauri
   does not check the public key at build time, so a wrong one fails silently at
   runtime and every update check quietly does nothing.
+- `bundle.targets` must keep `app` beside `dmg`. On macOS the updater ships the `.app`
+  bundle as a signed tarball, and a `dmg` alone builds no such artifact. The release
+  then carries no `latest.json`, every update check reads a 404, and the failure is
+  silent by design. The 0.17.0 release shipped this way. Read the `tauri-action` log
+  for "no updater-enabled targets were built" to catch it.
 - An update check is a network call the user did not ask for. It runs at most once
   every three days, a failure is silent, and nothing installs without a click.
 - Biome ignores `src-tauri`. Rust is formatted by `cargo fmt`, and the JSON config files

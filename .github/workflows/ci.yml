@@ -85,5 +85,10 @@ jobs:
           test -f "${resolved}/splashscreen.html" \
             || { echo "frontendDist ${dist} has no splash screen"; exit 1; }
 
+      # Both of these shipped broken once. Neither fails the build, and neither
+      # is visible until a user installs the app.
+      - name: Confirm the shell config still holds its load-bearing values
+        run: node .github/scripts/check-tauri-config.mjs
+
       - name: Build the desktop shell
         run: cargo build --manifest-path src-tauri/Cargo.toml

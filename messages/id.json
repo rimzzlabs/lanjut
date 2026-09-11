@@ -187,6 +187,16 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_17_1": [
+          {
+            "title": "Aplikasi Mac bisa memperbarui dirinya",
+            "description": "Kalau ada versi baru, aplikasi Mac sekarang menawarkannya ke kamu. Pengecekan paling sering beberapa hari sekali, dan tidak ada yang dipasang sebelum kamu klik."
+          },
+          {
+            "title": "Perbaikan bug",
+            "description": "Di aplikasi Mac, sidebar menutupi halaman saat aplikasi dibuka, dan tombol untuk menyembunyikannya tidak berfungsi. Keduanya sudah diperbaiki."
+          }
+        ],
         "0_16_0": [
           {
             "title": "Lanjut di Mac kamu",
