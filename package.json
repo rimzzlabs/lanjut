@@ -35,6 +35,8 @@
     "@opennextjs/cloudflare": "^1.20.1",
     "@react-pdf/renderer": "^4.5.1",
     "@shadcn/react": "^0.2.0",
+    "@tauri-apps/plugin-dialog": "^2.7.3",
+    "@tauri-apps/plugin-fs": "^2.5.2",
     "@tauri-apps/plugin-opener": "^2.5.5",
     "@tiptap/core": "^3.27.1",
     "@tiptap/extension-bold": "^3.27.1",

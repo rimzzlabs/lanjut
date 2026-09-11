@@ -29,7 +29,7 @@ export function ResumeExporter({ request, onSettled }: ResumeExporterProps) {
     if (startedFor.current === request) return;
     startedFor.current = request;
     downloadResume(request.resume, request.format, request.fileName)
-      .then(() => onSettled(true))
+      .then((saved) => onSettled(saved))
       .catch(() => onSettled(false));
   }, [request, onSettled]);
 
