@@ -14,12 +14,29 @@
         src: url("/brand/plus-jakarta-sans-700.woff2") format("woff2");
       }
 
+      :root {
+        color-scheme: light dark;
+        --paper: #fdfcf7;
+        --ink: #0f2f26;
+        --muted: #0e8a66;
+      }
+
+      /* The app follows the system theme, so the window that precedes it must
+         too. A light splash in front of a dark app reads as a flash. */
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #121a17;
+          --ink: #e8f2ed;
+          --muted: #3fae87;
+        }
+      }
+
       html,
       body {
         margin: 0;
         height: 100%;
         overflow: hidden;
-        background: #fdfcf7;
+        background: var(--paper);
       }
 
       body {
@@ -32,7 +49,7 @@
       .stack {
         display: grid;
         justify-items: center;
-        gap: 18px;
+        gap: 16px;
       }
 
       .mark {
@@ -56,7 +73,7 @@
         font-weight: 700;
         font-size: 30px;
         letter-spacing: -0.02em;
-        color: #0f2f26;
+        color: var(--ink);
         animation: pop 420ms cubic-bezier(0.22, 1, 0.36, 1) 1080ms both;
       }
 
@@ -74,6 +91,30 @@
       @keyframes draw {
         to {
           stroke-dashoffset: 0;
+        }
+      }
+
+      .spinner {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 2px solid color-mix(in oklab, var(--muted) 28%, transparent);
+        border-top-color: var(--muted);
+        opacity: 0;
+        animation:
+          fade 320ms ease-out 1560ms both,
+          spin 680ms linear 1560ms infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes fade {
+        to {
+          opacity: 1;
         }
       }
 
@@ -96,6 +137,11 @@
         }
         .stroke {
           stroke-dashoffset: 0;
+        }
+        /* The spinner still turns: it is a progress signal, not decoration. */
+        .spinner {
+          opacity: 1;
+          animation: spin 900ms linear infinite;
         }
       }
     </style>
@@ -125,6 +171,7 @@
         </g>
       </svg>
       <div class="wordmark" aria-hidden="true">Lanjut</div>
+      <div class="spinner" role="progressbar" aria-label="Loading"></div>
     </div>
   </body>
 </html>

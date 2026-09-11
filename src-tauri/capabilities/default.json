@@ -7,6 +7,7 @@
     "core:default",
     "core:app:allow-version",
     "core:webview:allow-create-webview-window",
+    "core:window:allow-set-focus",
     {
       "identifier": "opener:allow-open-url",
       "allow": [
