@@ -46,3 +46,7 @@ cloudflare-env.d.ts
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Tauri
+src-tauri/target/
+src-tauri/gen/

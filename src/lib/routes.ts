@@ -17,3 +17,11 @@ export function editorHref(id: string): EditorHref {
     ? `${EDITOR_PATHNAME}?id=${id}`
     : `${EDITOR_PATHNAME}/${id}`;
 }
+
+/**
+ * Where the brand mark leads. The web app sends a visitor to the landing page.
+ * The desktop app has nobody to sell itself to, so it stays in the workspace.
+ */
+export function homeHref(): "/" | "/platform" {
+  return IS_DESKTOP ? "/platform" : "/";
+}

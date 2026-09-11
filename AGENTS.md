@@ -15,6 +15,7 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 - Next.js (App Router)
 - open-next on Cloudflare (hosting only; the sole server surface is the `/api/feedback` route, which relays bug reports and feature requests and never receives resume content)
 - Static desktop export selected by `LANJUT_TARGET=desktop`; no desktop runtime packages are part of the web application
+- Tauri 2 (desktop shell for Windows and macOS; `src-tauri/`, system webview, loads the static export from disk)
 - next-intl (internationalization; `[locale]` routing for English and Indonesian, `messages/*.json`, edge middleware on web and explicit locale prefixes on desktop)
 - shadcn (base-ui variant)
 - Tailwind CSS
@@ -55,6 +56,17 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 - Migration steps must be bail-safe: when a document does not match the expected shape, keep the original data and no-op; never blank or replace what cannot be parsed.
 - Raw pre-migration documents are snapshotted to the `backups` object store before migration. Documents that fail migration are surfaced as unreadable in the UI and are never deleted or overwritten.
 
+
+## Desktop shell
+
+- `src-tauri/tauri.conf.json` holds two values that must never change. `identifier`
+  (`com.rimzzlabs.lanjut`) keys the webview data directory, and with it every user's
+  IndexedDB. `useHttpsScheme` (`false`) moves that same storage when flipped. Changing
+  either orphans the résumés of everyone who already installed the app.
+- The window opens on `/en/platform/`. Tauri resolves a directory path by falling back
+  to `<path>/index.html`, which is why the desktop build sets `trailingSlash`.
+- Biome ignores `src-tauri`. Rust is formatted by `cargo fmt`, and the JSON config files
+  are written by the Tauri CLI.
 
 ## Reordering
 

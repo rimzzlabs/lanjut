@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { homeHref } from "@/lib/routes";
 import { Separator } from "../ui/separator";
 import { SidebarHeader, SidebarTrigger } from "../ui/sidebar";
 
@@ -15,7 +16,7 @@ export function PlatformSidebarHeader() {
         <Separator orientation="vertical" className="lg:hidden" />
 
         <Link
-          href="/"
+          href={homeHref()}
           aria-label={t("home")}
           className="flex items-center gap-2"
         >

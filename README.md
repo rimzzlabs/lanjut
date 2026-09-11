@@ -58,6 +58,7 @@ Every template renders the same linear block sequence, so switching templates ne
 |---|---|
 | Framework | Next.js (App Router) |
 | Build targets | open-next on Cloudflare (default), static export (`LANJUT_TARGET=desktop`) |
+| Desktop shell | Tauri 2 (Windows, macOS) |
 | Internationalization | next-intl (English, Indonesian) |
 | UI components | shadcn (base-ui) |
 | Styling | Tailwind CSS |
@@ -93,6 +94,8 @@ Open `http://localhost:3000`.
 | `pnpm typecheck` | Generate Next types and run `tsc --noEmit` |
 | `pnpm build` | Build the open-next Cloudflare target |
 | `LANJUT_TARGET=desktop pnpm build` | Build the static desktop assets into `out/` |
+| `pnpm desktop:dev` | Run the desktop shell against the dev server |
+| `pnpm desktop:build` | Build the desktop app and installers |
 | `pnpm validate:exports` | Regenerate PDF/DOCX/TXT from the seed résumé and verify extraction order and field mapping |
 | `pnpm preview` | Build with open-next and preview the Cloudflare worker locally |
 | `pnpm ship` | Build and deploy to Cloudflare |
