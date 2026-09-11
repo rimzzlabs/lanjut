@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.0](https://github.com/rimzzlabs/lanjut/compare/v0.15.0...v0.16.0) (2026-09-11)
+
+
+### Features
+
+* offer the mac app on the landing page ([#173](https://github.com/rimzzlabs/lanjut/issues/173)) ([1937bd0](https://github.com/rimzzlabs/lanjut/commit/1937bd062a199e4f51d0bbe68cd2e331aad788cc))
+
 ## [0.15.0](https://github.com/rimzzlabs/lanjut/compare/v0.14.0...v0.15.0) (2026-09-11)
 
 
