@@ -16,6 +16,12 @@ permissions:
   pull-requests: write
   issues: write
 
+# A release must never be cancelled halfway, so runs queue instead. Two merges
+# in quick succession otherwise tag and upload at the same time.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release-please:
     if: github.event_name == 'push'
@@ -45,6 +51,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm lint
+
+      - run: pnpm typecheck
 
       - run: pnpm validate:exports
 
@@ -97,6 +105,11 @@ jobs:
           key: ${{ matrix.target }}
 
       - run: pnpm install --frozen-lockfile
+
+      # The same guard the CI desktop job runs. A release builds from a tag, and
+      # nothing else on this path reads the config before the bundle is built.
+      - name: Confirm the shell config still holds its load-bearing values
+        run: node .github/scripts/check-tauri-config.mjs
 
       # Resolved here rather than taken from the release-please output, so the
       # manual path and the release path reach the action the same way.

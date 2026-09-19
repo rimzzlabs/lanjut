@@ -7,6 +7,13 @@ on:
 permissions:
   contents: read
 
+# release-please force-pushes its branch, which strands the runs from the
+# previous push on a commit that no longer exists. Drop them when a newer
+# push arrives.
+concurrency:
+  group: pr-title-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint-title:
     runs-on: ubuntu-latest
