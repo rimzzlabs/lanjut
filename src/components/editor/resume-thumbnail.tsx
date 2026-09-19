@@ -41,13 +41,16 @@ export function ResumeThumbnail(props: ResumeThumbnailProps) {
   const BlockView = TEMPLATE_BLOCK_VIEWS[props.template];
   const scale = width > 0 ? width / A4.widthPx : 0;
 
+  // The page keeps its full A4 layout width under the scale transform. Without
+  // inline-size containment that width sizes any auto track around it, the
+  // track grows to fit the page, and the scale settles at 1.
   return (
     <div
       ref={containerRef}
       inert
       aria-hidden
       data-template={props.template}
-      className="pointer-events-none w-full select-none font-sans"
+      className="pointer-events-none w-full select-none font-sans contain-inline-size"
       style={resumeTypographyStyle(props.resume, props.template)}
     >
       <ResumeFontFaces />
