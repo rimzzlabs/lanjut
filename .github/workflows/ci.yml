@@ -6,6 +6,13 @@ on:
 permissions:
   contents: read
 
+# release-please force-pushes its branch, which leaves the runs from the
+# previous push building a commit that no longer exists. Those runs report a
+# failure with no jobs in it. Drop them when a newer push arrives.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   checks:
     runs-on: ubuntu-latest

@@ -88,8 +88,25 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 - `bundle.targets` must keep `app` beside `dmg`. On macOS the updater ships the `.app`
   bundle as a signed tarball, and a `dmg` alone builds no such artifact. The release
   then carries no `latest.json`, every update check reads a 404, and the failure is
-  silent by design. The 0.17.0 release shipped this way. Read the `tauri-action` log
-  for "no updater-enabled targets were built" to catch it.
+  silent by design. The 0.17.0 release shipped this way.
+- release-please cuts every release as a draft, with its tag created at once
+  (`draft` and `force-tag-creation` in `release-please-config.json`). The `publish`
+  job makes it public only after both desktop builds pass. A failed build therefore
+  leaves a hidden draft, and `releases/latest`, which the download button and every
+  installed updater read, stays on the last complete release.
+- Nothing `tauri-action` reports can fail a release on its own. It warns and carries
+  on when it builds no updater artifact, and again when it finds no signature. Each
+  architecture also merges its own entry into the one `latest.json`, so two builds
+  that finish together can drop an entry. The `publish` job reads the manifest off
+  the draft and confirms it signs every architecture before the release goes public
+  (`.github/scripts/check-update-manifest.mjs`). Keep its `PLATFORMS` list in step
+  with the desktop matrix.
+- Repair a failed release with `gh run rerun --failed <run-id>`. That runs the failed
+  jobs again inside the original run, runs `publish` after them, and updates the
+  checks the run already wrote. A `workflow_dispatch` starts a separate run instead,
+  and GitHub adds those checks beside the old ones rather than replacing them, so the
+  commit stays red even after the assets arrive. The 0.17.1 release reads that way.
+  Keep the `tag` input for a run that is too old to repeat.
 - An update check is a network call the user did not ask for. It runs at most once
   every three days, a failure is silent, and nothing installs without a click.
 - Biome ignores `src-tauri`. Rust is formatted by `cargo fmt`, and the JSON config files
