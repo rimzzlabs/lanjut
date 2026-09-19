@@ -131,3 +131,41 @@ jobs:
         with:
           releaseId: ${{ steps.release.outputs.id }}
           args: --target ${{ matrix.target }}
+
+  publish:
+    # release-please cuts every release as a draft. It stays hidden until both
+    # architectures have uploaded a signed bundle, so a failed build never leaves
+    # a public release with no app, and releases/latest never moves to one.
+    needs: [release-please, desktop]
+    if: >-
+      !cancelled() &&
+      needs.desktop.result == 'success' &&
+      (needs.release-please.outputs.release_created == 'true' ||
+       github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ inputs.tag || needs.release-please.outputs.tag_name }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+
+      # tauri-action warns and carries on when it builds no updater artifact or
+      # finds no signature, so the only proof is the manifest on the release.
+      # Keep this list in step with the desktop matrix.
+      - name: Confirm the release carries a signed update manifest
+        run: |
+          set -euo pipefail
+          gh release download "$TAG" --pattern latest.json --output latest.json --clobber
+          node .github/scripts/check-update-manifest.mjs
+        env:
+          PLATFORMS: darwin-aarch64 darwin-x86_64
+
+      # make_latest=legacy lets GitHub pick the latest release by date and
+      # version. The API defaults to true, which would let a repair of an older
+      # tag pull releases/latest, and every installed updater, backwards.
+      - name: Publish ${{ env.TAG }}
+        run: |
+          set -euo pipefail
+          id=$(gh release view "$TAG" --json databaseId --jq .databaseId)
+          gh api -X PATCH "repos/$GITHUB_REPOSITORY/releases/$id" \
+            -F draft=false -f make_latest=legacy --jq '"published \(.tag_name), draft=\(.draft)"'

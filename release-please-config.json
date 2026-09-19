@@ -4,6 +4,8 @@
   "bump-minor-pre-major": false,
   "bump-patch-for-minor-pre-major": false,
   "include-component-in-tag": false,
+  "draft": true,
+  "force-tag-creation": true,
   "changelog-sections": [
     { "type": "feat", "section": "Features" },
     { "type": "fix", "section": "Bug Fixes" },
