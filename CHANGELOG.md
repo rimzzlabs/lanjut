@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.2](https://github.com/rimzzlabs/lanjut/compare/v0.17.1...v0.17.2) (2026-09-19)
+
+
+### Bug Fixes
+
+* keep the landing résumé previews inside the mobile viewport ([#186](https://github.com/rimzzlabs/lanjut/issues/186)) ([7feb8ef](https://github.com/rimzzlabs/lanjut/commit/7feb8ef1f5909cdbe3fc0f4240ce608bcab5ce50))
+
 ## [0.17.1](https://github.com/rimzzlabs/lanjut/compare/v0.17.0...v0.17.1) (2026-09-11)
 
 
