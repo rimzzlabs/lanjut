@@ -17,8 +17,10 @@ XML, and the serializer output for `.txt`. It then asserts:
 - **Reading order**: `Summary → Experience → Education → Certificates → Skills →
   Languages` appears in that order in every format.
 - **Field mapping**: name, headline, email, website, each employer, an employer and a
-  school location, education, certificate, a representative skill, and a language are
-  all present in the extracted text.
+  school location, company context, education, certificate, a representative skill,
+  and a language are all present in the extracted text.
+- **Company-context order**: an optional company-context line follows its employer
+  and precedes the entry's achievements in every format.
 - **Photo invariance**: rendering with the opt-in header photo must leave the
   extracted text of every template PDF and the `.docx` byte-identical to the
   photo-free output. The photo is presentation-only; if it ever shifts, drops, or
@@ -80,3 +82,6 @@ Decisions made to satisfy them:
   `City, ST` with a **two-letter** state (regex `[A-Z][a-zA-Z\s]+, [A-Z]{2}`); a full
   "City, Province, Country" won't be detected as a location. This is a parser
   limitation, not an export defect; entering a 2-letter state code makes it parse.
+- **Company context is a separate plain-text line** immediately after the
+  employer/location line and before achievements. Keeping it inside the atomic entry
+  wrapper prevents it from being orphaned across pages; empty context adds no line.
