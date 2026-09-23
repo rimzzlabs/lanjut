@@ -229,6 +229,9 @@ export function buildAwalDocx(preview: ResumePreview): Document {
             ),
           );
         }
+        if (item.companyContext) {
+          children.push(subtitle(item.companyContext));
+        }
         children.push(...richParagraphs(item.description));
         break;
       }

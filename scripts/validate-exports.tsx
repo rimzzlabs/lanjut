@@ -163,6 +163,7 @@ const REQUIRED_FIELDS = [
   "github.com/johndoe",
   "Acme Corp",
   "San Francisco, CA",
+  "B2B payments platform serving 2M merchants",
   "Globex",
   "Led migration",
   "State University",
@@ -199,6 +200,28 @@ function checkFields(text: string, label: string): string[] {
   return REQUIRED_FIELDS.filter(
     (field) => !haystack.includes(field.toUpperCase()),
   ).map((field) => `${label}: field "${field}" not found in extracted text`);
+}
+
+function checkCompanyContextOrder(text: string, label: string): string[] {
+  const haystack = text.toUpperCase();
+  const fields = [
+    "Acme Corp",
+    "B2B payments platform serving 2M merchants",
+    "Led migration",
+  ];
+  const positions = fields.map((field) =>
+    haystack.indexOf(field.toUpperCase()),
+  );
+  if (
+    positions.some((position) => position === -1) ||
+    positions[0] > positions[1] ||
+    positions[1] > positions[2]
+  ) {
+    return [
+      `${label}: company context must follow the company and precede achievements`,
+    ];
+  }
+  return [];
 }
 
 async function extractPdfText(buffer: Uint8Array): Promise<string> {
@@ -257,7 +280,11 @@ async function main(): Promise<void> {
   const errors: string[] = [];
   for (const [label, text] of outputs) {
     console.log(`${label}: extracted ${text.length} chars`);
-    errors.push(...checkReadingOrder(text, label), ...checkFields(text, label));
+    errors.push(
+      ...checkReadingOrder(text, label),
+      ...checkFields(text, label),
+      ...checkCompanyContextOrder(text, label),
+    );
   }
 
   // The opt-in photo is presentation-only: with a photo present, the extracted
