@@ -30,6 +30,12 @@ export function KetikExperienceItem(props: ExperienceItemView) {
         {locationSuffix(props.company, props.location)}
       </p>
 
+      {props.companyContext ? (
+        <p className="resume-body-xs text-muted-foreground">
+          {props.companyContext}
+        </p>
+      ) : null}
+
       <ResumeRichText blocks={props.description} className="mt-2" />
     </article>
   );

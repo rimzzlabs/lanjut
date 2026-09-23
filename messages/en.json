@@ -187,6 +187,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_18_0": [
+          {
+            "title": "Add context about a company",
+            "description": "Experience and internship entries now have an optional company context field for briefly explaining an unfamiliar employer. It appears in every preview and export before your achievements."
+          }
+        ],
         "0_17_1": [
           {
             "title": "The Mac app can update itself",
@@ -739,6 +745,8 @@
       "companyPlaceholder": "Acme Inc.",
       "location": "Location",
       "locationPlaceholder": "San Francisco, CA",
+      "companyContext": "Company context",
+      "companyContextPlaceholder": "B2B payments platform serving 2M merchants",
       "companyWebsite": "Company Website",
       "companyWebsitePlaceholder": "acme.com",
       "present": "I currently work here",
@@ -760,6 +768,8 @@
       "companyPlaceholder": "Acme Inc.",
       "location": "Location",
       "locationPlaceholder": "San Francisco, CA",
+      "companyContext": "Company context",
+      "companyContextPlaceholder": "B2B payments platform serving 2M merchants",
       "companyWebsite": "Company Website",
       "companyWebsitePlaceholder": "acme.com",
       "present": "I'm currently interning here",

@@ -30,6 +30,12 @@ export function KetatExperienceItem(props: ExperienceItemView) {
         </span>
       </div>
 
+      {props.companyContext ? (
+        <p className="resume-body-xs text-muted-foreground">
+          {props.companyContext}
+        </p>
+      ) : null}
+
       <ResumeRichText blocks={props.description} className="mt-2" />
     </article>
   );

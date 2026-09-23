@@ -630,6 +630,35 @@ const migrateV21toV22: Migration = (doc) => {
 const migrateV22toV23: Migration = (doc) => structuredClone(doc);
 
 /**
+ * v23→v24: Experience and Internship entries gain an optional, plain-text
+ * `companyContext`. Existing entries are stamped empty so their rendered output
+ * is unchanged. Bail-safe: malformed sections and entries are skipped, and an
+ * existing field is never replaced.
+ */
+const migrateV23toV24: Migration = (doc) => {
+  const next = structuredClone(doc);
+  const sections = next.sections;
+  if (!Array.isArray(sections)) return next;
+
+  for (const section of sections) {
+    if (!G.isObject(section)) continue;
+    const isJobSection =
+      section.type === "experience" || section.type === "internship";
+    if (!isJobSection || !Array.isArray(section.entries)) continue;
+    for (const entry of section.entries) {
+      if (!G.isObject(entry)) continue;
+      if (!G.isObject(entry.fields)) continue;
+      const fields = entry.fields as Record<string, unknown>;
+      if (!("companyContext" in fields)) {
+        fields.companyContext = plainField("");
+      }
+    }
+  }
+
+  return next;
+};
+
+/**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
  */
 const LADDER: Record<number, Migration> = {
@@ -655,6 +684,7 @@ const LADDER: Record<number, Migration> = {
   20: migrateV20toV21,
   21: migrateV21toV22,
   22: migrateV22toV23,
+  23: migrateV23toV24,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

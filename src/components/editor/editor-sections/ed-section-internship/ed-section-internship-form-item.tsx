@@ -101,6 +101,24 @@ export function EditorSectionInternshipFormItem(
 
           <Controller
             control={props.control}
+            name={`internships.${props.index}.companyContext`}
+            render={({ field, fieldState }) => (
+              <Field>
+                <FieldLabel htmlFor={field.name}>
+                  {t("companyContext")}
+                </FieldLabel>
+                <Input
+                  placeholder={t("companyContextPlaceholder")}
+                  {...field}
+                  id={field.name}
+                />
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            )}
+          />
+
+          <Controller
+            control={props.control}
             name={`internships.${props.index}.website`}
             render={({ field, fieldState }) => (
               <Field>
