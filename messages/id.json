@@ -187,6 +187,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_18_0": [
+          {
+            "title": "Tambahkan konteks perusahaan",
+            "description": "Entri pengalaman kerja dan magang sekarang punya kolom konteks perusahaan opsional untuk menjelaskan perusahaan yang belum dikenal secara singkat. Tampil di semua pratinjau dan ekspor sebelum pencapaian kamu."
+          }
+        ],
         "0_17_1": [
           {
             "title": "Aplikasi Mac bisa memperbarui dirinya",
@@ -739,6 +745,8 @@
       "companyPlaceholder": "Acme Inc.",
       "location": "Lokasi",
       "locationPlaceholder": "Jakarta, Indonesia",
+      "companyContext": "Konteks perusahaan",
+      "companyContextPlaceholder": "Platform pembayaran B2B yang melayani 2 juta merchant",
       "companyWebsite": "Situs web perusahaan",
       "companyWebsitePlaceholder": "acme.com",
       "present": "Masih kerja di sini sekarang",
@@ -760,6 +768,8 @@
       "companyPlaceholder": "Acme Inc.",
       "location": "Lokasi",
       "locationPlaceholder": "Jakarta, Indonesia",
+      "companyContext": "Konteks perusahaan",
+      "companyContextPlaceholder": "Platform pembayaran B2B yang melayani 2 juta merchant",
       "companyWebsite": "Situs web perusahaan",
       "companyWebsitePlaceholder": "acme.com",
       "present": "Masih magang di sini sekarang",

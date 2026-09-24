@@ -37,8 +37,15 @@ export function resumeToText(preview: ResumePreview): string {
         lines.push(...richBlocksToText(block.body));
         break;
       case "experience": {
-        const { role, company, location, startDate, endDate, description } =
-          block.item;
+        const {
+          role,
+          company,
+          location,
+          companyContext,
+          startDate,
+          endDate,
+          description,
+        } = block.item;
         lines.push(
           metaLine(
             role,
@@ -46,6 +53,7 @@ export function resumeToText(preview: ResumePreview): string {
             dateRange(startDate, endDate),
           ),
         );
+        if (companyContext) lines.push(companyContext);
         lines.push(...richBlocksToText(description));
         lines.push("");
         break;

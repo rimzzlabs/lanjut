@@ -148,6 +148,12 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
         placeholder: "San Francisco, CA",
       },
       {
+        key: "companyContext",
+        label: "Company context",
+        kind: "plain",
+        placeholder: "B2B payments platform serving 2M merchants",
+      },
+      {
         key: "website",
         label: "Company website",
         kind: "plain",
@@ -195,6 +201,12 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
         label: "Location",
         kind: "plain",
         placeholder: "San Francisco, CA",
+      },
+      {
+        key: "companyContext",
+        label: "Company context",
+        kind: "plain",
+        placeholder: "B2B payments platform serving 2M merchants",
       },
       {
         key: "website",

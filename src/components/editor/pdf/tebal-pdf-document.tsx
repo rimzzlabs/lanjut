@@ -162,6 +162,9 @@ function TebalExperience(props: { item: ExperienceItemView }) {
         )}
         {locationSuffix(props.item.company, props.item.location)}
       </Text>
+      {props.item.companyContext ? (
+        <Text style={styles.subtitle}>{props.item.companyContext}</Text>
+      ) : null}
       <PdfRichText blocks={props.item.description} style={styles.body} />
     </View>
   );

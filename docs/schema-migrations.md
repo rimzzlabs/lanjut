@@ -37,6 +37,10 @@ Rules for every step:
   bump, and the ladder rung land in the same PR. A shipped gap in the ladder
   makes every older document unreadable.
 
+The current v23→v24 rung adds an empty plain-text `companyContext` field to
+Experience and Internship entries. Existing output stays unchanged until the user
+fills it, and `DB_VERSION` remains untouched because no object store or index changes.
+
 Documents with a `schemaVersion` **newer** than the running app (a stale cached
 bundle or a long-lived old tab after a deploy) fail migration with an error.
 That is deliberate: there is no forward compatibility, and guessing would risk

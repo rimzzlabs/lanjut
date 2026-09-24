@@ -176,6 +176,9 @@ function KetatExperience(props: { item: ExperienceItemView }) {
           {dateRange(props.item.startDate, props.item.endDate)}
         </Text>
       </View>
+      {props.item.companyContext ? (
+        <Text style={styles.subtitle}>{props.item.companyContext}</Text>
+      ) : null}
       <PdfRichText blocks={props.item.description} style={styles.body} />
     </View>
   );

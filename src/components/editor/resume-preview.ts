@@ -59,6 +59,8 @@ export interface ExperienceItemView {
    * it; projects, organizations, and custom lists leave it absent.
    */
   location?: string;
+  /** Optional one-line description of the employer, for unfamiliar companies. */
+  companyContext?: string;
   startDate: string;
   endDate: string;
   description: RichBlock[];
