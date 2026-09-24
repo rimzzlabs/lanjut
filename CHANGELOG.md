@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/rimzzlabs/lanjut/compare/v0.17.2...v0.18.0) (2026-09-24)
+
+
+### Features
+
+* optional company context ([#189](https://github.com/rimzzlabs/lanjut/issues/189)) ([f2c34b7](https://github.com/rimzzlabs/lanjut/commit/f2c34b7c762f5ac1e4b623283fc6a7b640f9a6d4))
+
 ## [0.17.2](https://github.com/rimzzlabs/lanjut/compare/v0.17.1...v0.17.2) (2026-09-19)
 
 
