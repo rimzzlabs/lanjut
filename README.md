@@ -7,7 +7,7 @@
 <p align="center">
   ATS Builder. Free, open-source resume builder. Runs locally in the browser. No account, no server-side storage of resume content.
   <br />
-  <a href="https://lanjut.rimzzlabs.com"><strong>lanjut.rimzzlabs.com</strong></a>
+  <a href="https://lanjut.org"><strong>lanjut.org</strong></a>
 </p>
 
 ## What This Is
