@@ -7,6 +7,11 @@
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "routes": [
     {
+      "pattern": "lanjut.org",
+      "custom_domain": true
+    },
+    // Kept so the old host stays proxied. A zone redirect rule sends it to lanjut.org.
+    {
       "pattern": "lanjut.rimzzlabs.com",
       "custom_domain": true
     }
