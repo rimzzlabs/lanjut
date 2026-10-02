@@ -5,7 +5,7 @@ import { useResumeExporter } from "./use-resume-exporter";
 
 export function useResumeDownload() {
   const resume = useResumeStore((state) => state.open);
-  const { runExport, exporting, exporter } = useResumeExporter();
+  const { runExport, exporting } = useResumeExporter();
 
   const download = useCallback(
     (format: ExportFormat, fileName: string) => {
@@ -15,5 +15,5 @@ export function useResumeDownload() {
     [resume, runExport],
   );
 
-  return { resume, generating: exporting, download, exporter };
+  return { resume, generating: exporting, download };
 }

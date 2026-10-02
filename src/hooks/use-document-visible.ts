@@ -1,4 +1,17 @@
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+function subscribe(onChange: () => void) {
+  document.addEventListener("visibilitychange", onChange);
+  return () => document.removeEventListener("visibilitychange", onChange);
+}
+
+function isVisible() {
+  return document.visibilityState === "visible";
+}
+
+function visibleOnServer() {
+  return true;
+}
 
 /**
  * Whether the document is actually on screen.
@@ -9,14 +22,5 @@ import { useEffect, useState } from "react";
  * layouts, reads the wrong value while that is true.
  */
 export function useDocumentVisible() {
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const read = () => setVisible(document.visibilityState === "visible");
-    read();
-    document.addEventListener("visibilitychange", read);
-    return () => document.removeEventListener("visibilitychange", read);
-  }, []);
-
-  return visible;
+  return useSyncExternalStore(subscribe, isVisible, visibleOnServer);
 }

@@ -13,7 +13,7 @@ export function PlatformResumeDownloadDrawer(props: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  const { resume, generating, download, exporter } = useResumeDownload();
+  const { resume, generating, download } = useResumeDownload();
   const t = useTranslations("forms.download");
 
   return (
@@ -36,7 +36,6 @@ export function PlatformResumeDownloadDrawer(props: {
             }
           />
         </div>
-        {exporter}
       </DrawerContent>
     </Drawer>
   );

@@ -24,7 +24,7 @@ export function PlatformResumeActionDownload(
   const [loading, setLoading] = useState(false);
   const [missing, setMissing] = useState(false);
   const t = useTranslations("forms.download");
-  const { runExport, exporting, exporter } = useResumeExporter();
+  const { runExport, exporting } = useResumeExporter();
 
   async function handleDownload(format: ExportFormat, fileName: string) {
     setLoading(true);
@@ -64,7 +64,6 @@ export function PlatformResumeActionDownload(
             }
           />
         )}
-        {exporter}
       </ResponsiveDialogContent>
     </ResponsiveDialog>
   );

@@ -3,7 +3,7 @@ import { resolveTemplateId } from "@/lib/templates";
 import type { ExportFormat } from "./export-format";
 import { resumeToPreview } from "./resume-to-preview";
 
-interface DownloadResumeParams {
+export interface ResumeExportRequest {
   resume: Resume;
   format: ExportFormat;
   fileName: string;
@@ -16,7 +16,7 @@ interface DownloadResumeParams {
  * out of the main bundle.
  */
 export async function downloadResume(
-  params: DownloadResumeParams,
+  params: ResumeExportRequest,
 ): Promise<boolean> {
   const { resume, format, fileName } = params;
   if (format === "json") {
