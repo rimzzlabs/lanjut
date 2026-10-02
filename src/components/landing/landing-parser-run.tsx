@@ -1,4 +1,4 @@
-import { A, O, pipe, S } from "@mobily/ts-belt";
+import { A, O, pipe, R, S } from "@mobily/ts-belt";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import type { Resume } from "@/lib/resume";
 import type { TemplateId } from "@/lib/templates";
@@ -43,7 +43,7 @@ interface RunParserProofParams {
  */
 export async function runParserProof(
   params: RunParserProofParams,
-): Promise<ParserProofReport> {
+): Promise<R.Result<ParserProofReport, string>> {
   const { resume, template, onPhase } = params;
   onPhase("render");
   const [{ pdf }, { registerPdfFonts }, { TEMPLATE_PDF_DOCUMENTS }] =
@@ -61,7 +61,7 @@ export async function runParserProof(
   const { extractPdfText } = await import("@/lib/import/extract");
   const bytes = new Uint8Array(await blob.arrayBuffer());
   const extracted = await extractPdfText(bytes);
-  if (!extracted.ok) throw new Error(extracted.reason);
+  if (!extracted.ok) return R.makeError(extracted.reason);
 
   onPhase("check");
   const text = extracted.text;
@@ -99,7 +99,7 @@ export async function runParserProof(
     () => [],
   );
 
-  return {
+  return R.makeOk({
     pdfKb: Math.round(blob.size / 1024),
     chars: S.length(text),
     excerpt,
@@ -110,5 +110,5 @@ export async function runParserProof(
     emailFound: Boolean(email) && S.includes(text, email),
     orderOk,
     order: SECTION_ORDER,
-  };
+  });
 }

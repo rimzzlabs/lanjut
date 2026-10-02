@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import type { CertificationsFormValues } from "../resume-form-adapter";
+import type { CertificationsFormValues } from "../resume-form-adapter-lists";
 
 interface EditorSectionCertificationsFormItemProps {
   id: string;

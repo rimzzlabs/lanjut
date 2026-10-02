@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { LanguagesFormValues } from "../resume-form-adapter";
+import type { LanguagesFormValues } from "../resume-form-adapter-lists";
 
 const LANGUAGE_LEVELS = [
   "Native",

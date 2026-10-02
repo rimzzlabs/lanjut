@@ -18,7 +18,7 @@ import {
   type ExperienceFormValues,
   type ExperienceItemValues,
   toExperienceValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-jobs";
 import { EditorSectionExperienceFormItem } from "./ed-section-experience-form-item";
 
 function emptyExperience(): ExperienceItemValues {

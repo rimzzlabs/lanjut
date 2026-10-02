@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { SkillsFormValues } from "../resume-form-adapter";
+import type { SkillsFormValues } from "../resume-form-adapter-lists";
 
 const PROFICIENCY_LEVELS = [
   "Beginner",

@@ -14,7 +14,7 @@ import {
   type CustomListFormValues,
   type CustomListItemValues,
   toCustomListValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-custom";
 import { EditorSectionCustomListItem } from "./ed-section-custom-list-item";
 
 function emptyEntry(): CustomListItemValues {

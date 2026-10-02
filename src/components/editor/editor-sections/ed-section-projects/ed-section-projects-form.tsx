@@ -18,7 +18,7 @@ import {
   type ProjectItemValues,
   type ProjectsFormValues,
   toProjectsValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-jobs";
 import { EditorSectionProjectsFormItem } from "./ed-section-projects-form-item";
 
 function emptyProject(): ProjectItemValues {

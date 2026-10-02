@@ -19,7 +19,7 @@ import {
   applyPersonalValues,
   type PersonalFormValues,
   toPersonalValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-profile";
 import { EditorSectionPersonalPhoto } from "./ed-section-personal-photo";
 
 export function EditorSectionPersonalForm() {

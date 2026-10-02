@@ -18,7 +18,7 @@ import {
   type OrganizationItemValues,
   type OrganizationsFormValues,
   toOrganizationsValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-jobs";
 import { EditorSectionOrganizationsFormItem } from "./ed-section-organizations-form-item";
 
 function emptyOrganization(): OrganizationItemValues {

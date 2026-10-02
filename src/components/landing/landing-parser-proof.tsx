@@ -1,4 +1,4 @@
-import { A, pipe } from "@mobily/ts-belt";
+import { A, pipe, R } from "@mobily/ts-belt";
 import { RotateCw } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useRef, useState } from "react";
@@ -50,11 +50,15 @@ function LandingParserProofTerminal() {
     setState({ status: "running", phase: "render" });
     const startedAt = Date.now();
     try {
-      const report = await runParserProof({
+      const result = await runParserProof({
         resume: draftToResume(draft),
         template,
         onPhase: (phase) => setState({ status: "running", phase }),
       });
+      if (R.isError(result)) {
+        setState({ status: "failed" });
+        return;
+      }
       // A cached rerun finishes in milliseconds, which reads as nothing having
       // happened. Hold the working lines long enough to be witnessed.
       const minimumMs = reduceMotion ? 0 : 900;
@@ -63,7 +67,13 @@ function LandingParserProofTerminal() {
         setState({ status: "running", phase: "extract" });
         await new Promise((resolve) => setTimeout(resolve, remaining));
       }
-      setState({ status: "done", report });
+      setState(
+        R.match<ParserProofReport, string, ProofState>(
+          result,
+          (report) => ({ status: "done", report }),
+          () => ({ status: "failed" }),
+        ),
+      );
     } catch {
       setState({ status: "failed" });
     }

@@ -18,7 +18,7 @@ import {
   type CertificationItemValues,
   type CertificationsFormValues,
   toCertificationsValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-lists";
 import { EditorSectionCertificationsFormItem } from "./ed-section-certifications-form-item";
 
 function emptyCertification(): CertificationItemValues {

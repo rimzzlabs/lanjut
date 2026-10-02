@@ -16,7 +16,7 @@ import {
   applyCustomBodyValues,
   type CustomBodyFormValues,
   toCustomBodyValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-custom";
 
 // Read the section once at mount (via getState, not a subscription): the form
 // owns its state afterward and the store is synced through the watch below.

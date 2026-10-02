@@ -19,7 +19,7 @@ import {
   type SkillItemValues,
   type SkillsFormValues,
   toSkillsValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-lists";
 import { EditorSectionSkillsFormItem } from "./ed-section-skills-form-item";
 import { SkillsColumnsToggle } from "./skills-columns-toggle";
 import { SkillsProficiencyToggle } from "./skills-proficiency-toggle";

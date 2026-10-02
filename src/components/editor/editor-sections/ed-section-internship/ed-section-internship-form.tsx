@@ -18,7 +18,7 @@ import {
   type InternshipFormValues,
   type InternshipItemValues,
   toInternshipValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-jobs";
 import { EditorSectionInternshipFormItem } from "./ed-section-internship-form-item";
 
 function emptyInternship(): InternshipItemValues {

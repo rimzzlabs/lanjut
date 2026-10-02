@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { PROSE_FEATURES } from "@/lib/resume/schema-registry";
 import { RichTextEditor } from "../../rich-text/rich-text-editor";
 import { DateRangeFields } from "../date-range-fields";
-import type { CustomListFormValues } from "../resume-form-adapter";
+import type { CustomListFormValues } from "../resume-form-adapter-custom";
 
 interface EditorSectionCustomListItemProps {
   index: number;

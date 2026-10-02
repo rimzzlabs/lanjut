@@ -14,7 +14,7 @@ import {
   applySummaryValues,
   type SummaryFormValues,
   toSummaryValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-profile";
 
 export function EditorSectionSummaryForm() {
   const open = useResumeStore((state) => state.open);

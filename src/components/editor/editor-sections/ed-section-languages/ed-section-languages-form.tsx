@@ -19,7 +19,7 @@ import {
   type LanguageItemValues,
   type LanguagesFormValues,
   toLanguagesValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-lists";
 import { EditorSectionLanguagesFormItem } from "./ed-section-languages-form-item";
 import { LanguagesColumnsToggle } from "./languages-columns-toggle";
 import { LanguagesProficiencyToggle } from "./languages-proficiency-toggle";

@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { PROSE_FEATURES } from "@/lib/resume/schema-registry";
 import { RichTextEditor } from "../../rich-text/rich-text-editor";
 import { DateRangeFields } from "../date-range-fields";
-import type { ExperienceFormValues } from "../resume-form-adapter";
+import type { ExperienceFormValues } from "../resume-form-adapter-jobs";
 
 interface EditorSectionExperienceFormItemProps {
   index: number;

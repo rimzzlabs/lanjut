@@ -18,7 +18,7 @@ import {
   type EducationFormValues,
   type EducationItemValues,
   toEducationValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-jobs";
 import { EditorSectionEducationFormItem } from "./ed-section-education-form-item";
 
 function emptyEducation(): EducationItemValues {
