@@ -60,14 +60,14 @@ Every template renders the same linear block sequence, so switching templates ne
 | Framework | Astro (static output, React islands) |
 | Hosting | Cloudflare Workers static assets, plus one Worker for the feedback relay |
 | Build targets | Web (default), desktop (`LANJUT_TARGET=desktop`) |
-| Desktop shell | Tauri 2 (macOS) |
+| Desktop shell | Tauri 2 (macOS 13 or later) |
 | Internationalization | use-intl (English, Indonesian) |
 | UI components | shadcn (base-ui) |
 | Styling | Tailwind CSS |
 | Rich text editor | TipTap |
 | Forms | react-hook-form + zod |
 | Drag and drop | @dnd-kit |
-| Export | takumi-pdf (PDF from the preview HTML, react-pdf as fallback), docx |
+| Export | takumi-pdf (PDF from the preview HTML), docx |
 | Animation | motion/react |
 | State | zustand |
 | Search params state | nuqs |

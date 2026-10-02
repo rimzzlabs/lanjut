@@ -2,120 +2,42 @@
  * Parser-validation pass (AGENTS.md export gate). Regenerates the PDF, .docx, and
  * .txt exports from the seed résumé and verifies, via real text extraction, that
  * each output preserves linear reading order and that every field maps through.
- * This is the automated "text-extraction test" (pdftotext-equivalent) that must
- * pass after any change to an export path. Run: `pnpm validate:exports`.
+ * The PDF checks live in takumi-checks.ts. This is the automated
+ * "text-extraction test" (pdftotext-equivalent) that must pass after any change
+ * to an export path. Run: `pnpm validate:exports`.
  */
 import { inflateSync } from "node:zlib";
-import {
-  Document,
-  Font,
-  Page,
-  renderToBuffer,
-  Text,
-  View,
-} from "@react-pdf/renderer";
 import { Packer } from "docx";
 import JSZip from "jszip";
 import { extractText, getDocumentProxy } from "unpdf";
 import { buildAwalDocx } from "@/components/editor/docx/resume-to-docx";
-import { TEMPLATE_PDF_DOCUMENTS } from "@/components/editor/pdf/template-pdf-document";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import { resumeToText } from "@/components/editor/resume-to-text";
 import { SEED_RESUME } from "@/lib/resume/seed";
 import { runTakumiChecks } from "./takumi-checks";
 
-const root = process.cwd();
-
-function registerFonts(): void {
-  Font.register({
-    family: "Inter",
-    fonts: [
-      { src: `${root}/public/fonts/Inter-Regular.ttf`, fontWeight: 400 },
-      { src: `${root}/public/fonts/Inter-SemiBold.ttf`, fontWeight: 600 },
-      { src: `${root}/public/fonts/Inter-Bold.ttf`, fontWeight: 700 },
-      {
-        src: `${root}/public/fonts/Inter-Italic.ttf`,
-        fontWeight: 400,
-        fontStyle: "italic",
-      },
-      {
-        src: `${root}/public/fonts/Inter-BoldItalic.ttf`,
-        fontWeight: 700,
-        fontStyle: "italic",
-      },
-    ],
-  });
-  Font.register({
-    family: "Lora",
-    fonts: [
-      { src: `${root}/public/fonts/Lora-Regular.ttf`, fontWeight: 400 },
-      { src: `${root}/public/fonts/Lora-Bold.ttf`, fontWeight: 700 },
-      {
-        src: `${root}/public/fonts/Lora-Italic.ttf`,
-        fontWeight: 400,
-        fontStyle: "italic",
-      },
-      {
-        src: `${root}/public/fonts/Lora-BoldItalic.ttf`,
-        fontWeight: 700,
-        fontStyle: "italic",
-      },
-    ],
-  });
-  Font.register({
-    family: "GeistMono",
-    fonts: [
-      { src: `${root}/public/fonts/GeistMono-Regular.ttf`, fontWeight: 400 },
-      { src: `${root}/public/fonts/GeistMono-Bold.ttf`, fontWeight: 700 },
-    ],
-  });
-  Font.register({
-    family: "Merriweather",
-    fonts: [
-      { src: `${root}/public/fonts/Merriweather-Regular.ttf`, fontWeight: 400 },
-      { src: `${root}/public/fonts/Merriweather-Bold.ttf`, fontWeight: 700 },
-    ],
-  });
-  Font.registerHyphenationCallback((word) => [word]);
-}
-
 /**
- * fi/fl-heavy probe. fontkit applies GSUB "liga"/"clig" by default, collapsing
- * f+i and f+l into a single ligature glyph whose ToUnicode maps back to two
- * codepoints. Readers that ignore the CMap then drop or garble the pair. The
- * @react-pdf/textkit patch disables those features so each letter stays its own
- * glyph with a single-codepoint ToUnicode, robust for every parser.
+ * fi/fl-heavy probe. A shaping engine applies "liga"/"clig" by default,
+ * collapsing f+i and f+l into one ligature glyph whose ToUnicode maps back to
+ * two codepoints. Readers that ignore the CMap then drop or garble the pair. The
+ * PDF stylesheet sets `font-variant-ligatures: none`, so each letter stays its
+ * own glyph with a single-codepoint ToUnicode, robust for every parser.
  */
 const LIGATURE_PROBE = "fintech workflow office final affix fluent classified";
 
 /** ToUnicode destinations that a fi/fl ligature glyph would map back to. */
 const LIGATURE_MAPPINGS = [/0066\s*0069/i, /0066\s*006c/i];
 
-/**
- * Fails if any embedded font maps a single glyph to the "fi" or "fl" codepoint
- * pair, i.e. a ligature survived into the PDF. Inflates the FlateDecode streams
- * (which include the ToUnicode CMaps) and scans their bfchar destinations.
- */
-async function checkLigatureSafety(family: string): Promise<string[]> {
-  const buffer = await renderToBuffer(
-    <Document>
-      <Page style={{ padding: 40 }}>
-        <View>
-          <Text style={{ fontFamily: family, fontSize: 12 }}>
-            {LIGATURE_PROBE}
-          </Text>
-        </View>
-      </Page>
-    </Document>,
-  );
-  return ligatureErrors({ buffer, label: `PDF ligatures (${family})` });
-}
-
 interface LigatureErrorsParams {
   buffer: Uint8Array;
   label: string;
 }
 
+/**
+ * Fails if any embedded font maps a single glyph to the "fi" or "fl" codepoint
+ * pair, i.e. a ligature survived into the PDF. Inflates the FlateDecode streams
+ * (which include the ToUnicode CMaps) and scans their bfchar and bfrange destinations.
+ */
 async function ligatureErrors(params: LigatureErrorsParams): Promise<string[]> {
   const { buffer, label } = params;
   const errors: string[] = [];
@@ -261,7 +183,7 @@ async function extractDocxText(buffer: Buffer): Promise<string> {
     .replace(/&gt;/g, ">");
 }
 
-/** A tiny valid JPEG, enough for react-pdf and docx to embed. */
+/** A tiny valid JPEG, enough for the PDF and docx to embed. */
 const TEST_PHOTO = `data:image/jpeg;base64,${[
   "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB",
   "AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEB",
@@ -272,7 +194,6 @@ const TEST_PHOTO = `data:image/jpeg;base64,${[
 ].join("")}`;
 
 async function main(): Promise<void> {
-  registerFonts();
   const preview = resumeToPreview(SEED_RESUME);
 
   const outputs: [string, string][] = [
@@ -282,18 +203,6 @@ async function main(): Promise<void> {
       await extractDocxText(await Packer.toBuffer(buildAwalDocx(preview))),
     ],
   ];
-
-  // Every template's PDF must extract cleanly, not just the default one.
-  for (const [template, PdfDocument] of Object.entries(
-    TEMPLATE_PDF_DOCUMENTS,
-  )) {
-    outputs.push([
-      `PDF(${template})`,
-      await extractPdfText(
-        await renderToBuffer(<PdfDocument preview={preview} />),
-      ),
-    ]);
-  }
 
   const errors: string[] = [];
   for (const [label, text] of outputs) {
@@ -306,8 +215,8 @@ async function main(): Promise<void> {
   }
 
   // The opt-in photo is presentation-only: with a photo present, the extracted
-  // text of every template PDF and the DOCX must be identical to the
-  // photo-free output, or the photo has disturbed parsing.
+  // text of the DOCX (and of every template PDF, in takumi-checks.ts) must be
+  // identical to the photo-free output, or the photo has disturbed parsing.
   const photoResume = structuredClone(SEED_RESUME);
   photoResume.header.photo = TEST_PHOTO;
   const photoPreview = resumeToPreview(photoResume);
@@ -320,30 +229,7 @@ async function main(): Promise<void> {
   if (docxPlain !== docxPhoto) {
     errors.push("DOCX: adding a photo changed the extracted text");
   }
-  for (const [template, PdfDocument] of Object.entries(
-    TEMPLATE_PDF_DOCUMENTS,
-  )) {
-    const plainText = await extractPdfText(
-      await renderToBuffer(<PdfDocument preview={preview} />),
-    );
-    const withPhoto = await extractPdfText(
-      await renderToBuffer(<PdfDocument preview={photoPreview} />),
-    );
-    if (plainText !== withPhoto) {
-      errors.push(
-        `PDF(${template}): adding a photo changed the extracted text`,
-      );
-    }
-  }
-  console.log("Photo invariance: extracted text identical with a photo");
-
-  for (const family of ["Lora", "Merriweather"]) {
-    const ligatureErrors = await checkLigatureSafety(family);
-    console.log(
-      `PDF ligatures (${family}): ${ligatureErrors.length === 0 ? "fi/fl stay separate glyphs" : "FAILED"}`,
-    );
-    errors.push(...ligatureErrors);
-  }
+  console.log("Photo invariance: DOCX text identical with a photo");
 
   const takumiErrors = await runTakumiChecks({
     preview,
@@ -352,10 +238,6 @@ async function main(): Promise<void> {
     extractPdfText,
     extractPdfPages,
     ligatureErrors,
-    referencePdf: (template) => {
-      const PdfDocument = TEMPLATE_PDF_DOCUMENTS[template];
-      return renderToBuffer(<PdfDocument preview={preview} />);
-    },
     textErrors: (text, label) => [
       ...checkReadingOrder(text, label),
       ...checkFields(text, label),
@@ -371,7 +253,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    "\n✓ All exports preserve reading order and carry every field (every template PDF on both engines, DOCX, TXT).",
+    "\n✓ All exports preserve reading order and carry every field (every template PDF, DOCX, TXT).",
   );
 }
 

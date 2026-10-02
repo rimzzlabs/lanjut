@@ -21,9 +21,23 @@ interface TakumiChecksParams {
     label: string;
   }) => Promise<string[]>;
   textErrors: (text: string, label: string) => string[];
-  /** The react-pdf export of the same résumé, the reference for font parity. */
-  referencePdf: (template: TemplateId) => Promise<Uint8Array>;
 }
+
+// The families each template draws with, recorded from the react-pdf exports
+// before takumi-pdf replaced them. A stylesheet rule the renderer drops makes a
+// template fall back to Inter, which this catches.
+const EXPECTED_FAMILIES: Record<TemplateId, ReadonlyArray<string>> = {
+  awal: ["Inter"],
+  ketat: ["Inter", "Lora"],
+  luasa: ["Inter", "Lora"],
+  tebal: ["Inter"],
+  klasik: ["Lora"],
+  ketik: ["GeistMono", "Inter"],
+};
+
+// The document letter-spacing setting is bounded to this range so that text
+// extraction still recovers word boundaries at its ends.
+const LETTER_SPACING_BOUNDS: ReadonlyArray<number> = [-0.5, 0.5];
 
 interface RenderParams {
   takumi: TakumiRenderer;
@@ -83,6 +97,11 @@ function embeddedFamilies(buffer: Uint8Array): ReadonlyArray<string> {
   );
 }
 
+function failWhen(failed: boolean, message: string): ReadonlyArray<string> {
+  if (!failed) return [];
+  return [message];
+}
+
 function pageOf(pages: ReadonlyArray<string>, marker: string): number {
   return O.getWithDefault(
     A.getIndexBy(pages, (page) => S.includes(page, marker)),
@@ -103,20 +122,34 @@ async function checkTemplate(
   const label = `TAKUMI(${template})`;
   const buffer = await render({ takumi, preview: checks.preview, template });
   const text = await checks.extractPdfText(buffer);
-  const families = embeddedFamilies(buffer);
-  const expected = embeddedFamilies(await checks.referencePdf(template));
-  const fontErrors =
-    A.join(families, ",") === A.join(expected, ",")
-      ? []
-      : [
-          `${label}: embeds ${A.join(families, ", ")}, react-pdf embeds ${A.join(expected, ", ")}`,
-        ];
   console.log(`${label}: extracted ${S.length(text)} chars`);
+  const families = A.join(embeddedFamilies(buffer), ", ");
+  const expected = A.join(EXPECTED_FAMILIES[template], ", ");
+  const fontErrors = failWhen(
+    families !== expected,
+    `${label}: embeds ${families}, expected ${expected}`,
+  );
+
+  const spacingErrors = await Promise.all(
+    A.map(LETTER_SPACING_BOUNDS, async (letterSpacing) => {
+      const spaced = await checks.extractPdfText(
+        await render({
+          takumi,
+          preview: { ...checks.preview, letterSpacing },
+          template,
+        }),
+      );
+      return checks.textErrors(spaced, `${label} spacing ${letterSpacing}`);
+    }),
+  );
+
   const withPhoto = await checks.extractPdfText(
     await render({ takumi, preview: checks.photoPreview, template }),
   );
-  const photoErrors =
-    text === withPhoto ? [] : [`${label}: adding a photo changed the text`];
+  const photoErrors = failWhen(
+    text !== withPhoto,
+    `${label}: adding a photo changed the text`,
+  );
 
   const probe = splitProbe(checks.preview);
   if (O.isNone(probe)) return [`${label}: seed has no experience entry`];
@@ -138,6 +171,7 @@ async function checkTemplate(
   return pipe(
     checks.textErrors(text, label),
     A.concat(fontErrors),
+    A.concat(A.flat(spacingErrors)),
     A.concat(photoErrors),
     A.concat(splitErrors),
   );
@@ -168,9 +202,9 @@ async function checkLigatures(params: LigatureCheckParams): Promise<string[]> {
 }
 
 /**
- * Runs the export checks against the Takumi PDF path for every template:
- * reading order and fields, photo invariance, no entry split across a page,
- * and no fi/fl ligatures.
+ * Runs the PDF export checks for every template: reading order and fields, at
+ * both letter-spacing bounds too, font families, photo invariance, no entry
+ * split across a page, and no fi/fl ligatures.
  */
 export async function runTakumiChecks(
   checks: TakumiChecksParams,

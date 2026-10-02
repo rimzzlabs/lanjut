@@ -32,10 +32,9 @@ export function resolveTemplateId(id: string): TemplateId {
 }
 
 /**
- * Each template's baseline body line height. Mirrors the `lineHeight` in the
- * template's PDF page style (src/components/editor/pdf/<id>-pdf-document.tsx);
- * keep the two in sync. The editor's line-height slider rests here, and the
- * preview body renders it so the on-screen rhythm matches the PDF.
+ * Each template's baseline body line height. The editor's line-height slider
+ * rests here, and the preview body renders it; the PDF is drawn from the same
+ * HTML, so it matches.
  */
 export const TEMPLATE_LINE_HEIGHT: Record<TemplateId, number> = {
   awal: 1.4,

@@ -7,7 +7,6 @@ onlyBuiltDependencies:
   - workerd
 
 patchedDependencies:
-  '@react-pdf/textkit@6.3.0': patches/@react-pdf__textkit@6.3.0.patch
   nextstepjs@2.2.0: patches/nextstepjs@2.2.0.patch
 
 # nextstepjs and nuqs list next as an optional peer. Lanjut does not use it.
