@@ -66,11 +66,11 @@ export function EditorSectionOrganizationsForm() {
 
   const handleDatesCommit = (index: number) => {
     requestAnimationFrame(() => {
-      const to = repositionByRecency(
-        index,
-        form.getValues().organizations,
+      const to = repositionByRecency({
+        from: index,
+        items: form.getValues().organizations,
         move,
-      );
+      });
       if (to !== null) listRef.current?.scrollToIndex(to);
     });
   };

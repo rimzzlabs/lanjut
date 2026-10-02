@@ -71,16 +71,19 @@ const MONTH_INDEX = new Map(
   A.mapWithIndex(MONTHS, (index, month) => [month.value, index] as const),
 );
 
+interface LocalizeDateValueParams {
+  value: string;
+  months: string[];
+  present: string;
+}
+
 /**
  * Renders a stored date value into a document language: the English month token
  * is swapped for its `months` equivalent and `PRESENT_DATE` for `present`. Meant
  * for display only; the stored value stays the canonical English token.
  */
-export function localizeDateValue(
-  value: string,
-  months: string[],
-  present: string,
-): string {
+export function localizeDateValue(params: LocalizeDateValueParams): string {
+  const { value, months, present } = params;
   const trimmed = S.trim(value);
   if (!trimmed) return "";
   if (trimmed === PRESENT_DATE) return present;

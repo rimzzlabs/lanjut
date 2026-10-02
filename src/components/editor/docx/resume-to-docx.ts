@@ -99,8 +99,15 @@ function sectionHeading(title: string): Paragraph {
   });
 }
 
+interface TitleRowParams {
+  title: string;
+  date: string;
+  href?: string;
+}
+
 /** A "Title …… Dates" row with the date right-aligned via a tab stop. */
-function titleRow(title: string, date: string, href?: string): Paragraph {
+function titleRow(params: TitleRowParams): Paragraph {
+  const { title, date, href } = params;
   const titleRun = new TextRun({
     text: title,
     bold: true,
@@ -113,8 +120,15 @@ function titleRow(title: string, date: string, href?: string): Paragraph {
   });
 }
 
+interface SubtitleParams {
+  text: string;
+  href?: string;
+  suffix?: string;
+}
+
 /** A muted subtitle: an optionally linked subject, then a plain-text tail. */
-function subtitle(text: string, href?: string, suffix = ""): Paragraph {
+function subtitle(params: SubtitleParams): Paragraph {
+  const { text, href, suffix = "" } = params;
   const child = new TextRun({
     text,
     color: MUTED,
@@ -128,7 +142,7 @@ function subtitle(text: string, href?: string, suffix = ""): Paragraph {
 
 function optionalSubtitle(text: string | undefined): ReadonlyArray<Paragraph> {
   if (!text) return [];
-  return [subtitle(text)];
+  return [subtitle({ text })];
 }
 
 /**
@@ -225,11 +239,11 @@ function gridParagraphs(
 function companyParagraphs(item: ExperienceItemView): ReadonlyArray<Paragraph> {
   if (!item.company && !item.location) return [];
   return [
-    subtitle(
-      item.company,
-      item.companyHref,
-      locationSuffix(item.company, item.location),
-    ),
+    subtitle({
+      text: item.company,
+      href: item.companyHref,
+      suffix: locationSuffix(item.company, item.location),
+    }),
   ];
 }
 
@@ -237,7 +251,11 @@ function experienceParagraphs(
   item: ExperienceItemView,
 ): ReadonlyArray<Paragraph> {
   return [
-    titleRow(item.role, dateRange(item.startDate, item.endDate), item.roleHref),
+    titleRow({
+      title: item.role,
+      date: dateRange(item.startDate, item.endDate),
+      href: item.roleHref,
+    }),
     ...companyParagraphs(item),
     ...optionalSubtitle(item.companyContext),
     ...richParagraphs(item.description),
@@ -248,7 +266,10 @@ function educationParagraphs(
   item: EducationItemView,
 ): ReadonlyArray<Paragraph> {
   return [
-    titleRow(item.degree, dateRange(item.startDate, item.endDate)),
+    titleRow({
+      title: item.degree,
+      date: dateRange(item.startDate, item.endDate),
+    }),
     ...optionalSubtitle(withLocation(item.institution, item.location)),
     ...richParagraphs(item.details),
   ];
@@ -268,10 +289,10 @@ function blockParagraphs(block: ResumeBlock): ReadonlyArray<Paragraph> {
       return educationParagraphs(block.item);
     case "certificate":
       return [
-        titleRow(
-          block.item.title,
-          dateRange(block.item.startDate, block.item.endDate),
-        ),
+        titleRow({
+          title: block.item.title,
+          date: dateRange(block.item.startDate, block.item.endDate),
+        }),
         ...optionalSubtitle(block.item.issuer),
       ];
     case "skills":

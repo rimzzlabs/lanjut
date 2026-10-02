@@ -26,7 +26,11 @@ export function ResumeExporter({ request, onSettled }: ResumeExporterProps) {
   useEffect(() => {
     if (startedFor.current === request) return;
     startedFor.current = request;
-    downloadResume(request.resume, request.format, request.fileName)
+    downloadResume({
+      resume: request.resume,
+      format: request.format,
+      fileName: request.fileName,
+    })
       .then((saved) => onSettled(saved))
       .catch(() => onSettled(false));
   }, [request, onSettled]);

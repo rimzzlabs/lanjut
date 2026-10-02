@@ -29,6 +29,12 @@ function plainValue(field: unknown): string {
   return "";
 }
 
+interface RunParserProofParams {
+  resume: Resume;
+  template: TemplateId;
+  onPhase: (phase: ParserPhase) => void;
+}
+
 /**
  * The landing page's proof run: renders the given document to a real PDF with
  * the real export pipeline, extracts its text with the same parser the import
@@ -36,10 +42,9 @@ function plainValue(field: unknown): string {
  * visitor's browser; every heavy module loads lazily on first run.
  */
 export async function runParserProof(
-  resume: Resume,
-  template: TemplateId,
-  onPhase: (phase: ParserPhase) => void,
+  params: RunParserProofParams,
 ): Promise<ParserProofReport> {
+  const { resume, template, onPhase } = params;
   onPhase("render");
   const [{ pdf }, { registerPdfFonts }, { TEMPLATE_PDF_DOCUMENTS }] =
     await Promise.all([

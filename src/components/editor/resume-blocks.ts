@@ -111,16 +111,21 @@ function hasLanguage(item: LanguageItemView): boolean {
   return Boolean(item.name);
 }
 
+interface ExperienceLikeBlocksParams {
+  items: ReadonlyArray<ExperienceItemView>;
+  headingId: string;
+  label: string;
+}
+
 // Internship, project, and organization entries reuse the "experience" block
 // kind: they render identically in every template and export, only the heading
 // differs. Each emitter drops empty entries first, then omits the whole section
 // (heading included) when nothing is left, so a sparse résumé shows only filled
 // sections.
 function experienceLikeBlocks(
-  items: ReadonlyArray<ExperienceItemView>,
-  headingId: string,
-  label: string,
+  params: ExperienceLikeBlocksParams,
 ): ResumeBlock[] {
+  const { items, headingId, label } = params;
   const filtered = A.filter(items, hasExperience);
   if (A.isEmpty(filtered)) return [];
   return [
@@ -180,11 +185,14 @@ function certificateBlocks(
   ];
 }
 
-function skillsBlocks(
-  items: ReadonlyArray<SkillItemView>,
-  columns: SectionColumns,
-  label: string,
-): ResumeBlock[] {
+interface SkillsBlocksParams {
+  items: ReadonlyArray<SkillItemView>;
+  columns: SectionColumns;
+  label: string;
+}
+
+function skillsBlocks(params: SkillsBlocksParams): ResumeBlock[] {
+  const { items, columns, label } = params;
   const filtered = A.filter(items, hasSkill);
   if (A.isEmpty(filtered)) return [];
   return [
@@ -200,11 +208,14 @@ function skillsBlocks(
   ];
 }
 
-function languagesBlocks(
-  items: ReadonlyArray<LanguageItemView>,
-  columns: SectionColumns,
-  label: string,
-): ResumeBlock[] {
+interface LanguagesBlocksParams {
+  items: ReadonlyArray<LanguageItemView>;
+  columns: SectionColumns;
+  label: string;
+}
+
+function languagesBlocks(params: LanguagesBlocksParams): ResumeBlock[] {
+  const { items, columns, label } = params;
   const filtered = A.filter(items, hasLanguage);
   if (A.isEmpty(filtered)) return [];
   return [
@@ -297,40 +308,44 @@ export function buildResumeBlocks(
     () => ResumeBlock[]
   > = {
     experience: () =>
-      experienceLikeBlocks(
-        resume.experience,
-        "experience-heading",
-        headings.experience,
-      ),
+      experienceLikeBlocks({
+        items: resume.experience,
+        headingId: "experience-heading",
+        label: headings.experience,
+      }),
     internship: () =>
-      experienceLikeBlocks(
-        resume.internship,
-        "internship-heading",
-        headings.internship,
-      ),
+      experienceLikeBlocks({
+        items: resume.internship,
+        headingId: "internship-heading",
+        label: headings.internship,
+      }),
     projects: () =>
-      experienceLikeBlocks(
-        resume.projects,
-        "projects-heading",
-        headings.projects,
-      ),
+      experienceLikeBlocks({
+        items: resume.projects,
+        headingId: "projects-heading",
+        label: headings.projects,
+      }),
     organizations: () =>
-      experienceLikeBlocks(
-        resume.organizations,
-        "organizations-heading",
-        headings.organizations,
-      ),
+      experienceLikeBlocks({
+        items: resume.organizations,
+        headingId: "organizations-heading",
+        label: headings.organizations,
+      }),
     education: () => educationBlocks(resume.education, headings.education),
     certifications: () =>
       certificateBlocks(resume.certificates, headings.certifications),
     skills: () =>
-      skillsBlocks(resume.skills, resume.skillsColumns, headings.skills),
+      skillsBlocks({
+        items: resume.skills,
+        columns: resume.skillsColumns,
+        label: headings.skills,
+      }),
     languages: () =>
-      languagesBlocks(
-        resume.languages,
-        resume.languagesColumns,
-        headings.languages,
-      ),
+      languagesBlocks({
+        items: resume.languages,
+        columns: resume.languagesColumns,
+        label: headings.languages,
+      }),
   };
 
   const customById = new Map(

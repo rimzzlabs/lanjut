@@ -34,7 +34,7 @@ export function PlatformResumeActionDownload(
         setMissing(true);
         return;
       }
-      const ok = await runExport(document, format, fileName);
+      const ok = await runExport({ resume: document, format, fileName });
       if (ok) props.onOpenChange(false);
     } finally {
       setLoading(false);

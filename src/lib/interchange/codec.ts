@@ -166,11 +166,14 @@ function fieldFromValue(field: FieldSchema, value: string): Field {
   return { kind: "richtext", value: markdownToTiptap(value) };
 }
 
-function fillEntry(
-  entry: Entry,
-  fields: FieldSchema[],
-  values: Record<string, string | undefined>,
-): Entry {
+interface FillEntryParams {
+  entry: Entry;
+  fields: FieldSchema[];
+  values: Record<string, string | undefined>;
+}
+
+function fillEntry(params: FillEntryParams): Entry {
+  const { entry, fields, values } = params;
   const filled = A.reduce(fields, entry.fields, (acc, field) => {
     const value = values[field.key];
     if (value === undefined) return acc;
@@ -242,7 +245,11 @@ function interchangeToSection(item: InterchangeSection): Section {
       return withBody(section, { type: "custom", value: item.body });
     }
     const entries = A.map(item.entries ?? [], (values) =>
-      fillEntry(createCustomEntry("list"), CUSTOM_LIST_FIELDS, values),
+      fillEntry({
+        entry: createCustomEntry("list"),
+        fields: CUSTOM_LIST_FIELDS,
+        values,
+      }),
     );
     return { ...section, entries };
   }
@@ -253,7 +260,7 @@ function interchangeToSection(item: InterchangeSection): Section {
   );
   const fields = getSectionSchema(item.type).fields;
   const entries = A.map(item.entries ?? [], (values) =>
-    fillEntry(createEmptyEntry(item.type), fields, values),
+    fillEntry({ entry: createEmptyEntry(item.type), fields, values }),
   );
   return withGridSettings({ ...section, entries }, item);
 }

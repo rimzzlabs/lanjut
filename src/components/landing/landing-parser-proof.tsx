@@ -50,11 +50,11 @@ function LandingParserProofTerminal() {
     setState({ status: "running", phase: "render" });
     const startedAt = Date.now();
     try {
-      const report = await runParserProof(
-        draftToResume(draft),
+      const report = await runParserProof({
+        resume: draftToResume(draft),
         template,
-        (phase) => setState({ status: "running", phase }),
-      );
+        onPhase: (phase) => setState({ status: "running", phase }),
+      });
       // A cached rerun finishes in milliseconds, which reads as nothing having
       // happened. Hold the working lines long enough to be witnessed.
       const minimumMs = reduceMotion ? 0 : 900;

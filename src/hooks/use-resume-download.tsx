@@ -10,7 +10,7 @@ export function useResumeDownload() {
   const download = useCallback(
     (format: ExportFormat, fileName: string) => {
       if (!resume) return Promise.resolve(false);
-      return runExport(resume, format, fileName);
+      return runExport({ resume, format, fileName });
     },
     [resume, runExport],
   );

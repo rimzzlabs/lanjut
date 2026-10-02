@@ -86,8 +86,15 @@ function unescapeText(text: string): string {
   return S.replaceByRe(text, /\\([!-/:-@[-`{-~])/g, "$1");
 }
 
+interface FindDelimiterParams {
+  src: string;
+  delim: string;
+  from: number;
+}
+
 /** The first unescaped occurrence of `delim` at or after `from`, or -1. */
-function findDelimiter(src: string, delim: string, from: number): number {
+function findDelimiter(params: FindDelimiterParams): number {
+  const { src, delim, from } = params;
   for (let i = from; i <= S.length(src) - S.length(delim); i += 1) {
     if (S.get(src, i) === "\\") {
       i += 1;
@@ -136,16 +143,23 @@ function appendRun(
   return A.replaceAt(runs, A.length(runs) - 1, merged);
 }
 
+interface DelimiterAfterParams {
+  src: string;
+  marker: string;
+  at: number;
+}
+
 /** Where the closing `marker` ends, when `src` opens one at `at`, or -1. */
-function delimiterAfter(src: string, marker: string, at: number): number {
+function delimiterAfter(params: DelimiterAfterParams): number {
+  const { src, marker, at } = params;
   if (!src.startsWith(marker, at)) return -1;
-  return findDelimiter(src, marker, at + S.length(marker));
+  return findDelimiter({ src, delim: marker, from: at + S.length(marker) });
 }
 
 /** The `)` that closes a link target after the `]` at `close`, or -1. */
 function linkTargetEnd(src: string, close: number): number {
   if (close === -1 || S.get(src, close + 1) !== "(") return -1;
-  return findDelimiter(src, ")", close + 2);
+  return findDelimiter({ src, delim: ")", from: close + 2 });
 }
 
 function parseSegment(src: string, marks: InlineMarks): ReadonlyArray<Piece> {
@@ -170,7 +184,7 @@ function parseSegment(src: string, marks: InlineMarks): ReadonlyArray<Piece> {
     if (ch === "*") {
       // Longest marker first, so `***x***` reads as bold+italic rather than a
       // dangling `*` inside bold.
-      const triple = delimiterAfter(src, "***", i);
+      const triple = delimiterAfter({ src, marker: "***", at: i });
       if (triple !== -1) {
         flush();
         nest(S.slice(src, i + 3, triple), {
@@ -181,14 +195,14 @@ function parseSegment(src: string, marks: InlineMarks): ReadonlyArray<Piece> {
         i = triple + 3;
         continue;
       }
-      const double = delimiterAfter(src, "**", i);
+      const double = delimiterAfter({ src, marker: "**", at: i });
       if (double !== -1) {
         flush();
         nest(S.slice(src, i + 2, double), { ...marks, bold: true });
         i = double + 2;
         continue;
       }
-      const single = findDelimiter(src, "*", i + 1);
+      const single = findDelimiter({ src, delim: "*", from: i + 1 });
       if (single !== -1) {
         flush();
         nest(S.slice(src, i + 1, single), { ...marks, italic: true });
@@ -200,7 +214,7 @@ function parseSegment(src: string, marks: InlineMarks): ReadonlyArray<Piece> {
       continue;
     }
     if (ch === "[") {
-      const close = findDelimiter(src, "]", i + 1);
+      const close = findDelimiter({ src, delim: "]", from: i + 1 });
       const paren = linkTargetEnd(src, close);
       if (close !== -1 && paren !== -1) {
         flush();
@@ -261,11 +275,14 @@ function listFor(
   return { ...flushList(state), list: { ordered, items: [] } };
 }
 
-function readListLine(
-  state: ParseState,
-  line: string,
-  marker: string,
-): ParseState {
+interface ReadListLineParams {
+  state: ParseState;
+  line: string;
+  marker: string;
+}
+
+function readListLine(params: ReadListLineParams): ParseState {
+  const { state, line, marker } = params;
   const current = listFor(state, ORDERED_LINE.test(line));
   const runs = parseInlineMarkdown(
     pipe(line, S.sliceToEnd(S.length(marker)), S.trim),
@@ -279,7 +296,7 @@ function readLine(state: ParseState, raw: string): ParseState {
   const line = S.trim(raw);
   if (!line) return flushList(state);
   const marker = BULLET_LINE.exec(line) ?? ORDERED_LINE.exec(line);
-  if (marker) return readListLine(state, line, marker[0]);
+  if (marker) return readListLine({ state, line, marker: marker[0] });
   const flushed = flushList(state);
   const runs = parseInlineMarkdown(line);
   if (A.isEmpty(runs)) return flushed;

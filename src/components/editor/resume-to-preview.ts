@@ -53,17 +53,20 @@ function clampScale(value: number | undefined): number {
   return Math.min(1.2, Math.max(0.8, value ?? 1));
 }
 
+interface EffectiveHeadingParams {
+  resume: Resume;
+  type: keyof SectionHeadings;
+  fallback: string;
+}
+
 /**
  * A stored title equal to the registry default means "never renamed": it
  * renders as the document-language label, which is how language switching
  * relabels headings. Anything else is a deliberate rename (via the Code tab)
  * and wins over the language label.
  */
-function effectiveHeading(
-  resume: Resume,
-  type: keyof SectionHeadings,
-  fallback: string,
-): string {
+function effectiveHeading(params: EffectiveHeadingParams): string {
+  const { resume, type, fallback } = params;
   const title = O.mapWithDefault(sectionOfType(resume, type), "", (section) =>
     S.trim(section.title),
   );
@@ -189,8 +192,16 @@ export function resumeToPreview(resume: Resume): ResumePreview {
     item: T,
   ): T => ({
     ...item,
-    startDate: localizeDateValue(item.startDate, labels.months, labels.present),
-    endDate: localizeDateValue(item.endDate, labels.months, labels.present),
+    startDate: localizeDateValue({
+      value: item.startDate,
+      months: labels.months,
+      present: labels.present,
+    }),
+    endDate: localizeDateValue({
+      value: item.endDate,
+      months: labels.months,
+      present: labels.present,
+    }),
   });
 
   // Hidden sections drop out of the emitted order entirely, so no renderer
@@ -230,23 +241,51 @@ export function resumeToPreview(resume: Resume): ResumePreview {
   );
 
   const headings: SectionHeadings = {
-    summary: effectiveHeading(resume, "summary", labels.summary),
-    experience: effectiveHeading(resume, "experience", labels.experience),
-    internship: effectiveHeading(resume, "internship", labels.internship),
-    projects: effectiveHeading(resume, "projects", labels.projects),
-    organizations: effectiveHeading(
+    summary: effectiveHeading({
       resume,
-      "organizations",
-      labels.organizations,
-    ),
-    education: effectiveHeading(resume, "education", labels.education),
-    certifications: effectiveHeading(
+      type: "summary",
+      fallback: labels.summary,
+    }),
+    experience: effectiveHeading({
       resume,
-      "certifications",
-      labels.certificates,
-    ),
-    skills: effectiveHeading(resume, "skills", labels.skills),
-    languages: effectiveHeading(resume, "languages", labels.languages),
+      type: "experience",
+      fallback: labels.experience,
+    }),
+    internship: effectiveHeading({
+      resume,
+      type: "internship",
+      fallback: labels.internship,
+    }),
+    projects: effectiveHeading({
+      resume,
+      type: "projects",
+      fallback: labels.projects,
+    }),
+    organizations: effectiveHeading({
+      resume,
+      type: "organizations",
+      fallback: labels.organizations,
+    }),
+    education: effectiveHeading({
+      resume,
+      type: "education",
+      fallback: labels.education,
+    }),
+    certifications: effectiveHeading({
+      resume,
+      type: "certifications",
+      fallback: labels.certificates,
+    }),
+    skills: effectiveHeading({
+      resume,
+      type: "skills",
+      fallback: labels.skills,
+    }),
+    languages: effectiveHeading({
+      resume,
+      type: "languages",
+      fallback: labels.languages,
+    }),
   };
 
   return {

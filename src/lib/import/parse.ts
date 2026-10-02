@@ -162,6 +162,12 @@ interface HeaderFill {
   leftovers: ReadonlyArray<string>;
 }
 
+interface FillHeaderParams {
+  resume: Resume;
+  preamble: ReadonlyArray<string>;
+  allText: string;
+}
+
 /**
  * Fill the header from the preamble (lines before the first heading) and
  * contacts found anywhere. Returns the filled résumé and the preamble lines
@@ -169,11 +175,8 @@ interface HeaderFill {
  * only the first plausible name and headline are taken; nothing is guessed
  * beyond that.
  */
-function fillHeader(
-  resume: Resume,
-  preamble: ReadonlyArray<string>,
-  allText: string,
-): HeaderFill {
+function fillHeader(params: FillHeaderParams): HeaderFill {
+  const { resume, preamble, allText } = params;
   const email = pipe(S.match(allText, EMAIL_RE), O.mapNullable(A.head));
   const linkedin = pipe(S.match(allText, LINKEDIN_RE), O.mapNullable(A.head));
   const phone = pipe(S.match(allText, PHONE_RE), O.mapNullable(A.head));
@@ -937,7 +940,7 @@ export function parseResumeText(text: string, opts: ParseOptions): ParseResult {
       () => [],
     ),
   );
-  const header = fillHeader(base, preamble, text);
+  const header = fillHeader({ resume: base, preamble, allText: text });
   const resume = A.reduce(blocks, header.resume, fillBlock);
   return { resume, leftovers: F.toMutable(header.leftovers) };
 }

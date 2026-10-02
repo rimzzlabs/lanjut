@@ -61,7 +61,11 @@ export function EditorSectionEducationForm() {
 
   const handleDatesCommit = (index: number) => {
     requestAnimationFrame(() => {
-      const to = repositionByRecency(index, form.getValues().educations, move);
+      const to = repositionByRecency({
+        from: index,
+        items: form.getValues().educations,
+        move,
+      });
       if (to !== null) listRef.current?.scrollToIndex(to);
     });
   };

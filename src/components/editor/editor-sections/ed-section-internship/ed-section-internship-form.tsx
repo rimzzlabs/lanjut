@@ -67,7 +67,11 @@ export function EditorSectionInternshipForm() {
 
   const handleDatesCommit = (index: number) => {
     requestAnimationFrame(() => {
-      const to = repositionByRecency(index, form.getValues().internships, move);
+      const to = repositionByRecency({
+        from: index,
+        items: form.getValues().internships,
+        move,
+      });
       if (to !== null) listRef.current?.scrollToIndex(to);
     });
   };

@@ -1,7 +1,5 @@
 import { lazy, Suspense, useCallback, useRef, useState } from "react";
-import type { ExportFormat } from "@/components/editor/export-format";
 import type { ResumeExportRequest } from "@/components/editor/resume-exporter";
-import type { Resume } from "@/lib/resume";
 
 const ResumeExporter = lazy(() =>
   import("@/components/editor/resume-exporter").then((m) => ({
@@ -14,10 +12,10 @@ export function useResumeExporter() {
   const resolverRef = useRef<((ok: boolean) => void) | null>(null);
 
   const runExport = useCallback(
-    (resume: Resume, format: ExportFormat, fileName: string) =>
+    (next: ResumeExportRequest) =>
       new Promise<boolean>((resolve) => {
         resolverRef.current = resolve;
-        setRequest({ resume, format, fileName });
+        setRequest(next);
       }),
     [],
   );

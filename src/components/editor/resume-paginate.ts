@@ -10,15 +10,20 @@ export interface Paginable {
   keepWithNext: boolean;
 }
 
+interface MeasureGroupParams<T extends Paginable> {
+  group: ReadonlyArray<T>;
+  heights: Record<string, number>;
+  isFirstOnPage: boolean;
+}
+
 /**
  * Height a group of blocks occupies. When placed first on a page the leading
  * block contributes no top gap (a page's top edge already provides the margin).
  */
 function measureGroup<T extends Paginable>(
-  group: ReadonlyArray<T>,
-  heights: Record<string, number>,
-  isFirstOnPage: boolean,
+  params: MeasureGroupParams<T>,
 ): number {
+  const { group, heights, isFirstOnPage } = params;
   return A.reduceWithIndex(group, 0, (total, block, index) => {
     const leadingGap = isFirstOnPage && index === 0 ? 0 : block.gapBefore;
     return total + leadingGap + (heights[block.id] ?? 0);
@@ -48,6 +53,12 @@ interface Packing<T> {
   used: number;
 }
 
+interface PaginateParams<T extends Paginable> {
+  blocks: ReadonlyArray<T>;
+  heights: Record<string, number>;
+  budget: number;
+}
+
 /**
  * Greedily packs blocks into fixed-height pages. Blocks joined by `keepWithNext`
  * are treated as one indivisible group. A group that does not fit on the current
@@ -55,24 +66,29 @@ interface Packing<T> {
  * variant does not split a single entry across pages) and clipped by the frame.
  */
 export function paginate<T extends Paginable>(
-  blocks: ReadonlyArray<T>,
-  heights: Record<string, number>,
-  budget: number,
+  params: PaginateParams<T>,
 ): ReadonlyArray<ReadonlyArray<T>> {
+  const { blocks, heights, budget } = params;
   const start: Packing<T> = { pages: [], current: [], used: 0 };
   const packed = A.reduce(groupBlocks(blocks), start, (state, group) => {
-    const appendHeight = measureGroup(group, heights, false);
+    const appendHeight = measureGroup({ group, heights, isFirstOnPage: false });
     if (A.isNotEmpty(state.current) && state.used + appendHeight > budget) {
       return {
         pages: A.append(state.pages, state.current),
         current: group,
-        used: measureGroup(group, heights, true),
+        used: measureGroup({ group, heights, isFirstOnPage: true }),
       };
     }
     return {
       pages: state.pages,
       current: A.concat(state.current, group),
-      used: state.used + measureGroup(group, heights, A.isEmpty(state.current)),
+      used:
+        state.used +
+        measureGroup({
+          group,
+          heights,
+          isFirstOnPage: A.isEmpty(state.current),
+        }),
     };
   });
 

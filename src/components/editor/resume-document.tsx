@@ -85,7 +85,7 @@ export function ResumeDocument(props: ResumeDocumentProps) {
   }, []);
 
   const pages = useMemo(
-    () => paginate(blocks, heights, CONTENT_HEIGHT_PX),
+    () => paginate({ blocks, heights, budget: CONTENT_HEIGHT_PX }),
     [blocks, heights],
   );
 
@@ -127,7 +127,7 @@ export function ResumeDocument(props: ResumeDocumentProps) {
             transformOrigin: "top left",
           }}
         >
-          {pages.map((pageBlocks, index, items) => {
+          {pages.map((pageBlocks, index) => {
             // The page's identity is its position in the stack: keying by index
             // keeps the container stable while blocks reflow through it, so a
             // changed first block animates instead of remounting the page.
@@ -138,7 +138,7 @@ export function ResumeDocument(props: ResumeDocumentProps) {
             );
             return (
               // biome-ignore lint/suspicious/noArrayIndexKey: pages have no id; position is their identity
-              <ResumePage page={index + 1} total={A.length(items)} key={index}>
+              <ResumePage page={index + 1} total={A.length(pages)} key={index}>
                 <AnimatePresence initial={false} mode="popLayout">
                   {pageBlocks.map((block, blockIndex) => (
                     <ResumeAnimatedBlock
