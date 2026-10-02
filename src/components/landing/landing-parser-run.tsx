@@ -46,20 +46,19 @@ export async function runParserProof(
 ): Promise<R.Result<ParserProofReport, string>> {
   const { resume, template, onPhase } = params;
   onPhase("render");
-  const [{ pdf }, { registerPdfFonts }, { TEMPLATE_PDF_DOCUMENTS }] =
-    await Promise.all([
-      import("@react-pdf/renderer"),
-      import("@/components/editor/pdf/pdf-fonts"),
-      import("@/components/editor/pdf/template-pdf-document"),
-    ]);
-  registerPdfFonts();
-  const preview = resumeToPreview(resume);
-  const PdfDocument = TEMPLATE_PDF_DOCUMENTS[template];
-  const blob = await pdf(<PdfDocument preview={preview} />).toBlob();
+  const { renderResumePdf } = await import(
+    "@/components/editor/takumi/render-resume-pdf"
+  );
+  const bytes = await renderResumePdf({
+    preview: resumeToPreview(resume),
+    template,
+  });
+
+  // pdf.js detaches the buffer it reads, so take the size first.
+  const pdfKb = Math.round(bytes.length / 1024);
 
   onPhase("extract");
   const { extractPdfText } = await import("@/lib/import/extract");
-  const bytes = new Uint8Array(await blob.arrayBuffer());
   const extracted = await extractPdfText(bytes);
   if (!extracted.ok) return R.makeError(extracted.reason);
 
@@ -100,7 +99,7 @@ export async function runParserProof(
   );
 
   return R.makeOk({
-    pdfKb: Math.round(blob.size / 1024),
+    pdfKb,
     chars: S.length(text),
     excerpt,
     name,
