@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { TemplateId } from "@/lib/templates";
 import { buildResumeBlocks } from "./resume-blocks";
@@ -54,7 +52,11 @@ export function ResumeThumbnail(props: ResumeThumbnailProps) {
       style={resumeTypographyStyle(props.resume, props.template)}
     >
       <ResumeFontFaces />
-      {scale > 0 && (
+      {scale === 0 ? (
+        // Holds the page's shape before the first measure, so the static HTML
+        // and an unhydrated island already take their final height.
+        <div style={{ aspectRatio: `${A4.widthPx} / ${A4.heightPx}` }} />
+      ) : (
         <div style={{ height: A4.heightPx * scale }}>
           <div
             style={{

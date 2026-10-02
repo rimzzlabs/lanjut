@@ -1,5 +1,3 @@
-"use client";
-
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { type ReactNode, useMemo } from "react";
 import { useResumeStore } from "@/lib/store";

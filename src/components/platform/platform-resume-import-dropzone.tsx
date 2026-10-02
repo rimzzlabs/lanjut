@@ -1,9 +1,7 @@
-"use client";
-
 import { FileText, Loader2, Upload, X } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { type FileRejection, useDropzone } from "react-dropzone";
+import { useLocale, useTranslations } from "use-intl";
 import type { ParseResult } from "@/lib/import";
 import { runPdfImport } from "@/lib/import/run-import";
 import type { ResumeLanguage } from "@/lib/resume";

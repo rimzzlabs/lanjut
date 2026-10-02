@@ -1,7 +1,5 @@
-"use client";
-
 import { ExternalLink, SendIcon, XIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import {
   ResponsiveDialogClose,
   ResponsiveDialogFooter,

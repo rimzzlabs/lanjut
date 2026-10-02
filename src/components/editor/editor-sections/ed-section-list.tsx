@@ -1,7 +1,5 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import { type ReactNode, useState } from "react";
+import { useTranslations } from "use-intl";
 import { SortableList } from "@/components/shared/sortable-list";
 import { Accordion } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";

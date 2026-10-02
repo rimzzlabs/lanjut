@@ -1,10 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "main": ".open-next/worker.js",
+  "main": "worker/index.ts",
   "name": "lanjut",
   "keep_names": false,
   "compatibility_date": "2026-07-01",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "compatibility_flags": ["global_fetch_strictly_public"],
+  // Shared modules read the build target the way Astro inlines it.
+  "define": {
+    "import.meta.env.PUBLIC_LANJUT_TARGET": "\"\""
+  },
   "routes": [
     {
       "pattern": "lanjut.org",
@@ -17,13 +21,23 @@
     }
   ],
   "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
-  },
-  "services": [
-    {
-      "binding": "WORKER_SELF_REFERENCE",
-      "service": "lanjut"
-    }
-  ]
+    "directory": "dist",
+    "binding": "ASSETS",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page",
+    // Static files skip the Worker, except the paths it decides on: the
+    // feedback relay, unprefixed pages that a language choice redirects, and
+    // addresses from before the static site.
+    "run_worker_first": [
+      "/api/*",
+      "/",
+      "/platform",
+      "/platform/*",
+      "/feedback",
+      "/feedback/*",
+      "/id/platform/editor/*",
+      "/en",
+      "/en/*"
+    ]
+  }
 }

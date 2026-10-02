@@ -1,5 +1,3 @@
-"use client";
-
 import { ResizablePanel } from "../ui/resizable";
 import { useSidebar } from "../ui/sidebar";
 import { EditorSidebarContent } from "./editor-sidebar-content";

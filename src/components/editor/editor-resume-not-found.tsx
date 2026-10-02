@@ -1,7 +1,5 @@
-"use client";
-
 import { FileQuestion } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { useEditorId } from "@/hooks/use-editor-id";
 import { Link } from "@/i18n/navigation";
 import { nearestResumeById } from "@/lib/resume";

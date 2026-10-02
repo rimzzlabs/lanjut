@@ -995,5 +995,11 @@
     "passed": "{count}/5 pemeriksaan lolos. Dokumen inilah yang dibaca ATS.",
     "failed": "proses gagal di browser ini. Coba lagi.",
     "rerun": "Jalankan lagi"
+  },
+  "notFound": {
+    "metaTitle": "Halaman tidak ditemukan",
+    "title": "Halaman ini tidak ada",
+    "body": "Tautannya rusak, atau halamannya sudah pindah.",
+    "home": "Ke beranda"
   }
 }

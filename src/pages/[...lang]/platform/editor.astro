@@ -1,0 +1,21 @@
+---
+import { EditorRoute } from "@/components/editor/editor-route";
+import RootLayout from "@/components/shared/root-layout.astro";
+import { type Locale, localeStaticPaths } from "@/i18n/routing";
+import { getTranslator } from "@/i18n/translator";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const locale = Astro.props.locale;
+const t = getTranslator(locale, "editor.chrome");
+---
+
+<RootLayout locale={locale} title={t("editorTitle")} noindex>
+  <EditorRoute client:load locale={locale} pathname={Astro.url.pathname} />
+</RootLayout>

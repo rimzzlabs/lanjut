@@ -1,8 +1,6 @@
-"use client";
-
 import { Copy, Download, MoreHorizontal, Pen, Trash } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { Fragment, useState } from "react";
+import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

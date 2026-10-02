@@ -1,6 +1,6 @@
 import { Trash } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { type Control, Controller } from "react-hook-form";
+import { useTranslations } from "use-intl";
 import { SortableItem } from "@/components/shared/sortable-list";
 import { UrlInput } from "@/components/shared/url-input";
 import { Button } from "@/components/ui/button";

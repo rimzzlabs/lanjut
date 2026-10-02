@@ -1,10 +1,10 @@
-import { useTranslations } from "next-intl";
 import {
   type Control,
   type FieldPath,
   type FieldValues,
   useController,
 } from "react-hook-form";
+import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";

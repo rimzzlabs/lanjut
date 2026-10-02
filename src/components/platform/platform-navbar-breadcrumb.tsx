@@ -1,6 +1,5 @@
-import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { useTranslations } from "use-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 import {
   Breadcrumb,
   BreadcrumbItem,

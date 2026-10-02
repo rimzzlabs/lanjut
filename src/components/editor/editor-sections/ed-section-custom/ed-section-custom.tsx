@@ -1,7 +1,5 @@
-"use client";
-
 import { Shapes } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
 import { TruncatedLabel } from "@/components/shared/truncated-label";
 import {

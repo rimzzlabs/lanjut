@@ -1,5 +1,3 @@
-"use client";
-
 import { ExternalLink, Globe, Link, Mail, MapPin, Phone } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";

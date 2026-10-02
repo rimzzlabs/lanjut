@@ -1,5 +1,3 @@
-"use client";
-
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { forwardRef, type ReactNode, useImperativeHandle, useRef } from "react";
 

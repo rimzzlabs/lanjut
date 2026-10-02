@@ -1,7 +1,5 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import { ResumeThumbnail } from "@/components/editor/resume-thumbnail";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import { Button } from "@/components/ui/button";

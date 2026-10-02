@@ -1,8 +1,6 @@
-"use client";
-
 import { Bug, HelpCircle, Send } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useNextStep } from "nextstepjs";
+import { useTranslations } from "use-intl";
 import { useIssueReport } from "@/hooks/use-issue-report";
 import { MEDIA_XL, useMediaQuery } from "@/hooks/use-media-query";
 import { usePathname } from "@/i18n/navigation";

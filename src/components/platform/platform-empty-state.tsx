@@ -1,8 +1,6 @@
-"use client";
-
 import { FilePlus, Inbox, Search } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import { Link } from "@/i18n/navigation";
 import { useResumeStore } from "@/lib/store";
 import { Button } from "../ui/button";

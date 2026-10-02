@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { Link } from "@/i18n/navigation";
 import { homeHref } from "@/lib/routes";
 import { Separator } from "../ui/separator";
@@ -20,7 +19,7 @@ export function PlatformSidebarHeader() {
           aria-label={t("home")}
           className="flex items-center gap-2"
         >
-          <Image
+          <img
             src="/favicon.svg"
             alt={t("logoAlt")}
             width={28}

@@ -1,5 +1,3 @@
-"use client";
-
 import { useCallback, useEffect, useState } from "react";
 import { deleteLeftovers, getLeftovers } from "@/lib/db";
 import { useResumeStore } from "@/lib/store";

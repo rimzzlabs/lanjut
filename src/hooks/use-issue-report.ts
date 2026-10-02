@@ -1,10 +1,10 @@
-"use client";
-
-import { useLocale, useTranslations } from "next-intl";
 import { useCallback } from "react";
 import { toast } from "sonner";
+import { useLocale, useTranslations } from "use-intl";
 import { usePathname } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
 import { IS_DESKTOP } from "@/lib/build-target";
+import type { FeedbackWindowOptions } from "@/lib/feedback-window";
 import { areaForPathname } from "@/lib/github-issue";
 import { useIssueReportStore } from "@/lib/store";
 
@@ -18,7 +18,7 @@ import { useIssueReportStore } from "@/lib/store";
 export function useIssueReport() {
   const setOpen = useIssueReportStore((state) => state.setOpen);
   const pathname = usePathname();
-  const locale = useLocale();
+  const locale = useLocale() as Locale;
   const t = useTranslations("feedback");
 
   return useCallback(
@@ -33,17 +33,17 @@ export function useIssueReport() {
         return;
       }
 
-      void openFeedbackWindowLazily(kind, areaForPathname(pathname), locale);
+      void openFeedbackWindowLazily({
+        kind,
+        area: areaForPathname(pathname),
+        locale,
+      });
     },
     [setOpen, pathname, locale, t],
   );
 }
 
-async function openFeedbackWindowLazily(
-  kind: "bug" | "feature",
-  area: ReturnType<typeof areaForPathname>,
-  locale: string,
-) {
+async function openFeedbackWindowLazily(options: FeedbackWindowOptions) {
   const { openFeedbackWindow } = await import("@/lib/feedback-window");
-  await openFeedbackWindow({ kind, area, locale });
+  await openFeedbackWindow(options);
 }

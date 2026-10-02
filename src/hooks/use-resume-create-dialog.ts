@@ -1,5 +1,3 @@
-"use client";
-
 import { parseAsBoolean, useQueryState } from "nuqs";
 
 /**

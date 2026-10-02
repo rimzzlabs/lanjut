@@ -1,5 +1,3 @@
-"use client";
-
 import type { JSONContent } from "@tiptap/core";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { useRef } from "react";

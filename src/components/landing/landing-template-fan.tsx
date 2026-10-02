@@ -1,5 +1,3 @@
-"use client";
-
 import { LandingLiveResume } from "./landing-live-resume";
 
 /**

@@ -1,7 +1,5 @@
-"use client";
-
 import { Plus, Search } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { useResumeCreateDialog } from "@/hooks/use-resume-create-dialog";
 import { useResumeSearchQuery } from "@/hooks/use-resume-search";
 import { Button } from "../ui/button";

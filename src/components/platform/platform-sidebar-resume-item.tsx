@@ -1,7 +1,7 @@
 import type { BaseUIEvent } from "@base-ui/react";
 import { Copy, FileText, MoreVertical, Pen, Trash } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { type MouseEvent, useState } from "react";
+import { useTranslations } from "use-intl";
 import { useEditorId } from "@/hooks/use-editor-id";
 import { Link } from "@/i18n/navigation";
 import type { ResumeIndexEntry } from "@/lib/resume";

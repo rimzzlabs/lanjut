@@ -1,9 +1,7 @@
-"use client";
-
 import type { Editor } from "@tiptap/react";
 import { Link2, Link2Off } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {

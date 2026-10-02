@@ -1,17 +1,18 @@
 /**
  * Build-time Open Graph image generator.
  *
- * Runs on the build machine (never in the Worker), so next/og's satori + resvg
- * wasm stay out of the deployed bundle. Emits one PNG per locale to public/og/,
- * which the app references from generateMetadata. Re-run after any brand change:
+ * Runs on the build machine before every web build. Satori lays the card out
+ * as SVG and sharp rasterizes it. Emits one PNG per locale to public/og/,
+ * which the root layout references. Re-run after any brand change:
  *   pnpm generate:og
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { ImageResponse } from "next/og";
+import satori from "satori";
+import sharp from "sharp";
 import { routing } from "../src/i18n/routing";
 
-type Messages = {
+interface Messages {
   hero: {
     headingLine1: string;
     headingLine2: string;
@@ -19,7 +20,7 @@ type Messages = {
     stat1Label: string;
   };
   platform: { sidebar: { tagline: string } };
-};
+}
 
 const ROOT = process.cwd();
 const SIZE = { width: 1200, height: 630 };
@@ -61,7 +62,6 @@ function OgImage(props: { messages: Messages }) {
     >
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-          {/** biome-ignore lint/performance/noImgElement: satori renders a plain img */}
           <img src={MARK_SRC} width={92} height={92} alt="" />
           <span
             style={{
@@ -121,7 +121,7 @@ async function main() {
 
   for (const locale of routing.locales) {
     const messages = readMessages(locale);
-    const response = new ImageResponse(<OgImage messages={messages} />, {
+    const svg = await satori(<OgImage messages={messages} />, {
       ...SIZE,
       fonts: [
         { name: "Fraunces", data: fraunces, weight: 600, style: "normal" },
@@ -133,7 +133,7 @@ async function main() {
         },
       ],
     });
-    const png = Buffer.from(await response.arrayBuffer());
+    const png = await sharp(Buffer.from(svg)).png().toBuffer();
     writeFileSync(join(outDir, `${locale}.png`), png);
     console.log(
       `  ✓ public/og/${locale}.png (${(png.length / 1024).toFixed(1)} KiB)`,

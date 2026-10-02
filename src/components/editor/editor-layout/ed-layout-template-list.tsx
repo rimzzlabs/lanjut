@@ -1,5 +1,3 @@
-"use client";
-
 import { useMemo } from "react";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { Skeleton } from "@/components/ui/skeleton";

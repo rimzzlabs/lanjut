@@ -1,8 +1,6 @@
-"use client";
-
 import { Check, ClipboardCopy, Inbox } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import {
   ResponsiveDialog,
   ResponsiveDialogClose,

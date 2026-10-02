@@ -1,5 +1,3 @@
-"use client";
-
 import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
 import { DEFAULT_TEMPLATE_SORT, TEMPLATE_SORTS } from "@/lib/templates";
 

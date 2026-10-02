@@ -1,6 +1,4 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { Switch } from "@/components/ui/switch";
 import { useResumeStore } from "@/lib/store";
 

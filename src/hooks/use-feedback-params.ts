@@ -1,5 +1,3 @@
-"use client";
-
 import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
 import { BUG_AREAS } from "@/lib/forms/bug-report";
 

@@ -1,7 +1,5 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import type { CardComponentProps } from "nextstepjs";
+import { useTranslations } from "use-intl";
 import { Button } from "../ui/button";
 
 export function TourCard(props: CardComponentProps) {

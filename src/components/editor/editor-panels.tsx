@@ -1,5 +1,3 @@
-"use client";
-
 import type { ReactNode } from "react";
 import { useEditorResume } from "@/hooks/use-editor-resume";
 import { MEDIA_XL, useMediaQuery } from "@/hooks/use-media-query";

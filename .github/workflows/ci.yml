@@ -35,9 +35,8 @@ jobs:
       - run: pnpm validate:exports
 
   build:
-    # Regular PRs skip the expensive open-next build; only the release-please PR
-    # builds it, so open-next incompatibilities surface before the release deploys.
-    if: startsWith(github.head_ref, 'release-please--')
+    # The static build and the Worker bundle take seconds, so every PR proves
+    # both before a release deploys them.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -51,7 +50,9 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm exec opennextjs-cloudflare build
+      - run: pnpm build
+
+      - run: pnpm exec wrangler deploy --dry-run --outdir .wrangler/dry-run
 
   desktop:
     # The desktop app is not covered by the checks job, and a broken Rust shell or
@@ -87,7 +88,7 @@ jobs:
           set -euo pipefail
           dist=$(node -p "require('./src-tauri/tauri.conf.json').build.frontendDist")
           resolved="src-tauri/${dist}"
-          test -f "${resolved}/en/platform/index.html" \
+          test -f "${resolved}/platform/index.html" \
             || { echo "frontendDist ${dist} has no exported page"; exit 1; }
           test -f "${resolved}/splashscreen.html" \
             || { echo "frontendDist ${dist} has no splash screen"; exit 1; }

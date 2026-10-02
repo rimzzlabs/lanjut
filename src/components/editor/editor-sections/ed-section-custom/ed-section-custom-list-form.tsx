@@ -1,9 +1,7 @@
-"use client";
-
 import { List, Plus } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { useTranslations } from "use-intl";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";

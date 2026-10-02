@@ -1,9 +1,7 @@
-"use client";
-
 import { A, F, O, pipe } from "@mobily/ts-belt";
 import { Laptop2, Loader2, Moon, Sun } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
+import { useTranslations } from "use-intl";
 import { useIsClient } from "@/hooks/use-is-client";
 import { Button } from "../ui/button";
 import {

@@ -1,10 +1,7 @@
-"use client";
-
 import { ImagePlus, Trash2 } from "lucide-react";
-import Image from "next/image";
-import { useTranslations } from "next-intl";
 import { useRef } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
@@ -55,12 +52,11 @@ export function EditorSectionPersonalPhoto() {
       <FieldLabel htmlFor="header-photo">{t("photo")}</FieldLabel>
       <div className="flex items-center gap-3">
         {photo ? (
-          <Image
+          <img
             src={photo}
             alt={t("photo")}
             width={56}
             height={56}
-            unoptimized
             className="size-14 object-cover"
             style={{ borderRadius: `${photoRadius}%` }}
           />

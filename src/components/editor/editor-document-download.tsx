@@ -1,5 +1,3 @@
-"use client";
-
 import { useResumeDownload } from "@/hooks/use-resume-download";
 import { PlatformResumeDownloadForm } from "../platform/platform-resume-download-form";
 

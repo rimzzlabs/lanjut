@@ -1,0 +1,105 @@
+---
+import "@/styles/globals.css";
+import { Font } from "astro:assets";
+import { type Locale, localizePath, routing } from "@/i18n/routing";
+import { getTranslator } from "@/i18n/translator";
+import { SITE } from "@/lib/site";
+import preferencesScript from "@/scripts/preferences.js?raw";
+
+interface Props {
+  locale: Locale;
+  /** The page title. Without one, the page uses the site title alone. */
+  title?: string;
+  description?: string;
+  /** Platform pages render each visitor's own data; nothing there to index. */
+  noindex?: boolean;
+}
+
+const props = Astro.props;
+const t = getTranslator(props.locale, "meta");
+
+const OG_LOCALE: Record<Locale, string> = { en: "en_US", id: "id_ID" };
+
+const siteTitle = t("title");
+const title = props.title ? `${props.title} · ${SITE.name}` : siteTitle;
+const description = props.description ?? t("description");
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogImage = new URL(`/og/${props.locale}.png`, SITE.url).href;
+const alternates = routing.locales.map((locale) => ({
+  hreflang: locale,
+  href: new URL(localizePath(Astro.url.pathname, locale), SITE.url).href,
+}));
+const xDefault = new URL(
+  localizePath(Astro.url.pathname, routing.defaultLocale),
+  SITE.url,
+).href;
+const keywords = [
+  "resume builder",
+  "ATS resume",
+  "applicant tracking system",
+  "CV builder",
+  "free resume builder",
+  "open source",
+  "local-first",
+].join(", ");
+---
+
+<!doctype html>
+<html lang={props.locale} class="h-full antialiased font-sans">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="application-name" content={SITE.name} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Rizki Citra" />
+    <link rel="author" href="https://rimzzlabs.com" />
+    <meta name="creator" content="Rizki Citra" />
+    <meta name="theme-color" content="#1c6b4f" />
+    {
+      props.noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <>
+          <link rel="canonical" href={canonical} />
+          {alternates.map((alternate) => (
+            <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
+          ))}
+          <link rel="alternate" hreflang="x-default" href={xDefault} />
+        </>
+      )
+    }
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={t("description")} />
+    <meta property="og:locale" content={OG_LOCALE[props.locale]} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={siteTitle} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={siteTitle} />
+    <meta name="twitter:description" content={t("description")} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon-192x192.png" sizes="192x192" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <Font cssVariable="--font-sans" preload />
+    <Font cssVariable="--font-geist-sans" />
+    <Font cssVariable="--font-geist-mono" />
+    <Font cssVariable="--font-brand" />
+    <Font cssVariable="--font-display" preload />
+    <script is:inline set:html={preferencesScript} />
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

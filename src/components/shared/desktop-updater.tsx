@@ -1,8 +1,6 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { useTranslations } from "use-intl";
 import { IS_DESKTOP } from "@/lib/build-target";
 import { updateCheckIsDue, useUpdaterStore } from "@/lib/store";
 

@@ -1,5 +1,3 @@
-"use client";
-
 import { type ReactNode, useEffect } from "react";
 import { useSidebarStore } from "@/lib/store";
 import { SidebarProvider, useSidebar } from "../ui/sidebar";
@@ -10,6 +8,7 @@ export function PlatformSidebarProvider(props: { children: ReactNode }) {
 
   useEffect(() => {
     void useSidebarStore.persist.rehydrate();
+    useSidebarStore.getState().restoreOpen();
   }, []);
 
   return (

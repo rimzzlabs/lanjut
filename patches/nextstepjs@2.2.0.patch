@@ -1,0 +1,20 @@
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index 23db4e3d2afdb0a01ea4ecb6b8300a90e76d913f..25aae98ab8291ae2e2b6fe3472c4189163734751 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -1,5 +1,4 @@
+ export { NextStepProvider, useNextStep } from './NextStepContext';
+-export { default as NextStep } from './NextStep';
+ export { default as NextStepReact } from './NextStepReact';
+ export { default as NextStepViewport } from './NextStepViewport';
+ export type { NextStepProps, Tour, Step, NextStepContextType, CardComponentProps, } from './types';
+diff --git a/dist/index.js b/dist/index.js
+index 0c1103bd408cb90518dd034b5f51a19b16b86227..2232c836c4c16c765a0ef00b4ab6281df199bf1c 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1,4 +1,4 @@
+ export { NextStepProvider, useNextStep } from './NextStepContext';
+-export { default as NextStep } from './NextStep';
++// Lanjut: the Next.js wrapper is dropped; it imports next/navigation.
+ export { default as NextStepReact } from './NextStepReact';
+ export { default as NextStepViewport } from './NextStepViewport';

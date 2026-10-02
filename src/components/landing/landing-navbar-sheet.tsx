@@ -1,5 +1,5 @@
 import { Menu } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { Link } from "@/i18n/navigation";
 import { PlatformNavbarTheme } from "../platform/platform-navbar-theme";
 import { LanguageSwitcher } from "../shared/language-switcher";
