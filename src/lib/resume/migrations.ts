@@ -96,8 +96,9 @@ function isJobSection(section: Record<string, unknown>): boolean {
  * `city`+`province`+`country`; experience `role`/`highlights` become
  * `title`/`description` and gain a `website`, dropping `location`.
  */
-const migrateV1toV2: Migration = (doc) =>
-  pipe(structuredClone(doc), migrateV1Header, migrateV1Experience);
+function migrateV1toV2(doc: ResumeDoc): ResumeDoc {
+  return pipe(structuredClone(doc), migrateV1Header, migrateV1Experience);
+}
 
 function migrateV1Header(doc: ResumeDoc): ResumeDoc {
   const header = doc.header as { fields?: Record<string, unknown> } | undefined;
@@ -225,12 +226,12 @@ function firstEntryOf(
  * per list item (or paragraph), with an empty level; an empty body yields a
  * single empty entry.
  */
-const migrateV2toV3: Migration = (doc) => {
+function migrateV2toV3(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   if (!Array.isArray(next.sections)) return next;
   const sections = next.sections as Array<Record<string, unknown>>;
   return { ...next, sections: A.map(sections, migrateV2SkillsSection) };
-};
+}
 
 function migrateV2SkillsSection(
   section: Record<string, unknown>,
@@ -256,7 +257,7 @@ function migrateV2SkillsSection(
  * each section (with one empty entry) if it is not already present, so the new
  * editor forms have somewhere to write.
  */
-const migrateV3toV4: Migration = (doc) => {
+function migrateV3toV4(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   const sections = pipe(
     sectionsOf(next),
@@ -269,7 +270,7 @@ const migrateV3toV4: Migration = (doc) => {
       withSection(current, { type: "languages", create: createV4Languages }),
   );
   return { ...next, sections };
-};
+}
 
 function createV4Certifications(): Record<string, unknown> {
   return {
@@ -304,25 +305,25 @@ function createV4Languages(): Record<string, unknown> {
 }
 
 /** v4→v5: adds the presentation-template id; existing documents keep "awal". */
-const migrateV4toV5: Migration = (doc) => {
+function migrateV4toV5(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   if (G.isString(next.templateId)) return next;
   return { ...next, templateId: "awal" };
-};
+}
 
 /**
  * v5→v6: adds the Organizations section (volunteer, student, and community
  * roles). Existing documents gain it (with one empty entry) if it is not
  * already present, so the new editor form has somewhere to write.
  */
-const migrateV5toV6: Migration = (doc) => {
+function migrateV5toV6(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   const sections = withSection(sectionsOf(next), {
     type: "organizations",
     create: createV6Organizations,
   });
   return { ...next, sections };
-};
+}
 
 function createV6Organizations(): Record<string, unknown> {
   return {
@@ -348,11 +349,11 @@ function createV6Organizations(): Record<string, unknown> {
  * v6→v7: adds the document `language` for localized section headings and dates.
  * Existing documents default to English, preserving their current output.
  */
-const migrateV6toV7: Migration = (doc) => {
+function migrateV6toV7(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   if (next.language === "en" || next.language === "id") return next;
   return { ...next, language: "en" };
-};
+}
 
 /** A section shaped like Experience, with one empty entry, for v8 and v9. */
 function createJobLikeSection(
@@ -384,28 +385,28 @@ function createJobLikeSection(
  * the heading differs). Existing documents gain it (with one empty entry) if it
  * is not already present, so the new editor form has somewhere to write.
  */
-const migrateV7toV8: Migration = (doc) => {
+function migrateV7toV8(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   const sections = withSection(sectionsOf(next), {
     type: "internship",
     create: () => createJobLikeSection("internship", "Internship"),
   });
   return { ...next, sections };
-};
+}
 
 /**
  * v8→v9: adds the Projects section (structurally identical to Experience, only
  * the heading differs). Existing documents gain it (with one empty entry) if it
  * is not already present, so the new editor form has somewhere to write.
  */
-const migrateV8toV9: Migration = (doc) => {
+function migrateV8toV9(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   const sections = withSection(sectionsOf(next), {
     type: "projects",
     create: () => createJobLikeSection("projects", "Projects"),
   });
   return { ...next, sections };
-};
+}
 
 /** Stamps two columns on a section whose `columns` is not 1 or 2. */
 function withTwoColumnDefault(
@@ -432,15 +433,16 @@ function withFirstColumnsDefault(doc: ResumeDoc, type: string): ResumeDoc {
  * grid can be toggled between one and two columns. Existing documents default to
  * two, preserving their current layout. Bail-safe: no Skills section means no-op.
  */
-const migrateV9toV10: Migration = (doc) =>
-  withFirstColumnsDefault(structuredClone(doc), "skills");
+function migrateV9toV10(doc: ResumeDoc): ResumeDoc {
+  return withFirstColumnsDefault(structuredClone(doc), "skills");
+}
 
 /**
  * v10→v11: adds the header `linkedin` field. Existing documents gain it (empty)
  * so the new personal-info input has somewhere to write. Bail-safe: a document
  * without header fields, or one that already carries `linkedin`, is left as-is.
  */
-const migrateV10toV11: Migration = (doc) => {
+function migrateV10toV11(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   const header = next.header as
     | { fields?: Record<string, unknown> }
@@ -448,7 +450,7 @@ const migrateV10toV11: Migration = (doc) => {
   if (!header?.fields || "linkedin" in header.fields) return next;
   const fields = { ...header.fields, linkedin: plainField("") };
   return { ...next, header: { ...header, fields } };
-};
+}
 
 /**
  * The reading order Sections are normalized to at v12. Inlined (not imported from
@@ -487,7 +489,7 @@ function v12Rank(section: unknown): number {
  * section. Bail-safe: a missing/non-array `sections` is left untouched, and the
  * sort is stable so unrecognized types keep their relative position at the end.
  */
-const migrateV11toV12: Migration = (doc) => {
+function migrateV11toV12(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   if (!Array.isArray(next.sections)) return next;
   const sections = A.sort(
@@ -495,7 +497,7 @@ const migrateV11toV12: Migration = (doc) => {
     (a, b) => v12Rank(a) - v12Rank(b),
   );
   return { ...next, sections };
-};
+}
 
 /** Maps every section of a document that has a `sections` array. */
 function mapSections(
@@ -513,14 +515,15 @@ function mapSections(
  * to true, preserving their current output. Bail-safe: a missing section is a
  * no-op, and a section already carrying the flag is left as-is.
  */
-const migrateV12toV13: Migration = (doc) =>
-  mapSections(structuredClone(doc), (section) => {
+function migrateV12toV13(doc: ResumeDoc): ResumeDoc {
+  return mapSections(structuredClone(doc), (section) => {
     if (section.type !== "skills" && section.type !== "languages") {
       return section;
     }
     if (G.isBoolean(section.showProficiency)) return section;
     return { ...section, showProficiency: true };
   });
+}
 
 /**
  * v13→v14: adds the presentation-only `columns` count to the Languages section so
@@ -528,30 +531,32 @@ const migrateV12toV13: Migration = (doc) =>
  * documents default to two, preserving their current layout. Bail-safe: no
  * Languages section means no-op.
  */
-const migrateV13toV14: Migration = (doc) =>
-  withFirstColumnsDefault(structuredClone(doc), "languages");
+function migrateV13toV14(doc: ResumeDoc): ResumeDoc {
+  return withFirstColumnsDefault(structuredClone(doc), "languages");
+}
 
 /**
  * v14→v15: adds the presentation-only `hidden` visibility toggle to every
  * section. Existing documents default to false, preserving their current
  * output. Bail-safe: a section already carrying a boolean flag is left as-is.
  */
-const migrateV14toV15: Migration = (doc) =>
-  mapSections(structuredClone(doc), (section) => {
+function migrateV14toV15(doc: ResumeDoc): ResumeDoc {
+  return mapSections(structuredClone(doc), (section) => {
     if (G.isBoolean(section.hidden)) return section;
     return { ...section, hidden: false };
   });
+}
 
 /**
  * v15→v16: adds the presentation-only document-level `showIcons` toggle for the
  * header's contact icons. Existing documents default to true, preserving their
  * current output. Bail-safe: a document already carrying a boolean is left as-is.
  */
-const migrateV15toV16: Migration = (doc) => {
+function migrateV15toV16(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   if (G.isBoolean(next.showIcons)) return next;
   return { ...next, showIcons: true };
-};
+}
 
 /**
  * v16→v17: adds the presentation-only document-level `sectionSpacing` (extra
@@ -559,11 +564,11 @@ const migrateV15toV16: Migration = (doc) => {
  * their current output. Bail-safe: a document already carrying a number is
  * left as-is.
  */
-const migrateV16toV17: Migration = (doc) => {
+function migrateV16toV17(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   if (typeof next.sectionSpacing === "number") return next;
   return { ...next, sectionSpacing: 0 };
-};
+}
 
 /** Drops `key` when it holds a value that `isValid` rejects; absence is kept. */
 function withoutMalformed(
@@ -581,8 +586,12 @@ function withoutMalformed(
  * the step only clears a malformed non-string value. Bail-safe: everything
  * else is left untouched.
  */
-const migrateV17toV18: Migration = (doc) =>
-  withoutMalformed(structuredClone(doc), { key: "font", isValid: G.isString });
+function migrateV17toV18(doc: ResumeDoc): ResumeDoc {
+  return withoutMalformed(structuredClone(doc), {
+    key: "font",
+    isValid: G.isString,
+  });
+}
 
 /**
  * v18→v19: adds the presentation-only document-wide typography settings.
@@ -591,11 +600,12 @@ const migrateV17toV18: Migration = (doc) =>
  * Bail-safe: existing numbers are left as-is and a malformed `lineHeight` is
  * cleared.
  */
-const migrateV18toV19: Migration = (doc) =>
-  withoutMalformed(withLetterSpacingDefault(structuredClone(doc)), {
+function migrateV18toV19(doc: ResumeDoc): ResumeDoc {
+  return withoutMalformed(withLetterSpacingDefault(structuredClone(doc)), {
     key: "lineHeight",
     isValid: G.isNumber,
   });
+}
 
 function withLetterSpacingDefault(doc: ResumeDoc): ResumeDoc {
   if (typeof doc.letterSpacing === "number") return doc;
@@ -608,12 +618,13 @@ function withLetterSpacingDefault(doc: ResumeDoc): ResumeDoc {
  * step only clears a malformed non-number value. Bail-safe: everything else is
  * left untouched.
  */
-const migrateV19toV20: Migration = (doc) =>
-  A.reduce(
+function migrateV19toV20(doc: ResumeDoc): ResumeDoc {
+  return A.reduce(
     ["nameScale", "titleScale", "bodyScale"],
     structuredClone(doc),
     (next, key) => withoutMalformed(next, { key, isValid: G.isNumber }),
   );
+}
 
 /** Adds `key` as an empty plain field to job entries that lack it. */
 function withJobEntryField(
@@ -641,16 +652,17 @@ function withJobEntryField(
  * until the user fills it in. Bail-safe: an entry already carrying a `location`
  * keeps it, and anything that is not an entry-shaped object is skipped.
  */
-const migrateV20toV21: Migration = (doc) =>
-  mapSections(structuredClone(doc), (section) =>
+function migrateV20toV21(doc: ResumeDoc): ResumeDoc {
+  return mapSections(structuredClone(doc), (section) =>
     withJobEntryField(section, "location"),
   );
+}
 
 /**
  * v21→v22: the header gains an optional extra `link` field (portfolio, GitHub,
  * and similar). Absence means empty; existing fields are untouched.
  */
-const migrateV21toV22: Migration = (doc) => {
+function migrateV21toV22(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   const header = next.header as
     | { fields?: Record<string, unknown> }
@@ -658,7 +670,7 @@ const migrateV21toV22: Migration = (doc) => {
   if (!G.isObject(header?.fields) || "link" in header.fields) return next;
   const fields = { ...header.fields, link: plainField("") };
   return { ...next, header: { ...header, fields } };
-};
+}
 
 /**
  * v22→v23: the header gains an optional opt-in `photo` (a data URL) and the
@@ -667,7 +679,9 @@ const migrateV21toV22: Migration = (doc) => {
  * Absence means no photo and the defaults, so nothing is reshaped; the step
  * exists to stamp the version and keep the ladder gap-free.
  */
-const migrateV22toV23: Migration = (doc) => structuredClone(doc);
+function migrateV22toV23(doc: ResumeDoc): ResumeDoc {
+  return structuredClone(doc);
+}
 
 /**
  * v23→v24: Experience and Internship entries gain an optional, plain-text
@@ -675,7 +689,7 @@ const migrateV22toV23: Migration = (doc) => structuredClone(doc);
  * is unchanged. Bail-safe: malformed sections and entries are skipped, and an
  * existing field is never replaced.
  */
-const migrateV23toV24: Migration = (doc) => {
+function migrateV23toV24(doc: ResumeDoc): ResumeDoc {
   const next = structuredClone(doc);
   if (!Array.isArray(next.sections)) return next;
   const sections = A.map(next.sections as unknown[], (section) => {
@@ -683,7 +697,7 @@ const migrateV23toV24: Migration = (doc) => {
     return withV24CompanyContext(section as Record<string, unknown>);
   });
   return { ...next, sections };
-};
+}
 
 function withV24CompanyContext(
   section: Record<string, unknown>,

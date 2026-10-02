@@ -33,8 +33,8 @@ import { PdfRichText } from "./pdf-rich-text";
 
 // Font sizes are multiplied by the document's per-group scales (name, title,
 // body); every other value is fixed. At NO_SCALE this is the baseline sheet.
-const makeStyles = (s: FontScales) =>
-  StyleSheet.create({
+function makeStyles(s: FontScales) {
+  return StyleSheet.create({
     page: {
       paddingVertical: 40,
       paddingHorizontal: 44,
@@ -92,6 +92,7 @@ const makeStyles = (s: FontScales) =>
     subtitle: { fontSize: 9 * s.body, color: PDF_COLORS.muted },
     body: { marginTop: 3 },
   });
+}
 
 const baseStyles = makeStyles(NO_SCALE);
 
