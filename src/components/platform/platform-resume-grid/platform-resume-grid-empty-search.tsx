@@ -16,9 +16,10 @@ interface PlatformResumeGridEmptySearchProps {
   query: string;
 }
 
-export function PlatformResumeGridEmptySearch({
-  query,
-}: PlatformResumeGridEmptySearchProps) {
+export function PlatformResumeGridEmptySearch(
+  props: PlatformResumeGridEmptySearchProps,
+) {
+  const { query } = props;
   const [open, setOpen] = useState(false);
   const t = useTranslations("platform.grid");
 

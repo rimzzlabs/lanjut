@@ -1,17 +1,14 @@
 import { ResumeContactIcon } from "../../resume-contact-icon";
 import { ResumeHeaderPhoto } from "../../resume-header-photo";
+import { ResumeOptionalLink } from "../../resume-optional-link";
 import type { ContactView, HeaderView } from "../../resume-preview";
 
 function KetatHeaderContact(props: ContactView & { showIcons: boolean }) {
   return (
     <li className="flex items-center justify-end gap-2">
-      {props.href ? (
-        <a href={props.href} className="underline">
-          {props.value}
-        </a>
-      ) : (
-        <span>{props.value}</span>
-      )}
+      <ResumeOptionalLink href={props.href} className="underline" wrapPlain>
+        {props.value}
+      </ResumeOptionalLink>
       <ResumeContactIcon kind={props.kind} show={props.showIcons} edge="end" />
     </li>
   );

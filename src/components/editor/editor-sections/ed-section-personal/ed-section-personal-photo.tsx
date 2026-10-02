@@ -42,16 +42,17 @@ export function EditorSectionPersonalPhoto() {
       toast.error(t("photoError"));
       return;
     }
-    updateOpen((draft) => {
-      draft.header.photo = processed;
-    });
+    updateOpen((resume) => ({
+      ...resume,
+      header: { ...resume.header, photo: processed },
+    }));
   }
 
   return (
     <Field>
       <FieldLabel htmlFor="header-photo">{t("photo")}</FieldLabel>
       <div className="flex items-center gap-3">
-        {photo ? (
+        {Boolean(photo) && (
           <img
             src={photo}
             alt={t("photo")}
@@ -60,7 +61,7 @@ export function EditorSectionPersonalPhoto() {
             className="size-14 object-cover"
             style={{ borderRadius: `${photoRadius}%` }}
           />
-        ) : null}
+        )}
         <input
           ref={inputRef}
           id="header-photo"
@@ -81,23 +82,24 @@ export function EditorSectionPersonalPhoto() {
           <ImagePlus />
           {photo ? t("photoReplace") : t("photoAdd")}
         </Button>
-        {photo ? (
+        {Boolean(photo) && (
           <Button
             type="button"
             variant="ghost"
             size="sm"
             onClick={() =>
-              updateOpen((draft) => {
-                draft.header.photo = undefined;
-              })
+              updateOpen((resume) => ({
+                ...resume,
+                header: { ...resume.header, photo: undefined },
+              }))
             }
           >
             <Trash2 />
             {t("photoRemove")}
           </Button>
-        ) : null}
+        )}
       </div>
-      {photo ? (
+      {Boolean(photo) && (
         <div className="mt-2 space-y-2">
           <div className="flex items-center justify-between gap-3">
             <span
@@ -111,9 +113,10 @@ export function EditorSectionPersonalPhoto() {
               className="max-w-36"
               value={photoSize}
               onValueChange={(value) =>
-                updateOpen((draft) => {
-                  draft.photoSize = toSingle(value);
-                })
+                updateOpen((resume) => ({
+                  ...resume,
+                  photoSize: toSingle(value),
+                }))
               }
               min={PHOTO_SIZE_MIN}
               max={PHOTO_SIZE_MAX}
@@ -132,9 +135,10 @@ export function EditorSectionPersonalPhoto() {
               className="max-w-36"
               value={photoRadius}
               onValueChange={(value) =>
-                updateOpen((draft) => {
-                  draft.photoRadius = toSingle(value);
-                })
+                updateOpen((resume) => ({
+                  ...resume,
+                  photoRadius: toSingle(value),
+                }))
               }
               min={PHOTO_RADIUS_MIN}
               max={PHOTO_RADIUS_MAX}
@@ -152,9 +156,10 @@ export function EditorSectionPersonalPhoto() {
               aria-label={t("photoAlign")}
               value={photoAlign}
               onValueChange={(value) =>
-                updateOpen((draft) => {
-                  draft.photoAlign = value as "top" | "center" | "bottom";
-                })
+                updateOpen((resume) => ({
+                  ...resume,
+                  photoAlign: value as "top" | "center" | "bottom",
+                }))
               }
               items={[
                 { value: "top", label: t("photoAlignTop") },
@@ -164,7 +169,7 @@ export function EditorSectionPersonalPhoto() {
             />
           </div>
         </div>
-      ) : null}
+      )}
       <FieldDescription>{t("photoHint")}</FieldDescription>
     </Field>
   );

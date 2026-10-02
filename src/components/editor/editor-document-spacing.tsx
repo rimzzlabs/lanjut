@@ -17,9 +17,7 @@ export function EditorDocumentSpacing() {
 
   const onValueChange = (value: number | readonly number[]) => {
     const next = Array.isArray(value) ? value[0] : (value as number);
-    updateOpen((draft) => {
-      draft.sectionSpacing = next;
-    });
+    updateOpen((resume) => ({ ...resume, sectionSpacing: next }));
   };
 
   return (

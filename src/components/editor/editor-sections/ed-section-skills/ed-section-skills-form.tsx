@@ -1,3 +1,4 @@
+import { A, O } from "@mobily/ts-belt";
 import { Plus, Zap } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -11,13 +12,14 @@ import {
   FieldLegend,
   FieldSet,
 } from "@/components/ui/field";
+import type { Resume } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 import {
   applySkillsValues,
   type SkillItemValues,
   type SkillsFormValues,
   toSkillsValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-lists";
 import { EditorSectionSkillsFormItem } from "./ed-section-skills-form-item";
 import { SkillsColumnsToggle } from "./skills-columns-toggle";
 import { SkillsProficiencyToggle } from "./skills-proficiency-toggle";
@@ -26,16 +28,24 @@ function emptySkill(): SkillItemValues {
   return { name: "", level: "" };
 }
 
+function initialValues(open: Resume | null): SkillsFormValues {
+  if (!open) return { skills: [] };
+  return toSkillsValues(open);
+}
+
 export function EditorSectionSkillsForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
-  const showProficiency =
-    open?.sections.find((s) => s.type === "skills")?.showProficiency ?? true;
+  const showProficiency = O.mapWithDefault(
+    A.find(open?.sections ?? [], (s) => s.type === "skills"),
+    true,
+    (section) => section.showProficiency ?? true,
+  );
   const t = useTranslations("editor.skills");
   const tc = useTranslations("editor.common");
 
   const form = useForm<SkillsFormValues>({
-    defaultValues: open ? toSkillsValues(open) : { skills: [] },
+    defaultValues: initialValues(open),
   });
   const { fields, prepend, remove, move } = useFieldArray({
     control: form.control,
@@ -44,14 +54,14 @@ export function EditorSectionSkillsForm() {
 
   useEffect(() => {
     const subscription = form.watch(() => {
-      updateOpen((draft) => applySkillsValues(draft, form.getValues()));
+      updateOpen((resume) => applySkillsValues(resume, form.getValues()));
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);
 
   function handleReorder(from: number, to: number) {
     move(from, to);
-    updateOpen((draft) => applySkillsValues(draft, form.getValues()));
+    updateOpen((resume) => applySkillsValues(resume, form.getValues()));
   }
 
   return (
@@ -71,13 +81,14 @@ export function EditorSectionSkillsForm() {
           {t("add")}
         </Button>
 
-        {fields.length === 0 ? (
+        {fields.length === 0 && (
           <EmptyState
             icon={Zap}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />
-        ) : (
+        )}
+        {fields.length > 0 && (
           <>
             <SkillsColumnsToggle />
             <SkillsProficiencyToggle />

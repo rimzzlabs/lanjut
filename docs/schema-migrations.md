@@ -18,10 +18,16 @@ existing data.
 
 ## The migration ladder
 
-`src/lib/resume/migrations.ts` holds one forward-only step per version, keyed by
-the version it migrates *from* (`LADDER[N]: vN → vN+1`). `runMigrations` walks a
-document up the ladder at **read time, in memory**; the raw document on disk is
-untouched until the user's next edit persists the migrated shape.
+`src/lib/resume/migrations.ts` holds the ladder: one forward-only step per
+version, keyed by the version it migrates *from* (`LADDER[N]: vN → vN+1`).
+`runMigrations` walks a document up the ladder at **read time, in memory**; the
+raw document on disk is untouched until the user's next edit persists the
+migrated shape.
+
+The steps live beside it. `migrations-v1-v11.ts` and `migrations-v11-v24.ts` hold
+the steps by version range, and `migrations-shared.ts` holds the document type
+and the helpers they share. Write a new step in the newest range file, or start
+a new range file when that one passes 600 lines, then add it to `LADDER`.
 
 Rules for every step:
 

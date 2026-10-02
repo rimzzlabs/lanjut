@@ -1,3 +1,4 @@
+import { joinPresent } from "@/lib/utils";
 /**
  * An entry's location rides on the same line as its company or institution,
  * comma-separated ("Acme Inc., San Francisco, CA"). A comma keeps the pair one
@@ -5,7 +6,7 @@
  * PDF, docx, plain text) joins it the same way.
  */
 export function withLocation(subject: string, location?: string): string {
-  return [subject, location].filter(Boolean).join(", ");
+  return joinPresent([subject, location], ", ");
 }
 
 /**

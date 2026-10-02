@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { Link, StyleSheet, Text, View } from "@react-pdf/renderer";
 import type { ComponentProps } from "react";
 import type { InlineRun, RichBlock } from "@/lib/resume/rich-content";
@@ -30,30 +31,33 @@ function runStyle(run: InlineRun): {
  * paragraphs would collide as keys).
  */
 
-function InlineRuns(props: { runs: InlineRun[] }) {
-  return props.runs.map((run, index) =>
-    run.href ? (
-      // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
-      <Link key={index} src={run.href} style={[styles.link, runStyle(run)]}>
-        {run.text}
-      </Link>
-    ) : (
+function InlineRuns(props: { runs: ReadonlyArray<InlineRun> }) {
+  return props.runs.map((run, index) => {
+    if (run.href) {
+      return (
+        // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
+        <Link key={index} src={run.href} style={[styles.link, runStyle(run)]}>
+          {run.text}
+        </Link>
+      );
+    }
+    return (
       // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
       <Text key={index} style={runStyle(run)}>
         {run.text}
       </Text>
-    ),
-  );
+    );
+  });
 }
 
 interface PdfRichTextProps {
-  blocks: RichBlock[];
+  blocks: ReadonlyArray<RichBlock>;
   style?: PdfStyle;
 }
 
 /** Renders `RichBlock`s into react-pdf primitives, preserving marks and lists. */
 export function PdfRichText(props: PdfRichTextProps) {
-  if (props.blocks.length === 0) return null;
+  if (A.isEmpty(props.blocks)) return null;
   return (
     <View style={props.style}>
       {props.blocks.map((block, index) => {

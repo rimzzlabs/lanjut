@@ -1,3 +1,4 @@
+import { A, O, pipe, S } from "@mobily/ts-belt";
 import type { JSONContent } from "@tiptap/core";
 
 /**
@@ -18,72 +19,89 @@ export interface InlineRun {
  * each a line of runs. The restricted TipTap schema has no nesting beyond this.
  */
 export type RichBlock =
-  | { type: "paragraph"; runs: InlineRun[] }
-  | { type: "list"; ordered: boolean; items: InlineRun[][] };
+  | { type: "paragraph"; runs: ReadonlyArray<InlineRun> }
+  | {
+      type: "list";
+      ordered: boolean;
+      items: ReadonlyArray<ReadonlyArray<InlineRun>>;
+    };
+
+function markOf(
+  mark: NonNullable<JSONContent["marks"]>[number],
+): Partial<InlineRun> {
+  if (mark.type === "bold") return { bold: true };
+  if (mark.type === "italic") return { italic: true };
+  if (mark.type === "link" && mark.attrs?.href) {
+    return { href: String(mark.attrs.href) };
+  }
+  return {};
+}
 
 function runFromText(node: JSONContent): InlineRun {
-  const run: InlineRun = { text: node.text ?? "" };
-  for (const mark of node.marks ?? []) {
-    if (mark.type === "bold") run.bold = true;
-    else if (mark.type === "italic") run.italic = true;
-    else if (mark.type === "link" && mark.attrs?.href) {
-      run.href = String(mark.attrs.href);
-    }
-  }
-  return run;
+  return A.reduce(
+    node.marks ?? [],
+    { text: node.text ?? "" } as InlineRun,
+    (run, mark) => ({ ...run, ...markOf(mark) }),
+  );
 }
 
 /** Depth-first collection of every text node under `node`, in document order. */
-function collectRuns(node: JSONContent): InlineRun[] {
-  if (node.type === "text") return node.text ? [runFromText(node)] : [];
-  const runs: InlineRun[] = [];
-  for (const child of node.content ?? []) runs.push(...collectRuns(child));
-  return runs;
+function collectRuns(node: JSONContent): ReadonlyArray<InlineRun> {
+  if (node.type !== "text") return A.flatMap(node.content ?? [], collectRuns);
+  if (!node.text) return [];
+  return [runFromText(node)];
+}
+
+function nodeToRichBlock(node: JSONContent): O.Option<RichBlock> {
+  if (node.type === "bulletList" || node.type === "orderedList") {
+    const items = pipe(
+      node.content ?? [],
+      A.map(collectRuns),
+      A.filter(A.isNotEmpty),
+    );
+    if (A.isEmpty(items)) return O.None;
+    return {
+      type: "list",
+      ordered: node.type === "orderedList",
+      items,
+    };
+  }
+  const runs = collectRuns(node);
+  if (A.isEmpty(runs)) return O.None;
+  return { type: "paragraph", runs };
 }
 
 /**
  * Projects a restricted TipTap document into linear `RichBlock`s. Empty
  * paragraphs and empty list items are dropped so an untouched editor yields `[]`.
  */
-export function tiptapToRichBlocks(doc: JSONContent | undefined): RichBlock[] {
-  const blocks: RichBlock[] = [];
-  for (const node of doc?.content ?? []) {
-    if (node.type === "bulletList" || node.type === "orderedList") {
-      const items: InlineRun[][] = [];
-      for (const item of node.content ?? []) {
-        const runs = collectRuns(item);
-        if (runs.length > 0) items.push(runs);
-      }
-      if (items.length > 0) {
-        blocks.push({
-          type: "list",
-          ordered: node.type === "orderedList",
-          items,
-        });
-      }
-      continue;
-    }
-    const runs = collectRuns(node);
-    if (runs.length > 0) blocks.push({ type: "paragraph", runs });
-  }
-  return blocks;
+export function tiptapToRichBlocks(
+  doc: JSONContent | undefined,
+): ReadonlyArray<RichBlock> {
+  return A.filterMap(doc?.content ?? [], nodeToRichBlock);
+}
+
+function runsHaveText(runs: ReadonlyArray<InlineRun>): boolean {
+  return A.some(runs, (run) => S.isNotEmpty(S.trim(run.text)));
+}
+
+function blockHasText(block: RichBlock): boolean {
+  if (block.type === "paragraph") return runsHaveText(block.runs);
+  return A.some(block.items, runsHaveText);
 }
 
 /** True when the blocks hold no non-whitespace text (used to gate empty fields). */
-export function isRichEmpty(blocks: RichBlock[]): boolean {
-  const hasText = (runs: InlineRun[]) => runs.some((run) => run.text.trim());
-  return !blocks.some((block) =>
-    block.type === "paragraph"
-      ? hasText(block.runs)
-      : block.items.some(hasText),
-  );
+export function isRichEmpty(blocks: ReadonlyArray<RichBlock>): boolean {
+  return !A.some(blocks, blockHasText);
 }
 
-function runsText(runs: InlineRun[]): string {
-  return runs
-    .map((run) => run.text)
-    .join("")
-    .trim();
+function runsText(runs: ReadonlyArray<InlineRun>): string {
+  return pipe(
+    runs,
+    A.map((run) => run.text),
+    A.join(""),
+    S.trim,
+  );
 }
 
 function runMarkdown(run: InlineRun): string {
@@ -99,25 +117,38 @@ function runMarkdown(run: InlineRun): string {
   return lead + text + tail;
 }
 
+function blockToMarkdown(block: RichBlock): string {
+  if (block.type === "paragraph") {
+    return pipe(block.runs, A.map(runMarkdown), A.join(""), S.trim);
+  }
+  const lines = A.mapWithIndex(block.items, (index, item) => {
+    const marker = block.ordered ? `${index + 1}.` : "-";
+    return `${marker} ${pipe(item, A.map(runMarkdown), A.join(""), S.trim)}`;
+  });
+  return A.join(lines, "\n");
+}
+
 /**
  * Serializes rich blocks to GitHub-flavored markdown (used to prefill issue
  * bodies, which GitHub renders as markdown). Paragraphs become blocks separated
  * by blank lines; lists keep their `-` / `1.` markers.
  */
-export function richBlocksToMarkdown(blocks: RichBlock[]): string {
-  const parts: string[] = [];
-  for (const block of blocks) {
-    if (block.type === "paragraph") {
-      parts.push(block.runs.map(runMarkdown).join("").trim());
-      continue;
-    }
-    const lines = block.items.map((item, index) => {
-      const marker = block.ordered ? `${index + 1}.` : "-";
-      return `${marker} ${item.map(runMarkdown).join("").trim()}`;
-    });
-    parts.push(lines.join("\n"));
+export function richBlocksToMarkdown(blocks: ReadonlyArray<RichBlock>): string {
+  return pipe(blocks, A.map(blockToMarkdown), A.join("\n\n"));
+}
+
+function blockToTextLines(block: RichBlock): ReadonlyArray<string> {
+  if (block.type === "paragraph") {
+    const text = runsText(block.runs);
+    if (S.isEmpty(text)) return [];
+    return [text];
   }
-  return parts.join("\n\n");
+  return pipe(
+    block.items,
+    A.map(runsText),
+    A.filter(S.isNotEmpty),
+    A.map((text) => `- ${text}`),
+  );
 }
 
 /**
@@ -125,18 +156,8 @@ export function richBlocksToMarkdown(blocks: RichBlock[]): string {
  * item prefixed with "- ") for the .txt export. Marks are dropped (plain text
  * carries no formatting); reading order is preserved.
  */
-export function richBlocksToText(blocks: RichBlock[]): string[] {
-  const lines: string[] = [];
-  for (const block of blocks) {
-    if (block.type === "paragraph") {
-      const text = runsText(block.runs);
-      if (text) lines.push(text);
-      continue;
-    }
-    for (const item of block.items) {
-      const text = runsText(item);
-      if (text) lines.push(`- ${text}`);
-    }
-  }
-  return lines;
+export function richBlocksToText(
+  blocks: ReadonlyArray<RichBlock>,
+): ReadonlyArray<string> {
+  return A.flatMap(blocks, blockToTextLines);
 }

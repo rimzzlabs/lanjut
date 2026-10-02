@@ -1,38 +1,27 @@
-import { lazy, Suspense, useCallback, useRef, useState } from "react";
-import type { ExportFormat } from "@/components/editor/export-format";
-import type { ResumeExportRequest } from "@/components/editor/resume-exporter";
-import type { Resume } from "@/lib/resume";
+import { useCallback, useState } from "react";
+import type { ResumeExportRequest } from "@/components/editor/download-resume";
 
-const ResumeExporter = lazy(() =>
-  import("@/components/editor/resume-exporter").then((m) => ({
-    default: m.ResumeExporter,
-  })),
-);
-
+/**
+ * Runs an export and reports whether a file was saved. The download module is
+ * loaded on first use, so the PDF and DOCX libraries stay out of the page
+ * bundle until someone exports.
+ */
 export function useResumeExporter() {
-  const [request, setRequest] = useState<ResumeExportRequest | null>(null);
-  const resolverRef = useRef<((ok: boolean) => void) | null>(null);
+  const [exporting, setExporting] = useState(false);
 
-  const runExport = useCallback(
-    (resume: Resume, format: ExportFormat, fileName: string) =>
-      new Promise<boolean>((resolve) => {
-        resolverRef.current = resolve;
-        setRequest({ resume, format, fileName });
-      }),
-    [],
-  );
-
-  const handleSettled = useCallback((ok: boolean) => {
-    setRequest(null);
-    resolverRef.current?.(ok);
-    resolverRef.current = null;
+  const runExport = useCallback(async (request: ResumeExportRequest) => {
+    setExporting(true);
+    try {
+      const { downloadResume } = await import(
+        "@/components/editor/download-resume"
+      );
+      return await downloadResume(request);
+    } catch {
+      return false;
+    } finally {
+      setExporting(false);
+    }
   }, []);
 
-  const exporter = request ? (
-    <Suspense>
-      <ResumeExporter request={request} onSettled={handleSettled} />
-    </Suspense>
-  ) : null;
-
-  return { runExport, exporting: request !== null, exporter };
+  return { runExport, exporting };
 }

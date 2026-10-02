@@ -1,3 +1,4 @@
+import { A, O, S } from "@mobily/ts-belt";
 import { Shapes } from "lucide-react";
 import { useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
@@ -20,14 +21,14 @@ interface EditorSectionCustomProps {
 
 export function EditorSectionCustom(props: EditorSectionCustomProps) {
   const section = useResumeStore((state) =>
-    state.open?.sections.find((s) => s.id === props.sectionId),
+    A.find(state.open?.sections ?? [], (s) => s.id === props.sectionId),
   );
   const setCustomVariant = useResumeStore((state) => state.setCustomVariant);
   const t = useTranslations("editor.custom");
 
-  if (!section || section.type !== "custom") return null;
+  if (O.isNone(section) || section.type !== "custom") return null;
   const variant = section.variant ?? "rich";
-  const label = section.title.trim() || t("defaultTitle");
+  const label = S.trim(section.title) || t("defaultTitle");
 
   return (
     <AccordionItem value={section.id} className="relative">
@@ -72,12 +73,13 @@ export function EditorSectionCustom(props: EditorSectionCustomProps) {
           />
         </div>
 
-        {variant === "list" ? (
+        {variant === "list" && (
           <EditorSectionCustomListForm
             key={`${section.id}-list`}
             sectionId={section.id}
           />
-        ) : (
+        )}
+        {variant !== "list" && (
           <EditorSectionCustomBodyForm
             key={`${section.id}-rich`}
             sectionId={section.id}

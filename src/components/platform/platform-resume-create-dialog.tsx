@@ -1,4 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { pipe, S } from "@mobily/ts-belt";
 import { Plus, TextInitial, XIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -39,7 +40,7 @@ import { PlatformTemplateRadioGroup } from "./platform-template-radio-group";
 
 /** Strip an imported file's name down to a résumé title. */
 function titleFromFileName(name: string): string {
-  return name.replace(/\.(pdf|json|ya?ml)$/i, "").trim() || name;
+  return pipe(name, S.replaceByRe(/\.(pdf|json|ya?ml)$/i, ""), S.trim) || name;
 }
 
 interface PlatformResumeCreateDialogProps {
@@ -107,50 +108,56 @@ export function PlatformResumeCreateDialog(
               <Controller
                 control={form.control}
                 name="title"
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor="create-resume-title">
-                      {t("label")}
-                    </FieldLabel>
-                    <InputGroup>
-                      <InputGroupAddon>
-                        <TextInitial />
-                      </InputGroupAddon>
-                      <InputGroupInput
-                        id="create-resume-title"
-                        maxLength={RESUME_TITLE_MAX_LENGTH}
-                        placeholder={t("placeholder")}
-                        aria-invalid={fieldState.invalid}
-                        {...field}
-                      />
-                    </InputGroup>
+                render={(controller) => {
+                  const { field, fieldState } = controller;
+                  return (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel htmlFor="create-resume-title">
+                        {t("label")}
+                      </FieldLabel>
+                      <InputGroup>
+                        <InputGroupAddon>
+                          <TextInitial />
+                        </InputGroupAddon>
+                        <InputGroupInput
+                          id="create-resume-title"
+                          maxLength={RESUME_TITLE_MAX_LENGTH}
+                          placeholder={t("placeholder")}
+                          aria-invalid={fieldState.invalid}
+                          {...field}
+                        />
+                      </InputGroup>
 
-                    <FieldError errors={[fieldState.error]} />
-                  </Field>
-                )}
+                      <FieldError errors={[fieldState.error]} />
+                    </Field>
+                  );
+                }}
               />
 
               <Controller
                 control={form.control}
                 name="source"
-                render={({ field }) => (
-                  <Field>
-                    <FieldLabel>{t("sourceLabel")}</FieldLabel>
-                    <SegmentedControl
-                      aria-label={t("sourceLabel")}
-                      value={field.value}
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                        if (value !== "import") setImported(null);
-                      }}
-                      items={[
-                        { value: "sample", label: t("sourceSample") },
-                        { value: "empty", label: t("sourceEmpty") },
-                        { value: "import", label: t("sourceImport") },
-                      ]}
-                    />
-                  </Field>
-                )}
+                render={(controller) => {
+                  const { field } = controller;
+                  return (
+                    <Field>
+                      <FieldLabel>{t("sourceLabel")}</FieldLabel>
+                      <SegmentedControl
+                        aria-label={t("sourceLabel")}
+                        value={field.value}
+                        onValueChange={(value) => {
+                          field.onChange(value);
+                          if (value !== "import") setImported(null);
+                        }}
+                        items={[
+                          { value: "sample", label: t("sourceSample") },
+                          { value: "empty", label: t("sourceEmpty") },
+                          { value: "import", label: t("sourceImport") },
+                        ]}
+                      />
+                    </Field>
+                  );
+                }}
               />
 
               {source === "import" && (

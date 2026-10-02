@@ -1,3 +1,4 @@
+import { A, D } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
 import {
   Select,
@@ -38,12 +39,9 @@ export function EditorDocumentFont() {
 
   const onValueChange = (value: string | null) => {
     if (!value) return;
-    updateOpen((draft) => {
-      if (value === TEMPLATE_DEFAULT) {
-        delete draft.font;
-      } else {
-        draft.font = value;
-      }
+    updateOpen((resume) => {
+      if (value === TEMPLATE_DEFAULT) return D.deleteKey(resume, "font");
+      return { ...resume, font: value };
     });
   };
 
@@ -68,7 +66,7 @@ export function EditorDocumentFont() {
           {CATEGORIES.map((category) => (
             <SelectGroup key={category}>
               <SelectLabel>{t(GROUP_KEY[category])}</SelectLabel>
-              {FONTS.filter((font) => font.category === category).map(
+              {A.filter(FONTS, (font) => font.category === category).map(
                 (font) => (
                   <SelectItem key={font.id} value={font.id}>
                     {FONT_LABELS[font.id]}

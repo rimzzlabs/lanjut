@@ -1,5 +1,7 @@
+import { D } from "@mobily/ts-belt";
 import type { ParseOptions } from "@/lib/import";
 import { createEmptyResume, type Resume } from "@/lib/resume";
+import type { ResumeContent } from "./codec";
 import { parseResumeJson } from "./json";
 import type { ParseInterchangeResult } from "./validate";
 import { parseResumeYaml } from "./yaml";
@@ -7,6 +9,25 @@ import { parseResumeYaml } from "./yaml";
 export type InterchangeImportResult =
   | { ok: true; resume: Resume; leftovers: string[] }
   | { ok: false };
+
+/** Settings that stay absent on the Resume unless the file sets them. */
+const OPTIONAL_SETTINGS = [
+  "font",
+  "lineHeight",
+  "nameScale",
+  "titleScale",
+  "bodyScale",
+  "photoSize",
+  "photoRadius",
+  "photoAlign",
+] as const;
+
+function presentSettings(content: ResumeContent): Partial<Resume> {
+  return D.filter(
+    D.selectKeys(content, OPTIONAL_SETTINGS),
+    (value) => value !== undefined,
+  );
+}
 
 /**
  * Build a full Resume from an exported interchange file. Unlike the PDF path
@@ -18,37 +39,20 @@ function buildImportedResume(
   options: ParseOptions,
 ): InterchangeImportResult {
   if (!parsed.ok) return { ok: false };
-  const resume = createEmptyResume(options.title);
-  resume.header = parsed.content.header;
-  resume.sections = parsed.content.sections;
-  resume.templateId = parsed.content.templateId ?? options.templateId;
-  resume.language = parsed.content.language ?? options.language;
-  resume.showIcons = parsed.content.showIcons ?? true;
-  resume.sectionSpacing = parsed.content.sectionSpacing ?? 0;
-  if (parsed.content.font !== undefined) resume.font = parsed.content.font;
-  resume.letterSpacing = parsed.content.letterSpacing ?? 0;
-  if (parsed.content.lineHeight !== undefined) {
-    resume.lineHeight = parsed.content.lineHeight;
-  }
-  if (parsed.content.nameScale !== undefined) {
-    resume.nameScale = parsed.content.nameScale;
-  }
-  if (parsed.content.titleScale !== undefined) {
-    resume.titleScale = parsed.content.titleScale;
-  }
-  if (parsed.content.bodyScale !== undefined) {
-    resume.bodyScale = parsed.content.bodyScale;
-  }
-  if (parsed.content.photoSize !== undefined) {
-    resume.photoSize = parsed.content.photoSize;
-  }
-  if (parsed.content.photoRadius !== undefined) {
-    resume.photoRadius = parsed.content.photoRadius;
-  }
-  if (parsed.content.photoAlign !== undefined) {
-    resume.photoAlign = parsed.content.photoAlign;
-  }
-  if (parsed.content.title) resume.title = parsed.content.title;
+  const { content } = parsed;
+  const base = createEmptyResume(options.title);
+  const resume: Resume = {
+    ...base,
+    title: content.title || base.title,
+    templateId: content.templateId ?? options.templateId,
+    language: content.language ?? options.language,
+    showIcons: content.showIcons ?? true,
+    sectionSpacing: content.sectionSpacing ?? 0,
+    letterSpacing: content.letterSpacing ?? 0,
+    header: content.header,
+    sections: content.sections,
+    ...presentSettings(content),
+  };
   return { ok: true, resume, leftovers: [] };
 }
 

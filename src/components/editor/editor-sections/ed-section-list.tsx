@@ -1,9 +1,14 @@
+import { A } from "@mobily/ts-belt";
 import { type ReactNode, useState } from "react";
 import { useTranslations } from "use-intl";
 import { SortableList } from "@/components/shared/sortable-list";
 import { Accordion } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
-import { isReorderableSection, type SectionType } from "@/lib/resume";
+import {
+  isReorderableSection,
+  type Section,
+  type SectionType,
+} from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { EditorSectionCertifications } from "./ed-section-certifications/ed-section-certifications";
@@ -36,6 +41,15 @@ const SECTION_EDITORS: Partial<Record<SectionType, () => ReactNode>> = {
   skills: EditorSectionSkills,
   languages: EditorSectionLanguages,
 };
+
+function sectionEditor(section: Section): ReactNode {
+  if (section.type === "custom") {
+    return <EditorSectionCustom sectionId={section.id} />;
+  }
+  const Editor = SECTION_EDITORS[section.type];
+  if (!Editor) return null;
+  return <Editor />;
+}
 
 export function EditorSectionList() {
   const openStatus = useResumeStore((state) => state.openStatus);
@@ -73,7 +87,7 @@ export function EditorSectionList() {
     );
   }
 
-  const reorderable = open.sections.filter((section) =>
+  const reorderable = A.filter(open.sections, (section) =>
     isReorderableSection(section.type),
   );
 
@@ -102,13 +116,7 @@ export function EditorSectionList() {
           remeasureWhileDragging
         >
           {reorderable.map((section) => {
-            const Editor = SECTION_EDITORS[section.type];
-            const content =
-              section.type === "custom" ? (
-                <EditorSectionCustom sectionId={section.id} />
-              ) : Editor ? (
-                <Editor />
-              ) : null;
+            const content = sectionEditor(section);
             if (!content) return null;
             return (
               <EditorSectionSortableItem

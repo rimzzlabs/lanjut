@@ -8,7 +8,11 @@ import type { Resume } from "@/lib/resume";
  */
 type OpenResumeGetter = () => Resume | null;
 
-let getOpenResume: OpenResumeGetter = () => null;
+function noOpenResume(): Resume | null {
+  return null;
+}
+
+let getOpenResume: OpenResumeGetter = noOpenResume;
 
 export function setOpenResumeGetter(getter: OpenResumeGetter): void {
   getOpenResume = getter;

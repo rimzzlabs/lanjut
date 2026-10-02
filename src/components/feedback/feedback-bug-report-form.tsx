@@ -1,4 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { A, O, S } from "@mobily/ts-belt";
 import { ExternalLink } from "lucide-react";
 import { type FormEvent, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -84,14 +85,17 @@ export function FeedbackBugReportForm(props: FeedbackBugReportFormProps) {
 
   const submitDirect = form.handleSubmit(async (values) => {
     const whatHappened = tiptapToRichBlocks(values.whatHappened);
-    const summary = richBlocksToText(whatHappened)[0] ?? "";
+    const summary = O.getWithDefault(
+      A.head(richBlocksToText(whatHappened)),
+      "",
+    );
 
     const result = await submitFeedback({
       kind: "bug",
       name: values.name,
       client,
       turnstileToken: values.turnstileToken,
-      summary: summary.slice(0, 120),
+      summary: S.slice(summary, 0, 120),
       whatHappened: richBlocksToMarkdown(whatHappened),
       area: values.area,
     });
@@ -110,7 +114,10 @@ export function FeedbackBugReportForm(props: FeedbackBugReportFormProps) {
   function openGitHubIssue() {
     const values = form.getValues();
     const whatHappened = tiptapToRichBlocks(values.whatHappened);
-    const summary = richBlocksToText(whatHappened)[0] ?? "";
+    const summary = O.getWithDefault(
+      A.head(richBlocksToText(whatHappened)),
+      "",
+    );
     const url = buildBugReportUrl({
       title: summary ? issueTitle("fix(bug,via app):", summary) : "",
       whatHappened: richBlocksToMarkdown(whatHappened),
@@ -137,93 +144,105 @@ export function FeedbackBugReportForm(props: FeedbackBugReportFormProps) {
             <Controller
               control={form.control}
               name="name"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="bug-report-name">
-                    {td("name")}
-                  </FieldLabel>
-                  <Input
-                    id="bug-report-name"
-                    placeholder={td("namePlaceholder")}
-                    value={field.value}
-                    onChange={field.onChange}
-                    onBlur={field.onBlur}
-                  />
-                  <FieldDescription>{td("nameDescription")}</FieldDescription>
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="bug-report-name">
+                      {td("name")}
+                    </FieldLabel>
+                    <Input
+                      id="bug-report-name"
+                      placeholder={td("namePlaceholder")}
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                    <FieldDescription>{td("nameDescription")}</FieldDescription>
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
             />
           )}
 
           <Controller
             control={form.control}
             name="area"
-            render={({ field }) => (
-              <Field>
-                <FieldLabel>{t("area")}</FieldLabel>
-                <Select
-                  value={field.value}
-                  onValueChange={(value) => field.onChange(value)}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder={t("areaPlaceholder")} />
-                  </SelectTrigger>
-                  <SelectContent
-                    alignItemWithTrigger={false}
-                    align="start"
-                    className="w-[--anchor-width]"
+            render={(controller) => {
+              const { field } = controller;
+              return (
+                <Field>
+                  <FieldLabel>{t("area")}</FieldLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
                   >
-                    <SelectGroup>
-                      {BUG_AREAS.map((area) => (
-                        <SelectItem key={area} value={area}>
-                          {area}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </Field>
-            )}
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder={t("areaPlaceholder")} />
+                    </SelectTrigger>
+                    <SelectContent
+                      alignItemWithTrigger={false}
+                      align="start"
+                      className="w-[--anchor-width]"
+                    >
+                      <SelectGroup>
+                        {BUG_AREAS.map((area) => (
+                          <SelectItem key={area} value={area}>
+                            {area}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </Field>
+              );
+            }}
           />
 
           <Controller
             control={form.control}
             name="whatHappened"
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="bug-report-what-happened">
-                  {t("whatHappened")}
-                </FieldLabel>
-                <RichTextEditor
-                  id="bug-report-what-happened"
-                  features={PROSE_FEATURES}
-                  placeholder={t("whatHappenedPlaceholder")}
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                />
-                <FieldDescription>
-                  {t("whatHappenedDescription")}
-                </FieldDescription>
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
+            render={(controller) => {
+              const { field, fieldState } = controller;
+              return (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="bug-report-what-happened">
+                    {t("whatHappened")}
+                  </FieldLabel>
+                  <RichTextEditor
+                    id="bug-report-what-happened"
+                    features={PROSE_FEATURES}
+                    placeholder={t("whatHappenedPlaceholder")}
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                  />
+                  <FieldDescription>
+                    {t("whatHappenedDescription")}
+                  </FieldDescription>
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
+              );
+            }}
           />
 
           {directEnabled && (
             <Controller
               control={form.control}
               name="turnstileToken"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <Turnstile
-                    key={turnstileEpoch}
-                    onToken={(token) => field.onChange(token ?? "")}
-                  />
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field data-invalid={fieldState.invalid}>
+                    <Turnstile
+                      key={turnstileEpoch}
+                      onToken={(token) => field.onChange(token ?? "")}
+                    />
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
             />
           )}
 

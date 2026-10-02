@@ -1,3 +1,4 @@
+import { S } from "@mobily/ts-belt";
 import {
   InputGroup,
   InputGroupAddon,
@@ -19,7 +20,7 @@ interface UrlInputProps {
  * scheme in an existing value is stripped for display so it can't double up.
  */
 export function UrlInput(props: UrlInputProps) {
-  const display = props.value.replace(/^https?:\/\//i, "");
+  const display = S.replaceByRe(props.value, /^https?:\/\//i, "");
   return (
     // Tighten the gap between the prefix and the input (default is pl-1.5).
     <InputGroup className="has-[>[data-align=inline-start]]:[&>input]:pl-0">

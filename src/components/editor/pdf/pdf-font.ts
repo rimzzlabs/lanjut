@@ -1,3 +1,4 @@
+import { D } from "@mobily/ts-belt";
 import type { Styles } from "@react-pdf/renderer";
 import { createContext, useContext } from "react";
 import { resolveFont } from "@/lib/fonts";
@@ -67,9 +68,22 @@ interface PdfTypography {
  */
 export function pdfTypography(preview: ResumePreview): PdfTypography {
   const family = resolveFont(preview.font ?? undefined)?.family ?? null;
-  const page: PdfStyle = {};
-  if (family) page.fontFamily = family;
-  if (preview.letterSpacing !== 0) page.letterSpacing = preview.letterSpacing;
-  if (preview.lineHeight != null) page.lineHeight = preview.lineHeight;
-  return { family, page: Object.keys(page).length > 0 ? page : null };
+  const page: PdfStyle = {
+    ...(family && { fontFamily: family }),
+    ...(preview.letterSpacing !== 0 && {
+      letterSpacing: preview.letterSpacing,
+    }),
+    ...(preview.lineHeight != null && { lineHeight: preview.lineHeight }),
+  };
+  if (D.isEmpty(page)) return { family, page: null };
+  return { family, page };
+}
+
+/** The page style with the document's typography overrides layered on top. */
+export function pageStyle(
+  base: PdfStyle,
+  typography: PdfTypography,
+): PdfStyle | PdfStyle[] {
+  if (!typography.page) return base;
+  return [base, typography.page];
 }

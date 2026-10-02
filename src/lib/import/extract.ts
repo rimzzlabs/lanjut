@@ -18,31 +18,31 @@ export async function extractPdfText(
 ): Promise<ExtractResult> {
   try {
     const pdf = await getDocumentProxy(bytes);
-    const lines: string[] = [];
+    let lines: ReadonlyArray<string> = [];
     for (let page = 1; page <= pdf.numPages; page += 1) {
       const content = await (await pdf.getPage(page)).getTextContent();
-      let buffer = "";
-      for (const item of content.items) {
-        if (!("str" in item)) continue;
-        buffer += item.str;
-        if ((item as { hasEOL?: boolean }).hasEOL) buffer += "\n";
-      }
-      lines.push(
-        ...pipe(
-          buffer.split("\n"),
-          A.map((line) => line.replace(/\s+/g, " ").trim()),
-          A.reject(S.isEmpty),
-        ),
+      const buffer = A.reduce(content.items, "", (acc, item) => {
+        if (!("str" in item)) return acc;
+        const eol = (item as { hasEOL?: boolean }).hasEOL ? "\n" : "";
+        return acc + item.str + eol;
+      });
+      const pageLines = pipe(
+        buffer,
+        S.split("\n"),
+        A.map(S.replaceByRe(/\s+/g, " ")),
+        A.map(S.trim),
+        A.reject(S.isEmpty),
       );
+      lines = A.concat(lines, pageLines);
     }
-    const text = lines.join("\n").trim();
-    if (!text) return { ok: false, reason: "empty" };
+    const text = pipe(lines, A.join("\n"), S.trim);
+    if (S.isEmpty(text)) return { ok: false, reason: "empty" };
     return { ok: true, text };
   } catch (error) {
-    const message = String(
-      (error as { message?: unknown })?.message ?? error,
-    ).toLowerCase();
-    if (message.includes("password") || message.includes("encrypt")) {
+    const message = S.toLowerCase(
+      String((error as { message?: unknown })?.message ?? error),
+    );
+    if (S.includes(message, "password") || S.includes(message, "encrypt")) {
       return { ok: false, reason: "encrypted" };
     }
     return { ok: false, reason: "error" };

@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { SkillsFormValues } from "../resume-form-adapter";
+import type { SkillsFormValues } from "../resume-form-adapter-lists";
 
 const PROFICIENCY_LEVELS = [
   "Beginner",
@@ -45,16 +45,19 @@ export function EditorSectionSkillsFormItem(
           <Controller
             control={props.control}
             name={`skills.${props.index}.name`}
-            render={({ field, fieldState }) => (
-              <Field className="flex-1">
-                <Input
-                  placeholder={t("namePlaceholder")}
-                  {...field}
-                  id={field.name}
-                />
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
+            render={(controller) => {
+              const { field, fieldState } = controller;
+              return (
+                <Field className="flex-1">
+                  <Input
+                    placeholder={t("namePlaceholder")}
+                    {...field}
+                    id={field.name}
+                  />
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
+              );
+            }}
           />
 
           <Button
@@ -73,25 +76,28 @@ export function EditorSectionSkillsFormItem(
           <Controller
             control={props.control}
             name={`skills.${props.index}.level`}
-            render={({ field }) => (
-              <Select
-                value={field.value || null}
-                onValueChange={(value) => field.onChange(value)}
-              >
-                <SelectTrigger className="w-[87.888%] md:w-36">
-                  <SelectValue placeholder={t("proficiency")} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {PROFICIENCY_LEVELS.map((level) => (
-                      <SelectItem key={level} value={level}>
-                        {level}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            )}
+            render={(controller) => {
+              const { field } = controller;
+              return (
+                <Select
+                  value={field.value || null}
+                  onValueChange={(value) => field.onChange(value)}
+                >
+                  <SelectTrigger className="w-[87.888%] md:w-36">
+                    <SelectValue placeholder={t("proficiency")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {PROFICIENCY_LEVELS.map((level) => (
+                        <SelectItem key={level} value={level}>
+                          {level}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              );
+            }}
           />
         )}
 

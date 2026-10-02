@@ -21,9 +21,8 @@ interface PlatformResumeGridItemProps {
   resume: ResumeIndexEntry;
 }
 
-export function PlatformResumeGridItem({
-  resume,
-}: PlatformResumeGridItemProps) {
+export function PlatformResumeGridItem(props: PlatformResumeGridItemProps) {
+  const { resume } = props;
   const t = useTranslations("platform.grid");
   const formatter = useFormatter();
   const updatedAt = new Date(resume.updatedAt);

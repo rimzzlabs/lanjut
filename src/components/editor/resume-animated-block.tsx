@@ -9,6 +9,8 @@ interface ResumeAnimatedBlockProps {
   children: ReactNode;
 }
 
+const ENTER_FROM = { opacity: 0, y: 8 };
+
 /**
  * Animates a preview block entering, leaving, and shifting as sections are
  * shown, hidden, added, or removed. `layoutDependency` is the page's block-id
@@ -21,7 +23,7 @@ export function ResumeAnimatedBlock(props: ResumeAnimatedBlockProps) {
     <motion.div
       layout={reduce ? false : "position"}
       layoutDependency={props.layoutDependency}
-      initial={reduce ? false : { opacity: 0, y: 8 }}
+      initial={reduce ? false : ENTER_FROM}
       animate={{ opacity: 1, y: 0 }}
       exit={{
         y: 8,

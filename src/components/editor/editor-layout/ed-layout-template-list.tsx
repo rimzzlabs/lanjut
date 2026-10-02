@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { useMemo } from "react";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -18,7 +19,7 @@ const SEED_PREVIEW = resumeToPreview(SEED_RESUME);
  * to keep the tiles comparable.
  */
 function toTilePreview(preview: ReturnType<typeof resumeToPreview>) {
-  return buildResumeBlocks(preview).length > 1 ? preview : SEED_PREVIEW;
+  return A.length(buildResumeBlocks(preview)) > 1 ? preview : SEED_PREVIEW;
 }
 
 export function EditorLayoutTemplateList() {
@@ -45,9 +46,10 @@ export function EditorLayoutTemplateList() {
       <RadioGroup
         value={resolveTemplateId(open.templateId)}
         onValueChange={(value) => {
-          updateOpen((draft) => {
-            draft.templateId = value as string;
-          });
+          updateOpen((resume) => ({
+            ...resume,
+            templateId: value as string,
+          }));
         }}
         className="grid grid-cols-2 gap-3 px-4"
       >

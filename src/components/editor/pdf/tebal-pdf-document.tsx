@@ -1,11 +1,5 @@
-import {
-  Document,
-  Link,
-  Page,
-  StyleSheet,
-  Text,
-  View,
-} from "@react-pdf/renderer";
+import { A } from "@mobily/ts-belt";
+import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 import {
   buildResumeBlocks,
   isAtomicBlock,
@@ -25,18 +19,20 @@ import {
   fontScales,
   NO_SCALE,
   PdfStylesContext,
+  pageStyle,
   pdfTypography,
   usePdfStyles,
 } from "./pdf-font";
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfHeaderPhoto } from "./pdf-header-photo";
+import { PdfOptionalLink } from "./pdf-optional-link";
 import { PdfRichText } from "./pdf-rich-text";
 
 // Font sizes are multiplied by the document's per-group scales (name, title,
 // body); every other value is fixed. At NO_SCALE this is the baseline sheet.
-const makeStyles = (s: FontScales) =>
-  StyleSheet.create({
+function makeStyles(s: FontScales) {
+  return StyleSheet.create({
     page: {
       paddingVertical: 40,
       paddingHorizontal: 44,
@@ -92,6 +88,7 @@ const makeStyles = (s: FontScales) =>
     subtitleLink: { color: PDF_COLORS.muted, textDecoration: "underline" },
     body: { marginTop: 3 },
   });
+}
 
 const baseStyles = makeStyles(NO_SCALE);
 
@@ -102,27 +99,27 @@ function TebalHeader(props: { header: HeaderView }) {
       <PdfHeaderPhoto header={props.header} />
       <View>
         <Text style={styles.name}>{props.header.fullName}</Text>
-        {props.header.headline ? (
+        {Boolean(props.header.headline) && (
           <Text style={styles.headline}>{props.header.headline}</Text>
-        ) : null}
-        {props.header.contacts.length > 0 ? (
+        )}
+        {A.isNotEmpty(props.header.contacts) && (
           <View style={styles.contactRowWrap}>
             {props.header.contacts.map((contact) => (
               <View key={contact.kind} style={styles.contactRow}>
-                {props.header.showIcons ? (
+                {props.header.showIcons && (
                   <PdfContactIcon kind={contact.kind} />
-                ) : null}
-                {contact.href ? (
-                  <Link src={contact.href} style={styles.linkPlain}>
-                    {contact.value}
-                  </Link>
-                ) : (
-                  <Text>{contact.value}</Text>
                 )}
+                <PdfOptionalLink
+                  href={contact.href}
+                  style={styles.linkPlain}
+                  wrapPlain
+                >
+                  {contact.value}
+                </PdfOptionalLink>
               </View>
             ))}
           </View>
-        ) : null}
+        )}
       </View>
     </View>
   );
@@ -134,37 +131,32 @@ function TebalExperience(props: { item: ExperienceItemView }) {
     <View>
       <View style={styles.entryRow}>
         <Text style={styles.entryTitle}>
-          {props.item.roleHref ? (
-            <Link
-              src={props.item.roleHref}
-              style={[
-                styles.entryTitle,
-                { color: PDF_COLORS.foreground, textDecoration: "underline" },
-              ]}
-            >
-              {props.item.role}
-            </Link>
-          ) : (
-            props.item.role
-          )}
+          <PdfOptionalLink
+            href={props.item.roleHref}
+            style={[
+              styles.entryTitle,
+              { color: PDF_COLORS.foreground, textDecoration: "underline" },
+            ]}
+          >
+            {props.item.role}
+          </PdfOptionalLink>
         </Text>
         <Text style={styles.entryDate}>
           {dateRange(props.item.startDate, props.item.endDate)}
         </Text>
       </View>
       <Text style={styles.subtitle}>
-        {props.item.companyHref ? (
-          <Link src={props.item.companyHref} style={styles.subtitleLink}>
-            {props.item.company}
-          </Link>
-        ) : (
-          props.item.company
-        )}
+        <PdfOptionalLink
+          href={props.item.companyHref}
+          style={styles.subtitleLink}
+        >
+          {props.item.company}
+        </PdfOptionalLink>
         {locationSuffix(props.item.company, props.item.location)}
       </Text>
-      {props.item.companyContext ? (
+      {Boolean(props.item.companyContext) && (
         <Text style={styles.subtitle}>{props.item.companyContext}</Text>
-      ) : null}
+      )}
       <PdfRichText blocks={props.item.description} style={styles.body} />
     </View>
   );
@@ -195,13 +187,9 @@ function TebalCertificate(props: { item: CertificateItemView }) {
     <View>
       <View style={styles.entryRow}>
         <Text style={styles.entryTitle}>
-          {props.item.href ? (
-            <Link src={props.item.href} style={styles.linkPlain}>
-              {props.item.title}
-            </Link>
-          ) : (
-            props.item.title
-          )}
+          <PdfOptionalLink href={props.item.href} style={styles.linkPlain}>
+            {props.item.title}
+          </PdfOptionalLink>
         </Text>
         {range ? <Text style={styles.entryDate}>{range}</Text> : null}
       </View>
@@ -249,10 +237,7 @@ export function TebalPdfDocument(props: { preview: ResumePreview }) {
   return (
     <PdfStylesContext.Provider value={styles}>
       <Document>
-        <Page
-          size="A4"
-          style={typography.page ? [styles.page, typography.page] : styles.page}
-        >
+        <Page size="A4" style={pageStyle(styles.page, typography)}>
           {blocks.map((block) => (
             <View
               key={block.id}

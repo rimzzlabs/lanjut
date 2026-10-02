@@ -1,3 +1,4 @@
+import { A, S } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
 import {
   useTemplateSearchQuery,
@@ -11,16 +12,16 @@ export function PlatformTemplateGrid() {
   const [sort] = useTemplateSort();
   const t = useTranslations("platform.templates");
 
-  const localized = TEMPLATES.map((template) => ({
+  const localized = A.map(TEMPLATES, (template) => ({
     ...template,
     description: t(`descriptions.${template.id}`),
   }));
   const results = sortTemplates(filterTemplates(localized, query), sort);
 
-  if (results.length === 0) {
+  if (A.isEmpty(results)) {
     return (
       <p className="py-12 text-center text-sm text-muted-foreground">
-        {t("noMatch", { query: query.trim() })}
+        {t("noMatch", { query: S.trim(query) })}
       </p>
     );
   }

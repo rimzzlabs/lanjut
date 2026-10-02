@@ -1,4 +1,4 @@
-import { A, pipe, S } from "@mobily/ts-belt";
+import { A, O, pipe, S } from "@mobily/ts-belt";
 import { nanoid } from "nanoid";
 import { create } from "zustand";
 import {
@@ -21,6 +21,8 @@ import {
   type ResumeIndexEntry,
   type ResumeLanguage,
   SEED_RESUME,
+  updateSectionById,
+  updateSections,
 } from "@/lib/resume";
 import {
   flushOpenResumePersist,
@@ -78,7 +80,7 @@ interface ResumeStoreState {
   restoreResume: (resume: Resume) => Promise<void>;
   openResume: (id: string) => Promise<void>;
   /** Apply an edit to the open document; schedules a debounced persist. */
-  updateOpen: (recipe: (draft: Resume) => void) => void;
+  updateOpen: (update: (resume: Resume) => Resume) => void;
   /** Rewind the open document one undo step; no-op when the history is empty. */
   undo: () => void;
   /** Reapply the last undone step; no-op when nothing was undone. */
@@ -126,12 +128,12 @@ const UNDO_LIMIT = 100;
  */
 const UNDO_GROUP_MS = 600;
 
-// The stacks hold previous `open` snapshots by reference; `updateOpen` never
-// mutates a published document, it clones and replaces, so snapshots stay
-// frozen. Kept at module level so pushes do not re-render subscribers;
-// `canUndo`/`canRedo` mirror the stack heads into reactive state.
-let undoPast: Resume[] = [];
-let undoFuture: Resume[] = [];
+// The stacks hold previous `open` snapshots by reference. Updates are pure and
+// return a new document, so a snapshot never changes after it is taken. Kept at
+// module level so a new step does not re-render subscribers; `canUndo` and
+// `canRedo` mirror the stack heads into reactive state.
+let undoPast: ReadonlyArray<Resume> = [];
+let undoFuture: ReadonlyArray<Resume> = [];
 let undoGroupUntil = 0;
 
 function resetUndoHistory(): void {
@@ -156,6 +158,17 @@ function syncIndexEntry(
     A.sortBy((entry) => entry.updatedAt),
     A.reverse,
   );
+}
+
+/** The document a new résumé starts from: an import, a blank page, or the sample. */
+function startingResume(title: string, options?: CreateResumeOptions): Resume {
+  if (options?.source === "import" && options.imported) {
+    // The imported document is already parsed; adopt it, retitle it, and give
+    // it a fresh id so it never collides with the fixture's placeholder ids.
+    return { ...options.imported.resume, id: nanoid(), title };
+  }
+  if (options?.source === "empty") return createEmptyResume(title);
+  return cloneResumeAsNew(SEED_RESUME, title);
 }
 
 export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
@@ -185,18 +198,12 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
 
   async createResume(title, options) {
     const trimmed = S.trim(title);
-    let resume: Resume;
-    if (options?.source === "import" && options.imported) {
-      // The imported document is already parsed; adopt it, retitle it, and give
-      // it a fresh id so it never collides with the fixture's placeholder ids.
-      resume = { ...options.imported.resume, id: nanoid(), title: trimmed };
-    } else if (options?.source === "empty") {
-      resume = createEmptyResume(trimmed);
-    } else {
-      resume = cloneResumeAsNew(SEED_RESUME, trimmed);
-    }
-    if (options?.templateId) resume.templateId = options.templateId;
-    if (options?.language) resume.language = options.language;
+    const base = startingResume(trimmed, options);
+    const resume: Resume = {
+      ...base,
+      templateId: options?.templateId || base.templateId,
+      language: options?.language || base.language,
+    };
     await putResume(resume);
     if (options?.source === "import" && options.imported) {
       await putLeftovers(resume.id, options.imported.leftovers);
@@ -279,22 +286,21 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     set({ open: resume, openStatus: "ready", canUndo: false, canRedo: false });
   },
 
-  updateOpen(recipe) {
+  updateOpen(update) {
     const current = get().open;
     if (!current) return;
-    const draft = structuredClone(current);
-    recipe(draft);
-    draft.updatedAt = new Date().toISOString();
+    const updated = update(current);
+    if (updated === current) return;
+    const next = { ...updated, updatedAt: new Date().toISOString() };
     const now = Date.now();
     if (now > undoGroupUntil) {
-      undoPast.push(current);
-      if (undoPast.length > UNDO_LIMIT) undoPast.shift();
+      undoPast = A.sliceToEnd(A.append(undoPast, current), -UNDO_LIMIT);
     }
     undoGroupUntil = now + UNDO_GROUP_MS;
     undoFuture = [];
     set((state) => ({
-      open: draft,
-      index: syncIndexEntry(state.index, draft),
+      open: next,
+      index: syncIndexEntry(state.index, next),
       canUndo: true,
       canRedo: false,
     }));
@@ -303,16 +309,17 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
 
   undo() {
     const current = get().open;
-    const previous = undoPast.pop();
-    if (!current || !previous) return;
-    undoFuture.push(current);
+    const previous = A.last(undoPast);
+    if (!current || O.isNone(previous)) return;
+    undoPast = A.initOrEmpty(undoPast);
+    undoFuture = A.append(undoFuture, current);
     undoGroupUntil = 0;
     const restored = { ...previous, updatedAt: new Date().toISOString() };
     set((state) => ({
       open: restored,
       index: syncIndexEntry(state.index, restored),
       undoEpoch: state.undoEpoch + 1,
-      canUndo: undoPast.length > 0,
+      canUndo: A.isNotEmpty(undoPast),
       canRedo: true,
     }));
     scheduleOpenResumePersist();
@@ -320,9 +327,10 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
 
   redo() {
     const current = get().open;
-    const next = undoFuture.pop();
-    if (!current || !next) return;
-    undoPast.push(current);
+    const next = A.last(undoFuture);
+    if (!current || O.isNone(next)) return;
+    undoFuture = A.initOrEmpty(undoFuture);
+    undoPast = A.append(undoPast, current);
     undoGroupUntil = 0;
     const restored = { ...next, updatedAt: new Date().toISOString() };
     set((state) => ({
@@ -330,101 +338,128 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
       index: syncIndexEntry(state.index, restored),
       undoEpoch: state.undoEpoch + 1,
       canUndo: true,
-      canRedo: undoFuture.length > 0,
+      canRedo: A.isNotEmpty(undoFuture),
     }));
     scheduleOpenResumePersist();
   },
 
   reorderSections(from, to) {
-    get().updateOpen((draft) => {
+    get().updateOpen((resume) => {
       // Indices address the reorderable subset; map them onto absolute positions
       // in `sections` so pinned sections (Summary) keep their slots untouched.
-      const slots = draft.sections.reduce<number[]>((acc, section, index) => {
-        if (isReorderableSection(section.type)) acc.push(index);
-        return acc;
-      }, []);
+      const sections = resume.sections;
+      const slots = A.reduceWithIndex(
+        sections,
+        [] as ReadonlyArray<number>,
+        (acc, section, index) =>
+          isReorderableSection(section.type) ? A.append(acc, index) : acc,
+      );
       if (
         from < 0 ||
         to < 0 ||
-        from >= slots.length ||
-        to >= slots.length ||
+        from >= A.length(slots) ||
+        to >= A.length(slots) ||
         from === to
       ) {
-        return;
+        return resume;
       }
-      const moving = draft.sections[slots[from]];
-      const reordered = slots.map((slot) => draft.sections[slot]);
-      reordered.splice(from, 1);
-      reordered.splice(to, 0, moving);
-      slots.forEach((slot, index) => {
-        draft.sections[slot] = reordered[index];
-      });
+      const moving = pipe(
+        A.get(slots, from),
+        O.flatMap((slot) => A.get(sections, slot)),
+      );
+      if (O.isNone(moving)) return resume;
+      const reordered = pipe(
+        slots,
+        A.filterMap((slot) => A.get(sections, slot)),
+        A.removeAt(from),
+        A.insertAt(to, moving),
+      );
+      return updateSections(
+        resume,
+        A.mapWithIndex((index, section) =>
+          pipe(
+            A.getIndexBy(slots, (slot) => slot === index),
+            O.flatMap((position) => A.get(reordered, position)),
+            O.getWithDefault(section),
+          ),
+        ),
+      );
     });
   },
 
   resetSectionOrder() {
-    get().updateOpen((draft) => {
-      // Stable sort by canonical index; unknown types keep their relative order
-      // at the end. Pinned sections already sort to their fixed slots.
-      draft.sections.sort(
-        (a, b) => canonicalSectionIndex(a.type) - canonicalSectionIndex(b.type),
-      );
-    });
+    // Stable sort by canonical index; unknown types keep their relative order
+    // at the end. Pinned sections already sort to their fixed slots.
+    get().updateOpen((resume) =>
+      updateSections(
+        resume,
+        A.sort(
+          (a, b) =>
+            canonicalSectionIndex(a.type) - canonicalSectionIndex(b.type),
+        ),
+      ),
+    );
   },
 
   addCustomSection(title) {
     const section = createCustomSection("rich", title);
-    get().updateOpen((draft) => {
-      draft.sections.push(section);
-    });
+    get().updateOpen((resume) => updateSections(resume, A.append(section)));
     return section.id;
   },
 
   renameCustomSection(id, title) {
-    get().updateOpen((draft) => {
-      const section = draft.sections.find(
-        (s) => s.id === id && s.type === "custom",
-      );
-      if (section) section.title = title;
-    });
+    get().updateOpen((resume) =>
+      updateSections(
+        resume,
+        updateSectionById(id, (section) => {
+          if (section.type !== "custom") return section;
+          return { ...section, title };
+        }),
+      ),
+    );
   },
 
   removeCustomSection(id) {
-    get().updateOpen((draft) => {
-      const index = draft.sections.findIndex(
-        (section) => section.id === id && section.type === "custom",
-      );
-      if (index !== -1) draft.sections.splice(index, 1);
-    });
+    get().updateOpen((resume) =>
+      updateSections(
+        resume,
+        A.reject((section) => section.id === id && section.type === "custom"),
+      ),
+    );
   },
 
   setCustomVariant(id, variant) {
-    get().updateOpen((draft) => {
-      const index = draft.sections.findIndex(
-        (section) => section.id === id && section.type === "custom",
-      );
-      if (index === -1) return;
-      draft.sections[index] = convertCustomSection(
-        draft.sections[index],
-        variant,
-      );
-    });
+    get().updateOpen((resume) =>
+      updateSections(
+        resume,
+        updateSectionById(id, (section) => {
+          if (section.type !== "custom") return section;
+          return convertCustomSection(section, variant);
+        }),
+      ),
+    );
   },
 
   toggleSectionVisibility(id) {
-    get().updateOpen((draft) => {
-      const section = draft.sections.find((s) => s.id === id);
-      if (section) section.hidden = !section.hidden;
-    });
+    get().updateOpen((resume) =>
+      updateSections(
+        resume,
+        updateSectionById(id, (section) => ({
+          ...section,
+          hidden: !section.hidden,
+        })),
+      ),
+    );
   },
 
   replaceOpenWithImport(imported) {
     const current = get().open;
     if (!current) return;
-    get().updateOpen((draft) => {
-      draft.header = structuredClone(imported.resume.header);
-      draft.sections = structuredClone(imported.resume.sections);
-    });
+    get().updateOpen((resume) => ({
+      ...resume,
+      header: imported.resume.header,
+      sections: imported.resume.sections,
+    }));
     void putLeftovers(current.id, imported.leftovers);
     set((state) => ({ leftoversVersion: state.leftoversVersion + 1 }));
   },

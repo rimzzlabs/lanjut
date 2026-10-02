@@ -1,22 +1,32 @@
+import { A, O } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
+import { updateSectionOfType, updateSections } from "@/lib/resume";
 import type { SectionColumns } from "@/lib/resume/types";
 import { useResumeStore } from "@/lib/store";
 
 export function SkillsColumnsToggle() {
-  const columns = useResumeStore(
-    (state) =>
-      state.open?.sections.find((s) => s.type === "skills")?.columns ?? 2,
+  const columns = useResumeStore((state) =>
+    O.mapWithDefault(
+      A.find(state.open?.sections ?? [], (s) => s.type === "skills"),
+      2,
+      (section) => section.columns ?? 2,
+    ),
   );
   const updateOpen = useResumeStore((state) => state.updateOpen);
   const t = useTranslations("editor.skills");
 
   function handleChange(value: string) {
     const next: SectionColumns = value === "1" ? 1 : 2;
-    updateOpen((draft) => {
-      const section = draft.sections.find((s) => s.type === "skills");
-      if (section) section.columns = next;
-    });
+    updateOpen((resume) =>
+      updateSections(
+        resume,
+        updateSectionOfType("skills", (section) => ({
+          ...section,
+          columns: next,
+        })),
+      ),
+    );
   }
 
   return (

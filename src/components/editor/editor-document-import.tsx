@@ -1,3 +1,4 @@
+import { pipe, S } from "@mobily/ts-belt";
 import { useState } from "react";
 import { useLocale, useTranslations } from "use-intl";
 import { PlatformResumeImportDropzone } from "@/components/platform/platform-resume-import-dropzone";
@@ -12,7 +13,7 @@ import { isResumePreviewEmpty, resumeToPreview } from "./resume-to-preview";
 
 /** Strip an imported file's name down to a résumé title. */
 function titleFromFileName(name: string): string {
-  return name.replace(/\.(pdf|json|ya?ml)$/i, "").trim() || name;
+  return pipe(name, S.replaceByRe(/\.(pdf|json|ya?ml)$/i, ""), S.trim) || name;
 }
 
 interface Pending {

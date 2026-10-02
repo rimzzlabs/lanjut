@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { Inbox } from "lucide-react";
 import { useTranslations } from "use-intl";
 import { useHydrateResumeLibrary } from "@/hooks/use-hydrate-resume-library";
@@ -27,6 +28,7 @@ export function PlatformSidebarResume() {
   const index = useResumeStore((state) => state.index);
   const indexStatus = useResumeStore((state) => state.indexStatus);
   const t = useTranslations("platform.sidebar");
+  const ready = indexStatus === "ready";
 
   return (
     <SidebarGroup id="tour-sidebar-resumes">
@@ -37,13 +39,13 @@ export function PlatformSidebarResume() {
       </SidebarGroupLabel>
 
       <SidebarMenu>
-        {indexStatus !== "ready" ? (
+        {!ready &&
           SKELETON_KEYS.map((key) => (
             <SidebarMenuItem key={key}>
               <SidebarMenuSkeleton />
             </SidebarMenuItem>
-          ))
-        ) : index.length === 0 ? (
+          ))}
+        {ready && A.isEmpty(index) && (
           <SidebarMenuItem>
             <Empty className="px-2 py-3 border border-dashed">
               <EmptyContent>
@@ -60,11 +62,11 @@ export function PlatformSidebarResume() {
               </EmptyContent>
             </Empty>
           </SidebarMenuItem>
-        ) : (
+        )}
+        {ready &&
           index.map((resume) => (
             <PlatformSidebarResumeItem key={resume.id} resume={resume} />
-          ))
-        )}
+          ))}
       </SidebarMenu>
     </SidebarGroup>
   );

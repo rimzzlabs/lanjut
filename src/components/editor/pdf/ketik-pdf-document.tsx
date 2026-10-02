@@ -1,11 +1,5 @@
-import {
-  Document,
-  Link,
-  Page,
-  StyleSheet,
-  Text,
-  View,
-} from "@react-pdf/renderer";
+import { A } from "@mobily/ts-belt";
+import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 import {
   buildResumeBlocks,
   isAtomicBlock,
@@ -26,6 +20,7 @@ import {
   NO_SCALE,
   PdfFontContext,
   PdfStylesContext,
+  pageStyle,
   pdfTypography,
   usePdfFontFamily,
   usePdfStyles,
@@ -33,12 +28,13 @@ import {
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfHeaderPhoto } from "./pdf-header-photo";
+import { PdfOptionalLink } from "./pdf-optional-link";
 import { PdfRichText } from "./pdf-rich-text";
 
 // Font sizes are multiplied by the document's per-group scales (name, title,
 // body); every other value is fixed. At NO_SCALE this is the baseline sheet.
-const makeStyles = (s: FontScales) =>
-  StyleSheet.create({
+function makeStyles(s: FontScales) {
+  return StyleSheet.create({
     page: {
       paddingVertical: 40,
       paddingHorizontal: 44,
@@ -96,10 +92,11 @@ const makeStyles = (s: FontScales) =>
     subtitle: { fontSize: 9 * s.body, color: PDF_COLORS.muted },
     body: { marginTop: 3 },
   });
+}
 
 const baseStyles = makeStyles(NO_SCALE);
 
-function KetikContactLine(props: { contacts: ContactView[] }) {
+function KetikContactLine(props: { contacts: ReadonlyArray<ContactView> }) {
   const styles = usePdfStyles(baseStyles);
   const mono = usePdfFontFamily("GeistMono");
   // Single-spaced separator, same wrap fix as LuasaContactLine (#145).
@@ -108,13 +105,9 @@ function KetikContactLine(props: { contacts: ContactView[] }) {
       {props.contacts.map((contact, index) => (
         <Text key={contact.kind}>
           {index > 0 ? " | " : ""}
-          {contact.href ? (
-            <Link src={contact.href} style={styles.linkMuted}>
-              {contact.value}
-            </Link>
-          ) : (
-            contact.value
-          )}
+          <PdfOptionalLink href={contact.href} style={styles.linkMuted}>
+            {contact.value}
+          </PdfOptionalLink>
         </Text>
       ))}
     </Text>
@@ -131,14 +124,14 @@ function KetikHeader(props: { header: HeaderView }) {
         <Text style={[styles.name, { fontFamily: mono }]}>
           {props.header.fullName}
         </Text>
-        {props.header.headline ? (
+        {Boolean(props.header.headline) && (
           <Text style={[styles.headline, { fontFamily: mono }]}>
             {props.header.headline}
           </Text>
-        ) : null}
-        {props.header.contacts.length > 0 ? (
+        )}
+        {A.isNotEmpty(props.header.contacts) && (
           <KetikContactLine contacts={props.header.contacts} />
-        ) : null}
+        )}
       </View>
     </View>
   );
@@ -151,41 +144,33 @@ function KetikExperience(props: { item: ExperienceItemView }) {
     <View>
       <View style={styles.entryRow}>
         <Text style={[styles.entryTitle, { fontFamily: mono }]}>
-          {props.item.roleHref ? (
-            <Link
-              src={props.item.roleHref}
-              style={[
-                styles.entryTitle,
-                {
-                  fontFamily: mono,
-                  color: PDF_COLORS.foreground,
-                  textDecoration: "underline",
-                },
-              ]}
-            >
-              {props.item.role}
-            </Link>
-          ) : (
-            props.item.role
-          )}
+          <PdfOptionalLink
+            href={props.item.roleHref}
+            style={[
+              styles.entryTitle,
+              {
+                fontFamily: mono,
+                color: PDF_COLORS.foreground,
+                textDecoration: "underline",
+              },
+            ]}
+          >
+            {props.item.role}
+          </PdfOptionalLink>
         </Text>
         <Text style={[styles.entryDate, { fontFamily: mono }]}>
           {dateRange(props.item.startDate, props.item.endDate)}
         </Text>
       </View>
       <Text style={styles.subtitle}>
-        {props.item.companyHref ? (
-          <Link src={props.item.companyHref} style={styles.linkMuted}>
-            {props.item.company}
-          </Link>
-        ) : (
-          props.item.company
-        )}
+        <PdfOptionalLink href={props.item.companyHref} style={styles.linkMuted}>
+          {props.item.company}
+        </PdfOptionalLink>
         {locationSuffix(props.item.company, props.item.location)}
       </Text>
-      {props.item.companyContext ? (
+      {Boolean(props.item.companyContext) && (
         <Text style={styles.subtitle}>{props.item.companyContext}</Text>
-      ) : null}
+      )}
       <PdfRichText blocks={props.item.description} style={styles.body} />
     </View>
   );
@@ -220,17 +205,13 @@ function KetikCertificate(props: { item: CertificateItemView }) {
     <View>
       <View style={styles.entryRow}>
         <Text style={[styles.entryTitle, { fontFamily: mono }]}>
-          {props.item.href ? (
-            <Link src={props.item.href} style={styles.linkMuted}>
-              {props.item.title}
-            </Link>
-          ) : (
-            props.item.title
-          )}
+          <PdfOptionalLink href={props.item.href} style={styles.linkMuted}>
+            {props.item.title}
+          </PdfOptionalLink>
         </Text>
-        {range ? (
+        {Boolean(range) && (
           <Text style={[styles.entryDate, { fontFamily: mono }]}>{range}</Text>
-        ) : null}
+        )}
       </View>
       <Text style={styles.subtitle}>{props.item.issuer}</Text>
     </View>
@@ -279,12 +260,7 @@ export function KetikPdfDocument(props: { preview: ResumePreview }) {
     <PdfFontContext.Provider value={typography.family}>
       <PdfStylesContext.Provider value={styles}>
         <Document>
-          <Page
-            size="A4"
-            style={
-              typography.page ? [styles.page, typography.page] : styles.page
-            }
-          >
+          <Page size="A4" style={pageStyle(styles.page, typography)}>
             {blocks.map((block) => (
               <View
                 key={block.id}

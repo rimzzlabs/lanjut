@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import {
   type FeedbackPayload,
   feedbackPayloadSchema,
@@ -55,28 +56,34 @@ function buildIssue(
     return {
       title: issueTitle("fix(bug,via app):", payload.summary),
       labels: ["bug"],
-      body: [
-        "### What happened?",
-        payload.whatHappened,
-        "### Area",
-        payload.area,
-        "### Browser and OS",
-        payload.client ?? browser ?? "_Unknown._",
-        reportedBy(payload.name),
-      ].join("\n\n"),
+      body: A.join(
+        [
+          "### What happened?",
+          payload.whatHappened,
+          "### Area",
+          payload.area,
+          "### Browser and OS",
+          payload.client ?? browser ?? "_Unknown._",
+          reportedBy(payload.name),
+        ],
+        "\n\n",
+      ),
     };
   }
 
   return {
     title: issueTitle("feat(via app):", payload.summary),
     labels: ["enhancement"],
-    body: [
-      "### What problem does this solve?",
-      payload.problem,
-      "### Which layer does this touch?",
-      payload.layer,
-      reportedBy(payload.name),
-    ].join("\n\n"),
+    body: A.join(
+      [
+        "### What problem does this solve?",
+        payload.problem,
+        "### Which layer does this touch?",
+        payload.layer,
+        reportedBy(payload.name),
+      ],
+      "\n\n",
+    ),
   };
 }
 

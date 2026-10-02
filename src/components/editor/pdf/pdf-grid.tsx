@@ -28,7 +28,7 @@ export function dateRange(start: string, end: string): string {
  * order, so text extraction is unaffected by the column count (defaults to two).
  */
 export function PdfGrid(props: {
-  items: (SkillItemView | LanguageItemView)[];
+  items: ReadonlyArray<SkillItemView | LanguageItemView>;
   columns?: SectionColumns;
 }) {
   const width = props.columns === 1 ? "100%" : "50%";
@@ -37,9 +37,9 @@ export function PdfGrid(props: {
       {props.items.map((item) => (
         <View key={item.id} style={[styles.gridItem, { width }]}>
           <Text style={styles.gridName}>{item.name}</Text>
-          {item.proficiency ? (
+          {Boolean(item.proficiency) && (
             <Text style={styles.muted}>{item.proficiency}</Text>
-          ) : null}
+          )}
         </View>
       ))}
     </View>

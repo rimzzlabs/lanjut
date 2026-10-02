@@ -26,7 +26,7 @@ export function EditorResumeNotFound() {
 
       <p className="font-medium text-neutral-950">{t("notFound")}</p>
 
-      {suggestion ? (
+      {suggestion && (
         <p>
           {t("didYouMean")}{" "}
           <Link
@@ -37,9 +37,8 @@ export function EditorResumeNotFound() {
           </Link>
           ?
         </p>
-      ) : (
-        <p>{t("notExist")}</p>
       )}
+      {!suggestion && <p>{t("notExist")}</p>}
 
       <p className="text-xs text-neutral-500">
         {t("headTo")}{" "}

@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { FilePlus, Inbox, Search } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
@@ -22,7 +23,7 @@ export function PlatformEmptyState() {
   const t = useTranslations("platform.emptyState");
 
   // With unreadable documents present, "No résumés yet" would be a lie.
-  if (indexStatus !== "ready" || index.length > 0 || unreadableCount > 0) {
+  if (indexStatus !== "ready" || A.isNotEmpty(index) || unreadableCount > 0) {
     return null;
   }
 

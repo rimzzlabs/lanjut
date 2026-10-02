@@ -1,9 +1,33 @@
-import { G } from "@mobily/ts-belt";
-import { nanoid } from "nanoid";
+import { A, G, O, R } from "@mobily/ts-belt";
+import type { ResumeDoc } from "./migrations-shared";
+import {
+  migrateV1toV2,
+  migrateV2toV3,
+  migrateV3toV4,
+  migrateV4toV5,
+  migrateV5toV6,
+  migrateV6toV7,
+  migrateV7toV8,
+  migrateV8toV9,
+  migrateV9toV10,
+  migrateV10toV11,
+} from "./migrations-v1-v11";
+import {
+  migrateV11toV12,
+  migrateV12toV13,
+  migrateV13toV14,
+  migrateV14toV15,
+  migrateV15toV16,
+  migrateV16toV17,
+  migrateV17toV18,
+  migrateV18toV19,
+  migrateV19toV20,
+  migrateV20toV21,
+  migrateV21toV22,
+  migrateV22toV23,
+  migrateV23toV24,
+} from "./migrations-v11-v24";
 import { CURRENT_SCHEMA_VERSION, type Resume } from "./types";
-
-/** A persisted document of unknown/older shape, before migration. */
-type ResumeDoc = Record<string, unknown>;
 
 /**
  * A forward-only migration from version N to N+1, keyed by N. Each step is a pure
@@ -14,649 +38,6 @@ type ResumeDoc = Record<string, unknown>;
  * must degrade to a no-op, never to blanked or replaced fields.
  */
 type Migration = (doc: ResumeDoc) => ResumeDoc;
-
-type PlainField = { kind: "plain"; value: string };
-
-function plainField(value: string): PlainField {
-  return { kind: "plain", value };
-}
-
-/** Reads a persisted Field's string value, tolerant of missing/malformed data. */
-function fieldValue(field: unknown): string {
-  if (G.isObject(field)) {
-    const value = (field as { value?: unknown }).value;
-    if (G.isString(value)) return value;
-  }
-  return "";
-}
-
-function splitName(fullName: string): { firstName: string; lastName: string } {
-  const [firstName = "", ...rest] = fullName
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
-  return { firstName, lastName: rest.join(" ") };
-}
-
-function splitLocation(location: string): {
-  city: string;
-  province: string;
-  country: string;
-} {
-  const [city = "", province = "", ...rest] = location
-    .split(",")
-    .map((part) => part.trim());
-  return { city, province, country: rest.join(", ") };
-}
-
-/**
- * v1→v2: the persisted shape now mirrors the granular editor forms. Header
- * `fullName`/`headline`/`location` become `firstName`+`lastName`/`jobTitle`/
- * `city`+`province`+`country`; experience `role`/`highlights` become
- * `title`/`description` and gain a `website`, dropping `location`.
- */
-const migrateV1toV2: Migration = (doc) => {
-  const next = structuredClone(doc);
-
-  const header = next.header as
-    | { fields?: Record<string, unknown> }
-    | undefined;
-  // "in" checks guard against a doc already in v2 shape but stamped v1:
-  // remapping from absent v1 keys would blank every field.
-  if (
-    header?.fields &&
-    ("fullName" in header.fields ||
-      "headline" in header.fields ||
-      "location" in header.fields)
-  ) {
-    const hf = header.fields;
-    const { firstName, lastName } = splitName(fieldValue(hf.fullName));
-    const { city, province, country } = splitLocation(fieldValue(hf.location));
-    header.fields = {
-      firstName: plainField(firstName),
-      lastName: plainField(lastName),
-      jobTitle: plainField(fieldValue(hf.headline)),
-      email: plainField(fieldValue(hf.email)),
-      phone: plainField(fieldValue(hf.phone)),
-      website: plainField(fieldValue(hf.website)),
-      city: plainField(city),
-      province: plainField(province),
-      country: plainField(country),
-    };
-  }
-
-  const sections = next.sections;
-  if (Array.isArray(sections)) {
-    for (const section of sections as Array<Record<string, unknown>>) {
-      if (section.type !== "experience" || !Array.isArray(section.entries)) {
-        continue;
-      }
-      for (const entry of section.entries as Array<Record<string, unknown>>) {
-        const ef = (entry.fields ?? {}) as Record<string, unknown>;
-        if (!("role" in ef) && !("highlights" in ef)) continue;
-        entry.fields = {
-          title: plainField(fieldValue(ef.role)),
-          company: plainField(fieldValue(ef.company)),
-          website: plainField(""),
-          startDate: plainField(fieldValue(ef.startDate)),
-          endDate: plainField(fieldValue(ef.endDate)),
-          description: G.isObject(ef.highlights)
-            ? ef.highlights
-            : {
-                kind: "richtext",
-                value: { type: "doc", content: [{ type: "paragraph" }] },
-              },
-        };
-      }
-    }
-  }
-
-  return next;
-};
-
-/** Concatenates every text node within a rich-text node subtree. */
-function collectText(node: unknown): string {
-  if (!G.isObject(node)) return "";
-  const record = node as { text?: unknown; content?: unknown };
-  let text = G.isString(record.text) ? record.text : "";
-  if (Array.isArray(record.content)) {
-    for (const child of record.content) text += collectText(child);
-  }
-  return text;
-}
-
-/**
- * v2→v3: Skills becomes a repeating section (a `name` plus a `level` per skill)
- * instead of a single rich-text `body`. Existing bodies are split into one entry
- * per list item (or paragraph), with an empty level; an empty body yields a
- * single empty entry.
- */
-const migrateV2toV3: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const sections = next.sections;
-  if (!Array.isArray(sections)) return next;
-
-  for (const section of sections as Array<Record<string, unknown>>) {
-    if (section.type !== "skills") continue;
-    const entries = Array.isArray(section.entries) ? section.entries : [];
-    const first = entries[0] as
-      | { fields?: Record<string, unknown> }
-      | undefined;
-    // Entries without a `body` field are not the v2 single-body shape (likely a
-    // mis-stamped doc already at v3+); replacing them would destroy real skills.
-    if (first?.fields && !("body" in first.fields)) continue;
-    const body = (first?.fields?.body as { value?: unknown } | undefined)
-      ?.value;
-
-    const names: string[] = [];
-    if (
-      G.isObject(body) &&
-      Array.isArray((body as { content?: unknown }).content)
-    ) {
-      for (const block of (body as { content: unknown[] }).content) {
-        const type = G.isObject(block)
-          ? (block as { type?: unknown }).type
-          : null;
-        if (type === "bulletList" || type === "orderedList") {
-          const items = (block as { content?: unknown[] }).content ?? [];
-          for (const item of items) {
-            const text = collectText(item).trim();
-            if (text) names.push(text);
-          }
-        } else {
-          const text = collectText(block).trim();
-          if (text) names.push(text);
-        }
-      }
-    }
-    if (names.length === 0) names.push("");
-
-    section.entries = names.map((name) => ({
-      id: nanoid(),
-      fields: {
-        name: { kind: "plain", value: name },
-        level: { kind: "plain", value: "" },
-      },
-    }));
-  }
-
-  return next;
-};
-
-/**
- * v3→v4: adds the Certifications and Languages sections. Existing documents gain
- * each section (with one empty entry) if it is not already present, so the new
- * editor forms have somewhere to write.
- */
-const migrateV3toV4: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const sections = Array.isArray(next.sections)
-    ? (next.sections as Array<Record<string, unknown>>)
-    : [];
-  const hasType = (type: string) => sections.some((s) => s.type === type);
-
-  if (!hasType("certifications")) {
-    sections.push({
-      id: nanoid(),
-      type: "certifications",
-      title: "Certifications",
-      entries: [
-        {
-          id: nanoid(),
-          fields: {
-            name: plainField(""),
-            issuer: plainField(""),
-            url: plainField(""),
-          },
-        },
-      ],
-    });
-  }
-  if (!hasType("languages")) {
-    sections.push({
-      id: nanoid(),
-      type: "languages",
-      title: "Languages",
-      entries: [
-        {
-          id: nanoid(),
-          fields: { name: plainField(""), level: plainField("") },
-        },
-      ],
-    });
-  }
-
-  next.sections = sections;
-  return next;
-};
-
-/** v4→v5: adds the presentation-template id; existing documents keep "awal". */
-const migrateV4toV5: Migration = (doc) => {
-  const next = structuredClone(doc);
-  if (!G.isString(next.templateId)) next.templateId = "awal";
-  return next;
-};
-
-/**
- * v5→v6: adds the Organizations section (volunteer, student, and community
- * roles). Existing documents gain it (with one empty entry) if it is not
- * already present, so the new editor form has somewhere to write.
- */
-const migrateV5toV6: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const sections = Array.isArray(next.sections)
-    ? (next.sections as Array<Record<string, unknown>>)
-    : [];
-
-  if (!sections.some((s) => s.type === "organizations")) {
-    sections.push({
-      id: nanoid(),
-      type: "organizations",
-      title: "Organizations",
-      entries: [
-        {
-          id: nanoid(),
-          fields: {
-            role: plainField(""),
-            organization: plainField(""),
-            startDate: plainField(""),
-            endDate: plainField(""),
-            description: {
-              kind: "richtext",
-              value: { type: "doc", content: [{ type: "paragraph" }] },
-            },
-          },
-        },
-      ],
-    });
-  }
-
-  next.sections = sections;
-  return next;
-};
-
-/**
- * v6→v7: adds the document `language` for localized section headings and dates.
- * Existing documents default to English, preserving their current output.
- */
-const migrateV6toV7: Migration = (doc) => {
-  const next = structuredClone(doc);
-  if (next.language !== "en" && next.language !== "id") next.language = "en";
-  return next;
-};
-
-/**
- * v7→v8: adds the Internship section (structurally identical to Experience, only
- * the heading differs). Existing documents gain it (with one empty entry) if it
- * is not already present, so the new editor form has somewhere to write.
- */
-const migrateV7toV8: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const sections = Array.isArray(next.sections)
-    ? (next.sections as Array<Record<string, unknown>>)
-    : [];
-
-  if (!sections.some((s) => s.type === "internship")) {
-    sections.push({
-      id: nanoid(),
-      type: "internship",
-      title: "Internship",
-      entries: [
-        {
-          id: nanoid(),
-          fields: {
-            title: plainField(""),
-            company: plainField(""),
-            website: plainField(""),
-            startDate: plainField(""),
-            endDate: plainField(""),
-            description: {
-              kind: "richtext",
-              value: { type: "doc", content: [{ type: "paragraph" }] },
-            },
-          },
-        },
-      ],
-    });
-  }
-
-  next.sections = sections;
-  return next;
-};
-
-/**
- * v8→v9: adds the Projects section (structurally identical to Experience, only
- * the heading differs). Existing documents gain it (with one empty entry) if it
- * is not already present, so the new editor form has somewhere to write.
- */
-const migrateV8toV9: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const sections = Array.isArray(next.sections)
-    ? (next.sections as Array<Record<string, unknown>>)
-    : [];
-
-  if (!sections.some((s) => s.type === "projects")) {
-    sections.push({
-      id: nanoid(),
-      type: "projects",
-      title: "Projects",
-      entries: [
-        {
-          id: nanoid(),
-          fields: {
-            title: plainField(""),
-            company: plainField(""),
-            website: plainField(""),
-            startDate: plainField(""),
-            endDate: plainField(""),
-            description: {
-              kind: "richtext",
-              value: { type: "doc", content: [{ type: "paragraph" }] },
-            },
-          },
-        },
-      ],
-    });
-  }
-
-  next.sections = sections;
-  return next;
-};
-
-/**
- * v9→v10: adds the presentation-only `columns` count to the Skills section so its
- * grid can be toggled between one and two columns. Existing documents default to
- * two, preserving their current layout. Bail-safe: no Skills section means no-op.
- */
-const migrateV9toV10: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const sections = Array.isArray(next.sections)
-    ? (next.sections as Array<Record<string, unknown>>)
-    : [];
-
-  const skills = sections.find((s) => s.type === "skills");
-  if (skills && skills.columns !== 1 && skills.columns !== 2) {
-    skills.columns = 2;
-  }
-
-  return next;
-};
-
-/**
- * v10→v11: adds the header `linkedin` field. Existing documents gain it (empty)
- * so the new personal-info input has somewhere to write. Bail-safe: a document
- * without header fields, or one that already carries `linkedin`, is left as-is.
- */
-const migrateV10toV11: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const header = next.header as
-    | { fields?: Record<string, unknown> }
-    | undefined;
-  if (header?.fields && !("linkedin" in header.fields)) {
-    header.fields.linkedin = plainField("");
-  }
-  return next;
-};
-
-/**
- * The reading order Sections are normalized to at v12. Inlined (not imported from
- * the registry) so this step stays a frozen snapshot: it must always sort to the
- * v12 order even if the registry's canonical order later changes. Types absent
- * here sort last, keeping their original relative order.
- */
-const V12_SECTION_ORDER = [
-  "summary",
-  "experience",
-  "internship",
-  "projects",
-  "organizations",
-  "education",
-  "certifications",
-  "skills",
-  "languages",
-  "custom",
-];
-
-/**
- * v11→v12: normalizes `sections[]` into the canonical reading order. Rendering
- * moves from a hardcoded section sequence to one driven by this array's order, so
- * existing documents (written in assorted creation orders) are sorted here to
- * preserve their current on-screen output; nothing moves until the user drags a
- * section. Bail-safe: a missing/non-array `sections` is left untouched, and the
- * sort is stable so unrecognized types keep their relative position at the end.
- */
-const migrateV11toV12: Migration = (doc) => {
-  const next = structuredClone(doc);
-  if (!Array.isArray(next.sections)) return next;
-
-  const rank = (section: unknown): number => {
-    const type = G.isObject(section)
-      ? (section as { type?: unknown }).type
-      : null;
-    const index = G.isString(type) ? V12_SECTION_ORDER.indexOf(type) : -1;
-    return index === -1 ? V12_SECTION_ORDER.length : index;
-  };
-
-  next.sections = [...(next.sections as unknown[])].sort(
-    (a, b) => rank(a) - rank(b),
-  );
-  return next;
-};
-
-/**
- * v12→v13: adds the presentation-only `showProficiency` toggle to the Skills and
- * Languages sections so per-entry levels can be hidden. Existing documents default
- * to true, preserving their current output. Bail-safe: a missing section is a
- * no-op, and a section already carrying the flag is left as-is.
- */
-const migrateV12toV13: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const sections = Array.isArray(next.sections)
-    ? (next.sections as Array<Record<string, unknown>>)
-    : [];
-
-  for (const section of sections) {
-    if (section.type !== "skills" && section.type !== "languages") continue;
-    if (typeof section.showProficiency !== "boolean") {
-      section.showProficiency = true;
-    }
-  }
-
-  return next;
-};
-
-/**
- * v13→v14: adds the presentation-only `columns` count to the Languages section so
- * its grid can be toggled between one and two columns, matching Skills. Existing
- * documents default to two, preserving their current layout. Bail-safe: no
- * Languages section means no-op.
- */
-const migrateV13toV14: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const sections = Array.isArray(next.sections)
-    ? (next.sections as Array<Record<string, unknown>>)
-    : [];
-
-  const languages = sections.find((s) => s.type === "languages");
-  if (languages && languages.columns !== 1 && languages.columns !== 2) {
-    languages.columns = 2;
-  }
-
-  return next;
-};
-
-/**
- * v14→v15: adds the presentation-only `hidden` visibility toggle to every
- * section. Existing documents default to false, preserving their current
- * output. Bail-safe: a section already carrying a boolean flag is left as-is.
- */
-const migrateV14toV15: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const sections = Array.isArray(next.sections)
-    ? (next.sections as Array<Record<string, unknown>>)
-    : [];
-
-  for (const section of sections) {
-    if (typeof section.hidden !== "boolean") {
-      section.hidden = false;
-    }
-  }
-
-  return next;
-};
-
-/**
- * v15→v16: adds the presentation-only document-level `showIcons` toggle for the
- * header's contact icons. Existing documents default to true, preserving their
- * current output. Bail-safe: a document already carrying a boolean is left as-is.
- */
-const migrateV15toV16: Migration = (doc) => {
-  const next = structuredClone(doc);
-  if (typeof next.showIcons !== "boolean") {
-    next.showIcons = true;
-  }
-  return next;
-};
-
-/**
- * v16→v17: adds the presentation-only document-level `sectionSpacing` (extra
- * space above section headings). Existing documents default to 0, preserving
- * their current output. Bail-safe: a document already carrying a number is
- * left as-is.
- */
-const migrateV16toV17: Migration = (doc) => {
-  const next = structuredClone(doc);
-  if (typeof next.sectionSpacing !== "number") {
-    next.sectionSpacing = 0;
-  }
-  return next;
-};
-
-/**
- * v17→v18: introduces the optional document-level `font` override. Absence is
- * meaningful ("template default"), so existing documents need no new field;
- * the step only clears a malformed non-string value. Bail-safe: everything
- * else is left untouched.
- */
-const migrateV17toV18: Migration = (doc) => {
-  const next = structuredClone(doc);
-  if (next.font !== undefined && !G.isString(next.font)) {
-    delete next.font;
-  }
-  return next;
-};
-
-/**
- * v18→v19: adds the presentation-only document-wide typography settings.
- * `letterSpacing` is stamped to 0 (no tracking), preserving current output;
- * `lineHeight` stays absent because absence means "template default".
- * Bail-safe: existing numbers are left as-is and a malformed `lineHeight` is
- * cleared.
- */
-const migrateV18toV19: Migration = (doc) => {
-  const next = structuredClone(doc);
-  if (typeof next.letterSpacing !== "number") {
-    next.letterSpacing = 0;
-  }
-  if (next.lineHeight !== undefined && !G.isNumber(next.lineHeight)) {
-    delete next.lineHeight;
-  }
-  return next;
-};
-
-/**
- * v19→v20: adds the presentation-only per-group font-size scales. Absence means
- * "template default" (scale 1), so existing documents need no new field; the
- * step only clears a malformed non-number value. Bail-safe: everything else is
- * left untouched.
- */
-const migrateV19toV20: Migration = (doc) => {
-  const next = structuredClone(doc);
-  for (const key of ["nameScale", "titleScale", "bodyScale"] as const) {
-    if (next[key] !== undefined && !G.isNumber(next[key])) {
-      delete next[key];
-    }
-  }
-  return next;
-};
-
-/**
- * v20→v21: Experience and Internship entries gain a `location` (the company's
- * city). Existing entries are stamped with an empty value, so nothing renders
- * until the user fills it in. Bail-safe: an entry already carrying a `location`
- * keeps it, and anything that is not an entry-shaped object is skipped.
- */
-const migrateV20toV21: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const sections = next.sections;
-  if (!Array.isArray(sections)) return next;
-
-  for (const section of sections as Array<Record<string, unknown>>) {
-    const isJobSection =
-      section.type === "experience" || section.type === "internship";
-    if (!isJobSection || !Array.isArray(section.entries)) continue;
-    for (const entry of section.entries as Array<Record<string, unknown>>) {
-      if (!G.isObject(entry.fields)) continue;
-      const fields = entry.fields as Record<string, unknown>;
-      if (!("location" in fields)) fields.location = plainField("");
-    }
-  }
-
-  return next;
-};
-
-/**
- * v21→v22: the header gains an optional extra `link` field (portfolio, GitHub,
- * and similar). Absence means empty; existing fields are untouched.
- */
-const migrateV21toV22: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const header = next.header as
-    | { fields?: Record<string, unknown> }
-    | undefined;
-  if (G.isObject(header?.fields) && !("link" in header.fields)) {
-    header.fields.link = plainField("");
-  }
-  return next;
-};
-
-/**
- * v22→v23: the header gains an optional opt-in `photo` (a data URL) and the
- * document gains its presentation tokens `photoSize`, `photoRadius`, and
- * `photoAlign`.
- * Absence means no photo and the defaults, so nothing is reshaped; the step
- * exists to stamp the version and keep the ladder gap-free.
- */
-const migrateV22toV23: Migration = (doc) => structuredClone(doc);
-
-/**
- * v23→v24: Experience and Internship entries gain an optional, plain-text
- * `companyContext`. Existing entries are stamped empty so their rendered output
- * is unchanged. Bail-safe: malformed sections and entries are skipped, and an
- * existing field is never replaced.
- */
-const migrateV23toV24: Migration = (doc) => {
-  const next = structuredClone(doc);
-  const sections = next.sections;
-  if (!Array.isArray(sections)) return next;
-
-  for (const section of sections) {
-    if (!G.isObject(section)) continue;
-    const isJobSection =
-      section.type === "experience" || section.type === "internship";
-    if (!isJobSection || !Array.isArray(section.entries)) continue;
-    for (const entry of section.entries) {
-      if (!G.isObject(entry)) continue;
-      if (!G.isObject(entry.fields)) continue;
-      const fields = entry.fields as Record<string, unknown>;
-      if (!("companyContext" in fields)) {
-        fields.companyContext = plainField("");
-      }
-    }
-  }
-
-  return next;
-};
 
 /**
  * The migration ladder. Each key N is a forward-only step from version N to N+1.
@@ -695,30 +76,32 @@ export function readSchemaVersion(raw: unknown): number {
 
 /**
  * Step a persisted document up to the current schema version. Run at read time,
- * per document. Throws on a document written by a newer app version (no forward
+ * per document. Fails on a document written by a newer app version (no forward
  * compatibility) or a missing ladder rung (a version gap that should never ship).
  */
-export function runMigrations(raw: unknown): Resume {
-  let doc = raw as ResumeDoc;
-  let version = readSchemaVersion(doc);
-
-  if (version > CURRENT_SCHEMA_VERSION) {
-    throw new Error(
-      `Resume schemaVersion ${version} is newer than supported ${CURRENT_SCHEMA_VERSION}.`,
+export function runMigrations(raw: unknown): R.Result<Resume, string> {
+  const start = readSchemaVersion(raw);
+  if (start > CURRENT_SCHEMA_VERSION) {
+    return R.makeError(
+      `Resume schemaVersion ${start} is newer than supported ${CURRENT_SCHEMA_VERSION}.`,
     );
   }
 
-  while (version < CURRENT_SCHEMA_VERSION) {
-    const step = LADDER[version];
-    if (!step) {
-      throw new Error(`No migration registered from schemaVersion ${version}.`);
-    }
-    doc = step(doc);
-    version += 1;
-    doc.schemaVersion = version;
-  }
+  const migrated = A.reduce(
+    A.range(start, CURRENT_SCHEMA_VERSION - 1),
+    R.makeOk<ResumeDoc, string>(raw as ResumeDoc),
+    (result, version) => R.flatMap(result, (doc) => stepUp(doc, version)),
+  );
+  return R.map(migrated, (doc) => doc as unknown as Resume);
+}
 
-  return doc as unknown as Resume;
+/** Runs the ladder rung for `version`, or fails when none is registered. */
+function stepUp(doc: ResumeDoc, version: number): R.Result<ResumeDoc, string> {
+  return O.match(
+    O.fromNullable(LADDER[version]),
+    (step) => R.makeOk({ ...step(doc), schemaVersion: version + 1 }),
+    () => R.makeError(`No migration registered from schemaVersion ${version}.`),
+  );
 }
 
 /** Whether a persisted document is below the current version and will be migrated. */

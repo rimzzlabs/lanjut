@@ -1,4 +1,4 @@
-import { A, pipe } from "@mobily/ts-belt";
+import { A, O, pipe, S } from "@mobily/ts-belt";
 import { levenshteinSubstring } from "@/lib/levenshtein";
 import type { ResumeIndexEntry } from "./types";
 
@@ -15,23 +15,23 @@ export function nearestResumeById(
   index: readonly ResumeIndexEntry[],
   missingId: string,
 ): ResumeIndexEntry | undefined {
-  const query = missingId.trim().toLowerCase();
-  if (query.length === 0) return undefined;
+  const query = pipe(missingId, S.trim, S.toLowerCase);
+  if (S.isEmpty(query)) return undefined;
 
-  const threshold = Math.floor(query.length * ERROR_TOLERANCE);
+  const threshold = Math.floor(S.length(query) * ERROR_TOLERANCE);
 
-  const best = pipe(
+  return pipe(
     index,
     A.map((entry) => ({
       entry,
-      distance: levenshteinSubstring(query, entry.id.toLowerCase()),
+      distance: levenshteinSubstring(query, S.toLowerCase(entry.id)),
     })),
     A.filter((scored) => scored.distance <= threshold),
     A.sortBy((scored) => scored.distance),
     A.head,
+    O.map((scored) => scored.entry),
+    O.toUndefined,
   );
-
-  return best?.entry;
 }
 
 /**
@@ -45,16 +45,16 @@ export function filterResumeIndex(
   index: readonly ResumeIndexEntry[],
   rawQuery: string,
 ): readonly ResumeIndexEntry[] {
-  const query = rawQuery.trim().toLowerCase();
-  if (query.length === 0) return index;
+  const query = pipe(rawQuery, S.trim, S.toLowerCase);
+  if (S.isEmpty(query)) return index;
 
-  const threshold = Math.floor(query.length * ERROR_TOLERANCE);
+  const threshold = Math.floor(S.length(query) * ERROR_TOLERANCE);
 
   return pipe(
     index,
     A.map((entry) => ({
       entry,
-      distance: levenshteinSubstring(query, entry.title.toLowerCase()),
+      distance: levenshteinSubstring(query, S.toLowerCase(entry.title)),
     })),
     A.filter((scored) => scored.distance <= threshold),
     A.sortBy((scored) => scored.distance),

@@ -1,3 +1,4 @@
+import { S } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import {
@@ -12,21 +13,21 @@ import {
 export function PlatformNavbarBreadcrumb() {
   const pathname = usePathname();
   const t = useTranslations("platform.breadcrumb");
+  const atPlatform = S.endsWith(pathname, "/platform");
 
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          {pathname.endsWith("/platform") ? (
-            <BreadcrumbPage>{t("platform")}</BreadcrumbPage>
-          ) : (
+          {atPlatform && <BreadcrumbPage>{t("platform")}</BreadcrumbPage>}
+          {!atPlatform && (
             <BreadcrumbLink render={<Link href="/platform" />}>
               {t("platform")}
             </BreadcrumbLink>
           )}
         </BreadcrumbItem>
 
-        {pathname.includes("/editor") && (
+        {S.includes(pathname, "/editor") && (
           <>
             <BreadcrumbSeparator />
 
@@ -36,7 +37,7 @@ export function PlatformNavbarBreadcrumb() {
           </>
         )}
 
-        {pathname.includes("/template") && (
+        {S.includes(pathname, "/template") && (
           <>
             <BreadcrumbSeparator />
 

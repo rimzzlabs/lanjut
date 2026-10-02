@@ -5,6 +5,7 @@ import { useTranslations } from "use-intl";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import { FieldDescription, FieldLegend, FieldSet } from "@/components/ui/field";
+import type { Resume } from "@/lib/resume";
 import { emptyRichTextValue } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 import {
@@ -17,7 +18,7 @@ import {
   type InternshipFormValues,
   type InternshipItemValues,
   toInternshipValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-jobs";
 import { EditorSectionInternshipFormItem } from "./ed-section-internship-form-item";
 
 function emptyInternship(): InternshipItemValues {
@@ -33,6 +34,11 @@ function emptyInternship(): InternshipItemValues {
   };
 }
 
+function initialValues(open: Resume | null): InternshipFormValues {
+  if (!open) return { internships: [] };
+  return toInternshipValues(open);
+}
+
 export function EditorSectionInternshipForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
@@ -40,7 +46,7 @@ export function EditorSectionInternshipForm() {
   const tc = useTranslations("editor.common");
 
   const form = useForm<InternshipFormValues>({
-    defaultValues: open ? toInternshipValues(open) : { internships: [] },
+    defaultValues: initialValues(open),
   });
   const { fields, prepend, remove, move } = useFieldArray({
     control: form.control,
@@ -54,14 +60,18 @@ export function EditorSectionInternshipForm() {
   // write. Reading getValues() inside the callback avoids stale-value timing.
   useEffect(() => {
     const subscription = form.watch(() => {
-      updateOpen((draft) => applyInternshipValues(draft, form.getValues()));
+      updateOpen((resume) => applyInternshipValues(resume, form.getValues()));
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);
 
   const handleDatesCommit = (index: number) => {
     requestAnimationFrame(() => {
-      const to = repositionByRecency(index, form.getValues().internships, move);
+      const to = repositionByRecency({
+        from: index,
+        items: form.getValues().internships,
+        move,
+      });
       if (to !== null) listRef.current?.scrollToIndex(to);
     });
   };
@@ -85,13 +95,14 @@ export function EditorSectionInternshipForm() {
           {t("add")}
         </Button>
 
-        {fields.length === 0 ? (
+        {fields.length === 0 && (
           <EmptyState
             icon={Backpack}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />
-        ) : (
+        )}
+        {fields.length > 0 && (
           <AnimatedEntryList
             ref={listRef}
             ids={fields.map((field) => field.id)}

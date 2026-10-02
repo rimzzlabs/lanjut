@@ -1,3 +1,4 @@
+import { A, O } from "@mobily/ts-belt";
 import { Languages, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -11,13 +12,14 @@ import {
   FieldLegend,
   FieldSet,
 } from "@/components/ui/field";
+import type { Resume } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 import {
   applyLanguagesValues,
   type LanguageItemValues,
   type LanguagesFormValues,
   toLanguagesValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-lists";
 import { EditorSectionLanguagesFormItem } from "./ed-section-languages-form-item";
 import { LanguagesColumnsToggle } from "./languages-columns-toggle";
 import { LanguagesProficiencyToggle } from "./languages-proficiency-toggle";
@@ -26,16 +28,24 @@ function emptyLanguage(): LanguageItemValues {
   return { name: "", level: "" };
 }
 
+function initialValues(open: Resume | null): LanguagesFormValues {
+  if (!open) return { languages: [] };
+  return toLanguagesValues(open);
+}
+
 export function EditorSectionLanguagesForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
-  const showProficiency =
-    open?.sections.find((s) => s.type === "languages")?.showProficiency ?? true;
+  const showProficiency = O.mapWithDefault(
+    A.find(open?.sections ?? [], (s) => s.type === "languages"),
+    true,
+    (section) => section.showProficiency ?? true,
+  );
   const t = useTranslations("editor.languages");
   const tc = useTranslations("editor.common");
 
   const form = useForm<LanguagesFormValues>({
-    defaultValues: open ? toLanguagesValues(open) : { languages: [] },
+    defaultValues: initialValues(open),
   });
   const { fields, prepend, remove, move } = useFieldArray({
     control: form.control,
@@ -44,14 +54,14 @@ export function EditorSectionLanguagesForm() {
 
   useEffect(() => {
     const subscription = form.watch(() => {
-      updateOpen((draft) => applyLanguagesValues(draft, form.getValues()));
+      updateOpen((resume) => applyLanguagesValues(resume, form.getValues()));
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);
 
   function handleReorder(from: number, to: number) {
     move(from, to);
-    updateOpen((draft) => applyLanguagesValues(draft, form.getValues()));
+    updateOpen((resume) => applyLanguagesValues(resume, form.getValues()));
   }
 
   if (!open) return null;
@@ -73,13 +83,14 @@ export function EditorSectionLanguagesForm() {
           {t("add")}
         </Button>
 
-        {fields.length === 0 ? (
+        {fields.length === 0 && (
           <EmptyState
             icon={Languages}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />
-        ) : (
+        )}
+        {fields.length > 0 && (
           <>
             <LanguagesColumnsToggle />
             <LanguagesProficiencyToggle />

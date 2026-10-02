@@ -1,3 +1,5 @@
+import { A, O, pipe, S } from "@mobily/ts-belt";
+import type { DialogFilter } from "@tauri-apps/plugin-dialog";
 import { IS_DESKTOP } from "@/lib/build-target";
 
 /**
@@ -6,10 +8,12 @@ import { IS_DESKTOP } from "@/lib/build-target";
  * "resume" when nothing usable remains.
  */
 export function safeFileName(name: string): string {
-  const cleaned = name
-    .replace(/\.(pdf|docx|txt|json|ya?ml)$/i, "")
-    .replace(/[\\/:*?"<>|]+/g, "-")
-    .trim();
+  const cleaned = pipe(
+    name,
+    S.replaceByRe(/\.(pdf|docx|txt|json|ya?ml)$/i, ""),
+    S.replaceByRe(/[\\/:*?"<>|]+/g, "-"),
+    S.trim,
+  );
   return cleaned || "resume";
 }
 
@@ -21,23 +25,23 @@ const EXTENSION_LABEL: Record<string, string> = {
   yaml: "YAML",
 };
 
+function saveFilters(extension: string): DialogFilter[] {
+  if (!extension) return [];
+  return [
+    { name: EXTENSION_LABEL[extension] ?? extension, extensions: [extension] },
+  ];
+}
+
 async function saveThroughDialog(blob: Blob, fileName: string) {
   const [{ save }, { writeFile }] = await Promise.all([
     import("@tauri-apps/plugin-dialog"),
     import("@tauri-apps/plugin-fs"),
   ]);
 
-  const extension = fileName.split(".").pop() ?? "";
+  const extension = pipe(fileName, S.split("."), A.last, O.getWithDefault(""));
   const path = await save({
     defaultPath: fileName,
-    filters: extension
-      ? [
-          {
-            name: EXTENSION_LABEL[extension] ?? extension,
-            extensions: [extension],
-          },
-        ]
-      : [],
+    filters: saveFilters(extension),
   });
   if (!path) return false;
 

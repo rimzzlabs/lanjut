@@ -15,9 +15,10 @@ interface PlatformResumeGridItemThumbnailProps {
   resume: ResumeIndexEntry;
 }
 
-export function PlatformResumeGridItemThumbnail({
-  resume,
-}: PlatformResumeGridItemThumbnailProps) {
+export function PlatformResumeGridItemThumbnail(
+  props: PlatformResumeGridItemThumbnailProps,
+) {
+  const { resume } = props;
   const document = useResumeDocument(resume.id, resume.updatedAt);
   const preview = useMemo(
     () => (document ? resumeToPreview(document) : null),

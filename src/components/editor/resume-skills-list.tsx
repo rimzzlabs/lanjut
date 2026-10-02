@@ -4,7 +4,7 @@ import type { SkillItemView } from "./resume-preview";
 import { ResumeSkillItem } from "./resume-skill-item";
 
 interface ResumeSkillsListProps {
-  items: SkillItemView[];
+  items: ReadonlyArray<SkillItemView>;
   columns: SectionColumns;
 }
 

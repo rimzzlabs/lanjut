@@ -1,5 +1,6 @@
 import { Toggle } from "@base-ui/react/toggle";
 import { ToggleGroup } from "@base-ui/react/toggle-group";
+import { A, O, pipe, S } from "@mobily/ts-belt";
 import { motion, useReducedMotion } from "motion/react";
 import { useId } from "react";
 import { cn } from "@/lib/utils";
@@ -12,10 +13,22 @@ export interface SegmentedItem {
   ariaLabel?: string;
 }
 
+const INSTANT = { duration: 0 };
+const PILL_SPRING = { type: "spring", stiffness: 500, damping: 40 } as const;
+
+/**
+ * The accessible name must contain the visible label (WCAG 2.5.3), so fold the
+ * short label into the fuller aria label rather than replacing it.
+ */
+function accessibleNameOf(item: SegmentedItem) {
+  if (!item.ariaLabel || item.ariaLabel === item.label) return item.label;
+  return `${item.ariaLabel} (${item.label})`;
+}
+
 interface SegmentedControlProps {
   value: string;
   onValueChange: (value: string) => void;
-  items: SegmentedItem[];
+  items: ReadonlyArray<SegmentedItem>;
   "aria-label": string;
   className?: string;
 }
@@ -35,9 +48,8 @@ export function SegmentedControl(props: SegmentedControlProps) {
       aria-label={props["aria-label"]}
       value={[props.value]}
       onValueChange={(next) => {
-        const value = next[0];
         // Ignore deselection: a segmented control always keeps one active.
-        if (value) props.onValueChange(value);
+        pipe(next, A.head, O.filter(S.isNotEmpty), O.tap(props.onValueChange));
       }}
       className={cn(
         "inline-flex w-fit items-center rounded-2xl border bg-muted p-0.5",
@@ -46,12 +58,7 @@ export function SegmentedControl(props: SegmentedControlProps) {
     >
       {props.items.map((item) => {
         const active = item.value === props.value;
-        // The accessible name must contain the visible label (WCAG 2.5.3), so
-        // fold the short label into the fuller aria label rather than replacing it.
-        const accessibleName =
-          item.ariaLabel && item.ariaLabel !== item.label
-            ? `${item.ariaLabel} (${item.label})`
-            : item.label;
+        const accessibleName = accessibleNameOf(item);
         return (
           <Toggle
             key={item.value}
@@ -59,9 +66,8 @@ export function SegmentedControl(props: SegmentedControlProps) {
             aria-label={accessibleName}
             className={cn(
               "relative inline-flex h-6 min-w-9 cursor-pointer items-center justify-center rounded-xl px-2.5 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring/50",
-              active
-                ? "text-foreground"
-                : "text-muted-foreground hover:text-foreground",
+              active && "text-foreground",
+              !active && "text-muted-foreground hover:text-foreground",
             )}
           >
             {active && (
@@ -69,11 +75,7 @@ export function SegmentedControl(props: SegmentedControlProps) {
                 aria-hidden
                 layoutId={layoutId}
                 className="absolute inset-0 rounded-xl bg-background shadow-sm"
-                transition={
-                  reduceMotion
-                    ? { duration: 0 }
-                    : { type: "spring", stiffness: 500, damping: 40 }
-                }
+                transition={reduceMotion ? INSTANT : PILL_SPRING}
               />
             )}
             <span className="relative z-10">{item.label}</span>

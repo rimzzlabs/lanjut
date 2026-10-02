@@ -30,9 +30,7 @@ export function PdfHeaderPhoto(props: {
         alignSelf: (
           { top: "flex-start", center: "center", bottom: "flex-end" } as const
         )[photoAlign],
-        ...(props.centered
-          ? { alignSelf: "center", marginBottom: 6 }
-          : undefined),
+        ...(props.centered && { alignSelf: "center", marginBottom: 6 }),
       }}
     />
   );

@@ -1,4 +1,5 @@
 import { locationSuffix } from "../../resume-entry-location";
+import { ResumeOptionalLink } from "../../resume-optional-link";
 import type { ExperienceItemView } from "../../resume-preview";
 import { ResumeRichText } from "../../resume-rich-text";
 
@@ -7,34 +8,26 @@ export function LuasaExperienceItem(props: ExperienceItemView) {
     <article>
       <div className="flex items-baseline justify-between gap-4">
         <h3 className="resume-body-xs uppercase tracking-wide">
-          {props.roleHref ? (
-            <a href={props.roleHref} className="underline">
-              {props.role}
-            </a>
-          ) : (
-            props.role
-          )}
+          <ResumeOptionalLink href={props.roleHref} className="underline">
+            {props.role}
+          </ResumeOptionalLink>
         </h3>
         <span className="shrink-0 resume-body-xs text-muted-foreground">
           {props.startDate} – {props.endDate}
         </span>
       </div>
       <p className="resume-body-xs italic text-muted-foreground">
-        {props.companyHref ? (
-          <a href={props.companyHref} className="underline">
-            {props.company}
-          </a>
-        ) : (
-          props.company
-        )}
+        <ResumeOptionalLink href={props.companyHref} className="underline">
+          {props.company}
+        </ResumeOptionalLink>
         {locationSuffix(props.company, props.location)}
       </p>
 
-      {props.companyContext ? (
+      {Boolean(props.companyContext) && (
         <p className="resume-body-xs text-muted-foreground">
           {props.companyContext}
         </p>
-      ) : null}
+      )}
 
       <ResumeRichText
         blocks={props.description}

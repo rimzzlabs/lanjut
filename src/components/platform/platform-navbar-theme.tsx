@@ -1,4 +1,4 @@
-import { A, F, O, pipe } from "@mobily/ts-belt";
+import { A, O } from "@mobily/ts-belt";
 import { Laptop2, Loader2, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useTranslations } from "use-intl";
@@ -20,16 +20,16 @@ const THEMES = [
   { value: "light", icon: Sun },
   { value: "dark", icon: Moon },
 ] as const;
+const [DEFAULT_THEME] = THEMES;
 
 export function PlatformNavbarTheme() {
   const mounted = useIsClient();
   const { theme, setTheme } = useTheme();
   const t = useTranslations("platform.theme");
 
-  const selected = pipe(
-    THEMES,
-    A.find((t) => t.value === theme),
-    O.mapWithDefault(THEMES[0], F.identity),
+  const selected = O.getWithDefault(
+    A.find(THEMES, (t) => t.value === theme),
+    DEFAULT_THEME,
   );
 
   const onChangeTheme = (next: string) => setTheme(next);

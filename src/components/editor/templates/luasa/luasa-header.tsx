@@ -1,5 +1,7 @@
+import { A } from "@mobily/ts-belt";
 import { Fragment } from "react";
 import { ResumeHeaderPhoto } from "../../resume-header-photo";
+import { ResumeOptionalLink } from "../../resume-optional-link";
 import type { HeaderView } from "../../resume-preview";
 
 export function LuasaHeader(props: HeaderView) {
@@ -15,18 +17,18 @@ export function LuasaHeader(props: HeaderView) {
             {props.headline}
           </p>
         )}
-        {props.contacts.length > 0 && (
+        {A.isNotEmpty(props.contacts) && (
           <p className="mt-1 resume-body-xs text-muted-foreground">
             {props.contacts.map((contact, index) => (
               <Fragment key={contact.kind}>
                 {index > 0 && <span aria-hidden> • </span>}
-                {contact.href ? (
-                  <a href={contact.href} className="underline">
-                    {contact.value}
-                  </a>
-                ) : (
-                  <span>{contact.value}</span>
-                )}
+                <ResumeOptionalLink
+                  href={contact.href}
+                  className="underline"
+                  wrapPlain
+                >
+                  {contact.value}
+                </ResumeOptionalLink>
               </Fragment>
             ))}
           </p>

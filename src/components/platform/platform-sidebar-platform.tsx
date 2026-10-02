@@ -1,3 +1,4 @@
+import { S } from "@mobily/ts-belt";
 import { Layout, LayoutTemplate } from "lucide-react";
 import { useTranslations } from "use-intl";
 import { Link, usePathname } from "@/i18n/navigation";
@@ -27,7 +28,7 @@ export function PlatformSidebarPlatform() {
         </SidebarMenuItem>
         <SidebarMenuItem>
           <SidebarMenuButton
-            isActive={pathname.endsWith("/template")}
+            isActive={S.endsWith(pathname, "/template")}
             render={<Link href="/platform/template" />}
           >
             <LayoutTemplate /> {t("browseTemplate")}

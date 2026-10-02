@@ -7,10 +7,10 @@ interface EditorSectionVisibilityToggleProps {
   onToggle: () => void;
 }
 
-export function EditorSectionVisibilityToggle({
-  hidden,
-  onToggle,
-}: EditorSectionVisibilityToggleProps) {
+export function EditorSectionVisibilityToggle(
+  props: EditorSectionVisibilityToggleProps,
+) {
+  const { hidden, onToggle } = props;
   const t = useTranslations("editor.chrome");
   const Icon = hidden ? EyeClosed : Eye;
 

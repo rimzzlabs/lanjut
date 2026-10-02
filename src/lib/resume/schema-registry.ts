@@ -1,3 +1,4 @@
+import { A, O } from "@mobily/ts-belt";
 import type { CustomVariant, FieldKey, SectionType } from "./types";
 
 /**
@@ -449,9 +450,8 @@ export const CUSTOM_LIST_FIELDS: FieldSchema[] = [
 
 /** The per-entry Field shape for a custom Section in the given variant. */
 export function getCustomFields(variant: CustomVariant): FieldSchema[] {
-  return variant === "list"
-    ? CUSTOM_LIST_FIELDS
-    : SECTION_REGISTRY.custom.fields;
+  if (variant === "list") return CUSTOM_LIST_FIELDS;
+  return SECTION_REGISTRY.custom.fields;
 }
 
 export function getSectionSchema(type: SectionType): SectionSchema {
@@ -485,8 +485,9 @@ export const CANONICAL_SECTION_ORDER: SectionType[] = [
  */
 export type ReorderableSectionType = Exclude<SectionType, "summary">;
 
-export const REORDERABLE_SECTION_TYPES: ReorderableSectionType[] =
-  CANONICAL_SECTION_ORDER.filter(
+export const REORDERABLE_SECTION_TYPES: ReadonlyArray<ReorderableSectionType> =
+  A.filter(
+    CANONICAL_SECTION_ORDER,
     (type): type is ReorderableSectionType => type !== "summary",
   );
 
@@ -498,6 +499,6 @@ export function isReorderableSection(type: SectionType): boolean {
 
 /** Sort key for a Section type; unknown types sort last, preserving their order. */
 export function canonicalSectionIndex(type: string): number {
-  const index = CANONICAL_SECTION_ORDER.indexOf(type as SectionType);
-  return index === -1 ? CANONICAL_SECTION_ORDER.length : index;
+  const index = A.getIndexBy(CANONICAL_SECTION_ORDER, (item) => item === type);
+  return O.getWithDefault(index, A.length(CANONICAL_SECTION_ORDER));
 }

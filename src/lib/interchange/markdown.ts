@@ -1,3 +1,4 @@
+import { A, F, G, O, pipe, S } from "@mobily/ts-belt";
 import type { JSONContent } from "@tiptap/core";
 import { emptyRichTextValue } from "@/lib/resume";
 import {
@@ -38,29 +39,32 @@ function runToMarkdown(run: InlineRun): string {
 function guardLineStart(line: string): string {
   const bullet = /^(\s*)-(\s)/.exec(line);
   if (bullet) {
-    return `${bullet[1]}\\-${bullet[2]}${line.slice(bullet[0].length)}`;
+    return `${bullet[1]}\\-${bullet[2]}${S.sliceToEnd(line, S.length(bullet[0]))}`;
   }
   const ordered = /^(\s*\d+)([.)])(\s)/.exec(line);
   if (ordered) {
-    return `${ordered[1]}\\${ordered[2]}${line.slice(ordered[1].length + 1)}`;
+    return `${ordered[1]}\\${ordered[2]}${S.sliceToEnd(line, S.length(ordered[1]) + 1)}`;
   }
   return line;
 }
 
-export function richBlocksToInterchangeMarkdown(blocks: RichBlock[]): string {
-  const parts: string[] = [];
-  for (const block of blocks) {
-    if (block.type === "paragraph") {
-      parts.push(guardLineStart(block.runs.map(runToMarkdown).join("").trim()));
-      continue;
-    }
-    const lines = block.items.map((item, index) => {
-      const marker = block.ordered ? `${index + 1}.` : "-";
-      return `${marker} ${item.map(runToMarkdown).join("").trim()}`;
-    });
-    parts.push(lines.join("\n"));
+function blockToInterchangeMarkdown(block: RichBlock): string {
+  if (block.type === "paragraph") {
+    return guardLineStart(
+      pipe(block.runs, A.map(runToMarkdown), A.join(""), S.trim),
+    );
   }
-  return parts.join("\n\n");
+  const lines = A.mapWithIndex(block.items, (index, item) => {
+    const marker = block.ordered ? `${index + 1}.` : "-";
+    return `${marker} ${pipe(item, A.map(runToMarkdown), A.join(""), S.trim)}`;
+  });
+  return A.join(lines, "\n");
+}
+
+export function richBlocksToInterchangeMarkdown(
+  blocks: ReadonlyArray<RichBlock>,
+): string {
+  return pipe(blocks, A.map(blockToInterchangeMarkdown), A.join("\n\n"));
 }
 
 export function tiptapToMarkdown(doc: JSONContent | undefined): string {
@@ -79,13 +83,20 @@ interface InlineMarks {
 const ESCAPABLE = /[!-/:-@[-`{-~]/;
 
 function unescapeText(text: string): string {
-  return text.replace(/\\([!-/:-@[-`{-~])/g, "$1");
+  return S.replaceByRe(text, /\\([!-/:-@[-`{-~])/g, "$1");
+}
+
+interface FindDelimiterParams {
+  src: string;
+  delim: string;
+  from: number;
 }
 
 /** The first unescaped occurrence of `delim` at or after `from`, or -1. */
-function findDelimiter(src: string, delim: string, from: number): number {
-  for (let i = from; i <= src.length - delim.length; i += 1) {
-    if (src[i] === "\\") {
+function findDelimiter(params: FindDelimiterParams): number {
+  const { src, delim, from } = params;
+  for (let i = from; i <= S.length(src) - S.length(delim); i += 1) {
+    if (S.get(src, i) === "\\") {
       i += 1;
       continue;
     }
@@ -94,65 +105,107 @@ function findDelimiter(src: string, delim: string, from: number): number {
   return -1;
 }
 
-function appendRun(out: InlineRun[], text: string, marks: InlineMarks): void {
-  if (!text) return;
-  const last = out[out.length - 1];
-  if (
-    last &&
-    Boolean(last.bold) === Boolean(marks.bold) &&
-    Boolean(last.italic) === Boolean(marks.italic) &&
-    last.href === marks.href
-  ) {
-    last.text += text;
-    return;
-  }
-  const run: InlineRun = { text };
-  if (marks.bold) run.bold = true;
-  if (marks.italic) run.italic = true;
-  if (marks.href) run.href = marks.href;
-  out.push(run);
+/** A run of text with the marks of the segment it was read from. */
+interface Piece {
+  text: string;
+  marks: InlineMarks;
 }
 
-function parseSegment(src: string, marks: InlineMarks, out: InlineRun[]): void {
+function sameMarks(run: InlineRun, marks: InlineMarks): boolean {
+  return (
+    Boolean(run.bold) === Boolean(marks.bold) &&
+    Boolean(run.italic) === Boolean(marks.italic) &&
+    run.href === marks.href
+  );
+}
+
+function runFromPiece(piece: Piece): InlineRun {
+  const { text, marks } = piece;
+  return {
+    text,
+    ...(Boolean(marks.bold) && { bold: true }),
+    ...(Boolean(marks.italic) && { italic: true }),
+    ...(Boolean(marks.href) && { href: marks.href }),
+  };
+}
+
+/** Adds a piece, merging it into the last run when the marks match. */
+function appendRun(
+  runs: ReadonlyArray<InlineRun>,
+  piece: Piece,
+): ReadonlyArray<InlineRun> {
+  if (!piece.text) return runs;
+  const last = A.last(runs);
+  if (O.isNone(last) || !sameMarks(last, piece.marks)) {
+    return A.append(runs, runFromPiece(piece));
+  }
+  const merged = { ...last, text: last.text + piece.text };
+  return A.replaceAt(runs, A.length(runs) - 1, merged);
+}
+
+interface DelimiterAfterParams {
+  src: string;
+  marker: string;
+  at: number;
+}
+
+/** Where the closing `marker` ends, when `src` opens one at `at`, or -1. */
+function delimiterAfter(params: DelimiterAfterParams): number {
+  const { src, marker, at } = params;
+  if (!src.startsWith(marker, at)) return -1;
+  return findDelimiter({ src, delim: marker, from: at + S.length(marker) });
+}
+
+/** The `)` that closes a link target after the `]` at `close`, or -1. */
+function linkTargetEnd(src: string, close: number): number {
+  if (close === -1 || S.get(src, close + 1) !== "(") return -1;
+  return findDelimiter({ src, delim: ")", from: close + 2 });
+}
+
+function parseSegment(src: string, marks: InlineMarks): ReadonlyArray<Piece> {
+  let pieces: ReadonlyArray<Piece> = [];
   let buffer = "";
   let i = 0;
   const flush = () => {
-    appendRun(out, buffer, marks);
+    pieces = A.append(pieces, { text: buffer, marks });
     buffer = "";
   };
-  while (i < src.length) {
-    const ch = src[i];
-    if (ch === "\\" && i + 1 < src.length && ESCAPABLE.test(src[i + 1])) {
-      buffer += src[i + 1];
+  const nest = (inner: string, innerMarks: InlineMarks) => {
+    pieces = A.concat(pieces, parseSegment(inner, innerMarks));
+  };
+  while (i < S.length(src)) {
+    const ch = O.getWithDefault(S.get(src, i), "");
+    const next = S.get(src, i + 1);
+    if (ch === "\\" && O.isSome(next) && ESCAPABLE.test(next)) {
+      buffer += next;
       i += 2;
       continue;
     }
     if (ch === "*") {
       // Longest marker first, so `***x***` reads as bold+italic rather than a
       // dangling `*` inside bold.
-      const triple = src.startsWith("***", i)
-        ? findDelimiter(src, "***", i + 3)
-        : -1;
+      const triple = delimiterAfter({ src, marker: "***", at: i });
       if (triple !== -1) {
         flush();
-        const inner = src.slice(i + 3, triple);
-        parseSegment(inner, { ...marks, bold: true, italic: true }, out);
+        nest(S.slice(src, i + 3, triple), {
+          ...marks,
+          bold: true,
+          italic: true,
+        });
         i = triple + 3;
         continue;
       }
-      const double = src.startsWith("**", i)
-        ? findDelimiter(src, "**", i + 2)
-        : -1;
+      const double = delimiterAfter({ src, marker: "**", at: i });
       if (double !== -1) {
         flush();
-        parseSegment(src.slice(i + 2, double), { ...marks, bold: true }, out);
+        nest(S.slice(src, i + 2, double), { ...marks, bold: true });
         i = double + 2;
         continue;
       }
-      const single = findDelimiter(src, "*", i + 1);
+      const single = findDelimiter({ src, delim: "*", from: i + 1 });
       if (single !== -1) {
         flush();
-        parseSegment(src.slice(i + 1, single), { ...marks, italic: true }, out);
+        nest(S.slice(src, i + 1, single), { ...marks, italic: true });
         i = single + 1;
         continue;
       }
@@ -161,15 +214,12 @@ function parseSegment(src: string, marks: InlineMarks, out: InlineRun[]): void {
       continue;
     }
     if (ch === "[") {
-      const close = findDelimiter(src, "]", i + 1);
-      const paren =
-        close !== -1 && src[close + 1] === "("
-          ? findDelimiter(src, ")", close + 2)
-          : -1;
+      const close = findDelimiter({ src, delim: "]", from: i + 1 });
+      const paren = linkTargetEnd(src, close);
       if (close !== -1 && paren !== -1) {
         flush();
-        const href = unescapeText(src.slice(close + 2, paren));
-        parseSegment(src.slice(i + 1, close), { ...marks, href }, out);
+        const href = unescapeText(S.slice(src, close + 2, paren));
+        nest(S.slice(src, i + 1, close), { ...marks, href });
         i = paren + 1;
         continue;
       }
@@ -181,82 +231,131 @@ function parseSegment(src: string, marks: InlineMarks, out: InlineRun[]): void {
     i += 1;
   }
   flush();
+  return pieces;
 }
 
-export function parseInlineMarkdown(text: string): InlineRun[] {
-  const runs: InlineRun[] = [];
-  parseSegment(text, {}, runs);
+export function parseInlineMarkdown(text: string): ReadonlyArray<InlineRun> {
+  const runs = A.reduce(parseSegment(text, {}), [], appendRun);
   return runs;
 }
 
 const BULLET_LINE = /^\s*[-*]\s+/;
 const ORDERED_LINE = /^\s*\d+[.)]\s+/;
 
-export function markdownToRichBlocks(text: string): RichBlock[] {
-  const blocks: RichBlock[] = [];
-  let list: { ordered: boolean; items: InlineRun[][] } | null = null;
-  const flushList = () => {
-    if (list && list.items.length > 0) {
-      blocks.push({ type: "list", ordered: list.ordered, items: list.items });
-    }
-    list = null;
+interface OpenList {
+  ordered: boolean;
+  items: ReadonlyArray<ReadonlyArray<InlineRun>>;
+}
+
+interface ParseState {
+  blocks: ReadonlyArray<RichBlock>;
+  list: OpenList | null;
+}
+
+function flushList(state: ParseState): ParseState {
+  const { blocks, list } = state;
+  if (!list || A.isEmpty(list.items)) return { blocks, list: null };
+  const block: RichBlock = {
+    type: "list",
+    ordered: list.ordered,
+    items: list.items,
   };
-  for (const raw of text.split(/\r?\n/)) {
-    const line = raw.trim();
-    if (!line) {
-      flushList();
-      continue;
-    }
-    const marker = BULLET_LINE.exec(line) ?? ORDERED_LINE.exec(line);
-    if (marker) {
-      const ordered = ORDERED_LINE.test(line);
-      if (!list || list.ordered !== ordered) {
-        flushList();
-        list = { ordered, items: [] };
-      }
-      const runs = parseInlineMarkdown(line.slice(marker[0].length).trim());
-      if (runs.length > 0) list.items.push(runs);
-      continue;
-    }
-    flushList();
-    const runs = parseInlineMarkdown(line);
-    if (runs.length > 0) blocks.push({ type: "paragraph", runs });
-  }
-  flushList();
+  return { blocks: A.append(blocks, block), list: null };
+}
+
+/** The open list when it matches `ordered`, else a fresh one after a flush. */
+function listFor(
+  state: ParseState,
+  ordered: boolean,
+): ParseState & {
+  list: OpenList;
+} {
+  const { list } = state;
+  if (list && list.ordered === ordered) return { ...state, list };
+  return { ...flushList(state), list: { ordered, items: [] } };
+}
+
+interface ReadListLineParams {
+  state: ParseState;
+  line: string;
+  marker: string;
+}
+
+function readListLine(params: ReadListLineParams): ParseState {
+  const { state, line, marker } = params;
+  const current = listFor(state, ORDERED_LINE.test(line));
+  const runs = parseInlineMarkdown(
+    pipe(line, S.sliceToEnd(S.length(marker)), S.trim),
+  );
+  if (A.isEmpty(runs)) return current;
+  const items = A.append(current.list.items, runs);
+  return { ...current, list: { ...current.list, items } };
+}
+
+function readLine(state: ParseState, raw: string): ParseState {
+  const line = S.trim(raw);
+  if (!line) return flushList(state);
+  const marker = BULLET_LINE.exec(line) ?? ORDERED_LINE.exec(line);
+  if (marker) return readListLine({ state, line, marker: marker[0] });
+  const flushed = flushList(state);
+  const runs = parseInlineMarkdown(line);
+  if (A.isEmpty(runs)) return flushed;
+  const block: RichBlock = { type: "paragraph", runs };
+  return { ...flushed, blocks: A.append(flushed.blocks, block) };
+}
+
+export function markdownToRichBlocks(text: string): ReadonlyArray<RichBlock> {
+  const lines = pipe(text, S.splitByRe(/\r?\n/), A.filter(G.isString));
+  const initial: ParseState = { blocks: [], list: null };
+  const { blocks } = flushList(A.reduce(lines, initial, readLine));
   return blocks;
 }
 
 // --- building TipTap documents ---------------------------------------------
 
-function textNode(run: InlineRun): JSONContent {
-  const marks: NonNullable<JSONContent["marks"]> = [];
-  if (run.bold) marks.push({ type: "bold" });
-  if (run.italic) marks.push({ type: "italic" });
-  if (run.href) marks.push({ type: "link", attrs: { href: run.href } });
-  const node: JSONContent = { type: "text", text: run.text };
-  if (marks.length > 0) node.marks = marks;
-  return node;
-}
+type Mark = NonNullable<JSONContent["marks"]>[number];
 
-function paragraphNode(runs: InlineRun[]): JSONContent {
-  return { type: "paragraph", content: runs.map(textNode) };
-}
-
-export function richBlocksToTiptap(blocks: RichBlock[]): JSONContent {
-  if (blocks.length === 0) return emptyRichTextValue();
-  const content = blocks.map(
-    (block): JSONContent =>
-      block.type === "paragraph"
-        ? paragraphNode(block.runs)
-        : {
-            type: block.ordered ? "orderedList" : "bulletList",
-            content: block.items.map((item) => ({
-              type: "listItem",
-              content: [paragraphNode(item)],
-            })),
-          },
+function runMarks(run: InlineRun): ReadonlyArray<Mark> {
+  const candidates: ReadonlyArray<readonly [unknown, Mark]> = [
+    [run.bold, { type: "bold" }],
+    [run.italic, { type: "italic" }],
+    [run.href, { type: "link", attrs: { href: run.href } }],
+  ];
+  return pipe(
+    candidates,
+    A.filter(([enabled]) => Boolean(enabled)),
+    A.map(([, mark]) => mark),
   );
-  return { type: "doc", content };
+}
+
+function textNode(run: InlineRun): JSONContent {
+  const node: JSONContent = { type: "text", text: run.text };
+  const marks = runMarks(run);
+  if (A.isEmpty(marks)) return node;
+  return { ...node, marks: F.toMutable(marks) };
+}
+
+function paragraphNode(runs: ReadonlyArray<InlineRun>): JSONContent {
+  return { type: "paragraph", content: F.toMutable(A.map(runs, textNode)) };
+}
+
+function blockToTiptap(block: RichBlock): JSONContent {
+  if (block.type === "paragraph") return paragraphNode(block.runs);
+  const items = A.map(block.items, (item) => ({
+    type: "listItem",
+    content: [paragraphNode(item)],
+  }));
+  return {
+    type: block.ordered ? "orderedList" : "bulletList",
+    content: F.toMutable(items),
+  };
+}
+
+export function richBlocksToTiptap(
+  blocks: ReadonlyArray<RichBlock>,
+): JSONContent {
+  if (A.isEmpty(blocks)) return emptyRichTextValue();
+  return { type: "doc", content: F.toMutable(A.map(blocks, blockToTiptap)) };
 }
 
 export function markdownToTiptap(text: string): JSONContent {

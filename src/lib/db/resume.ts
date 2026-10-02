@@ -1,4 +1,4 @@
-import { A, G, pipe } from "@mobily/ts-belt";
+import { A, G, O, pipe, R } from "@mobily/ts-belt";
 import type { Resume, ResumeIndexEntry } from "@/lib/resume";
 import { needsMigration, readSchemaVersion, runMigrations } from "@/lib/resume";
 import { getDb, META_KEYS } from "./schema";
@@ -47,15 +47,16 @@ export async function putResume(resume: Resume): Promise<void> {
 
 /**
  * Read one Resume, stepped up through the migration ladder before returning.
- * Backs up the raw document first when a migration will run. Throws when the
- * document cannot be migrated (e.g. written by a newer app build).
+ * Backs up the raw document first when a migration will run. Returns undefined
+ * when the document cannot be migrated (e.g. written by a newer app build); the
+ * raw document stays on disk untouched.
  */
 export async function getResume(id: string): Promise<Resume | undefined> {
   const db = await getDb();
   const raw = await db.get("resumes", id);
   if (!raw) return undefined;
   if (needsMigration(raw)) await backupRawResume(db, raw);
-  return runMigrations(raw);
+  return R.toUndefined(runMigrations(raw));
 }
 
 export async function deleteResume(id: string): Promise<void> {
@@ -63,6 +64,30 @@ export async function deleteResume(id: string): Promise<void> {
   await db.delete("resumes", id);
   // Import leftovers are keyed by the same id; drop them with the document.
   await db.delete("leftovers", id);
+}
+
+/** The index fields of one stored document, or None when it fails to migrate. */
+async function readIndexEntry(
+  db: Db,
+  raw: unknown,
+): Promise<O.Option<ResumeIndexEntry>> {
+  // A failed backup marks this one document unreadable, never the whole Library.
+  if (needsMigration(raw)) {
+    const saved = await backupRawResume(db, raw).then(
+      () => true,
+      () => false,
+    );
+    if (!saved) return O.None;
+  }
+  return pipe(
+    runMigrations(raw),
+    R.toOption,
+    O.map((resume) => ({
+      id: resume.id,
+      title: resume.title,
+      updatedAt: resume.updatedAt,
+    })),
+  );
 }
 
 /**
@@ -78,20 +103,13 @@ export async function listResumeIndex(): Promise<ResumeIndexResult> {
   // be silently absent from an index scan, which reads as data loss.
   const all = await db.getAll("resumes");
 
-  const entries: ResumeIndexEntry[] = [];
+  // Sequential on purpose: each backup lands before its document migrates.
+  let entries: ReadonlyArray<ResumeIndexEntry> = [];
   let unreadableCount = 0;
   for (const raw of all) {
-    try {
-      if (needsMigration(raw)) await backupRawResume(db, raw);
-      const resume = runMigrations(raw);
-      entries.push({
-        id: resume.id,
-        title: resume.title,
-        updatedAt: resume.updatedAt,
-      });
-    } catch {
-      unreadableCount += 1;
-    }
+    const entry = await readIndexEntry(db, raw);
+    if (O.isSome(entry)) entries = A.append(entries, entry);
+    else unreadableCount += 1;
   }
 
   return {

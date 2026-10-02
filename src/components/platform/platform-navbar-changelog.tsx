@@ -1,3 +1,4 @@
+import { A, O, pipe, S } from "@mobily/ts-belt";
 import { ArrowUpRight, ChevronDown, Sparkles } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useId, useState } from "react";
@@ -28,13 +29,31 @@ const listVariants = {
   visible: { transition: { staggerChildren: 0.06, delayChildren: 0.04 } },
 };
 
+const INSTANT = { duration: 0 };
+const ITEM_HIDDEN = { opacity: 0, y: 16 };
+const ITEM_HIDDEN_REDUCED = { opacity: 0 };
+const CHEVRON_TRANSITION = { duration: 0.2 };
+const PANEL_TRANSITION = {
+  duration: 0.25,
+  ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
+};
+
 export function PlatformNavbarChangelog() {
   const mounted = useIsClient();
   const t = useTranslations("platform.changelog");
   const [open, setOpen] = useState(false);
   const lastSeenVersion = useChangelogStore((state) => state.lastSeenVersion);
-  const [openVersions, setOpenVersions] = useState<string[]>(() =>
-    CHANGELOG[0]?.version ? [CHANGELOG[0].version] : [],
+  const [openVersions, setOpenVersions] = useState<ReadonlyArray<string>>(() =>
+    pipe(
+      CHANGELOG,
+      A.head,
+      O.map((entry) => entry.version),
+      O.filter(S.isNotEmpty),
+      O.match(
+        (version) => [version],
+        () => [],
+      ),
+    ),
   );
 
   const hasUnseen = lastSeenVersion !== LATEST_CHANGELOG_VERSION;
@@ -47,11 +66,12 @@ export function PlatformNavbarChangelog() {
   };
 
   const toggle = (version: string) =>
-    setOpenVersions((prev) =>
-      prev.includes(version)
-        ? prev.filter((v) => v !== version)
-        : [...prev, version],
-    );
+    setOpenVersions((prev) => {
+      if (A.includes(prev, version)) {
+        return A.filter(prev, (v) => v !== version);
+      }
+      return A.append(prev, version);
+    });
 
   if (!mounted) return null;
 
@@ -92,7 +112,7 @@ export function PlatformNavbarChangelog() {
                 key={entry.version}
                 entry={entry}
                 isLatest={index === 0}
-                isOpen={openVersions.includes(entry.version)}
+                isOpen={A.includes(openVersions, entry.version)}
                 onToggle={() => toggle(entry.version)}
               />
             ))}
@@ -124,11 +144,11 @@ function PlatformNavbarChangelogEntry(props: {
   const reduceMotion = useReducedMotion();
   const panelId = useId();
   const highlights = t.raw(
-    `entries.${props.entry.version.replace(/\./g, "_")}`,
+    `entries.${S.replaceByRe(props.entry.version, /\./g, "_")}`,
   ) as Array<{ title: string; description: string }>;
 
   const itemVariants = {
-    hidden: reduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 },
+    hidden: reduceMotion ? ITEM_HIDDEN_REDUCED : ITEM_HIDDEN,
     visible: {
       opacity: 1,
       y: 0,
@@ -152,9 +172,8 @@ function PlatformNavbarChangelogEntry(props: {
         aria-hidden
         className={cn(
           "pointer-events-none absolute top-5.5 left-1.75 z-10 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 ring-4 ring-popover",
-          props.isLatest
-            ? "border-primary bg-primary"
-            : "border-border bg-popover",
+          props.isLatest && "border-primary bg-primary",
+          !props.isLatest && "border-border bg-popover",
         )}
       />
 
@@ -184,7 +203,7 @@ function PlatformNavbarChangelogEntry(props: {
           aria-hidden
           className="ml-auto flex shrink-0 text-muted-foreground"
           animate={{ rotate: props.isOpen ? 180 : 0 }}
-          transition={reduceMotion ? { duration: 0 } : { duration: 0.2 }}
+          transition={reduceMotion ? INSTANT : CHEVRON_TRANSITION}
         >
           <ChevronDown className="size-4" />
         </motion.span>
@@ -198,11 +217,7 @@ function PlatformNavbarChangelogEntry(props: {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={
-              reduceMotion
-                ? { duration: 0 }
-                : { duration: 0.25, ease: [0.4, 0, 0.2, 1] }
-            }
+            transition={reduceMotion ? INSTANT : PANEL_TRANSITION}
             className="overflow-hidden"
           >
             <motion.ul

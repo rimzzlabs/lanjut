@@ -1,5 +1,5 @@
 import { useTheme } from "next-themes";
-import { useEffect, useRef } from "react";
+import { useEffect, useEffectEvent, useRef } from "react";
 import { useLocale } from "use-intl";
 
 /** Inlined at build time; when absent, direct feedback submission is disabled. */
@@ -46,11 +46,10 @@ export function Turnstile(props: TurnstileProps) {
   const locale = useLocale();
   const { resolvedTheme } = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
-  const onTokenRef = useRef(props.onToken);
-
-  useEffect(() => {
-    onTokenRef.current = props.onToken;
-  });
+  // Reads the latest onToken without re-rendering the widget when it changes.
+  const onToken = useEffectEvent((token: string | null) =>
+    props.onToken(token),
+  );
 
   useEffect(() => {
     if (!TURNSTILE_SITE_KEY) return;
@@ -65,12 +64,12 @@ export function Turnstile(props: TurnstileProps) {
           size: "flexible",
           theme: resolvedTheme === "dark" ? "dark" : "light",
           language: locale,
-          callback: (token: string) => onTokenRef.current(token),
-          "expired-callback": () => onTokenRef.current(null),
-          "error-callback": () => onTokenRef.current(null),
+          callback: (token: string) => onToken(token),
+          "expired-callback": () => onToken(null),
+          "error-callback": () => onToken(null),
         });
       })
-      .catch(() => onTokenRef.current(null));
+      .catch(() => onToken(null));
 
     return () => {
       cancelled = true;

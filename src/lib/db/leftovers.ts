@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { getDb } from "./schema";
 
 /**
@@ -9,7 +10,7 @@ export async function putLeftovers(
   items: string[],
 ): Promise<void> {
   const db = await getDb();
-  if (items.length === 0) {
+  if (A.isEmpty(items)) {
     await db.delete("leftovers", resumeId);
     return;
   }

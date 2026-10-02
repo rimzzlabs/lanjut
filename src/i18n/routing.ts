@@ -1,3 +1,5 @@
+import { A, pipe, S } from "@mobily/ts-belt";
+
 export const routing = {
   locales: ["en", "id"],
   defaultLocale: "en",
@@ -9,7 +11,7 @@ export const LOCALE_COOKIE = "locale";
 export type Locale = (typeof routing.locales)[number];
 
 export function isLocale(value: unknown): value is Locale {
-  return routing.locales.includes(value as Locale);
+  return A.includes(routing.locales, value as Locale);
 }
 
 const LOCALE_PREFIX = /^\/id(?=\/|$)/;
@@ -19,7 +21,13 @@ const LOCALE_PREFIX = /^\/id(?=\/|$)/;
  * `/platform`.
  */
 export function stripLocale(pathname: string): string {
-  return pathname.replace(LOCALE_PREFIX, "").replace(/\/+$/, "") || "/";
+  return (
+    pipe(
+      pathname,
+      S.replaceByRe(LOCALE_PREFIX, ""),
+      S.replaceByRe(/\/+$/, ""),
+    ) || "/"
+  );
 }
 
 export function localeFromPath(pathname: string): Locale {
@@ -38,7 +46,7 @@ export function localizePath(href: string, locale: Locale): string {
 
 /** `getStaticPaths` entries for a page that exists in every locale. */
 export function localeStaticPaths() {
-  return routing.locales.map((locale) => ({
+  return A.map(routing.locales, (locale) => ({
     params: { lang: locale === routing.defaultLocale ? undefined : locale },
     props: { locale },
   }));

@@ -2,6 +2,9 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { forwardRef, type ReactNode, useImperativeHandle, useRef } from "react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+const ENTER_FROM = { opacity: 0, y: -8 };
+const EXIT_REDUCED = { opacity: 0 };
+const EXIT_TO = { opacity: 0, scale: 0.98 };
 
 export interface AnimatedEntryListHandle {
   scrollToIndex: (index: number) => void;
@@ -42,9 +45,9 @@ export const AnimatedEntryList = forwardRef<
           <motion.div
             key={id}
             layout={reduce ? false : "position"}
-            initial={reduce ? false : { opacity: 0, y: -8 }}
+            initial={reduce ? false : ENTER_FROM}
             animate={{ opacity: 1, y: 0 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.98 }}
+            exit={reduce ? EXIT_REDUCED : EXIT_TO}
             transition={{ duration: reduce ? 0 : 0.32, ease: EASE }}
             className="not-last:border-b not-last:pb-4"
           >

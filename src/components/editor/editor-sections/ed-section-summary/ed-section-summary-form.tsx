@@ -14,7 +14,7 @@ import {
   applySummaryValues,
   type SummaryFormValues,
   toSummaryValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-profile";
 
 export function EditorSectionSummaryForm() {
   const open = useResumeStore((state) => state.open);
@@ -28,7 +28,7 @@ export function EditorSectionSummaryForm() {
   // store's job); reading inside the subscription avoids stale form snapshots.
   useEffect(() => {
     const subscription = form.watch(() => {
-      updateOpen((draft) => applySummaryValues(draft, form.getValues()));
+      updateOpen((resume) => applySummaryValues(resume, form.getValues()));
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);
@@ -41,20 +41,23 @@ export function EditorSectionSummaryForm() {
         <Controller
           control={form.control}
           name="summary"
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>{t("label")}</FieldLabel>
-              <RichTextEditor
-                id={field.name}
-                value={field.value}
-                features={PROSE_FEATURES}
-                placeholder={t("placeholder")}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-              />
-              <FieldError errors={[fieldState.error]} />
-            </Field>
-          )}
+          render={(controller) => {
+            const { field, fieldState } = controller;
+            return (
+              <Field>
+                <FieldLabel htmlFor={field.name}>{t("label")}</FieldLabel>
+                <RichTextEditor
+                  id={field.name}
+                  value={field.value}
+                  features={PROSE_FEATURES}
+                  placeholder={t("placeholder")}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                />
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            );
+          }}
         />
       </FieldGroup>
     </form>

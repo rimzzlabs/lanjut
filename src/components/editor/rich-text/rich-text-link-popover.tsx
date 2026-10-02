@@ -1,3 +1,4 @@
+import { S } from "@mobily/ts-belt";
 import type { Editor } from "@tiptap/react";
 import { Link2, Link2Off } from "lucide-react";
 import { useState } from "react";
@@ -18,8 +19,8 @@ interface RichTextLinkPopoverProps {
 
 /** Accepts bare hosts (prepends https://) and passes through http(s)/mailto. */
 function normalizeUrl(input: string): string | null {
-  const trimmed = input.trim();
-  if (trimmed.length === 0) return null;
+  const trimmed = S.trim(input);
+  if (S.isEmpty(trimmed)) return null;
   if (/^(https?:\/\/|mailto:)/i.test(trimmed)) return trimmed;
   return `https://${trimmed}`;
 }

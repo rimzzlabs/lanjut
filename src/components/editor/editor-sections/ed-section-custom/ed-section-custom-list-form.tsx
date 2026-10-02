@@ -1,3 +1,4 @@
+import { A, O } from "@mobily/ts-belt";
 import { List, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -13,7 +14,7 @@ import {
   type CustomListFormValues,
   type CustomListItemValues,
   toCustomListValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-custom";
 import { EditorSectionCustomListItem } from "./ed-section-custom-list-item";
 
 function emptyEntry(): CustomListItemValues {
@@ -26,6 +27,17 @@ function emptyEntry(): CustomListItemValues {
   };
 }
 
+// Read the section once at mount (via getState, not a subscription): the form
+// owns its state afterward and the store is synced through the watch below.
+function initialValues(sectionId: string): CustomListFormValues {
+  const section = A.find(
+    useResumeStore.getState().open?.sections ?? [],
+    (s) => s.id === sectionId,
+  );
+  if (O.isNone(section) || section.type !== "custom") return { entries: [] };
+  return toCustomListValues(section);
+}
+
 interface EditorSectionCustomListFormProps {
   sectionId: string;
 }
@@ -36,16 +48,8 @@ export function EditorSectionCustomListForm(
   const updateOpen = useResumeStore((state) => state.updateOpen);
   const t = useTranslations("editor.custom");
 
-  // Read the section once at mount (via getState, not a subscription): the form
-  // owns its state afterward and the store is synced through the watch below.
-  const initial = useResumeStore
-    .getState()
-    .open?.sections.find((s) => s.id === props.sectionId);
   const form = useForm<CustomListFormValues>({
-    defaultValues:
-      initial?.type === "custom"
-        ? toCustomListValues(initial)
-        : { entries: [] },
+    defaultValues: initialValues(props.sectionId),
   });
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -54,9 +58,7 @@ export function EditorSectionCustomListForm(
 
   useEffect(() => {
     const subscription = form.watch(() => {
-      updateOpen((draft) =>
-        applyCustomListValues(draft, props.sectionId, form.getValues()),
-      );
+      updateOpen(applyCustomListValues(props.sectionId, form.getValues()));
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen, props.sectionId]);
@@ -73,13 +75,14 @@ export function EditorSectionCustomListForm(
           <Plus /> {t("addEntry")}
         </Button>
 
-        {fields.length === 0 ? (
+        {fields.length === 0 && (
           <EmptyState
             icon={List}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />
-        ) : (
+        )}
+        {fields.length > 0 && (
           <AnimatedEntryList
             ids={fields.map((field) => field.id)}
             renderItem={(_, index) => (

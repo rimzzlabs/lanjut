@@ -1,4 +1,4 @@
-import { A, D, F, pipe } from "@mobily/ts-belt";
+import { A, D, pipe } from "@mobily/ts-belt";
 import type { JSONContent } from "@tiptap/core";
 import { nanoid } from "nanoid";
 import {
@@ -47,6 +47,12 @@ export function createEmptyEntry(type: SectionType): Entry {
   };
 }
 
+/**
+ * Skills and Languages share a column-toggleable grid. New sections start
+ * two-column and show per-entry proficiency until the user hides it.
+ */
+const GRID_SECTION_TYPES: ReadonlyArray<SectionType> = ["skills", "languages"];
+
 export function createEmptySection(type: SectionType): Section {
   const schema = getSectionSchema(type);
   const section: Section = {
@@ -56,19 +62,8 @@ export function createEmptySection(type: SectionType): Section {
     entries: [],
     hidden: false,
   };
-  // The Skills grid is column-toggleable; new sections start two-column and
-  // show per-skill proficiency until the user hides it.
-  if (type === "skills") {
-    section.columns = 2;
-    section.showProficiency = true;
-  }
-  // Languages share the Skills grid controls: column-toggleable and proficiency
-  // shown until the user hides it. New sections start two-column.
-  if (type === "languages") {
-    section.columns = 2;
-    section.showProficiency = true;
-  }
-  return section;
+  if (!A.includes(GRID_SECTION_TYPES, type)) return section;
+  return { ...section, columns: 2, showProficiency: true };
 }
 
 /** An empty entry shaped for a custom Section in the given variant. */
@@ -152,10 +147,8 @@ export function cloneResumeAsNew(template: Resume, title: string): Resume {
         entries: pipe(
           section.entries,
           A.map((entry) => ({ ...structuredClone(entry), id: nanoid() })),
-          F.toMutable,
         ),
       })),
-      F.toMutable,
     ),
     createdAt: now,
     updatedAt: now,

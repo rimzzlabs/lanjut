@@ -14,11 +14,24 @@ const CONTACT_ICON: Record<ContactKind, typeof Phone> = {
   location: MapPin,
 };
 
+type IconEdge = "start" | "end";
+
+// The collapsed icon pulls back the row's gap-2 on the side that faces the text.
+const COLLAPSED: Record<IconEdge, Record<string, number | string>> = {
+  start: { width: 0, opacity: 0, marginRight: "-0.5rem" },
+  end: { width: 0, opacity: 0, marginLeft: "-0.5rem" },
+};
+
+const EXPANDED: Record<IconEdge, Record<string, number | string>> = {
+  start: { width: "0.875rem", opacity: 1, marginRight: "0rem" },
+  end: { width: "0.875rem", opacity: 1, marginLeft: "0rem" },
+};
+
 interface ResumeContactIconProps {
   kind: ContactKind;
   show: boolean;
   /** Which edge of the contact row the icon sits on. Defaults to "start". */
-  edge?: "start" | "end";
+  edge?: IconEdge;
   className?: string;
 }
 
@@ -31,14 +44,9 @@ interface ResumeContactIconProps {
 export function ResumeContactIcon(props: ResumeContactIconProps) {
   const reduce = useReducedMotion();
   const Icon = CONTACT_ICON[props.kind];
-  const collapsed =
-    props.edge === "end"
-      ? { width: 0, opacity: 0, marginLeft: "-0.5rem" }
-      : { width: 0, opacity: 0, marginRight: "-0.5rem" };
-  const expanded =
-    props.edge === "end"
-      ? { width: "0.875rem", opacity: 1, marginLeft: "0rem" }
-      : { width: "0.875rem", opacity: 1, marginRight: "0rem" };
+  const edge = props.edge ?? "start";
+  const collapsed = COLLAPSED[edge];
+  const expanded = EXPANDED[edge];
 
   return (
     <AnimatePresence initial={false} mode="wait">

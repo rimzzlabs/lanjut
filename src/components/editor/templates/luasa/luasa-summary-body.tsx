@@ -2,7 +2,7 @@ import type { RichBlock } from "@/lib/resume/rich-content";
 import { ResumeRichText } from "../../resume-rich-text";
 
 interface LuasaSummaryBodyProps {
-  body: RichBlock[];
+  body: ReadonlyArray<RichBlock>;
 }
 
 export function LuasaSummaryBody(props: LuasaSummaryBodyProps) {

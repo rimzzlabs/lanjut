@@ -1,3 +1,4 @@
+import { ResumeOptionalLink } from "../../resume-optional-link";
 import type { CertificateItemView } from "../../resume-preview";
 
 export function LuasaCertificateItem(props: CertificateItemView) {
@@ -5,13 +6,9 @@ export function LuasaCertificateItem(props: CertificateItemView) {
     <article className="border-l-2 border-foreground/30 pl-4">
       <div className="flex items-baseline justify-between gap-4">
         <h3 className="resume-body-xs uppercase tracking-wide">
-          {props.href ? (
-            <a href={props.href} className="underline">
-              {props.title}
-            </a>
-          ) : (
-            props.title
-          )}
+          <ResumeOptionalLink href={props.href} className="underline">
+            {props.title}
+          </ResumeOptionalLink>
         </h3>
         {(props.startDate || props.endDate) && (
           <span className="shrink-0 resume-body-xs text-muted-foreground">

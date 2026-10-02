@@ -1,4 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { A, O, S } from "@mobily/ts-belt";
 import { ExternalLink } from "lucide-react";
 import { type FormEvent, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -79,14 +80,14 @@ export function FeedbackFeatureRequestForm(
 
   const submitDirect = form.handleSubmit(async (values) => {
     const problem = tiptapToRichBlocks(values.problem);
-    const summary = richBlocksToText(problem)[0] ?? "";
+    const summary = O.getWithDefault(A.head(richBlocksToText(problem)), "");
 
     const result = await submitFeedback({
       kind: "feature",
       name: values.name,
       client,
       turnstileToken: values.turnstileToken,
-      summary: summary.slice(0, 120),
+      summary: S.slice(summary, 0, 120),
       problem: richBlocksToMarkdown(problem),
       layer: values.layer,
     });
@@ -105,7 +106,7 @@ export function FeedbackFeatureRequestForm(
   function openGitHubIssue() {
     const values = form.getValues();
     const problem = tiptapToRichBlocks(values.problem);
-    const summary = richBlocksToText(problem)[0] ?? "";
+    const summary = O.getWithDefault(A.head(richBlocksToText(problem)), "");
     const url = buildFeatureRequestUrl({
       title: summary ? issueTitle("feat(via app):", summary) : "",
       problem: richBlocksToMarkdown(problem),
@@ -132,91 +133,103 @@ export function FeedbackFeatureRequestForm(
             <Controller
               control={form.control}
               name="name"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="feature-request-name">
-                    {td("name")}
-                  </FieldLabel>
-                  <Input
-                    id="feature-request-name"
-                    placeholder={td("namePlaceholder")}
-                    value={field.value}
-                    onChange={field.onChange}
-                    onBlur={field.onBlur}
-                  />
-                  <FieldDescription>{td("nameDescription")}</FieldDescription>
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="feature-request-name">
+                      {td("name")}
+                    </FieldLabel>
+                    <Input
+                      id="feature-request-name"
+                      placeholder={td("namePlaceholder")}
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                    <FieldDescription>{td("nameDescription")}</FieldDescription>
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
             />
           )}
 
           <Controller
             control={form.control}
             name="layer"
-            render={({ field }) => (
-              <Field>
-                <FieldLabel>{t("layer")}</FieldLabel>
-                <Select
-                  value={field.value}
-                  onValueChange={(value) => field.onChange(value)}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder={t("layerPlaceholder")} />
-                  </SelectTrigger>
-                  <SelectContent
-                    alignItemWithTrigger={false}
-                    align="start"
-                    className="w-[--anchor-width]"
+            render={(controller) => {
+              const { field } = controller;
+              return (
+                <Field>
+                  <FieldLabel>{t("layer")}</FieldLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
                   >
-                    <SelectGroup>
-                      {FEATURE_LAYERS.map((layer) => (
-                        <SelectItem key={layer} value={layer}>
-                          {layer}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </Field>
-            )}
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder={t("layerPlaceholder")} />
+                    </SelectTrigger>
+                    <SelectContent
+                      alignItemWithTrigger={false}
+                      align="start"
+                      className="w-[--anchor-width]"
+                    >
+                      <SelectGroup>
+                        {FEATURE_LAYERS.map((layer) => (
+                          <SelectItem key={layer} value={layer}>
+                            {layer}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </Field>
+              );
+            }}
           />
 
           <Controller
             control={form.control}
             name="problem"
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="feature-request-problem">
-                  {t("problem")}
-                </FieldLabel>
-                <RichTextEditor
-                  id="feature-request-problem"
-                  features={PROSE_FEATURES}
-                  placeholder={t("problemPlaceholder")}
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                />
-                <FieldDescription>{t("problemDescription")}</FieldDescription>
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
+            render={(controller) => {
+              const { field, fieldState } = controller;
+              return (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="feature-request-problem">
+                    {t("problem")}
+                  </FieldLabel>
+                  <RichTextEditor
+                    id="feature-request-problem"
+                    features={PROSE_FEATURES}
+                    placeholder={t("problemPlaceholder")}
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                  />
+                  <FieldDescription>{t("problemDescription")}</FieldDescription>
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
+              );
+            }}
           />
 
           {directEnabled && (
             <Controller
               control={form.control}
               name="turnstileToken"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <Turnstile
-                    key={turnstileEpoch}
-                    onToken={(token) => field.onChange(token ?? "")}
-                  />
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field data-invalid={fieldState.invalid}>
+                    <Turnstile
+                      key={turnstileEpoch}
+                      onToken={(token) => field.onChange(token ?? "")}
+                    />
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
             />
           )}
 

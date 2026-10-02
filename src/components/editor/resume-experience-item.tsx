@@ -1,4 +1,5 @@
 import { locationSuffix } from "./resume-entry-location";
+import { ResumeOptionalLink } from "./resume-optional-link";
 import type { ExperienceItemView } from "./resume-preview";
 import { ResumeRichText } from "./resume-rich-text";
 
@@ -13,21 +14,17 @@ export function ResumeExperienceItem(props: ExperienceItemView) {
       </div>
 
       <p className="resume-body-xs text-muted-foreground">
-        {props.companyHref ? (
-          <a href={props.companyHref} className="underline">
-            {props.company}
-          </a>
-        ) : (
-          props.company
-        )}
+        <ResumeOptionalLink href={props.companyHref} className="underline">
+          {props.company}
+        </ResumeOptionalLink>
         {locationSuffix(props.company, props.location)}
       </p>
 
-      {props.companyContext ? (
+      {Boolean(props.companyContext) && (
         <p className="resume-body-xs text-muted-foreground">
           {props.companyContext}
         </p>
-      ) : null}
+      )}
 
       <ResumeRichText blocks={props.description} className="mt-2" />
     </article>

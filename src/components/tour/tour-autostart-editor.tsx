@@ -18,9 +18,8 @@ export function TourAutostartEditor() {
     // window width. Starting it before the window is on screen picks the wrong
     // one and leaves the two out of step.
     if (!visible || openStatus !== "ready") return;
-    const tour = window.matchMedia(MEDIA_XL).matches
-      ? EDITOR_TOUR
-      : EDITOR_SHEET_TOUR;
+    const wide = window.matchMedia(MEDIA_XL).matches;
+    const tour = wide ? EDITOR_TOUR : EDITOR_SHEET_TOUR;
     if (useTourStore.getState().hasSeen(tour)) return;
     const timer = setTimeout(() => startNextStep(tour), PREVIEW_SETTLE_MS);
     return () => clearTimeout(timer);

@@ -1,3 +1,4 @@
+import { A, S } from "@mobily/ts-belt";
 import { ArrowRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslations } from "use-intl";
@@ -118,9 +119,9 @@ function LandingTryItForm() {
               aria-label={t("template")}
               value={template}
               onValueChange={(value) => setTemplate(value as TemplateId)}
-              items={TRY_TEMPLATES.map((id) => ({
+              items={A.map(TRY_TEMPLATES, (id) => ({
                 value: id,
-                label: id.charAt(0).toUpperCase() + id.slice(1),
+                label: S.toUpperCase(S.slice(id, 0, 1)) + S.sliceToEnd(id, 1),
               }))}
             />
           </Field>

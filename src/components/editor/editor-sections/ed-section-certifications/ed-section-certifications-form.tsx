@@ -11,17 +11,23 @@ import {
   FieldLegend,
   FieldSet,
 } from "@/components/ui/field";
+import type { Resume } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 import {
   applyCertificationsValues,
   type CertificationItemValues,
   type CertificationsFormValues,
   toCertificationsValues,
-} from "../resume-form-adapter";
+} from "../resume-form-adapter-lists";
 import { EditorSectionCertificationsFormItem } from "./ed-section-certifications-form-item";
 
 function emptyCertification(): CertificationItemValues {
   return { name: "", issuer: "", url: "" };
+}
+
+function initialValues(open: Resume | null): CertificationsFormValues {
+  if (!open) return { certifications: [] };
+  return toCertificationsValues(open);
 }
 
 export function EditorSectionCertificationsForm() {
@@ -31,7 +37,7 @@ export function EditorSectionCertificationsForm() {
   const tc = useTranslations("editor.common");
 
   const form = useForm<CertificationsFormValues>({
-    defaultValues: open ? toCertificationsValues(open) : { certifications: [] },
+    defaultValues: initialValues(open),
   });
   const { fields, prepend, remove, move } = useFieldArray({
     control: form.control,
@@ -40,14 +46,16 @@ export function EditorSectionCertificationsForm() {
 
   useEffect(() => {
     const subscription = form.watch(() => {
-      updateOpen((draft) => applyCertificationsValues(draft, form.getValues()));
+      updateOpen((resume) =>
+        applyCertificationsValues(resume, form.getValues()),
+      );
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);
 
   function handleReorder(from: number, to: number) {
     move(from, to);
-    updateOpen((draft) => applyCertificationsValues(draft, form.getValues()));
+    updateOpen((resume) => applyCertificationsValues(resume, form.getValues()));
   }
 
   if (!open) return null;
@@ -69,13 +77,14 @@ export function EditorSectionCertificationsForm() {
           {t("add")}
         </Button>
 
-        {fields.length === 0 ? (
+        {fields.length === 0 && (
           <EmptyState
             icon={Award}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />
-        ) : (
+        )}
+        {fields.length > 0 && (
           <SortableList
             items={fields.map((field) => field.id)}
             onReorder={handleReorder}

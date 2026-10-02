@@ -1,3 +1,4 @@
+import { A, pipe, S } from "@mobily/ts-belt";
 import type { SectionType } from "@/lib/resume";
 
 /**
@@ -119,11 +120,13 @@ export interface HeadingMatch {
 }
 
 function normalizeHeading(line: string): string {
-  return line
-    .trim()
-    .toLowerCase()
-    .replace(/[\s:•·.\-–—|]+$/g, "")
-    .trim();
+  return pipe(
+    line,
+    S.trim,
+    S.toLowerCase,
+    S.replaceByRe(/[\s:•·.\-–—|]+$/g, ""),
+    S.trim,
+  );
 }
 
 /**
@@ -132,9 +135,14 @@ function normalizeHeading(line: string): string {
  * short acronyms in body text (AWS, IAAP, IEEE) are not mistaken for headings.
  */
 function looksLikeAllCapsHeading(line: string): boolean {
-  const letters = line.replace(/[^a-zA-Z]/g, "");
-  if (letters.length < 2 || letters !== letters.toUpperCase()) return false;
-  return line.trim().split(/\s+/).length >= 2 || letters.length >= 6;
+  const letters = S.replaceByRe(line, /[^a-zA-Z]/g, "");
+  if (S.length(letters) < 2 || letters !== S.toUpperCase(letters)) {
+    return false;
+  }
+  return (
+    pipe(line, S.trim, S.splitByRe(/\s+/), A.length) >= 2 ||
+    S.length(letters) >= 6
+  );
 }
 
 function toTitleCase(line: string): string {
@@ -152,17 +160,17 @@ function toTitleCase(line: string): string {
  * not mistaken for headings.
  */
 export function detectHeading(line: string): HeadingMatch | null {
-  const trimmed = line.trim();
-  if (!trimmed) return null;
-  if (trimmed.split(/\s+/).length > 5) return null;
+  const trimmed = S.trim(line);
+  if (S.isEmpty(trimmed)) return null;
+  if (pipe(trimmed, S.splitByRe(/\s+/), A.length) > 5) return null;
   const norm = normalizeHeading(trimmed);
-  if (!norm) return null;
+  if (S.isEmpty(norm)) return null;
 
   for (const [type, keywords] of HEADING_KEYWORDS) {
-    if (keywords.includes(norm)) return { type, title: trimmed };
+    if (A.includes(keywords, norm)) return { type, title: trimmed };
   }
   for (const [type, keywords] of HEADING_KEYWORDS) {
-    if (keywords.some((keyword) => norm.includes(keyword))) {
+    if (A.some(keywords, (keyword) => S.includes(norm, keyword))) {
       return { type, title: trimmed };
     }
   }

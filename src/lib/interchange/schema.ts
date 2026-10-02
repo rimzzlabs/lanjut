@@ -1,3 +1,4 @@
+import { A, D, pipe } from "@mobily/ts-belt";
 import { z } from "zod";
 import {
   CUSTOM_LIST_FIELDS,
@@ -26,8 +27,14 @@ const scalarString = z
   .transform((value) => String(value));
 
 function entryShape(fields: FieldSchema[]) {
-  const shape: Record<string, z.ZodOptional<typeof scalarString>> = {};
-  for (const field of fields) shape[field.key] = scalarString.optional();
+  const shape = pipe(
+    fields,
+    A.map((field): readonly [string, z.ZodOptional<typeof scalarString>] => [
+      field.key,
+      scalarString.optional(),
+    ]),
+    D.fromPairs,
+  );
   return z.strictObject(shape);
 }
 
@@ -109,7 +116,7 @@ export const interchangeSchema = z
   })
   .superRefine((value, ctx) => {
     const seen = new Set<string>();
-    (value.sections ?? []).forEach((section, index) => {
+    A.forEachWithIndex(value.sections ?? [], (index, section) => {
       if (section.type === "custom") {
         const variant = section.variant ?? "rich";
         if (variant === "rich" && section.entries !== undefined) {

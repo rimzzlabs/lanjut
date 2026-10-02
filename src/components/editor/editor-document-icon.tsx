@@ -14,9 +14,7 @@ export function EditorDocumentIcon() {
   const hasIcons = templateHasContactIcons(templateId);
 
   function handleChange(next: boolean) {
-    updateOpen((draft) => {
-      draft.showIcons = next;
-    });
+    updateOpen((resume) => ({ ...resume, showIcons: next }));
   }
 
   return (

@@ -75,29 +75,32 @@ export function PlatformResumeActionRename(
             <Controller
               control={form.control}
               name="title"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="rename-resume-title">
-                    {t("label")}
-                  </FieldLabel>
-                  <InputGroup>
-                    <InputGroupAddon>
-                      <TextInitial />
-                    </InputGroupAddon>
-                    <InputGroupInput
-                      id="rename-resume-title"
-                      maxLength={RESUME_TITLE_MAX_LENGTH}
-                      placeholder={t("placeholder")}
-                      aria-invalid={fieldState.invalid}
-                      {...field}
-                    />
-                  </InputGroup>
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="rename-resume-title">
+                      {t("label")}
+                    </FieldLabel>
+                    <InputGroup>
+                      <InputGroupAddon>
+                        <TextInitial />
+                      </InputGroupAddon>
+                      <InputGroupInput
+                        id="rename-resume-title"
+                        maxLength={RESUME_TITLE_MAX_LENGTH}
+                        placeholder={t("placeholder")}
+                        aria-invalid={fieldState.invalid}
+                        {...field}
+                      />
+                    </InputGroup>
 
-                  <FieldDescription>{t("fieldDescription")}</FieldDescription>
+                    <FieldDescription>{t("fieldDescription")}</FieldDescription>
 
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
             />
           </FieldGroup>
 

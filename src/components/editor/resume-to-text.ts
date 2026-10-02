@@ -1,5 +1,7 @@
+import { A, G, pipe, S } from "@mobily/ts-belt";
 import { richBlocksToText } from "@/lib/resume/rich-content";
-import { buildResumeBlocks } from "./resume-blocks";
+import { joinPresent } from "@/lib/utils";
+import { buildResumeBlocks, type ResumeBlock } from "./resume-blocks";
 import { withLocation } from "./resume-entry-location";
 import type { ResumePreview } from "./resume-preview";
 
@@ -10,7 +12,72 @@ function dateRange(start: string, end: string): string {
 
 /** "Role - Company - Dates", dropping whichever parts are absent. */
 function metaLine(...parts: string[]): string {
-  return parts.filter(Boolean).join(" - ");
+  return joinPresent(parts, " - ");
+}
+
+function presentLines(
+  values: ReadonlyArray<string | undefined>,
+): ReadonlyArray<string> {
+  return pipe(values, A.filter(G.isString), A.reject(S.isEmpty));
+}
+
+function blockLines(block: ResumeBlock): ReadonlyArray<string> {
+  switch (block.kind) {
+    case "header": {
+      const { fullName, headline, contacts } = block.header;
+      return [
+        ...presentLines([fullName, headline]),
+        ...A.map(contacts, (contact) => contact.value),
+      ];
+    }
+    case "heading":
+      return ["", S.toUpperCase(block.title)];
+    case "summary":
+      return richBlocksToText(block.body);
+    case "experience": {
+      const {
+        role,
+        company,
+        location,
+        companyContext,
+        startDate,
+        endDate,
+        description,
+      } = block.item;
+      return [
+        metaLine(
+          role,
+          withLocation(company, location),
+          dateRange(startDate, endDate),
+        ),
+        ...presentLines([companyContext]),
+        ...richBlocksToText(description),
+        "",
+      ];
+    }
+    case "education": {
+      const { degree, institution, location, startDate, endDate, details } =
+        block.item;
+      return [
+        metaLine(
+          degree,
+          withLocation(institution, location),
+          dateRange(startDate, endDate),
+        ),
+        ...richBlocksToText(details),
+        "",
+      ];
+    }
+    case "certificate": {
+      const { title, issuer, startDate, endDate } = block.item;
+      return [metaLine(title, issuer, dateRange(startDate, endDate))];
+    }
+    case "skills":
+    case "languages":
+      return A.map(block.items, (item) =>
+        metaLine(item.name, item.proficiency),
+      );
+  }
 }
 
 /**
@@ -19,76 +86,12 @@ function metaLine(...parts: string[]): string {
  * empty-section gating match the preview and the PDF exactly.
  */
 export function resumeToText(preview: ResumePreview): string {
-  const lines: string[] = [];
-
-  for (const block of buildResumeBlocks(preview)) {
-    switch (block.kind) {
-      case "header": {
-        const { fullName, headline, contacts } = block.header;
-        if (fullName) lines.push(fullName);
-        if (headline) lines.push(headline);
-        for (const contact of contacts) lines.push(contact.value);
-        break;
-      }
-      case "heading":
-        lines.push("", block.title.toUpperCase());
-        break;
-      case "summary":
-        lines.push(...richBlocksToText(block.body));
-        break;
-      case "experience": {
-        const {
-          role,
-          company,
-          location,
-          companyContext,
-          startDate,
-          endDate,
-          description,
-        } = block.item;
-        lines.push(
-          metaLine(
-            role,
-            withLocation(company, location),
-            dateRange(startDate, endDate),
-          ),
-        );
-        if (companyContext) lines.push(companyContext);
-        lines.push(...richBlocksToText(description));
-        lines.push("");
-        break;
-      }
-      case "education": {
-        const { degree, institution, location, startDate, endDate, details } =
-          block.item;
-        lines.push(
-          metaLine(
-            degree,
-            withLocation(institution, location),
-            dateRange(startDate, endDate),
-          ),
-        );
-        lines.push(...richBlocksToText(details));
-        lines.push("");
-        break;
-      }
-      case "certificate": {
-        const { title, issuer, startDate, endDate } = block.item;
-        lines.push(metaLine(title, issuer, dateRange(startDate, endDate)));
-        break;
-      }
-      case "skills":
-      case "languages":
-        for (const item of block.items) {
-          lines.push(metaLine(item.name, item.proficiency));
-        }
-        break;
-    }
-  }
-
   // Collapse runs of blank lines and normalize to a single trailing newline.
-  return `${lines
-    .join("\n")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim()}\n`;
+  return `${pipe(
+    buildResumeBlocks(preview),
+    A.flatMap(blockLines),
+    A.join("\n"),
+    S.replaceByRe(/\n{3,}/g, "\n\n"),
+    S.trim,
+  )}\n`;
 }

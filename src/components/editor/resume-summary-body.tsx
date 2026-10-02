@@ -2,7 +2,7 @@ import type { RichBlock } from "@/lib/resume/rich-content";
 import { ResumeRichText } from "./resume-rich-text";
 
 interface ResumeSummaryBodyProps {
-  body: RichBlock[];
+  body: ReadonlyArray<RichBlock>;
 }
 
 export function ResumeSummaryBody(props: ResumeSummaryBodyProps) {

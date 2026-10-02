@@ -24,7 +24,7 @@ export function PlatformResumeActionDownload(
   const [loading, setLoading] = useState(false);
   const [missing, setMissing] = useState(false);
   const t = useTranslations("forms.download");
-  const { runExport, exporting, exporter } = useResumeExporter();
+  const { runExport, exporting } = useResumeExporter();
 
   async function handleDownload(format: ExportFormat, fileName: string) {
     setLoading(true);
@@ -34,7 +34,7 @@ export function PlatformResumeActionDownload(
         setMissing(true);
         return;
       }
-      const ok = await runExport(document, format, fileName);
+      const ok = await runExport({ resume: document, format, fileName });
       if (ok) props.onOpenChange(false);
     } finally {
       setLoading(false);
@@ -53,9 +53,8 @@ export function PlatformResumeActionDownload(
           </ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 
-        {missing ? (
-          <p className="text-sm text-destructive">{t("missing")}</p>
-        ) : (
+        {missing && <p className="text-sm text-destructive">{t("missing")}</p>}
+        {!missing && (
           <PlatformResumeDownloadForm
             key={props.resume.title}
             defaultFileName={props.resume.title}
@@ -65,7 +64,6 @@ export function PlatformResumeActionDownload(
             }
           />
         )}
-        {exporter}
       </ResponsiveDialogContent>
     </ResponsiveDialog>
   );

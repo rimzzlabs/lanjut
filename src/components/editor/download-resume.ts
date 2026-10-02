@@ -3,6 +3,12 @@ import { resolveTemplateId } from "@/lib/templates";
 import type { ExportFormat } from "./export-format";
 import { resumeToPreview } from "./resume-to-preview";
 
+export interface ResumeExportRequest {
+  resume: Resume;
+  format: ExportFormat;
+  fileName: string;
+}
+
 /**
  * Exports `resume` in the chosen format and triggers the browser download.
  * Everything renders client-side; no résumé content leaves the device. The
@@ -10,10 +16,9 @@ import { resumeToPreview } from "./resume-to-preview";
  * out of the main bundle.
  */
 export async function downloadResume(
-  resume: Resume,
-  format: ExportFormat,
-  fileName: string,
+  params: ResumeExportRequest,
 ): Promise<boolean> {
+  const { resume, format, fileName } = params;
   if (format === "json") {
     const { downloadResumeJson } = await import("./download-resume-json");
     return downloadResumeJson(resume, fileName);
@@ -28,11 +33,11 @@ export async function downloadResume(
 
   if (format === "pdf") {
     const { downloadResumePdf } = await import("./pdf/download-resume-pdf");
-    return downloadResumePdf(
+    return downloadResumePdf({
       preview,
       fileName,
-      resolveTemplateId(resume.templateId),
-    );
+      template: resolveTemplateId(resume.templateId),
+    });
   }
 
   if (format === "docx") {

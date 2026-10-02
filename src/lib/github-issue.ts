@@ -1,3 +1,4 @@
+import { pipe, S } from "@mobily/ts-belt";
 import type { BUG_AREAS } from "./forms/bug-report";
 import type { FEATURE_LAYERS } from "./forms/feature-request";
 import type { FeedbackPayload } from "./forms/feedback";
@@ -21,18 +22,20 @@ export interface FeatureRequestIssue {
 }
 
 export function areaForPathname(pathname: string): (typeof BUG_AREAS)[number] {
-  if (pathname.startsWith(EDITOR_PATHNAME)) return "Editor";
-  if (pathname.startsWith("/platform")) return "Dashboard / library";
+  if (S.startsWith(pathname, EDITOR_PATHNAME)) return "Editor";
+  if (S.startsWith(pathname, "/platform")) return "Dashboard / library";
   if (pathname === "/") return "Landing page";
   return "Other";
 }
 
 /** Issue title from a report's first line, marked as coming from the app. */
 export function issueTitle(prefix: string, summaryLine: string): string {
-  const subject = summaryLine
-    .replace(/^- /, "")
-    .trim()
-    .slice(0, TITLE_SUBJECT_MAX_LENGTH);
+  const subject = pipe(
+    summaryLine,
+    S.replaceByRe(/^- /, ""),
+    S.trim,
+    S.slice(0, TITLE_SUBJECT_MAX_LENGTH),
+  );
   return `${prefix} ${subject}`;
 }
 

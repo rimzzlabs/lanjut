@@ -6,6 +6,9 @@ import { EditorResumeNotFound } from "./editor-resume-not-found";
 import { ResumeDocument } from "./resume-document";
 import { resumeToPreview } from "./resume-to-preview";
 
+const ENTER_REDUCED = { opacity: 0 };
+const ENTER_FROM = { opacity: 0, y: 32 };
+
 /**
  * The paper preview, driven by the open résumé in the store. `EditorPanels`
  * owns loading the document (`useEditorResume`), so this only reads `open` and
@@ -18,18 +21,21 @@ export function EditorResumePreview() {
   const open = useResumeStore((state) => state.open);
   const openStatus = useResumeStore((state) => state.openStatus);
   const preview = useMemo(() => (open ? resumeToPreview(open) : null), [open]);
+  const missing = openStatus === "missing";
 
   return (
     <AnimatePresence mode="wait">
-      {openStatus === "missing" ? (
+      {missing && (
         <PreviewEnter key="missing">
           <EditorResumeNotFound />
         </PreviewEnter>
-      ) : !open || !preview ? (
+      )}
+      {!missing && (!open || !preview) && (
         <PreviewFade key="skeleton">
           <PreviewSkeleton />
         </PreviewFade>
-      ) : (
+      )}
+      {!missing && open && preview && (
         <PreviewEnter key={open.id}>
           <PreviewContentReveal>
             <div data-template={resolveTemplateId(open.templateId)}>
@@ -50,7 +56,7 @@ function PreviewEnter(props: { children: ReactNode }) {
 
   return (
     <motion.div
-      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 32 }}
+      initial={reduceMotion ? ENTER_REDUCED : ENTER_FROM}
       animate={{ opacity: 1, y: 0 }}
       exit={{
         opacity: 0,

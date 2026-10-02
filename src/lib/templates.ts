@@ -1,3 +1,5 @@
+import { A, G, pipe, S } from "@mobily/ts-belt";
+
 /**
  * The catalog of résumé templates shown on the Browse Templates page. Presentation
  * metadata only; the rendering for each template lives under
@@ -23,9 +25,10 @@ export interface TemplateSummary {
 
 /** Coerces a persisted template id to a known one, falling back to the default. */
 export function resolveTemplateId(id: string): TemplateId {
-  return TEMPLATES.some((template) => template.id === id)
-    ? (id as TemplateId)
-    : DEFAULT_TEMPLATE_ID;
+  if (A.some(TEMPLATES, (template) => template.id === id)) {
+    return id as TemplateId;
+  }
+  return DEFAULT_TEMPLATE_ID;
 }
 
 /**
@@ -52,7 +55,7 @@ const TEMPLATE_IDS_WITH_CONTACT_ICONS: TemplateId[] = [
 
 /** Whether a persisted template id renders contact icons. Unknown ids resolve to the default template first, matching renderer fallback. */
 export function templateHasContactIcons(id: string): boolean {
-  return TEMPLATE_IDS_WITH_CONTACT_ICONS.includes(resolveTemplateId(id));
+  return A.includes(TEMPLATE_IDS_WITH_CONTACT_ICONS, resolveTemplateId(id));
 }
 
 export type TemplateSort = "name-asc" | "name-desc" | "newest";
@@ -76,15 +79,17 @@ export const TEMPLATES: TemplateSummary[] = [
 ];
 
 export function filterTemplates(
-  templates: TemplateSummary[],
+  templates: ReadonlyArray<TemplateSummary>,
   query: string,
-): TemplateSummary[] {
-  const needle = query.trim().toLowerCase();
+): ReadonlyArray<TemplateSummary> {
+  const needle = pipe(query, S.trim, S.toLowerCase);
   if (!needle) return templates;
-  return templates.filter(
+  return A.filter(
+    templates,
     (template) =>
-      template.name.toLowerCase().includes(needle) ||
-      (template.description?.toLowerCase().includes(needle) ?? false),
+      S.includes(S.toLowerCase(template.name), needle) ||
+      (G.isString(template.description) &&
+        S.includes(S.toLowerCase(template.description), needle)),
   );
 }
 
@@ -94,22 +99,21 @@ export function filterTemplates(
  * surfaces can never drift apart; only the browse page re-sorts, and only when
  * the user picks another sort.
  */
-export const SORTED_TEMPLATES: TemplateSummary[] = sortTemplates(
+export const SORTED_TEMPLATES: ReadonlyArray<TemplateSummary> = sortTemplates(
   TEMPLATES,
   DEFAULT_TEMPLATE_SORT,
 );
 
 export function sortTemplates(
-  templates: TemplateSummary[],
+  templates: ReadonlyArray<TemplateSummary>,
   sort: TemplateSort,
-): TemplateSummary[] {
-  const sorted = [...templates];
+): ReadonlyArray<TemplateSummary> {
   switch (sort) {
     case "name-asc":
-      return sorted.sort((a, b) => a.name.localeCompare(b.name));
+      return A.sort(templates, (a, b) => a.name.localeCompare(b.name));
     case "name-desc":
-      return sorted.sort((a, b) => b.name.localeCompare(a.name));
+      return A.sort(templates, (a, b) => b.name.localeCompare(a.name));
     case "newest":
-      return sorted.sort((a, b) => b.addedAt.localeCompare(a.addedAt));
+      return A.sort(templates, (a, b) => b.addedAt.localeCompare(a.addedAt));
   }
 }

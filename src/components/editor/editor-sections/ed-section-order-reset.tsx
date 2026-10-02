@@ -1,3 +1,4 @@
+import { A, pipe } from "@mobily/ts-belt";
 import { ListRestart } from "lucide-react";
 import { useTranslations } from "use-intl";
 import {
@@ -10,12 +11,15 @@ import { Button } from "../../ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 
 /** True when the reorderable sections are already in canonical (default) order. */
-function isDefaultOrder(sections: Section[]): boolean {
-  const indices = sections
-    .filter((section) => isReorderableSection(section.type))
-    .map((section) => canonicalSectionIndex(section.type));
-  return indices.every(
-    (value, index) => index === 0 || indices[index - 1] <= value,
+function isDefaultOrder(sections: ReadonlyArray<Section>): boolean {
+  const indices = pipe(
+    sections,
+    A.filter((section) => isReorderableSection(section.type)),
+    A.map((section) => canonicalSectionIndex(section.type)),
+  );
+  return pipe(
+    A.zip(indices, A.drop(indices, 1)),
+    A.every(([previous, value]) => previous <= value),
   );
 }
 

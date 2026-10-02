@@ -1,4 +1,6 @@
+import { A, G, O, pipe, S } from "@mobily/ts-belt";
 import { format, getYear } from "date-fns";
+import { joinPresent } from "@/lib/utils";
 
 /** Sentinel end-date value marking an ongoing role or study ("current"). */
 export const PRESENT_DATE = "Present";
@@ -41,13 +43,20 @@ export interface MonthYear {
  * so the picker can be filled one column at a time (e.g. "2020" or "Jan 2020").
  */
 export function parseMonthYear(value: string | undefined): MonthYear {
-  const parsed: MonthYear = { month: undefined, year: undefined };
-  if (!value) return parsed;
-  for (const token of value.trim().split(/\s+/)) {
-    if (/^\d{4}$/.test(token)) parsed.year = token;
-    else if (token) parsed.month = token;
-  }
-  return parsed;
+  if (!value) return { month: undefined, year: undefined };
+  const tokens = pipe(
+    value,
+    S.trim,
+    S.splitByRe(/\s+/),
+    A.filter(G.isString),
+    A.reject(S.isEmpty),
+  );
+  const isYear = (token: string) => /^\d{4}$/.test(token);
+  // The last token of each kind wins.
+  return {
+    month: pipe(tokens, A.reject(isYear), A.last, O.toUndefined),
+    year: pipe(tokens, A.filter(isYear), A.last, O.toUndefined),
+  };
 }
 
 /** Joins the parts back into "MMM YYYY", dropping whichever part is missing. */
@@ -55,28 +64,34 @@ export function formatMonthYear(
   month: string | undefined,
   year: string | undefined,
 ): string {
-  return [month, year].filter(Boolean).join(" ");
+  return joinPresent([month, year], " ");
 }
 
-const MONTH_INDEX = new Map(MONTHS.map((month, index) => [month.value, index]));
+const MONTH_INDEX = new Map(
+  A.mapWithIndex(MONTHS, (index, month) => [month.value, index] as const),
+);
+
+interface LocalizeDateValueParams {
+  value: string;
+  months: string[];
+  present: string;
+}
 
 /**
  * Renders a stored date value into a document language: the English month token
  * is swapped for its `months` equivalent and `PRESENT_DATE` for `present`. Meant
  * for display only; the stored value stays the canonical English token.
  */
-export function localizeDateValue(
-  value: string,
-  months: string[],
-  present: string,
-): string {
-  const trimmed = value.trim();
+export function localizeDateValue(params: LocalizeDateValueParams): string {
+  const { value, months, present } = params;
+  const trimmed = S.trim(value);
   if (!trimmed) return "";
   if (trimmed === PRESENT_DATE) return present;
   const { month, year } = parseMonthYear(trimmed);
   const index = month ? MONTH_INDEX.get(month) : undefined;
-  const localizedMonth = index !== undefined ? months[index] : month;
-  return [localizedMonth, year].filter(Boolean).join(" ");
+  const localizedMonth =
+    index !== undefined ? O.toUndefined(A.get(months, index)) : month;
+  return joinPresent([localizedMonth, year], " ");
 }
 
 /**
@@ -85,7 +100,7 @@ export function localizeDateValue(
  * most recent, so a freshly added (undated) row is treated as the latest.
  */
 export function dateSortValue(value: string | undefined): number {
-  const trimmed = value?.trim();
+  const trimmed = S.trim(value ?? "");
   if (!trimmed || trimmed === PRESENT_DATE) return Number.POSITIVE_INFINITY;
   const { month, year } = parseMonthYear(trimmed);
   if (!year) return Number.POSITIVE_INFINITY;

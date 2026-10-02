@@ -1,3 +1,4 @@
+import { pipe, S } from "@mobily/ts-belt";
 import {
   InputGroup,
   InputGroupAddon,
@@ -17,11 +18,13 @@ const LINKEDIN_PREFIX = "linkedin.com/in/";
 
 /** Reduces a stored value or pasted URL down to the bare profile username. */
 function toUsername(value: string): string {
-  return value
-    .replace(/^https?:\/\//i, "")
-    .replace(/^www\./i, "")
-    .replace(/^linkedin\.com\/in\//i, "")
-    .replace(/^\/+/, "");
+  return pipe(
+    value,
+    S.replaceByRe(/^https?:\/\//i, ""),
+    S.replaceByRe(/^www\./i, ""),
+    S.replaceByRe(/^linkedin\.com\/in\//i, ""),
+    S.replaceByRe(/^\/+/, ""),
+  );
 }
 
 /**
