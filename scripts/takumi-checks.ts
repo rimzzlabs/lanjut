@@ -1,4 +1,4 @@
-import { A, O, pipe, S } from "@mobily/ts-belt";
+import { A, G, O, pipe, S } from "@mobily/ts-belt";
 import type {
   ExperienceItemView,
   ResumePreview,
@@ -21,6 +21,8 @@ interface TakumiChecksParams {
     label: string;
   }) => Promise<string[]>;
   textErrors: (text: string, label: string) => string[];
+  /** The react-pdf export of the same résumé, the reference for font parity. */
+  referencePdf: (template: TemplateId) => Promise<Uint8Array>;
 }
 
 interface RenderParams {
@@ -68,6 +70,19 @@ function splitProbe(preview: ResumePreview): O.Option<ResumePreview> {
   }));
 }
 
+/** Family names of the fonts a PDF embeds, read from its subset font names. */
+function embeddedFamilies(buffer: Uint8Array): ReadonlyArray<string> {
+  return pipe(
+    Buffer.from(buffer).toString("latin1"),
+    S.match(/\/(?:BaseFont|FontName) *\/[A-Z]{6}\+[A-Za-z0-9]+/g),
+    O.getWithDefault<ReadonlyArray<O.Option<string>>>([]),
+    A.filter(G.isString),
+    A.map((name) => S.replaceByRe(name, /^.*\+/, "")),
+    A.uniq,
+    A.sort((a, b) => a.localeCompare(b)),
+  );
+}
+
 function pageOf(pages: ReadonlyArray<string>, marker: string): number {
   return O.getWithDefault(
     A.getIndexBy(pages, (page) => S.includes(page, marker)),
@@ -86,9 +101,16 @@ async function checkTemplate(
 ): Promise<ReadonlyArray<string>> {
   const { takumi, template, checks } = params;
   const label = `TAKUMI(${template})`;
-  const text = await checks.extractPdfText(
-    await render({ takumi, preview: checks.preview, template }),
-  );
+  const buffer = await render({ takumi, preview: checks.preview, template });
+  const text = await checks.extractPdfText(buffer);
+  const families = embeddedFamilies(buffer);
+  const expected = embeddedFamilies(await checks.referencePdf(template));
+  const fontErrors =
+    A.join(families, ",") === A.join(expected, ",")
+      ? []
+      : [
+          `${label}: embeds ${A.join(families, ", ")}, react-pdf embeds ${A.join(expected, ", ")}`,
+        ];
   console.log(`${label}: extracted ${S.length(text)} chars`);
   const withPhoto = await checks.extractPdfText(
     await render({ takumi, preview: checks.photoPreview, template }),
@@ -115,6 +137,7 @@ async function checkTemplate(
 
   return pipe(
     checks.textErrors(text, label),
+    A.concat(fontErrors),
     A.concat(photoErrors),
     A.concat(splitErrors),
   );

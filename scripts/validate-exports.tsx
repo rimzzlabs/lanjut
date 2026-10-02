@@ -352,6 +352,10 @@ async function main(): Promise<void> {
     extractPdfText,
     extractPdfPages,
     ligatureErrors,
+    referencePdf: (template) => {
+      const PdfDocument = TEMPLATE_PDF_DOCUMENTS[template];
+      return renderToBuffer(<PdfDocument preview={preview} />);
+    },
     textErrors: (text, label) => [
       ...checkReadingOrder(text, label),
       ...checkFields(text, label),
