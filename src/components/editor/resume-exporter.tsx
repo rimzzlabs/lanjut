@@ -14,7 +14,8 @@ interface ResumeExporterProps {
   onSettled: (ok: boolean) => void;
 }
 
-export function ResumeExporter({ request, onSettled }: ResumeExporterProps) {
+export function ResumeExporter(props: ResumeExporterProps) {
+  const { request, onSettled } = props;
   // The download hands a file to the browser and cannot be undone, so it must
   // fire once per request even though the effect re-runs (StrictMode). Guard on
   // the request identity rather than cleanup, which cannot cancel the download.

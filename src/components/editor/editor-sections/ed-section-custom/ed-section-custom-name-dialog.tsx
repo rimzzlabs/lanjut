@@ -81,26 +81,29 @@ export function EditorSectionCustomNameDialog(
             <Controller
               control={form.control}
               name="title"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="custom-section-name">
-                    {t("nameLabel")}
-                  </FieldLabel>
-                  <InputGroup>
-                    <InputGroupAddon>
-                      <TextInitial />
-                    </InputGroupAddon>
-                    <InputGroupInput
-                      id="custom-section-name"
-                      maxLength={SECTION_TITLE_MAX_LENGTH}
-                      placeholder={t("namePlaceholder")}
-                      aria-invalid={fieldState.invalid}
-                      {...field}
-                    />
-                  </InputGroup>
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="custom-section-name">
+                      {t("nameLabel")}
+                    </FieldLabel>
+                    <InputGroup>
+                      <InputGroupAddon>
+                        <TextInitial />
+                      </InputGroupAddon>
+                      <InputGroupInput
+                        id="custom-section-name"
+                        maxLength={SECTION_TITLE_MAX_LENGTH}
+                        placeholder={t("namePlaceholder")}
+                        aria-invalid={fieldState.invalid}
+                        {...field}
+                      />
+                    </InputGroup>
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
             />
           </FieldGroup>
 

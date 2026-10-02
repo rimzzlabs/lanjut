@@ -13,11 +13,8 @@ interface EmptyStateProps {
   icon?: LucideIcon;
 }
 
-export function EmptyState({
-  title,
-  description,
-  icon: Icon,
-}: EmptyStateProps) {
+export function EmptyState(props: EmptyStateProps) {
+  const { title, description, icon: Icon } = props;
   return (
     <Empty className="gap-1.5 rounded-lg border px-4 py-5">
       <EmptyHeader className="gap-1">

@@ -62,50 +62,56 @@ export function PlatformResumeDownloadForm(
         <Controller
           control={form.control}
           name="format"
-          render={({ field }) => (
-            <ToggleGroup
-              variant="outline"
-              spacing={0}
-              className="w-full"
-              value={[field.value]}
-              onValueChange={(value) => {
-                pipe(
-                  value,
-                  A.head,
-                  O.filter(S.isNotEmpty),
-                  O.tap((next) => field.onChange(next as ExportFormat)),
-                );
-              }}
-            >
-              {EXPORT_FORMATS.map((value) => (
-                <ToggleGroupItem key={value} value={value} className="flex-1">
-                  {S.toUpperCase(value)}
-                </ToggleGroupItem>
-              ))}
-            </ToggleGroup>
-          )}
+          render={(controller) => {
+            const { field } = controller;
+            return (
+              <ToggleGroup
+                variant="outline"
+                spacing={0}
+                className="w-full"
+                value={[field.value]}
+                onValueChange={(value) => {
+                  pipe(
+                    value,
+                    A.head,
+                    O.filter(S.isNotEmpty),
+                    O.tap((next) => field.onChange(next as ExportFormat)),
+                  );
+                }}
+              >
+                {EXPORT_FORMATS.map((value) => (
+                  <ToggleGroupItem key={value} value={value} className="flex-1">
+                    {S.toUpperCase(value)}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+            );
+          }}
         />
       </Field>
 
       <Controller
         control={form.control}
         name="fileName"
-        render={({ field, fieldState }) => (
-          <Field className="mt-3">
-            <FieldLabel htmlFor={field.name}>{t("fileName")}</FieldLabel>
-            <InputGroup>
-              <InputGroupInput
-                aria-invalid={fieldState.invalid}
-                id={field.name}
-                placeholder={t("fileNamePlaceholder")}
-                {...field}
-              />
-              <InputGroupAddon align="inline-end">
-                <InputGroupText>.{format}</InputGroupText>
-              </InputGroupAddon>
-            </InputGroup>
-          </Field>
-        )}
+        render={(controller) => {
+          const { field, fieldState } = controller;
+          return (
+            <Field className="mt-3">
+              <FieldLabel htmlFor={field.name}>{t("fileName")}</FieldLabel>
+              <InputGroup>
+                <InputGroupInput
+                  aria-invalid={fieldState.invalid}
+                  id={field.name}
+                  placeholder={t("fileNamePlaceholder")}
+                  {...field}
+                />
+                <InputGroupAddon align="inline-end">
+                  <InputGroupText>.{format}</InputGroupText>
+                </InputGroupAddon>
+              </InputGroup>
+            </Field>
+          );
+        }}
       />
 
       <Button

@@ -46,16 +46,19 @@ export function EditorSectionLanguagesFormItem(
           <Controller
             control={props.control}
             name={`languages.${props.index}.name`}
-            render={({ field, fieldState }) => (
-              <Field className="flex-1">
-                <Input
-                  placeholder={t("namePlaceholder")}
-                  {...field}
-                  id={field.name}
-                />
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
+            render={(controller) => {
+              const { field, fieldState } = controller;
+              return (
+                <Field className="flex-1">
+                  <Input
+                    placeholder={t("namePlaceholder")}
+                    {...field}
+                    id={field.name}
+                  />
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
+              );
+            }}
           />
 
           <Button
@@ -74,25 +77,28 @@ export function EditorSectionLanguagesFormItem(
           <Controller
             control={props.control}
             name={`languages.${props.index}.level`}
-            render={({ field }) => (
-              <Select
-                value={field.value || null}
-                onValueChange={(value) => field.onChange(value)}
-              >
-                <SelectTrigger className="w-[87.888%] md:w-40">
-                  <SelectValue placeholder={t("proficiency")} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {LANGUAGE_LEVELS.map((level) => (
-                      <SelectItem key={level} value={level}>
-                        {level}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            )}
+            render={(controller) => {
+              const { field } = controller;
+              return (
+                <Select
+                  value={field.value || null}
+                  onValueChange={(value) => field.onChange(value)}
+                >
+                  <SelectTrigger className="w-[87.888%] md:w-40">
+                    <SelectValue placeholder={t("proficiency")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {LANGUAGE_LEVELS.map((level) => (
+                        <SelectItem key={level} value={level}>
+                          {level}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              );
+            }}
           />
         )}
 

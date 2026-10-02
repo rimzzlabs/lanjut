@@ -41,20 +41,23 @@ export function EditorSectionSummaryForm() {
         <Controller
           control={form.control}
           name="summary"
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>{t("label")}</FieldLabel>
-              <RichTextEditor
-                id={field.name}
-                value={field.value}
-                features={PROSE_FEATURES}
-                placeholder={t("placeholder")}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-              />
-              <FieldError errors={[fieldState.error]} />
-            </Field>
-          )}
+          render={(controller) => {
+            const { field, fieldState } = controller;
+            return (
+              <Field>
+                <FieldLabel htmlFor={field.name}>{t("label")}</FieldLabel>
+                <RichTextEditor
+                  id={field.name}
+                  value={field.value}
+                  features={PROSE_FEATURES}
+                  placeholder={t("placeholder")}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                />
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            );
+          }}
         />
       </FieldGroup>
     </form>

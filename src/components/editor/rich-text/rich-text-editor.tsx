@@ -47,7 +47,10 @@ export function RichTextEditor(props: RichTextEditorProps) {
           "tiptap-content max-h-56 min-h-24 overflow-y-auto rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30",
       },
     },
-    onUpdate: ({ editor }) => onChangeRef.current(editor.getJSON()),
+    onUpdate: (context) => {
+      const { editor } = context;
+      return onChangeRef.current(editor.getJSON());
+    },
     onBlur: () => onBlurRef.current?.(),
   });
 

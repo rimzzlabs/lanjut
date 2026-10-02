@@ -133,91 +133,103 @@ export function FeedbackFeatureRequestForm(
             <Controller
               control={form.control}
               name="name"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="feature-request-name">
-                    {td("name")}
-                  </FieldLabel>
-                  <Input
-                    id="feature-request-name"
-                    placeholder={td("namePlaceholder")}
-                    value={field.value}
-                    onChange={field.onChange}
-                    onBlur={field.onBlur}
-                  />
-                  <FieldDescription>{td("nameDescription")}</FieldDescription>
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="feature-request-name">
+                      {td("name")}
+                    </FieldLabel>
+                    <Input
+                      id="feature-request-name"
+                      placeholder={td("namePlaceholder")}
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                    <FieldDescription>{td("nameDescription")}</FieldDescription>
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
             />
           )}
 
           <Controller
             control={form.control}
             name="layer"
-            render={({ field }) => (
-              <Field>
-                <FieldLabel>{t("layer")}</FieldLabel>
-                <Select
-                  value={field.value}
-                  onValueChange={(value) => field.onChange(value)}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder={t("layerPlaceholder")} />
-                  </SelectTrigger>
-                  <SelectContent
-                    alignItemWithTrigger={false}
-                    align="start"
-                    className="w-[--anchor-width]"
+            render={(controller) => {
+              const { field } = controller;
+              return (
+                <Field>
+                  <FieldLabel>{t("layer")}</FieldLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
                   >
-                    <SelectGroup>
-                      {FEATURE_LAYERS.map((layer) => (
-                        <SelectItem key={layer} value={layer}>
-                          {layer}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </Field>
-            )}
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder={t("layerPlaceholder")} />
+                    </SelectTrigger>
+                    <SelectContent
+                      alignItemWithTrigger={false}
+                      align="start"
+                      className="w-[--anchor-width]"
+                    >
+                      <SelectGroup>
+                        {FEATURE_LAYERS.map((layer) => (
+                          <SelectItem key={layer} value={layer}>
+                            {layer}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </Field>
+              );
+            }}
           />
 
           <Controller
             control={form.control}
             name="problem"
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="feature-request-problem">
-                  {t("problem")}
-                </FieldLabel>
-                <RichTextEditor
-                  id="feature-request-problem"
-                  features={PROSE_FEATURES}
-                  placeholder={t("problemPlaceholder")}
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                />
-                <FieldDescription>{t("problemDescription")}</FieldDescription>
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
+            render={(controller) => {
+              const { field, fieldState } = controller;
+              return (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="feature-request-problem">
+                    {t("problem")}
+                  </FieldLabel>
+                  <RichTextEditor
+                    id="feature-request-problem"
+                    features={PROSE_FEATURES}
+                    placeholder={t("problemPlaceholder")}
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                  />
+                  <FieldDescription>{t("problemDescription")}</FieldDescription>
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
+              );
+            }}
           />
 
           {directEnabled && (
             <Controller
               control={form.control}
               name="turnstileToken"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <Turnstile
-                    key={turnstileEpoch}
-                    onToken={(token) => field.onChange(token ?? "")}
-                  />
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field data-invalid={fieldState.invalid}>
+                    <Turnstile
+                      key={turnstileEpoch}
+                      onToken={(token) => field.onChange(token ?? "")}
+                    />
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
             />
           )}
 

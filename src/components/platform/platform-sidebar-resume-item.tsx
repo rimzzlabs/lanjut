@@ -28,9 +28,10 @@ interface PlatformSidebarResumeItemProps {
   resume: ResumeIndexEntry;
 }
 
-export function PlatformSidebarResumeItem({
-  resume,
-}: PlatformSidebarResumeItemProps) {
+export function PlatformSidebarResumeItem(
+  props: PlatformSidebarResumeItemProps,
+) {
+  const { resume } = props;
   const id = useEditorId();
   const duplicateResume = useResumeStore((state) => state.duplicateResume);
   const [open, setOpen] = useState({ rename: false, remove: false });

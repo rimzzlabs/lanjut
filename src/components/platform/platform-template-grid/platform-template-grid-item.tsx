@@ -21,9 +21,8 @@ interface PlatformTemplateGridItemProps {
   template: TemplateSummary;
 }
 
-export function PlatformTemplateGridItem({
-  template,
-}: PlatformTemplateGridItemProps) {
+export function PlatformTemplateGridItem(props: PlatformTemplateGridItemProps) {
+  const { template } = props;
   const [open, setOpen] = useState(false);
   const t = useTranslations("platform.templates");
 

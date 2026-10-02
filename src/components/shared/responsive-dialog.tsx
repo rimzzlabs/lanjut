@@ -128,10 +128,8 @@ export function ResponsiveDialogFooter(props: SectionProps) {
   return <DialogFooter {...props} />;
 }
 
-export function ResponsiveDialogClose({
-  children,
-  ...buttonProps
-}: ComponentProps<typeof Button>) {
+export function ResponsiveDialogClose(props: ComponentProps<typeof Button>) {
+  const { children, ...buttonProps } = props;
   const isMobile = useContext(MobileContext);
 
   if (isMobile) {

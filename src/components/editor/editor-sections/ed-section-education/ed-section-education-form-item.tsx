@@ -40,61 +40,70 @@ export function EditorSectionEducationFormItem(
         <Controller
           control={props.control}
           name={`educations.${props.index}.institution`}
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>{t("institution")}</FieldLabel>
-              <div className="flex items-center gap-2">
-                <Input
-                  placeholder={t("institutionPlaceholder")}
-                  {...field}
-                  id={field.name}
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon-sm"
-                  onClick={onRemove}
-                >
-                  <Trash className="size-3.5 stroke-destructive" />
-                  <span className="sr-only">{t("remove")}</span>
-                </Button>
-              </div>
-              <FieldError errors={[fieldState.error]} />
-            </Field>
-          )}
+          render={(controller) => {
+            const { field, fieldState } = controller;
+            return (
+              <Field>
+                <FieldLabel htmlFor={field.name}>{t("institution")}</FieldLabel>
+                <div className="flex items-center gap-2">
+                  <Input
+                    placeholder={t("institutionPlaceholder")}
+                    {...field}
+                    id={field.name}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon-sm"
+                    onClick={onRemove}
+                  >
+                    <Trash className="size-3.5 stroke-destructive" />
+                    <span className="sr-only">{t("remove")}</span>
+                  </Button>
+                </div>
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            );
+          }}
         />
 
         <div className="grid gap-6 2xl:grid-cols-2 2xl:gap-3">
           <Controller
             control={props.control}
             name={`educations.${props.index}.degree`}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel htmlFor={field.name}>{t("degree")}</FieldLabel>
-                <Input
-                  placeholder={t("degreePlaceholder")}
-                  {...field}
-                  id={field.name}
-                />
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
+            render={(controller) => {
+              const { field, fieldState } = controller;
+              return (
+                <Field>
+                  <FieldLabel htmlFor={field.name}>{t("degree")}</FieldLabel>
+                  <Input
+                    placeholder={t("degreePlaceholder")}
+                    {...field}
+                    id={field.name}
+                  />
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
+              );
+            }}
           />
 
           <Controller
             control={props.control}
             name={`educations.${props.index}.location`}
-            render={({ field, fieldState }) => (
-              <Field>
-                <FieldLabel htmlFor={field.name}>{t("location")}</FieldLabel>
-                <Input
-                  placeholder={t("locationPlaceholder")}
-                  {...field}
-                  id={field.name}
-                />
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
+            render={(controller) => {
+              const { field, fieldState } = controller;
+              return (
+                <Field>
+                  <FieldLabel htmlFor={field.name}>{t("location")}</FieldLabel>
+                  <Input
+                    placeholder={t("locationPlaceholder")}
+                    {...field}
+                    id={field.name}
+                  />
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
+              );
+            }}
           />
         </div>
 
@@ -109,20 +118,23 @@ export function EditorSectionEducationFormItem(
         <Controller
           control={props.control}
           name={`educations.${props.index}.details`}
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel htmlFor={field.name}>{t("details")}</FieldLabel>
-              <RichTextEditor
-                id={field.name}
-                value={field.value}
-                features={PROSE_FEATURES}
-                placeholder={t("detailsPlaceholder")}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-              />
-              <FieldError errors={[fieldState.error]} />
-            </Field>
-          )}
+          render={(controller) => {
+            const { field, fieldState } = controller;
+            return (
+              <Field>
+                <FieldLabel htmlFor={field.name}>{t("details")}</FieldLabel>
+                <RichTextEditor
+                  id={field.name}
+                  value={field.value}
+                  features={PROSE_FEATURES}
+                  placeholder={t("detailsPlaceholder")}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                />
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            );
+          }}
         />
       </FieldGroup>
     </FieldSet>

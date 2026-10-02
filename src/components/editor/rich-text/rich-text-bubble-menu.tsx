@@ -16,11 +16,14 @@ export function RichTextBubbleMenu(props: RichTextBubbleMenuProps) {
   const t = useTranslations("editor.richText");
   const state = useEditorState({
     editor: props.editor,
-    selector: ({ editor }) => ({
-      bold: editor.isActive("bold"),
-      italic: editor.isActive("italic"),
-      link: editor.isActive("link"),
-    }),
+    selector: (context) => {
+      const { editor } = context;
+      return {
+        bold: editor.isActive("bold"),
+        italic: editor.isActive("italic"),
+        link: editor.isActive("link"),
+      };
+    },
   });
 
   const has = (feature: RichTextFeature) => A.includes(props.features, feature);
@@ -31,9 +34,10 @@ export function RichTextBubbleMenu(props: RichTextBubbleMenuProps) {
       // Key off the selection, not editor focus: opening the link popover moves
       // focus to a portaled input outside the menu, which the default
       // focus-based `shouldShow` would treat as a blur and hide the menu.
-      shouldShow={({ editor, state }) =>
-        editor.isEditable && !state.selection.empty
-      }
+      shouldShow={(context) => {
+        const { editor, state } = context;
+        return editor.isEditable && !state.selection.empty;
+      }}
       className="flex items-center gap-0.5 rounded-md border border-input bg-popover p-0.5 shadow-md"
     >
       {has("bold") && (

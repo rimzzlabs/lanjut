@@ -20,9 +20,10 @@ interface PlatformResumeGridItemMenuProps {
   resume: { id: string; title: string };
 }
 
-export function PlatformResumeGridItemMenu({
-  resume,
-}: PlatformResumeGridItemMenuProps) {
+export function PlatformResumeGridItemMenu(
+  props: PlatformResumeGridItemMenuProps,
+) {
+  const { resume } = props;
   const t = useTranslations("platform.grid");
   const duplicateResume = useResumeStore((state) => state.duplicateResume);
   const [open, setOpen] = useState({

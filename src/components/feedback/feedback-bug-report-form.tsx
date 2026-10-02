@@ -144,93 +144,105 @@ export function FeedbackBugReportForm(props: FeedbackBugReportFormProps) {
             <Controller
               control={form.control}
               name="name"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="bug-report-name">
-                    {td("name")}
-                  </FieldLabel>
-                  <Input
-                    id="bug-report-name"
-                    placeholder={td("namePlaceholder")}
-                    value={field.value}
-                    onChange={field.onChange}
-                    onBlur={field.onBlur}
-                  />
-                  <FieldDescription>{td("nameDescription")}</FieldDescription>
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="bug-report-name">
+                      {td("name")}
+                    </FieldLabel>
+                    <Input
+                      id="bug-report-name"
+                      placeholder={td("namePlaceholder")}
+                      value={field.value}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                    <FieldDescription>{td("nameDescription")}</FieldDescription>
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
             />
           )}
 
           <Controller
             control={form.control}
             name="area"
-            render={({ field }) => (
-              <Field>
-                <FieldLabel>{t("area")}</FieldLabel>
-                <Select
-                  value={field.value}
-                  onValueChange={(value) => field.onChange(value)}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder={t("areaPlaceholder")} />
-                  </SelectTrigger>
-                  <SelectContent
-                    alignItemWithTrigger={false}
-                    align="start"
-                    className="w-[--anchor-width]"
+            render={(controller) => {
+              const { field } = controller;
+              return (
+                <Field>
+                  <FieldLabel>{t("area")}</FieldLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
                   >
-                    <SelectGroup>
-                      {BUG_AREAS.map((area) => (
-                        <SelectItem key={area} value={area}>
-                          {area}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </Field>
-            )}
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder={t("areaPlaceholder")} />
+                    </SelectTrigger>
+                    <SelectContent
+                      alignItemWithTrigger={false}
+                      align="start"
+                      className="w-[--anchor-width]"
+                    >
+                      <SelectGroup>
+                        {BUG_AREAS.map((area) => (
+                          <SelectItem key={area} value={area}>
+                            {area}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </Field>
+              );
+            }}
           />
 
           <Controller
             control={form.control}
             name="whatHappened"
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="bug-report-what-happened">
-                  {t("whatHappened")}
-                </FieldLabel>
-                <RichTextEditor
-                  id="bug-report-what-happened"
-                  features={PROSE_FEATURES}
-                  placeholder={t("whatHappenedPlaceholder")}
-                  value={field.value}
-                  onChange={field.onChange}
-                  onBlur={field.onBlur}
-                />
-                <FieldDescription>
-                  {t("whatHappenedDescription")}
-                </FieldDescription>
-                <FieldError errors={[fieldState.error]} />
-              </Field>
-            )}
+            render={(controller) => {
+              const { field, fieldState } = controller;
+              return (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor="bug-report-what-happened">
+                    {t("whatHappened")}
+                  </FieldLabel>
+                  <RichTextEditor
+                    id="bug-report-what-happened"
+                    features={PROSE_FEATURES}
+                    placeholder={t("whatHappenedPlaceholder")}
+                    value={field.value}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                  />
+                  <FieldDescription>
+                    {t("whatHappenedDescription")}
+                  </FieldDescription>
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
+              );
+            }}
           />
 
           {directEnabled && (
             <Controller
               control={form.control}
               name="turnstileToken"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <Turnstile
-                    key={turnstileEpoch}
-                    onToken={(token) => field.onChange(token ?? "")}
-                  />
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              )}
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field data-invalid={fieldState.invalid}>
+                    <Turnstile
+                      key={turnstileEpoch}
+                      onToken={(token) => field.onChange(token ?? "")}
+                    />
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
             />
           )}
 
