@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.18.1](https://github.com/rimzzlabs/lanjut/compare/v0.18.0...v0.18.1) (2026-10-02)
+
+
+### Refactors
+
+* apply the rts conventions across the codebase ([#194](https://github.com/rimzzlabs/lanjut/issues/194)) ([20e1789](https://github.com/rimzzlabs/lanjut/commit/20e1789a5ccaa9a5e1825ef43d2cc6283cb07753))
+* migrate the app from next.js to astro ([#192](https://github.com/rimzzlabs/lanjut/issues/192)) ([7e36617](https://github.com/rimzzlabs/lanjut/commit/7e36617963fec9835eda159349e99f5166674150))
+
 ## [0.18.0](https://github.com/rimzzlabs/lanjut/compare/v0.17.2...v0.18.0) (2026-09-27)
 
 
