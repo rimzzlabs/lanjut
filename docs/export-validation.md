@@ -26,8 +26,20 @@ XML, and the serializer output for `.txt`. It then asserts:
   photo-free output. The photo is presentation-only; if it ever shifts, drops, or
   adds a character of extracted text, the gate fails.
 
+The PDF checks run on both engines. `scripts/takumi-checks.ts` loads the takumi-pdf
+renderer through Vite, the way the app bundles it, and checks every template on that
+path too, adding:
+
+- **Font parity**: each takumi-pdf PDF embeds the same font families as the react-pdf
+  export of that template. A stylesheet rule the renderer drops (it once lost the serif
+  and mono families) fails here instead of silently printing in Inter.
+- **No split entries**: a long résumé whose entries open with `START-n` and close with
+  `END-n` must keep each pair on one page.
+- **No ligatures**: Lora and Merriweather résumés keep `fi` and `fl` as separate
+  glyphs, read from the embedded ToUnicode maps (`bfchar` and `bfrange`).
+
 This is the pdftotext-equivalent text-extraction test required by `AGENTS.md`. **Run it
-after any change to an export path** (`pdf/`, `docx/`, `resume-to-text.ts`,
+after any change to an export path** (`takumi/`, `pdf/`, `docx/`, `resume-to-text.ts`,
 `buildResumeBlocks`, or the rich-content model). It exits non-zero on failure.
 
 Because all three exporters consume the same `buildResumeBlocks` sequence as the
