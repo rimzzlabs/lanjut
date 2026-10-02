@@ -22,6 +22,7 @@ import { TEMPLATE_PDF_DOCUMENTS } from "@/components/editor/pdf/template-pdf-doc
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import { resumeToText } from "@/components/editor/resume-to-text";
 import { SEED_RESUME } from "@/lib/resume/seed";
+import { runTakumiChecks } from "./takumi-checks";
 
 const root = process.cwd();
 
@@ -107,7 +108,16 @@ async function checkLigatureSafety(family: string): Promise<string[]> {
       </Page>
     </Document>,
   );
-  const label = `PDF ligatures (${family})`;
+  return ligatureErrors({ buffer, label: `PDF ligatures (${family})` });
+}
+
+interface LigatureErrorsParams {
+  buffer: Uint8Array;
+  label: string;
+}
+
+async function ligatureErrors(params: LigatureErrorsParams): Promise<string[]> {
+  const { buffer, label } = params;
   const errors: string[] = [];
 
   const text = await extractPdfText(buffer);
@@ -131,7 +141,7 @@ async function checkLigatureSafety(family: string): Promise<string[]> {
     } catch {
       continue;
     }
-    if (inflated.includes("beginbfchar")) cmaps.push(inflated);
+    if (/begin(bfchar|bfrange)/.test(inflated)) cmaps.push(inflated);
   }
   for (const cmap of cmaps) {
     if (LIGATURE_MAPPINGS.some((pattern) => pattern.test(cmap))) {
@@ -227,6 +237,14 @@ function checkCompanyContextOrder(text: string, label: string): string[] {
 async function extractPdfText(buffer: Uint8Array): Promise<string> {
   const pdf = await getDocumentProxy(new Uint8Array(buffer));
   const { text } = await extractText(pdf, { mergePages: true });
+  return text;
+}
+
+async function extractPdfPages(
+  buffer: Uint8Array,
+): Promise<ReadonlyArray<string>> {
+  const pdf = await getDocumentProxy(new Uint8Array(buffer));
+  const { text } = await extractText(pdf, { mergePages: false });
   return text;
 }
 
@@ -327,6 +345,21 @@ async function main(): Promise<void> {
     errors.push(...ligatureErrors);
   }
 
+  const takumiErrors = await runTakumiChecks({
+    preview,
+    photoPreview,
+    ligatureProbe: LIGATURE_PROBE,
+    extractPdfText,
+    extractPdfPages,
+    ligatureErrors,
+    textErrors: (text, label) => [
+      ...checkReadingOrder(text, label),
+      ...checkFields(text, label),
+      ...checkCompanyContextOrder(text, label),
+    ],
+  });
+  errors.push(...takumiErrors);
+
   if (errors.length > 0) {
     for (const error of errors) console.error(`  ✗ ${error}`);
     console.error(`\n${errors.length} validation failure(s).`);
@@ -334,7 +367,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    "\n✓ All exports preserve reading order and carry every field (every template PDF, DOCX, TXT).",
+    "\n✓ All exports preserve reading order and carry every field (every template PDF on both engines, DOCX, TXT).",
   );
 }
 
