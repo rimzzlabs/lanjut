@@ -32,7 +32,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Custom sections alongside the fixed types, all sharing the same restricted schema
 - Drag to reorder sections and toggle any section's visibility (entries within a section sort by date automatically)
 - Document-level presentation controls: font, font size, section spacing, line height, letter spacing, contact-icon visibility, and a one-click style reset
-- Available in English and Indonesian (`next-intl`)
+- Available in English and Indonesian (`use-intl`)
 - Export to PDF (linear reading order preserved) and plain text / .docx
 - Copy, download, and re-import a résumé as JSON or YAML
 - Guided tour of the editor and library for first-time users
@@ -57,10 +57,11 @@ Every template renders the same linear block sequence, so switching templates ne
 
 | Purpose | Library |
 |---|---|
-| Framework | Next.js (App Router) |
-| Build targets | open-next on Cloudflare (default), static export (`LANJUT_TARGET=desktop`) |
+| Framework | Astro (static output, React islands) |
+| Hosting | Cloudflare Workers static assets, plus one Worker for the feedback relay |
+| Build targets | Web (default), desktop (`LANJUT_TARGET=desktop`) |
 | Desktop shell | Tauri 2 (macOS) |
-| Internationalization | next-intl (English, Indonesian) |
+| Internationalization | use-intl (English, Indonesian) |
 | UI components | shadcn (base-ui) |
 | Styling | Tailwind CSS |
 | Rich text editor | TipTap |
@@ -90,15 +91,15 @@ Open `http://localhost:3000`.
 
 | Script | What it does |
 |---|---|
-| `pnpm dev` | Start the dev server |
+| `pnpm dev` | Start the Astro dev server and the feedback Worker |
 | `pnpm lint` / `pnpm format` | Check / write with Biome |
-| `pnpm typecheck` | Generate Next types and run `tsc --noEmit` |
-| `pnpm build` | Build the open-next Cloudflare target |
-| `LANJUT_TARGET=desktop pnpm build` | Build the static desktop assets into `.next-desktop/` |
+| `pnpm typecheck` | Run `astro check` |
+| `pnpm build` | Generate the Open Graph images and build the site into `dist/` |
+| `LANJUT_TARGET=desktop pnpm build` | Build the static desktop assets into `dist-desktop/` |
 | `pnpm desktop:dev` | Run the desktop shell against the dev server |
 | `pnpm desktop:build` | Build the desktop app and installers |
 | `pnpm validate:exports` | Regenerate PDF/DOCX/TXT from the seed résumé and verify extraction order and field mapping |
-| `pnpm preview` | Build with open-next and preview the Cloudflare worker locally |
+| `pnpm preview` | Build the site and serve it through the Worker locally |
 | `pnpm ship` | Build and deploy to Cloudflare |
 | `pnpm commit` | Commit via the commitizen prompt |
 

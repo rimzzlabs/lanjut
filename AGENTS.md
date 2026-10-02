@@ -1,9 +1,3 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
-
 # AGENTS.md
 
 ## Lanjut -> Resume -> Résumé.
@@ -12,18 +6,18 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 
 ## Tech Stack
 
-- Next.js (App Router)
-- open-next on Cloudflare (hosting only; the sole server surface is the `/api/feedback` route, which relays bug reports and feature requests and never receives resume content)
-- Static desktop export selected by `LANJUT_TARGET=desktop`; no desktop runtime packages are part of the web application
+- Astro (static output; every page is prerendered, React islands carry the interactive parts)
+- Cloudflare Workers static assets, plus one small Worker in `worker/`. The Worker relays bug reports and feature requests on `/api/feedback`, sends visitors to their language, and forwards old addresses. It is the sole server surface and never receives resume content.
+- Static desktop build selected by `LANJUT_TARGET=desktop`, written to `dist-desktop/`. Tauri packages load only through dynamic imports behind `IS_DESKTOP`, so the web app never runs them.
 - Tauri 2 (desktop shell for macOS; `src-tauri/`, system webview, loads the static export from disk)
-- next-intl (internationalization; `[locale]` routing for English and Indonesian, `messages/*.json`, edge middleware on web and explicit locale prefixes on desktop)
+- use-intl (internationalization; English at `/` and Indonesian under `/id`, on web and desktop alike. `messages/*.json` hold the copy. `src/i18n` holds the routing helpers, the `Link`, `useRouter`, and `usePathname` replacements, and `getTranslator` for `.astro` files)
 - shadcn (base-ui variant)
 - Tailwind CSS
 - [TipTap](https://tiptap.dev/docs) (rich text editing, restricted extension set)
 - react-hook-form + zod + @hookform/resolvers (forms; every field goes through Controller, schemas in `src/lib/forms`)
 - @dnd-kit (section and entry drag-to-reorder)
 - @react-pdf/renderer and docx (PDF and .docx export)
-- nextstepjs (guided tour)
+- nextstepjs (guided tour; a pnpm patch drops its Next.js wrapper export, and the tour uses `NextStepReact`)
 - motion/react (animation)
 - zustand (in-memory state)
 - IndexedDB via idb (persistence layer)
@@ -35,6 +29,15 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 - nuqs (search params state)
 
 @mobily/ts-belt is the single utility library. Do not introduce radash or any second utility library with overlapping purpose.
+
+## Pages and Islands
+
+- Pages live in `src/pages/[...lang]/` as `.astro` files. `localeStaticPaths` emits each page once per locale.
+- An application page (platform, editor, feedback) renders one React island root, for example `PlatformDashboardPage`. The root wraps its content in `AppProviders`.
+- Landing sections are `.astro` components in `src/components/landing/`. Only the parts that need JavaScript are React islands: the navbar actions, Try It, the live résumé renders, and the parser proof. An island that reads copy wraps itself in `IslandProviders`. Static sections take their copy from `getTranslator`.
+- Each island is its own React root. React context does not cross islands, so each root carries its own providers. Module state does cross them: islands on one page share the same zustand stores.
+- Every page change is a full document load. `Link` and `useRouter` from `@/i18n/navigation` flush the pending resume write before they leave. State that must survive a page change lives in IndexedDB or in a zustand `persist` store.
+- The editor address is `/platform/editor?id=<id>` on web and desktop. `editorHref` and `useEditorId` own it. The Worker forwards the old `/platform/editor/<id>` links.
 
 ## Architecture Rule: Two Layers
 
@@ -50,7 +53,7 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 
 
 - zustand holds working state, synced to IndexedDB on change (debounced).
-- No resume content is sent to any server, API route, or open-next function. Confirm this on every PR touching data flow.
+- No resume content is sent to any server, API route, or Worker. Confirm this on every PR touching data flow.
 - Document shape is versioned by the in-document `schemaVersion` plus a forward-only, read-time migration ladder (`src/lib/resume/migrations.ts`). Ship the shape change, the `CURRENT_SCHEMA_VERSION` bump, and the ladder rung in the same PR. Full reference: `docs/schema-migrations.md`.
 - The IndexedDB `DB_VERSION` is separate and governs object stores/indexes only. Never bump it for a field-shape change; never reshape documents inside the idb `upgrade` callback.
 - Migration steps must be bail-safe: when a document does not match the expected shape, keep the original data and no-op; never blank or replace what cannot be parsed.
@@ -63,14 +66,14 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   (`com.rimzzlabs.lanjut`) keys the webview data directory, and with it every user's
   IndexedDB. `useHttpsScheme` (`false`) moves that same storage when flipped. Changing
   either orphans the résumés of everyone who already installed the app.
-- The window opens on `/en/platform/`. Tauri resolves a directory path by falling back
-  to `<path>/index.html`, which is why the desktop build sets `trailingSlash`.
+- The window opens on `/platform/`. Tauri falls back from `<path>` to `<path>.html`
+  and then to `<path>/index.html`, so links need no trailing slash.
 - `dangerousDisableAssetCspModification` lists `style-src` and must keep listing it.
   Tauri appends a hash source to every directive it manages. A `style-src` that
   carries a hash makes the browser ignore `'unsafe-inline'`. The app then drops every
   `style` attribute in the exported HTML, and that includes the `--sidebar-width` that
-  carries the whole platform layout. Next.js cannot nonce those attributes in a static
-  export, so the two cannot both hold. `script-src` keeps its injection, which is the
+  carries the whole platform layout. A static build cannot nonce those attributes, so
+  the two cannot both hold. `script-src` keeps its injection, which is the
   directive that stops script execution.
 - Every file the app hands to a user goes through `triggerDownload` in
   `src/components/editor/download-file.ts`. A new export format that builds its own
@@ -158,7 +161,7 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 
 - TypeScript strict mode on.
 - No `any` without inline justification comment.
-- Components live in `./src/components/<domain-name>/*`, grouped by their domain (e.g. `./src/components/landing/landing-hero.tsx`). Never a global `components/` dump by type, and never colocated under `src/app/` route folders.
+- Components live in `./src/components/<domain-name>/*`, grouped by their domain (e.g. `./src/components/landing/landing-hero.tsx`). Never a global `components/` dump by type, and never colocated under `src/pages/` route folders.
 - Shared non-primitive components (used across domains, but not base UI primitives) live in `./src/components/shared/*`.
 - Shared UI primitives only in the shadcn-managed `./src/components/ui` directory.
 - Compose the existing primitives in `./src/components/ui`; do not hand-roll their equivalents. A callout or notice is an `Alert`, a scrollable region is a `ScrollArea`, and so on. Never reach for raw markup (a bare `<p>` plus link) or a native `overflow-y-auto` when a primitive already covers it. Note: base-ui's `ScrollArea` only scrolls when its Root has a definite height (an explicit height, or a grid track); a `flex-1` used size is not enough.

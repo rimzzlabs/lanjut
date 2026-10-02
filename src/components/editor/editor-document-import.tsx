@@ -1,7 +1,5 @@
-"use client";
-
-import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
+import { useLocale, useTranslations } from "use-intl";
 import { PlatformResumeImportDropzone } from "@/components/platform/platform-resume-import-dropzone";
 import { ResumeImportDisclaimer } from "@/components/shared/resume-import-disclaimer";
 import { Button } from "@/components/ui/button";

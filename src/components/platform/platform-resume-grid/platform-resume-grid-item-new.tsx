@@ -1,8 +1,6 @@
-"use client";
-
 import { FilePlus2 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import { PlatformResumeCreateDialog } from "../platform-resume-create-dialog";
 
 export function PlatformResumeGridItemNew() {

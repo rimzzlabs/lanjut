@@ -1,5 +1,3 @@
-"use client";
-
 import { LanguageSwitcher } from "../shared/language-switcher";
 import { SidebarTrigger } from "../ui/sidebar";
 import { PlatformNavbarBreadcrumb } from "./platform-navbar-breadcrumb";

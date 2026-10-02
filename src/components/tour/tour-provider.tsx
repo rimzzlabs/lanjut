@@ -1,9 +1,12 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import { NextStep, NextStepProvider } from "nextstepjs";
+import {
+  type NavigationAdapter,
+  NextStepProvider,
+  NextStepReact,
+} from "nextstepjs";
 import { type PropsWithChildren, useMemo } from "react";
+import { useTranslations } from "use-intl";
+import { usePathname } from "@/i18n/navigation";
 import {
   useEditorChromeStore,
   useSidebarStore,
@@ -53,6 +56,16 @@ function handleStepChange(stepIndex: number, tourName: string | null) {
   prepareStep(tourName, stepIndex);
 }
 
+// The tours never change page, but NextStepReact still asks for an adapter. Its
+// built-in window adapter logs a warning on every render.
+function useTourNavigation(): NavigationAdapter {
+  const pathname = usePathname();
+  return {
+    push: (path) => window.location.assign(path),
+    getCurrentPath: () => pathname,
+  };
+}
+
 function handleTourEnd() {
   useSidebarStore.getState().ensureVisible(false);
   useEditorChromeStore.getState().setSheetOpen(false);
@@ -66,8 +79,9 @@ export function TourProvider(props: PropsWithChildren) {
 
   return (
     <NextStepProvider>
-      <NextStep
+      <NextStepReact
         steps={tours}
+        navigationAdapter={useTourNavigation}
         cardComponent={TourCard}
         onStart={handleTourStart}
         onStepChange={handleStepChange}
@@ -79,7 +93,7 @@ export function TourProvider(props: PropsWithChildren) {
         shadowOpacity={isDarkMode ? "0.15" : "0.2"}
       >
         {props.children}
-      </NextStep>
+      </NextStepReact>
     </NextStepProvider>
   );
 }

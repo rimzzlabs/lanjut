@@ -1,5 +1,3 @@
-"use client";
-
 import { EditorSectionVisibilityToggle } from "@/components/editor/editor-section-visibility-toggle";
 import type { SectionType } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";

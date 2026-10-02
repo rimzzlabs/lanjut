@@ -1,11 +1,9 @@
-"use client";
-
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { ExternalLink } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { type FormEvent, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useTranslations } from "use-intl";
 import { useFeedbackClient } from "@/hooks/use-feedback-params";
 import { useValidationTranslator } from "@/hooks/use-validation-translator";
 import {

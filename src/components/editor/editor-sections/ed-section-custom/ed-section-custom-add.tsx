@@ -1,8 +1,6 @@
-"use client";
-
 import { Plus } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
 import { useResumeStore } from "@/lib/store";
 import { EditorSectionCustomNameDialog } from "./ed-section-custom-name-dialog";

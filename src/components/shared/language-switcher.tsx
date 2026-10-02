@@ -1,6 +1,4 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { useLocaleSwitch } from "@/hooks/use-locale-switch";
 import { routing } from "@/i18n/routing";
 import { SegmentedControl } from "./segmented-control";

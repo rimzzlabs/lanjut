@@ -1,8 +1,6 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslations } from "use-intl";
 import {
   Field,
   FieldError,

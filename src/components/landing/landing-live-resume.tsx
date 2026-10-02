@@ -1,5 +1,3 @@
-"use client";
-
 import { useMemo } from "react";
 import type { ResumePreview } from "@/components/editor/resume-preview";
 import { ResumeThumbnail } from "@/components/editor/resume-thumbnail";

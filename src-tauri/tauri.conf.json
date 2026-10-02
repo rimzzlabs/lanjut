@@ -4,10 +4,10 @@
   "version": "../package.json",
   "identifier": "com.rimzzlabs.lanjut",
   "build": {
-    "beforeDevCommand": "pnpm dev",
+    "beforeDevCommand": "pnpm dev:astro",
     "beforeBuildCommand": "pnpm build",
     "devUrl": "http://localhost:3000",
-    "frontendDist": "../.next-desktop"
+    "frontendDist": "../dist-desktop"
   },
   "app": {
     "windows": [
@@ -27,7 +27,7 @@
       {
         "label": "main",
         "title": "Lanjut (beta)",
-        "url": "/en/platform/",
+        "url": "/platform/",
         "width": 1280,
         "height": 860,
         "minWidth": 960,

@@ -1,8 +1,6 @@
-"use client";
-
 import { CheckCircle2 } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import { useFeedbackKind } from "@/hooks/use-feedback-params";
 import { TURNSTILE_SITE_KEY } from "../shared/turnstile";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";

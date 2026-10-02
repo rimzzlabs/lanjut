@@ -1,0 +1,64 @@
+---
+import type { Locale } from "@/i18n/routing";
+import { getTranslator } from "@/i18n/translator";
+import LandingHowItWorksRow from "./landing-how-it-works-row.astro";
+import { LandingLiveResume } from "./landing-live-resume";
+import { LandingParserProof } from "./landing-parser-proof";
+import { LandingTemplateFan } from "./landing-template-fan";
+
+interface Props {
+  locale: Locale;
+  pathname: string;
+}
+
+const { locale, pathname } = Astro.props;
+const t = getTranslator(locale, "howItWorks");
+---
+
+<section id="how-it-works" class="mx-auto w-11/12 max-w-5xl pb-24 md:pb-32">
+  <div class="landing-reveal max-w-2xl">
+    <h2 class="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+      {t("heading")}
+    </h2>
+    <p class="mt-4 text-base text-foreground/70 sm:text-lg">
+      {t("subheading")}
+    </p>
+  </div>
+
+  <div class="mt-14 md:mt-20">
+    <LandingHowItWorksRow
+      kicker={t("step1Kicker")}
+      title={t("step1Title")}
+      description={t("step1Description")}
+    >
+      <LandingTemplateFan client:visible />
+    </LandingHowItWorksRow>
+
+    <LandingHowItWorksRow
+      kicker={t("step2Kicker")}
+      title={t("step2Title")}
+      description={t("step2Description")}
+      flip
+    >
+      <div>
+        <LandingLiveResume client:visible template="tebal" cropHeight={420} />
+        <p class="mt-2 px-1 font-mono text-xs text-muted-foreground">
+          {t("liveCaption")}
+        </p>
+      </div>
+    </LandingHowItWorksRow>
+
+    <LandingHowItWorksRow
+      kicker={t("step3Kicker")}
+      title={t("step3Title")}
+      description={t("step3Description")}
+      alignStart
+    >
+      <LandingParserProof
+        client:visible
+        locale={locale}
+        pathname={pathname}
+      />
+    </LandingHowItWorksRow>
+  </div>
+</section>

@@ -1,7 +1,5 @@
-"use client";
-
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import type { ExportFormat } from "@/components/editor/export-format";
 import { useResumeExporter } from "@/hooks/use-resume-exporter";
 import { getResume } from "@/lib/db";

@@ -16,7 +16,7 @@ pnpm install
 pnpm dev
 ```
 
-The app runs at `http://localhost:3000`. There is no backend to configure: résumé data lives in your browser's IndexedDB and never leaves it. Keep it that way; no PR may send résumé content to a server, API route, or open-next function.
+The app runs at `http://localhost:3000`. There is no backend to configure: résumé data lives in your browser's IndexedDB and never leaves it. Keep it that way; no PR may send résumé content to a server, API route, or Worker.
 
 Useful scripts:
 
@@ -26,8 +26,8 @@ Useful scripts:
 | `pnpm lint` | Biome lint and format check |
 | `pnpm format` | Apply Biome formatting |
 | `pnpm validate:exports` | Validate the export pipeline |
-| `pnpm build` | Next.js production build |
-| `pnpm preview` | Build and preview the Cloudflare production bundle via open-next |
+| `pnpm build` | Astro production build |
+| `pnpm preview` | Build the site and serve it through the Worker locally |
 | `pnpm commit` | Guided Commitizen commit prompt |
 
 ## Branches
@@ -72,7 +72,7 @@ There is no automated test suite yet, so the required bar is:
 - `pnpm validate:exports` passes
 - `pnpm build` succeeds
 
-CI runs all of these plus the Cloudflare production build (`opennextjs-cloudflare build`) on every PR, and all checks must be green before merge.
+CI runs all of these plus a Worker bundle dry run (`wrangler deploy --dry-run`) on every PR, and all checks must be green before merge.
 
 Two areas carry extra verification duties (see [AGENTS.md](AGENTS.md) for the full requirements):
 

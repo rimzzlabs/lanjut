@@ -1,6 +1,4 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
 import { RESUME_LANGUAGES, type ResumeLanguage } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";

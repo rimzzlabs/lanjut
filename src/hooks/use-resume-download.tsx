@@ -1,5 +1,3 @@
-"use client";
-
 import { useCallback } from "react";
 import type { ExportFormat } from "@/components/editor/export-format";
 import { useResumeStore } from "@/lib/store";

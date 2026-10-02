@@ -1,11 +1,9 @@
-"use client";
-
-import { useLocale } from "next-intl";
 import { useTheme } from "next-themes";
 import { useEffect, useRef } from "react";
+import { useLocale } from "use-intl";
 
 /** Inlined at build time; when absent, direct feedback submission is disabled. */
-export const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+export const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
 const SCRIPT_SRC =
   "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";

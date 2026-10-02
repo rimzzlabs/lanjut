@@ -1,7 +1,5 @@
-"use client";
-
 import { TriangleAlert } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useResumeStore } from "@/lib/store";
 

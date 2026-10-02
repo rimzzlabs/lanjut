@@ -1,9 +1,11 @@
-"use client";
-
 import { RotateCw } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
+import { useTranslations } from "use-intl";
+import {
+  type IslandProps,
+  IslandProviders,
+} from "@/components/shared/providers";
 import { Button } from "@/components/ui/button";
 import { useLandingDraftStore } from "@/lib/store";
 import { draftToResume } from "./landing-draft-resume";
@@ -25,7 +27,15 @@ type ProofState =
  * real text extractor, in their browser, and the checks report what actually
  * came back. Not an animation of a claim; the claim, executed.
  */
-export function LandingParserProof() {
+export function LandingParserProof(props: IslandProps) {
+  return (
+    <IslandProviders locale={props.locale} pathname={props.pathname}>
+      <LandingParserProofTerminal />
+    </IslandProviders>
+  );
+}
+
+function LandingParserProofTerminal() {
   const t = useTranslations("parserProof");
   const reduceMotion = useReducedMotion();
   const draft = useLandingDraftStore((state) => state.draft);
@@ -73,7 +83,7 @@ export function LandingParserProof() {
         report.employerFound,
         report.emailFound,
         report.orderOk,
-      ].filter(Boolean).length
+      ].filter((found) => found).length
     : 0;
 
   return (

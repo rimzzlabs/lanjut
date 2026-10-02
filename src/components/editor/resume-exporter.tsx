@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useRef } from "react";
 import type { Resume } from "@/lib/resume";
 import { downloadResume } from "./download-resume";

@@ -1,8 +1,6 @@
-"use client";
-
 import { Plus } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { useTranslations } from "use-intl";
 import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { PlatformResumeCreateDialog } from "./platform-resume-create-dialog";

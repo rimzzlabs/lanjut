@@ -1,9 +1,7 @@
-"use client";
-
 import { Plus, Users } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { useTranslations } from "use-intl";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import { FieldDescription, FieldLegend, FieldSet } from "@/components/ui/field";

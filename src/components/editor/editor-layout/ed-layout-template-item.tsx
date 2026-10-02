@@ -1,8 +1,6 @@
-"use client";
-
 import { Radio as RadioPrimitive } from "@base-ui/react/radio";
 import { CheckIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import type { TemplateSummary } from "@/lib/templates";
 import type { ResumePreview } from "../resume-preview";
 import { ResumeThumbnail } from "../resume-thumbnail";

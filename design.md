@@ -4,7 +4,7 @@ A locked design system for this app. Every page redesign reads this file before
 emitting code. Do not regenerate per page; extend or amend this file when the
 system needs to grow.
 
-The canonical token source is [`src/app/globals.css`](src/app/globals.css) (shadcn
+The canonical token source is [`src/styles/globals.css`](src/styles/globals.css) (shadcn
 base-ui variables under `:root` / `.dark`). This file documents the intent behind
 those values and the structural rules that CSS cannot encode. Where a value and this
 file disagree, fix one to match the other; they must not drift.
@@ -21,9 +21,8 @@ editorial
 - App pages (`/platform`, `/platform/template`): **Workbench-minimal**. A page header
   (title + hairline rule) over a toolbar over a grid. Function carries the page; no
   enrichment, no display serif.
-- Editor pages use `/platform/editor/[id]` on web and `/platform/editor?id=...` in
-  the static desktop export. Both render the same **Workbench-minimal** editor
-  surface and share one route layout.
+- The editor page is `/platform/editor?id=...` on web and desktop. It renders the
+  **Workbench-minimal** editor surface inside the platform shell.
 - Utility pages (`/feedback`): **Workbench-minimal**, single column, capped at
   `max-w-xl`. A kind switch over a heading over the form. Reached from the
   sidebar dialogs' own surface or opened directly by the desktop app, which
@@ -69,10 +68,15 @@ column is `w-11/12 max-w-5xl` centered.
 
 ## Motion
 
-- `motion/react`. Easing `[0.16, 1, 0.3, 1]` (ease-out) on entrances.
-- Reveal pattern: one orchestrated hero entrance (stagger ~0.12s); quiet fade-up on
-  scroll for later sections, `once: true`.
-- `useReducedMotion` collapses spatial motion to opacity only.
+- Easing `[0.16, 1, 0.3, 1]` (ease-out) on entrances.
+- Landing entrances are CSS, so the static sections ship no JavaScript.
+  `.landing-rise` is the hero entrance on load, staggered ~0.12s with `--rise`.
+  `.landing-reveal` is a fade-up as a section scrolls into view
+  (`animation-timeline: view()`). A browser without scroll-driven animations shows
+  the section still. Both live in `src/styles/globals.css`.
+- Inside React islands and the app, `motion/react` carries the motion.
+- Reduced motion collapses spatial motion to opacity only: a media query for the
+  CSS entrances, `useReducedMotion` for `motion/react`.
 
 ## Microinteractions stance
 
@@ -118,7 +122,7 @@ These override any generic design guidance:
 
 ### shadcn/ui CSS variables (light)
 
-The live values are in [`src/app/globals.css`](src/app/globals.css). Mirror:
+The live values are in [`src/styles/globals.css`](src/styles/globals.css). Mirror:
 
 ```css
 :root {

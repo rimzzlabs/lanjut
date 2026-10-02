@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { getResume } from "@/lib/db";
 import type { Resume } from "@/lib/resume";

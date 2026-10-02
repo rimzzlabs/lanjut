@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { HeaderView } from "./resume-preview";
 
@@ -18,12 +17,11 @@ export function ResumeHeaderPhoto(props: {
   const { photo, photoSize, photoRadius, photoAlign } = props.header;
   if (!photo) return null;
   return (
-    <Image
+    <img
       src={photo}
       alt=""
       width={photoSize}
       height={photoSize}
-      unoptimized
       className={cn("shrink-0 object-cover", props.className)}
       style={{
         width: photoSize,

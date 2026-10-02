@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 import { useEditorId } from "@/hooks/use-editor-id";
 import { registerResumeFlushListeners, useResumeStore } from "@/lib/store";

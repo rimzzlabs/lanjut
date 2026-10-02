@@ -1,10 +1,8 @@
-"use client";
-
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Plus, TextInitial, XIcon } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useLocale, useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
 import { useValidationTranslator } from "@/hooks/use-validation-translator";
 import { useRouter } from "@/i18n/navigation";

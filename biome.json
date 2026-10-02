@@ -10,8 +10,9 @@
     "includes": [
       "**",
       "!node_modules",
-      "!.next",
+      "!.astro",
       "!dist",
+      "!dist-desktop",
       "!build",
       "!src-tauri"
     ]
@@ -30,7 +31,6 @@
       }
     },
     "domains": {
-      "next": "recommended",
       "react": "recommended"
     }
   },
@@ -40,5 +40,18 @@
         "organizeImports": "on"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.astro"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedImports": "off",
+            "noUnusedVariables": "off"
+          }
+        }
+      }
+    }
+  ]
 }

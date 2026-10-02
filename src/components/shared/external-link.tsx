@@ -1,5 +1,3 @@
-"use client";
-
 import type { ComponentProps, MouseEvent } from "react";
 import { IS_DESKTOP } from "@/lib/build-target";
 import { openExternal } from "@/lib/open-external";

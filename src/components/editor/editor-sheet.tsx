@@ -1,7 +1,5 @@
-"use client";
-
 import { PenLine } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { useEditorChromeStore } from "@/lib/store";
 import { Button } from "../ui/button";
 import {

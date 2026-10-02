@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import { useCallback } from "react";
+import { useTranslations } from "use-intl";
 
 export type ValidationTranslator = (
   key: string,

@@ -995,5 +995,11 @@
     "passed": "{count}/5 checks passed. This exact document is what an ATS reads.",
     "failed": "the run hit an error in this browser. Try again.",
     "rerun": "Run it again"
+  },
+  "notFound": {
+    "metaTitle": "Page not found",
+    "title": "This page does not exist",
+    "body": "The link is broken, or the page moved.",
+    "home": "Go to the home page"
   }
 }

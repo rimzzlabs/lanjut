@@ -1,1 +1,1 @@
-export const IS_DESKTOP = process.env.NEXT_PUBLIC_LANJUT_TARGET === "desktop";
+export const IS_DESKTOP = import.meta.env.PUBLIC_LANJUT_TARGET === "desktop";

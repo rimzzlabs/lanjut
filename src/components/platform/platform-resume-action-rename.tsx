@@ -1,10 +1,8 @@
-"use client";
-
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Save, TextInitial, XIcon } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslations } from "use-intl";
 import {
   ResponsiveDialog,
   ResponsiveDialogClose,

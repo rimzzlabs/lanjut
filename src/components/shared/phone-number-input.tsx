@@ -1,5 +1,3 @@
-"use client";
-
 import PhoneInput from "react-phone-number-input/input";
 import { Input } from "@/components/ui/input";
 

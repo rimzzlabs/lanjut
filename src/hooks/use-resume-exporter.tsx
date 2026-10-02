@@ -1,15 +1,12 @@
-"use client";
-
-import dynamic from "next/dynamic";
-import { useCallback, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useRef, useState } from "react";
 import type { ExportFormat } from "@/components/editor/export-format";
 import type { ResumeExportRequest } from "@/components/editor/resume-exporter";
 import type { Resume } from "@/lib/resume";
 
-const ResumeExporter = dynamic(
-  () =>
-    import("@/components/editor/resume-exporter").then((m) => m.ResumeExporter),
-  { ssr: false },
+const ResumeExporter = lazy(() =>
+  import("@/components/editor/resume-exporter").then((m) => ({
+    default: m.ResumeExporter,
+  })),
 );
 
 export function useResumeExporter() {
@@ -32,7 +29,9 @@ export function useResumeExporter() {
   }, []);
 
   const exporter = request ? (
-    <ResumeExporter request={request} onSettled={handleSettled} />
+    <Suspense>
+      <ResumeExporter request={request} onSettled={handleSettled} />
+    </Suspense>
   ) : null;
 
   return { runExport, exporting: request !== null, exporter };

@@ -1,10 +1,11 @@
+import { type Locale, localizePath } from "@/i18n/routing";
 import type { BUG_AREAS } from "./forms/bug-report";
 import { SITE } from "./site";
 
-interface FeedbackWindowOptions {
+export interface FeedbackWindowOptions {
   kind: "bug" | "feature";
   area: (typeof BUG_AREAS)[number];
-  locale: string;
+  locale: Locale;
 }
 
 const LABEL = "feedback";
@@ -34,7 +35,7 @@ export async function openFeedbackWindow(options: FeedbackWindowOptions) {
     return;
   }
 
-  const url = new URL(`${SITE.url}/${options.locale}/feedback`);
+  const url = new URL(localizePath("/feedback", options.locale), SITE.url);
   url.searchParams.set("kind", options.kind);
   url.searchParams.set("area", options.area);
   url.searchParams.set(

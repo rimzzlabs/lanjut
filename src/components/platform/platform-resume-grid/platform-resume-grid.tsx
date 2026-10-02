@@ -1,5 +1,3 @@
-"use client";
-
 import { useHydrateResumeLibrary } from "@/hooks/use-hydrate-resume-library";
 import { useResumeSearchQuery } from "@/hooks/use-resume-search";
 import { filterResumeIndex } from "@/lib/resume";

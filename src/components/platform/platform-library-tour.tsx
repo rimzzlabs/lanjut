@@ -1,5 +1,3 @@
-"use client";
-
 import { useResumeCreateDialog } from "@/hooks/use-resume-create-dialog";
 import { LIBRARY_TOUR } from "@/lib/tour";
 import { TourAutostart } from "../tour/tour-autostart";

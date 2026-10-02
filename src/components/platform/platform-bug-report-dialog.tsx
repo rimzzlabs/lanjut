@@ -1,6 +1,4 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { useIssueReportStore } from "@/lib/store";
 import { FeedbackBugReportForm } from "../feedback/feedback-bug-report-form";
 import {

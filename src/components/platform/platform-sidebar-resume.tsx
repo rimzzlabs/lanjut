@@ -1,7 +1,5 @@
-"use client";
-
 import { Inbox } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { useHydrateResumeLibrary } from "@/hooks/use-hydrate-resume-library";
 import { useResumeStore } from "@/lib/store";
 import {

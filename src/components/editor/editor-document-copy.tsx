@@ -1,8 +1,6 @@
-"use client";
-
 import { Copy } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
 import { resumeToJson, resumeToYaml } from "@/lib/interchange";
 import { useResumeStore } from "@/lib/store";

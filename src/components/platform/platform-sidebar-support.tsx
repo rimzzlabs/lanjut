@@ -1,7 +1,4 @@
-"use client";
-
-import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { DONATION_LINKS } from "@/lib/site";
 import { ExternalLink } from "../shared/external-link";
 import {
@@ -23,7 +20,7 @@ export function PlatformSidebarSupport() {
           <SidebarMenuButton
             render={
               <ExternalLink href={DONATION_LINKS.saweria}>
-                <Image
+                <img
                   src="/brands/saweria.png"
                   alt=""
                   width={16}
@@ -39,7 +36,7 @@ export function PlatformSidebarSupport() {
           <SidebarMenuButton
             render={
               <ExternalLink href={DONATION_LINKS.sociabuzz}>
-                <Image
+                <img
                   src="/brands/sociabuzz.png"
                   alt=""
                   width={16}

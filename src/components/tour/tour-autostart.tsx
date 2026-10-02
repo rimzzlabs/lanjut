@@ -1,5 +1,3 @@
-"use client";
-
 import { useNextStep } from "nextstepjs";
 import { useEffect } from "react";
 import { useTourStore } from "@/lib/store";

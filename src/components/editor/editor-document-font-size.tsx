@@ -1,6 +1,4 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { Slider } from "@/components/ui/slider";
 import type { Resume } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";

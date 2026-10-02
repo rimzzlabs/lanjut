@@ -1,9 +1,7 @@
-"use client";
-
 import { ArrowUpRight, ChevronDown, Sparkles } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useFormatter, useTranslations } from "next-intl";
 import { useId, useState } from "react";
+import { useFormatter, useTranslations } from "use-intl";
 import { useIsClient } from "@/hooks/use-is-client";
 import {
   CHANGELOG,

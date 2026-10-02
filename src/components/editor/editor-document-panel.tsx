@@ -1,6 +1,4 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { useTranslations } from "use-intl";
 import { EditorDocumentCopy } from "./editor-document-copy";
 import { EditorDocumentDownload } from "./editor-document-download";
 import { EditorDocumentFont } from "./editor-document-font";

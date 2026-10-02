@@ -1,9 +1,7 @@
-"use client";
-
-import { hasLocale, useLocale } from "next-intl";
 import { useLayoutEffect } from "react";
+import { useLocale } from "use-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
+import { isLocale } from "@/i18n/routing";
 import { IS_DESKTOP } from "@/lib/build-target";
 import { useSidebarStore } from "@/lib/store";
 
@@ -13,7 +11,7 @@ export function DesktopLocaleMemory() {
   const router = useRouter();
 
   useLayoutEffect(() => {
-    if (!IS_DESKTOP || !hasLocale(routing.locales, locale)) return;
+    if (!IS_DESKTOP || !isLocale(locale)) return;
 
     void useSidebarStore.persist.rehydrate();
     const storedLocale = useSidebarStore.getState().locale;
@@ -24,9 +22,8 @@ export function DesktopLocaleMemory() {
     }
 
     if (storedLocale !== locale) {
-      router.replace(`${pathname}${window.location.search}`, {
+      void router.replace(`${pathname}${window.location.search}`, {
         locale: storedLocale,
-        scroll: false,
       });
     }
   }, [locale, pathname, router]);
