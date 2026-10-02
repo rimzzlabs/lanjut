@@ -1,11 +1,4 @@
-import {
-  Document,
-  Link,
-  Page,
-  StyleSheet,
-  Text,
-  View,
-} from "@react-pdf/renderer";
+import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 import {
   buildResumeBlocks,
   isAtomicBlock,
@@ -26,6 +19,7 @@ import {
   NO_SCALE,
   PdfFontContext,
   PdfStylesContext,
+  pageStyle,
   pdfTypography,
   usePdfFontFamily,
   usePdfStyles,
@@ -33,6 +27,7 @@ import {
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfHeaderPhoto } from "./pdf-header-photo";
+import { PdfOptionalLink } from "./pdf-optional-link";
 import { PdfRichText } from "./pdf-rich-text";
 
 // Font sizes are multiplied by the document's per-group scales (name, title,
@@ -115,26 +110,24 @@ function KetatHeader(props: { header: HeaderView }) {
           <Text style={[styles.name, { fontFamily: serif }]}>
             {props.header.fullName}
           </Text>
-          {props.header.headline ? (
+          {Boolean(props.header.headline) && (
             <Text style={[styles.headline, { fontFamily: serif }]}>
               {props.header.headline}
             </Text>
-          ) : null}
+          )}
         </View>
       </View>
       <View style={styles.headerRight}>
         {props.header.contacts.map((contact) => (
           <View key={contact.kind} style={styles.contactRow}>
-            {contact.href ? (
-              <Link src={contact.href} style={styles.linkPlain}>
-                {contact.value}
-              </Link>
-            ) : (
-              <Text>{contact.value}</Text>
-            )}
-            {props.header.showIcons ? (
-              <PdfContactIcon kind={contact.kind} />
-            ) : null}
+            <PdfOptionalLink
+              href={contact.href}
+              style={styles.linkPlain}
+              wrapPlain
+            >
+              {contact.value}
+            </PdfOptionalLink>
+            {props.header.showIcons && <PdfContactIcon kind={contact.kind} />}
           </View>
         ))}
       </View>
@@ -147,38 +140,33 @@ function KetatExperience(props: { item: ExperienceItemView }) {
   return (
     <View>
       <Text style={styles.entryTitle}>
-        {props.item.roleHref ? (
-          <Link
-            src={props.item.roleHref}
-            style={[
-              styles.entryTitle,
-              { color: PDF_COLORS.foreground, textDecoration: "underline" },
-            ]}
-          >
-            {props.item.role}
-          </Link>
-        ) : (
-          props.item.role
-        )}
+        <PdfOptionalLink
+          href={props.item.roleHref}
+          style={[
+            styles.entryTitle,
+            { color: PDF_COLORS.foreground, textDecoration: "underline" },
+          ]}
+        >
+          {props.item.role}
+        </PdfOptionalLink>
       </Text>
       <View style={styles.subtitleRow}>
         <Text style={styles.subtitle}>
-          {props.item.companyHref ? (
-            <Link src={props.item.companyHref} style={styles.subtitleLink}>
-              {props.item.company}
-            </Link>
-          ) : (
-            props.item.company
-          )}
+          <PdfOptionalLink
+            href={props.item.companyHref}
+            style={styles.subtitleLink}
+          >
+            {props.item.company}
+          </PdfOptionalLink>
           {locationSuffix(props.item.company, props.item.location)}
         </Text>
         <Text style={styles.entryDate}>
           {dateRange(props.item.startDate, props.item.endDate)}
         </Text>
       </View>
-      {props.item.companyContext ? (
+      {Boolean(props.item.companyContext) && (
         <Text style={styles.subtitle}>{props.item.companyContext}</Text>
-      ) : null}
+      )}
       <PdfRichText blocks={props.item.description} style={styles.body} />
     </View>
   );
@@ -209,13 +197,9 @@ function KetatCertificate(props: { item: CertificateItemView }) {
     <View>
       <View style={styles.subtitleRow}>
         <Text style={styles.entryTitle}>
-          {props.item.href ? (
-            <Link src={props.item.href} style={styles.linkPlain}>
-              {props.item.title}
-            </Link>
-          ) : (
-            props.item.title
-          )}
+          <PdfOptionalLink href={props.item.href} style={styles.linkPlain}>
+            {props.item.title}
+          </PdfOptionalLink>
         </Text>
         {range ? <Text style={styles.entryDate}>{range}</Text> : null}
       </View>
@@ -267,12 +251,7 @@ export function KetatPdfDocument(props: { preview: ResumePreview }) {
     <PdfFontContext.Provider value={typography.family}>
       <PdfStylesContext.Provider value={styles}>
         <Document>
-          <Page
-            size="A4"
-            style={
-              typography.page ? [styles.page, typography.page] : styles.page
-            }
-          >
+          <Page size="A4" style={pageStyle(styles.page, typography)}>
             {blocks.map((block) => (
               <View
                 key={block.id}

@@ -1,3 +1,4 @@
+import { A, S } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
 import { RESUME_LANGUAGES, type ResumeLanguage } from "@/lib/resume";
@@ -11,16 +12,14 @@ export function EditorDocumentLanguage() {
 
   if (!language) return null;
 
-  const items = RESUME_LANGUAGES.map((lang) => ({
+  const items = A.map(RESUME_LANGUAGES, (lang) => ({
     value: lang,
-    label: lang.toUpperCase(),
+    label: S.toUpperCase(lang),
     ariaLabel: tl(lang),
   }));
 
   const onChange = (value: string) => {
-    updateOpen((draft) => {
-      draft.language = value as ResumeLanguage;
-    });
+    updateOpen((resume) => ({ ...resume, language: value as ResumeLanguage }));
   };
 
   return (

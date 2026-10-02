@@ -22,9 +22,10 @@ export function EditorDocumentLineHeight() {
 
   const onValueChange = (next: number | readonly number[]) => {
     const raw = Array.isArray(next) ? next[0] : (next as number);
-    updateOpen((draft) => {
-      draft.lineHeight = Math.round(raw * 100) / 100;
-    });
+    updateOpen((resume) => ({
+      ...resume,
+      lineHeight: Math.round(raw * 100) / 100,
+    }));
   };
 
   return (

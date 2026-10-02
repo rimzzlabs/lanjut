@@ -1,4 +1,5 @@
 import { ResumeContactIcon } from "./resume-contact-icon";
+import { ResumeOptionalLink } from "./resume-optional-link";
 import type { ContactView } from "./resume-preview";
 
 export function ResumeHeaderContact(
@@ -11,13 +12,9 @@ export function ResumeHeaderContact(
         show={props.showIcons}
         className="text-muted-foreground"
       />
-      {props.href ? (
-        <a href={props.href} className="underline">
-          {props.value}
-        </a>
-      ) : (
-        <span>{props.value}</span>
-      )}
+      <ResumeOptionalLink href={props.href} className="underline" wrapPlain>
+        {props.value}
+      </ResumeOptionalLink>
     </li>
   );
 }

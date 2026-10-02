@@ -1,5 +1,7 @@
-import { type Resume, SEED_RESUME } from "@/lib/resume";
+import { S } from "@mobily/ts-belt";
+import { type PlainField, type Resume, SEED_RESUME } from "@/lib/resume";
 import type { LandingDraft } from "@/lib/store";
+import { joinPresent } from "@/lib/utils";
 
 /**
  * The landing draft materialized as a full document: the sample resume with
@@ -10,27 +12,33 @@ import type { LandingDraft } from "@/lib/store";
  */
 export function draftToResume(draft: LandingDraft): Resume {
   const resume = structuredClone(SEED_RESUME);
-  const fields = resume.header.fields;
-  if (draft.firstName.trim()) {
-    fields.firstName = { kind: "plain", value: draft.firstName.trim() };
-  }
-  if (draft.lastName.trim()) {
-    fields.lastName = { kind: "plain", value: draft.lastName.trim() };
-  }
-  if (draft.jobTitle.trim()) {
-    fields.jobTitle = { kind: "plain", value: draft.jobTitle.trim() };
-  }
-  return resume;
+  const firstName = S.trim(draft.firstName);
+  const lastName = S.trim(draft.lastName);
+  const jobTitle = S.trim(draft.jobTitle);
+  return {
+    ...resume,
+    header: {
+      ...resume.header,
+      fields: {
+        ...resume.header.fields,
+        ...(S.isNotEmpty(firstName) && { firstName: plainField(firstName) }),
+        ...(S.isNotEmpty(lastName) && { lastName: plainField(lastName) }),
+        ...(S.isNotEmpty(jobTitle) && { jobTitle: plainField(jobTitle) }),
+      },
+    },
+  };
+}
+
+function plainField(value: string): PlainField {
+  return { kind: "plain", value };
 }
 
 export function draftFullName(draft: LandingDraft): string {
-  return [draft.firstName.trim(), draft.lastName.trim()]
-    .filter(Boolean)
-    .join(" ");
+  return joinPresent([S.trim(draft.firstName), S.trim(draft.lastName)], " ");
 }
 
 export function draftHasContent(draft: LandingDraft): boolean {
   return Boolean(
-    draft.firstName.trim() || draft.lastName.trim() || draft.jobTitle.trim(),
+    S.trim(draft.firstName) || S.trim(draft.lastName) || S.trim(draft.jobTitle),
   );
 }

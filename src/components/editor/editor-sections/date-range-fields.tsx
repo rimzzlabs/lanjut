@@ -60,7 +60,7 @@ export function DateRangeFields<T extends FieldValues>(
 
         <Field>
           <FieldLabel htmlFor={end.field.name}>{t("endDate")}</FieldLabel>
-          {isPresent ? (
+          {isPresent && (
             <Button
               type="button"
               variant="outline"
@@ -69,7 +69,8 @@ export function DateRangeFields<T extends FieldValues>(
             >
               {t("present")}
             </Button>
-          ) : (
+          )}
+          {!isPresent && (
             <MonthYearMenu
               id={end.field.name}
               value={asString(end.field.value)}

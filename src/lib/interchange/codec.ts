@@ -1,3 +1,4 @@
+import { A, D, F, O, pipe, S } from "@mobily/ts-belt";
 import {
   CANONICAL_SECTION_ORDER,
   CUSTOM_LIST_FIELDS,
@@ -41,7 +42,7 @@ export interface ResumeContent {
   photoRadius?: number;
   photoAlign?: "top" | "center" | "bottom";
   header: Header;
-  sections: Section[];
+  sections: ReadonlyArray<Section>;
 }
 
 // --- Resume -> interchange -------------------------------------------------
@@ -52,15 +53,26 @@ function fieldToString(field: Field | undefined): string {
   return tiptapToMarkdown(field.value);
 }
 
+function firstBodyString(section: Section): string {
+  return pipe(
+    section.entries,
+    A.head,
+    O.mapWithDefault("", (entry) => fieldToString(entry.fields.body)),
+  );
+}
+
 function entryToValues(
   entry: Entry | undefined,
   fields: FieldSchema[],
 ): Record<string, string> {
-  const values: Record<string, string> = {};
-  for (const field of fields) {
-    values[field.key] = fieldToString(entry?.fields[field.key]);
-  }
-  return values;
+  return pipe(
+    fields,
+    A.map((field): readonly [string, string] => [
+      field.key,
+      fieldToString(entry?.fields[field.key]),
+    ]),
+    D.fromPairs,
+  );
 }
 
 function sectionToInterchange(section: Section): InterchangeSection {
@@ -69,7 +81,7 @@ function sectionToInterchange(section: Section): InterchangeSection {
       type: "summary",
       title: section.title,
       hidden: section.hidden ?? false,
-      body: fieldToString(section.entries[0]?.fields.body),
+      body: firstBodyString(section),
     };
   }
   if (section.type === "custom") {
@@ -80,7 +92,7 @@ function sectionToInterchange(section: Section): InterchangeSection {
         variant,
         title: section.title,
         hidden: section.hidden ?? false,
-        body: fieldToString(section.entries[0]?.fields.body),
+        body: firstBodyString(section),
       };
     }
     return {
@@ -88,8 +100,10 @@ function sectionToInterchange(section: Section): InterchangeSection {
       variant,
       title: section.title,
       hidden: section.hidden ?? false,
-      entries: section.entries.map((entry) =>
-        entryToValues(entry, CUSTOM_LIST_FIELDS),
+      entries: F.toMutable(
+        A.map(section.entries, (entry) =>
+          entryToValues(entry, CUSTOM_LIST_FIELDS),
+        ),
       ),
     };
   }
@@ -98,7 +112,9 @@ function sectionToInterchange(section: Section): InterchangeSection {
     type: section.type,
     title: section.title,
     hidden: section.hidden ?? false,
-    entries: section.entries.map((entry) => entryToValues(entry, fields)),
+    entries: F.toMutable(
+      A.map(section.entries, (entry) => entryToValues(entry, fields)),
+    ),
   };
   if (section.type === "skills" || section.type === "languages") {
     return {
@@ -112,10 +128,14 @@ function sectionToInterchange(section: Section): InterchangeSection {
 }
 
 export function resumeToInterchange(resume: Resume): InterchangeResume {
-  const header: Record<string, string> = {};
-  for (const field of HEADER_SCHEMA) {
-    header[field.key] = fieldToString(resume.header.fields[field.key]);
-  }
+  const header = pipe(
+    HEADER_SCHEMA,
+    A.map((field): readonly [string, string] => [
+      field.key,
+      fieldToString(resume.header.fields[field.key]),
+    ]),
+    D.fromPairs,
+  );
   return {
     format: INTERCHANGE_FORMAT,
     version: INTERCHANGE_VERSION,
@@ -135,105 +155,147 @@ export function resumeToInterchange(resume: Resume): InterchangeResume {
     photoSize: resume.photoSize,
     photoRadius: resume.photoRadius,
     photoAlign: resume.photoAlign,
-    sections: resume.sections.map(sectionToInterchange),
+    sections: F.toMutable(A.map(resume.sections, sectionToInterchange)),
   };
 }
 
 // --- interchange -> Resume content -----------------------------------------
+
+function fieldFromValue(field: FieldSchema, value: string): Field {
+  if (field.kind === "plain") return { kind: "plain", value: S.trim(value) };
+  return { kind: "richtext", value: markdownToTiptap(value) };
+}
 
 function fillEntry(
   entry: Entry,
   fields: FieldSchema[],
   values: Record<string, string | undefined>,
 ): Entry {
-  for (const field of fields) {
+  const filled = A.reduce(fields, entry.fields, (acc, field) => {
     const value = values[field.key];
-    if (value === undefined) continue;
-    entry.fields[field.key] =
-      field.kind === "plain"
-        ? { kind: "plain", value: value.trim() }
-        : { kind: "richtext", value: markdownToTiptap(value) };
-  }
-  return entry;
+    if (value === undefined) return acc;
+    return D.set(acc, field.key, fieldFromValue(field, value));
+  });
+  return { ...entry, fields: filled };
+}
+
+function emptyBodyEntry(type: "summary" | "custom"): Entry {
+  if (type === "custom") return createCustomEntry("rich");
+  return createEmptyEntry(type);
 }
 
 function bodyEntry(type: "summary" | "custom", body: string): Entry {
-  const entry =
-    type === "custom" ? createCustomEntry("rich") : createEmptyEntry(type);
-  entry.fields.body = { kind: "richtext", value: markdownToTiptap(body) };
-  return entry;
+  const entry = emptyBodyEntry(type);
+  const value = markdownToTiptap(body);
+  return {
+    ...entry,
+    fields: { ...entry.fields, body: { kind: "richtext", value } },
+  };
+}
+
+function withTitle(section: Section, title: string | undefined): Section {
+  if (!title) return section;
+  return { ...section, title };
+}
+
+function withHidden(section: Section, hidden: boolean | undefined): Section {
+  if (hidden === undefined) return section;
+  return { ...section, hidden };
+}
+
+function withBody(
+  section: Section,
+  body: { type: "summary" | "custom"; value: string | undefined },
+): Section {
+  if (body.value === undefined) return section;
+  return { ...section, entries: [bodyEntry(body.type, body.value)] };
+}
+
+/** Copies the grid toggles that Skills and Languages carry, when present. */
+function withGridSettings(section: Section, item: InterchangeSection): Section {
+  const columns = "columns" in item ? item.columns : undefined;
+  const showProficiency =
+    "showProficiency" in item ? item.showProficiency : undefined;
+  return {
+    ...section,
+    ...(columns !== undefined && { columns }),
+    ...(showProficiency !== undefined && { showProficiency }),
+  };
 }
 
 function interchangeToSection(item: InterchangeSection): Section {
   if (item.type === "summary") {
-    const section = createEmptySection("summary");
-    if (item.title) section.title = item.title;
-    if (item.hidden !== undefined) section.hidden = item.hidden;
-    if (item.body !== undefined) {
-      section.entries = [bodyEntry("summary", item.body)];
-    }
-    return section;
+    const section = pipe(
+      createEmptySection("summary"),
+      (current) => withTitle(current, item.title),
+      (current) => withHidden(current, item.hidden),
+    );
+    return withBody(section, { type: "summary", value: item.body });
   }
   if (item.type === "custom") {
     const variant = item.variant ?? "rich";
-    const section = createCustomSection(variant, item.title || undefined);
-    if (item.hidden !== undefined) section.hidden = item.hidden;
+    const section = withHidden(
+      createCustomSection(variant, item.title || undefined),
+      item.hidden,
+    );
     if (variant === "rich") {
-      if (item.body !== undefined) {
-        section.entries = [bodyEntry("custom", item.body)];
-      }
-      return section;
+      return withBody(section, { type: "custom", value: item.body });
     }
-    section.entries = (item.entries ?? []).map((values) =>
+    const entries = A.map(item.entries ?? [], (values) =>
       fillEntry(createCustomEntry("list"), CUSTOM_LIST_FIELDS, values),
     );
-    return section;
+    return { ...section, entries };
   }
-  const section = createEmptySection(item.type);
-  if (item.title) section.title = item.title;
-  if (item.hidden !== undefined) section.hidden = item.hidden;
+  const section = pipe(
+    createEmptySection(item.type),
+    (current) => withTitle(current, item.title),
+    (current) => withHidden(current, item.hidden),
+  );
   const fields = getSectionSchema(item.type).fields;
-  section.entries = (item.entries ?? []).map((values) =>
+  const entries = A.map(item.entries ?? [], (values) =>
     fillEntry(createEmptyEntry(item.type), fields, values),
   );
-  if ("columns" in item && item.columns !== undefined) {
-    section.columns = item.columns;
-  }
-  if ("showProficiency" in item && item.showProficiency !== undefined) {
-    section.showProficiency = item.showProficiency;
-  }
-  return section;
+  return withGridSettings({ ...section, entries }, item);
+}
+
+function withPhoto(header: Header, photo: string | undefined): Header {
+  if (!photo) return header;
+  return { ...header, photo };
+}
+
+/** Summary first, then the provided sections, then any missing core section. */
+function completeSections(
+  provided: ReadonlyArray<Section>,
+): ReadonlyArray<Section> {
+  const summary = A.find(provided, (section) => section.type === "summary");
+  const ordered = A.concat(
+    [O.getWithDefault(summary, createEmptySection("summary"))],
+    A.reject(provided, (section) => section.type === "summary"),
+  );
+  return A.reduce(CANONICAL_SECTION_ORDER, ordered, (sections, type) => {
+    if (type === "custom") return sections;
+    if (A.some(sections, (section) => section.type === type)) return sections;
+    return A.append(sections, createEmptySection(type));
+  });
 }
 
 export function interchangeToContent(data: InterchangeResume): ResumeContent {
-  const header = createEmptyHeader();
-  for (const field of HEADER_SCHEMA) {
+  const empty = createEmptyHeader();
+  const fields = A.reduce(HEADER_SCHEMA, empty.fields, (acc, field) => {
     const value = data.header?.[field.key];
-    if (value !== undefined) {
-      header.fields[field.key] = { kind: "plain", value: value.trim() };
-    }
-  }
+    if (value === undefined) return acc;
+    return D.set(acc, field.key, { kind: "plain", value: S.trim(value) });
+  });
+  const header = withPhoto({ ...empty, fields }, data.photo);
 
-  if (data.photo) header.photo = data.photo;
-
-  const provided = (data.sections ?? []).map(interchangeToSection);
   // Summary is pinned first; core sections the document omits are appended
   // empty so the editor always has its full fixed set.
-  const sections: Section[] = [];
-  const summary = provided.find((section) => section.type === "summary");
-  sections.push(summary ?? createEmptySection("summary"));
-  for (const section of provided) {
-    if (section.type !== "summary") sections.push(section);
-  }
-  for (const type of CANONICAL_SECTION_ORDER) {
-    if (type === "custom") continue;
-    if (!sections.some((section) => section.type === type)) {
-      sections.push(createEmptySection(type));
-    }
-  }
+  const sections = completeSections(
+    A.map(data.sections ?? [], interchangeToSection),
+  );
 
   return {
-    title: data.title?.trim() || undefined,
+    title: S.trim(data.title ?? "") || undefined,
     templateId: data.template,
     language: data.language,
     showIcons: data.showIcons,

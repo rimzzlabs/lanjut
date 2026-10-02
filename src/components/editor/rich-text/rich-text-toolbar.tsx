@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { type Editor, useEditorState } from "@tiptap/react";
 import { Bold, Italic, List, ListOrdered, Redo2, Undo2 } from "lucide-react";
 import { useTranslations } from "use-intl";
@@ -27,7 +28,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
     }),
   });
 
-  const has = (feature: RichTextFeature) => props.features.includes(feature);
+  const has = (feature: RichTextFeature) => A.includes(props.features, feature);
 
   return (
     <div className="flex items-center gap-0.5 rounded-md border border-input p-0.5">

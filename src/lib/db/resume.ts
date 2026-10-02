@@ -1,4 +1,4 @@
-import { A, G, pipe } from "@mobily/ts-belt";
+import { A, G, O, pipe } from "@mobily/ts-belt";
 import type { Resume, ResumeIndexEntry } from "@/lib/resume";
 import { needsMigration, readSchemaVersion, runMigrations } from "@/lib/resume";
 import { getDb, META_KEYS } from "./schema";
@@ -65,6 +65,20 @@ export async function deleteResume(id: string): Promise<void> {
   await db.delete("leftovers", id);
 }
 
+/** The index fields of one stored document, or None when it fails to migrate. */
+async function readIndexEntry(
+  db: Db,
+  raw: unknown,
+): Promise<O.Option<ResumeIndexEntry>> {
+  try {
+    if (needsMigration(raw)) await backupRawResume(db, raw);
+    const resume = runMigrations(raw);
+    return { id: resume.id, title: resume.title, updatedAt: resume.updatedAt };
+  } catch {
+    return O.None;
+  }
+}
+
 /**
  * The lightweight Library projection (id, title, updatedAt), newest first. Reads
  * full bodies to migrate them, but returns only index fields; the full body of a
@@ -78,20 +92,13 @@ export async function listResumeIndex(): Promise<ResumeIndexResult> {
   // be silently absent from an index scan, which reads as data loss.
   const all = await db.getAll("resumes");
 
-  const entries: ResumeIndexEntry[] = [];
+  // Sequential on purpose: each backup lands before its document migrates.
+  let entries: ReadonlyArray<ResumeIndexEntry> = [];
   let unreadableCount = 0;
   for (const raw of all) {
-    try {
-      if (needsMigration(raw)) await backupRawResume(db, raw);
-      const resume = runMigrations(raw);
-      entries.push({
-        id: resume.id,
-        title: resume.title,
-        updatedAt: resume.updatedAt,
-      });
-    } catch {
-      unreadableCount += 1;
-    }
+    const entry = await readIndexEntry(db, raw);
+    if (O.isSome(entry)) entries = A.append(entries, entry);
+    else unreadableCount += 1;
   }
 
   return {

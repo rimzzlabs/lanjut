@@ -1,4 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { A, O, S } from "@mobily/ts-belt";
 import { ExternalLink } from "lucide-react";
 import { type FormEvent, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -84,14 +85,17 @@ export function FeedbackBugReportForm(props: FeedbackBugReportFormProps) {
 
   const submitDirect = form.handleSubmit(async (values) => {
     const whatHappened = tiptapToRichBlocks(values.whatHappened);
-    const summary = richBlocksToText(whatHappened)[0] ?? "";
+    const summary = O.getWithDefault(
+      A.head(richBlocksToText(whatHappened)),
+      "",
+    );
 
     const result = await submitFeedback({
       kind: "bug",
       name: values.name,
       client,
       turnstileToken: values.turnstileToken,
-      summary: summary.slice(0, 120),
+      summary: S.slice(summary, 0, 120),
       whatHappened: richBlocksToMarkdown(whatHappened),
       area: values.area,
     });
@@ -110,7 +114,10 @@ export function FeedbackBugReportForm(props: FeedbackBugReportFormProps) {
   function openGitHubIssue() {
     const values = form.getValues();
     const whatHappened = tiptapToRichBlocks(values.whatHappened);
-    const summary = richBlocksToText(whatHappened)[0] ?? "";
+    const summary = O.getWithDefault(
+      A.head(richBlocksToText(whatHappened)),
+      "",
+    );
     const url = buildBugReportUrl({
       title: summary ? issueTitle("fix(bug,via app):", summary) : "",
       whatHappened: richBlocksToMarkdown(whatHappened),

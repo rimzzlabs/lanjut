@@ -1,3 +1,4 @@
+import { ResumeOptionalLink } from "../../resume-optional-link";
 import type { CertificateItemView } from "../../resume-preview";
 
 export function KetikCertificateItem(props: CertificateItemView) {
@@ -5,13 +6,9 @@ export function KetikCertificateItem(props: CertificateItemView) {
     <article>
       <div className="flex items-baseline justify-between gap-4">
         <h3 className="font-mono resume-body-xs font-bold">
-          {props.href ? (
-            <a href={props.href} className="underline">
-              {props.title}
-            </a>
-          ) : (
-            props.title
-          )}
+          <ResumeOptionalLink href={props.href} className="underline">
+            {props.title}
+          </ResumeOptionalLink>
         </h3>
         {(props.startDate || props.endDate) && (
           <span className="shrink-0 font-mono text-[0.6875rem] text-muted-foreground">

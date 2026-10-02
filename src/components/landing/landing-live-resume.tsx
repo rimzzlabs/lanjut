@@ -27,7 +27,7 @@ export function LandingLiveResume(props: {
     >
       <div
         className="overflow-hidden bg-white"
-        style={props.cropHeight ? { maxHeight: props.cropHeight } : undefined}
+        style={{ maxHeight: props.cropHeight || undefined }}
       >
         <ResumeThumbnail
           resume={props.preview ?? fallback}

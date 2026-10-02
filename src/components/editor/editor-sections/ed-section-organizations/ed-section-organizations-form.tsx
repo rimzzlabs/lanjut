@@ -5,6 +5,7 @@ import { useTranslations } from "use-intl";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import { FieldDescription, FieldLegend, FieldSet } from "@/components/ui/field";
+import type { Resume } from "@/lib/resume";
 import { emptyRichTextValue } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 import {
@@ -30,6 +31,11 @@ function emptyOrganization(): OrganizationItemValues {
   };
 }
 
+function initialValues(open: Resume | null): OrganizationsFormValues {
+  if (!open) return { organizations: [] };
+  return toOrganizationsValues(open);
+}
+
 export function EditorSectionOrganizationsForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
@@ -37,7 +43,7 @@ export function EditorSectionOrganizationsForm() {
   const tc = useTranslations("editor.common");
 
   const form = useForm<OrganizationsFormValues>({
-    defaultValues: open ? toOrganizationsValues(open) : { organizations: [] },
+    defaultValues: initialValues(open),
   });
   const { fields, prepend, remove, move } = useFieldArray({
     control: form.control,
@@ -51,7 +57,9 @@ export function EditorSectionOrganizationsForm() {
   // write. Reading getValues() inside the callback avoids stale-value timing.
   useEffect(() => {
     const subscription = form.watch(() => {
-      updateOpen((draft) => applyOrganizationsValues(draft, form.getValues()));
+      updateOpen((resume) =>
+        applyOrganizationsValues(resume, form.getValues()),
+      );
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);
@@ -86,13 +94,14 @@ export function EditorSectionOrganizationsForm() {
           {t("add")}
         </Button>
 
-        {fields.length === 0 ? (
+        {fields.length === 0 && (
           <EmptyState
             icon={Users}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />
-        ) : (
+        )}
+        {fields.length > 0 && (
           <AnimatedEntryList
             ref={listRef}
             ids={fields.map((field) => field.id)}

@@ -1,13 +1,15 @@
+import { A, O, pipe, S } from "@mobily/ts-belt";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import type { Resume } from "@/lib/resume";
 import type { TemplateId } from "@/lib/templates";
+import { joinPresent } from "@/lib/utils";
 
 export type ParserPhase = "render" | "extract" | "check";
 
 export interface ParserProofReport {
   pdfKb: number;
   chars: number;
-  excerpt: string[];
+  excerpt: ReadonlyArray<string>;
   name: string;
   nameFound: boolean;
   titleFound: boolean;
@@ -58,12 +60,12 @@ export async function runParserProof(
 
   onPhase("check");
   const text = extracted.text;
-  const upper = text.toUpperCase();
+  const upper = S.toUpperCase(text);
   let cursor = -1;
   let orderOk = true;
   for (const section of SECTION_ORDER) {
-    const index = upper.indexOf(section);
-    if (index === -1 || index < cursor) {
+    const index = S.indexOf(upper, section);
+    if (O.isNone(index) || index < cursor) {
       orderOk = false;
       break;
     }
@@ -71,28 +73,36 @@ export async function runParserProof(
   }
 
   const fields = resume.header.fields;
-  const name = [plainValue(fields.firstName), plainValue(fields.lastName)]
-    .filter(Boolean)
-    .join(" ");
+  const name = joinPresent(
+    [plainValue(fields.firstName), plainValue(fields.lastName)],
+    " ",
+  );
   const title = plainValue(fields.jobTitle);
   const email = plainValue(fields.email);
 
-  const lines = text.split("\n").filter((line) => line.trim());
-  const headingIndex = lines.findIndex((line) =>
-    /^experience$/i.test(line.trim()),
+  const lines = pipe(
+    text,
+    S.split("\n"),
+    A.filter((line) => S.isNotEmpty(S.trim(line))),
   );
-  const excerpt =
-    headingIndex === -1 ? [] : lines.slice(headingIndex, headingIndex + 3);
+  const headingIndex = A.getIndexBy(lines, (line) =>
+    /^experience$/i.test(S.trim(line)),
+  );
+  const excerpt = O.match(
+    headingIndex,
+    (index) => A.slice(lines, index, 3),
+    () => [],
+  );
 
   return {
     pdfKb: Math.round(blob.size / 1024),
-    chars: text.length,
+    chars: S.length(text),
     excerpt,
     name,
-    nameFound: Boolean(name) && text.includes(name),
-    titleFound: Boolean(title) && text.includes(title),
-    employerFound: text.includes("Acme Corp"),
-    emailFound: Boolean(email) && text.includes(email),
+    nameFound: Boolean(name) && S.includes(text, name),
+    titleFound: Boolean(title) && S.includes(text, title),
+    employerFound: S.includes(text, "Acme Corp"),
+    emailFound: Boolean(email) && S.includes(text, email),
     orderOk,
     order: SECTION_ORDER,
   };

@@ -19,9 +19,10 @@ export function EditorDocumentLetterSpacing() {
 
   const onValueChange = (value: number | readonly number[]) => {
     const next = Array.isArray(value) ? value[0] : (value as number);
-    updateOpen((draft) => {
-      draft.letterSpacing = Math.round(next * 100) / 100;
-    });
+    updateOpen((resume) => ({
+      ...resume,
+      letterSpacing: Math.round(next * 100) / 100,
+    }));
   };
 
   return (

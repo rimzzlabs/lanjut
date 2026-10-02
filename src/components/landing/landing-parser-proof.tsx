@@ -1,3 +1,4 @@
+import { A, pipe } from "@mobily/ts-belt";
 import { RotateCw } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useRef, useState } from "react";
@@ -76,15 +77,7 @@ function LandingParserProofTerminal() {
 
   const running = state.status === "running";
   const report = state.status === "done" ? state.report : null;
-  const passCount = report
-    ? [
-        report.nameFound,
-        report.titleFound,
-        report.employerFound,
-        report.emailFound,
-        report.orderOk,
-      ].filter((found) => found).length
-    : 0;
+  const passCount = report ? countPassed(report) : 0;
 
   return (
     <motion.figure
@@ -98,39 +91,39 @@ function LandingParserProofTerminal() {
       <div className="border border-stone-800 bg-stone-950 p-4 text-left font-mono text-xs leading-relaxed sm:p-5 sm:text-sm dark:border-stone-700">
         <p className="text-stone-500">$ lanjut verify --template {template}</p>
 
-        {state.status === "idle" ? (
+        {state.status === "idle" && (
           <p className="mt-3 text-stone-400">{t("waiting")}</p>
-        ) : null}
+        )}
 
-        {running || report ? (
+        {(running || report) && (
           <p className="mt-3 text-stone-300">
             {t("rendering")}
-            {report ? (
+            {report && (
               <span className="text-stone-500">
                 {" "}
                 {t("renderedKb", { kb: report.pdfKb })}
               </span>
-            ) : state.status === "running" && state.phase === "render" ? (
+            )}
+            {!report && running && state.phase === "render" && (
               <span className="text-stone-500"> …</span>
-            ) : null}
+            )}
           </p>
-        ) : null}
+        )}
 
-        {(running && state.phase !== "render") || report ? (
+        {((running && state.phase !== "render") || report) && (
           <p className="text-stone-300">
             {t("extracting")}
-            {report ? (
+            {report && (
               <span className="text-stone-500">
                 {" "}
                 {t("extractedChars", { chars: report.chars })}
               </span>
-            ) : (
-              <span className="text-stone-500"> …</span>
             )}
+            {!report && <span className="text-stone-500"> …</span>}
           </p>
-        ) : null}
+        )}
 
-        {report ? (
+        {report && (
           <motion.div
             key={runId}
             initial={reduceMotion ? undefined : "hidden"}
@@ -140,7 +133,7 @@ function LandingParserProofTerminal() {
               visible: { transition: { staggerChildren: 0.16 } },
             }}
           >
-            {report.excerpt.length > 0 ? (
+            {A.isNotEmpty(report.excerpt) && (
               <motion.div
                 variants={lineVariants}
                 className="mt-3 border-l-2 border-stone-800 pl-3 text-stone-500"
@@ -151,7 +144,7 @@ function LandingParserProofTerminal() {
                   </p>
                 ))}
               </motion.div>
-            ) : null}
+            )}
             <div className="mt-3 space-y-0.5">
               <CheckLine ok={report.nameFound}>
                 {t("checkName", { name: report.name })}
@@ -162,7 +155,7 @@ function LandingParserProofTerminal() {
               </CheckLine>
               <CheckLine ok={report.emailFound}>{t("checkEmail")}</CheckLine>
               <CheckLine ok={report.orderOk}>
-                {t("checkOrder")} {report.order.join(" → ")}
+                {t("checkOrder")} {A.join(report.order, " → ")}
               </CheckLine>
               <motion.p
                 variants={lineVariants}
@@ -172,13 +165,13 @@ function LandingParserProofTerminal() {
               </motion.p>
             </div>
           </motion.div>
-        ) : null}
+        )}
 
-        {state.status === "failed" ? (
+        {state.status === "failed" && (
           <p className="mt-3 text-red-400">{t("failed")}</p>
-        ) : null}
+        )}
       </div>
-      {report || state.status === "failed" ? (
+      {(report || state.status === "failed") && (
         <div className="mt-2">
           <Button
             variant="ghost"
@@ -189,8 +182,22 @@ function LandingParserProofTerminal() {
             <RotateCw /> {t("rerun")}
           </Button>
         </div>
-      ) : null}
+      )}
     </motion.figure>
+  );
+}
+
+function countPassed(report: ParserProofReport) {
+  return pipe(
+    [
+      report.nameFound,
+      report.titleFound,
+      report.employerFound,
+      report.emailFound,
+      report.orderOk,
+    ],
+    A.filter((found) => found),
+    A.length,
   );
 }
 

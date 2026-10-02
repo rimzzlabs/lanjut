@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { type Editor, useEditorState } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import { Bold, Italic } from "lucide-react";
@@ -22,7 +23,7 @@ export function RichTextBubbleMenu(props: RichTextBubbleMenuProps) {
     }),
   });
 
-  const has = (feature: RichTextFeature) => props.features.includes(feature);
+  const has = (feature: RichTextFeature) => A.includes(props.features, feature);
 
   return (
     <BubbleMenu

@@ -50,12 +50,13 @@ export function FeedbackPanel() {
         </p>
       </div>
 
-      {kind === "bug" ? (
+      {kind === "bug" && (
         <FeedbackBugReportForm
           surface="page"
           onSubmitted={() => setSent(true)}
         />
-      ) : (
+      )}
+      {kind !== "bug" && (
         <FeedbackFeatureRequestForm
           surface="page"
           onSubmitted={() => setSent(true)}

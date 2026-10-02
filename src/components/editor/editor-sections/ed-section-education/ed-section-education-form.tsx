@@ -5,6 +5,7 @@ import { useTranslations } from "use-intl";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import { FieldDescription, FieldLegend, FieldSet } from "@/components/ui/field";
+import type { Resume } from "@/lib/resume";
 import { emptyRichTextValue } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 import {
@@ -31,6 +32,11 @@ function emptyEducation(): EducationItemValues {
   };
 }
 
+function initialValues(open: Resume | null): EducationFormValues {
+  if (!open) return { educations: [] };
+  return toEducationValues(open);
+}
+
 export function EditorSectionEducationForm() {
   const open = useResumeStore((state) => state.open);
   const updateOpen = useResumeStore((state) => state.updateOpen);
@@ -38,7 +44,7 @@ export function EditorSectionEducationForm() {
   const tc = useTranslations("editor.common");
 
   const form = useForm<EducationFormValues>({
-    defaultValues: open ? toEducationValues(open) : { educations: [] },
+    defaultValues: initialValues(open),
   });
   const { fields, prepend, remove, move } = useFieldArray({
     control: form.control,
@@ -48,7 +54,7 @@ export function EditorSectionEducationForm() {
 
   useEffect(() => {
     const subscription = form.watch(() => {
-      updateOpen((draft) => applyEducationValues(draft, form.getValues()));
+      updateOpen((resume) => applyEducationValues(resume, form.getValues()));
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);
@@ -79,13 +85,14 @@ export function EditorSectionEducationForm() {
           {t("add")}
         </Button>
 
-        {fields.length === 0 ? (
+        {fields.length === 0 && (
           <EmptyState
             icon={GraduationCap}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />
-        ) : (
+        )}
+        {fields.length > 0 && (
           <AnimatedEntryList
             ref={listRef}
             ids={fields.map((field) => field.id)}

@@ -22,10 +22,12 @@ export interface IslandProps {
  * Pages are rendered at build time, where no visitor time zone exists. Nothing
  * in the static HTML formats a date, so the browser's own zone is safe here.
  */
-const TIME_ZONE =
-  typeof window === "undefined"
-    ? "UTC"
-    : Intl.DateTimeFormat().resolvedOptions().timeZone;
+function resolveTimeZone() {
+  if (typeof window === "undefined") return "UTC";
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+}
+
+const TIME_ZONE = resolveTimeZone();
 
 /**
  * Context for an island that only reads copy and the current path. Each island
@@ -67,8 +69,8 @@ export function AppProviders(props: PropsWithChildren<IslandProps>) {
   return (
     <IslandProviders locale={props.locale} pathname={props.pathname}>
       <NuqsAdapter>
-        {IS_DESKTOP ? <DesktopLocaleMemory /> : null}
-        {IS_DESKTOP ? <DesktopUpdater /> : null}
+        {IS_DESKTOP && <DesktopLocaleMemory />}
+        {IS_DESKTOP && <DesktopUpdater />}
         <AppThemeProvider>
           <TooltipProvider>{props.children}</TooltipProvider>
           <Toaster />

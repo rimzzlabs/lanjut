@@ -1,3 +1,4 @@
+import { pipe, S } from "@mobily/ts-belt";
 import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
 import { BUG_AREAS } from "@/lib/forms/bug-report";
 
@@ -27,5 +28,6 @@ export function useFeedbackArea() {
  */
 export function useFeedbackClient() {
   const [client] = useQueryState("client", parseAsString);
-  return client?.trim() ? client.trim().slice(0, 120) : undefined;
+  if (!client || S.isEmpty(S.trim(client))) return undefined;
+  return pipe(client, S.trim, S.slice(0, 120));
 }

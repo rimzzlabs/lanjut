@@ -1,3 +1,4 @@
+import { A, pipe } from "@mobily/ts-belt";
 import type { CSSProperties } from "react";
 import { FONTS, resolveFont } from "@/lib/fonts";
 import { TEMPLATE_LINE_HEIGHT, type TemplateId } from "@/lib/templates";
@@ -35,33 +36,36 @@ export function resumeTypographyStyle(
 ): CSSProperties {
   const override = resolveFont(resume.font ?? undefined);
   const lineHeight = resume.lineHeight ?? TEMPLATE_LINE_HEIGHT[template];
-  const style: CSSProperties = {
+  // Per-group font-size multipliers; the resume-<group>-* utilities multiply
+  // each element's baseline size by these (default 1 via the class fallback).
+  return {
     "--font-sans": `${override?.family ?? "Inter"}, ui-sans-serif, system-ui, sans-serif`,
     "--font-serif": `${override?.family ?? "Lora"}, ui-serif, Georgia, serif`,
     "--font-geist-mono": `${override?.family ?? "GeistMono"}, ui-monospace, monospace`,
     lineHeight,
+    "--resume-line-height": String(lineHeight),
+    ...(resume.letterSpacing !== 0 && {
+      letterSpacing: `${resume.letterSpacing}px`,
+    }),
+    ...(resume.nameScale !== 1 && { "--resume-name-scale": resume.nameScale }),
+    ...(resume.titleScale !== 1 && {
+      "--resume-title-scale": resume.titleScale,
+    }),
+    ...(resume.bodyScale !== 1 && { "--resume-body-scale": resume.bodyScale }),
   } as CSSProperties;
-  (style as Record<string, unknown>)["--resume-line-height"] =
-    String(lineHeight);
-  if (resume.letterSpacing !== 0) {
-    style.letterSpacing = `${resume.letterSpacing}px`;
-  }
-  // Per-group font-size multipliers; the resume-<group>-* utilities multiply
-  // each element's baseline size by these (default 1 via the class fallback).
-  const record = style as Record<string, unknown>;
-  if (resume.nameScale !== 1) record["--resume-name-scale"] = resume.nameScale;
-  if (resume.titleScale !== 1)
-    record["--resume-title-scale"] = resume.titleScale;
-  if (resume.bodyScale !== 1) record["--resume-body-scale"] = resume.bodyScale;
-  return style;
 }
 
-const FONT_FACE_CSS = FONTS.flatMap((font) =>
-  font.faces.map(
-    (face) =>
-      `@font-face{font-family:"${font.family}";src:url("/fonts/${face.file}") format("truetype");font-weight:${face.weight};font-style:${face.style};font-display:swap;}`,
+const FONT_FACE_CSS = pipe(
+  FONTS,
+  A.flatMap((font) =>
+    A.map(
+      font.faces,
+      (face) =>
+        `@font-face{font-family:"${font.family}";src:url("/fonts/${face.file}") format("truetype");font-weight:${face.weight};font-style:${face.style};font-display:swap;}`,
+    ),
   ),
-).join("\n");
+  A.join("\n"),
+);
 
 /**
  * Declares every catalog face once. Declarations are free: a browser only

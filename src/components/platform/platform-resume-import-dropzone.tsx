@@ -1,8 +1,9 @@
+import { A, O } from "@mobily/ts-belt";
 import { FileText, Loader2, Upload, X } from "lucide-react";
 import { useCallback, useState } from "react";
 import { type FileRejection, useDropzone } from "react-dropzone";
 import { useLocale, useTranslations } from "use-intl";
-import type { ParseResult } from "@/lib/import";
+import type { ImportResult, ParseResult } from "@/lib/import";
 import { runPdfImport } from "@/lib/import/run-import";
 import type { ResumeLanguage } from "@/lib/resume";
 import { cn } from "@/lib/utils";
@@ -17,6 +18,13 @@ type ErrorKey =
   | "errorEncrypted"
   | "errorInvalidData"
   | "errorGeneric";
+
+type PdfFailureReason = Extract<ImportResult, { ok: false }>["reason"];
+
+const PDF_FAILURES: Partial<Record<PdfFailureReason, ErrorKey>> = {
+  empty: "errorEmpty",
+  encrypted: "errorEncrypted",
+};
 
 interface PlatformResumeImportDropzoneProps {
   onParsingChange: (parsing: boolean) => void;
@@ -45,16 +53,18 @@ export function PlatformResumeImportDropzone(
 
   const onDrop = useCallback(
     async (accepted: File[], rejections: FileRejection[]) => {
-      if (rejections.length > 0) {
-        const tooLarge = rejections[0].errors.some(
+      const rejection = A.head(rejections);
+      if (O.isSome(rejection)) {
+        const tooLarge = A.some(
+          rejection.errors,
           (e) => e.code === "file-too-large",
         );
         setError(tooLarge ? "errorTooLarge" : "errorUnsupported");
         reset();
         return;
       }
-      const file = accepted[0];
-      if (!file) return;
+      const file = A.head(accepted);
+      if (O.isNone(file)) return;
 
       setError(null);
       setFileName(file.name);
@@ -72,9 +82,8 @@ export function PlatformResumeImportDropzone(
         const { importResumeFromJson, importResumeFromYaml } = await import(
           "@/lib/interchange"
         );
-        const importFile = /\.json$/i.test(file.name)
-          ? importResumeFromJson
-          : importResumeFromYaml;
+        const isJson = /\.json$/i.test(file.name);
+        const importFile = isJson ? importResumeFromJson : importResumeFromYaml;
         const imported = importFile(await file.text(), options);
         if (imported.ok) result = imported;
         else failure = "errorInvalidData";
@@ -82,12 +91,7 @@ export function PlatformResumeImportDropzone(
         const imported = await runPdfImport(await file.arrayBuffer(), options);
         if (imported.ok) result = imported;
         else {
-          failure =
-            imported.reason === "empty"
-              ? "errorEmpty"
-              : imported.reason === "encrypted"
-                ? "errorEncrypted"
-                : "errorGeneric";
+          failure = PDF_FAILURES[imported.reason] ?? "errorGeneric";
         }
       }
 
@@ -120,9 +124,10 @@ export function PlatformResumeImportDropzone(
   if (fileName && !error) {
     return (
       <div className="flex items-center gap-3 rounded-xl border bg-muted/40 p-3">
-        {parsing ? (
+        {parsing && (
           <Loader2 className="size-5 shrink-0 animate-spin text-muted-foreground" />
-        ) : (
+        )}
+        {!parsing && (
           <FileText className="size-5 shrink-0 text-muted-foreground" />
         )}
         <div className="min-w-0 flex-1">

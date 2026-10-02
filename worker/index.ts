@@ -4,6 +4,7 @@
  * and forward editor links from before the static site. Résumé content never
  * reaches it.
  */
+import { S } from "@mobily/ts-belt";
 import { FeedbackError, fileFeedback } from "./feedback";
 import { localeRedirect } from "./locale";
 
@@ -45,7 +46,8 @@ export default {
 
     if (LEGACY_DEFAULT_PREFIX.test(url.pathname)) {
       const target = new URL(url);
-      target.pathname = url.pathname.replace(LEGACY_DEFAULT_PREFIX, "") || "/";
+      target.pathname =
+        S.replaceByRe(url.pathname, LEGACY_DEFAULT_PREFIX, "") || "/";
       return Response.redirect(target.href, 308);
     }
 

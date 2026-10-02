@@ -1,3 +1,4 @@
+import { A, O, pipe, S } from "@mobily/ts-belt";
 import { resolveFont } from "@/lib/fonts";
 import { RESUME_LABELS } from "@/lib/resume/labels";
 import { type RichBlock, tiptapToRichBlocks } from "@/lib/resume/rich-content";
@@ -7,10 +8,13 @@ import {
   type ReorderableSectionType,
 } from "@/lib/resume/schema-registry";
 import type { Field, Resume, Section } from "@/lib/resume/types";
+import { joinPresent } from "@/lib/utils";
 import { localizeDateValue } from "./month-year-menu/month-year-menu-data";
 import type {
+  ContactKind,
   ContactView,
   CustomSectionView,
+  ExperienceItemView,
   HeaderView,
   ResumePreview,
   SectionHeadings,
@@ -18,23 +22,30 @@ import type {
 import { byRecency } from "./resume-sort";
 
 function plain(field: Field | undefined): string {
-  return field?.kind === "plain" ? field.value.trim() : "";
+  return field?.kind === "plain" ? S.trim(field.value) : "";
 }
 
-function richBlocks(field: Field | undefined): RichBlock[] {
-  return field?.kind === "richtext" ? tiptapToRichBlocks(field.value) : [];
+function richBlocks(field: Field | undefined): ReadonlyArray<RichBlock> {
+  if (field?.kind !== "richtext") return [];
+  return tiptapToRichBlocks(field.value);
 }
 
 function sectionOfType(
   resume: Resume,
   type: Section["type"],
-): Section | undefined {
-  return resume.sections.find((section) => section.type === type);
+): O.Option<Section> {
+  return A.find(resume.sections, (section) => section.type === type);
 }
 
 /** A stored URL is domain-only (see `UrlInput`); restore the scheme for links. */
 function withHttps(value: string): string {
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
+}
+
+/** Document line height bounded to 1.2..2, or null for the template baseline. */
+function clampLineHeight(value: number | undefined): number | null {
+  if (value == null) return null;
+  return Math.min(2, Math.max(1.2, value));
 }
 
 /** Font-size multiplier, defaulting to 1 and bounded to the editor's range. */
@@ -53,54 +64,59 @@ function effectiveHeading(
   type: keyof SectionHeadings,
   fallback: string,
 ): string {
-  const title = sectionOfType(resume, type)?.title.trim();
+  const title = O.mapWithDefault(sectionOfType(resume, type), "", (section) =>
+    S.trim(section.title),
+  );
   if (!title || title === getSectionSchema(type).defaultTitle) return fallback;
   return title;
 }
 
+function linkContact(kind: ContactKind): (value: string) => ContactView {
+  return (value) => {
+    const url = withHttps(value);
+    return { kind, value: url, href: url };
+  };
+}
+
+// Links show the full URL (scheme included): a bare domain isn't recognized as
+// a link by résumé parsers, which look for http(s)://, www., or a path.
+const CONTACT_VIEWS: Record<ContactKind, (value: string) => ContactView> = {
+  phone: (value) => ({
+    kind: "phone",
+    value,
+    href: `tel:${S.replaceByRe(value, /\s+/g, "")}`,
+  }),
+  email: (value) => ({ kind: "email", value, href: `mailto:${value}` }),
+  website: linkContact("website"),
+  linkedin: linkContact("linkedin"),
+  link: linkContact("link"),
+  location: (value) => ({ kind: "location", value }),
+};
+
 function toHeaderView(resume: Resume): HeaderView {
   const fields = resume.header.fields;
-  const fullName = [plain(fields.firstName), plain(fields.lastName)]
-    .filter(Boolean)
-    .join(" ");
+  const fullName = joinPresent(
+    [plain(fields.firstName), plain(fields.lastName)],
+    " ",
+  );
 
-  const contacts: ContactView[] = [];
-  const phone = plain(fields.phone);
-  if (phone) {
-    contacts.push({
-      kind: "phone",
-      value: phone,
-      href: `tel:${phone.replace(/\s+/g, "")}`,
-    });
-  }
-  const email = plain(fields.email);
-  if (email)
-    contacts.push({ kind: "email", value: email, href: `mailto:${email}` });
-  const website = plain(fields.website);
-  if (website) {
-    // Show the full URL (scheme included): a bare domain isn't recognized as a
-    // link by résumé parsers, which look for http(s)://, www., or a path.
-    const url = withHttps(website);
-    contacts.push({ kind: "website", value: url, href: url });
-  }
-  const linkedin = plain(fields.linkedin);
-  if (linkedin) {
-    const url = withHttps(linkedin);
-    contacts.push({ kind: "linkedin", value: url, href: url });
-  }
-  const link = plain(fields.link);
-  if (link) {
-    const url = withHttps(link);
-    contacts.push({ kind: "link", value: url, href: url });
-  }
-  const location = [
-    plain(fields.city),
-    plain(fields.province),
-    plain(fields.country),
-  ]
-    .filter(Boolean)
-    .join(", ");
-  if (location) contacts.push({ kind: "location", value: location });
+  const location = joinPresent(
+    [plain(fields.city), plain(fields.province), plain(fields.country)],
+    ", ",
+  );
+  const rawContacts: ReadonlyArray<readonly [ContactKind, string]> = [
+    ["phone", plain(fields.phone)],
+    ["email", plain(fields.email)],
+    ["website", plain(fields.website)],
+    ["linkedin", plain(fields.linkedin)],
+    ["link", plain(fields.link)],
+    ["location", location],
+  ];
+  const contacts = pipe(
+    rawContacts,
+    A.reject(([, value]) => S.isEmpty(value)),
+    A.map(([kind, value]) => CONTACT_VIEWS[kind](value)),
+  );
 
   return {
     fullName,
@@ -114,6 +130,27 @@ function toHeaderView(resume: Resume): HeaderView {
   };
 }
 
+function customBody(section: Section): ReadonlyArray<RichBlock> {
+  if ((section.variant ?? "rich") !== "rich") return [];
+  return O.mapWithDefault(A.head(section.entries), [], (entry) =>
+    richBlocks(entry.fields.body),
+  );
+}
+
+// Custom list entries keep document order (no recency sort): they are freeform
+// and often carry no dates.
+function customEntries(section: Section): ReadonlyArray<ExperienceItemView> {
+  if (section.variant !== "list") return [];
+  return A.map(section.entries, (entry) => ({
+    id: entry.id,
+    role: plain(entry.fields.title),
+    company: plain(entry.fields.subtitle),
+    startDate: plain(entry.fields.startDate),
+    endDate: plain(entry.fields.endDate),
+    description: richBlocks(entry.fields.description),
+  }));
+}
+
 /**
  * True when a preview carries no user content: an untouched document that would
  * render as a blank sheet. Callers surface a placeholder instead of the empty page.
@@ -123,15 +160,15 @@ export function isResumePreviewEmpty(preview: ResumePreview): boolean {
   return (
     !header.fullName &&
     !header.headline &&
-    header.contacts.length === 0 &&
-    preview.summary.length === 0 &&
-    preview.experience.length === 0 &&
-    preview.organizations.length === 0 &&
-    preview.education.length === 0 &&
-    preview.certificates.length === 0 &&
-    preview.skills.length === 0 &&
-    preview.languages.length === 0 &&
-    preview.customSections.length === 0
+    A.isEmpty(header.contacts) &&
+    A.isEmpty(preview.summary) &&
+    A.isEmpty(preview.experience) &&
+    A.isEmpty(preview.organizations) &&
+    A.isEmpty(preview.education) &&
+    A.isEmpty(preview.certificates) &&
+    A.isEmpty(preview.skills) &&
+    A.isEmpty(preview.languages) &&
+    A.isEmpty(preview.customSections)
   );
 }
 
@@ -141,10 +178,12 @@ export function isResumePreviewEmpty(preview: ResumePreview): boolean {
  * components never read the storage schema directly.
  */
 export function resumeToPreview(resume: Resume): ResumePreview {
-  const summarySection = sectionOfType(resume, "summary");
-  const summaryBody = summarySection?.hidden
-    ? undefined
-    : summarySection?.entries[0]?.fields.body;
+  const summary = pipe(
+    sectionOfType(resume, "summary"),
+    O.filter((section) => !section.hidden),
+    O.flatMap((section) => A.head(section.entries)),
+    O.mapWithDefault([], (entry) => richBlocks(entry.fields.body)),
+  );
   const labels = RESUME_LABELS[resume.language];
   const localizeDates = <T extends { startDate: string; endDate: string }>(
     item: T,
@@ -156,45 +195,39 @@ export function resumeToPreview(resume: Resume): ResumePreview {
 
   // Hidden sections drop out of the emitted order entirely, so no renderer
   // (preview, PDF, docx, plain text) ever sees their heading or entries.
-  const sectionOrder = resume.sections
-    .filter((section) => isReorderableSection(section.type) && !section.hidden)
-    .map((section) => ({
+  const sectionOrder = pipe(
+    resume.sections,
+    A.filter(
+      (section) => isReorderableSection(section.type) && !section.hidden,
+    ),
+    A.map((section) => ({
       type: section.type as ReorderableSectionType,
       id: section.id,
-    }));
+    })),
+  );
 
-  const customSections: CustomSectionView[] = resume.sections
-    .filter((section) => section.type === "custom")
-    .map((section) => {
-      const variant = section.variant ?? "rich";
-      return {
-        id: section.id,
-        title: section.title,
-        variant,
-        body:
-          variant === "rich" ? richBlocks(section.entries[0]?.fields.body) : [],
-        // Custom list entries keep document order (no recency sort): they are
-        // freeform and often carry no dates.
-        entries:
-          variant === "list"
-            ? section.entries
-                .map((entry) => ({
-                  id: entry.id,
-                  role: plain(entry.fields.title),
-                  company: plain(entry.fields.subtitle),
-                  startDate: plain(entry.fields.startDate),
-                  endDate: plain(entry.fields.endDate),
-                  description: richBlocks(entry.fields.description),
-                }))
-                .map(localizeDates)
-            : [],
-      };
-    });
+  const customSections: ReadonlyArray<CustomSectionView> = pipe(
+    resume.sections,
+    A.filter((section) => section.type === "custom"),
+    A.map((section) => ({
+      id: section.id,
+      title: section.title,
+      variant: section.variant ?? "rich",
+      body: customBody(section),
+      entries: A.map(customEntries(section), localizeDates),
+    })),
+  );
 
-  const skillsShowProficiency =
-    sectionOfType(resume, "skills")?.showProficiency ?? true;
-  const languagesShowProficiency =
-    sectionOfType(resume, "languages")?.showProficiency ?? true;
+  const skillsShowProficiency = O.mapWithDefault(
+    sectionOfType(resume, "skills"),
+    true,
+    (section) => section.showProficiency ?? true,
+  );
+  const languagesShowProficiency = O.mapWithDefault(
+    sectionOfType(resume, "languages"),
+    true,
+    (section) => section.showProficiency ?? true,
+  );
 
   const headings: SectionHeadings = {
     summary: effectiveHeading(resume, "summary", labels.summary),
@@ -226,10 +259,7 @@ export function resumeToPreview(resume: Resume): ResumePreview {
     // PDF text extraction (word boundaries merge or split), and out-of-range
     // line heights break layout.
     letterSpacing: Math.min(0.5, Math.max(-0.5, resume.letterSpacing ?? 0)),
-    lineHeight:
-      resume.lineHeight != null
-        ? Math.min(2, Math.max(1.2, resume.lineHeight))
-        : null,
+    lineHeight: clampLineHeight(resume.lineHeight),
     // Clamped so a hand-edited document keeps template proportions readable.
     nameScale: clampScale(resume.nameScale),
     titleScale: clampScale(resume.titleScale),
@@ -238,9 +268,11 @@ export function resumeToPreview(resume: Resume): ResumePreview {
     sectionOrder,
     customSections,
     header: toHeaderView(resume),
-    summary: richBlocks(summaryBody),
-    experience: (sectionOfType(resume, "experience")?.entries ?? [])
-      .map((entry) => {
+    summary,
+    experience: pipe(
+      sectionOfType(resume, "experience"),
+      O.mapWithDefault([], (section) => section.entries),
+      A.map((entry) => {
         const website = plain(entry.fields.website);
         return {
           id: entry.id,
@@ -253,11 +285,14 @@ export function resumeToPreview(resume: Resume): ResumePreview {
           endDate: plain(entry.fields.endDate),
           description: richBlocks(entry.fields.description),
         };
-      })
-      .sort(byRecency)
-      .map(localizeDates),
-    internship: (sectionOfType(resume, "internship")?.entries ?? [])
-      .map((entry) => {
+      }),
+      A.sort(byRecency),
+      A.map(localizeDates),
+    ),
+    internship: pipe(
+      sectionOfType(resume, "internship"),
+      O.mapWithDefault([], (section) => section.entries),
+      A.map((entry) => {
         const website = plain(entry.fields.website);
         return {
           id: entry.id,
@@ -270,11 +305,14 @@ export function resumeToPreview(resume: Resume): ResumePreview {
           endDate: plain(entry.fields.endDate),
           description: richBlocks(entry.fields.description),
         };
-      })
-      .sort(byRecency)
-      .map(localizeDates),
-    projects: (sectionOfType(resume, "projects")?.entries ?? [])
-      .map((entry) => {
+      }),
+      A.sort(byRecency),
+      A.map(localizeDates),
+    ),
+    projects: pipe(
+      sectionOfType(resume, "projects"),
+      O.mapWithDefault([], (section) => section.entries),
+      A.map((entry) => {
         const website = plain(entry.fields.website);
         return {
           id: entry.id,
@@ -285,22 +323,28 @@ export function resumeToPreview(resume: Resume): ResumePreview {
           endDate: plain(entry.fields.endDate),
           description: richBlocks(entry.fields.description),
         };
-      })
-      .sort(byRecency)
-      .map(localizeDates),
-    organizations: (sectionOfType(resume, "organizations")?.entries ?? [])
-      .map((entry) => ({
+      }),
+      A.sort(byRecency),
+      A.map(localizeDates),
+    ),
+    organizations: pipe(
+      sectionOfType(resume, "organizations"),
+      O.mapWithDefault([], (section) => section.entries),
+      A.map((entry) => ({
         id: entry.id,
         role: plain(entry.fields.role),
         company: plain(entry.fields.organization),
         startDate: plain(entry.fields.startDate),
         endDate: plain(entry.fields.endDate),
         description: richBlocks(entry.fields.description),
-      }))
-      .sort(byRecency)
-      .map(localizeDates),
-    education: (sectionOfType(resume, "education")?.entries ?? [])
-      .map((entry) => ({
+      })),
+      A.sort(byRecency),
+      A.map(localizeDates),
+    ),
+    education: pipe(
+      sectionOfType(resume, "education"),
+      O.mapWithDefault([], (section) => section.entries),
+      A.map((entry) => ({
         id: entry.id,
         degree: plain(entry.fields.degree),
         institution: plain(entry.fields.institution),
@@ -308,11 +352,14 @@ export function resumeToPreview(resume: Resume): ResumePreview {
         startDate: plain(entry.fields.startDate),
         endDate: plain(entry.fields.endDate),
         details: richBlocks(entry.fields.details),
-      }))
-      .sort(byRecency)
-      .map(localizeDates),
-    certificates: (sectionOfType(resume, "certifications")?.entries ?? []).map(
-      (entry) => {
+      })),
+      A.sort(byRecency),
+      A.map(localizeDates),
+    ),
+    certificates: pipe(
+      sectionOfType(resume, "certifications"),
+      O.mapWithDefault([], (section) => section.entries),
+      A.map((entry) => {
         const url = plain(entry.fields.url);
         return {
           id: entry.id,
@@ -322,24 +369,38 @@ export function resumeToPreview(resume: Resume): ResumePreview {
           startDate: "",
           endDate: "",
         };
-      },
+      }),
     ),
     // Hiding proficiency is presentation-only: blank it here, the single view
     // chokepoint, so every downstream renderer (preview, PDF, docx, plain text)
     // drops it without threading a flag through each one.
-    skills: (sectionOfType(resume, "skills")?.entries ?? []).map((entry) => ({
-      id: entry.id,
-      name: plain(entry.fields.name),
-      proficiency: skillsShowProficiency ? plain(entry.fields.level) : "",
-    })),
-    skillsColumns: sectionOfType(resume, "skills")?.columns ?? 2,
-    languages: (sectionOfType(resume, "languages")?.entries ?? []).map(
-      (entry) => ({
+    skills: pipe(
+      sectionOfType(resume, "skills"),
+      O.mapWithDefault([], (section) => section.entries),
+      A.map((entry) => ({
+        id: entry.id,
+        name: plain(entry.fields.name),
+        proficiency: skillsShowProficiency ? plain(entry.fields.level) : "",
+      })),
+    ),
+    skillsColumns: O.mapWithDefault(
+      sectionOfType(resume, "skills"),
+      2,
+      (section) => section.columns ?? 2,
+    ),
+    languages: pipe(
+      sectionOfType(resume, "languages"),
+      O.mapWithDefault([], (section) => section.entries),
+      A.map((entry) => ({
         id: entry.id,
         name: plain(entry.fields.name),
         proficiency: languagesShowProficiency ? plain(entry.fields.level) : "",
-      }),
+      })),
     ),
-    languagesColumns: sectionOfType(resume, "languages")?.columns ?? 2,
+    languagesColumns: O.mapWithDefault(
+      sectionOfType(resume, "languages"),
+      2,
+      (section) => section.columns ?? 2,
+    ),
   };
 }

@@ -16,18 +16,12 @@ interface FeedbackFormActionsProps {
 
 export function FeedbackFormActions(props: FeedbackFormActionsProps) {
   const tc = useTranslations("forms.common");
-  const td = useTranslations("forms.direct");
 
-  const submit = props.directEnabled ? (
-    <Button type="submit" disabled={props.submitting}>
-      {props.submitting ? <Spinner /> : <SendIcon />}
-      {td("send")}
-    </Button>
-  ) : (
-    <Button type="submit">
-      <ExternalLink />
-      {tc("openIssue")}
-    </Button>
+  const submit = (
+    <FeedbackSubmitButton
+      directEnabled={props.directEnabled}
+      submitting={props.submitting}
+    />
   );
 
   if (props.surface === "page") {
@@ -45,5 +39,29 @@ export function FeedbackFormActions(props: FeedbackFormActionsProps) {
       </ResponsiveDialogClose>
       {submit}
     </ResponsiveDialogFooter>
+  );
+}
+
+function FeedbackSubmitButton(props: {
+  directEnabled: boolean;
+  submitting: boolean;
+}) {
+  const tc = useTranslations("forms.common");
+  const td = useTranslations("forms.direct");
+
+  if (!props.directEnabled) {
+    return (
+      <Button type="submit">
+        <ExternalLink />
+        {tc("openIssue")}
+      </Button>
+    );
+  }
+
+  return (
+    <Button type="submit" disabled={props.submitting}>
+      {props.submitting ? <Spinner /> : <SendIcon />}
+      {td("send")}
+    </Button>
   );
 }

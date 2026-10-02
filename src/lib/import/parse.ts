@@ -1,15 +1,19 @@
-import { A, G, pipe, S } from "@mobily/ts-belt";
+import { A, D, F, G, O, pipe, S } from "@mobily/ts-belt";
 import type { JSONContent } from "@tiptap/core";
 import {
   createCustomSection,
   createEmptyEntry,
   createEmptyResume,
+  type Entry,
   emptyRichTextValue,
   type Field,
+  type FieldKey,
   type Resume,
   type ResumeLanguage,
   type Section,
   type SectionType,
+  updateSectionOfType,
+  updateSections,
 } from "@/lib/resume";
 import { detectHeading, type HeadingMatch } from "./headings";
 
@@ -28,52 +32,62 @@ export interface ParseResult {
 // --- field builders --------------------------------------------------------
 
 function plain(value: string): Field {
-  return { kind: "plain", value: value.trim() };
+  return { kind: "plain", value: S.trim(value) };
 }
 
 const BULLET_RE = /^\s*[•·▪◦●*\-–—]\s+/;
 
-function trimmedNonEmpty(lines: string[]): readonly string[] {
+function trimmedNonEmpty(lines: ReadonlyArray<string>): readonly string[] {
   return pipe(lines, A.map(S.trim), A.reject(S.isEmpty));
 }
 
 function paragraph(text: string): JSONContent {
-  const trimmed = text.trim();
+  const trimmed = S.trim(text);
+  if (S.isEmpty(trimmed)) return { type: "paragraph", content: [] };
+  return { type: "paragraph", content: [{ type: "text", text: trimmed }] };
+}
+
+function bulletList(bullets: ReadonlyArray<string>): JSONContent {
   return {
-    type: "paragraph",
-    content: trimmed ? [{ type: "text", text: trimmed }] : [],
+    type: "bulletList",
+    content: F.toMutable(
+      A.map(bullets, (item) => ({
+        type: "listItem",
+        content: [paragraph(item)],
+      })),
+    ),
   };
+}
+
+interface RichBlocks {
+  content: ReadonlyArray<JSONContent>;
+  bullets: ReadonlyArray<string>;
+}
+
+function flushBullets(blocks: RichBlocks): ReadonlyArray<JSONContent> {
+  if (A.isEmpty(blocks.bullets)) return blocks.content;
+  return A.append(blocks.content, bulletList(blocks.bullets));
 }
 
 /** Consecutive bulleted lines become one bullet list, everything else a
  * paragraph, so the source structure survives the round trip. */
-function richFromLines(lines: string[]): Field {
+function richFromLines(lines: ReadonlyArray<string>): Field {
   const nonEmpty = trimmedNonEmpty(lines);
-  if (nonEmpty.length === 0) {
+  if (A.isEmpty(nonEmpty)) {
     return { kind: "richtext", value: emptyRichTextValue() };
   }
-  const content: JSONContent[] = [];
-  let bullets: string[] = [];
-  const flushBullets = () => {
-    if (bullets.length === 0) return;
-    content.push({
-      type: "bulletList",
-      content: bullets.map((item) => ({
-        type: "listItem",
-        content: [paragraph(item)],
-      })),
-    });
-    bullets = [];
-  };
-  for (const line of nonEmpty) {
+  const initial: RichBlocks = { content: [], bullets: [] };
+  const blocks = A.reduce(nonEmpty, initial, (acc, line) => {
     if (BULLET_RE.test(line)) {
-      bullets.push(line.replace(BULLET_RE, ""));
-    } else {
-      flushBullets();
-      content.push(paragraph(line));
+      const bullet = S.replaceByRe(line, BULLET_RE, "");
+      return { content: acc.content, bullets: A.append(acc.bullets, bullet) };
     }
-  }
-  flushBullets();
+    return {
+      content: A.append(flushBullets(acc), paragraph(line)),
+      bullets: [],
+    };
+  });
+  const content = F.toMutable(flushBullets(blocks));
   return { kind: "richtext", value: { type: "doc", content } };
 }
 
@@ -96,96 +110,136 @@ function isContactLine(line: string): boolean {
 
 function looksLikeLocation(line: string): boolean {
   return (
-    line.includes(",") &&
+    S.includes(line, ",") &&
     !/\d/.test(line) &&
     /^[A-Z]/.test(line) &&
-    line.split(/\s+/).length <= 6 &&
+    pipe(line, S.splitByRe(/\s+/), A.length) <= 6 &&
     !isContactLine(line)
   );
 }
 
 function splitName(fullName: string): { first: string; last: string } {
-  const parts = pipe(fullName.trim().split(/\s+/), A.reject(S.isEmpty));
+  const parts = pipe(
+    fullName,
+    S.trim,
+    S.splitByRe(/\s+/),
+    A.filter(G.isString),
+    A.reject(S.isEmpty),
+  );
   const [first = "", ...rest] = parts;
-  return { first, last: rest.join(" ") };
+  return { first, last: A.join(rest, " ") };
+}
+
+type Fields = Record<FieldKey, Field>;
+
+function setPlain(key: FieldKey, value: O.Option<string>) {
+  return (fields: Fields): Fields =>
+    O.mapWithDefault(value, fields, (text) => D.set(fields, key, plain(text)));
+}
+
+function nameFields(nameLine: O.Option<string>): Fields {
+  if (O.isNone(nameLine)) return {};
+  const { first, last } = splitName(nameLine);
+  return { firstName: plain(first), lastName: plain(last) };
+}
+
+function locationFields(locationLine: O.Option<string>): Fields {
+  if (O.isNone(locationLine)) return {};
+  const [city = "", province = "", ...rest] = pipe(
+    locationLine,
+    S.split(","),
+    A.map(S.trim),
+  );
+  return {
+    city: plain(city),
+    province: plain(province),
+    country: plain(A.join(rest, ", ")),
+  };
+}
+
+interface HeaderFill {
+  resume: Resume;
+  leftovers: ReadonlyArray<string>;
 }
 
 /**
  * Fill the header from the preamble (lines before the first heading) and
- * contacts found anywhere. Returns the preamble lines that were not used, to be
- * added to the leftovers. Deliberately conservative: only the first plausible
- * name and headline are taken; nothing is guessed beyond that.
+ * contacts found anywhere. Returns the filled résumé and the preamble lines
+ * that were not used, to be added to the leftovers. Deliberately conservative:
+ * only the first plausible name and headline are taken; nothing is guessed
+ * beyond that.
  */
 function fillHeader(
   resume: Resume,
-  preamble: string[],
+  preamble: ReadonlyArray<string>,
   allText: string,
-): string[] {
-  const fields = resume.header.fields;
-
-  const email = allText.match(EMAIL_RE)?.[0];
-  const linkedin = allText.match(LINKEDIN_RE)?.[0];
-  const phone = allText.match(PHONE_RE)?.[0];
-  const website = (allText.match(URL_G_RE) ?? []).find(
-    (url) => !/linkedin\.com/i.test(url),
+): HeaderFill {
+  const email = pipe(S.match(allText, EMAIL_RE), O.mapNullable(A.head));
+  const linkedin = pipe(S.match(allText, LINKEDIN_RE), O.mapNullable(A.head));
+  const phone = pipe(S.match(allText, PHONE_RE), O.mapNullable(A.head));
+  const website = pipe(
+    O.getWithDefault(S.match(allText, URL_G_RE), []),
+    A.filter(G.isString),
+    A.find((url) => !/linkedin\.com/i.test(url)),
   );
   // The extra link only comes from the preamble: anywhere else, a second URL
   // is far more likely a company or project site from an entry.
-  const link = (preamble.join(" ").match(URL_G_RE) ?? []).find(
-    (url) =>
-      !/linkedin\.com/i.test(url) && url !== website && !url.includes("@"),
+  const link = pipe(
+    O.getWithDefault(S.match(A.join(preamble, " "), URL_G_RE), []),
+    A.filter(G.isString),
+    A.find(
+      (url) =>
+        !/linkedin\.com/i.test(url) &&
+        !O.contains(website, url) &&
+        !S.includes(url, "@"),
+    ),
   );
-  if (email) fields.email = plain(email);
-  if (phone) fields.phone = plain(phone);
-  if (linkedin) fields.linkedin = plain(linkedin);
-  if (website) fields.website = plain(website);
-  if (link) fields.link = plain(link);
 
   const named = pipe(
     preamble,
     A.map(S.trim),
     A.reject((line) => S.isEmpty(line) || isContactLine(line)),
   );
-  const nameLine = named[0];
+  const nameLine = A.head(named);
   // Detect the location first so a "City, Region" line is not mistaken for the
   // headline, which is the next short non-location line (some résumés have none).
-  const locationLine = named.find(
-    (line) => line !== nameLine && looksLikeLocation(line),
+  const locationLine = A.find(
+    named,
+    (line) => !O.contains(nameLine, line) && looksLikeLocation(line),
   );
-  const headlineLine = named.find(
+  const headlineLine = A.find(
+    named,
     (line) =>
-      line !== nameLine &&
-      line !== locationLine &&
-      line.split(/\s+/).length <= 8,
+      !O.contains(nameLine, line) &&
+      !O.contains(locationLine, line) &&
+      pipe(line, S.splitByRe(/\s+/), A.length) <= 8,
   );
-  if (nameLine) {
-    const { first, last } = splitName(nameLine);
-    fields.firstName = plain(first);
-    fields.lastName = plain(last);
-  }
-  if (headlineLine) fields.jobTitle = plain(headlineLine);
-
-  if (locationLine) {
-    const [city = "", province = "", ...rest] = locationLine
-      .split(",")
-      .map((part) => part.trim());
-    fields.city = plain(city);
-    fields.province = plain(province);
-    fields.country = plain(rest.join(", "));
-  }
+  const fields = pipe(
+    resume.header.fields,
+    setPlain("email", email),
+    setPlain("phone", phone),
+    setPlain("linkedin", linkedin),
+    setPlain("website", website),
+    setPlain("link", link),
+    D.merge(nameFields(nameLine)),
+    setPlain("jobTitle", headlineLine),
+    D.merge(locationFields(locationLine)),
+  );
 
   const used = new Set(
-    pipe([nameLine, headlineLine, locationLine], A.filter(G.isString)),
+    pipe([nameLine, headlineLine, locationLine], A.filterMap(F.identity)),
   );
-  return [
-    ...pipe(
-      preamble,
-      A.map(S.trim),
-      A.reject(
-        (line) => S.isEmpty(line) || used.has(line) || isContactLine(line),
-      ),
+  const leftovers = pipe(
+    preamble,
+    A.map(S.trim),
+    A.reject(
+      (line) => S.isEmpty(line) || used.has(line) || isContactLine(line),
     ),
-  ];
+  );
+  return {
+    resume: { ...resume, header: { ...resume.header, fields } },
+    leftovers,
+  };
 }
 
 // --- sections --------------------------------------------------------------
@@ -199,27 +253,42 @@ const DATE_RANGE_RE = new RegExp(
   "i",
 );
 
-function findDateRange(lines: string[]): { start: string; end: string } | null {
+function findDateRange(
+  lines: ReadonlyArray<string>,
+): { start: string; end: string } | null {
   for (const line of lines) {
-    const match = line.match(DATE_RANGE_RE);
-    if (match) return { start: match[1].trim(), end: match[2].trim() };
+    const match = S.match(line, DATE_RANGE_RE);
+    if (O.isSome(match)) {
+      return {
+        start: pipe(A.get(match, 1), O.getWithDefault(""), S.trim),
+        end: pipe(A.get(match, 2), O.getWithDefault(""), S.trim),
+      };
+    }
   }
   return null;
 }
 
-function splitEntries(lines: string[]): string[][] {
-  const entries: string[][] = [];
-  let current: string[] = [];
-  for (const line of lines) {
-    if (line.trim()) {
-      current.push(line);
-    } else if (current.length > 0) {
-      entries.push(current);
-      current = [];
+type EntryLines = ReadonlyArray<ReadonlyArray<string>>;
+
+interface EntrySplit {
+  entries: EntryLines;
+  current: ReadonlyArray<string>;
+}
+
+function closeEntry(split: EntrySplit): EntryLines {
+  if (A.isEmpty(split.current)) return split.entries;
+  return A.append(split.entries, split.current);
+}
+
+function splitEntries(lines: ReadonlyArray<string>): EntryLines {
+  const initial: EntrySplit = { entries: [], current: [] };
+  const split = A.reduce(lines, initial, (acc, line) => {
+    if (S.isNotEmpty(S.trim(line))) {
+      return { entries: acc.entries, current: A.append(acc.current, line) };
     }
-  }
-  if (current.length > 0) entries.push(current);
-  return entries;
+    return { entries: closeEntry(acc), current: [] };
+  });
+  return closeEntry(split);
 }
 
 /**
@@ -227,32 +296,34 @@ function splitEntries(lines: string[]): string[][] {
  * carry a date range, each begins a new entry (the common one-role-per-block
  * layout); otherwise fall back to blank-line boundaries.
  */
-function splitDatedEntries(lines: string[]): string[][] {
-  const nonEmpty = lines.filter((line) => line.trim());
-  const dateLines = nonEmpty.filter((line) => DATE_RANGE_RE.test(line)).length;
+function splitDatedEntries(lines: ReadonlyArray<string>): EntryLines {
+  const nonEmpty = A.filter(lines, (line) => S.isNotEmpty(S.trim(line)));
+  const dateLines = pipe(
+    nonEmpty,
+    A.filter((line) => DATE_RANGE_RE.test(line)),
+    A.length,
+  );
   if (dateLines < 2) return splitEntries(lines);
 
-  const entries: string[][] = [];
-  let current: string[] = [];
-  for (const line of nonEmpty) {
-    if (DATE_RANGE_RE.test(line) && current.length > 0) {
-      entries.push(current);
-      current = [];
+  const initial: EntrySplit = { entries: [], current: [] };
+  const split = A.reduce(nonEmpty, initial, (acc, line) => {
+    if (DATE_RANGE_RE.test(line)) {
+      return { entries: closeEntry(acc), current: [line] };
     }
-    current.push(line);
-  }
-  if (current.length > 0) entries.push(current);
-  return entries;
+    return { entries: acc.entries, current: A.append(acc.current, line) };
+  });
+  return closeEntry(split);
 }
 
 /** A short, capitalized line or one carrying a date range: a plausible entry
  * header (role, employer, dates) rather than a wrapped description sentence,
  * which starts lowercase. */
 function looksLikeEntryHeader(line: string): boolean {
-  const trimmed = line.trim();
+  const trimmed = S.trim(line);
   return (
     DATE_RANGE_RE.test(trimmed) ||
-    (/^[A-Z0-9]/.test(trimmed) && trimmed.split(/\s+/).length <= 8)
+    (/^[A-Z0-9]/.test(trimmed) &&
+      pipe(trimmed, S.splitByRe(/\s+/), A.length) <= 8)
   );
 }
 
@@ -263,65 +334,73 @@ function looksLikeEntryHeader(line: string): boolean {
  * "Company / Role / bullets" layouts without orphaning the company. Falls back
  * to date/blank-line splitting when there are no bullets.
  */
-function splitExperienceEntries(lines: string[]): string[][] {
-  const nonEmpty = lines.filter((line) => line.trim());
-  if (!nonEmpty.some((line) => BULLET_RE.test(line))) {
-    return splitDatedEntries(nonEmpty);
-  }
-  const entries: string[][] = [];
-  let current: string[] = [];
-  let seenBullet = false;
-  for (const line of nonEmpty) {
-    const isBullet = BULLET_RE.test(line);
-    if (
-      !isBullet &&
-      seenBullet &&
-      current.length > 0 &&
-      looksLikeEntryHeader(line)
-    ) {
-      entries.push(current);
-      current = [];
-      seenBullet = false;
-    }
-    current.push(line);
-    if (isBullet) seenBullet = true;
-  }
-  if (current.length > 0) entries.push(current);
-  return entries;
+interface ExperienceSplit extends EntrySplit {
+  seenBullet: boolean;
 }
 
-function splitItems(lines: string[]): readonly string[] {
+function splitExperienceEntries(lines: ReadonlyArray<string>): EntryLines {
+  const nonEmpty = A.filter(lines, (line) => S.isNotEmpty(S.trim(line)));
+  if (!A.some(nonEmpty, (line) => BULLET_RE.test(line))) {
+    return splitDatedEntries(nonEmpty);
+  }
+  const initial: ExperienceSplit = {
+    entries: [],
+    current: [],
+    seenBullet: false,
+  };
+  const split = A.reduce(nonEmpty, initial, (acc, line) => {
+    const isBullet = BULLET_RE.test(line);
+    const startsEntry =
+      !isBullet &&
+      acc.seenBullet &&
+      A.isNotEmpty(acc.current) &&
+      looksLikeEntryHeader(line);
+    if (startsEntry) {
+      return { entries: closeEntry(acc), current: [line], seenBullet: false };
+    }
+    return {
+      entries: acc.entries,
+      current: A.append(acc.current, line),
+      seenBullet: acc.seenBullet || isBullet,
+    };
+  });
+  return closeEntry(split);
+}
+
+function splitItems(lines: ReadonlyArray<string>): readonly string[] {
   return pipe(
     lines,
-    A.flatMap((line) => line.split(/[,;•·|]/)),
-    A.map((item) => item.replace(BULLET_RE, "").trim()),
+    A.flatMap(S.splitByRe(/[,;•·|]/)),
+    A.filter(G.isString),
+    A.map(S.replaceByRe(BULLET_RE, "")),
+    A.map(S.trim),
     A.reject(S.isEmpty),
   );
 }
 
-function sectionOfType(resume: Resume, type: SectionType): Section | undefined {
-  return resume.sections.find((section) => section.type === type);
-}
-
 function stripDateRange(line: string): string {
-  return line
-    .replace(DATE_RANGE_RE, "")
-    .replace(/^[\s|,·•–—-]+|[\s|,·•–—-]+$/g, "")
-    .trim();
+  return pipe(
+    line,
+    S.replaceByRe(DATE_RANGE_RE, ""),
+    S.replaceByRe(/^[\s|,·•–—-]+|[\s|,·•–—-]+$/g, ""),
+    S.trim,
+  );
 }
 
 interface EntryHeader {
   title?: string;
   subtitle?: string;
-  descLines: string[];
+  descLines: ReadonlyArray<string>;
 }
 
-function isSubtitleLine(line: string | undefined): line is string {
-  if (line === undefined || BULLET_RE.test(line) || DATE_RANGE_RE.test(line)) {
+function isSubtitleLine(line: O.Option<string>): line is string {
+  if (O.isNone(line) || BULLET_RE.test(line) || DATE_RANGE_RE.test(line)) {
     return false;
   }
   const stripped = stripDateRange(line);
-  return stripped.length > 0 && stripped.split(/\s+/).length <= 7;
+  return (
+    S.isNotEmpty(stripped) && pipe(stripped, S.splitByRe(/\s+/), A.length) <= 7
+  );
 }
 
 /**
@@ -332,41 +411,53 @@ function isSubtitleLine(line: string | undefined): line is string {
  * else is the description. With no date range, falls back to first-line title,
  * second short line subtitle.
  */
-function extractEntryHeader(lines: string[]): EntryHeader {
-  const dateIdx = lines.findIndex((line) => DATE_RANGE_RE.test(line));
-  if (dateIdx === -1) {
+function extractEntryHeader(lines: ReadonlyArray<string>): EntryHeader {
+  const dateIdx = A.getIndexBy(lines, (line) => DATE_RANGE_RE.test(line));
+  if (O.isNone(dateIdx)) {
     let i = 0;
     let title: string | undefined;
-    while (i < lines.length && !BULLET_RE.test(lines[i])) {
-      const stripped = lines[i].trim();
+    while (i < A.length(lines)) {
+      const line = A.get(lines, i);
+      if (O.isNone(line) || BULLET_RE.test(line)) break;
+      const stripped = S.trim(line);
       i += 1;
-      if (stripped) {
-        if (stripped.split(/\s+/).length <= 10) title = stripped;
+      if (S.isNotEmpty(stripped)) {
+        if (pipe(stripped, S.splitByRe(/\s+/), A.length) <= 10) {
+          title = stripped;
+        }
         break;
       }
     }
     let subtitle: string | undefined;
-    if (isSubtitleLine(lines[i])) {
-      subtitle = lines[i].trim();
+    const next = A.get(lines, i);
+    if (isSubtitleLine(next)) {
+      subtitle = S.trim(next);
       i += 1;
     }
-    return { title, subtitle, descLines: lines.slice(i) };
+    return { title, subtitle, descLines: A.sliceToEnd(lines, i) };
   }
 
   const used = new Set<number>([dateIdx]);
-  const title = stripDateRange(lines[dateIdx]) || undefined;
+  const title = pipe(
+    A.get(lines, dateIdx),
+    O.map(stripDateRange),
+    O.filter(S.isNotEmpty),
+    O.toUndefined,
+  );
+  const before = A.get(lines, dateIdx - 1);
+  const after = A.get(lines, dateIdx + 1);
   let subtitle: string | undefined;
-  if (isSubtitleLine(lines[dateIdx - 1])) {
-    subtitle = lines[dateIdx - 1].trim();
+  if (isSubtitleLine(before)) {
+    subtitle = S.trim(before);
     used.add(dateIdx - 1);
-  } else if (isSubtitleLine(lines[dateIdx + 1])) {
-    subtitle = lines[dateIdx + 1].trim();
+  } else if (isSubtitleLine(after)) {
+    subtitle = S.trim(after);
     used.add(dateIdx + 1);
   }
   return {
     title,
     subtitle,
-    descLines: lines.filter((_, idx) => !used.has(idx)),
+    descLines: A.filterWithIndex(lines, (idx) => !used.has(idx)),
   };
 }
 
@@ -396,9 +487,11 @@ function isLocationSegment(segment: string): boolean {
   return (
     /^[A-Z]/.test(segment) &&
     !/\d/.test(segment) &&
-    !segment.includes("&") &&
-    segment.split(/\s+/).length <= 3 &&
-    !COMPANY_SUFFIXES.has(segment.toLowerCase().replace(/\./g, ""))
+    !S.includes(segment, "&") &&
+    pipe(segment, S.splitByRe(/\s+/), A.length) <= 3 &&
+    !COMPANY_SUFFIXES.has(
+      pipe(segment, S.toLowerCase, S.replaceByRe(/\./g, "")),
+    )
   );
 }
 
@@ -415,78 +508,129 @@ function splitSubtitleLocation(subtitle: string): {
   location?: string;
 } {
   const segments = pipe(
-    subtitle.split(","),
+    subtitle,
+    S.split(","),
     A.map(S.trim),
     A.reject(S.isEmpty),
   );
-  const maxTail = Math.min(3, segments.length - 1);
+  const maxTail = Math.min(3, A.length(segments) - 1);
   for (let take = maxTail; take >= 1; take -= 1) {
-    const tail = segments.slice(segments.length - take);
-    if (!tail.every(isLocationSegment)) continue;
+    const tail = A.sliceToEnd(segments, A.length(segments) - take);
+    if (!A.every(tail, isLocationSegment)) continue;
     if (take === 1) {
-      const only = tail[0];
-      const isWorkplaceWord = WORKPLACE_WORDS.has(only.toLowerCase());
+      const only = A.head(tail);
+      if (O.isNone(only)) continue;
+      const isWorkplaceWord = WORKPLACE_WORDS.has(S.toLowerCase(only));
       const isRegionCode = /^[A-Z]{2,3}$/.test(only);
       if (!isWorkplaceWord && !isRegionCode) continue;
     }
     return {
-      subject: segments.slice(0, segments.length - take).join(", "),
-      location: tail.join(", "),
+      subject: pipe(segments, A.take(A.length(segments) - take), A.join(", ")),
+      location: A.join(tail, ", "),
     };
   }
   return { subject: subtitle };
 }
 
-function fillSubtitle(
-  entry: ReturnType<typeof createEmptyEntry>,
-  subjectKey: string,
-  subtitle: string,
-  withLocation: boolean,
-): void {
-  if (!withLocation) {
-    entry.fields[subjectKey] = plain(subtitle);
-    return;
-  }
+interface SubtitleTarget {
+  key: FieldKey;
+  subtitle: string;
+  withLocation: boolean;
+}
+
+function subtitleFields(target: SubtitleTarget): Fields {
+  const { key, subtitle, withLocation } = target;
+  if (!withLocation) return { [key]: plain(subtitle) };
   const { subject, location } = splitSubtitleLocation(subtitle);
-  entry.fields[subjectKey] = plain(subject);
-  if (location) entry.fields.location = plain(location);
+  if (!location) return { [key]: plain(subject) };
+  return { [key]: plain(subject), location: plain(location) };
 }
 
-function fillExperienceLike(section: Section, lines: string[]): void {
-  const titleKey = section.type === "organizations" ? "role" : "title";
-  const companyKey =
-    section.type === "organizations" ? "organization" : "company";
-  const hasLocation =
-    section.type === "experience" || section.type === "internship";
-  for (const entryLines of splitExperienceEntries(lines)) {
-    const entry = createEmptyEntry(section.type);
-    const range = findDateRange(entryLines);
-    if (range) {
-      entry.fields.startDate = plain(range.start);
-      entry.fields.endDate = plain(range.end);
-    }
-    const { title, subtitle, descLines } = extractEntryHeader(entryLines);
-    if (title) entry.fields[titleKey] = plain(title);
-    if (subtitle) fillSubtitle(entry, companyKey, subtitle, hasLocation);
-    entry.fields.description = richFromLines(descLines);
-    section.entries.push(entry);
-  }
+function plainIfPresent(key: FieldKey, value: string | undefined): Fields {
+  if (value === undefined || S.isEmpty(value)) return {};
+  return { [key]: plain(value) };
 }
 
-function fillEducation(section: Section, lines: string[]): void {
-  for (const entryLines of splitExperienceEntries(lines)) {
-    const entry = createEmptyEntry("education");
-    const range = findDateRange(entryLines);
-    if (range) {
-      entry.fields.startDate = plain(range.start);
-      entry.fields.endDate = plain(range.end);
-    }
-    const { title, subtitle, descLines } = extractEntryHeader(entryLines);
-    if (title) entry.fields.degree = plain(title);
-    if (subtitle) fillSubtitle(entry, "institution", subtitle, true);
-    entry.fields.details = richFromLines(descLines);
-    section.entries.push(entry);
+function dateFields(lines: ReadonlyArray<string>): Fields {
+  const range = findDateRange(lines);
+  if (!range) return {};
+  return { startDate: plain(range.start), endDate: plain(range.end) };
+}
+
+interface DatedKeys {
+  title: FieldKey;
+  subject: FieldKey;
+  body: FieldKey;
+  withLocation: boolean;
+}
+
+function subjectFields(keys: DatedKeys, subtitle: string | undefined): Fields {
+  if (subtitle === undefined || S.isEmpty(subtitle)) return {};
+  const { subject: key, withLocation } = keys;
+  return subtitleFields({ key, subtitle, withLocation });
+}
+
+function datedEntry(type: SectionType, keys: DatedKeys) {
+  return (lines: ReadonlyArray<string>): Entry => {
+    const base = createEmptyEntry(type);
+    const { title, subtitle, descLines } = extractEntryHeader(lines);
+    return {
+      ...base,
+      fields: {
+        ...base.fields,
+        ...dateFields(lines),
+        ...plainIfPresent(keys.title, title),
+        ...subjectFields(keys, subtitle),
+        [keys.body]: richFromLines(descLines),
+      },
+    };
+  };
+}
+
+function experienceKeys(type: SectionType): DatedKeys {
+  if (type === "organizations") {
+    return {
+      title: "role",
+      subject: "organization",
+      body: "description",
+      withLocation: false,
+    };
   }
+  return {
+    title: "title",
+    subject: "company",
+    body: "description",
+    withLocation: type === "experience" || type === "internship",
+  };
+}
+
+const EDUCATION_KEYS: DatedKeys = {
+  title: "degree",
+  subject: "institution",
+  body: "details",
+  withLocation: true,
+};
+
+function fillExperienceLike(
+  section: Section,
+  lines: ReadonlyArray<string>,
+): Section {
+  const entries = A.map(
+    splitExperienceEntries(lines),
+    datedEntry(section.type, experienceKeys(section.type)),
+  );
+  return { ...section, entries: A.concat(section.entries, entries) };
+}
+
+function fillEducation(
+  section: Section,
+  lines: ReadonlyArray<string>,
+): Section {
+  const entries = A.map(
+    splitExperienceEntries(lines),
+    datedEntry("education", EDUCATION_KEYS),
+  );
+  return { ...section, entries: A.concat(section.entries, entries) };
 }
 
 // Proficiency words (en + id) that end a skill or language item. Detecting them
@@ -519,114 +663,163 @@ const PROFICIENCY_WORDS = new Set([
 ]);
 
 function isProficiency(word: string): boolean {
-  return PROFICIENCY_WORDS.has(word.toLowerCase().replace(/[^a-z]/g, ""));
+  return PROFICIENCY_WORDS.has(
+    pipe(word, S.toLowerCase, S.replaceByRe(/[^a-z]/g, "")),
+  );
 }
 
-function splitProficiencyPairs(
-  text: string,
-): Array<{ name: string; level: string }> {
-  const cleanName = (words: string[]) =>
-    words
-      .join(" ")
-      .replace(/[\s\-–—:,|•]+$/, "")
-      .trim();
-  const pairs: Array<{ name: string; level: string }> = [];
-  let nameWords: string[] = [];
-  for (const word of pipe(text.split(/\s+/), A.reject(S.isEmpty))) {
-    if (isProficiency(word) && nameWords.length > 0) {
-      pairs.push({
-        name: cleanName(nameWords),
-        level: word.replace(/[.,;:]+$/, ""),
-      });
-      nameWords = [];
-    } else {
-      nameWords.push(word);
+interface ProficiencyPair {
+  name: string;
+  level: string;
+}
+
+interface PairSplit {
+  pairs: ReadonlyArray<ProficiencyPair>;
+  nameWords: ReadonlyArray<string>;
+}
+
+function cleanName(words: ReadonlyArray<string>): string {
+  return pipe(words, A.join(" "), S.replaceByRe(/[\s\-–—:,|•]+$/, ""), S.trim);
+}
+
+function splitProficiencyPairs(text: string): ReadonlyArray<ProficiencyPair> {
+  const words = pipe(
+    text,
+    S.splitByRe(/\s+/),
+    A.filter(G.isString),
+    A.reject(S.isEmpty),
+  );
+  const initial: PairSplit = { pairs: [], nameWords: [] };
+  const split = A.reduce(words, initial, (acc, word) => {
+    if (isProficiency(word) && A.isNotEmpty(acc.nameWords)) {
+      const pair = {
+        name: cleanName(acc.nameWords),
+        level: S.replaceByRe(word, /[.,;:]+$/, ""),
+      };
+      return { pairs: A.append(acc.pairs, pair), nameWords: [] };
     }
-  }
-  const trailing = cleanName(nameWords);
-  if (trailing) pairs.push({ name: trailing, level: "" });
-  return pairs;
+    return { pairs: acc.pairs, nameWords: A.append(acc.nameWords, word) };
+  });
+  const trailing = cleanName(split.nameWords);
+  if (S.isEmpty(trailing)) return split.pairs;
+  return A.append(split.pairs, { name: trailing, level: "" });
 }
 
 /** Fill a skills or languages section: name/level pairs when proficiency words
  * are present (also un-merging a two-column grid), otherwise a delimited list. */
-function fillNamedList(section: Section, lines: string[]): void {
+function fillNamedList(
+  section: Section,
+  lines: ReadonlyArray<string>,
+): Section {
   const text = pipe(
     lines,
-    A.map((line) => line.replace(BULLET_RE, "").trim()),
+    A.map(S.replaceByRe(BULLET_RE, "")),
+    A.map(S.trim),
     A.reject(S.isEmpty),
     A.join(" "),
   );
 
-  if (text.split(/\s+/).some(isProficiency)) {
-    for (const { name, level } of splitProficiencyPairs(text)) {
-      const entry = createEmptyEntry(section.type);
-      entry.fields.name = plain(name);
-      if (level) entry.fields.level = plain(level);
-      section.entries.push(entry);
-    }
-    return;
+  if (
+    pipe(text, S.splitByRe(/\s+/), A.filter(G.isString), A.some(isProficiency))
+  ) {
+    const pairs = A.map(splitProficiencyPairs(text), (pair): Entry => {
+      const base = createEmptyEntry(section.type);
+      return {
+        ...base,
+        fields: {
+          ...base.fields,
+          name: plain(pair.name),
+          ...plainIfPresent("level", pair.level),
+        },
+      };
+    });
+    return { ...section, entries: A.concat(section.entries, pairs) };
   }
 
-  for (const item of splitItems(lines)) {
-    const entry = createEmptyEntry(section.type);
-    entry.fields.name = plain(item);
-    section.entries.push(entry);
-  }
+  const items = A.map(splitItems(lines), (item): Entry => {
+    const base = createEmptyEntry(section.type);
+    return { ...base, fields: { ...base.fields, name: plain(item) } };
+  });
+  return { ...section, entries: A.concat(section.entries, items) };
 }
 
-function fillCertifications(section: Section, lines: string[]): void {
-  for (const line of trimmedNonEmpty(lines)) {
-    // A URL line is the verification link of the preceding certificate, not a
-    // certificate of its own.
-    const last = section.entries.at(-1);
-    if (URL_RE.test(line) && last) {
-      last.fields.url = plain(line);
-      continue;
-    }
-    const entry = createEmptyEntry("certifications");
-    entry.fields.name = plain(line.replace(BULLET_RE, ""));
-    section.entries.push(entry);
-  }
+function withUrl(url: string) {
+  return (entry: Entry): Entry => ({
+    ...entry,
+    fields: { ...entry.fields, url: plain(url) },
+  });
 }
 
-function fillBlock(
-  resume: Resume,
-  heading: HeadingMatch,
-  lines: string[],
-): void {
-  if (heading.type === "custom") {
-    const custom = createCustomSection("rich", heading.title);
-    custom.entries[0].fields.body = richFromLines(lines);
-    resume.sections.push(custom);
-    return;
-  }
-  const section = sectionOfType(resume, heading.type);
-  if (!section) return;
-  switch (heading.type) {
+function fillCertifications(
+  section: Section,
+  lines: ReadonlyArray<string>,
+): Section {
+  const entries = A.reduce(
+    trimmedNonEmpty(lines),
+    section.entries,
+    (acc, line) => {
+      // A URL line is the verification link of the preceding certificate, not
+      // a certificate of its own.
+      if (URL_RE.test(line) && A.isNotEmpty(acc)) {
+        return A.updateAt(acc, A.length(acc) - 1, withUrl(line));
+      }
+      const base = createEmptyEntry("certifications");
+      const name = plain(S.replaceByRe(line, BULLET_RE, ""));
+      return A.append(acc, { ...base, fields: { ...base.fields, name } });
+    },
+  );
+  return { ...section, entries };
+}
+
+function fillSummary(section: Section, lines: ReadonlyArray<string>): Section {
+  const entry = {
+    ...createEmptyEntry("summary"),
+    fields: { body: richFromLines(lines) },
+  };
+  return { ...section, entries: A.append(section.entries, entry) };
+}
+
+function fillSection(section: Section, lines: ReadonlyArray<string>): Section {
+  switch (section.type) {
     case "summary":
-      section.entries.push({
-        ...createEmptyEntry("summary"),
-        fields: { body: richFromLines(lines) },
-      });
-      break;
+      return fillSummary(section, lines);
     case "experience":
     case "internship":
     case "projects":
     case "organizations":
-      fillExperienceLike(section, lines);
-      break;
+      return fillExperienceLike(section, lines);
     case "education":
-      fillEducation(section, lines);
-      break;
+      return fillEducation(section, lines);
     case "certifications":
-      fillCertifications(section, lines);
-      break;
+      return fillCertifications(section, lines);
     case "skills":
     case "languages":
-      fillNamedList(section, lines);
-      break;
+      return fillNamedList(section, lines);
+    default:
+      return section;
   }
+}
+
+function customSection(heading: HeadingMatch, lines: ReadonlyArray<string>) {
+  const custom = createCustomSection("rich", heading.title);
+  const entries = A.updateAt(custom.entries, 0, (entry) => ({
+    ...entry,
+    fields: { ...entry.fields, body: richFromLines(lines) },
+  }));
+  return { ...custom, entries };
+}
+
+function fillBlock(resume: Resume, block: Block): Resume {
+  const { heading, lines } = block;
+  if (heading === null) return resume;
+  if (heading.type === "custom") {
+    const sections = A.append(resume.sections, customSection(heading, lines));
+    return { ...resume, sections };
+  }
+  return updateSections(
+    resume,
+    updateSectionOfType(heading.type, (section) => fillSection(section, lines)),
+  );
 }
 
 // --- entry point -----------------------------------------------------------
@@ -639,33 +832,85 @@ function fillBlock(
  * either starts lowercase or completes a hyphenated word split. Merging these
  * keeps a wrapped bullet as one item and stops a fragment being read as a header.
  */
-function reassembleLines(rawLines: string[]): string[] {
-  const result: string[] = [];
-  for (const raw of rawLines) {
-    const line = raw.trim();
-    if (!line) continue;
-    const prev = result.at(-1);
+function reassembleLines(
+  rawLines: ReadonlyArray<string>,
+): ReadonlyArray<string> {
+  const initial: ReadonlyArray<string> = [];
+  return A.reduce(rawLines, initial, (result, raw) => {
+    const line = S.trim(raw);
+    if (S.isEmpty(line)) return result;
+    const prev = A.last(result);
     const isContinuation =
-      prev !== undefined &&
+      O.isSome(prev) &&
       !BULLET_RE.test(line) &&
       !DATE_RANGE_RE.test(line) &&
       !isContactLine(line) &&
       !/[.!?:]$/.test(prev) &&
       (/^[a-z]/.test(line) || /[-–—]$/.test(prev));
-    if (!isContinuation) {
-      result.push(line);
-    } else if (/[-–—]$/.test(prev)) {
-      result[result.length - 1] = prev.replace(/[-–—]$/, "") + line;
-    } else {
-      result[result.length - 1] = `${prev} ${line}`;
+    if (!isContinuation) return A.append(result, line);
+    const lastIdx = A.length(result) - 1;
+    if (/[-–—]$/.test(prev)) {
+      return A.replaceAt(
+        result,
+        lastIdx,
+        S.replaceByRe(prev, /[-–—]$/, "") + line,
+      );
     }
-  }
-  return result;
+    return A.replaceAt(result, lastIdx, `${prev} ${line}`);
+  });
 }
 
 interface Block {
   heading: HeadingMatch | null;
-  lines: string[];
+  lines: ReadonlyArray<string>;
+}
+
+interface BlockSplit {
+  blocks: ReadonlyArray<Block>;
+  seenRecognizedHeading: boolean;
+}
+
+// Everything before the first recognized section is the preamble (name,
+// contacts, location). A custom (all-caps) heading there is really the name,
+// so custom headings are only honored once a recognized section has started.
+function blockHeading(
+  line: string,
+  seenRecognizedHeading: boolean,
+): HeadingMatch | null {
+  if (S.isEmpty(S.trim(line))) return null;
+  const heading = detectHeading(line);
+  if (heading?.type === "custom" && !seenRecognizedHeading) return null;
+  return heading;
+}
+
+function appendLine(line: string) {
+  return (block: Block): Block => ({
+    ...block,
+    lines: A.append(block.lines, line),
+  });
+}
+
+function splitBlocks(lines: ReadonlyArray<string>): ReadonlyArray<Block> {
+  const initial: BlockSplit = {
+    blocks: [{ heading: null, lines: [] }],
+    seenRecognizedHeading: false,
+  };
+  const split = A.reduce(lines, initial, (acc, line) => {
+    const heading = blockHeading(line, acc.seenRecognizedHeading);
+    if (heading === null) {
+      const lastIdx = A.length(acc.blocks) - 1;
+      return {
+        ...acc,
+        blocks: A.updateAt(acc.blocks, lastIdx, appendLine(line)),
+      };
+    }
+    return {
+      blocks: A.append(acc.blocks, { heading, lines: [] }),
+      seenRecognizedHeading:
+        acc.seenRecognizedHeading || heading.type !== "custom",
+    };
+  });
+  return split.blocks;
 }
 
 /**
@@ -675,33 +920,24 @@ interface Block {
  * cannot place as leftovers rather than guessing.
  */
 export function parseResumeText(text: string, opts: ParseOptions): ParseResult {
-  const resume = createEmptyResume(opts.title);
-  resume.language = opts.language;
-  resume.templateId = opts.templateId;
-
-  const lines = reassembleLines(text.split(/\r?\n/));
-  const blocks: Block[] = [{ heading: null, lines: [] }];
-  // Everything before the first recognized section is the preamble (name,
-  // contacts, location). A custom (all-caps) heading there is really the name,
-  // so custom headings are only honored once a recognized section has started.
-  let seenRecognizedHeading = false;
-  for (const line of lines) {
-    let heading = line.trim() ? detectHeading(line) : null;
-    if (heading?.type === "custom" && !seenRecognizedHeading) heading = null;
-    if (heading) {
-      if (heading.type !== "custom") seenRecognizedHeading = true;
-      blocks.push({ heading, lines: [] });
-    } else {
-      blocks[blocks.length - 1].lines.push(line);
-    }
-  }
-
-  const preamble = blocks[0].heading === null ? blocks[0].lines : [];
-  const leftovers = fillHeader(resume, preamble, text);
-
-  for (const block of blocks) {
-    if (block.heading) fillBlock(resume, block.heading, block.lines);
-  }
-
-  return { resume, leftovers };
+  const base: Resume = {
+    ...createEmptyResume(opts.title),
+    language: opts.language,
+    templateId: opts.templateId,
+  };
+  const lines = reassembleLines(
+    pipe(text, S.splitByRe(/\r?\n/), A.filter(G.isString)),
+  );
+  const blocks = splitBlocks(lines);
+  const preamble = pipe(
+    A.head(blocks),
+    O.filter((block) => block.heading === null),
+    O.match(
+      (block): ReadonlyArray<string> => block.lines,
+      () => [],
+    ),
+  );
+  const header = fillHeader(base, preamble, text);
+  const resume = A.reduce(blocks, header.resume, fillBlock);
+  return { resume, leftovers: F.toMutable(header.leftovers) };
 }

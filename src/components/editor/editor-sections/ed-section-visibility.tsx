@@ -1,3 +1,4 @@
+import { A, O } from "@mobily/ts-belt";
 import { EditorSectionVisibilityToggle } from "@/components/editor/editor-section-visibility-toggle";
 import type { SectionType } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
@@ -18,14 +19,14 @@ interface EditorSectionVisibilityProps {
  */
 export function EditorSectionVisibility(props: EditorSectionVisibilityProps) {
   const section = useResumeStore((state) =>
-    state.open?.sections.find((s) =>
+    A.find(state.open?.sections ?? [], (s) =>
       props.sectionId ? s.id === props.sectionId : s.type === props.type,
     ),
   );
   const toggleSectionVisibility = useResumeStore(
     (state) => state.toggleSectionVisibility,
   );
-  if (!section) return null;
+  if (O.isNone(section)) return null;
   return (
     <div className={cn("absolute top-3 right-10 z-10", props.className)}>
       <EditorSectionVisibilityToggle

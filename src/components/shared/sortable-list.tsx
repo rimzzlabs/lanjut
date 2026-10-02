@@ -15,9 +15,12 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { A, O } from "@mobily/ts-belt";
 import { GripVertical } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+
+const ALWAYS_MEASURE = { droppable: { strategy: MeasuringStrategy.Always } };
 
 interface SortableListProps {
   items: string[];
@@ -42,9 +45,9 @@ export function SortableList(props: SortableListProps) {
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
-    const from = props.items.indexOf(String(active.id));
-    const to = props.items.indexOf(String(over.id));
-    if (from === -1 || to === -1) return;
+    const from = A.getIndexBy(props.items, (id) => id === String(active.id));
+    const to = A.getIndexBy(props.items, (id) => id === String(over.id));
+    if (O.isNone(from) || O.isNone(to)) return;
     props.onReorder(from, to);
   }
 
@@ -53,11 +56,7 @@ export function SortableList(props: SortableListProps) {
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
-      measuring={
-        props.remeasureWhileDragging
-          ? { droppable: { strategy: MeasuringStrategy.Always } }
-          : undefined
-      }
+      measuring={props.remeasureWhileDragging ? ALWAYS_MEASURE : undefined}
     >
       <SortableContext
         items={props.items}

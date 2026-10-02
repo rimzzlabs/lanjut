@@ -1,6 +1,5 @@
-import { byRecency } from "../resume-sort";
-
-type Dated = { startDate: string; endDate: string };
+import { A, O } from "@mobily/ts-belt";
+import { byRecency, type Dated } from "../resume-sort";
 
 /**
  * Assumes the rest of `items` is already sorted, so moving the one edited row at
@@ -8,16 +7,15 @@ type Dated = { startDate: string; endDate: string };
  */
 export function repositionByRecency<T extends Dated>(
   from: number,
-  items: T[],
+  items: ReadonlyArray<T>,
   move: (from: number, to: number) => void,
 ): number | null {
-  if (from < 0 || from >= items.length) return null;
+  const moving = A.get(items, from);
+  if (O.isNone(moving)) return null;
 
-  const moving = items[from];
-  let to = 0;
-  for (let i = 0; i < items.length; i++) {
-    if (i !== from && byRecency(items[i], moving) < 0) to++;
-  }
+  const to = A.reduceWithIndex(items, 0, (count, item, index) =>
+    index !== from && byRecency(item, moving) < 0 ? count + 1 : count,
+  );
 
   if (to === from) return null;
   move(from, to);

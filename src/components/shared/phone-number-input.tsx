@@ -1,3 +1,4 @@
+import { S } from "@mobily/ts-belt";
 import PhoneInput from "react-phone-number-input/input";
 import { Input } from "@/components/ui/input";
 
@@ -18,7 +19,7 @@ interface PhoneNumberInputProps {
 export function PhoneNumberInput(props: PhoneNumberInputProps) {
   // The library warns when the initial value isn't strict E.164; strip any
   // formatting (spaces, dashes, parens) that legacy or hand-entered values carry.
-  const value = props.value.replace(/[^\d+]/g, "") || undefined;
+  const value = S.replaceByRe(props.value, /[^\d+]/g, "") || undefined;
   return (
     <PhoneInput
       id={props.id}

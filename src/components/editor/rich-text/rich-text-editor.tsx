@@ -22,6 +22,11 @@ interface RichTextEditorProps {
  * live document is never re-synced from `value` (that would reset the caret);
  * to load a different document, remount with a fresh `key`.
  */
+function idAttribute(id: string | undefined): Record<string, string> {
+  if (!id) return {};
+  return { id };
+}
+
 export function RichTextEditor(props: RichTextEditorProps) {
   // The editor is created once; keep the change handlers current through refs so
   // a re-render with new callbacks (e.g. an experience entry shifting index) is
@@ -37,7 +42,7 @@ export function RichTextEditor(props: RichTextEditorProps) {
     content: props.value ?? emptyRichTextValue(),
     editorProps: {
       attributes: {
-        ...(props.id ? { id: props.id } : {}),
+        ...idAttribute(props.id),
         class:
           "tiptap-content max-h-56 min-h-24 overflow-y-auto rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30",
       },

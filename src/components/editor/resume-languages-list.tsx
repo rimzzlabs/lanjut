@@ -4,7 +4,7 @@ import { ResumeLanguageItem } from "./resume-language-item";
 import type { LanguageItemView } from "./resume-preview";
 
 interface ResumeLanguagesListProps {
-  items: LanguageItemView[];
+  items: ReadonlyArray<LanguageItemView>;
   columns: SectionColumns;
 }
 

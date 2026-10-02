@@ -72,7 +72,7 @@ export interface Section {
   id: string;
   type: SectionType;
   title: string;
-  entries: Entry[];
+  entries: ReadonlyArray<Entry>;
   /**
    * Presentation-only column count for grid-rendered sections (skills, languages).
    * Absent on non-grid sections; renderers default to a two-column grid when unset.
@@ -205,7 +205,7 @@ export interface Resume {
    */
   bodyScale?: number;
   header: Header;
-  sections: Section[];
+  sections: ReadonlyArray<Section>;
   /** ISO 8601. */
   createdAt: string;
   /** ISO 8601. */

@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import type { InlineRun, RichBlock } from "@/lib/resume/rich-content";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +23,7 @@ function RichRun(props: InlineRun) {
  * paragraphs would collide as keys).
  */
 
-function RichRuns(props: { runs: InlineRun[] }) {
+function RichRuns(props: { runs: ReadonlyArray<InlineRun> }) {
   return props.runs.map((run, index) => {
     // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
     return <RichRun key={index} {...run} />;
@@ -30,7 +31,7 @@ function RichRuns(props: { runs: InlineRun[] }) {
 }
 
 interface ResumeRichTextProps {
-  blocks: RichBlock[];
+  blocks: ReadonlyArray<RichBlock>;
   className?: string;
 }
 
@@ -40,7 +41,7 @@ interface ResumeRichTextProps {
  * (summary, experience, education) so formatting is consistent.
  */
 export function ResumeRichText(props: ResumeRichTextProps) {
-  if (props.blocks.length === 0) return null;
+  if (A.isEmpty(props.blocks)) return null;
   return (
     <div
       className={cn(

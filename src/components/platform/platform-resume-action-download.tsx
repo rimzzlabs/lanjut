@@ -53,9 +53,8 @@ export function PlatformResumeActionDownload(
           </ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 
-        {missing ? (
-          <p className="text-sm text-destructive">{t("missing")}</p>
-        ) : (
+        {missing && <p className="text-sm text-destructive">{t("missing")}</p>}
+        {!missing && (
           <PlatformResumeDownloadForm
             key={props.resume.title}
             defaultFileName={props.resume.title}

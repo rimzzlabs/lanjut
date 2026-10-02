@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { isRichEmpty, type RichBlock } from "@/lib/resume/rich-content";
 import type { ReorderableSectionType } from "@/lib/resume/schema-registry";
 import type { SectionColumns } from "@/lib/resume/types";
@@ -33,12 +34,20 @@ export type ResumeBlock = BlockMeta &
   (
     | { kind: "header"; header: HeaderView }
     | { kind: "heading"; title: string }
-    | { kind: "summary"; body: RichBlock[] }
+    | { kind: "summary"; body: ReadonlyArray<RichBlock> }
     | { kind: "experience"; item: ExperienceItemView }
     | { kind: "education"; item: EducationItemView }
     | { kind: "certificate"; item: CertificateItemView }
-    | { kind: "skills"; items: SkillItemView[]; columns: SectionColumns }
-    | { kind: "languages"; items: LanguageItemView[]; columns: SectionColumns }
+    | {
+        kind: "skills";
+        items: ReadonlyArray<SkillItemView>;
+        columns: SectionColumns;
+      }
+    | {
+        kind: "languages";
+        items: ReadonlyArray<LanguageItemView>;
+        columns: SectionColumns;
+      }
   );
 
 const ATOMIC_KINDS = new Set<ResumeBlock["kind"]>([
@@ -108,16 +117,17 @@ function hasLanguage(item: LanguageItemView): boolean {
 // (heading included) when nothing is left, so a sparse résumé shows only filled
 // sections.
 function experienceLikeBlocks(
-  items: ExperienceItemView[],
+  items: ReadonlyArray<ExperienceItemView>,
   headingId: string,
   label: string,
 ): ResumeBlock[] {
-  const filtered = items.filter(hasExperience);
-  if (filtered.length === 0) return [];
+  const filtered = A.filter(items, hasExperience);
+  if (A.isEmpty(filtered)) return [];
   return [
     heading(headingId, label),
-    ...filtered.map(
-      (item, index): ResumeBlock => ({
+    ...A.mapWithIndex(
+      filtered,
+      (index, item): ResumeBlock => ({
         id: item.id,
         kind: "experience",
         item,
@@ -129,15 +139,16 @@ function experienceLikeBlocks(
 }
 
 function educationBlocks(
-  items: EducationItemView[],
+  items: ReadonlyArray<EducationItemView>,
   label: string,
 ): ResumeBlock[] {
-  const filtered = items.filter(hasEducation);
-  if (filtered.length === 0) return [];
+  const filtered = A.filter(items, hasEducation);
+  if (A.isEmpty(filtered)) return [];
   return [
     heading("education-heading", label),
-    ...filtered.map(
-      (item, index): ResumeBlock => ({
+    ...A.mapWithIndex(
+      filtered,
+      (index, item): ResumeBlock => ({
         id: item.id,
         kind: "education",
         item,
@@ -149,15 +160,16 @@ function educationBlocks(
 }
 
 function certificateBlocks(
-  items: CertificateItemView[],
+  items: ReadonlyArray<CertificateItemView>,
   label: string,
 ): ResumeBlock[] {
-  const filtered = items.filter(hasCertificate);
-  if (filtered.length === 0) return [];
+  const filtered = A.filter(items, hasCertificate);
+  if (A.isEmpty(filtered)) return [];
   return [
     heading("certificates-heading", label),
-    ...filtered.map(
-      (item, index): ResumeBlock => ({
+    ...A.mapWithIndex(
+      filtered,
+      (index, item): ResumeBlock => ({
         id: item.id,
         kind: "certificate",
         item,
@@ -169,12 +181,12 @@ function certificateBlocks(
 }
 
 function skillsBlocks(
-  items: SkillItemView[],
+  items: ReadonlyArray<SkillItemView>,
   columns: SectionColumns,
   label: string,
 ): ResumeBlock[] {
-  const filtered = items.filter(hasSkill);
-  if (filtered.length === 0) return [];
+  const filtered = A.filter(items, hasSkill);
+  if (A.isEmpty(filtered)) return [];
   return [
     heading("skills-heading", label),
     {
@@ -189,12 +201,12 @@ function skillsBlocks(
 }
 
 function languagesBlocks(
-  items: LanguageItemView[],
+  items: ReadonlyArray<LanguageItemView>,
   columns: SectionColumns,
   label: string,
 ): ResumeBlock[] {
-  const filtered = items.filter(hasLanguage);
-  if (filtered.length === 0) return [];
+  const filtered = A.filter(items, hasLanguage);
+  if (A.isEmpty(filtered)) return [];
   return [
     heading("languages-heading", label),
     {
@@ -214,12 +226,13 @@ function languagesBlocks(
 function customBlocks(view: CustomSectionView): ResumeBlock[] {
   const headingId = `custom-${view.id}-heading`;
   if (view.variant === "list") {
-    const entries = view.entries.filter(hasExperience);
-    if (entries.length === 0) return [];
+    const entries = A.filter(view.entries, hasExperience);
+    if (A.isEmpty(entries)) return [];
     return [
       heading(headingId, view.title),
-      ...entries.map(
-        (item, index): ResumeBlock => ({
+      ...A.mapWithIndex(
+        entries,
+        (index, item): ResumeBlock => ({
           id: item.id,
           kind: "experience",
           item,
@@ -242,33 +255,42 @@ function customBlocks(view: CustomSectionView): ResumeBlock[] {
   ];
 }
 
+function summaryBlocks(resume: ResumePreview): ReadonlyArray<ResumeBlock> {
+  if (isRichEmpty(resume.summary)) return [];
+  return [
+    heading("summary-heading", resume.headings.summary),
+    {
+      id: "summary-body",
+      kind: "summary",
+      body: resume.summary,
+      gapBefore: GAP.body,
+      keepWithNext: false,
+    },
+  ];
+}
+
+function shiftHeading(block: ResumeBlock, spacing: number): ResumeBlock {
+  if (block.kind !== "heading") return block;
+  return { ...block, gapBefore: Math.max(0, block.gapBefore + spacing) };
+}
+
 /**
  * Builds the linear block sequence. The Header and Summary are pinned at the top;
  * every other section is emitted in the document's `sectionOrder` (the user's
  * reordering), so pagination, PDF, and text export all follow the same order.
  * Sections with no meaningful content are omitted (heading included).
  */
-export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
+export function buildResumeBlocks(
+  resume: ResumePreview,
+): ReadonlyArray<ResumeBlock> {
   const { headings } = resume;
-  const blocks: ResumeBlock[] = [
-    {
-      id: "header",
-      kind: "header",
-      header: resume.header,
-      gapBefore: 0,
-      keepWithNext: false,
-    },
-  ];
-
-  if (!isRichEmpty(resume.summary)) {
-    blocks.push(heading("summary-heading", headings.summary), {
-      id: "summary-body",
-      kind: "summary",
-      body: resume.summary,
-      gapBefore: GAP.body,
-      keepWithNext: false,
-    });
-  }
+  const header: ResumeBlock = {
+    id: "header",
+    kind: "header",
+    header: resume.header,
+    gapBefore: 0,
+    keepWithNext: false,
+  };
 
   const emitters: Record<
     Exclude<ReorderableSectionType, "custom">,
@@ -312,32 +334,24 @@ export function buildResumeBlocks(resume: ResumePreview): ResumeBlock[] {
   };
 
   const customById = new Map(
-    resume.customSections.map((section) => [section.id, section]),
+    A.map(resume.customSections, (section) => [section.id, section] as const),
   );
 
-  for (const ref of resume.sectionOrder) {
-    if (ref.type === "custom") {
+  const sections = A.flatMap(
+    resume.sectionOrder,
+    (ref): ReadonlyArray<ResumeBlock> => {
+      if (ref.type !== "custom") return emitters[ref.type]();
       const view = customById.get(ref.id);
-      if (view) blocks.push(...customBlocks(view));
-    } else {
-      blocks.push(...emitters[ref.type]());
-    }
-  }
+      if (!view) return [];
+      return customBlocks(view);
+    },
+  );
+  const blocks = [header, ...summaryBlocks(resume), ...sections];
 
   // Document-level section spacing adjusts only the gap above headings; the
   // paginator and every PDF template consume `gapBefore`, so this single
   // adjustment reaches all of them. Floored at zero so a tightened document
   // collapses sections to flush instead of overlapping them.
-  if (resume.sectionSpacing !== 0) {
-    return blocks.map((block) =>
-      block.kind === "heading"
-        ? {
-            ...block,
-            gapBefore: Math.max(0, block.gapBefore + resume.sectionSpacing),
-          }
-        : block,
-    );
-  }
-
-  return blocks;
+  if (resume.sectionSpacing === 0) return blocks;
+  return A.map(blocks, (block) => shiftHeading(block, resume.sectionSpacing));
 }

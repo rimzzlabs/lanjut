@@ -1,3 +1,4 @@
+import { A, S } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
 import { useLocaleSwitch } from "@/hooks/use-locale-switch";
 import { routing } from "@/i18n/routing";
@@ -7,9 +8,9 @@ export function LanguageSwitcher(props: { className?: string }) {
   const t = useTranslations("language");
   const { locale, switchLocale } = useLocaleSwitch();
 
-  const items = routing.locales.map((loc) => ({
+  const items = A.map(routing.locales, (loc) => ({
     value: loc,
-    label: loc.toUpperCase(),
+    label: S.toUpperCase(loc),
     ariaLabel: t(loc),
   }));
 

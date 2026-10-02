@@ -1,3 +1,4 @@
+import { A, D, O, pipe } from "@mobily/ts-belt";
 import { AnimatePresence } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { TemplateId } from "@/lib/templates";
@@ -44,11 +45,18 @@ export function ResumeDocument(props: ResumeDocumentProps) {
     let cancelled = false;
     const measure = () => {
       if (cancelled) return;
-      const next: Record<string, number> = {};
-      layer.querySelectorAll<HTMLElement>("[data-block-id]").forEach((node) => {
-        const id = node.dataset.blockId;
-        if (id) next[id] = node.getBoundingClientRect().height;
-      });
+      const nodes = Array.from(
+        layer.querySelectorAll<HTMLElement>("[data-block-id]"),
+      );
+      const next = pipe(
+        nodes,
+        A.filterMap((node): O.Option<readonly [string, number]> => {
+          const id = node.dataset.blockId;
+          if (!id) return O.None;
+          return O.Some([id, node.getBoundingClientRect().height] as const);
+        }),
+        D.fromPairs,
+      );
       setHeights(next);
     };
 
@@ -84,7 +92,8 @@ export function ResumeDocument(props: ResumeDocumentProps) {
   const scale =
     availableWidth > 0 ? Math.min(1, availableWidth / A4.widthPx) : 1;
   const naturalHeight =
-    pages.length * A4.heightPx + Math.max(0, pages.length - 1) * PAGE_GAP_PX;
+    A.length(pages) * A4.heightPx +
+    Math.max(0, A.length(pages) - 1) * PAGE_GAP_PX;
 
   return (
     <div
@@ -122,10 +131,14 @@ export function ResumeDocument(props: ResumeDocumentProps) {
             // The page's identity is its position in the stack: keying by index
             // keeps the container stable while blocks reflow through it, so a
             // changed first block animates instead of remounting the page.
-            const signature = pageBlocks.map((block) => block.id).join("|");
+            const signature = pipe(
+              pageBlocks,
+              A.map((block) => block.id),
+              A.join("|"),
+            );
             return (
               // biome-ignore lint/suspicious/noArrayIndexKey: pages have no id; position is their identity
-              <ResumePage page={index + 1} total={items.length} key={index}>
+              <ResumePage page={index + 1} total={A.length(items)} key={index}>
                 <AnimatePresence initial={false} mode="popLayout">
                   {pageBlocks.map((block, blockIndex) => (
                     <ResumeAnimatedBlock

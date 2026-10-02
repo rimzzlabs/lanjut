@@ -42,7 +42,7 @@ export interface HeaderView {
   photoRadius: number;
   /** Resolved vertical anchor of the photo within the header strip. */
   photoAlign: "top" | "center" | "bottom";
-  contacts: ContactView[];
+  contacts: ReadonlyArray<ContactView>;
   /** Presentation-only: whether contact icon glyphs are drawn; defaults to true. */
   showIcons: boolean;
 }
@@ -63,7 +63,7 @@ export interface ExperienceItemView {
   companyContext?: string;
   startDate: string;
   endDate: string;
-  description: RichBlock[];
+  description: ReadonlyArray<RichBlock>;
 }
 
 export interface EducationItemView {
@@ -74,7 +74,7 @@ export interface EducationItemView {
   location: string;
   startDate: string;
   endDate: string;
-  details: RichBlock[];
+  details: ReadonlyArray<RichBlock>;
 }
 
 export interface CertificateItemView {
@@ -108,8 +108,8 @@ export interface CustomSectionView {
   id: string;
   title: string;
   variant: CustomVariant;
-  body: RichBlock[];
-  entries: ExperienceItemView[];
+  body: ReadonlyArray<RichBlock>;
+  entries: ReadonlyArray<ExperienceItemView>;
 }
 
 /** A reference to a reorderable section in reading order, addressable by id. */
@@ -167,38 +167,38 @@ export interface ResumePreview {
    * once; `custom` may repeat, so each ref carries the section `id` used to look
    * it up in `customSections`. Empty sections are gated out at block-build time.
    */
-  sectionOrder: SectionRef[];
+  sectionOrder: ReadonlyArray<SectionRef>;
   /** Custom sections by id, resolved from `sectionOrder` refs of type `custom`. */
-  customSections: CustomSectionView[];
+  customSections: ReadonlyArray<CustomSectionView>;
   header: HeaderView;
-  summary: RichBlock[];
-  experience: ExperienceItemView[];
+  summary: ReadonlyArray<RichBlock>;
+  experience: ReadonlyArray<ExperienceItemView>;
   /**
    * Internship entries are structurally identical to experience (same fields),
    * so they reuse `ExperienceItemView` and every renderer's experience path;
    * only the section heading differs.
    */
-  internship: ExperienceItemView[];
+  internship: ReadonlyArray<ExperienceItemView>;
   /**
    * Project entries reuse `ExperienceItemView`: `role` holds the project name
    * and `company` the contributor role, so they render through the experience
    * path in every template and export; only the section heading differs. The
    * project URL rides on `roleHref` (not `companyHref`).
    */
-  projects: ExperienceItemView[];
+  projects: ReadonlyArray<ExperienceItemView>;
   /**
    * Organization entries (volunteer, student, community roles) are
    * presentationally identical to experience entries, so they reuse
    * `ExperienceItemView` (`company` holds the organization name) and every
    * renderer's experience path.
    */
-  organizations: ExperienceItemView[];
-  education: EducationItemView[];
-  certificates: CertificateItemView[];
-  skills: SkillItemView[];
+  organizations: ReadonlyArray<ExperienceItemView>;
+  education: ReadonlyArray<EducationItemView>;
+  certificates: ReadonlyArray<CertificateItemView>;
+  skills: ReadonlyArray<SkillItemView>;
   /** Presentation-only column count for the skills grid; defaults to two. */
   skillsColumns: SectionColumns;
-  languages: LanguageItemView[];
+  languages: ReadonlyArray<LanguageItemView>;
   /** Presentation-only column count for the languages grid; defaults to two. */
   languagesColumns: SectionColumns;
 }

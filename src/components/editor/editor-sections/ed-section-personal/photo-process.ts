@@ -1,3 +1,5 @@
+import { S } from "@mobily/ts-belt";
+
 const PHOTO_SIZE = 256;
 const JPEG_QUALITY = 0.85;
 
@@ -9,7 +11,7 @@ const JPEG_QUALITY = 0.85;
  * PNG would otherwise composite onto black.
  */
 export async function processPhotoFile(file: File): Promise<string | null> {
-  if (!file.type.startsWith("image/")) return null;
+  if (!S.startsWith(file.type, "image/")) return null;
   try {
     const bitmap = await createImageBitmap(file);
     const side = Math.min(bitmap.width, bitmap.height);

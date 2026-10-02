@@ -1,3 +1,4 @@
+import { S } from "@mobily/ts-belt";
 import { useEffect } from "react";
 import { useResumeStore } from "@/lib/store";
 
@@ -14,7 +15,7 @@ export function EditorUndoShortcuts() {
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (!(event.metaKey || event.ctrlKey) || event.altKey) return;
-      const key = event.key.toLowerCase();
+      const key = S.toLowerCase(event.key);
       const isUndo = key === "z" && !event.shiftKey;
       const isRedo = (key === "z" && event.shiftKey) || key === "y";
       if (!isUndo && !isRedo) return;

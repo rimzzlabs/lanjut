@@ -1,11 +1,5 @@
-import {
-  Document,
-  Link,
-  Page,
-  StyleSheet,
-  Text,
-  View,
-} from "@react-pdf/renderer";
+import { A } from "@mobily/ts-belt";
+import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 import {
   buildResumeBlocks,
   isAtomicBlock,
@@ -26,6 +20,7 @@ import {
   NO_SCALE,
   PdfFontContext,
   PdfStylesContext,
+  pageStyle,
   pdfTypography,
   usePdfFontFamily,
   usePdfStyles,
@@ -33,6 +28,7 @@ import {
 import { PDF_COLORS } from "./pdf-fonts";
 import { dateRange, PdfGrid } from "./pdf-grid";
 import { PdfHeaderPhoto } from "./pdf-header-photo";
+import { PdfOptionalLink } from "./pdf-optional-link";
 import { PdfRichText } from "./pdf-rich-text";
 
 // Font sizes are multiplied by the document's per-group scales (name, title,
@@ -101,7 +97,7 @@ const makeStyles = (s: FontScales) =>
 
 const baseStyles = makeStyles(NO_SCALE);
 
-function LuasaContactLine(props: { contacts: ContactView[] }) {
+function LuasaContactLine(props: { contacts: ReadonlyArray<ContactView> }) {
   const styles = usePdfStyles(baseStyles);
   // Single spaces around the bullet are load-bearing: textkit marks any word
   // not followed by exactly one plain space as a hyphenation point and injects
@@ -111,13 +107,9 @@ function LuasaContactLine(props: { contacts: ContactView[] }) {
       {props.contacts.map((contact, index) => (
         <Text key={contact.kind}>
           {index > 0 ? " • " : ""}
-          {contact.href ? (
-            <Link src={contact.href} style={styles.linkMuted}>
-              {contact.value}
-            </Link>
-          ) : (
-            contact.value
-          )}
+          <PdfOptionalLink href={contact.href} style={styles.linkMuted}>
+            {contact.value}
+          </PdfOptionalLink>
         </Text>
       ))}
     </Text>
@@ -139,14 +131,14 @@ function LuasaHeader(props: { header: HeaderView }) {
         <Text style={[styles.name, { fontFamily: serif }]}>
           {props.header.fullName}
         </Text>
-        {props.header.headline ? (
+        {Boolean(props.header.headline) && (
           <Text style={[styles.headline, { fontFamily: serif }]}>
             {props.header.headline}
           </Text>
-        ) : null}
-        {props.header.contacts.length > 0 ? (
+        )}
+        {A.isNotEmpty(props.header.contacts) && (
           <LuasaContactLine contacts={props.header.contacts} />
-        ) : null}
+        )}
       </View>
     </View>
   );
@@ -158,37 +150,29 @@ function LuasaExperience(props: { item: ExperienceItemView }) {
     <View>
       <View style={styles.entryRow}>
         <Text style={styles.entryTitle}>
-          {props.item.roleHref ? (
-            <Link
-              src={props.item.roleHref}
-              style={[
-                styles.entryTitle,
-                { color: PDF_COLORS.foreground, textDecoration: "underline" },
-              ]}
-            >
-              {props.item.role}
-            </Link>
-          ) : (
-            props.item.role
-          )}
+          <PdfOptionalLink
+            href={props.item.roleHref}
+            style={[
+              styles.entryTitle,
+              { color: PDF_COLORS.foreground, textDecoration: "underline" },
+            ]}
+          >
+            {props.item.role}
+          </PdfOptionalLink>
         </Text>
         <Text style={styles.entryDate}>
           {dateRange(props.item.startDate, props.item.endDate)}
         </Text>
       </View>
       <Text style={styles.subtitle}>
-        {props.item.companyHref ? (
-          <Link src={props.item.companyHref} style={styles.linkMuted}>
-            {props.item.company}
-          </Link>
-        ) : (
-          props.item.company
-        )}
+        <PdfOptionalLink href={props.item.companyHref} style={styles.linkMuted}>
+          {props.item.company}
+        </PdfOptionalLink>
         {locationSuffix(props.item.company, props.item.location)}
       </Text>
-      {props.item.companyContext ? (
+      {Boolean(props.item.companyContext) && (
         <Text style={styles.subtitle}>{props.item.companyContext}</Text>
-      ) : null}
+      )}
       <PdfRichText blocks={props.item.description} style={styles.body} />
     </View>
   );
@@ -219,13 +203,9 @@ function LuasaCertificate(props: { item: CertificateItemView }) {
     <View style={styles.softBar}>
       <View style={styles.entryRow}>
         <Text style={styles.entryTitle}>
-          {props.item.href ? (
-            <Link src={props.item.href} style={styles.linkMuted}>
-              {props.item.title}
-            </Link>
-          ) : (
-            props.item.title
-          )}
+          <PdfOptionalLink href={props.item.href} style={styles.linkMuted}>
+            {props.item.title}
+          </PdfOptionalLink>
         </Text>
         {range ? <Text style={styles.entryDate}>{range}</Text> : null}
       </View>
@@ -279,12 +259,7 @@ export function LuasaPdfDocument(props: { preview: ResumePreview }) {
     <PdfFontContext.Provider value={typography.family}>
       <PdfStylesContext.Provider value={styles}>
         <Document>
-          <Page
-            size="A4"
-            style={
-              typography.page ? [styles.page, typography.page] : styles.page
-            }
-          >
+          <Page size="A4" style={pageStyle(styles.page, typography)}>
             {blocks.map((block) => (
               <View
                 key={block.id}

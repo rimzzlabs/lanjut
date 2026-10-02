@@ -1,4 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { A, O, S } from "@mobily/ts-belt";
 import { ExternalLink } from "lucide-react";
 import { type FormEvent, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -79,14 +80,14 @@ export function FeedbackFeatureRequestForm(
 
   const submitDirect = form.handleSubmit(async (values) => {
     const problem = tiptapToRichBlocks(values.problem);
-    const summary = richBlocksToText(problem)[0] ?? "";
+    const summary = O.getWithDefault(A.head(richBlocksToText(problem)), "");
 
     const result = await submitFeedback({
       kind: "feature",
       name: values.name,
       client,
       turnstileToken: values.turnstileToken,
-      summary: summary.slice(0, 120),
+      summary: S.slice(summary, 0, 120),
       problem: richBlocksToMarkdown(problem),
       layer: values.layer,
     });
@@ -105,7 +106,7 @@ export function FeedbackFeatureRequestForm(
   function openGitHubIssue() {
     const values = form.getValues();
     const problem = tiptapToRichBlocks(values.problem);
-    const summary = richBlocksToText(problem)[0] ?? "";
+    const summary = O.getWithDefault(A.head(richBlocksToText(problem)), "");
     const url = buildFeatureRequestUrl({
       title: summary ? issueTitle("feat(via app):", summary) : "",
       problem: richBlocksToMarkdown(problem),

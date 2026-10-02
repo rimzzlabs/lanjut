@@ -1,3 +1,5 @@
+import { A, O, pipe } from "@mobily/ts-belt";
+
 /**
  * The catalog of document fonts offered in the editor. Every family is
  * OFL-licensed and self-hosted as static TTFs under `/fonts`, so the on-screen
@@ -37,7 +39,7 @@ export interface FontSummary {
   /** Family name used by both CSS `@font-face` and react-pdf registration. */
   family: string;
   category: FontCategory;
-  faces: FontFace[];
+  faces: ReadonlyArray<FontFace>;
 }
 
 /**
@@ -49,26 +51,28 @@ export interface FontSummary {
 function faceSet(
   prefix: string,
   options: { semibold?: boolean; italics?: boolean } = {},
-): FontFace[] {
+): ReadonlyArray<FontFace> {
   const { semibold = true, italics = true } = options;
-  const faces: FontFace[] = [
-    { file: `${prefix}-Regular.ttf`, weight: 400, style: "normal" },
+  const groups: ReadonlyArray<readonly [boolean, ReadonlyArray<FontFace>]> = [
+    [true, [{ file: `${prefix}-Regular.ttf`, weight: 400, style: "normal" }]],
+    [
+      semibold,
+      [{ file: `${prefix}-SemiBold.ttf`, weight: 600, style: "normal" }],
+    ],
+    [true, [{ file: `${prefix}-Bold.ttf`, weight: 700, style: "normal" }]],
+    [
+      italics,
+      [
+        { file: `${prefix}-Italic.ttf`, weight: 400, style: "italic" },
+        { file: `${prefix}-BoldItalic.ttf`, weight: 700, style: "italic" },
+      ],
+    ],
   ];
-  if (semibold) {
-    faces.push({
-      file: `${prefix}-SemiBold.ttf`,
-      weight: 600,
-      style: "normal",
-    });
-  }
-  faces.push({ file: `${prefix}-Bold.ttf`, weight: 700, style: "normal" });
-  if (italics) {
-    faces.push(
-      { file: `${prefix}-Italic.ttf`, weight: 400, style: "italic" },
-      { file: `${prefix}-BoldItalic.ttf`, weight: 700, style: "italic" },
-    );
-  }
-  return faces;
+  return pipe(
+    groups,
+    A.filter(([enabled]) => enabled),
+    A.flatMap(([, faces]) => faces),
+  );
 }
 
 /** Catalog order is dropdown order: sans, then serif, then mono. */
@@ -181,5 +185,5 @@ export const FONT_LABELS: Record<FontId, string> = {
  */
 export function resolveFont(id: string | undefined): FontSummary | null {
   if (!id) return null;
-  return FONTS.find((font) => font.id === id) ?? null;
+  return O.toNullable(A.find(FONTS, (font) => font.id === id));
 }

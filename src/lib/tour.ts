@@ -1,3 +1,4 @@
+import { A, F, O, pipe, S } from "@mobily/ts-belt";
 import type { Step } from "nextstepjs";
 import { EDITOR_PATHNAME } from "@/lib/routes";
 import type { EditorTab } from "@/lib/store";
@@ -37,8 +38,8 @@ export interface AppTour {
 }
 
 export function tourForPathname(pathname: string): TourName {
-  if (pathname.startsWith(EDITOR_PATHNAME)) return EDITOR_TOUR;
-  if (pathname.startsWith("/platform/template")) return TEMPLATE_TOUR;
+  if (S.startsWith(pathname, EDITOR_PATHNAME)) return EDITOR_TOUR;
+  if (S.startsWith(pathname, "/platform/template")) return TEMPLATE_TOUR;
   return LIBRARY_TOUR;
 }
 
@@ -46,19 +47,26 @@ export function getTourStep(
   tourName: string | null,
   stepIndex: number,
 ): AppStepMeta | undefined {
-  const tour = TOUR_STEPS.find((t) => t.tour === tourName);
-  return tour?.steps[stepIndex];
+  const tour = A.find(TOUR_STEPS, (t) => t.tour === tourName);
+  return pipe(
+    tour,
+    O.flatMap((found) => A.get(found.steps, stepIndex)),
+    O.toUndefined,
+  );
 }
 
 export function localizeTours(t: (key: string) => string): AppTour[] {
-  return TOUR_STEPS.map((tour) => ({
+  const tours = A.map(TOUR_STEPS, (tour) => ({
     tour: tour.tour,
-    steps: tour.steps.map((step) => ({
-      ...step,
-      title: t(`${tour.tour}.${step.id}.title`),
-      content: t(`${tour.tour}.${step.id}.content`),
-    })),
+    steps: F.toMutable(
+      A.map(tour.steps, (step) => ({
+        ...step,
+        title: t(`${tour.tour}.${step.id}.title`),
+        content: t(`${tour.tour}.${step.id}.content`),
+      })),
+    ),
   }));
+  return F.toMutable(tours);
 }
 
 const BASE_STEP = {

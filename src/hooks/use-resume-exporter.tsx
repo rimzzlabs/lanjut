@@ -28,11 +28,11 @@ export function useResumeExporter() {
     resolverRef.current = null;
   }, []);
 
-  const exporter = request ? (
+  const exporter = request && (
     <Suspense>
       <ResumeExporter request={request} onSettled={handleSettled} />
     </Suspense>
-  ) : null;
+  );
 
   return { runExport, exporting: request !== null, exporter };
 }

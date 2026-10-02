@@ -1,3 +1,4 @@
+import { A, F } from "@mobily/ts-belt";
 import { Font } from "@react-pdf/renderer";
 import { FONTS } from "@/lib/fonts";
 
@@ -18,11 +19,14 @@ export function registerPdfFonts(): void {
   for (const font of FONTS) {
     Font.register({
       family: font.family,
-      fonts: font.faces.map((face) => ({
-        src: `/fonts/${face.file}`,
-        fontWeight: face.weight,
-        fontStyle: face.style,
-      })),
+      // react-pdf types `fonts` as a mutable array.
+      fonts: F.toMutable(
+        A.map(font.faces, (face) => ({
+          src: `/fonts/${face.file}`,
+          fontWeight: face.weight,
+          fontStyle: face.style,
+        })),
+      ),
     });
   }
 

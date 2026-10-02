@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { interchangeToContent, type ResumeContent } from "./codec";
 import { interchangeSchema } from "./schema";
 
@@ -10,7 +11,7 @@ export interface InterchangeIssue {
 export type ParseInterchangeResult =
   | { ok: true; content: ResumeContent }
   | { ok: false; kind: "syntax"; message: string }
-  | { ok: false; kind: "schema"; issues: InterchangeIssue[] };
+  | { ok: false; kind: "schema"; issues: ReadonlyArray<InterchangeIssue> };
 
 function formatPath(path: readonly PropertyKey[]): string {
   let out = "";
@@ -28,7 +29,7 @@ export function validateInterchange(data: unknown): ParseInterchangeResult {
     return {
       ok: false,
       kind: "schema",
-      issues: parsed.error.issues.map((issue) => ({
+      issues: A.map(parsed.error.issues, (issue) => ({
         path: formatPath(issue.path),
         message: issue.message,
       })),

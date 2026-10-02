@@ -1,3 +1,4 @@
+import { A, G, O, pipe, S } from "@mobily/ts-belt";
 import {
   isLocale,
   LOCALE_COOKIE,
@@ -8,29 +9,40 @@ import {
 } from "../src/i18n/routing";
 
 function cookieLocale(header: string | null): Locale | null {
-  const match = header?.match(
-    new RegExp(`(?:^|;\\s*)${LOCALE_COOKIE}=([^;]+)`),
+  if (!G.isString(header)) return null;
+  const value = pipe(
+    S.match(header, new RegExp(`(?:^|;\\s*)${LOCALE_COOKIE}=([^;]+)`)),
+    O.flatMap(A.get(1)),
   );
-  return isLocale(match?.[1]) ? match[1] : null;
+  return isLocale(value) ? value : null;
 }
 
 /** The first supported language in the header, by quality. */
 function acceptedLocale(header: string | null): Locale | null {
-  const ranked = (header ?? "")
-    .split(",")
-    .map((part) => {
-      const [tag, ...params] = part.trim().split(";");
-      const q = params.find((param) => param.trim().startsWith("q="));
+  const ranked = pipe(
+    header ?? "",
+    S.split(","),
+    A.map((part) => {
+      const [tag, ...params] = pipe(part, S.trim, S.split(";"));
+      const q = A.find(params, (param) =>
+        pipe(param, S.trim, S.startsWith("q=")),
+      );
       return {
-        language: tag.toLowerCase().split("-")[0],
-        quality: q ? Number(q.trim().slice(2)) : 1,
+        language: pipe(tag, S.toLowerCase, S.split("-"), A.head),
+        quality: O.mapWithDefault(q, 1, (found) =>
+          Number(pipe(found, S.trim, S.sliceToEnd(2))),
+        ),
       };
-    })
-    .filter((entry) => entry.quality > 0)
-    .toSorted((a, b) => b.quality - a.quality);
+    }),
+    A.filter((entry) => entry.quality > 0),
+    A.sort((a, b) => b.quality - a.quality),
+  );
 
-  const match = ranked.find((entry) => isLocale(entry.language));
-  return match && isLocale(match.language) ? match.language : null;
+  const language = pipe(
+    A.find(ranked, (entry) => isLocale(entry.language)),
+    O.flatMap((entry) => entry.language),
+  );
+  return isLocale(language) ? language : null;
 }
 
 /**

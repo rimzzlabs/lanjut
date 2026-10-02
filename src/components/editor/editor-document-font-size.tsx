@@ -24,9 +24,10 @@ function FontSizeRow(props: { field: ScaleField; labelKey: string }) {
 
   const onValueChange = (next: number | readonly number[]) => {
     const raw = Array.isArray(next) ? next[0] : (next as number);
-    updateOpen((draft: Resume) => {
-      draft[props.field] = Math.round(raw * 100) / 100;
-    });
+    updateOpen((resume: Resume) => ({
+      ...resume,
+      [props.field]: Math.round(raw * 100) / 100,
+    }));
   };
 
   return (

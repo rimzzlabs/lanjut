@@ -1,3 +1,4 @@
+import { D } from "@mobily/ts-belt";
 import { RefreshCw } from "lucide-react";
 import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
@@ -36,16 +37,18 @@ export function EditorDocumentStyleReset() {
   if (!hasOpen) return null;
 
   const onReset = () => {
-    updateOpen((draft) => {
-      draft.showIcons = true;
-      draft.sectionSpacing = 0;
-      draft.letterSpacing = 0;
-      delete draft.font;
-      delete draft.lineHeight;
-      delete draft.nameScale;
-      delete draft.titleScale;
-      delete draft.bodyScale;
-    });
+    updateOpen((resume) => ({
+      ...D.deleteKeys(resume, [
+        "font",
+        "lineHeight",
+        "nameScale",
+        "titleScale",
+        "bodyScale",
+      ]),
+      showIcons: true,
+      sectionSpacing: 0,
+      letterSpacing: 0,
+    }));
   };
 
   return (

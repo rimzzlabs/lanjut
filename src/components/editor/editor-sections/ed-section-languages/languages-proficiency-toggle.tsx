@@ -1,21 +1,30 @@
+import { A, O } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
 import { Switch } from "@/components/ui/switch";
+import { updateSectionOfType, updateSections } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 
 export function LanguagesProficiencyToggle() {
-  const showProficiency = useResumeStore(
-    (state) =>
-      state.open?.sections.find((s) => s.type === "languages")
-        ?.showProficiency ?? true,
+  const showProficiency = useResumeStore((state) =>
+    O.mapWithDefault(
+      A.find(state.open?.sections ?? [], (s) => s.type === "languages"),
+      true,
+      (section) => section.showProficiency ?? true,
+    ),
   );
   const updateOpen = useResumeStore((state) => state.updateOpen);
   const t = useTranslations("editor.languages");
 
   function handleChange(next: boolean) {
-    updateOpen((draft) => {
-      const section = draft.sections.find((s) => s.type === "languages");
-      if (section) section.showProficiency = next;
-    });
+    updateOpen((resume) =>
+      updateSections(
+        resume,
+        updateSectionOfType("languages", (section) => ({
+          ...section,
+          showProficiency: next,
+        })),
+      ),
+    );
   }
 
   return (

@@ -44,3 +44,8 @@ export {
   type Section,
   type SectionType,
 } from "./types";
+export {
+  updateSectionById,
+  updateSectionOfType,
+  updateSections,
+} from "./update";

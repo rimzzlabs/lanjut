@@ -1,3 +1,5 @@
+import { A, O, pipe } from "@mobily/ts-belt";
+
 /**
  * Minimal shape the paginator needs. Decoupled from `ResumeBlock` so this stays
  * a pure, testable packing function over ids, gaps, and grouping flags.
@@ -13,14 +15,37 @@ export interface Paginable {
  * block contributes no top gap (a page's top edge already provides the margin).
  */
 function measureGroup<T extends Paginable>(
-  group: T[],
+  group: ReadonlyArray<T>,
   heights: Record<string, number>,
   isFirstOnPage: boolean,
 ): number {
-  return group.reduce((total, block, index) => {
+  return A.reduceWithIndex(group, 0, (total, block, index) => {
     const leadingGap = isFirstOnPage && index === 0 ? 0 : block.gapBefore;
     return total + leadingGap + (heights[block.id] ?? 0);
-  }, 0);
+  });
+}
+
+/** Splits blocks into groups that end at the first block not kept with the next. */
+function groupBlocks<T extends Paginable>(
+  blocks: ReadonlyArray<T>,
+): ReadonlyArray<ReadonlyArray<T>> {
+  const none: ReadonlyArray<ReadonlyArray<T>> = [];
+  return A.reduce(blocks, none, (groups, block) => {
+    const open = pipe(
+      A.last(groups),
+      O.filter((group) =>
+        O.mapWithDefault(A.last(group), false, (last) => last.keepWithNext),
+      ),
+    );
+    if (O.isNone(open)) return A.append(groups, [block]);
+    return A.replaceAt(groups, A.length(groups) - 1, A.append(open, block));
+  });
+}
+
+interface Packing<T> {
+  pages: ReadonlyArray<ReadonlyArray<T>>;
+  current: ReadonlyArray<T>;
+  used: number;
 }
 
 /**
@@ -30,36 +55,27 @@ function measureGroup<T extends Paginable>(
  * variant does not split a single entry across pages) and clipped by the frame.
  */
 export function paginate<T extends Paginable>(
-  blocks: T[],
+  blocks: ReadonlyArray<T>,
   heights: Record<string, number>,
   budget: number,
-): T[][] {
-  const pages: T[][] = [];
-  let current: T[] = [];
-  let used = 0;
-
-  let index = 0;
-  while (index < blocks.length) {
-    const group: T[] = [blocks[index]];
-    while (
-      group[group.length - 1].keepWithNext &&
-      index + group.length < blocks.length
-    ) {
-      group.push(blocks[index + group.length]);
-    }
-
+): ReadonlyArray<ReadonlyArray<T>> {
+  const start: Packing<T> = { pages: [], current: [], used: 0 };
+  const packed = A.reduce(groupBlocks(blocks), start, (state, group) => {
     const appendHeight = measureGroup(group, heights, false);
-    if (current.length > 0 && used + appendHeight > budget) {
-      pages.push(current);
-      current = [];
-      used = 0;
+    if (A.isNotEmpty(state.current) && state.used + appendHeight > budget) {
+      return {
+        pages: A.append(state.pages, state.current),
+        current: group,
+        used: measureGroup(group, heights, true),
+      };
     }
+    return {
+      pages: state.pages,
+      current: A.concat(state.current, group),
+      used: state.used + measureGroup(group, heights, A.isEmpty(state.current)),
+    };
+  });
 
-    used += measureGroup(group, heights, current.length === 0);
-    current.push(...group);
-    index += group.length;
-  }
-
-  if (current.length > 0) pages.push(current);
-  return pages;
+  if (A.isEmpty(packed.current)) return packed.pages;
+  return A.append(packed.pages, packed.current);
 }

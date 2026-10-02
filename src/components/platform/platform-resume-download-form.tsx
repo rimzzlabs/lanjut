@@ -1,4 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { A, O, pipe, S } from "@mobily/ts-belt";
 import { Download } from "lucide-react";
 import { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -68,13 +69,17 @@ export function PlatformResumeDownloadForm(
               className="w-full"
               value={[field.value]}
               onValueChange={(value) => {
-                const next = value[0] as ExportFormat | undefined;
-                if (next) field.onChange(next);
+                pipe(
+                  value,
+                  A.head,
+                  O.filter(S.isNotEmpty),
+                  O.tap((next) => field.onChange(next as ExportFormat)),
+                );
               }}
             >
               {EXPORT_FORMATS.map((value) => (
                 <ToggleGroupItem key={value} value={value} className="flex-1">
-                  {value.toUpperCase()}
+                  {S.toUpperCase(value)}
                 </ToggleGroupItem>
               ))}
             </ToggleGroup>

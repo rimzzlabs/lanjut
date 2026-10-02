@@ -1,4 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { pipe, S } from "@mobily/ts-belt";
 import { Plus, TextInitial, XIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -39,7 +40,7 @@ import { PlatformTemplateRadioGroup } from "./platform-template-radio-group";
 
 /** Strip an imported file's name down to a résumé title. */
 function titleFromFileName(name: string): string {
-  return name.replace(/\.(pdf|json|ya?ml)$/i, "").trim() || name;
+  return pipe(name, S.replaceByRe(/\.(pdf|json|ya?ml)$/i, ""), S.trim) || name;
 }
 
 interface PlatformResumeCreateDialogProps {

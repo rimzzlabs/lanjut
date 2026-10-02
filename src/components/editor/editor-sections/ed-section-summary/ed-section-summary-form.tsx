@@ -28,7 +28,7 @@ export function EditorSectionSummaryForm() {
   // store's job); reading inside the subscription avoids stale form snapshots.
   useEffect(() => {
     const subscription = form.watch(() => {
-      updateOpen((draft) => applySummaryValues(draft, form.getValues()));
+      updateOpen((resume) => applySummaryValues(resume, form.getValues()));
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);

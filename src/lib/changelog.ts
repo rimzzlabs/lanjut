@@ -1,3 +1,5 @@
+import { A, O, pipe } from "@mobily/ts-belt";
+
 export interface ChangelogEntry {
   version: string;
   date: string;
@@ -27,4 +29,8 @@ export const CHANGELOG: ChangelogEntry[] = [
   { version: "0.2.0", date: "2026-07-03" },
 ];
 
-export const LATEST_CHANGELOG_VERSION = CHANGELOG[0]?.version ?? "";
+export const LATEST_CHANGELOG_VERSION = pipe(
+  CHANGELOG,
+  A.head,
+  O.mapWithDefault("", (entry) => entry.version),
+);

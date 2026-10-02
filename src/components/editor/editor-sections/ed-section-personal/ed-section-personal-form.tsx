@@ -34,7 +34,7 @@ export function EditorSectionPersonalForm() {
   // store's job); reading inside the subscription avoids stale form snapshots.
   useEffect(() => {
     const subscription = form.watch(() => {
-      updateOpen((draft) => applyPersonalValues(draft, form.getValues()));
+      updateOpen((resume) => applyPersonalValues(resume, form.getValues()));
     });
     return () => subscription.unsubscribe();
   }, [form, updateOpen]);

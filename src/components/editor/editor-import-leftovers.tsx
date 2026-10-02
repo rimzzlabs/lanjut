@@ -1,3 +1,4 @@
+import { A, S } from "@mobily/ts-belt";
 import { Check, ClipboardCopy, Inbox } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
@@ -26,7 +27,7 @@ export function EditorImportLeftovers() {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState<number | null>(null);
 
-  if (items.length === 0) return null;
+  if (A.isEmpty(items)) return null;
 
   const copy = async (index: number, text: string) => {
     await navigator.clipboard.writeText(text);
@@ -43,7 +44,7 @@ export function EditorImportLeftovers() {
         className="w-full justify-start text-muted-foreground"
         onClick={() => setOpen(true)}
       >
-        <Inbox /> {t("button", { count: items.length })}
+        <Inbox /> {t("button", { count: A.length(items) })}
       </Button>
 
       <ResponsiveDialog open={open} onOpenChange={setOpen}>
@@ -58,7 +59,7 @@ export function EditorImportLeftovers() {
           <ul className="flex max-h-80 flex-col gap-2 overflow-y-auto">
             {items.map((item, index) => (
               <li
-                key={`${index}:${item.slice(0, 40)}`}
+                key={`${index}:${S.slice(item, 0, 40)}`}
                 className="flex items-start gap-2 rounded-lg border p-2.5"
               >
                 <p className="min-w-0 flex-1 text-sm wrap-break-word whitespace-pre-wrap">

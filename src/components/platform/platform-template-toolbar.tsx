@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { Search } from "lucide-react";
 import { useTranslations } from "use-intl";
 import {
@@ -28,7 +29,7 @@ export function PlatformTemplateToolbar() {
   const [query, setQuery] = useTemplateSearchQuery();
   const [sort, setSort] = useTemplateSort();
   const t = useTranslations("platform.toolbar");
-  const options = SORT_OPTIONS.map((option) => ({
+  const options = A.map(SORT_OPTIONS, (option) => ({
     value: option.value,
     label: t(option.labelKey),
   }));

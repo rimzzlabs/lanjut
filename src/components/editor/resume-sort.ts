@@ -1,6 +1,9 @@
 import { dateSortValue } from "./month-year-menu/month-year-menu-data";
 
-type Dated = { startDate: string; endDate: string };
+export interface Dated {
+  startDate: string;
+  endDate: string;
+}
 
 /** `a === b` first guards against `Infinity - Infinity` (NaN) for ongoing dates. */
 function compareDesc(a: number, b: number): number {
@@ -13,7 +16,7 @@ function compareDesc(a: number, b: number): number {
  * row surfaces at the top until the user dates it. Shared by the preview
  * projection and the editor forms so both present entries in the same order.
  */
-export function byRecency(a: Dated, b: Dated): number {
+export function byRecency<T extends Dated>(a: T, b: T): number {
   const end = compareDesc(dateSortValue(a.endDate), dateSortValue(b.endDate));
   if (end !== 0) return end;
   return compareDesc(dateSortValue(a.startDate), dateSortValue(b.startDate));

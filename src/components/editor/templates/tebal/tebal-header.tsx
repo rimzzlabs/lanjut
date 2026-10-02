@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { ResumeHeaderContact } from "../../resume-header-contact";
 import { ResumeHeaderPhoto } from "../../resume-header-photo";
 import type { HeaderView } from "../../resume-preview";
@@ -15,7 +16,7 @@ export function TebalHeader(props: HeaderView) {
             {props.headline}
           </p>
         )}
-        {props.contacts.length > 0 && (
+        {A.isNotEmpty(props.contacts) && (
           <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 resume-body-xs">
             {props.contacts.map((contact) => (
               <ResumeHeaderContact
