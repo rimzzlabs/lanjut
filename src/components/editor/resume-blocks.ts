@@ -59,8 +59,9 @@ const ATOMIC_KINDS = new Set<ResumeBlock["kind"]>([
 /**
  * Entry blocks are indivisible: their title, subtitle, and body must never be
  * split across a page break. The on-screen paginator already treats every block
- * as one unit; PDF templates mark these with `wrap={false}` so react-pdf agrees,
- * moving a whole entry to the next page rather than stranding its header.
+ * as one unit; the PDF flow marks these `data-atomic` and keeps them together
+ * with `break-inside: avoid`, moving a whole entry to the next page rather
+ * than stranding its header.
  */
 export function isAtomicBlock(block: ResumeBlock): boolean {
   return ATOMIC_KINDS.has(block.kind);

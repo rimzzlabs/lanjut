@@ -176,7 +176,7 @@ export interface Resume {
   /**
    * Presentation-only letter spacing (tracking) applied document-wide, in
    * rendering units (px on screen, pt in PDF). Hard-bounded to -0.5..0.5:
-   * react-pdf places letter-spaced glyphs individually, and outside that range
+   * the PDF places letter-spaced glyphs individually, and outside that range
    * at the 8-9pt body sizes text extractors stop recovering word boundaries
    * (splitting words when too wide, merging them when too tight), which would
    * break ATS parsing. 0 or unset means the template default (no tracking).

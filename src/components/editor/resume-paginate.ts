@@ -31,7 +31,7 @@ function measureGroup<T extends Paginable>(
 }
 
 /** Splits blocks into groups that end at the first block not kept with the next. */
-function groupBlocks<T extends Paginable>(
+export function groupBlocks<T extends Paginable>(
   blocks: ReadonlyArray<T>,
 ): ReadonlyArray<ReadonlyArray<T>> {
   const none: ReadonlyArray<ReadonlyArray<T>> = [];

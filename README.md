@@ -60,14 +60,14 @@ Every template renders the same linear block sequence, so switching templates ne
 | Framework | Astro (static output, React islands) |
 | Hosting | Cloudflare Workers static assets, plus one Worker for the feedback relay |
 | Build targets | Web (default), desktop (`LANJUT_TARGET=desktop`) |
-| Desktop shell | Tauri 2 (macOS) |
+| Desktop shell | Tauri 2 (macOS 13 or later) |
 | Internationalization | use-intl (English, Indonesian) |
 | UI components | shadcn (base-ui) |
 | Styling | Tailwind CSS |
 | Rich text editor | TipTap |
 | Forms | react-hook-form + zod |
 | Drag and drop | @dnd-kit |
-| Export | @react-pdf/renderer, docx |
+| Export | takumi-pdf (PDF from the preview HTML), docx |
 | Animation | motion/react |
 | State | zustand |
 | Search params state | nuqs |
@@ -109,7 +109,7 @@ Resume content is stored in IndexedDB in the browser. No resume content is sent 
 
 ## Export Formats
 
-- **PDF**: structured text export, not a visual snapshot. Reading order is preserved for ATS text extraction.
+- **PDF**: rendered from the same HTML as the preview, so the file matches what you see. It is real, selectable text in linear reading order for ATS text extraction, not a visual snapshot.
 - **DOCX / plain text**: direct ATS-submission-safe formats, recommended over PDF for systems with strict parsing requirements.
 
 Changes to the export path are gated by `pnpm validate:exports`, which regenerates every format from the seed résumé and verifies, via real text extraction, that linear reading order is preserved and every field maps through.

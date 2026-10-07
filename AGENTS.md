@@ -16,7 +16,7 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 - [TipTap](https://tiptap.dev/docs) (rich text editing, restricted extension set)
 - react-hook-form + zod + @hookform/resolvers (forms; every field goes through Controller, schemas in `src/lib/forms`)
 - @dnd-kit (section and entry drag-to-reorder)
-- @react-pdf/renderer and docx (PDF and .docx export)
+- takumi-pdf (PDF export: renders the preview's own HTML and compiled CSS to PDF in the browser, through WebAssembly) and docx (.docx export)
 - nextstepjs (guided tour; a pnpm patch drops its Next.js wrapper export, and the tour uses `NextStepReact`)
 - motion/react (animation)
 - zustand (in-memory state)
@@ -47,7 +47,7 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 
 Any feature request that adds structural freedom (tables, columns, floating elements, decorative icons in text runs) is out of scope unless it is presentation-only and degrades gracefully to plain text in export.
 
-The one shipped example of that carve-out is the opt-in header photo: off by default, stored as a downscaled data URL on `header.photo`, rendered by each template's header (never absolutely positioned), embedded in PDF and DOCX, ignored by TXT. `scripts/validate-exports.tsx` enforces that adding a photo never changes the extracted text of any export.
+The one shipped example of that carve-out is the opt-in header photo: off by default, stored as a downscaled data URL on `header.photo`, rendered by each template's header (never absolutely positioned), embedded in PDF and DOCX, ignored by TXT. `scripts/validate-exports.ts` enforces that adding a photo never changes the extracted text of any export.
 
 ## Data and Storage
 
@@ -79,6 +79,7 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   `src/components/editor/download-file.ts`. A new export format that builds its own
   anchor will work on the web and do nothing at all in the desktop app. The function
   resolves false when the user cancels the save dialog, which is not an error.
+- The app requires macOS 13 (`bundle.macOS.minimumSystemVersion`). PDF export runs takumi-pdf's WebAssembly, which the CSP allows through `'wasm-unsafe-eval'` in `script-src`, and WebKit honors that keyword only from Safari 16, which macOS 13 ships. Lowering the minimum breaks PDF export on older systems.
 - macOS is the only desktop target. The shell has never been built or run on Windows,
   so do not describe it as supported until it has been.
 - A tagged release publishes one `.dmg` per architecture. The build is unsigned, so
@@ -124,7 +125,9 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 - PDF export must preserve linear reading order. Do not use a method that achieves visual layout via absolute positioning that breaks text extraction order. Verify with a text-extraction test (e.g., pdftotext) after any change to the PDF generation path.
 - Provide a plain text or .docx export path in addition to PDF. This is the actual ATS-safe submission format for many applicant tracking systems.
 - Before marking export work done, run output through at least one real parser test (Workday/Greenhouse test upload, or an open-source resume parser) and confirm fields map correctly.
-- Entry blocks (experience, education, certificate, and the internship/projects/organizations and custom `list` sections that reuse the experience kind) must never split across a page break; their title, subtitle, and body stay on one page, matching the on-screen paginator which never splits a block. `isAtomicBlock` in `src/components/editor/resume-blocks.ts` is the source of truth; every PDF template's block wrapper sets `wrap={isAtomicBlock(block) ? false : undefined}`. A new PDF template MUST do the same, or its entries will orphan their header at a page foot. Apply `wrap={false}` only at the whole-entry level, never on the individual bullet rows in `pdf-rich-text.tsx` (that collapses list items on top of each other at a page boundary).
+- Entry blocks (experience, education, certificate, and the internship/projects/organizations and custom `list` sections that reuse the experience kind) must never split across a page break; their title, subtitle, and body stay on one page, matching the on-screen paginator which never splits a block. `isAtomicBlock` in `src/components/editor/resume-blocks.ts` is the source of truth. `TakumiResumeFlow` marks atomic blocks with `data-atomic`, and the PDF stylesheet gives them `break-inside: avoid`. A section heading stays with its first entry the same way: the flow wraps each `keepWithNext` run (from `groupBlocks` in `resume-paginate.ts`) in one `data-keep` group, because takumi-pdf ignores `break-after: avoid`.
+- Keep an entry's first bullet within 1.4 line heights of the line above it. Parsers such as OpenResume start a new entry at a larger gap, and the entry then loses its description. The experience items use `mt-1` above the description for this reason.
+- The PDF comes from the preview's own templates (`src/components/editor/takumi/`), so a template change shows in the preview and the PDF at once. takumi-pdf 0.15 has gaps that `takumi-css.ts` works around: it draws solid borders only (dotted and dashed rules are drawn as a repeated SVG background under a transparent border), it drops a `var()` with whitespace inside its parentheses (the stylesheet is compacted), it strokes the 700 face to fake weights above it (`font-extrabold` and `font-black` are held at 700, as a browser renders them with the catalog fonts), it drops `:where()` selectors and the `margin-block-end` longhand (every `space-y-*` utility is restated as a bottom margin), it writes a CSS list marker after the item's text (the flow sets `TextListMarkersContext`, so `ResumeRichText` writes a "•" or number before each item), letter spacing splits words for parsers (template tracking is reset in the PDF), and no résumé font has a square glyph (square bullets are set in `SquareBullet.ttf`, a font whose "•" is a square, built by `scripts/build-square-bullet-font.py`, so the marker stays visible text with no image or hidden glyph). Check a new template style against these before relying on it.
 
 ## Documentation
 
@@ -172,7 +175,7 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 - Props destructuring is capped at 3 fields. If a component needs more than 3 fields from props, do not destructure, access fields directly via `props.fieldName`. This applies above the 3-field threshold only, not below it.
 - No default exports for function components or utility functions. All exports are named.
 - Data transforms on arrays and strings go through ts-belt: `pipe(value, A.map(...), A.filter(...), A.join(", "))` with its modules (`A`, `S`, `N`, `O`, `R`, `G`, `D`, `F`). Do not mix ts-belt and native methods in one flow. JSX list rendering (`{items.map(...)}`) stays native. Keep a native call only where ts-belt has no equivalent (a callback replacer, `localeCompare`) or where a hot loop needs it.
-- ts-belt returns `ReadonlyArray`, and the résumé model follows it (`Resume.sections`, `Section.entries`). Replace an array instead of mutating it (`A.append`, `A.reject`, `A.sort`). Use `F.toMutable` only at a library boundary that needs a mutable array: react-hook-form field arrays, TipTap `JSONContent`, zod-inferred types, nextstepjs, react-pdf. Never enable `Belt.UseMutableArrays`.
+- ts-belt returns `ReadonlyArray`, and the résumé model follows it (`Resume.sections`, `Section.entries`). Replace an array instead of mutating it (`A.append`, `A.reject`, `A.sort`). Use `F.toMutable` only at a library boundary that needs a mutable array: react-hook-form field arrays, TipTap `JSONContent`, zod-inferred types, nextstepjs, takumi-pdf. Never enable `Belt.UseMutableArrays`.
 - Index and length go through ts-belt too: `A.get`, `A.head`, `A.last`, `S.get`, `A.length`, `A.isEmpty`, `S.isEmpty`. Their `Option` results are handled with `O` (`O.isNone` early exits, `O.getWithDefault`, `O.mapWithDefault`, `O.match`, `O.flatMap`), not with `??`, `?.`, truthiness, or `G.isNullable`. Values that are nullable for other reasons (optional props, DOM lookups, library results) stay as they are.
 - In this ts-belt release only `undefined` is None at runtime: `null` counts as Some, and `O.map` boxes an `undefined` result. Do not feed `O` an array that can hold `null`, and use `O.mapWithDefault`, `O.match`, or `O.flatMap` when a mapper can return `undefined`.
 - Do not mutate data. No property or element assignment, no `push`/`splice`/`sort`/`reverse`/`fill`, no `delete`, no accumulator loops. Build with literals, spread, and ts-belt (`A.append`, `A.updateAt`, `D.set`, `D.merge`, `D.deleteKey`), and return the new value. The store's `updateOpen` takes a pure `(resume) => Resume`; returning the same object is a no-op (no undo step, no save). Use `updateSections`, `updateSectionById`, and `updateSectionOfType` from `@/lib/resume` for section changes. DOM and browser objects, refs, and library APIs built on mutation are the only exceptions.

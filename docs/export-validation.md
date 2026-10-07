@@ -10,7 +10,7 @@ verification back this up.
 pnpm validate:exports
 ```
 
-`scripts/validate-exports.tsx` regenerates all three exports from the seed résumé and
+`scripts/validate-exports.ts` regenerates all three exports from the seed résumé and
 extracts their text with real parsers: `unpdf` for the PDF, `jszip` for the `.docx`
 XML, and the serializer output for `.txt`. It then asserts:
 
@@ -26,8 +26,32 @@ XML, and the serializer output for `.txt`. It then asserts:
   photo-free output. The photo is presentation-only; if it ever shifts, drops, or
   adds a character of extracted text, the gate fails.
 
+`scripts/takumi-checks.ts` loads the takumi-pdf renderer through Vite, the way the app
+bundles it, and runs the PDF checks on every template. It adds:
+
+- **Font families**: each template's PDF embeds the families it draws with (recorded
+  in `takumi-checks.ts` from the react-pdf exports it replaced, plus SquareBullet for
+  Luasa's square bullets). A stylesheet rule the
+  renderer drops (it once lost the serif and mono families) fails here instead of
+  silently printing in Inter.
+- **No faked weights**: no text is drawn with a stroke render mode. takumi-pdf
+  strokes the 700 face to fake a heavier weight, which a browser never does.
+- **No hidden text**: no fill is drawn at zero opacity. Text drawn that way is
+  hidden from the reader but not from a parser, and ATS checkers flag it.
+- **No split entries**: a long résumé whose entries open with `START-n` and close with
+  `END-n` must keep each pair on one page.
+- **Parser-ready bullets**: in content order, a "•" comes before each list item's
+  text, and an entry's first bullet sits within 1.4 line heights of the line above
+  it. Parsers find bullets by a leading "•" and start a new entry at a larger gap,
+  as the OpenResume parser does.
+- **No orphaned headings**: a summary that grows three lines at a time pushes the
+  Experience heading down to the page foot and past it. At every step the heading and
+  its first entry must print on the same page.
+- **No ligatures**: Lora and Merriweather résumés keep `fi` and `fl` as separate
+  glyphs, read from the embedded ToUnicode maps (`bfchar` and `bfrange`).
+
 This is the pdftotext-equivalent text-extraction test required by `AGENTS.md`. **Run it
-after any change to an export path** (`pdf/`, `docx/`, `resume-to-text.ts`,
+after any change to an export path** (`takumi/`, `docx/`, `resume-to-text.ts`,
 `buildResumeBlocks`, or the rich-content model). It exits non-zero on failure.
 
 Because all three exporters consume the same `buildResumeBlocks` sequence as the
@@ -58,22 +82,21 @@ Decisions made to satisfy them:
   slash; `johndoe.dev` alone is not detected.
 - **Contact icons are drawn as vector SVG**, so they never appear in the extracted
   text and can't interfere with field detection.
-- **`letterSpacing` is banned in PDF template styles.** react-pdf positions
-  letter-spaced glyphs individually, so extractors read `J o h n D o e`; word
-  boundaries are destroyed and fields stop matching. `textTransform: "uppercase"`
-  is fine (whole words survive; the gate matches fields case-insensitively). The
-  DOM preview may still use CSS `tracking-*`; it is never text-extracted.
-- **Ligatures (`liga`/`clig`) are disabled in the PDF shaper.** fontkit collapses
-  `f`+`i` and `f`+`l` into a single ligature glyph whose ToUnicode maps back to two
-  codepoints; readers that ignore the CMap then drop or garble the pair (e.g.
-  `fintech` → `fntech`). This is done through a `pnpm patch` on `@react-pdf/textkit`
-  (`patches/@react-pdf__textkit@6.3.0.patch`) that passes `{ liga: false, clig: false }`
-  to the two `font.layout` calls, so each letter stays its own glyph with a
-  single-codepoint ToUnicode. GPOS kerning still applies; only the aesthetic glyph
-  merge is removed, so the visual result is near-identical. The gate renders an fi/fl
-  probe and fails if any
-  glyph maps back to an `fi`/`fl` pair, which also catches the patch silently dropping
-  on a `@react-pdf` upgrade. The DOM preview is HTML and keeps native ligatures.
+- **Template letter spacing is reset in the PDF.** The PDF places letter-spaced glyphs
+  individually, so extractors read `S U M M A R Y`; word boundaries are destroyed and
+  fields stop matching. The PDF stylesheet resets every `tracking-*` class to
+  `letter-spacing: 0`, so the preview keeps its tracking and the PDF does not. The
+  document-wide letter-spacing setting stays within -0.5..0.5, and the gate checks
+  that every field still extracts at both ends. Uppercase is fine (whole words
+  survive; the gate matches fields case-insensitively).
+- **Ligatures are disabled in the PDF.** A shaper collapses `f`+`i` and `f`+`l`
+  into a single ligature glyph whose ToUnicode maps back to two codepoints; readers
+  that ignore the CMap then drop or garble the pair (e.g. `fintech` → `fntech`). The
+  PDF stylesheet sets `font-variant-ligatures: none`, so each letter stays its own
+  glyph with a single-codepoint ToUnicode. Kerning still applies, so the visual
+  result is near-identical. The gate renders an fi/fl probe in Lora and Merriweather
+  and fails if any glyph maps back to an `fi`/`fl` pair. The screen preview keeps
+  native ligatures.
 - **Entry locations join the subject with a comma** ("Acme Inc., San Francisco, CA"),
   in the preview, PDF, docx, and text alike. They ride on the employer/institution
   line rather than a column of their own, so the pair stays one contiguous phrase for

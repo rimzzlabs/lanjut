@@ -187,6 +187,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_19_0": [
+          {
+            "title": "Your PDF now matches the preview",
+            "description": "PDF downloads are now drawn from the same page you see in the editor, so the fonts, sizes, and spacing in the file match the preview. The text stays selectable for applicant tracking systems."
+          }
+        ],
         "0_18_0": [
           {
             "title": "Add context about a company",

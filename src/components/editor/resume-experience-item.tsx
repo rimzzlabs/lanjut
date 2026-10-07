@@ -26,7 +26,7 @@ export function ResumeExperienceItem(props: ExperienceItemView) {
         </p>
       )}
 
-      <ResumeRichText blocks={props.description} className="mt-2" />
+      <ResumeRichText blocks={props.description} className="mt-1" />
     </article>
   );
 }

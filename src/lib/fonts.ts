@@ -36,7 +36,7 @@ export interface FontFace {
 
 export interface FontSummary {
   id: FontId;
-  /** Family name used by both CSS `@font-face` and react-pdf registration. */
+  /** Family name used by CSS `@font-face` and by the PDF renderer's fonts. */
   family: string;
   category: FontCategory;
   faces: ReadonlyArray<FontFace>;
@@ -46,7 +46,7 @@ export interface FontSummary {
  * The standard face set for a family whose files follow the
  * `<Prefix>-<Variant>.ttf` naming. `semibold` and `italics` are opt-out for
  * families that don't ship those styles; weights a family lacks resolve to the
- * nearest registered weight in both CSS and react-pdf.
+ * nearest registered weight in CSS and in the PDF.
  */
 function faceSet(
   prefix: string,

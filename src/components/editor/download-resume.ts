@@ -32,8 +32,10 @@ export async function downloadResume(
   const preview = resumeToPreview(resume);
 
   if (format === "pdf") {
-    const { downloadResumePdf } = await import("./pdf/download-resume-pdf");
-    return downloadResumePdf({
+    const { downloadResumeTakumi } = await import(
+      "./takumi/download-resume-takumi"
+    );
+    return downloadResumeTakumi({
       preview,
       fileName,
       template: resolveTemplateId(resume.templateId),

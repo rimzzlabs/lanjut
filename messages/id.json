@@ -187,6 +187,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_19_0": [
+          {
+            "title": "PDF kamu sekarang sama dengan pratinjau",
+            "description": "Unduhan PDF sekarang dibuat dari halaman yang sama dengan yang kamu lihat di editor, jadi huruf, ukuran, dan jarak di file sama dengan pratinjau. Teksnya tetap bisa dipilih untuk sistem pelacak pelamar."
+          }
+        ],
         "0_18_0": [
           {
             "title": "Tambahkan konteks perusahaan",
