@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRightIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { buttonVariants } from "@/components/ui/button";
 import { type Locale, localizePath } from "@/i18n/routing";
 import { getTranslator } from "@/i18n/translator";
@@ -34,13 +34,13 @@ const t = getTranslator(locale, "closure");
         class={cn(buttonVariants({ size: "lg", className: "gap-2" }))}
       >
         {t("ctaPrimary")}
-        <ArrowRight />
+        <ArrowRightIcon />
       </a>
       <a
         href={localizePath("/platform/template", locale)}
         class={cn(buttonVariants({ size: "lg", variant: "outline" }))}
       >
-        <Search />
+        <MagnifyingGlassIcon />
         {t("ctaSecondary")}
       </a>
     </div>

@@ -1,4 +1,8 @@
-import { Bug, HelpCircle, Send } from "lucide-react";
+import {
+  BugIcon,
+  PaperPlaneTiltIcon,
+  QuestionIcon,
+} from "@phosphor-icons/react";
 import { useNextStep } from "nextstepjs";
 import { useTranslations } from "use-intl";
 import { useIssueReport } from "@/hooks/use-issue-report";
@@ -39,7 +43,7 @@ export function PlatformSidebarOther() {
             disabled={guideDisabled}
             onClick={() => startNextStep(tour)}
           >
-            <HelpCircle /> {t("guide")}
+            <QuestionIcon /> {t("guide")}
           </SidebarMenuButton>
         </SidebarMenuItem>
 
@@ -50,7 +54,7 @@ export function PlatformSidebarOther() {
               openIssueReport("bug");
             }}
           >
-            <Bug /> {t("reportBug")}
+            <BugIcon /> {t("reportBug")}
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem>
@@ -60,7 +64,7 @@ export function PlatformSidebarOther() {
               openIssueReport("feature");
             }}
           >
-            <Send /> {t("featureRequest")}
+            <PaperPlaneTiltIcon /> {t("featureRequest")}
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>

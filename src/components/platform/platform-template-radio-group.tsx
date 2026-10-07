@@ -1,5 +1,5 @@
 import { Radio as RadioPrimitive } from "@base-ui/react/radio";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon } from "@phosphor-icons/react";
 import { ResumeThumbnail } from "@/components/editor/resume-thumbnail";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import { RadioGroup } from "@/components/ui/radio-group";

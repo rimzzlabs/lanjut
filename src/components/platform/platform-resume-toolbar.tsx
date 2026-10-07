@@ -1,4 +1,4 @@
-import { Plus, Search } from "lucide-react";
+import { MagnifyingGlassIcon, PlusIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { useResumeCreateDialog } from "@/hooks/use-resume-create-dialog";
 import { useResumeSearchQuery } from "@/hooks/use-resume-search";
@@ -19,7 +19,7 @@ export function PlatformResumeToolbar() {
     <div className="flex items-center gap-2">
       <InputGroup id="tour-search-resume" className="max-w-xs">
         <InputGroupAddon>
-          <Search />
+          <MagnifyingGlassIcon />
         </InputGroupAddon>
         <InputGroupInput
           value={query}
@@ -30,7 +30,7 @@ export function PlatformResumeToolbar() {
 
       <nav className="inline-flex items-center gap-2 ml-auto">
         <Button id="tour-create-resume" onClick={() => setOpen(true)}>
-          <Plus /> {t("resume")}
+          <PlusIcon /> {t("resume")}
         </Button>
       </nav>
 

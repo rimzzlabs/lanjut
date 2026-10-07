@@ -1,4 +1,10 @@
-import { Copy, Download, MoreHorizontal, Pen, Trash } from "lucide-react";
+import {
+  CopyIcon,
+  DotsThreeIcon,
+  DownloadSimpleIcon,
+  PencilSimpleIcon,
+  TrashIcon,
+} from "@phosphor-icons/react";
 import { Fragment, useState } from "react";
 import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
@@ -57,26 +63,26 @@ export function PlatformResumeGridItemMenu(
       <DropdownMenu>
         <DropdownMenuTrigger render={<Button size="icon-sm" variant="ghost" />}>
           <span className="sr-only">{t("menu")}</span>
-          <MoreHorizontal />
+          <DotsThreeIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
             <DropdownMenuLabel>{t("menu")}</DropdownMenuLabel>
             <DropdownMenuItem onClick={openRenameDialog}>
-              <Pen /> {t("rename")}
+              <PencilSimpleIcon /> {t("rename")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={onDuplicate}>
-              <Copy /> {t("duplicate")}
+              <CopyIcon /> {t("duplicate")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={openDownloadDialog}>
-              <Download />
+              <DownloadSimpleIcon />
               {t("download")}
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
 
             <DropdownMenuItem variant="destructive" onClick={openRemoveDialog}>
-              <Trash /> {t("delete")}
+              <TrashIcon /> {t("delete")}
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>

@@ -1,5 +1,5 @@
 import { A } from "@mobily/ts-belt";
-import { Inbox } from "lucide-react";
+import { TrayIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { useHydrateResumeLibrary } from "@/hooks/use-hydrate-resume-library";
 import { useResumeStore } from "@/lib/store";
@@ -51,7 +51,7 @@ export function PlatformSidebarResume() {
               <EmptyContent>
                 <EmptyHeader>
                   <EmptyMedia variant="icon" className="size-8">
-                    <Inbox className="size-3.5" />
+                    <TrayIcon className="size-3.5" />
                   </EmptyMedia>
 
                   <EmptyTitle className="text-xs">{t("noResume")}</EmptyTitle>

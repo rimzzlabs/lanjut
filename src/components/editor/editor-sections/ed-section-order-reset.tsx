@@ -1,5 +1,5 @@
 import { A, pipe } from "@mobily/ts-belt";
-import { ListRestart } from "lucide-react";
+import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import {
   canonicalSectionIndex,
@@ -42,7 +42,7 @@ export function EditorSectionOrderReset() {
           />
         }
       >
-        <ListRestart />
+        <ArrowCounterClockwiseIcon />
         <span className="sr-only">{t("resetOrder")}</span>
       </TooltipTrigger>
       <TooltipContent>{t("resetOrder")}</TooltipContent>

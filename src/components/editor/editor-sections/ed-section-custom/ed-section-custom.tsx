@@ -1,5 +1,5 @@
 import { A, O, S } from "@mobily/ts-belt";
-import { Shapes } from "lucide-react";
+import { ShapesIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
 import { TruncatedLabel } from "@/components/shared/truncated-label";
@@ -33,7 +33,7 @@ export function EditorSectionCustom(props: EditorSectionCustomProps) {
   return (
     <AccordionItem value={section.id} className="relative">
       <AccordionTrigger className="min-w-0 items-center gap-3">
-        <Shapes className="size-4 shrink-0" />
+        <ShapesIcon className="size-4 shrink-0" />
         {/* mr reserves room for the absolutely-positioned controls so the title
             truncates before them, leaving order: title, toggle, menu, chevron. */}
         <TruncatedLabel

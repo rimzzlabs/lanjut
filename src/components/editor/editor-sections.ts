@@ -1,16 +1,16 @@
 import {
-  AlignLeft,
-  Award,
-  Backpack,
-  Briefcase,
-  CircleUserRound,
-  FolderGit2,
-  GraduationCap,
-  Languages,
-  type LucideIcon,
-  Users,
-  Zap,
-} from "lucide-react";
+  BackpackIcon,
+  BriefcaseIcon,
+  CertificateIcon,
+  FolderSimpleIcon,
+  GraduationCapIcon,
+  type Icon,
+  LightningIcon,
+  TextAlignLeftIcon,
+  TranslateIcon,
+  UserCircleIcon,
+  UsersIcon,
+} from "@phosphor-icons/react";
 
 export type EditorSectionId =
   | "personal-details"
@@ -27,7 +27,7 @@ export type EditorSectionId =
 export interface EditorSectionDescriptor {
   id: EditorSectionId;
   label: string;
-  icon: LucideIcon;
+  icon: Icon;
   /** Required sections are always present and cannot be hidden (no visibility toggle). */
   required: boolean;
 }
@@ -42,21 +42,46 @@ export const EDITOR_SECTIONS: EditorSectionDescriptor[] = [
   {
     id: "personal-details",
     label: "Personal Details",
-    icon: CircleUserRound,
+    icon: UserCircleIcon,
     required: true,
   },
-  { id: "experience", label: "Experience", icon: Briefcase, required: false },
-  { id: "internship", label: "Internship", icon: Backpack, required: false },
-  { id: "projects", label: "Projects", icon: FolderGit2, required: false },
+  {
+    id: "experience",
+    label: "Experience",
+    icon: BriefcaseIcon,
+    required: false,
+  },
+  {
+    id: "internship",
+    label: "Internship",
+    icon: BackpackIcon,
+    required: false,
+  },
+  {
+    id: "projects",
+    label: "Projects",
+    icon: FolderSimpleIcon,
+    required: false,
+  },
   {
     id: "organizations",
     label: "Organizations",
-    icon: Users,
+    icon: UsersIcon,
     required: false,
   },
-  { id: "education", label: "Education", icon: GraduationCap, required: false },
-  { id: "skills", label: "Skills", icon: Zap, required: false },
-  { id: "languages", label: "Languages", icon: Languages, required: false },
-  { id: "certificates", label: "Certificates", icon: Award, required: false },
-  { id: "summary", label: "Summary", icon: AlignLeft, required: false },
+  {
+    id: "education",
+    label: "Education",
+    icon: GraduationCapIcon,
+    required: false,
+  },
+  { id: "skills", label: "Skills", icon: LightningIcon, required: false },
+  { id: "languages", label: "Languages", icon: TranslateIcon, required: false },
+  {
+    id: "certificates",
+    label: "Certificates",
+    icon: CertificateIcon,
+    required: false,
+  },
+  { id: "summary", label: "Summary", icon: TextAlignLeftIcon, required: false },
 ];

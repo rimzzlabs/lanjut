@@ -1,6 +1,6 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { A, O, pipe, S } from "@mobily/ts-belt";
-import { Download } from "lucide-react";
+import { DownloadSimpleIcon } from "@phosphor-icons/react";
 import { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslations } from "use-intl";
@@ -119,7 +119,8 @@ export function PlatformResumeDownloadForm(
         className="mt-3 w-full"
         disabled={props.generating || !form.formState.isValid}
       >
-        {props.generating ? <Spinner /> : <Download />} {tc("download")}
+        {props.generating ? <Spinner /> : <DownloadSimpleIcon />}{" "}
+        {tc("download")}
       </Button>
     </form>
   );

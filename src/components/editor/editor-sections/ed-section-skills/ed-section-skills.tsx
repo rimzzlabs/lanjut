@@ -1,4 +1,4 @@
-import { Sparkles } from "lucide-react";
+import { SparkleIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import {
   AccordionContent,
@@ -14,7 +14,7 @@ export function EditorSectionSkills() {
   return (
     <AccordionItem value="skills" className="relative">
       <AccordionTrigger className="items-center gap-3">
-        <Sparkles className="size-4" /> {t("accordionTitle")}
+        <SparkleIcon className="size-4" /> {t("accordionTitle")}
       </AccordionTrigger>
 
       <EditorSectionVisibility type="skills" />

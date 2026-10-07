@@ -1,4 +1,4 @@
-import { Award } from "lucide-react";
+import { CertificateIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import {
   AccordionContent,
@@ -14,7 +14,7 @@ export function EditorSectionCertifications() {
   return (
     <AccordionItem value="certifications" className="relative">
       <AccordionTrigger className="items-center gap-3">
-        <Award className="size-4" /> {t("accordionTitle")}
+        <CertificateIcon className="size-4" /> {t("accordionTitle")}
       </AccordionTrigger>
 
       <EditorSectionVisibility type="certifications" />

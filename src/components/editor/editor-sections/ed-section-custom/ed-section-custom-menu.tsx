@@ -1,4 +1,8 @@
-import { MoreVertical, Pen, Trash } from "lucide-react";
+import {
+  DotsThreeVerticalIcon,
+  PencilSimpleIcon,
+  TrashIcon,
+} from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
@@ -32,18 +36,18 @@ export function EditorSectionCustomMenu(props: EditorSectionCustomMenuProps) {
       <DropdownMenu>
         <DropdownMenuTrigger render={<Button size="icon-sm" variant="ghost" />}>
           <span className="sr-only">{t("menuLabel")}</span>
-          <MoreVertical />
+          <DotsThreeVerticalIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={() => setRenameOpen(true)}>
-            <Pen /> {t("rename")}
+            <PencilSimpleIcon /> {t("rename")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             variant="destructive"
             onClick={() => removeCustomSection(props.sectionId)}
           >
-            <Trash /> {t("remove")}
+            <TrashIcon /> {t("remove")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

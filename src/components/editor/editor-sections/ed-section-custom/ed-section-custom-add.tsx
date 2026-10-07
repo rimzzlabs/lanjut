@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { PlusIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ export function EditorSectionCustomAdd(props: EditorSectionCustomAddProps) {
         className="w-full"
         onClick={() => setOpen(true)}
       >
-        <Plus /> <span className="sr-only">{tcom("add")} </span>
+        <PlusIcon /> <span className="sr-only">{tcom("add")} </span>
         {t("addSection")}
       </Button>
 

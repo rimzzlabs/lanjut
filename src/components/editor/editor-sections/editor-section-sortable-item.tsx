@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical } from "lucide-react";
+import { DotsSixVerticalIcon } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -58,7 +58,7 @@ export function EditorSectionSortableItem(
         {...attributes}
         {...listeners}
       >
-        <GripVertical className="size-4" />
+        <DotsSixVerticalIcon className="size-4" />
       </button>
       {props.children}
     </div>

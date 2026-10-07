@@ -1,4 +1,4 @@
-import { GraduationCap, Plus } from "lucide-react";
+import { GraduationCapIcon, PlusIcon } from "@phosphor-icons/react";
 import { useEffect, useRef } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useTranslations } from "use-intl";
@@ -85,13 +85,13 @@ export function EditorSectionEducationForm() {
           variant="outline"
           className="w-full"
         >
-          <Plus /> <span className="sr-only">{tc("add")} </span>
+          <PlusIcon /> <span className="sr-only">{tc("add")} </span>
           {t("add")}
         </Button>
 
         {fields.length === 0 && (
           <EmptyState
-            icon={GraduationCap}
+            icon={GraduationCapIcon}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />

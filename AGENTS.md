@@ -12,6 +12,7 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 - Tauri 2 (desktop shell for macOS; `src-tauri/`, system webview, loads the static export from disk)
 - use-intl (internationalization; English at `/` and Indonesian under `/id`, on web and desktop alike. `messages/*.json` hold the copy. `src/i18n` holds the routing helpers, the `Link`, `useRouter`, and `usePathname` replacements, and `getTranslator` for `.astro` files)
 - shadcn (base-ui variant)
+- @phosphor-icons/react (icons; `components.json` sets shadcn's `iconLibrary` to `phosphor`, and code imports the `*Icon` names)
 - Tailwind CSS
 - [TipTap](https://tiptap.dev/docs) (rich text editing, restricted extension set)
 - react-hook-form + zod + @hookform/resolvers (forms; every field goes through Controller, schemas in `src/lib/forms`)

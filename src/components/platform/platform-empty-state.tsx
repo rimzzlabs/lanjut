@@ -1,5 +1,9 @@
 import { A } from "@mobily/ts-belt";
-import { FilePlus, Inbox, Search } from "lucide-react";
+import {
+  FilePlusIcon,
+  MagnifyingGlassIcon,
+  TrayIcon,
+} from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 import { Link } from "@/i18n/navigation";
@@ -33,7 +37,7 @@ export function PlatformEmptyState() {
         <EmptyContent>
           <EmptyHeader>
             <EmptyMedia variant="icon">
-              <Inbox />
+              <TrayIcon />
             </EmptyMedia>
 
             <EmptyTitle>{t("title")}</EmptyTitle>
@@ -44,10 +48,10 @@ export function PlatformEmptyState() {
                 nativeButton={false}
                 render={<Link href="/platform/template" />}
               >
-                <Search /> {t("browseTemplates")}
+                <MagnifyingGlassIcon /> {t("browseTemplates")}
               </Button>
               <Button variant="secondary" onClick={() => setOpen(true)}>
-                <FilePlus /> {t("newResume")}
+                <FilePlusIcon /> {t("newResume")}
               </Button>
             </div>
           </EmptyHeader>

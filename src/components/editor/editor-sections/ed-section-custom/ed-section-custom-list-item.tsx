@@ -1,4 +1,4 @@
-import { Trash } from "lucide-react";
+import { TrashIcon } from "@phosphor-icons/react";
 import { type Control, Controller } from "react-hook-form";
 import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
@@ -57,7 +57,7 @@ export function EditorSectionCustomListItem(
                     size="icon-sm"
                     onClick={onRemove}
                   >
-                    <Trash className="size-3.5 stroke-destructive" />
+                    <TrashIcon className="size-3.5 text-destructive" />
                     <span className="sr-only">{t("removeEntry")}</span>
                   </Button>
                 </div>

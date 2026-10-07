@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+import type { Icon } from "@phosphor-icons/react";
 import {
   Empty,
   EmptyDescription,
@@ -10,7 +10,7 @@ import {
 interface EmptyStateProps {
   title: string;
   description: string;
-  icon?: LucideIcon;
+  icon?: Icon;
 }
 
 export function EmptyState(props: EmptyStateProps) {

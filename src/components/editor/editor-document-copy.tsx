@@ -1,4 +1,4 @@
-import { Copy } from "lucide-react";
+import { CopyIcon } from "@phosphor-icons/react";
 import { toast } from "sonner";
 import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
@@ -28,7 +28,7 @@ export function EditorDocumentCopy() {
         className="flex-1"
         onClick={() => void copy(() => resumeToJson(open))}
       >
-        <Copy />
+        <CopyIcon />
         <span className="sr-only">{t("copyAs")} </span>
         {t("copyJson")}
       </Button>
@@ -38,7 +38,7 @@ export function EditorDocumentCopy() {
         className="flex-1"
         onClick={() => void copy(() => resumeToYaml(open))}
       >
-        <Copy />
+        <CopyIcon />
         <span className="sr-only">{t("copyAs")} </span>
         {t("copyYaml")}
       </Button>

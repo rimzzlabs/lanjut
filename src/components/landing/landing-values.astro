@@ -1,5 +1,9 @@
 ---
-import { FileCheck2, HardDrive, ScanSearch } from "lucide-react";
+import {
+  FileMagnifyingGlassIcon,
+  HardDriveIcon,
+  SealCheckIcon,
+} from "@phosphor-icons/react";
 import type { Locale } from "@/i18n/routing";
 import { getTranslator } from "@/i18n/translator";
 
@@ -11,9 +15,13 @@ const { locale } = Astro.props;
 const t = getTranslator(locale, "values");
 
 const VALUES = [
-  { icon: HardDrive, titleKey: "localTitle", bodyKey: "localBody" },
-  { icon: ScanSearch, titleKey: "parseTitle", bodyKey: "parseBody" },
-  { icon: FileCheck2, titleKey: "freeTitle", bodyKey: "freeBody" },
+  { icon: HardDriveIcon, titleKey: "localTitle", bodyKey: "localBody" },
+  {
+    icon: FileMagnifyingGlassIcon,
+    titleKey: "parseTitle",
+    bodyKey: "parseBody",
+  },
+  { icon: SealCheckIcon, titleKey: "freeTitle", bodyKey: "freeBody" },
 ];
 ---
 

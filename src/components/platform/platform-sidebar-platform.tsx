@@ -1,5 +1,5 @@
 import { S } from "@mobily/ts-belt";
-import { Layout, LayoutTemplate } from "lucide-react";
+import { LayoutIcon, SquaresFourIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import {
@@ -23,7 +23,7 @@ export function PlatformSidebarPlatform() {
             isActive={pathname === "/platform"}
             render={<Link href="/platform" />}
           >
-            <Layout /> {t("dashboard")}
+            <LayoutIcon /> {t("dashboard")}
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem>
@@ -31,7 +31,7 @@ export function PlatformSidebarPlatform() {
             isActive={S.endsWith(pathname, "/template")}
             render={<Link href="/platform/template" />}
           >
-            <LayoutTemplate /> {t("browseTemplate")}
+            <SquaresFourIcon /> {t("browseTemplate")}
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>

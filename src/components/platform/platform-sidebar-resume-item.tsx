@@ -1,5 +1,11 @@
 import type { BaseUIEvent } from "@base-ui/react";
-import { Copy, FileText, MoreVertical, Pen, Trash } from "lucide-react";
+import {
+  CopyIcon,
+  DotsThreeVerticalIcon,
+  FileTextIcon,
+  PencilSimpleIcon,
+  TrashIcon,
+} from "@phosphor-icons/react";
 import { type MouseEvent, useState } from "react";
 import { useTranslations } from "use-intl";
 import { useEditorId } from "@/hooks/use-editor-id";
@@ -64,7 +70,7 @@ export function PlatformSidebarResumeItem(
         className="truncate"
         render={<Link href={editorHref(resume.id)} />}
       >
-        <FileText />
+        <FileTextIcon />
         <span className="truncate">{resume.title}</span>
       </SidebarMenuButton>
 
@@ -73,7 +79,7 @@ export function PlatformSidebarResumeItem(
           render={<SidebarMenuAction className="right-3.5" />}
         >
           <span className="sr-only">{t("itemMenu")}</span>
-          <MoreVertical />
+          <DotsThreeVerticalIcon />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="start">
@@ -85,11 +91,11 @@ export function PlatformSidebarResumeItem(
               })}
             </DropdownMenuLabel>
             <DropdownMenuItem onClick={openRenameDialog}>
-              <Pen />
+              <PencilSimpleIcon />
               {t("rename")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={onDuplicate}>
-              <Copy />
+              <CopyIcon />
               {t("duplicate")}
             </DropdownMenuItem>
 
@@ -100,7 +106,7 @@ export function PlatformSidebarResumeItem(
                   variant="destructive"
                   onClick={openRemoveDialog}
                 >
-                  <Trash />
+                  <TrashIcon />
                   {t("delete")}
                 </DropdownMenuItem>
               </>

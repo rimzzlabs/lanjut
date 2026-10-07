@@ -1,4 +1,4 @@
-import { FilePlus2, SearchX } from "lucide-react";
+import { FilePlusIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ export function PlatformResumeGridEmptySearch(
     <Empty className="border border-dashed">
       <EmptyHeader className="max-w-full">
         <EmptyMedia variant="icon">
-          <SearchX />
+          <MagnifyingGlassIcon />
         </EmptyMedia>
 
         <EmptyTitle>{t("emptyTitle")}</EmptyTitle>
@@ -38,7 +38,7 @@ export function PlatformResumeGridEmptySearch(
 
       <EmptyContent>
         <Button onClick={() => setOpen(true)} className="mx-auto max-w-60">
-          <FilePlus2 className="shrink-0" />
+          <FilePlusIcon className="shrink-0" />
           <span className="min-w-0 truncate">{t("create", { query })}</span>
         </Button>
       </EmptyContent>

@@ -1,4 +1,4 @@
-import { Trash } from "lucide-react";
+import { TrashIcon } from "@phosphor-icons/react";
 import { type Control, Controller } from "react-hook-form";
 import { useTranslations } from "use-intl";
 import { SortableItem } from "@/components/shared/sortable-list";
@@ -67,7 +67,7 @@ export function EditorSectionSkillsFormItem(
             className="md:hidden"
             onClick={() => props.onRemoveField(props.index)}
           >
-            <Trash className="size-3.5 stroke-destructive" />
+            <TrashIcon className="size-3.5 text-destructive" />
             <span className="sr-only">{t("remove")}</span>
           </Button>
         </div>
@@ -108,7 +108,7 @@ export function EditorSectionSkillsFormItem(
           className="max-md:hidden"
           onClick={() => props.onRemoveField(props.index)}
         >
-          <Trash className="size-3.5 stroke-destructive" />
+          <TrashIcon className="size-3.5 text-destructive" />
           <span className="sr-only">{t("remove")}</span>
         </Button>
       </div>

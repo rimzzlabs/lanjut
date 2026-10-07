@@ -1,4 +1,4 @@
-import { GraduationCap } from "lucide-react";
+import { GraduationCapIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import {
   AccordionContent,
@@ -14,7 +14,7 @@ export function EditorSectionEducation() {
   return (
     <AccordionItem value="education" className="relative">
       <AccordionTrigger className="items-center gap-3">
-        <GraduationCap className="size-4" /> {t("accordionTitle")}
+        <GraduationCapIcon className="size-4" /> {t("accordionTitle")}
       </AccordionTrigger>
 
       <EditorSectionVisibility type="education" />

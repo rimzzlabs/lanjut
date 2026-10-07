@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { PlusIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 import { Button } from "../ui/button";
@@ -22,7 +22,7 @@ export function PlatformSidebarResumeCreate() {
             />
           }
         >
-          <Plus /> <span className="sr-only">{t("createResume")}</span>
+          <PlusIcon /> <span className="sr-only">{t("createResume")}</span>
         </TooltipTrigger>
         <TooltipContent>{t("createResume")}</TooltipContent>
       </Tooltip>

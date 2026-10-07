@@ -1,4 +1,4 @@
-import { Menu } from "lucide-react";
+import { ListIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { Link } from "@/i18n/navigation";
 import { PlatformNavbarTheme } from "../platform/platform-navbar-theme";
@@ -25,7 +25,7 @@ export function LandingNavbarSheet() {
         render={<Button className="md:hidden" size="icon" variant="outline" />}
       >
         <span className="sr-only">{t("openMenu")}</span>
-        <Menu />
+        <ListIcon />
       </SheetTrigger>
 
       <SheetContent side="right">

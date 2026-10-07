@@ -1,5 +1,5 @@
 import { A, S } from "@mobily/ts-belt";
-import { Check, ClipboardCopy, Inbox } from "lucide-react";
+import { CheckIcon, ClipboardTextIcon, TrayIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 import {
@@ -44,7 +44,7 @@ export function EditorImportLeftovers() {
         className="w-full justify-start text-muted-foreground"
         onClick={() => setOpen(true)}
       >
-        <Inbox /> {t("button", { count: A.length(items) })}
+        <TrayIcon /> {t("button", { count: A.length(items) })}
       </Button>
 
       <ResponsiveDialog open={open} onOpenChange={setOpen}>
@@ -71,7 +71,7 @@ export function EditorImportLeftovers() {
                   size="icon-xs"
                   onClick={() => copy(index, item)}
                 >
-                  {copied === index ? <Check /> : <ClipboardCopy />}
+                  {copied === index ? <CheckIcon /> : <ClipboardTextIcon />}
                   <span className="sr-only">{t("copy")}</span>
                 </Button>
               </li>

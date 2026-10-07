@@ -1,4 +1,4 @@
-import { Redo2, Undo2 } from "lucide-react";
+import { ArrowUUpLeftIcon, ArrowUUpRightIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,7 +28,7 @@ export function EditorUndoRedo() {
             />
           }
         >
-          <Undo2 />
+          <ArrowUUpLeftIcon />
           <span className="sr-only">{t("undo")}</span>
         </TooltipTrigger>
         <TooltipContent>{t("undo")}</TooltipContent>
@@ -44,7 +44,7 @@ export function EditorUndoRedo() {
             />
           }
         >
-          <Redo2 />
+          <ArrowUUpRightIcon />
           <span className="sr-only">{t("redo")}</span>
         </TooltipTrigger>
         <TooltipContent>{t("redo")}</TooltipContent>

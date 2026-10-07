@@ -1,4 +1,4 @@
-import { Plus, Users } from "lucide-react";
+import { PlusIcon, UsersIcon } from "@phosphor-icons/react";
 import { useEffect, useRef } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useTranslations } from "use-intl";
@@ -90,13 +90,13 @@ export function EditorSectionOrganizationsForm() {
           variant="outline"
           className="w-full"
         >
-          <Plus /> <span className="sr-only">{tc("add")} </span>
+          <PlusIcon /> <span className="sr-only">{tc("add")} </span>
           {t("add")}
         </Button>
 
         {fields.length === 0 && (
           <EmptyState
-            icon={Users}
+            icon={UsersIcon}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />

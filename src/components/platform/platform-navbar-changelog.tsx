@@ -1,5 +1,9 @@
 import { A, O, pipe, S } from "@mobily/ts-belt";
-import { ArrowUpRight, ChevronDown, Sparkles } from "lucide-react";
+import {
+  ArrowUpRightIcon,
+  CaretDownIcon,
+  SparkleIcon,
+} from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useId, useState } from "react";
 import { useFormatter, useTranslations } from "use-intl";
@@ -87,7 +91,7 @@ export function PlatformNavbarChangelog() {
             />
           }
         >
-          <Sparkles />
+          <SparkleIcon />
           <span className="sr-only">{t("whatsNew")}</span>
           {hasUnseen && (
             <span
@@ -125,7 +129,7 @@ export function PlatformNavbarChangelog() {
             className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
             {t("fullChangelog")}
-            <ArrowUpRight className="size-4" />
+            <ArrowUpRightIcon className="size-4" />
           </ExternalLink>
         </SheetFooter>
       </SheetContent>
@@ -205,7 +209,7 @@ function PlatformNavbarChangelogEntry(props: {
           animate={{ rotate: props.isOpen ? 180 : 0 }}
           transition={reduceMotion ? INSTANT : CHEVRON_TRANSITION}
         >
-          <ChevronDown className="size-4" />
+          <CaretDownIcon className="size-4" />
         </motion.span>
       </button>
 

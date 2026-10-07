@@ -1,7 +1,7 @@
 import { A } from "@mobily/ts-belt";
+import { TextBIcon, TextItalicIcon } from "@phosphor-icons/react";
 import { type Editor, useEditorState } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
-import { Bold, Italic } from "lucide-react";
 import { useTranslations } from "use-intl";
 import { Toggle } from "@/components/ui/toggle";
 import type { RichTextFeature } from "@/lib/resume/schema-registry";
@@ -49,7 +49,7 @@ export function RichTextBubbleMenu(props: RichTextBubbleMenuProps) {
             props.editor.chain().focus().toggleBold().run()
           }
         >
-          <Bold />
+          <TextBIcon />
         </Toggle>
       )}
       {has("italic") && (
@@ -61,7 +61,7 @@ export function RichTextBubbleMenu(props: RichTextBubbleMenuProps) {
             props.editor.chain().focus().toggleItalic().run()
           }
         >
-          <Italic />
+          <TextItalicIcon />
         </Toggle>
       )}
       {has("link") && (

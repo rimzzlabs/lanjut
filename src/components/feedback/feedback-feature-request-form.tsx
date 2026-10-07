@@ -1,6 +1,6 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { A, O, S } from "@mobily/ts-belt";
-import { ExternalLink } from "lucide-react";
+import { ArrowSquareOutIcon } from "@phosphor-icons/react";
 import { type FormEvent, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -241,7 +241,7 @@ export function FeedbackFeatureRequestForm(
               disabled={form.formState.isSubmitting}
               onClick={openGitHubIssue}
             >
-              <ExternalLink /> {td("githubAlt")}
+              <ArrowSquareOutIcon /> {td("githubAlt")}
             </Button>
           )}
         </FieldGroup>
