@@ -1,0 +1,112 @@
+---
+import { A } from "@mobily/ts-belt";
+import { ArrowDownIcon, ArrowRightIcon } from "@phosphor-icons/react";
+import { buttonVariants } from "@/components/ui/button";
+import { type Locale, localizePath } from "@/i18n/routing";
+import { getTranslator } from "@/i18n/translator";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale, "landing");
+
+// Lines as a PDF extractor returns them, and where parseResumeText puts each
+// one. "Open to remote roles" is the line it leaves for the person to place.
+const RAW = [
+  "JOHN DOE",
+  "Senior Frontend Engineer",
+  "Open to remote roles",
+  "+15550101234 · john.doe@example.com",
+  "SUMMARY",
+  "Senior frontend engineer with 8+ years…",
+  "EXPERIENCE",
+  "Senior Frontend Engineer",
+  "Acme Corp, San Francisco, CA",
+];
+const HEADINGS = ["SUMMARY", "EXPERIENCE"];
+const SORTED = [
+  {
+    key: "sectionHeader",
+    lines: [
+      "JOHN DOE",
+      "Senior Frontend Engineer",
+      "+15550101234 · john.doe@example.com",
+    ],
+  },
+  { key: "sectionSummary", lines: ["Senior frontend engineer with 8+ years…"] },
+  {
+    key: "sectionExperience",
+    lines: ["Senior Frontend Engineer", "Acme Corp, San Francisco, CA"],
+  },
+];
+const LEFTOVER = "Open to remote roles";
+---
+
+<section class="mx-auto w-11/12 max-w-6xl pb-24 md:pb-36">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:items-end md:gap-12">
+    <h2
+      class="text-[clamp(2rem,4vw,3rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance md:col-span-7"
+    >
+      {t("importHeading")}
+    </h2>
+    <div class="md:col-span-5">
+      <p class="max-w-[52ch] text-muted-foreground">{t("importBody")}</p>
+      <a
+        href={localizePath("/platform?create=true", locale)}
+        class={cn(buttonVariants({ variant: "outline", size: "lg" }), "mt-6 h-11 gap-2 px-5")}
+      >
+        {t("importLink")}
+        <ArrowRightIcon />
+      </a>
+    </div>
+  </div>
+
+  <figure
+    aria-hidden="true"
+    class="mt-14 grid grid-cols-1 items-center gap-6 md:mt-20 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-10 lg:gap-16"
+  >
+    <div class="rounded-3xl bg-(--ink) p-6 font-machine text-xs leading-[1.9] md:p-8">
+      <p class="mb-4 text-(--machine-muted)">{t("importRawLabel")}</p>
+      {
+        RAW.map((line) => (
+          <p
+            class={cn(
+              "truncate text-(--machine-muted)",
+              A.includes(HEADINGS, line) && "font-semibold text-(--machine)",
+            )}
+          >
+            {line}
+          </p>
+        ))
+      }
+    </div>
+
+    <ArrowRightIcon className="mx-auto hidden size-5 text-muted-foreground md:block" />
+    <ArrowDownIcon className="mx-auto size-5 text-muted-foreground md:hidden" />
+
+    <div>
+      <p class="mb-4 text-xs text-muted-foreground">{t("importFound")}</p>
+      <dl class="divide-y divide-border border-y border-border text-sm">
+        {
+          SORTED.map((row) => (
+            <div class="grid gap-1 py-4 sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-6">
+              <dt class="text-muted-foreground">{t(row.key)}</dt>
+              <dd>
+                {row.lines.map((line) => (
+                  <p class="truncate">{line}</p>
+                ))}
+              </dd>
+            </div>
+          ))
+        }
+        <div class="grid gap-1 py-4 sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-6">
+          <dt class="text-muted-foreground">{t("importLeftovers")}</dt>
+          <dd class="font-machine text-xs leading-5">{LEFTOVER}</dd>
+        </div>
+      </dl>
+    </div>
+  </figure>
+</section>

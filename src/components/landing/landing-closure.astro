@@ -1,48 +1,27 @@
 ---
-import { ArrowRightIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { buttonVariants } from "@/components/ui/button";
-import { type Locale, localizePath } from "@/i18n/routing";
+import type { Locale } from "@/i18n/routing";
 import { getTranslator } from "@/i18n/translator";
-import { cn } from "@/lib/utils";
+import { LandingClosureActions } from "./landing-closure-actions";
 
 interface Props {
   locale: Locale;
+  pathname: string;
 }
 
-const { locale } = Astro.props;
-const t = getTranslator(locale, "closure");
+const { locale, pathname } = Astro.props;
+const t = getTranslator(locale, "landing");
 ---
 
-<section class="mx-auto w-11/12 max-w-5xl pb-24 md:pb-32">
-  <div class="landing-reveal border-y-2 border-foreground py-16 md:py-24">
-    <p class="font-mono text-xs tracking-[0.18em] text-primary uppercase">
-      {t("kicker")}
-    </p>
-    <h2
-      class="mt-4 max-w-3xl font-display text-[clamp(2rem,5vw,3.75rem)] leading-[1.04] font-semibold tracking-tight text-balance"
-    >
-      {t("heading")}
-    </h2>
-    <p class="mt-5 max-w-2xl text-base text-foreground/70 sm:text-lg">
-      {t("description")}
-    </p>
-    <div
-      class="mt-9 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:gap-4"
-    >
-      <a
-        href={localizePath("/platform?create=true", locale)}
-        class={cn(buttonVariants({ size: "lg", className: "gap-2" }))}
-      >
-        {t("ctaPrimary")}
-        <ArrowRightIcon />
-      </a>
-      <a
-        href={localizePath("/platform/template", locale)}
-        class={cn(buttonVariants({ size: "lg", variant: "outline" }))}
-      >
-        <MagnifyingGlassIcon />
-        {t("ctaSecondary")}
-      </a>
-    </div>
+<section class="mx-auto w-11/12 max-w-6xl pb-28 md:pb-40">
+  <h2
+    class="max-w-4xl text-[clamp(2.75rem,8vw,6rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-balance"
+  >
+    {t("closeHeading")}
+  </h2>
+  <p class="mt-6 max-w-[52ch] text-base text-muted-foreground sm:text-lg">
+    {t("closeBody")}
+  </p>
+  <div class="mt-10">
+    <LandingClosureActions client:visible locale={locale} pathname={pathname} />
   </div>
 </section>

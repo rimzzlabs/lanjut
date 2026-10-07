@@ -1,6 +1,7 @@
 import { Dialog as SheetPrimitive } from "@base-ui/react/dialog";
 import { XIcon } from "@phosphor-icons/react";
 import type * as React from "react";
+import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -45,6 +46,7 @@ function SheetContent({
   showCloseButton?: boolean;
   skipOverlay?: boolean;
 }) {
+  const t = useTranslations("ui");
   return (
     <SheetPortal>
       {!skipOverlay && <SheetOverlay />}
@@ -70,7 +72,7 @@ function SheetContent({
             }
           >
             <XIcon />
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{t("close")}</span>
           </SheetPrimitive.Close>
         )}
       </SheetPrimitive.Popup>

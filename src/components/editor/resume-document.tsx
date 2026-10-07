@@ -1,6 +1,7 @@
 import { A, D, O, pipe } from "@mobily/ts-belt";
 import { AnimatePresence } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslations } from "use-intl";
 import type { TemplateId } from "@/lib/templates";
 import { ResumeAnimatedBlock } from "./resume-animated-block";
 import { buildResumeBlocks } from "./resume-blocks";
@@ -30,6 +31,7 @@ const PAGE_GAP_PX = 24;
  * a CSS transform on the whole stack; it changes nothing about text order.
  */
 export function ResumeDocument(props: ResumeDocumentProps) {
+  const t = useTranslations("ui");
   const blocks = useMemo(() => buildResumeBlocks(props.resume), [props.resume]);
   const BlockView = TEMPLATE_BLOCK_VIEWS[props.template];
   const measureRef = useRef<HTMLDivElement>(null);
@@ -137,8 +139,13 @@ export function ResumeDocument(props: ResumeDocumentProps) {
               A.join("|"),
             );
             return (
-              // biome-ignore lint/suspicious/noArrayIndexKey: pages have no id; position is their identity
-              <ResumePage page={index + 1} total={A.length(pages)} key={index}>
+              <ResumePage
+                // biome-ignore lint/suspicious/noArrayIndexKey: pages have no id; position is their identity
+                key={index}
+                page={index + 1}
+                total={A.length(pages)}
+                label={t("pageOf", { page: index + 1, total: A.length(pages) })}
+              >
                 <AnimatePresence initial={false} mode="popLayout">
                   {pageBlocks.map((block, blockIndex) => (
                     <ResumeAnimatedBlock

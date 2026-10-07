@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { PROSE_FEATURES } from "@/lib/resume/schema-registry";
-import { RichTextEditor } from "../../rich-text/rich-text-editor";
+import { RichTextField } from "../../rich-text/rich-text-field";
 import { DateRangeFields } from "../date-range-fields";
 import type { OrganizationsFormValues } from "../resume-form-adapter-jobs";
 
@@ -105,7 +105,7 @@ export function EditorSectionOrganizationsFormItem(
             return (
               <Field>
                 <FieldLabel htmlFor={field.name}>{t("summary")}</FieldLabel>
-                <RichTextEditor
+                <RichTextField
                   id={field.name}
                   value={field.value}
                   features={PROSE_FEATURES}

@@ -14,14 +14,10 @@ export function PlatformSidebarHeader() {
 
         <Separator orientation="vertical" className="lg:hidden" />
 
-        <Link
-          href={homeHref()}
-          aria-label={t("home")}
-          className="flex items-center gap-2"
-        >
+        <Link href={homeHref()} className="flex items-center gap-2">
           <img
             src="/favicon.svg"
-            alt={t("logoAlt")}
+            alt=""
             width={28}
             height={28}
             className="size-7"

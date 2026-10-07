@@ -1,5 +1,6 @@
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useMemo } from "react";
+import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import { useResumeStore } from "@/lib/store";
 import { resolveTemplateId } from "@/lib/templates";
 import { EditorResumeNotFound } from "./editor-resume-not-found";
@@ -52,7 +53,7 @@ export function EditorResumePreview() {
 }
 
 function PreviewEnter(props: { children: ReactNode }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotionPreference();
 
   return (
     <motion.div
@@ -87,7 +88,7 @@ function PreviewContentReveal(props: { children: ReactNode }) {
     <div className="relative">
       <div
         aria-hidden
-        className="absolute inset-x-0 top-0 mx-auto aspect-210/297 w-full max-w-[794px] rounded border bg-white shadow-sm"
+        className="absolute inset-x-0 top-0 mx-auto aspect-210/297 w-full max-w-198.5 rounded border bg-white shadow-sm"
       />
       <motion.div
         className="relative"
@@ -116,6 +117,6 @@ function PreviewFade(props: { children: ReactNode }) {
 
 function PreviewSkeleton() {
   return (
-    <div className="mx-auto aspect-210/297 w-full max-w-[794px] animate-pulse rounded border bg-white shadow-sm" />
+    <div className="mx-auto aspect-210/297 w-full max-w-198.5 animate-pulse rounded border bg-white shadow-sm" />
   );
 }

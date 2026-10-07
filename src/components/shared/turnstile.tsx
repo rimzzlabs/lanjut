@@ -77,5 +77,5 @@ export function Turnstile(props: TurnstileProps) {
     };
   }, [locale, resolvedTheme]);
 
-  return <div ref={containerRef} className="min-h-[65px]" />;
+  return <div ref={containerRef} className="min-h-16.25" />;
 }

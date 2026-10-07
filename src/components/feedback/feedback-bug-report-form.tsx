@@ -173,12 +173,12 @@ export function FeedbackBugReportForm(props: FeedbackBugReportFormProps) {
               const { field } = controller;
               return (
                 <Field>
-                  <FieldLabel>{t("area")}</FieldLabel>
+                  <FieldLabel htmlFor="bug-report-area">{t("area")}</FieldLabel>
                   <Select
                     value={field.value}
                     onValueChange={(value) => field.onChange(value)}
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger id="bug-report-area" className="w-full">
                       <SelectValue placeholder={t("areaPlaceholder")} />
                     </SelectTrigger>
                     <SelectContent

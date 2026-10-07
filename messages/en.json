@@ -8,49 +8,6 @@
     "en": "English",
     "id": "Indonesia"
   },
-  "hero": {
-    "badge": "Free & open source",
-    "srHeading": "Lanjut, ATS Resume builder:",
-    "headingLine1": "Land The Interview,",
-    "headingLine2": "Not The Reject Pile.",
-    "description": "Lanjut is a local-first resume builder that stays entirely in your browser. No account, nothing uploaded. Style it freely, and every export is structured to sail through applicant tracking systems.",
-    "ctaPrimary": "Start building free",
-    "ctaSecondary": "Browse Templates",
-    "stat1Value": "100%",
-    "stat1Label": "Local-first",
-    "stat2Value": "No",
-    "stat2Label": "Accounts",
-    "stat3Value": "5",
-    "stat3Label": "Export formats"
-  },
-  "howItWorks": {
-    "heading": "How it works",
-    "subheading": "The same resume at every stage: what you type, what recruiters see, and what the parser reads back.",
-    "step1Kicker": "01 · Template",
-    "step1Title": "Pick a template",
-    "step1Description": "Start from a template you like. Each one only changes typography, spacing, and accents; the structure underneath stays ATS-safe.",
-    "step2Kicker": "02 · Content",
-    "step2Title": "Type it once",
-    "step2Description": "Fill structured sections: experience, education, skills. Every change lands in your browser's storage and nowhere else.",
-    "step3Kicker": "03 · Export",
-    "step3Title": "Survive the parser",
-    "step3Description": "Download PDF, DOCX, or plain text, and any extractor reads it back in the order you wrote it. That's the whole trick.",
-    "liveCaption": "Live render, same engine as your PDF."
-  },
-  "closure": {
-    "kicker": "04 · Apply",
-    "heading": "Lanjut. Resume. Résumé.",
-    "description": "The name is the pitch: lanjut means continue. Pick a template or start from a blank page; either way it's free, open source, and your resume never leaves your browser.",
-    "ctaPrimary": "Create your resume",
-    "ctaSecondary": "Browse templates"
-  },
-  "desktop": {
-    "kicker": "05 · Desktop",
-    "heading": "Or keep it on your Mac",
-    "description": "The same builder as a native app. Your résumés live on your own machine, and it keeps working with the network off.",
-    "cta": "Download for macOS",
-    "gatekeeper": "Beta, and not yet signed by Apple, so macOS asks you to confirm the first time you open it."
-  },
   "updater": {
     "title": "Lanjut {version} is available",
     "description": "You are up to date otherwise. Installing takes a moment and reopens the app.",
@@ -58,26 +15,16 @@
     "later": "Not now",
     "installing": "Downloading the update"
   },
-  "footer": {
-    "ariaLabel": "Footer",
-    "tagline": "Local-first: your resume never leaves your browser.",
-    "startBuilding": "Start building",
-    "templates": "Templates",
-    "github": "GitHub",
-    "support": "Support this project:",
-    "supportAriaLabel": "Donation links",
-    "rights": "© {year} Lanjut. Open source, AGPL-3.0 licensed."
-  },
   "nav": {
     "skipToContent": "Skip to main content",
-    "dashboard": "Dashboard",
-    "templates": "Templates",
-    "createResume": "Create Resume",
-    "openMenu": "Open menu",
-    "menuTitle": "Menu",
-    "menuDescription": "Browse Lanjut and jump into the resume builder.",
-    "display": "Display",
-    "close": "Close"
+    "main": "Main",
+    "toggleTheme": "Toggle theme",
+    "settings": "Settings",
+    "animation": "Animation",
+    "animationSystem": "System",
+    "animationOn": "On",
+    "animationOff": "Off",
+    "openApp": "Open app"
   },
   "tour": {
     "controls": {
@@ -173,14 +120,6 @@
       "editor": "Editor",
       "browseTemplates": "Browse Templates"
     },
-    "theme": {
-      "system": "System",
-      "light": "Light",
-      "dark": "Dark",
-      "choose": "Choose theme",
-      "appearance": "Appearance",
-      "chooseAppearance": "Choose Appearance"
-    },
     "changelog": {
       "whatsNew": "What's new",
       "description": "The latest from Lanjut",
@@ -191,6 +130,14 @@
           {
             "title": "Your PDF now matches the preview",
             "description": "PDF downloads are now drawn from the same page you see in the editor, so the fonts, sizes, and spacing in the file match the preview. The text stays selectable for applicant tracking systems."
+          },
+          {
+            "title": "Turn animations off",
+            "description": "A new settings menu in the top bar holds your language and an animation switch. Pick Off to stop movement on screen, or System to follow your device. The theme switch now sits right next to it."
+          },
+          {
+            "title": "Know your résumé is saved",
+            "description": "The top bar of the editor now shows when your résumé is saved on this device. If the browser ever refuses to save, it tells you right away and how to keep a copy."
           }
         ],
         "0_18_0": [
@@ -462,8 +409,6 @@
       "downloadResume": "Download Resume"
     },
     "sidebar": {
-      "home": "Lanjut - Home Page",
-      "logoAlt": "Lanjut Logo",
       "localFirst": "Local-First",
       "tagline": "ATS Resume Builder",
       "platform": "Platform",
@@ -483,7 +428,8 @@
       "rename": "Rename",
       "duplicate": "Duplicate",
       "copyOf": "Copy of {title}",
-      "delete": "Delete"
+      "delete": "Delete",
+      "label": "App navigation"
     },
     "toolbar": {
       "searchResume": "Search your resume",
@@ -491,7 +437,8 @@
       "searchTemplates": "Search templates",
       "sortNameAsc": "Name (A–Z)",
       "sortNameDesc": "Name (Z–A)",
-      "sortNewest": "Newest"
+      "sortNewest": "Newest",
+      "sortTemplates": "Sort templates"
     },
     "emptyState": {
       "title": "No resumes yet",
@@ -960,52 +907,171 @@
       "copyYaml": "YAML",
       "copied": "Copied to clipboard",
       "copyFailed": "Couldn't copy to the clipboard."
+    },
+    "saveStatus": {
+      "saved": "Saved on this device",
+      "savedShort": "Saved",
+      "saving": "Saving…",
+      "failed": "Not saved",
+      "failedTitle": "This browser did not save your last change",
+      "failedBody": "Storage can be full or blocked, for example in a private window. Your changes are still on screen. Download a copy from the Document tab before you close this page."
     }
-  },
-  "tryIt": {
-    "kicker": "Try it right here",
-    "heading": "Type your name. Watch it become a resume.",
-    "description": "This is not a mockup. The page you see on the right is drawn by the same engine that renders the editor and prints your PDF, live, as you type.",
-    "firstName": "First name",
-    "firstNamePlaceholder": "John",
-    "lastName": "Last name",
-    "lastNamePlaceholder": "Doe",
-    "jobTitle": "Job title",
-    "jobTitlePlaceholder": "Senior Frontend Engineer",
-    "template": "Template",
-    "cta": "Create your resume",
-    "note": "Free, no account. Everything stays in your browser.",
-    "caption": "Rendered live by the export engine. Never a screenshot.",
-    "draftTitle": "My resume"
-  },
-  "values": {
-    "localTitle": "Yours, locally",
-    "localBody": "Your resume lives in your browser and nowhere else. No account, no server, no one reading over your shoulder.",
-    "parseTitle": "Machines read it right",
-    "parseBody": "Every template keeps one linear reading order, and every export is verified by real text extraction before it ships.",
-    "freeTitle": "Free and open source",
-    "freeBody": "The whole builder is open source and free to use. Inspect the code, file an issue, or run it yourself."
-  },
-  "parserProof": {
-    "caption": "Runs in your browser, on this page, right now",
-    "waiting": "waiting for you to scroll here…",
-    "rendering": "rendering resume.pdf",
-    "renderedKb": "done · {kb} KB",
-    "extracting": "extracting text with a real parser",
-    "extractedChars": "{chars} characters",
-    "checkName": "name “{name}” survives extraction",
-    "checkTitle": "job title survives extraction",
-    "checkEmployer": "employer “Acme Corp” survives extraction",
-    "checkEmail": "email address intact",
-    "checkOrder": "sections in reading order:",
-    "passed": "{count}/5 checks passed. This exact document is what an ATS reads.",
-    "failed": "the run hit an error in this browser. Try again.",
-    "rerun": "Run it again"
   },
   "notFound": {
     "metaTitle": "Page not found",
     "title": "This page does not exist",
     "body": "The link is broken, or the page moved.",
     "home": "Go to the home page"
+  },
+  "ui": {
+    "close": "Close",
+    "toggleSidebar": "Toggle sidebar",
+    "loading": "Loading",
+    "breadcrumb": "Breadcrumb",
+    "pageOf": "Page {page} of {total}",
+    "done": "Done",
+    "notDone": "Not done"
+  },
+  "landing": {
+    "srHeading": "Lanjut, a free ATS résumé builder:",
+    "headingLine1": "Every résumé",
+    "headingLead": "is read ",
+    "headingAccent": "twice.",
+    "deck": "First a parser pulls out the text, then a recruiter looks at the page. Lanjut makes one résumé that works for both. It is free, and it never leaves your browser.",
+    "firstName": "First name",
+    "firstNamePlaceholder": "Your first name",
+    "lastName": "Last name",
+    "lastNamePlaceholder": "Your last name",
+    "role": "Role you're applying for",
+    "rolePlaceholder": "The role you want",
+    "look": "Look",
+    "humanLabel": "What the recruiter sees",
+    "machineLabel": "What the parser reads",
+    "scannerLabel": "Compare the two readings",
+    "scannerValue": "{percent}% of the page shown as styled",
+    "reading": "Reading your PDF…",
+    "readDone": "Read back from a real PDF · {chars, number} characters",
+    "readFallback": "Plain-text export. The PDF read failed in this browser.",
+    "checkName": "Name found",
+    "checkRole": "Role found",
+    "checkEmail": "Email intact",
+    "checkOrder": "Sections in order",
+    "sampleNote": "Your name and role, on sample content.",
+    "cta": "Continue in the builder",
+    "allTemplates": "See all six templates",
+    "noAccount": "No account. Nothing uploaded.",
+    "looksHeading": "Change the look. The order stays put.",
+    "looksBody": "Six templates, each with its own type and spacing. Pick one and the résumé above is read again. The sections come back in the same order, and every change to Lanjut is tested for it.",
+    "looksPick": "Use {name}",
+    "lookAwal": "Plain and roomy",
+    "lookKetat": "Compact serif",
+    "lookLuasa": "Airy, letterspaced",
+    "lookTebal": "Big name, heavy headings",
+    "lookKlasik": "All serif, centered",
+    "lookKetik": "Typewriter tone",
+    "localHeading": "Your résumé never leaves this browser.",
+    "localBody": "There is no account and no copy on a server. Lanjut keeps your résumés in your browser's own storage, and you can export them as PDF, DOCX, plain text, JSON, or YAML whenever you want.",
+    "localPanelCaption": "Where your work lives",
+    "localStores": "Object stores",
+    "localSource": "Lanjut is open source under AGPL-3.0.",
+    "localSourceLink": "Read the code on GitHub",
+    "appHeading": "Prefer an app?",
+    "appBody": "The same builder runs as a Mac app that keeps working offline.",
+    "macMeta": "macOS 13 or later",
+    "macCta": "Download for macOS",
+    "macNote": "It is a beta and not yet signed by Apple, so macOS asks you to confirm the first time you open it.",
+    "closeHeading": "Free to use, and open source.",
+    "closeBody": "There is no paid plan and no account to make. The code is public under AGPL-3.0, and anyone can read it or run their own copy.",
+    "closeCta": "Start your résumé",
+    "closeBrowse": "Browse templates",
+    "newTab": "opens in a new tab",
+    "ogLine": "Free · Open source · Stays in your browser",
+    "footer": {
+      "tagline": "A free résumé builder that keeps your work in your browser.",
+      "product": "Product",
+      "project": "Project",
+      "support": "Support",
+      "builder": "Builder",
+      "templates": "Templates",
+      "download": "Download for macOS",
+      "github": "GitHub",
+      "rights": "© {year} Lanjut. Open source under AGPL-3.0."
+    },
+    "draftTitle": "My resume",
+    "keptHeading": "Some things stay out on purpose.",
+    "keptBody": "Parsers read a page from top to bottom. Anything that breaks that order can scramble your text, so Lanjut keeps it out of the content and leaves everything else up to you.",
+    "keptAllowedTitle": "Sections you can use",
+    "keptOutTitle": "Kept out of the text",
+    "sectionHeader": "Header",
+    "sectionSummary": "Summary",
+    "sectionExperience": "Experience",
+    "sectionInternship": "Internship",
+    "sectionProjects": "Projects",
+    "sectionOrganizations": "Organizations",
+    "sectionEducation": "Education",
+    "sectionCertifications": "Certifications",
+    "sectionSkills": "Skills",
+    "sectionLanguages": "Languages",
+    "sectionCustom": "Your own sections",
+    "outTables": "Tables",
+    "outTablesWhy": "Cells can be read in an order you never meant.",
+    "outColumns": "Two-column text",
+    "outColumnsWhy": "Side-by-side lines can merge into one jumbled line.",
+    "outBoxes": "Floating text boxes",
+    "outBoxesWhy": "Text outside the main flow is easy to skip.",
+    "outImages": "Pictures inside text",
+    "outImagesWhy": "A parser reads text, not images.",
+    "keptPhoto": "The header photo is the one exception. It is optional, off by default, and never changes the text a parser reads.",
+    "importHeading": "Already have a résumé? Start from it.",
+    "importBody": "Drop in a PDF, or a JSON or YAML file you exported earlier. Lanjut sorts what it finds into sections, and anything it can't place waits in a list you can copy from. The file is read in your browser, like everything else.",
+    "importFound": "Sorted into sections",
+    "importLeftovers": "Lines to place yourself",
+    "exportsHeading": "One résumé, five files.",
+    "exportsBody": "Each application asks for something different. All five come from the same résumé, so they never drift apart.",
+    "exportPdf": "For upload forms and email. It reads back in the same order you see.",
+    "exportDocx": "For recruiters and portals that ask for Word.",
+    "exportTxt": "For forms that want you to paste plain text.",
+    "exportJson": "A full copy you can import again later.",
+    "exportYaml": "The same copy, easier to read and edit by hand.",
+    "orderTitle": "Section order the parser read",
+    "orderNote": "Pick another template. The order stays the same.",
+    "importLink": "Import a file in the builder",
+    "importRawLabel": "Text from your PDF",
+    "snippetLabel": "Your PDF, read back",
+    "snippetChars": "{chars, number} characters",
+    "otherPlatforms": "Windows and Linux are coming soon.",
+    "faqHeading": "Common questions",
+    "faqMissing": "Not covered here?",
+    "faqMissingLink": "Ask on GitHub",
+    "faq": {
+      "free": {
+        "question": "Is Lanjut really free?",
+        "answer": "Yes. There is no paid plan and no account. If you want to support the work, you can donate through Saweria or SociaBuzz. Both links are in the footer."
+      },
+      "storage": {
+        "question": "Where is my résumé saved?",
+        "answer": "In this browser, on this device. Lanjut keeps your résumés in the browser's own storage and sends nothing to a server. If you clear your site data or switch browsers, the résumés stay behind, so export a JSON copy to move them or to keep a backup."
+      },
+      "files": {
+        "question": "Which file should I send?",
+        "answer": "Send the PDF to most upload forms and by email. Send the .docx when a portal or a recruiter asks for Word. Paste the .txt into forms that only take plain text."
+      },
+      "ats": {
+        "question": "Will my résumé get through an applicant tracking system?",
+        "answer": "No tool can promise that, because each company sets up its system its own way. Lanjut takes care of the part the file controls: real text in reading order, standard section headings, and contact details a parser can find. The sheet at the top of this page shows the text a parser reads back from your PDF."
+      },
+      "import": {
+        "question": "Can I import the résumé I already have?",
+        "answer": "Yes. Drop in a PDF, or a JSON or YAML file you exported from Lanjut. The PDF needs real text, so a scanned page or a password-protected file cannot be read. Any line Lanjut cannot place goes to a list you can copy from."
+      },
+      "language": {
+        "question": "Can I write my résumé in Indonesian?",
+        "answer": "Yes. Set the document language to Indonesian in the editor, and the fixed labels, such as section headings and dates, change with it. The app itself is in English and Indonesian too."
+      },
+      "photo": {
+        "question": "Can I add a photo?",
+        "answer": "Yes. The header photo is optional and off by default. It shows in the PDF and the .docx, the .txt leaves it out, and it never changes the text a parser reads."
+      }
+    }
   }
 }

@@ -1,0 +1,33 @@
+---
+import type { Locale } from "@/i18n/routing";
+import { getTranslator } from "@/i18n/translator";
+import { LandingLooks } from "./landing-looks";
+import { LandingOrderPlate } from "./landing-order-plate";
+
+interface Props {
+  locale: Locale;
+  pathname: string;
+}
+
+const { locale, pathname } = Astro.props;
+const t = getTranslator(locale, "landing");
+---
+
+<section class="mx-auto w-11/12 max-w-6xl pb-24 md:pb-36">
+  <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
+    <div class="self-start md:sticky md:top-28 md:col-span-4">
+      <h2
+        class="text-[clamp(2rem,4vw,3rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance"
+      >
+        {t("looksHeading")}
+      </h2>
+      <p class="mt-5 max-w-[40ch] text-muted-foreground">{t("looksBody")}</p>
+      <div class="mt-8">
+        <LandingOrderPlate client:visible locale={locale} pathname={pathname} />
+      </div>
+    </div>
+    <div class="md:col-span-8">
+      <LandingLooks client:visible locale={locale} pathname={pathname} />
+    </div>
+  </div>
+</section>

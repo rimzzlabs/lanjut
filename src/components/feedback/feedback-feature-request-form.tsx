@@ -162,12 +162,17 @@ export function FeedbackFeatureRequestForm(
               const { field } = controller;
               return (
                 <Field>
-                  <FieldLabel>{t("layer")}</FieldLabel>
+                  <FieldLabel htmlFor="feature-request-layer">
+                    {t("layer")}
+                  </FieldLabel>
                   <Select
                     value={field.value}
                     onValueChange={(value) => field.onChange(value)}
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger
+                      id="feature-request-layer"
+                      className="w-full"
+                    >
                       <SelectValue placeholder={t("layerPlaceholder")} />
                     </SelectTrigger>
                     <SelectContent

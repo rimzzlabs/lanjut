@@ -13,6 +13,8 @@ interface Props {
   description?: string;
   /** Platform pages render each visitor's own data; nothing there to index. */
   noindex?: boolean;
+  /** A page with its own tokens in globals.css, set on the body so popups share them. */
+  world?: "readers";
 }
 
 const props = Astro.props;
@@ -95,11 +97,11 @@ const keywords = [
     <Font cssVariable="--font-geist-sans" />
     <Font cssVariable="--font-geist-mono" />
     <Font cssVariable="--font-brand" />
-    <Font cssVariable="--font-display" preload />
+    <Font cssVariable="--font-display" />
     <script is:inline set:html={preferencesScript} />
     <slot name="head" />
   </head>
-  <body>
+  <body data-world={props.world}>
     <slot />
   </body>
 </html>

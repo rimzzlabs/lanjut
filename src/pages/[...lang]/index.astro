@@ -1,12 +1,16 @@
 ---
+import { Font } from "astro:assets";
 import LandingClosure from "@/components/landing/landing-closure.astro";
-import LandingDesktop from "@/components/landing/landing-desktop.astro";
+import LandingDownload from "@/components/landing/landing-download.astro";
+import LandingExports from "@/components/landing/landing-exports.astro";
+import LandingFaq from "@/components/landing/landing-faq.astro";
 import LandingFooter from "@/components/landing/landing-footer.astro";
 import LandingHero from "@/components/landing/landing-hero.astro";
-import LandingHowItWorks from "@/components/landing/landing-how-it-works.astro";
+import LandingImport from "@/components/landing/landing-import.astro";
+import LandingKept from "@/components/landing/landing-kept.astro";
+import LandingLocal from "@/components/landing/landing-local.astro";
+import LandingLooks from "@/components/landing/landing-looks.astro";
 import LandingNavbar from "@/components/landing/landing-navbar.astro";
-import LandingTryIt from "@/components/landing/landing-try-it.astro";
-import LandingValues from "@/components/landing/landing-values.astro";
 import RootLayout from "@/components/shared/root-layout.astro";
 import { type Locale, localeStaticPaths } from "@/i18n/routing";
 import { getTranslator } from "@/i18n/translator";
@@ -49,7 +53,7 @@ const structuredData = {
 };
 ---
 
-<RootLayout locale={locale}>
+<RootLayout locale={locale} world="readers">
   <script
     slot="head"
     is:inline
@@ -63,14 +67,19 @@ const structuredData = {
     {tNav("skipToContent")}
   </a>
 
-  <LandingNavbar locale={locale} pathname={pathname} />
-  <main id="main">
-    <LandingHero locale={locale} />
-    <LandingTryIt locale={locale} pathname={pathname} />
-    <LandingHowItWorks locale={locale} pathname={pathname} />
-    <LandingValues locale={locale} />
-    <LandingDesktop locale={locale} />
-    <LandingClosure locale={locale} />
-  </main>
-  <LandingFooter locale={locale} />
+  <Font slot="head" cssVariable="--font-landing" preload />
+  <Font slot="head" cssVariable="--font-machine" />
+    <LandingNavbar locale={locale} pathname={pathname} />
+    <main id="main">
+      <LandingHero locale={locale} pathname={pathname} />
+      <LandingLooks locale={locale} pathname={pathname} />
+      <LandingKept locale={locale} />
+      <LandingImport locale={locale} />
+      <LandingExports locale={locale} pathname={pathname} />
+      <LandingLocal locale={locale} />
+      <LandingDownload locale={locale} />
+      <LandingFaq locale={locale} pathname={pathname} />
+      <LandingClosure locale={locale} pathname={pathname} />
+    </main>
+    <LandingFooter locale={locale} />
 </RootLayout>

@@ -1,87 +1,37 @@
 ---
-import { ArrowRightIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
-import { buttonVariants } from "@/components/ui/button";
-import { type Locale, localizePath } from "@/i18n/routing";
+import type { Locale } from "@/i18n/routing";
 import { getTranslator } from "@/i18n/translator";
-import { cn } from "@/lib/utils";
+import { LandingReaders } from "./landing-readers";
 
 interface Props {
   locale: Locale;
+  pathname: string;
 }
 
-const { locale } = Astro.props;
-const t = getTranslator(locale, "hero");
-
-const STATS = [
-  { valueKey: "stat1Value", labelKey: "stat1Label" },
-  { valueKey: "stat2Value", labelKey: "stat2Label" },
-  { valueKey: "stat3Value", labelKey: "stat3Label" },
-];
+const { locale, pathname } = Astro.props;
+const t = getTranslator(locale, "landing");
 ---
 
-<section
-  class="mx-auto flex min-h-[calc(100svh-3.5rem)] w-11/12 max-w-5xl flex-col justify-center py-20 md:py-28"
->
-  <p
-    class="landing-rise flex items-center gap-3 text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase"
-    style="--rise: 0"
-  >
-    <span aria-hidden="true" class="h-px w-8 bg-primary"></span>
-    {t("badge")}
-  </p>
-
-  <h1
-    class="landing-rise mt-6 max-w-4xl font-display text-[clamp(2.5rem,7vw,5.25rem)] leading-[1.02] font-semibold tracking-tight text-balance wrap-anywhere"
-    style="--rise: 1"
-  >
-    <span class="sr-only">{t("srHeading")}</span>
-    {t("headingLine1")}
-    <br />
-    <span class="text-primary">{t("headingLine2")}</span>
-  </h1>
-
-  <p
-    class="landing-rise mt-7 max-w-2xl text-base text-foreground/70 sm:text-lg"
-    style="--rise: 2"
-  >
-    {t("description")}
-  </p>
-
-  <div
-    class="landing-rise mt-9 flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:items-center sm:gap-4"
-    style="--rise: 3"
-  >
-    <a
-      href={localizePath("/platform", locale)}
-      class={cn(buttonVariants({ size: "lg", className: "gap-2" }))}
+<section class="mx-auto w-11/12 max-w-6xl pt-10 pb-24 md:pt-16 md:pb-36">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:items-end md:gap-10">
+    <h1
+      class="landing-rise text-[clamp(2.75rem,7.4vw,6rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-balance md:col-span-8"
+      style="--rise: 0"
     >
-      {t("ctaPrimary")}
-      <ArrowRightIcon />
-    </a>
-    <a
-      href={localizePath("/platform/template", locale)}
-      class={cn(buttonVariants({ size: "lg", variant: "outline" }))}
+      <span class="sr-only">{t("srHeading")}</span>
+      {t("headingLine1")}
+      <br />
+      {t("headingLead")}<span class="text-primary">{t("headingAccent")}</span>
+    </h1>
+    <p
+      class="landing-rise max-w-[42ch] text-base text-muted-foreground sm:text-lg md:col-span-4 md:pb-2"
+      style="--rise: 1"
     >
-      <MagnifyingGlassIcon />
-      {t("ctaSecondary")}
-    </a>
+      {t("deck")}
+    </p>
   </div>
 
-  <dl
-    class="landing-rise mt-14 grid max-w-2xl grid-cols-3 divide-x divide-foreground/15 border-y border-foreground/15"
-    style="--rise: 4"
-  >
-    {
-      STATS.map((stat) => (
-        <div class="px-4 py-4 first:pl-0">
-          <dt class="font-display text-2xl font-semibold text-foreground sm:text-3xl">
-            {t(stat.valueKey)}
-          </dt>
-          <dd class="mt-1 text-xs text-muted-foreground sm:text-sm">
-            {t(stat.labelKey)}
-          </dd>
-        </div>
-      ))
-    }
-  </dl>
+  <div class="landing-rise mt-10 md:mt-14" style="--rise: 2">
+    <LandingReaders client:load locale={locale} pathname={pathname} />
+  </div>
 </section>

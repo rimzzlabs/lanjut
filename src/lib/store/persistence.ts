@@ -1,6 +1,7 @@
 import { F } from "@mobily/ts-belt";
 import { putResume } from "@/lib/db";
 import type { Resume } from "@/lib/resume";
+import { useSaveStatusStore } from "./save-status-store";
 
 /**
  * The persist target is read lazily so this module and the store don't import
@@ -18,9 +19,14 @@ export function setOpenResumeGetter(getter: OpenResumeGetter): void {
   getOpenResume = getter;
 }
 
-async function persistOpenNow(): Promise<void> {
+function persistOpenNow(): Promise<void> {
   const resume = getOpenResume();
-  if (resume) await putResume(resume);
+  if (!resume) return Promise.resolve();
+  const { setStatus } = useSaveStatusStore.getState();
+  return putResume(resume).then(
+    () => setStatus("saved"),
+    () => setStatus("failed"),
+  );
 }
 
 /**
@@ -36,6 +42,7 @@ const controlled = F.makeControlledDebounce(
 );
 
 export function scheduleOpenResumePersist(): void {
+  useSaveStatusStore.getState().setStatus("saving");
   controlled.schedule();
 }
 

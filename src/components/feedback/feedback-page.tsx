@@ -4,7 +4,9 @@ import { AppProviders, type IslandProps } from "@/components/shared/providers";
 export function FeedbackPage(props: IslandProps) {
   return (
     <AppProviders locale={props.locale} pathname={props.pathname}>
-      <FeedbackPanel />
+      <main>
+        <FeedbackPanel />
+      </main>
     </AppProviders>
   );
 }

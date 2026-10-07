@@ -5,6 +5,8 @@ interface ResumePageProps {
   children: ReactNode;
   page: number;
   total: number;
+  /** The counter as a screen reader hears it. Thumbnails, which are inert, omit it. */
+  label?: string;
 }
 
 /**
@@ -32,8 +34,11 @@ export function ResumePage(props: ResumePageProps) {
       style={PAPER_STYLE}
     >
       {props.children}
-      <p className="text-[0.6875rem] text-muted-foreground/70 absolute bottom-4 right-4">
-        <span className="sr-only">Page</span> {props.page}/{props.total}
+      <p className="text-[0.6875rem] text-muted-foreground absolute bottom-4 right-4">
+        {props.label && <span className="sr-only">{props.label}</span>}
+        <span aria-hidden={props.label ? true : undefined}>
+          {props.page}/{props.total}
+        </span>
       </p>
     </div>
   );

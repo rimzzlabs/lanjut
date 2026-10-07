@@ -16,7 +16,7 @@ interface EditorSectionSortableItemProps {
  * carry the same inset but no grip, so every row's icon and title line up. The
  * inset targets the trigger content only, keeping the row background full-bleed.
  */
-export const SECTION_TRIGGER_INSET = "[&_[data-slot=accordion-trigger]]:pl-10";
+export const SECTION_TRIGGER_INSET = "**:data-[slot=accordion-trigger]:pl-10";
 
 /**
  * Wraps a reorderable section's accordion item with drag behavior. The grip sits

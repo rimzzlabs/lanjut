@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/field";
 import { PROSE_FEATURES } from "@/lib/resume/schema-registry";
 import { useResumeStore } from "@/lib/store";
-import { RichTextEditor } from "../../rich-text/rich-text-editor";
+import { RichTextField } from "../../rich-text/rich-text-field";
 import {
   applySummaryValues,
   type SummaryFormValues,
@@ -46,7 +46,7 @@ export function EditorSectionSummaryForm() {
             return (
               <Field>
                 <FieldLabel htmlFor={field.name}>{t("label")}</FieldLabel>
-                <RichTextEditor
+                <RichTextField
                   id={field.name}
                   value={field.value}
                   features={PROSE_FEATURES}

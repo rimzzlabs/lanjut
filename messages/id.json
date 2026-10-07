@@ -8,49 +8,6 @@
     "en": "Bahasa Inggris",
     "id": "Bahasa Indonesia"
   },
-  "hero": {
-    "badge": "Gratis & open source",
-    "srHeading": "Lanjut, pembuat resume ATS:",
-    "headingLine1": "Tingkatkan Peluang Interview,",
-    "headingLine2": "Bukan Tumpukan Penolakan.",
-    "description": "Lanjut itu pembuat resume local-first yang jalan sepenuhnya di browser kamu. Tanpa akun, tanpa unggah-unggah. Atur gayanya sesukamu, dan tiap ekspor tersusun rapi biar lolos sistem pelacakan pelamar.",
-    "ctaPrimary": "Bikin gratis",
-    "ctaSecondary": "Intip Template",
-    "stat1Value": "100%",
-    "stat1Label": "Local-first",
-    "stat2Value": "Tanpa",
-    "stat2Label": "Akun",
-    "stat3Value": "5",
-    "stat3Label": "Format ekspor"
-  },
-  "howItWorks": {
-    "heading": "Cara kerjanya",
-    "subheading": "Resume yang sama di tiap tahap: apa yang kamu ketik, apa yang dilihat perekrut, dan apa yang dibaca ulang parser.",
-    "step1Kicker": "01 · Template",
-    "step1Title": "Pilih template",
-    "step1Description": "Mulai dari template yang kamu suka. Masing-masing cuma ngubah tipografi, spasi, dan aksen; struktur di baliknya tetap aman buat ATS.",
-    "step2Kicker": "02 · Konten",
-    "step2Title": "Ketik sekali aja",
-    "step2Description": "Isi bagian-bagiannya: pengalaman, pendidikan, keahlian. Tiap perubahan langsung tersimpan di browser kamu, nggak ke mana-mana.",
-    "step3Kicker": "03 · Ekspor",
-    "step3Title": "Lolos dari parser",
-    "step3Description": "Unduh PDF, DOCX, atau teks biasa, dan tiap extractor bakal baca ulang persis seurutan yang kamu tulis. Itu aja rahasianya.",
-    "liveCaption": "Render langsung, mesin yang sama dengan PDF-mu."
-  },
-  "closure": {
-    "kicker": "04 · Lamar",
-    "heading": "Lanjut. Resume. Résumé.",
-    "description": "Namanya udah jadi janjinya: lanjut artinya terus maju. Pilih template atau mulai dari halaman kosong; dua-duanya gratis, open source, dan resume kamu nggak pernah keluar dari browser.",
-    "ctaPrimary": "Buat resume kamu",
-    "ctaSecondary": "Intip template"
-  },
-  "desktop": {
-    "kicker": "05 · Desktop",
-    "heading": "Atau simpan di Mac kamu",
-    "description": "Builder yang sama sebagai aplikasi native. Résumé kamu tersimpan di perangkat sendiri, dan tetap jalan waktu internet mati.",
-    "cta": "Unduh untuk macOS",
-    "gatekeeper": "Masih beta dan belum ditandatangani Apple, jadi macOS minta konfirmasi saat pertama kali dibuka."
-  },
   "updater": {
     "title": "Lanjut {version} sudah tersedia",
     "description": "Selain itu semuanya sudah terbaru. Pemasangan sebentar saja lalu aplikasi dibuka ulang.",
@@ -58,26 +15,16 @@
     "later": "Nanti saja",
     "installing": "Mengunduh pembaruan"
   },
-  "footer": {
-    "ariaLabel": "Footer",
-    "tagline": "Local-first: resume kamu nggak pernah keluar dari browser.",
-    "startBuilding": "Mulai bikin",
-    "templates": "Template",
-    "github": "GitHub",
-    "support": "Dukung proyek ini:",
-    "supportAriaLabel": "Tautan donasi",
-    "rights": "© {year} Lanjut. Open source, berlisensi AGPL-3.0."
-  },
   "nav": {
     "skipToContent": "Lewati ke konten utama",
-    "dashboard": "Dasbor",
-    "templates": "Template",
-    "createResume": "Buat resume",
-    "openMenu": "Buka menu",
-    "menuTitle": "Menu",
-    "menuDescription": "Jelajahi Lanjut dan langsung mulai bikin resume.",
-    "display": "Tampilan",
-    "close": "Tutup"
+    "main": "Utama",
+    "toggleTheme": "Ganti tema",
+    "settings": "Pengaturan",
+    "animation": "Animasi",
+    "animationSystem": "Sistem",
+    "animationOn": "Nyala",
+    "animationOff": "Mati",
+    "openApp": "Buka aplikasi"
   },
   "tour": {
     "controls": {
@@ -173,14 +120,6 @@
       "editor": "Editor",
       "browseTemplates": "Jelajahi Template"
     },
-    "theme": {
-      "system": "Sistem",
-      "light": "Terang",
-      "dark": "Gelap",
-      "choose": "Pilih tema",
-      "appearance": "Tampilan",
-      "chooseAppearance": "Pilih Tampilan"
-    },
     "changelog": {
       "whatsNew": "Apa yang baru",
       "description": "Yang terbaru dari Lanjut",
@@ -191,6 +130,14 @@
           {
             "title": "PDF kamu sekarang sama dengan pratinjau",
             "description": "Unduhan PDF sekarang dibuat dari halaman yang sama dengan yang kamu lihat di editor, jadi huruf, ukuran, dan jarak di file sama dengan pratinjau. Teksnya tetap bisa dipilih untuk sistem pelacak pelamar."
+          },
+          {
+            "title": "Matikan animasi",
+            "description": "Menu pengaturan baru di bilah atas berisi bahasa dan tombol animasi. Pilih Mati untuk menghentikan gerakan di layar, atau Sistem untuk mengikuti perangkat kamu. Tombol tema sekarang ada tepat di sebelahnya."
+          },
+          {
+            "title": "Pastikan résumé kamu tersimpan",
+            "description": "Bilah atas editor sekarang menunjukkan kapan résumé kamu tersimpan di perangkat ini. Kalau browser menolak menyimpan, kamu langsung diberi tahu dan cara menyimpan salinannya."
           }
         ],
         "0_18_0": [
@@ -462,8 +409,6 @@
       "downloadResume": "Unduh Resume"
     },
     "sidebar": {
-      "home": "Lanjut - Halaman Utama",
-      "logoAlt": "Logo Lanjut",
       "localFirst": "Local-First",
       "tagline": "Pembuat Resume ATS",
       "platform": "Platform",
@@ -483,7 +428,8 @@
       "rename": "Ganti nama",
       "duplicate": "Duplikat",
       "copyOf": "Salinan dari {title}",
-      "delete": "Hapus"
+      "delete": "Hapus",
+      "label": "Navigasi aplikasi"
     },
     "toolbar": {
       "searchResume": "Cari resume kamu",
@@ -491,7 +437,8 @@
       "searchTemplates": "Cari template",
       "sortNameAsc": "Nama (A-Z)",
       "sortNameDesc": "Nama (Z-A)",
-      "sortNewest": "Terbaru"
+      "sortNewest": "Terbaru",
+      "sortTemplates": "Urutkan template"
     },
     "emptyState": {
       "title": "Belum ada resume",
@@ -960,52 +907,171 @@
       "copyYaml": "YAML",
       "copied": "Disalin ke clipboard",
       "copyFailed": "Nggak bisa menyalin ke clipboard."
+    },
+    "saveStatus": {
+      "saved": "Tersimpan di perangkat ini",
+      "savedShort": "Tersimpan",
+      "saving": "Menyimpan…",
+      "failed": "Belum tersimpan",
+      "failedTitle": "Browser ini tidak menyimpan perubahan terakhirmu",
+      "failedBody": "Penyimpanan bisa penuh atau diblokir, misalnya di jendela pribadi. Perubahanmu masih ada di layar. Unduh salinan dari tab Dokumen sebelum kamu menutup halaman ini."
     }
-  },
-  "tryIt": {
-    "kicker": "Coba langsung di sini",
-    "heading": "Ketik namamu. Lihat jadi resume.",
-    "description": "Ini bukan mockup. Halaman di sebelah kanan digambar oleh mesin yang sama dengan editor dan PDF-mu, langsung, selagi kamu mengetik.",
-    "firstName": "Nama depan",
-    "firstNamePlaceholder": "Budi",
-    "lastName": "Nama belakang",
-    "lastNamePlaceholder": "Santoso",
-    "jobTitle": "Posisi",
-    "jobTitlePlaceholder": "Senior Frontend Engineer",
-    "template": "Template",
-    "cta": "Buat resume kamu",
-    "note": "Gratis, tanpa akun. Semuanya tersimpan di browser kamu.",
-    "caption": "Dirender langsung oleh mesin ekspor. Bukan tangkapan layar.",
-    "draftTitle": "Resume saya"
-  },
-  "values": {
-    "localTitle": "Milikmu, lokal",
-    "localBody": "Resume kamu hidup di browser kamu, bukan di tempat lain. Tanpa akun, tanpa server, tanpa yang mengintip.",
-    "parseTitle": "Mesin membacanya dengan benar",
-    "parseBody": "Semua template menjaga satu urutan baca linear, dan setiap ekspor diverifikasi lewat ekstraksi teks sungguhan sebelum dirilis.",
-    "freeTitle": "Gratis dan open source",
-    "freeBody": "Seluruh builder ini open source dan gratis. Periksa kodenya, laporkan masalah, atau jalankan sendiri."
-  },
-  "parserProof": {
-    "caption": "Berjalan di browser kamu, di halaman ini, sekarang",
-    "waiting": "menunggu kamu scroll ke sini…",
-    "rendering": "merender resume.pdf",
-    "renderedKb": "selesai · {kb} KB",
-    "extracting": "mengekstrak teks dengan parser sungguhan",
-    "extractedChars": "{chars} karakter",
-    "checkName": "nama “{name}” selamat dari ekstraksi",
-    "checkTitle": "posisi selamat dari ekstraksi",
-    "checkEmployer": "perusahaan “Acme Corp” selamat dari ekstraksi",
-    "checkEmail": "alamat email utuh",
-    "checkOrder": "urutan section terjaga:",
-    "passed": "{count}/5 pemeriksaan lolos. Dokumen inilah yang dibaca ATS.",
-    "failed": "proses gagal di browser ini. Coba lagi.",
-    "rerun": "Jalankan lagi"
   },
   "notFound": {
     "metaTitle": "Halaman tidak ditemukan",
     "title": "Halaman ini tidak ada",
     "body": "Tautannya rusak, atau halamannya sudah pindah.",
     "home": "Ke beranda"
+  },
+  "ui": {
+    "close": "Tutup",
+    "toggleSidebar": "Tampilkan atau sembunyikan sidebar",
+    "loading": "Memuat",
+    "breadcrumb": "Jalur navigasi",
+    "pageOf": "Halaman {page} dari {total}",
+    "done": "Selesai",
+    "notDone": "Belum"
+  },
+  "landing": {
+    "srHeading": "Lanjut, pembuat resume ATS gratis:",
+    "headingLine1": "Setiap resume",
+    "headingLead": "dibaca ",
+    "headingAccent": "dua kali.",
+    "deck": "Pertama, parser mengambil teksnya. Lalu perekrut melihat tampilannya. Lanjut bikin satu resume yang pas untuk keduanya. Gratis, dan nggak pernah keluar dari browser kamu.",
+    "firstName": "Nama depan",
+    "firstNamePlaceholder": "Nama depanmu",
+    "lastName": "Nama belakang",
+    "lastNamePlaceholder": "Nama belakangmu",
+    "role": "Posisi yang kamu lamar",
+    "rolePlaceholder": "Posisi incaranmu",
+    "look": "Tampilan",
+    "humanLabel": "Yang dilihat perekrut",
+    "machineLabel": "Yang dibaca parser",
+    "scannerLabel": "Bandingkan dua cara baca",
+    "scannerValue": "{percent}% halaman tampil dengan gaya",
+    "reading": "Membaca PDF kamu…",
+    "readDone": "Dibaca ulang dari PDF asli · {chars, number} karakter",
+    "readFallback": "Ekspor teks biasa. Pembacaan PDF gagal di browser ini.",
+    "checkName": "Nama terbaca",
+    "checkRole": "Posisi terbaca",
+    "checkEmail": "Email utuh",
+    "checkOrder": "Urutan section terjaga",
+    "sampleNote": "Nama dan posisimu, di atas konten contoh.",
+    "cta": "Lanjut ke builder",
+    "allTemplates": "Lihat keenam template",
+    "noAccount": "Tanpa akun. Tanpa unggah.",
+    "looksHeading": "Ganti tampilannya. Urutannya tetap.",
+    "looksBody": "Enam template, masing-masing dengan huruf dan spasinya sendiri. Pilih satu dan resume di atas dibaca ulang. Section-nya kembali dengan urutan yang sama, dan setiap perubahan di Lanjut diuji untuk itu.",
+    "looksPick": "Pakai {name}",
+    "lookAwal": "Polos dan lega",
+    "lookKetat": "Serif yang padat",
+    "lookLuasa": "Lapang, huruf renggang",
+    "lookTebal": "Nama besar, judul tebal",
+    "lookKlasik": "Serif penuh, rata tengah",
+    "lookKetik": "Nuansa mesin tik",
+    "localHeading": "Resume kamu nggak pernah keluar dari browser ini.",
+    "localBody": "Nggak ada akun dan nggak ada salinan di server. Lanjut menyimpan resume kamu di penyimpanan browser kamu sendiri, dan kamu bisa mengekspornya ke PDF, DOCX, teks biasa, JSON, atau YAML kapan saja.",
+    "localPanelCaption": "Tempat kerjaanmu tersimpan",
+    "localStores": "Object store",
+    "localSource": "Lanjut open source dengan lisensi AGPL-3.0.",
+    "localSourceLink": "Baca kodenya di GitHub",
+    "appHeading": "Lebih suka aplikasi?",
+    "appBody": "Builder yang sama juga ada sebagai aplikasi Mac yang tetap jalan tanpa internet.",
+    "macMeta": "macOS 13 ke atas",
+    "macCta": "Unduh untuk macOS",
+    "macNote": "Masih beta dan belum ditandatangani Apple, jadi macOS minta konfirmasi saat pertama kali dibuka.",
+    "closeHeading": "Gratis dipakai, dan open source.",
+    "closeBody": "Nggak ada paket berbayar, dan nggak perlu bikin akun. Kodenya terbuka dengan lisensi AGPL-3.0, jadi siapa pun bisa membacanya atau menjalankan salinannya sendiri.",
+    "closeCta": "Mulai resume kamu",
+    "closeBrowse": "Lihat template",
+    "newTab": "terbuka di tab baru",
+    "ogLine": "Gratis · Open source · Tetap di browser kamu",
+    "footer": {
+      "tagline": "Pembuat resume gratis yang menyimpan kerjaanmu di browser kamu.",
+      "product": "Produk",
+      "project": "Proyek",
+      "support": "Dukungan",
+      "builder": "Builder",
+      "templates": "Template",
+      "download": "Unduh untuk macOS",
+      "github": "GitHub",
+      "rights": "© {year} Lanjut. Open source dengan lisensi AGPL-3.0."
+    },
+    "draftTitle": "Resume saya",
+    "keptHeading": "Ada yang sengaja nggak dimasukkan.",
+    "keptBody": "Parser membaca halaman dari atas ke bawah. Apa pun yang merusak urutan itu bisa mengacak teksmu, jadi Lanjut menjauhkannya dari isi resume dan menyerahkan sisanya ke kamu.",
+    "keptAllowedTitle": "Section yang bisa kamu pakai",
+    "keptOutTitle": "Dijauhkan dari teks",
+    "sectionHeader": "Header",
+    "sectionSummary": "Ringkasan",
+    "sectionExperience": "Pengalaman",
+    "sectionInternship": "Magang",
+    "sectionProjects": "Proyek",
+    "sectionOrganizations": "Organisasi",
+    "sectionEducation": "Pendidikan",
+    "sectionCertifications": "Sertifikasi",
+    "sectionSkills": "Keahlian",
+    "sectionLanguages": "Bahasa",
+    "sectionCustom": "Section buatanmu sendiri",
+    "outTables": "Tabel",
+    "outTablesWhy": "Isi sel bisa terbaca dengan urutan yang nggak kamu maksud.",
+    "outColumns": "Teks dua kolom",
+    "outColumnsWhy": "Baris yang bersebelahan bisa tergabung jadi satu baris berantakan.",
+    "outBoxes": "Kotak teks melayang",
+    "outBoxesWhy": "Teks di luar alur utama gampang terlewat.",
+    "outImages": "Gambar di dalam teks",
+    "outImagesWhy": "Parser membaca teks, bukan gambar.",
+    "keptPhoto": "Foto di header satu-satunya pengecualian. Sifatnya opsional, mati secara bawaan, dan nggak pernah mengubah teks yang dibaca parser.",
+    "importHeading": "Sudah punya resume? Mulai dari situ.",
+    "importBody": "Masukkan PDF, atau file JSON atau YAML yang pernah kamu ekspor. Lanjut memilah isinya ke dalam section, dan bagian yang belum bisa ditempatkan menunggu di daftar yang bisa kamu salin. Filenya dibaca di browser kamu, sama seperti yang lainnya.",
+    "importFound": "Dipilah ke dalam section",
+    "importLeftovers": "Baris untuk kamu tempatkan sendiri",
+    "exportsHeading": "Satu resume, lima file.",
+    "exportsBody": "Tiap lamaran minta format yang berbeda. Kelimanya berasal dari resume yang sama, jadi isinya nggak pernah berbeda.",
+    "exportPdf": "Untuk formulir unggah dan email. Terbaca ulang dengan urutan yang sama seperti yang kamu lihat.",
+    "exportDocx": "Untuk perekrut dan portal yang minta file Word.",
+    "exportTxt": "Untuk formulir yang minta teks biasa ditempel.",
+    "exportJson": "Salinan lengkap yang bisa kamu impor lagi nanti.",
+    "exportYaml": "Salinan yang sama, lebih mudah dibaca dan diedit manual.",
+    "orderTitle": "Urutan section yang dibaca parser",
+    "orderNote": "Pilih template lain. Urutannya tetap sama.",
+    "importLink": "Impor file di builder",
+    "importRawLabel": "Teks dari PDF kamu",
+    "snippetLabel": "PDF kamu, dibaca ulang",
+    "snippetChars": "{chars, number} karakter",
+    "otherPlatforms": "Windows dan Linux segera hadir.",
+    "faqHeading": "Pertanyaan umum",
+    "faqMissing": "Pertanyaanmu nggak ada di sini?",
+    "faqMissingLink": "Tanya di GitHub",
+    "faq": {
+      "free": {
+        "question": "Lanjut beneran gratis?",
+        "answer": "Iya. Nggak ada paket berbayar dan nggak perlu akun. Kalau mau mendukung, kamu bisa berdonasi lewat Saweria atau SociaBuzz. Tautannya ada di footer."
+      },
+      "storage": {
+        "question": "Resume aku disimpan di mana?",
+        "answer": "Di browser ini, di perangkat ini. Lanjut menyimpan resume kamu di penyimpanan bawaan browser dan nggak mengirim apa pun ke server. Kalau kamu menghapus data situs atau pindah browser, resume kamu tertinggal, jadi ekspor salinan JSON untuk memindahkan atau mencadangkannya."
+      },
+      "files": {
+        "question": "File mana yang harus aku kirim?",
+        "answer": "Kirim PDF untuk sebagian besar formulir unggah dan lewat email. Kirim .docx kalau portal atau perekrut minta file Word. Tempel .txt ke formulir yang cuma menerima teks biasa."
+      },
+      "ats": {
+        "question": "Apakah resume aku bakal lolos ATS?",
+        "answer": "Nggak ada alat yang bisa menjanjikan itu, karena tiap perusahaan mengatur sistemnya sendiri. Lanjut mengurus bagian yang ditentukan file: teks asli sesuai urutan baca, judul section yang standar, dan kontak yang bisa ditemukan parser. Lembar di bagian atas halaman ini menunjukkan teks yang dibaca parser dari PDF kamu."
+      },
+      "import": {
+        "question": "Bisa impor resume yang sudah aku punya?",
+        "answer": "Bisa. Masukkan PDF, atau file JSON atau YAML yang kamu ekspor dari Lanjut. PDF-nya harus berisi teks asli, jadi halaman hasil scan atau file yang dikunci kata sandi nggak bisa dibaca. Baris yang nggak bisa ditempatkan Lanjut masuk ke daftar yang bisa kamu salin."
+      },
+      "language": {
+        "question": "Bisa bikin resume dalam bahasa Inggris?",
+        "answer": "Bisa. Atur bahasa dokumen ke Inggris di editor, dan label tetap seperti judul section dan tanggal ikut berubah. Aplikasinya sendiri tersedia dalam bahasa Indonesia dan Inggris."
+      },
+      "photo": {
+        "question": "Bisa pasang foto?",
+        "answer": "Bisa. Foto di header itu opsional dan mati secara bawaan. Foto muncul di PDF dan .docx, file .txt nggak menyertakannya, dan foto nggak pernah mengubah teks yang dibaca parser."
+      }
+    }
   }
 }

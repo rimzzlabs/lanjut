@@ -58,6 +58,22 @@ export default defineConfig({
     },
     {
       provider: fontProviders.google(),
+      name: "Schibsted Grotesk",
+      cssVariable: "--font-landing",
+      weights: ["400 900"],
+      styles: ["normal"],
+      subsets: ["latin"],
+    },
+    {
+      provider: fontProviders.google(),
+      name: "Martian Mono",
+      cssVariable: "--font-machine",
+      weights: ["100 800"],
+      styles: ["normal"],
+      subsets: ["latin"],
+    },
+    {
+      provider: fontProviders.google(),
       name: "Fraunces",
       cssVariable: "--font-display",
       weights: ["100 900"],

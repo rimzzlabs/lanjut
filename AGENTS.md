@@ -14,7 +14,7 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 - shadcn (base-ui variant)
 - @phosphor-icons/react (icons; `components.json` sets shadcn's `iconLibrary` to `phosphor`, and code imports the `*Icon` names)
 - Tailwind CSS
-- [TipTap](https://tiptap.dev/docs) (rich text editing, restricted extension set)
+- [TipTap](https://tiptap.dev/docs) (rich text editing, restricted extension set). TipTap is the largest library in the app, so it stays off the first paint: editor forms render the lazy `RichTextField`, never `RichTextEditor` directly, and the platform feedback dialogs load their forms on demand (`platform-feedback-forms.tsx`).
 - react-hook-form + zod + @hookform/resolvers (forms; every field goes through Controller, schemas in `src/lib/forms`)
 - @dnd-kit (section and entry drag-to-reorder)
 - takumi-pdf (PDF export: renders the preview's own HTML and compiled CSS to PDF in the browser, through WebAssembly) and docx (.docx export)
@@ -35,7 +35,8 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 
 - Pages live in `src/pages/[...lang]/` as `.astro` files. `localeStaticPaths` emits each page once per locale.
 - An application page (platform, editor, feedback) renders one React island root, for example `PlatformDashboardPage`. The root wraps its content in `AppProviders`.
-- Landing sections are `.astro` components in `src/components/landing/`. Only the parts that need JavaScript are React islands: the navbar actions, Try It, the live résumé renders, and the parser proof. An island that reads copy wraps itself in `IslandProviders`. Static sections take their copy from `getTranslator`.
+- Landing sections are `.astro` components in `src/components/landing/`. Only the parts that need JavaScript are React islands: the navbar theme toggle and settings menu, the hero's two-readers sheet (the live résumé beside the text a PDF extractor reads back from it), the template picker, the FAQ accordion, and the closing actions. The landing page has its own scoped tokens and faces (`[data-world="readers"]` in `globals.css`, set on `<body>` through the `world` prop of `RootLayout`), so the app keeps its own look. An island that reads copy wraps itself in `IslandProviders`. Static sections take their copy from `getTranslator`.
+- Primitives with built-in labels (the Dialog and Sheet close button, `SidebarTrigger`, `Spinner`, `Breadcrumb`) read them from the `ui` messages namespace, so they render only inside an island that wraps `IslandProviders`. `ResumePage` takes its label as a prop instead, because the landing page renders it with no provider.
 - Each island is its own React root. React context does not cross islands, so each root carries its own providers. Module state does cross them: islands on one page share the same zustand stores.
 - Every page change is a full document load. `Link` and `useRouter` from `@/i18n/navigation` flush the pending resume write before they leave. State that must survive a page change lives in IndexedDB or in a zustand `persist` store.
 - The editor address is `/platform/editor?id=<id>` on web and desktop. `editorHref` and `useEditorId` own it. The Worker forwards the old `/platform/editor/<id>` links.

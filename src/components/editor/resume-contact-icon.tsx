@@ -6,7 +6,8 @@ import {
   MapPinIcon,
   PhoneIcon,
 } from "@phosphor-icons/react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import { cn } from "@/lib/utils";
 import type { ContactKind } from "./resume-preview";
 
@@ -49,7 +50,7 @@ interface ResumeContactIconProps {
  * the element unmounts.
  */
 export function ResumeContactIcon(props: ResumeContactIconProps) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionPreference();
   const Icon = CONTACT_ICON[props.kind];
   const edge = props.edge ?? "start";
   const collapsed = COLLAPSED[edge];

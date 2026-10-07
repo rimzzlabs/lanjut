@@ -14,6 +14,7 @@ import {
 import { Link } from "@/i18n/navigation";
 import type { ResumeIndexEntry } from "@/lib/resume";
 import { editorHref } from "@/lib/routes";
+import { TruncatedLabel } from "../../shared/truncated-label";
 import { PlatformResumeGridItemMenu } from "./platform-resume-grid-item-menu";
 import { PlatformResumeGridItemThumbnail } from "./platform-resume-grid-item-thumbnail";
 
@@ -40,12 +41,12 @@ export function PlatformResumeGridItem(props: PlatformResumeGridItemProps) {
       </div>
 
       <CardHeader>
-        <CardTitle className="truncate">
+        <CardTitle className="min-w-0">
           <Link
             href={href}
-            className="rounded-xs hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="block rounded-xs hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
-            {resume.title}
+            <TruncatedLabel text={resume.title} />
           </Link>
         </CardTitle>
         <CardDescription className="text-xs">

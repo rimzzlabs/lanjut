@@ -2,12 +2,14 @@ import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import { CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/react";
 import type * as React from "react";
+import { useTranslations } from "use-intl";
 import { cn } from "@/lib/utils";
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
+  const t = useTranslations("ui");
   return (
     <nav
-      aria-label="breadcrumb"
+      aria-label={t("breadcrumb")}
       data-slot="breadcrumb"
       className={cn(className)}
       {...props}

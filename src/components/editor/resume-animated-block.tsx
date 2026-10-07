@@ -1,5 +1,6 @@
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import type { CSSProperties, ReactNode } from "react";
+import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -18,7 +19,7 @@ const ENTER_FROM = { opacity: 0, y: 8 };
  * never while typing merely reflows content within existing blocks.
  */
 export function ResumeAnimatedBlock(props: ResumeAnimatedBlockProps) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionPreference();
   return (
     <motion.div
       layout={reduce ? false : "position"}

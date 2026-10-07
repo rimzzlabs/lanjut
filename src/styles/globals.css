@@ -9,6 +9,8 @@
 @import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant motion-safe (&:where([data-motion="full"], [data-motion="full"] *));
+@custom-variant motion-reduce (&:where([data-motion="reduce"], [data-motion="reduce"] *));
 
 @theme inline {
   --color-background: var(--background);
@@ -27,6 +29,8 @@
   --font-heading: var(--font-sans);
   --font-display: var(--font-display);
   --font-brand: var(--font-brand);
+  --font-landing: var(--font-landing);
+  --font-machine: var(--font-machine);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -241,10 +245,8 @@ html[data-sidebar="collapsed"]
   left: calc(var(--sidebar-width) * -1);
 }
 
-/* Landing entrances, in CSS so the static sections ship no JavaScript.
-   `landing-rise` plays once on load; `--rise` staggers siblings by 120ms.
-   `landing-reveal` plays as the element scrolls into view. A browser without
-   scroll-driven animations shows the content still. */
+/* The landing hero entrance, in CSS so the static sections ship no JavaScript.
+   `landing-rise` plays once on load; `--rise` staggers siblings by 120ms. */
 @keyframes landing-rise {
   from {
     opacity: 0;
@@ -263,17 +265,80 @@ html[data-sidebar="collapsed"]
   animation-delay: calc(80ms + var(--rise, 0) * 120ms);
 }
 
-@supports (animation-timeline: view()) {
-  .landing-reveal {
-    animation: landing-rise cubic-bezier(0.16, 1, 0.3, 1) both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 80%;
-  }
+/* The head script and the motion store set data-motion from the animation
+   setting. Reduced motion keeps fades and color changes and drops movement. */
+:root[data-motion="reduce"] .landing-rise {
+  animation-name: landing-fade;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .landing-rise,
-  .landing-reveal {
-    animation-name: landing-fade;
-  }
+:root[data-motion="reduce"] *,
+:root[data-motion="reduce"] *::before,
+:root[data-motion="reduce"] *::after {
+  --tw-enter-scale: 1;
+  --tw-exit-scale: 1;
+  --tw-enter-rotate: 0;
+  --tw-exit-rotate: 0;
+  --tw-enter-translate-x: 0;
+  --tw-enter-translate-y: 0;
+  --tw-exit-translate-x: 0;
+  --tw-exit-translate-y: 0;
+  --reduced-motion-transitions:
+    opacity, color, background-color, border-color, outline-color,
+    text-decoration-color, fill, stroke, box-shadow;
+  /* biome-ignore lint/complexity/noImportantStyles: reduced motion must win over inline and component transitions. */
+  transition-property: var(--reduced-motion-transitions) !important;
+}
+
+/* The landing page's own world ("two readers"). It re-points the shadcn tokens
+   on the landing page's body only, so the app keeps its look. */
+[data-world="readers"] {
+  --background: oklch(0.975 0.004 165);
+  --foreground: oklch(0.2 0.02 168);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.02 168);
+  --popover: oklch(0.99 0.003 165);
+  --popover-foreground: oklch(0.2 0.02 168);
+  --primary: oklch(0.55 0.12 164);
+  --primary-foreground: oklch(0.99 0.005 160);
+  --secondary: oklch(0.93 0.008 165);
+  --secondary-foreground: oklch(0.2 0.02 168);
+  --muted: oklch(0.94 0.006 165);
+  --muted-foreground: oklch(0.45 0.02 168);
+  --accent: oklch(0.93 0.008 165);
+  --accent-foreground: oklch(0.2 0.02 168);
+  --border: oklch(0.88 0.01 168);
+  --input: oklch(0.86 0.012 168);
+  --ring: oklch(0.55 0.12 164);
+  --ink: oklch(0.17 0.02 168);
+  --ink-line: oklch(0.3 0.025 168);
+  --machine: oklch(0.86 0.1 158);
+  --machine-muted: oklch(0.66 0.05 162);
+  --scanner: oklch(0.74 0.16 160);
+  /* Softer corners than the app: a control rounds to about a third of its height. */
+  --radius: 0.55rem;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-landing), var(--font-sans), sans-serif;
+}
+
+.dark [data-world="readers"] {
+  --background: oklch(0.155 0.018 168);
+  --foreground: oklch(0.965 0.008 160);
+  --card: oklch(0.19 0.02 168);
+  --card-foreground: oklch(0.965 0.008 160);
+  --popover: oklch(0.2 0.02 168);
+  --popover-foreground: oklch(0.965 0.008 160);
+  --primary: oklch(0.76 0.15 160);
+  --primary-foreground: oklch(0.17 0.03 165);
+  --secondary: oklch(0.23 0.02 168);
+  --secondary-foreground: oklch(0.965 0.008 160);
+  --muted: oklch(0.22 0.02 168);
+  --muted-foreground: oklch(0.74 0.02 165);
+  --accent: oklch(0.24 0.022 168);
+  --accent-foreground: oklch(0.965 0.008 160);
+  --border: oklch(0.3 0.022 168);
+  --input: oklch(0.33 0.024 168);
+  --ring: oklch(0.76 0.15 160);
+  --ink: oklch(0.12 0.016 168);
+  --ink-line: oklch(0.28 0.022 168);
 }

@@ -11,7 +11,7 @@ import {
 import { emptyRichTextValue } from "@/lib/resume";
 import { PROSE_FEATURES } from "@/lib/resume/schema-registry";
 import { useResumeStore } from "@/lib/store";
-import { RichTextEditor } from "../../rich-text/rich-text-editor";
+import { RichTextField } from "../../rich-text/rich-text-field";
 import {
   applyCustomBodyValues,
   type CustomBodyFormValues,
@@ -62,7 +62,7 @@ export function EditorSectionCustomBodyForm(
             return (
               <Field>
                 <FieldLabel htmlFor={field.name}>{t("bodyLabel")}</FieldLabel>
-                <RichTextEditor
+                <RichTextField
                   id={field.name}
                   value={field.value}
                   features={PROSE_FEATURES}

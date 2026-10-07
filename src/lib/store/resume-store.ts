@@ -29,6 +29,7 @@ import {
   scheduleOpenResumePersist,
   setOpenResumeGetter,
 } from "./persistence";
+import { useSaveStatusStore } from "./save-status-store";
 
 type IndexStatus = "idle" | "loading" | "ready" | "error";
 type OpenStatus = "idle" | "loading" | "ready" | "missing";
@@ -284,6 +285,7 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     await setLastOpenedResumeId(id);
     resetUndoHistory();
     set({ open: resume, openStatus: "ready", canUndo: false, canRedo: false });
+    useSaveStatusStore.getState().setStatus("saved");
   },
 
   updateOpen(update) {

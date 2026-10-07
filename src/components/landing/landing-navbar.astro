@@ -1,7 +1,11 @@
 ---
+import { ArrowRightIcon } from "@phosphor-icons/react";
+import { buttonVariants } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { type Locale, localizePath } from "@/i18n/routing";
 import { getTranslator } from "@/i18n/translator";
-import { LandingNavbarActions } from "./landing-navbar-actions";
+import { cn } from "@/lib/utils";
+import { LandingNavbarSettings } from "./landing-navbar-settings";
 
 interface Props {
   locale: Locale;
@@ -10,35 +14,129 @@ interface Props {
 
 const { locale, pathname } = Astro.props;
 const t = getTranslator(locale, "nav");
+const homeHref = localizePath("/", locale);
+const builderHref = localizePath("/platform", locale);
 ---
 
-<header
-  class="sticky top-0 z-40 border-b border-foreground/15 bg-background/85 backdrop-blur"
->
-  <div class="mx-auto flex h-16 w-11/12 max-w-5xl items-center">
-    <a
-      href={localizePath("/", locale)}
-      class="inline-flex items-center gap-2 font-brand text-lg font-bold tracking-tight"
+<div class="relative hidden h-16 md:block">
+  <header
+    data-landing-header
+    data-state="top"
+    class="group/header absolute inset-x-0 top-2 z-40 transition-[top,translate,opacity] duration-300 ease-out data-[animate=false]:transition-none data-[state=hidden]:pointer-events-none data-[state=hidden]:fixed data-[state=hidden]:top-3 data-[state=hidden]:-translate-y-[calc(100%+1rem)] data-[state=hidden]:opacity-0 data-[state=pill]:fixed data-[state=pill]:top-3"
+  >
+    <div
+      class="relative isolate mx-auto flex h-14 w-11/12 max-w-6xl items-center rounded-[calc(var(--radius)*1.8+0.5rem)] border border-transparent transition-[padding,background-color,border-color,box-shadow] duration-300 ease-out before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] group-data-[animate=false]/header:transition-none group-data-[state=pill]/header:border-foreground/10 group-data-[state=pill]/header:bg-popover/70 dark:group-data-[state=pill]/header:bg-popover/85 group-data-[state=pill]/header:px-1.75 group-data-[state=pill]/header:shadow-md group-data-[state=pill]/header:before:backdrop-blur-2xl group-data-[state=pill]/header:before:backdrop-saturate-150"
     >
-      <img src="/favicon.svg" alt="" width="22" height="22" class="size-5.5" />
-      Lanjut
+      <a
+        href={homeHref}
+        class={cn(
+          buttonVariants({ variant: "ghost" }),
+          "-ml-3 h-10 gap-2 px-3 font-brand text-lg font-bold tracking-tight transition-[margin,background-color] group-data-[state=pill]/header:ml-0 group-data-[state=pill]/header:hover:bg-transparent dark:group-data-[state=pill]/header:hover:bg-transparent",
+        )}
+      >
+        <img src="/favicon.svg" alt="" width="22" height="22" class="size-5.5" />
+        Lanjut
+      </a>
+
+      <nav aria-label={t("main")} class="ml-auto inline-flex items-center gap-2">
+        <LandingNavbarSettings
+          client:media="(min-width: 48rem)"
+          locale={locale}
+          pathname={pathname}
+          buttonClassName="size-10 rounded-2xl"
+        />
+        <Separator orientation="vertical" className="my-2 bg-foreground/15" />
+        <a
+          href={builderHref}
+          class={cn(buttonVariants({ variant: "outline" }), "h-10 px-4")}
+        >
+          {t("openApp")}
+          <ArrowRightIcon />
+        </a>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<header
+  data-landing-mobile-bar
+  data-hidden="false"
+  class="fixed inset-x-2.5 bottom-[calc(0.5rem+env(safe-area-inset-bottom))] z-40 rounded-[calc(var(--radius)*1.8+0.5rem)] border border-foreground/10 bg-popover/70 text-popover-foreground dark:bg-popover/85 shadow-md transition-[translate,opacity] duration-300 ease-out before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] before:backdrop-blur-2xl before:backdrop-saturate-150 data-[hidden=true]:pointer-events-none data-[hidden=true]:translate-y-[calc(100%+0.5rem+env(safe-area-inset-bottom))] data-[hidden=true]:opacity-0 has-focus-visible:pointer-events-auto has-focus-visible:translate-y-0 has-focus-visible:opacity-100 has-aria-expanded:pointer-events-auto has-aria-expanded:translate-y-0 has-aria-expanded:opacity-100 md:hidden"
+>
+  <div class="flex h-12 items-center px-1.75">
+    <a href={homeHref} class={cn(buttonVariants({ variant: "ghost", size: "icon" }), "rounded-2xl")}>
+      <img src="/favicon.svg" alt="" width="20" height="20" class="size-5" />
+      <span class="sr-only">Lanjut</span>
     </a>
 
-    <nav class="ml-auto hidden items-center gap-8 md:inline-flex">
-      <a
-        href={localizePath("/platform", locale)}
-        class="text-sm text-foreground/70 transition-colors hover:text-foreground"
-      >
-        {t("dashboard")}
-      </a>
-      <a
-        href={localizePath("/platform/template", locale)}
-        class="text-sm text-foreground/70 transition-colors hover:text-foreground"
-      >
-        {t("templates")}
+    <nav aria-label={t("main")} class="ml-auto inline-flex items-center gap-1">
+      <LandingNavbarSettings
+        client:media="(max-width: 47.99rem)"
+        locale={locale}
+        pathname={pathname}
+        side="top"
+        buttonClassName="rounded-2xl"
+      />
+      <a href={builderHref} class={cn(buttonVariants({ variant: "outline" }))}>
+        {t("openApp")}
+        <ArrowRightIcon />
       </a>
     </nav>
-
-    <LandingNavbarActions client:idle locale={locale} pathname={pathname} />
   </div>
 </header>
+
+<script>
+  import { onScrollDirection } from "@/lib/scroll-direction";
+  import {
+    type HeaderState,
+    isMobileBarHidden,
+    nextHeaderState,
+  } from "./landing-navbar-state";
+
+  const header = document.querySelector<HTMLElement>("[data-landing-header]");
+  const mobileBar = document.querySelector<HTMLElement>(
+    "[data-landing-mobile-bar]",
+  );
+
+  function syncHeader(target: HTMLElement) {
+    let state: HeaderState = "top";
+
+    function setState(next: HeaderState, animate: boolean) {
+      state = next;
+      target.dataset.animate = String(animate);
+      target.dataset.state = next;
+    }
+
+    onScrollDirection((change) => {
+      const menuOpen = target.querySelector('[aria-expanded="true"]') !== null;
+      if (menuOpen && change.scroll > 0) return;
+
+      const previous = state;
+      const next = nextHeaderState(previous, change);
+      if (next === previous) return;
+
+      // Start from the hidden position so the pill drops in from above.
+      if (previous === "top" && next === "pill") {
+        setState("hidden", false);
+        target.getBoundingClientRect();
+        setState("pill", true);
+        return;
+      }
+
+      setState(next, !(previous === "top" && next === "hidden"));
+    });
+
+    target.addEventListener("focusin", () => {
+      if (state === "hidden") setState("pill", true);
+    });
+  }
+
+  function syncMobileBar(target: HTMLElement) {
+    onScrollDirection((change) => {
+      target.dataset.hidden = String(isMobileBarHidden(change));
+    });
+  }
+
+  if (header) syncHeader(header);
+  if (mobileBar) syncMobileBar(mobileBar);
+</script>

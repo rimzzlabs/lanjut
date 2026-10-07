@@ -4,10 +4,11 @@ import {
   CaretDownIcon,
   SparkleIcon,
 } from "@phosphor-icons/react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useId, useState } from "react";
 import { useFormatter, useTranslations } from "use-intl";
 import { useIsClient } from "@/hooks/use-is-client";
+import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import {
   CHANGELOG,
   type ChangelogEntry,
@@ -110,7 +111,7 @@ export function PlatformNavbarChangelog() {
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto px-6 py-2">
-          <div className="relative before:absolute before:top-6 before:bottom-6 before:left-[7px] before:w-px before:bg-border">
+          <div className="relative before:absolute before:top-6 before:bottom-6 before:left-1.75 before:w-px before:bg-border">
             {CHANGELOG.map((entry, index) => (
               <PlatformNavbarChangelogEntry
                 key={entry.version}
@@ -145,7 +146,7 @@ function PlatformNavbarChangelogEntry(props: {
 }) {
   const t = useTranslations("platform.changelog");
   const formatter = useFormatter();
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotionPreference();
   const panelId = useId();
   const highlights = t.raw(
     `entries.${S.replaceByRe(props.entry.version, /\./g, "_")}`,

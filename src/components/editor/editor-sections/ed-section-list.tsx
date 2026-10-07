@@ -11,6 +11,7 @@ import {
 } from "@/lib/resume";
 import { useResumeStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { preloadRichTextEditor } from "../rich-text/rich-text-field";
 import { EditorSectionCertifications } from "./ed-section-certifications/ed-section-certifications";
 import { EditorSectionCustom } from "./ed-section-custom/ed-section-custom";
 import { EditorSectionCustomAdd } from "./ed-section-custom/ed-section-custom-add";
@@ -102,6 +103,8 @@ export function EditorSectionList() {
         key={`${open.id}:${undoEpoch}`}
         value={openSections}
         onValueChange={setOpenSections}
+        onPointerEnter={() => void preloadRichTextEditor()}
+        onFocus={() => void preloadRichTextEditor()}
         className="border-none"
       >
         <div className={cn("not-last:border-b", SECTION_TRIGGER_INSET)}>

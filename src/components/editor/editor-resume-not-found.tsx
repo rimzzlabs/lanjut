@@ -19,7 +19,7 @@ export function EditorResumeNotFound() {
   const t = useTranslations("editor.chrome");
 
   return (
-    <div className="mx-auto flex aspect-210/297 w-full max-w-[794px] flex-col items-center justify-center gap-1.5 rounded border bg-white text-sm text-neutral-600 shadow-sm">
+    <div className="mx-auto flex aspect-210/297 w-full max-w-198.5 flex-col items-center justify-center gap-1.5 rounded border bg-white text-sm text-neutral-600 shadow-sm">
       <div className="mb-2 flex size-12 items-center justify-center rounded-xl border border-neutral-200 bg-neutral-50 text-neutral-500">
         <FileDashedIcon className="size-5" />
       </div>

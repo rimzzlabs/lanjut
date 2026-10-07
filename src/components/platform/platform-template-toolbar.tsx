@@ -44,6 +44,7 @@ export function PlatformTemplateToolbar() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder={t("searchTemplates")}
+          aria-label={t("searchTemplates")}
         />
       </InputGroup>
 
@@ -53,7 +54,7 @@ export function PlatformTemplateToolbar() {
           value={sort}
           onValueChange={(value) => setSort(value as TemplateSort)}
         >
-          <SelectTrigger className="w-40">
+          <SelectTrigger className="w-40" aria-label={t("sortTemplates")}>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

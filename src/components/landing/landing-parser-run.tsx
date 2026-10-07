@@ -10,6 +10,8 @@ export interface ParserProofReport {
   pdfKb: number;
   chars: number;
   excerpt: ReadonlyArray<string>;
+  /** Every non-empty line the extractor read, in the order it read them. */
+  lines: ReadonlyArray<string>;
   name: string;
   nameFound: boolean;
   titleFound: boolean;
@@ -102,12 +104,18 @@ export async function runParserProof(
     pdfKb,
     chars: S.length(text),
     excerpt,
+    lines,
     name,
-    nameFound: Boolean(name) && S.includes(text, name),
-    titleFound: Boolean(title) && S.includes(text, title),
-    employerFound: S.includes(text, "Acme Corp"),
-    emailFound: Boolean(email) && S.includes(text, email),
+    nameFound: foundIn(upper, name),
+    titleFound: foundIn(upper, title),
+    employerFound: foundIn(upper, "Acme Corp"),
+    emailFound: foundIn(upper, email),
     orderOk,
     order: SECTION_ORDER,
   });
+}
+
+/** Some templates set the name or headings in capitals, so compare without case. */
+function foundIn(upperText: string, value: string) {
+  return S.isNotEmpty(value) && S.includes(upperText, S.toUpperCase(value));
 }

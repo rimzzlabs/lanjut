@@ -13,11 +13,11 @@ import sharp from "sharp";
 import { routing } from "../src/i18n/routing";
 
 interface Messages {
-  hero: {
+  landing: {
     headingLine1: string;
-    headingLine2: string;
-    badge: string;
-    stat1Label: string;
+    headingLead: string;
+    headingAccent: string;
+    ogLine: string;
   };
   platform: { sidebar: { tagline: string } };
 }
@@ -44,7 +44,7 @@ function readMessages(locale: string): Messages {
 }
 
 function OgImage(props: { messages: Messages }) {
-  const { hero, platform } = props.messages;
+  const { landing, platform } = props.messages;
 
   return (
     <div
@@ -89,7 +89,8 @@ function OgImage(props: { messages: Messages }) {
 
       <div style={{ display: "flex", flexDirection: "column" }}>
         <span style={{ fontSize: 62, lineHeight: 1.05, maxWidth: "920px" }}>
-          {hero.headingLine1} {hero.headingLine2}
+          {landing.headingLine1} {landing.headingLead}
+          {landing.headingAccent}
         </span>
         <div
           style={{
@@ -108,7 +109,7 @@ function OgImage(props: { messages: Messages }) {
             color: ACCENT,
           }}
         >
-          {hero.badge} · {hero.stat1Label}
+          {landing.ogLine}
         </span>
       </div>
     </div>

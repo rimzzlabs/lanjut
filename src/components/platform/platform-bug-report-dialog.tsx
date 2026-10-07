@@ -1,6 +1,6 @@
+import { Suspense } from "react";
 import { useTranslations } from "use-intl";
 import { useIssueReportStore } from "@/lib/store";
-import { FeedbackBugReportForm } from "../feedback/feedback-bug-report-form";
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -9,6 +9,10 @@ import {
   ResponsiveDialogTitle,
 } from "../shared/responsive-dialog";
 import { TURNSTILE_SITE_KEY } from "../shared/turnstile";
+import {
+  LazyBugReportForm,
+  PlatformFeedbackFormFallback,
+} from "./platform-feedback-forms";
 
 /**
  * Rendered once at the platform layout level, outside the sidebar: on mobile
@@ -33,10 +37,12 @@ export function PlatformBugReportDialog() {
           </ResponsiveDialogDescription>
         </ResponsiveDialogHeader>
 
-        <FeedbackBugReportForm
-          surface="dialog"
-          onSubmitted={() => setOpen(null)}
-        />
+        <Suspense fallback={<PlatformFeedbackFormFallback />}>
+          <LazyBugReportForm
+            surface="dialog"
+            onSubmitted={() => setOpen(null)}
+          />
+        </Suspense>
       </ResponsiveDialogContent>
     </ResponsiveDialog>
   );

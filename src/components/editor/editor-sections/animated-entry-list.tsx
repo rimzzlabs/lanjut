@@ -1,5 +1,6 @@
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { forwardRef, type ReactNode, useImperativeHandle, useRef } from "react";
+import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const ENTER_FROM = { opacity: 0, y: -8 };
@@ -19,7 +20,7 @@ export const AnimatedEntryList = forwardRef<
   AnimatedEntryListHandle,
   AnimatedEntryListProps
 >(function AnimatedEntryList(props, ref) {
-  const reduce = useReducedMotion();
+  const reduce = useReducedMotionPreference();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useImperativeHandle(

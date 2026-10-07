@@ -25,6 +25,7 @@ export function PlatformResumeToolbar() {
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder={t("searchResume")}
+          aria-label={t("searchResume")}
         />
       </InputGroup>
 

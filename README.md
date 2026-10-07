@@ -33,11 +33,12 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Drag to reorder sections and toggle any section's visibility (entries within a section sort by date automatically)
 - Document-level presentation controls: font, font size, section spacing, line height, letter spacing, contact-icon visibility, and a one-click style reset
 - Available in English and Indonesian (`use-intl`)
+- Theme toggle and one settings menu (language, animation) in the landing and app navbars. The animation setting (System, On, Off) follows the operating system's reduced-motion setting on System
 - Export to PDF (linear reading order preserved) and plain text / .docx
 - Copy, download, and re-import a résumé as JSON or YAML
 - Guided tour of the editor and library for first-time users
 - Send bug reports and feature requests in-app, no GitHub account required
-- Local persistence via IndexedDB, no data leaves the browser
+- Local persistence via IndexedDB, no data leaves the browser. The editor's top bar confirms each save to the device and warns when the browser refuses one
 - Fully local: works offline after initial load
 
 ## Templates

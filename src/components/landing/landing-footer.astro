@@ -1,90 +1,126 @@
 ---
+import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import { type Locale, localizePath } from "@/i18n/routing";
 import { getTranslator } from "@/i18n/translator";
-import { DONATION_LINKS } from "@/lib/site";
+import { DESKTOP_RELEASE_URL, DONATION_LINKS, REPO_URL } from "@/lib/site";
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
-const t = getTranslator(locale, "footer");
+const t = getTranslator(locale, "landing.footer");
+const tLanding = getTranslator(locale, "landing");
+const tSidebar = getTranslator(locale, "platform.sidebar");
 const year = new Date().getFullYear();
+
+const feedbackHref = localizePath("/feedback", locale);
+
+interface FooterLink {
+  label: string;
+  href: string;
+  external?: boolean;
+  logo?: string;
+}
+
+const GROUPS: ReadonlyArray<{
+  id: string;
+  title: string;
+  links: ReadonlyArray<FooterLink>;
+}> = [
+  {
+    id: "footer-product",
+    title: t("product"),
+    links: [
+      { label: t("builder"), href: localizePath("/platform", locale) },
+      {
+        label: t("templates"),
+        href: localizePath("/platform/template", locale),
+      },
+      { label: t("download"), href: DESKTOP_RELEASE_URL, external: true },
+    ],
+  },
+  {
+    id: "footer-project",
+    title: t("project"),
+    links: [
+      { label: t("github"), href: REPO_URL, external: true },
+      { label: tSidebar("reportBug"), href: `${feedbackHref}?kind=bug` },
+      {
+        label: tSidebar("featureRequest"),
+        href: `${feedbackHref}?kind=feature`,
+      },
+    ],
+  },
+  {
+    id: "footer-support",
+    title: t("support"),
+    links: [
+      {
+        label: "Saweria",
+        href: DONATION_LINKS.saweria,
+        external: true,
+        logo: "/brands/saweria.png",
+      },
+      {
+        label: "SociaBuzz",
+        href: DONATION_LINKS.sociabuzz,
+        external: true,
+        logo: "/brands/sociabuzz.png",
+      },
+    ],
+  },
+];
+
+const LINK_CLASS =
+  "inline-flex items-center gap-1.5 rounded-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 ---
 
-<footer class="border-t border-foreground/15">
-  <div
-    class="mx-auto grid w-11/12 max-w-5xl gap-8 py-12 md:grid-cols-[1fr_auto] md:items-end"
-  >
+<footer class="mx-auto w-11/12 max-w-6xl border-t border-border pt-12 pb-28 md:pb-14">
+  <div class="grid gap-12 md:grid-cols-[1fr_auto] md:gap-16">
     <div>
       <a
         href={localizePath("/", locale)}
-        class="inline-flex items-center gap-2 font-brand text-lg font-bold tracking-tight"
+        class="inline-flex items-center gap-2 rounded-xs font-brand text-lg font-bold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >
         <img src="/favicon.svg" alt="" width="22" height="22" class="size-5.5" />
         Lanjut
       </a>
-      <p class="mt-3 max-w-sm text-sm text-muted-foreground">{t("tagline")}</p>
+      <p class="mt-3 max-w-xs text-sm text-muted-foreground">{t("tagline")}</p>
+      <p class="mt-8 text-xs text-muted-foreground">{t("rights", { year })}</p>
     </div>
 
-    <nav
-      aria-label={t("ariaLabel")}
-      class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground"
-    >
-      <a
-        href={localizePath("/platform", locale)}
-        class="transition-colors hover:text-foreground"
-      >
-        {t("startBuilding")}
-      </a>
-      <a
-        href={localizePath("/platform/template", locale)}
-        class="transition-colors hover:text-foreground"
-      >
-        {t("templates")}
-      </a>
-      <a
-        href="https://github.com/rimzzlabs/lanjut"
-        target="_blank"
-        rel="noreferrer"
-        class="transition-colors hover:text-foreground"
-      >
-        {t("github")}
-      </a>
-    </nav>
-  </div>
-
-  <div class="border-t border-foreground/10">
-    <div
-      class="mx-auto flex w-11/12 max-w-5xl flex-wrap items-center justify-between gap-x-6 gap-y-2 py-5"
-    >
-      <p class="font-mono text-xs text-muted-foreground">
-        {t("rights", { year })}
-      </p>
-      <nav
-        aria-label={t("supportAriaLabel")}
-        class="flex items-center gap-x-4 text-xs text-muted-foreground"
-      >
-        <span>{t("support")}</span>
-        <a
-          href={DONATION_LINKS.saweria}
-          target="_blank"
-          rel="noreferrer"
-          class="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
-        >
-          <img src="/brands/saweria.png" alt="" width="14" height="14" class="size-3.5" />
-          Saweria
-        </a>
-        <a
-          href={DONATION_LINKS.sociabuzz}
-          target="_blank"
-          rel="noreferrer"
-          class="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
-        >
-          <img src="/brands/sociabuzz.png" alt="" width="14" height="14" class="size-3.5" />
-          SociaBuzz
-        </a>
-      </nav>
+    <div class="grid grid-cols-2 gap-10 sm:grid-cols-3 sm:gap-16">
+      {
+        GROUPS.map((group) => (
+          <nav aria-labelledby={group.id}>
+            <h2 id={group.id} class="text-sm font-semibold">
+              {group.title}
+            </h2>
+            <ul class="mt-4 flex flex-col gap-2.5 text-sm">
+              {group.links.map((link) => (
+                <li>
+                  {link.external && (
+                    <a href={link.href} target="_blank" rel="noreferrer" class={LINK_CLASS}>
+                      {link.logo && (
+                        <img src={link.logo} alt="" width="14" height="14" class="size-3.5" />
+                      )}
+                      {link.label}
+                      <ArrowUpRightIcon aria-hidden="true" className="size-3" />
+                      <span class="sr-only">{tLanding("newTab")}</span>
+                    </a>
+                  )}
+                  {!link.external && (
+                    <a href={link.href} class={LINK_CLASS}>
+                      {link.label}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
     </div>
   </div>
 </footer>

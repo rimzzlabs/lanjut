@@ -13,6 +13,7 @@ import { Link } from "@/i18n/navigation";
 import type { ResumeIndexEntry } from "@/lib/resume";
 import { editorHref } from "@/lib/routes";
 import { useResumeStore } from "@/lib/store";
+import { TruncatedLabel } from "../shared/truncated-label";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -71,7 +72,7 @@ export function PlatformSidebarResumeItem(
         render={<Link href={editorHref(resume.id)} />}
       >
         <FileTextIcon />
-        <span className="truncate">{resume.title}</span>
+        <TruncatedLabel text={resume.title} className="min-w-0" />
       </SidebarMenuButton>
 
       <DropdownMenu>

@@ -1,0 +1,49 @@
+---
+import type { Locale } from "@/i18n/routing";
+import { getTranslator } from "@/i18n/translator";
+import { LandingReadSnippet } from "./landing-read-snippet";
+
+interface Props {
+  locale: Locale;
+  pathname: string;
+}
+
+const { locale, pathname } = Astro.props;
+const t = getTranslator(locale, "landing");
+
+const OTHERS = [
+  { ext: ".docx", key: "exportDocx" },
+  { ext: ".txt", key: "exportTxt" },
+  { ext: ".json", key: "exportJson" },
+  { ext: ".yaml", key: "exportYaml" },
+];
+---
+
+<section class="mx-auto w-11/12 max-w-6xl pb-24 md:pb-36">
+  <div class="max-w-3xl">
+    <h2
+      class="text-[clamp(2rem,4vw,3rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance"
+    >
+      {t("exportsHeading")}
+    </h2>
+    <p class="mt-5 max-w-[56ch] text-muted-foreground">{t("exportsBody")}</p>
+  </div>
+
+  <ul class="mt-12 border-t border-border md:mt-16">
+    <li class="grid gap-4 border-b border-border py-6 md:grid-cols-12 md:items-center md:gap-8">
+      <p class="font-machine text-3xl leading-none md:col-span-2">.pdf</p>
+      <p class="text-muted-foreground md:col-span-4">{t("exportPdf")}</p>
+      <div class="md:col-span-6">
+        <LandingReadSnippet client:visible locale={locale} pathname={pathname} />
+      </div>
+    </li>
+    {
+      OTHERS.map((item) => (
+        <li class="grid gap-2 border-b border-border py-5 md:grid-cols-12 md:items-center md:gap-8">
+          <p class="font-machine text-xl leading-none md:col-span-2">{item.ext}</p>
+          <p class="text-muted-foreground md:col-span-10">{t(item.key)}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>

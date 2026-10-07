@@ -18,6 +18,10 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "../ui/sidebar";
+import {
+  preloadBugReportForm,
+  preloadFeatureRequestForm,
+} from "./platform-feedback-forms";
 
 export function PlatformSidebarOther() {
   const pathname = usePathname();
@@ -49,6 +53,8 @@ export function PlatformSidebarOther() {
 
         <SidebarMenuItem>
           <SidebarMenuButton
+            onPointerEnter={() => void preloadBugReportForm()}
+            onFocus={() => void preloadBugReportForm()}
             onClick={() => {
               if (isMobile) setOpenMobile(false);
               openIssueReport("bug");
@@ -59,6 +65,8 @@ export function PlatformSidebarOther() {
         </SidebarMenuItem>
         <SidebarMenuItem>
           <SidebarMenuButton
+            onPointerEnter={() => void preloadFeatureRequestForm()}
+            onFocus={() => void preloadFeatureRequestForm()}
             onClick={() => {
               if (isMobile) setOpenMobile(false);
               openIssueReport("feature");

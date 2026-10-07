@@ -1,8 +1,9 @@
 import { Toggle } from "@base-ui/react/toggle";
 import { ToggleGroup } from "@base-ui/react/toggle-group";
 import { A, O, pipe, S } from "@mobily/ts-belt";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { useId } from "react";
+import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import { cn } from "@/lib/utils";
 
 export interface SegmentedItem {
@@ -41,7 +42,7 @@ interface SegmentedControlProps {
  */
 export function SegmentedControl(props: SegmentedControlProps) {
   const layoutId = useId();
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotionPreference();
 
   return (
     <ToggleGroup
