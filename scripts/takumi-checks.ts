@@ -1,5 +1,6 @@
 import { inflateSync } from "node:zlib";
 import { A, G, O, pipe, S } from "@mobily/ts-belt";
+import { getDocumentProxy } from "unpdf";
 import type {
   ExperienceItemView,
   ResumePreview,
@@ -26,11 +27,12 @@ interface TakumiChecksParams {
 
 // The families each template draws with, recorded from the react-pdf exports
 // before takumi-pdf replaced them. A stylesheet rule the renderer drops makes a
-// template fall back to Inter, which this catches.
+// template fall back to Inter, which this catches. Luasa also sets its square
+// bullets in SquareBullet.
 const EXPECTED_FAMILIES: Record<TemplateId, ReadonlyArray<string>> = {
   awal: ["Inter"],
   ketat: ["Inter", "Lora"],
-  luasa: ["Inter", "Lora"],
+  luasa: ["Inter", "Lora", "SquareBullet"],
   tebal: ["Inter"],
   klasik: ["Lora"],
   ketik: ["GeistMono", "Inter"],
@@ -64,7 +66,13 @@ function probeDescription(index: number): ReadonlyArray<RichBlock> {
       type: "list",
       ordered: false,
       items: pipe(
-        [[{ text: `START-${index}` }]],
+        [
+          [
+            {
+              text: `START-${index} opens a bullet long enough to wrap onto a second line in every template, at every font size the editor offers, so that the distance between its two lines gives the body line height.`,
+            },
+          ],
+        ],
         A.concat(filler),
         A.append([{ text: `END-${index}` }]),
       ),
@@ -117,6 +125,119 @@ function strokedTextRuns(buffer: Uint8Array): number {
       A.length(Array.from(content.matchAll(/(^|\s)[12] Tr\b/g))),
     ),
     A.reduce(0, (total, count) => total + count),
+  );
+}
+
+/**
+ * Graphics states that fill at zero opacity. Text drawn in one is hidden from
+ * the reader but not from a parser, and ATS checkers flag it.
+ */
+function hiddenFillStates(buffer: Uint8Array): number {
+  return pipe(
+    Buffer.from(buffer).toString("latin1"),
+    S.match(/\/ca\s+0(?![.\d])/g),
+    O.mapWithDefault(0, A.length),
+  );
+}
+
+interface PlacedText {
+  text: string;
+  x: number;
+  y: number;
+}
+
+async function pageItems(
+  buffer: Uint8Array,
+): Promise<ReadonlyArray<PlacedText>> {
+  const pdf = await getDocumentProxy(new Uint8Array(buffer));
+  const content = await (await pdf.getPage(1)).getTextContent();
+  return pipe(
+    content.items,
+    A.filter((item) => "str" in item && S.isNotEmpty(S.trim(item.str))),
+    A.map((item) => {
+      const placed = item as { str: string; transform: number[] };
+      return {
+        text: placed.str,
+        x: O.getWithDefault(A.get(placed.transform, 4), 0),
+        y: O.getWithDefault(A.get(placed.transform, 5), 0),
+      };
+    }),
+  );
+}
+
+// Résumé parsers read bullets in content order and split entries at a line gap
+// well above the body line height (OpenResume uses 1.4 times it).
+const ENTRY_GAP_LIMIT = 1.4;
+
+/**
+ * Checks, in content order, that each "•" comes before its item's text, and
+ * that the probe's first bullet sits close enough to the line above it to stay
+ * in the same entry.
+ */
+function bulletErrors(params: {
+  items: ReadonlyArray<PlacedText>;
+  label: string;
+}): ReadonlyArray<string> {
+  const { items, label } = params;
+  const misplaced = pipe(
+    items,
+    A.filterWithIndex((index, item) => {
+      if (item.text !== "•") return false;
+      return O.mapWithDefault(
+        A.get(items, index + 1),
+        true,
+        (next) => Math.abs(next.y - item.y) > 0.5 || next.x <= item.x,
+      );
+    }),
+    A.length,
+  );
+  const markerErrors = failWhen(
+    misplaced > 0,
+    `${label}: ${misplaced} bullet markers do not precede their text`,
+  );
+  const start = A.getIndexBy(items, (item) =>
+    S.startsWith(item.text, "START-0"),
+  );
+  if (O.isNone(start))
+    return A.append(markerErrors, `${label}: no START-0 bullet`);
+  const leading = O.mapWithDefault(
+    A.get(items, start - 1),
+    false,
+    (item) => item.text === "•",
+  );
+  if (!leading) {
+    return A.append(
+      markerErrors,
+      `${label}: no "•" before the first bullet's text`,
+    );
+  }
+  const above = A.get(items, start - 2);
+  const bullet = A.get(items, start);
+  const wrapped = pipe(
+    items,
+    A.sliceToEnd(start + 1),
+    A.find((item) =>
+      O.mapWithDefault(bullet, false, (first) => item.y < first.y - 0.5),
+    ),
+  );
+  if (
+    O.isNone(above) ||
+    O.isNone(bullet) ||
+    O.isNone(wrapped) ||
+    wrapped.text === "•"
+  ) {
+    return A.append(markerErrors, `${label}: could not place the first bullet`);
+  }
+  const lineHeight = bullet.y - wrapped.y;
+  const gap = above.y - bullet.y;
+  return pipe(
+    markerErrors,
+    A.concat(
+      failWhen(
+        gap > lineHeight * ENTRY_GAP_LIMIT,
+        `${label}: the first bullet sits ${gap.toFixed(1)}pt below its entry, over ${ENTRY_GAP_LIMIT} line heights (${lineHeight.toFixed(1)}pt)`,
+      ),
+    ),
   );
 }
 
@@ -182,6 +303,11 @@ async function checkTemplate(
     `${label}: text is stroked to fake a heavier weight`,
   );
 
+  const hiddenErrors = failWhen(
+    hiddenFillStates(buffer) > 0,
+    `${label}: draws with a zero-opacity fill, which hides text`,
+  );
+
   const spacingErrors = await Promise.all(
     A.map(LETTER_SPACING_BOUNDS, async (letterSpacing) => {
       const spaced = await checks.extractPdfText(
@@ -205,9 +331,12 @@ async function checkTemplate(
 
   const probe = splitProbe(checks.preview);
   if (O.isNone(probe)) return [`${label}: seed has no experience entry`];
-  const pages = await checks.extractPdfPages(
-    await render({ takumi, preview: probe, template }),
-  );
+  const probeBuffer = await render({ takumi, preview: probe, template });
+  const pages = await checks.extractPdfPages(probeBuffer);
+  const listErrors = bulletErrors({
+    items: await pageItems(probeBuffer),
+    label,
+  });
   const splitErrors = pipe(
     A.range(0, PROBE_ENTRIES - 1),
     A.filter(
@@ -224,9 +353,11 @@ async function checkTemplate(
     checks.textErrors(text, label),
     A.concat(fontErrors),
     A.concat(strokeErrors),
+    A.concat(hiddenErrors),
     A.concat(A.flat(spacingErrors)),
     A.concat(photoErrors),
     A.concat(splitErrors),
+    A.concat(listErrors),
   );
 }
 

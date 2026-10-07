@@ -8,6 +8,7 @@ import {
 import { resumeTypographyStyle } from "../resume-fonts";
 import { groupBlocks } from "../resume-paginate";
 import type { ResumePreview } from "../resume-preview";
+import { TextListMarkersContext } from "../resume-rich-text";
 import {
   type BlockViewComponent,
   TEMPLATE_BLOCK_VIEWS,
@@ -36,14 +37,20 @@ export function TakumiResumeFlow(props: TakumiResumeFlowProps) {
       className="font-sans text-foreground"
       style={resumeTypographyStyle(preview, template)}
     >
-      {groups.map((group, index) => (
-        <TakumiBlockGroup
-          key={O.mapWithDefault(A.head(group), `${index}`, (block) => block.id)}
-          group={group}
-          isFirst={index === 0}
-          BlockView={BlockView}
-        />
-      ))}
+      <TextListMarkersContext value={true}>
+        {groups.map((group, index) => (
+          <TakumiBlockGroup
+            key={O.mapWithDefault(
+              A.head(group),
+              `${index}`,
+              (block) => block.id,
+            )}
+            group={group}
+            isFirst={index === 0}
+            BlockView={BlockView}
+          />
+        ))}
+      </TextListMarkersContext>
     </div>
   );
 }

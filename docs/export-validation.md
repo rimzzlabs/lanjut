@@ -30,13 +30,20 @@ XML, and the serializer output for `.txt`. It then asserts:
 bundles it, and runs the PDF checks on every template. It adds:
 
 - **Font families**: each template's PDF embeds the families it draws with (recorded
-  in `takumi-checks.ts` from the react-pdf exports it replaced). A stylesheet rule the
+  in `takumi-checks.ts` from the react-pdf exports it replaced, plus SquareBullet for
+  Luasa's square bullets). A stylesheet rule the
   renderer drops (it once lost the serif and mono families) fails here instead of
   silently printing in Inter.
 - **No faked weights**: no text is drawn with a stroke render mode. takumi-pdf
   strokes the 700 face to fake a heavier weight, which a browser never does.
+- **No hidden text**: no fill is drawn at zero opacity. Text drawn that way is
+  hidden from the reader but not from a parser, and ATS checkers flag it.
 - **No split entries**: a long résumé whose entries open with `START-n` and close with
   `END-n` must keep each pair on one page.
+- **Parser-ready bullets**: in content order, a "•" comes before each list item's
+  text, and an entry's first bullet sits within 1.4 line heights of the line above
+  it. Parsers find bullets by a leading "•" and start a new entry at a larger gap,
+  as the OpenResume parser does.
 - **No orphaned headings**: a summary that grows three lines at a time pushes the
   Experience heading down to the page foot and past it. At every step the heading and
   its first entry must print on the same page.

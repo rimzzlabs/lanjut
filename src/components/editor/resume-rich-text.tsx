@@ -1,4 +1,5 @@
 import { A } from "@mobily/ts-belt";
+import { createContext, use } from "react";
 import type { InlineRun, RichBlock } from "@/lib/resume/rich-content";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +31,43 @@ function RichRuns(props: { runs: ReadonlyArray<InlineRun> }) {
   });
 }
 
+/**
+ * When true, lists draw their markers as text before each item instead of as
+ * CSS list markers. The PDF needs this: takumi-pdf writes a CSS marker after
+ * the item's text, and résumé parsers find bullets by a leading "•".
+ */
+export const TextListMarkersContext = createContext(false);
+
+interface RichListItemProps {
+  runs: ReadonlyArray<InlineRun>;
+  marker: string;
+}
+
+function RichListItem(props: RichListItemProps) {
+  const textMarkers = use(TextListMarkersContext);
+  if (!textMarkers) {
+    return (
+      <li>
+        <RichRuns runs={props.runs} />
+      </li>
+    );
+  }
+  // Baseline alignment keeps a marker set in another font (Square Bullet) on
+  // its item's text line.
+  return (
+    <li className="flex items-baseline">
+      <span className="w-5 shrink-0 pr-1.5 text-right">
+        <span data-list-marker className="inline-block">
+          {props.marker}
+        </span>
+      </span>
+      <span className="min-w-0 flex-1">
+        <RichRuns runs={props.runs} />
+      </span>
+    </li>
+  );
+}
+
 interface ResumeRichTextProps {
   blocks: ReadonlyArray<RichBlock>;
   className?: string;
@@ -41,6 +79,7 @@ interface ResumeRichTextProps {
  * (summary, experience, education) so formatting is consistent.
  */
 export function ResumeRichText(props: ResumeRichTextProps) {
+  const textMarkers = use(TextListMarkersContext);
   if (A.isEmpty(props.blocks)) return null;
   return (
     <div
@@ -54,19 +93,22 @@ export function ResumeRichText(props: ResumeRichTextProps) {
       {props.blocks.map((block, index) => {
         if (block.type === "list") {
           const ListTag = block.ordered ? "ol" : "ul";
+          const markerClass = block.ordered ? "list-decimal" : "list-disc";
           const listClass = cn(
-            "space-y-1 pl-5",
-            block.ordered ? "list-decimal" : "list-disc",
+            "space-y-1",
+            textMarkers ? "list-none" : `pl-5 ${markerClass}`,
           );
           return (
             // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
             <ListTag key={index} className={listClass}>
               {block.items.map((runs, itemIndex) => {
                 return (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
-                  <li key={itemIndex}>
-                    <RichRuns runs={runs} />
-                  </li>
+                  <RichListItem
+                    // biome-ignore lint/suspicious/noArrayIndexKey: see renderer note above
+                    key={itemIndex}
+                    runs={runs}
+                    marker={block.ordered ? `${itemIndex + 1}.` : "•"}
+                  />
                 );
               })}
             </ListTag>

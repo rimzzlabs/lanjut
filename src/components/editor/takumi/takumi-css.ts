@@ -1,20 +1,15 @@
-import { pipe, S } from "@mobily/ts-belt";
+import { A, G, O, pipe, S } from "@mobily/ts-belt";
 import appCss from "@/styles/globals.css?inline";
+import { SQUARE_BULLET_FAMILY } from "./takumi-fonts";
 
-// takumi-pdf 0.15 draws solid borders only, and no résumé font has a square
-// glyph. Dotted and dashed rules become a repeated SVG segment under a
-// transparent border, and square bullets use an SVG marker padded below so the
-// square sits at x-height, where a browser draws it.
+// takumi-pdf 0.15 draws solid borders only. Dotted and dashed rules become a
+// repeated SVG segment under a transparent border.
 function svg(body: string, size: string): string {
   return encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" ${size}>${body}</svg>`,
   );
 }
 
-const SQUARE_MARKER = svg(
-  '<rect width="4" height="4" fill="#0a0a0a"/>',
-  'width="4" height="6"',
-);
 // neutral-600 at the opacity each rule uses in the preview.
 const DOT = svg(
   '<rect width="1" height="1" fill="#525252" fill-opacity="0.4"/>',
@@ -25,13 +20,35 @@ const DASH = svg(
   'width="6" height="1"',
 );
 
+// takumi-pdf 0.15 drops :where() selectors and the margin-block-end longhand,
+// which every Tailwind space-y utility uses. Each one is restated as a plain
+// bottom margin.
+const SPACE_Y_CSS = pipe(
+  appCss,
+  S.match(/\.space-y-[\d\\.]+(?=\s*>\s*:not\(:last-child\)\))/g),
+  O.getWithDefault<ReadonlyArray<O.Option<string>>>([]),
+  A.filter(G.isString),
+  A.uniq,
+  A.map((selector) => {
+    const step = pipe(
+      selector,
+      S.replace(".space-y-", ""),
+      S.replace("\\", ""),
+    );
+    return `[data-resume-flow] ${selector}>:not(:last-child){margin-bottom:calc(var(--spacing) * ${step})}`;
+  }),
+  A.join("\n"),
+);
+
 // The preview pins its ink colors on the page frame (see ResumePage); the flow
 // has no frame, so it pins them itself. Ligatures stay off so fi and fl extract
 // as separate letters for résumé parsers. Letter spacing from template
 // tracking classes is dropped: the PDF places each spaced letter on its own,
 // and parsers then read "S U M M A R Y" instead of the heading. No catalog font
 // ships a face above 700, and takumi-pdf strokes the 700 face to fake heavier
-// weights where a browser uses it as it is.
+// weights where a browser uses it as it is. No catalog font has a square glyph
+// either, so a square list sets its "•" in Square Bullet, whose "•" is a square:
+// the marker stays visible text for parsers, with no image or hidden glyph.
 const PDF_CSS = `
 [data-resume-flow] {
   --foreground: var(--color-neutral-950);
@@ -68,9 +85,16 @@ const PDF_CSS = `
 [data-resume-flow] .font-black {
   font-weight: 700;
 }
-[data-resume-flow] [class*="list-[square]"] ul {
-  list-style-image: url("data:image/svg+xml,${SQUARE_MARKER}");
+[data-resume-flow] ul,
+[data-resume-flow] ol {
+  list-style: none;
 }
+[data-resume-flow] [class*="list-[square]"] ul [data-list-marker] {
+  font-family: "${SQUARE_BULLET_FAMILY}";
+  font-weight: 400;
+  font-style: normal;
+}
+${SPACE_Y_CSS}
 `;
 
 // takumi-pdf 0.15 drops a declaration whose var() has whitespace before the

@@ -31,7 +31,7 @@ export function LuasaExperienceItem(props: ExperienceItemView) {
 
       <ResumeRichText
         blocks={props.description}
-        className="mt-2 [&_ul]:list-[square]"
+        className="mt-1 [&_ul]:list-[square]"
       />
     </article>
   );

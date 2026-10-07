@@ -9,8 +9,23 @@ export async function fetchFontFile(file: string): Promise<Uint8Array> {
   return new Uint8Array(await response.arrayBuffer());
 }
 
+/**
+ * SquareBullet.ttf draws "•" (U+2022) as the 4px square that `list-[square]`
+ * draws in the preview. `scripts/build-square-bullet-font.py` builds it.
+ */
+export const SQUARE_BULLET_FAMILY = "Square Bullet";
+const SQUARE_BULLET_FILE = "SquareBullet.ttf";
+
 // Every template falls back to these three; resumeTypographyStyle names them.
 const DEFAULT_FAMILIES: ReadonlyArray<string> = ["Inter", "Lora", "GeistMono"];
+
+interface FontLoader {
+  key: string;
+  name: string;
+  weight: number;
+  style: "normal" | "italic";
+  data: () => Promise<Uint8Array>;
+}
 
 interface ResumeFontLoadersParams {
   fontId: string | undefined;
@@ -22,7 +37,9 @@ interface ResumeFontLoadersParams {
  * defaults and the chosen override. Each face registers under the CSS family
  * name the preview uses, keyed by file so faces of one family stay distinct.
  */
-export function resumeFontLoaders(params: ResumeFontLoadersParams) {
+export function resumeFontLoaders(
+  params: ResumeFontLoadersParams,
+): ReadonlyArray<FontLoader> {
   const { fontId, readFile } = params;
   const override = resolveFont(fontId);
   const families = pipe(
@@ -42,5 +59,12 @@ export function resumeFontLoaders(params: ResumeFontLoadersParams) {
         data: () => readFile(face.file),
       })),
     ),
+    A.append<FontLoader>({
+      key: SQUARE_BULLET_FILE,
+      name: SQUARE_BULLET_FAMILY,
+      weight: 400,
+      style: "normal",
+      data: () => readFile(SQUARE_BULLET_FILE),
+    }),
   );
 }

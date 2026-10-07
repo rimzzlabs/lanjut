@@ -29,7 +29,7 @@ export function KlasikExperienceItem(props: ExperienceItemView) {
         </p>
       )}
 
-      <ResumeRichText blocks={props.description} className="mt-2 font-serif" />
+      <ResumeRichText blocks={props.description} className="mt-1 font-serif" />
     </article>
   );
 }
