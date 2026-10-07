@@ -1,5 +1,10 @@
 import { A, O } from "@mobily/ts-belt";
-import { FileText, Loader2, Upload, X } from "lucide-react";
+import {
+  CircleNotchIcon,
+  FileTextIcon,
+  UploadSimpleIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import { useCallback, useState } from "react";
 import { type FileRejection, useDropzone } from "react-dropzone";
 import { useLocale, useTranslations } from "use-intl";
@@ -125,10 +130,10 @@ export function PlatformResumeImportDropzone(
     return (
       <div className="flex items-center gap-3 rounded-xl border bg-muted/40 p-3">
         {parsing && (
-          <Loader2 className="size-5 shrink-0 animate-spin text-muted-foreground" />
+          <CircleNotchIcon className="size-5 shrink-0 animate-spin text-muted-foreground" />
         )}
         {!parsing && (
-          <FileText className="size-5 shrink-0 text-muted-foreground" />
+          <FileTextIcon className="size-5 shrink-0 text-muted-foreground" />
         )}
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-medium">{fileName}</p>
@@ -138,7 +143,7 @@ export function PlatformResumeImportDropzone(
         </div>
         {!parsing && (
           <Button type="button" variant="ghost" size="icon-sm" onClick={reset}>
-            <X /> <span className="sr-only">{t("remove")}</span>
+            <XIcon /> <span className="sr-only">{t("remove")}</span>
           </Button>
         )}
       </div>
@@ -155,7 +160,7 @@ export function PlatformResumeImportDropzone(
         )}
       >
         <input {...getInputProps()} />
-        <Upload className="size-6 text-muted-foreground" />
+        <UploadSimpleIcon className="size-6 text-muted-foreground" />
         <p className="text-sm font-medium text-balance">{t("dropPrompt")}</p>
         <p className="text-xs text-muted-foreground text-balance">
           {t("hint")}

@@ -1,5 +1,5 @@
 ---
-import { ArrowUpRight, Download } from "lucide-react";
+import { ArrowUpRightIcon, DownloadSimpleIcon } from "@phosphor-icons/react";
 import { buttonVariants } from "@/components/ui/button";
 import type { Locale } from "@/i18n/routing";
 import { getTranslator } from "@/i18n/translator";
@@ -42,9 +42,9 @@ const t = getTranslator(locale, "desktop");
         rel="noreferrer"
         class={cn(buttonVariants({ size: "lg", className: "gap-2" }))}
       >
-        <Download />
+        <DownloadSimpleIcon />
         {t("cta")}
-        <ArrowUpRight />
+        <ArrowUpRightIcon />
       </a>
       <p class="max-w-72 text-pretty text-muted-foreground text-xs md:text-right">
         {t("gatekeeper")}

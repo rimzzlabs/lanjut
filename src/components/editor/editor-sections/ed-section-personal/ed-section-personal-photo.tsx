@@ -1,4 +1,4 @@
-import { ImagePlus, Trash2 } from "lucide-react";
+import { ImageIcon, TrashIcon } from "@phosphor-icons/react";
 import { useRef } from "react";
 import { toast } from "sonner";
 import { useTranslations } from "use-intl";
@@ -79,7 +79,7 @@ export function EditorSectionPersonalPhoto() {
           size="sm"
           onClick={() => inputRef.current?.click()}
         >
-          <ImagePlus />
+          <ImageIcon />
           {photo ? t("photoReplace") : t("photoAdd")}
         </Button>
         {Boolean(photo) && (
@@ -94,7 +94,7 @@ export function EditorSectionPersonalPhoto() {
               }))
             }
           >
-            <Trash2 />
+            <TrashIcon />
             {t("photoRemove")}
           </Button>
         )}

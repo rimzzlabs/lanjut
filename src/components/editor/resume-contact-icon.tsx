@@ -1,17 +1,24 @@
-import { ExternalLink, Globe, Link, Mail, MapPin, Phone } from "lucide-react";
+import {
+  ArrowSquareOutIcon,
+  EnvelopeSimpleIcon,
+  GlobeIcon,
+  LinkIcon,
+  MapPinIcon,
+  PhoneIcon,
+} from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 import type { ContactKind } from "./resume-preview";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const CONTACT_ICON: Record<ContactKind, typeof Phone> = {
-  phone: Phone,
-  email: Mail,
-  website: Globe,
-  linkedin: Link,
-  link: ExternalLink,
-  location: MapPin,
+const CONTACT_ICON: Record<ContactKind, typeof PhoneIcon> = {
+  phone: PhoneIcon,
+  email: EnvelopeSimpleIcon,
+  website: GlobeIcon,
+  linkedin: LinkIcon,
+  link: ArrowSquareOutIcon,
+  location: MapPinIcon,
 };
 
 type IconEdge = "start" | "end";

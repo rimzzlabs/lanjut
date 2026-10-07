@@ -1,5 +1,5 @@
 import { D } from "@mobily/ts-belt";
-import { RefreshCw } from "lucide-react";
+import { ArrowsClockwiseIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
 import {
@@ -64,7 +64,7 @@ export function EditorDocumentStyleReset() {
         }
       >
         <span className="sr-only">{t("resetStyling")}</span>
-        <RefreshCw />
+        <ArrowsClockwiseIcon />
       </TooltipTrigger>
       <TooltipContent>
         <span>{t("resetStylingHint")}</span>

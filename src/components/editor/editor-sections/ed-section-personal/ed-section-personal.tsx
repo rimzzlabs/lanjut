@@ -1,4 +1,4 @@
-import { User2 } from "lucide-react";
+import { UserIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import {
   AccordionContent,
@@ -13,7 +13,7 @@ export function EditorSectionPersonal() {
   return (
     <AccordionItem value="personal">
       <AccordionTrigger className="items-center gap-3">
-        <User2 className="size-4" />
+        <UserIcon className="size-4" />
         {t("accordionTitle")}
       </AccordionTrigger>
       <AccordionContent>

@@ -1,6 +1,13 @@
 import { A } from "@mobily/ts-belt";
+import {
+  ArrowUUpLeftIcon,
+  ArrowUUpRightIcon,
+  ListBulletsIcon,
+  ListNumbersIcon,
+  TextBIcon,
+  TextItalicIcon,
+} from "@phosphor-icons/react";
 import { type Editor, useEditorState } from "@tiptap/react";
-import { Bold, Italic, List, ListOrdered, Redo2, Undo2 } from "lucide-react";
 import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -43,7 +50,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
         disabled={!state.canUndo}
         onClick={() => props.editor.chain().focus().undo().run()}
       >
-        <Undo2 />
+        <ArrowUUpLeftIcon />
       </Button>
       <Button
         type="button"
@@ -53,7 +60,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
         disabled={!state.canRedo}
         onClick={() => props.editor.chain().focus().redo().run()}
       >
-        <Redo2 />
+        <ArrowUUpRightIcon />
       </Button>
       <Separator orientation="vertical" className="mx-0.5 my-1" />
       {has("bold") && (
@@ -65,7 +72,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
             props.editor.chain().focus().toggleBold().run()
           }
         >
-          <Bold />
+          <TextBIcon />
         </Toggle>
       )}
       {has("italic") && (
@@ -77,7 +84,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
             props.editor.chain().focus().toggleItalic().run()
           }
         >
-          <Italic />
+          <TextItalicIcon />
         </Toggle>
       )}
       {has("bulletList") && (
@@ -89,7 +96,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
             props.editor.chain().focus().toggleBulletList().run()
           }
         >
-          <List />
+          <ListBulletsIcon />
         </Toggle>
       )}
       {has("orderedList") && (
@@ -101,7 +108,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
             props.editor.chain().focus().toggleOrderedList().run()
           }
         >
-          <ListOrdered />
+          <ListNumbersIcon />
         </Toggle>
       )}
       {has("link") && (

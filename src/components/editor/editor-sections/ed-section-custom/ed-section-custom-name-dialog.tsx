@@ -1,5 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { Save, TextInitial, XIcon } from "lucide-react";
+import { FloppyDiskIcon, TextTIcon, XIcon } from "@phosphor-icons/react";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslations } from "use-intl";
@@ -104,7 +104,7 @@ function CustomNameForm(props: CustomNameFormProps) {
                 </FieldLabel>
                 <InputGroup>
                   <InputGroupAddon>
-                    <TextInitial />
+                    <TextTIcon />
                   </InputGroupAddon>
                   <InputGroupInput
                     id="custom-section-name"
@@ -126,7 +126,7 @@ function CustomNameForm(props: CustomNameFormProps) {
           <XIcon /> {tc("cancel")}
         </ResponsiveDialogClose>
         <Button type="submit" disabled={!form.formState.isValid}>
-          <Save /> {tc("save")}
+          <FloppyDiskIcon /> {tc("save")}
         </Button>
       </ResponsiveDialogFooter>
     </form>

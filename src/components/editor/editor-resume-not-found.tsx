@@ -1,4 +1,4 @@
-import { FileQuestion } from "lucide-react";
+import { FileDashedIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { useEditorId } from "@/hooks/use-editor-id";
 import { Link } from "@/i18n/navigation";
@@ -21,7 +21,7 @@ export function EditorResumeNotFound() {
   return (
     <div className="mx-auto flex aspect-210/297 w-full max-w-[794px] flex-col items-center justify-center gap-1.5 rounded border bg-white text-sm text-neutral-600 shadow-sm">
       <div className="mb-2 flex size-12 items-center justify-center rounded-xl border border-neutral-200 bg-neutral-50 text-neutral-500">
-        <FileQuestion className="size-5" />
+        <FileDashedIcon className="size-5" />
       </div>
 
       <p className="font-medium text-neutral-950">{t("notFound")}</p>

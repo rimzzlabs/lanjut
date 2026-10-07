@@ -1,6 +1,6 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { pipe, S } from "@mobily/ts-belt";
-import { Plus, TextInitial, XIcon } from "lucide-react";
+import { PlusIcon, TextTIcon, XIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useLocale, useTranslations } from "use-intl";
@@ -117,7 +117,7 @@ export function PlatformResumeCreateDialog(
                       </FieldLabel>
                       <InputGroup>
                         <InputGroupAddon>
-                          <TextInitial />
+                          <TextTIcon />
                         </InputGroupAddon>
                         <InputGroupInput
                           id="create-resume-title"
@@ -196,7 +196,7 @@ export function PlatformResumeCreateDialog(
               type="submit"
               disabled={form.formState.isSubmitting || importIncomplete}
             >
-              <Plus />
+              <PlusIcon />
               {t("submit")}
             </Button>
           </ResponsiveDialogFooter>

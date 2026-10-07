@@ -63,6 +63,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Desktop shell | Tauri 2 (macOS 13 or later) |
 | Internationalization | use-intl (English, Indonesian) |
 | UI components | shadcn (base-ui) |
+| Icons | Phosphor (@phosphor-icons/react) |
 | Styling | Tailwind CSS |
 | Rich text editor | TipTap |
 | Forms | react-hook-form + zod |

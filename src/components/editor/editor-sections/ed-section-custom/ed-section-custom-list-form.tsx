@@ -1,5 +1,5 @@
 import { A, O } from "@mobily/ts-belt";
-import { List, Plus } from "lucide-react";
+import { ListBulletsIcon, PlusIcon } from "@phosphor-icons/react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useTranslations } from "use-intl";
@@ -72,12 +72,12 @@ export function EditorSectionCustomListForm(
           variant="outline"
           className="w-full"
         >
-          <Plus /> {t("addEntry")}
+          <PlusIcon /> {t("addEntry")}
         </Button>
 
         {fields.length === 0 && (
           <EmptyState
-            icon={List}
+            icon={ListBulletsIcon}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />

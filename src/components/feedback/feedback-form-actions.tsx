@@ -1,4 +1,8 @@
-import { ExternalLink, SendIcon, XIcon } from "lucide-react";
+import {
+  ArrowSquareOutIcon,
+  PaperPlaneTiltIcon,
+  XIcon,
+} from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import {
   ResponsiveDialogClose,
@@ -52,7 +56,7 @@ function FeedbackSubmitButton(props: {
   if (!props.directEnabled) {
     return (
       <Button type="submit">
-        <ExternalLink />
+        <ArrowSquareOutIcon />
         {tc("openIssue")}
       </Button>
     );
@@ -60,7 +64,7 @@ function FeedbackSubmitButton(props: {
 
   return (
     <Button type="submit" disabled={props.submitting}>
-      {props.submitting ? <Spinner /> : <SendIcon />}
+      {props.submitting ? <Spinner /> : <PaperPlaneTiltIcon />}
       {td("send")}
     </Button>
   );

@@ -1,4 +1,4 @@
-import { Users } from "lucide-react";
+import { UsersIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import {
   AccordionContent,
@@ -14,7 +14,7 @@ export function EditorSectionOrganizations() {
   return (
     <AccordionItem value="organizations" className="relative">
       <AccordionTrigger className="items-center gap-3">
-        <Users className="size-4" /> {t("accordionTitle")}
+        <UsersIcon className="size-4" /> {t("accordionTitle")}
       </AccordionTrigger>
 
       <EditorSectionVisibility type="organizations" />

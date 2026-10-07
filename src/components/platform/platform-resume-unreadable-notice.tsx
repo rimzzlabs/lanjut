@@ -1,4 +1,4 @@
-import { TriangleAlert } from "lucide-react";
+import { WarningIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useResumeStore } from "@/lib/store";
@@ -11,7 +11,7 @@ export function PlatformResumeUnreadableNotice() {
 
   return (
     <Alert>
-      <TriangleAlert />
+      <WarningIcon />
       <AlertTitle>{t("title")}</AlertTitle>
       <AlertDescription>
         {t("description", { count: unreadableCount })}

@@ -1,5 +1,5 @@
+import { CheckIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { Command as CommandPrimitive } from "cmdk";
-import { CheckIcon, SearchIcon } from "lucide-react";
 import type * as React from "react";
 import {
   Dialog,
@@ -76,7 +76,7 @@ function CommandInput({
           {...props}
         />
         <InputGroupAddon>
-          <SearchIcon className="size-4 shrink-0 opacity-50" />
+          <MagnifyingGlassIcon className="size-4 shrink-0 opacity-50" />
         </InputGroupAddon>
       </InputGroup>
     </div>

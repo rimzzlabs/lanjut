@@ -1,4 +1,4 @@
-import { ScrollText } from "lucide-react";
+import { ScrollIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import {
   AccordionContent,
@@ -14,7 +14,7 @@ export function EditorSectionSummary() {
   return (
     <AccordionItem value="summary" className="relative">
       <AccordionTrigger className="items-center gap-3">
-        <ScrollText className="size-4" /> {t("accordionTitle")}
+        <ScrollIcon className="size-4" /> {t("accordionTitle")}
       </AccordionTrigger>
 
       <EditorSectionVisibility type="summary" />

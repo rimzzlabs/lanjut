@@ -1,5 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import { Save, TextInitial, XIcon } from "lucide-react";
+import { FloppyDiskIcon, TextTIcon, XIcon } from "@phosphor-icons/react";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslations } from "use-intl";
@@ -84,7 +84,7 @@ export function PlatformResumeActionRename(
                     </FieldLabel>
                     <InputGroup>
                       <InputGroupAddon>
-                        <TextInitial />
+                        <TextTIcon />
                       </InputGroupAddon>
                       <InputGroupInput
                         id="rename-resume-title"
@@ -110,7 +110,7 @@ export function PlatformResumeActionRename(
             </ResponsiveDialogClose>
 
             <Button type="submit" disabled={form.formState.isSubmitting}>
-              <Save /> {tc("save")}
+              <FloppyDiskIcon /> {tc("save")}
             </Button>
           </ResponsiveDialogFooter>
         </form>

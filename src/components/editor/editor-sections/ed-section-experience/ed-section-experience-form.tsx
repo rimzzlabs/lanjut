@@ -1,4 +1,4 @@
-import { Briefcase, Plus } from "lucide-react";
+import { BriefcaseIcon, PlusIcon } from "@phosphor-icons/react";
 import { useEffect, useRef } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useTranslations } from "use-intl";
@@ -91,13 +91,13 @@ export function EditorSectionExperienceForm() {
           variant="outline"
           className="w-full"
         >
-          <Plus /> <span className="sr-only">{tc("add")} </span>
+          <PlusIcon /> <span className="sr-only">{tc("add")} </span>
           {t("add")}
         </Button>
 
         {fields.length === 0 && (
           <EmptyState
-            icon={Briefcase}
+            icon={BriefcaseIcon}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />

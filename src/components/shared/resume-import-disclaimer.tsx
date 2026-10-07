@@ -1,4 +1,4 @@
-import { Info } from "lucide-react";
+import { InfoIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ export function ResumeImportDisclaimer() {
   const openIssueReport = useIssueReportStore((state) => state.setOpen);
   return (
     <Alert>
-      <Info className="size-4 mt-px" />
+      <InfoIcon className="size-4 mt-px" />
       <AlertDescription className="text-xs">
         <span>
           {t("disclaimer")}{" "}

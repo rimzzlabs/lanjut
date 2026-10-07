@@ -1,5 +1,5 @@
 import { A } from "@mobily/ts-belt";
-import { Search } from "lucide-react";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import {
   useTemplateSearchQuery,
@@ -38,7 +38,7 @@ export function PlatformTemplateToolbar() {
     <div className="flex items-center gap-2">
       <InputGroup id="tour-search-template" className="max-w-xs">
         <InputGroupAddon>
-          <Search />
+          <MagnifyingGlassIcon />
         </InputGroupAddon>
         <InputGroupInput
           value={query}

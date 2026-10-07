@@ -1,6 +1,9 @@
 import { S } from "@mobily/ts-belt";
+import {
+  LinkSimpleHorizontalBreakIcon,
+  LinkSimpleHorizontalIcon,
+} from "@phosphor-icons/react";
 import type { Editor } from "@tiptap/react";
-import { Link2, Link2Off } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 import { Button } from "@/components/ui/button";
@@ -53,7 +56,7 @@ export function RichTextLinkPopover(props: RichTextLinkPopoverProps) {
       <PopoverTrigger
         render={
           <Toggle size="xs" pressed={props.active} aria-label={t("link")}>
-            <Link2 />
+            <LinkSimpleHorizontalIcon />
           </Toggle>
         }
       />
@@ -83,7 +86,7 @@ export function RichTextLinkPopover(props: RichTextLinkPopoverProps) {
             className="justify-start gap-2"
             onClick={remove}
           >
-            <Link2Off /> {t("removeLink")}
+            <LinkSimpleHorizontalBreakIcon /> {t("removeLink")}
           </Button>
         )}
       </PopoverContent>

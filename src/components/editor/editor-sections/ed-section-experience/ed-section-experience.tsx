@@ -1,4 +1,4 @@
-import { BriefcaseBusiness } from "lucide-react";
+import { BriefcaseIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import {
   AccordionContent,
@@ -14,7 +14,7 @@ export function EditorSectionExperience() {
   return (
     <AccordionItem value="experience" className="relative">
       <AccordionTrigger className="items-center gap-3">
-        <BriefcaseBusiness className="size-4" /> {t("accordionTitle")}
+        <BriefcaseIcon className="size-4" /> {t("accordionTitle")}
       </AccordionTrigger>
 
       <EditorSectionVisibility type="experience" />

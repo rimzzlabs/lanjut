@@ -16,7 +16,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { A, O } from "@mobily/ts-belt";
-import { GripVertical } from "lucide-react";
+import { DotsSixVerticalIcon } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -119,7 +119,7 @@ export function SortableItem(props: SortableItemProps) {
         {...attributes}
         {...listeners}
       >
-        <GripVertical className="size-4" />
+        <DotsSixVerticalIcon className="size-4" />
       </button>
       <div className="flex-1">{props.children}</div>
     </div>

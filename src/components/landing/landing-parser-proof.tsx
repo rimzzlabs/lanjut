@@ -1,5 +1,5 @@
 import { A, pipe, R } from "@mobily/ts-belt";
-import { RotateCw } from "lucide-react";
+import { ArrowClockwiseIcon } from "@phosphor-icons/react";
 import { motion, useReducedMotion } from "motion/react";
 import { useRef, useState } from "react";
 import { useTranslations } from "use-intl";
@@ -189,7 +189,7 @@ function LandingParserProofTerminal() {
             className="font-mono text-xs text-muted-foreground"
             onClick={() => void run()}
           >
-            <RotateCw /> {t("rerun")}
+            <ArrowClockwiseIcon /> {t("rerun")}
           </Button>
         </div>
       )}

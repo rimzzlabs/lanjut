@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide-react";
+import { CaretDownIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -51,7 +51,7 @@ export function MonthYearMenu(props: MonthYearMenuProps) {
             )}
           >
             {props.value || props.placeholder}
-            <ChevronDown className="text-muted-foreground" />
+            <CaretDownIcon className="text-muted-foreground" />
           </Button>
         }
       />

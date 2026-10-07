@@ -1,5 +1,5 @@
 import { Radio as RadioPrimitive } from "@base-ui/react/radio";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import type { TemplateSummary } from "@/lib/templates";
 import type { ResumePreview } from "../resume-preview";

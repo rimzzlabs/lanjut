@@ -1,5 +1,5 @@
 import { A, S } from "@mobily/ts-belt";
-import { ArrowRight } from "lucide-react";
+import { ArrowRightIcon } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { useTranslations } from "use-intl";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
@@ -133,7 +133,7 @@ function LandingTryItForm() {
               disabled={creating}
               onClick={() => void onCreate()}
             >
-              {t("cta")} <ArrowRight />
+              {t("cta")} <ArrowRightIcon />
             </Button>
             <p className="text-xs text-muted-foreground">{t("note")}</p>
           </div>

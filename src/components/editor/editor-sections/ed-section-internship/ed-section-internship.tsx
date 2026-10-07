@@ -1,4 +1,4 @@
-import { Backpack } from "lucide-react";
+import { BackpackIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import {
   AccordionContent,
@@ -14,7 +14,7 @@ export function EditorSectionInternship() {
   return (
     <AccordionItem value="internship" className="relative">
       <AccordionTrigger className="items-center gap-3">
-        <Backpack className="size-4" /> {t("accordionTitle")}
+        <BackpackIcon className="size-4" /> {t("accordionTitle")}
       </AccordionTrigger>
 
       <EditorSectionVisibility type="internship" />

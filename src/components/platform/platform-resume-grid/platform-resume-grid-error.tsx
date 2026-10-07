@@ -1,4 +1,4 @@
-import { TriangleAlert } from "lucide-react";
+import { WarningIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
@@ -7,7 +7,7 @@ export function PlatformResumeGridError() {
 
   return (
     <Alert variant="destructive">
-      <TriangleAlert />
+      <WarningIcon />
       <AlertTitle>{t("errorTitle")}</AlertTitle>
       <AlertDescription>{t("errorDescription")}</AlertDescription>
     </Alert>

@@ -1,4 +1,4 @@
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircleIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 import { useFeedbackKind } from "@/hooks/use-feedback-params";
@@ -24,7 +24,7 @@ export function FeedbackPanel() {
     return (
       <div className="mx-auto flex w-full max-w-xl flex-col gap-4 px-4 py-10">
         <Alert>
-          <CheckCircle2 />
+          <CheckCircleIcon />
           <AlertTitle>{t("sentTitle")}</AlertTitle>
           <AlertDescription>{t("sentBody")}</AlertDescription>
         </Alert>

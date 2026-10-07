@@ -1,4 +1,4 @@
-import { Eye, EyeClosed } from "lucide-react";
+import { EyeClosedIcon, EyeIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { Button } from "../ui/button";
 
@@ -12,7 +12,7 @@ export function EditorSectionVisibilityToggle(
 ) {
   const { hidden, onToggle } = props;
   const t = useTranslations("editor.chrome");
-  const Icon = hidden ? EyeClosed : Eye;
+  const Icon = hidden ? EyeClosedIcon : EyeIcon;
 
   return (
     <Button
@@ -23,7 +23,7 @@ export function EditorSectionVisibilityToggle(
       aria-pressed={hidden}
       aria-label={hidden ? t("showSection") : t("hideSection")}
     >
-      <Icon className="size-4 stroke-muted-foreground" />
+      <Icon className="size-4 text-muted-foreground" />
     </Button>
   );
 }

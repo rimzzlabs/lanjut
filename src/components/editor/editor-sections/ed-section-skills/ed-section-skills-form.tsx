@@ -1,5 +1,5 @@
 import { A, O } from "@mobily/ts-belt";
-import { Plus, Zap } from "lucide-react";
+import { LightningIcon, PlusIcon } from "@phosphor-icons/react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useTranslations } from "use-intl";
@@ -77,13 +77,13 @@ export function EditorSectionSkillsForm() {
           variant="outline"
           className="w-full"
         >
-          <Plus /> <span className="sr-only">{tc("add")} </span>
+          <PlusIcon /> <span className="sr-only">{tc("add")} </span>
           {t("add")}
         </Button>
 
         {fields.length === 0 && (
           <EmptyState
-            icon={Zap}
+            icon={LightningIcon}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />

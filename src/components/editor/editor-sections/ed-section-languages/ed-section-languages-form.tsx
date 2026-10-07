@@ -1,5 +1,5 @@
 import { A, O } from "@mobily/ts-belt";
-import { Languages, Plus } from "lucide-react";
+import { PlusIcon, TranslateIcon } from "@phosphor-icons/react";
 import { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useTranslations } from "use-intl";
@@ -79,13 +79,13 @@ export function EditorSectionLanguagesForm() {
           variant="outline"
           className="w-full"
         >
-          <Plus /> <span className="sr-only">{tc("add")} </span>
+          <PlusIcon /> <span className="sr-only">{tc("add")} </span>
           {t("add")}
         </Button>
 
         {fields.length === 0 && (
           <EmptyState
-            icon={Languages}
+            icon={TranslateIcon}
             title={t("emptyTitle")}
             description={t("emptyDescription")}
           />

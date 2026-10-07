@@ -1,5 +1,10 @@
 import { A, O } from "@mobily/ts-belt";
-import { Laptop2, Loader2, Moon, Sun } from "lucide-react";
+import {
+  CircleNotchIcon,
+  LaptopIcon,
+  MoonIcon,
+  SunIcon,
+} from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
 import { useTranslations } from "use-intl";
 import { useIsClient } from "@/hooks/use-is-client";
@@ -16,9 +21,9 @@ import { Skeleton } from "../ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 const THEMES = [
-  { value: "system", icon: Laptop2 },
-  { value: "light", icon: Sun },
-  { value: "dark", icon: Moon },
+  { value: "system", icon: LaptopIcon },
+  { value: "light", icon: SunIcon },
+  { value: "dark", icon: MoonIcon },
 ] as const;
 const [DEFAULT_THEME] = THEMES;
 
@@ -37,7 +42,8 @@ export function PlatformNavbarTheme() {
   if (!mounted)
     return (
       <Button disabled variant="outline">
-        <Loader2 className="animate-spin" /> <Skeleton className="h-4 w-12" />
+        <CircleNotchIcon className="animate-spin" />{" "}
+        <Skeleton className="h-4 w-12" />
       </Button>
     );
 

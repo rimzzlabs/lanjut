@@ -1,4 +1,4 @@
-import { PenLine } from "lucide-react";
+import { PencilSimpleLineIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { useEditorChromeStore } from "@/lib/store";
 import { Button } from "../ui/button";
@@ -28,7 +28,7 @@ export function EditorSheet() {
           />
         }
       >
-        <PenLine /> {t("edit")}
+        <PencilSimpleLineIcon /> {t("edit")}
       </SheetTrigger>
 
       <SheetContent
