@@ -17,7 +17,6 @@ import {
 import { useChangelogStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { ExternalLink } from "../shared/external-link";
-import { Button } from "../ui/button";
 import {
   Sheet,
   SheetContent,
@@ -27,6 +26,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
+import { SidebarMenuButton } from "../ui/sidebar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 const listVariants = {
@@ -43,7 +43,7 @@ const PANEL_TRANSITION = {
   ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
 };
 
-export function PlatformNavbarChangelog() {
+export function PlatformSidebarChangelog() {
   const mounted = useIsClient();
   const t = useTranslations("platform.changelog");
   const [open, setOpen] = useState(false);
@@ -86,18 +86,19 @@ export function PlatformNavbarChangelog() {
         <TooltipTrigger
           render={
             <SheetTrigger
-              render={
-                <Button size="icon" variant="outline" className="relative" />
-              }
+              render={<SidebarMenuButton className="font-mono" />}
             />
           }
         >
           <SparkleIcon />
-          <span className="sr-only">{t("whatsNew")}</span>
+          <span>
+            <span className="sr-only">{t("whatsNew")}, </span>
+            {`v${LATEST_CHANGELOG_VERSION}`}
+          </span>
           {hasUnseen && (
             <span
               aria-hidden
-              className="absolute -top-0.5 -right-0.5 size-2 rounded-full bg-primary animate-pulse motion-reduce:animate-none"
+              className="ml-auto size-2 shrink-0 rounded-full bg-primary animate-pulse motion-reduce:animate-none"
             />
           )}
         </TooltipTrigger>
@@ -113,7 +114,7 @@ export function PlatformNavbarChangelog() {
         <div className="flex-1 overflow-y-auto px-6 py-2">
           <div className="relative before:absolute before:top-6 before:bottom-6 before:left-1.75 before:w-px before:bg-border">
             {CHANGELOG.map((entry, index) => (
-              <PlatformNavbarChangelogEntry
+              <PlatformSidebarChangelogEntry
                 key={entry.version}
                 entry={entry}
                 isLatest={index === 0}
@@ -138,7 +139,7 @@ export function PlatformNavbarChangelog() {
   );
 }
 
-function PlatformNavbarChangelogEntry(props: {
+function PlatformSidebarChangelogEntry(props: {
   entry: ChangelogEntry;
   isLatest: boolean;
   isOpen: boolean;

@@ -93,7 +93,7 @@
   --chart-3: oklch(0.596 0.145 163.225);
   --chart-4: oklch(0.508 0.118 165.612);
   --chart-5: oklch(0.432 0.095 166.913);
-  --radius: 0.4rem;
+  --radius: 1rem;
   --sidebar: oklch(0.976 0.007 92);
   --sidebar-foreground: oklch(0.2 0.014 155);
   --sidebar-primary: oklch(0.505 0.13 160);
@@ -314,8 +314,6 @@ html[data-sidebar="collapsed"]
   --machine: oklch(0.86 0.1 158);
   --machine-muted: oklch(0.66 0.05 162);
   --scanner: oklch(0.74 0.16 160);
-  /* Softer corners than the app: a control rounds to about a third of its height. */
-  --radius: 0.55rem;
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-landing), var(--font-sans), sans-serif;

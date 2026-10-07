@@ -26,7 +26,7 @@ interface LandingReaderSheetProps {
   chars: number | null;
 }
 
-const START = 58;
+const START = 40;
 const KEY_STEP: Record<string, number> = {
   ArrowLeft: -4,
   ArrowDown: -4,
@@ -128,7 +128,7 @@ export function LandingReaderSheet(props: LandingReaderSheetProps) {
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
       onLostPointerCapture={endDrag}
-      className="relative aspect-3/4 cursor-col-resize overflow-hidden rounded-3xl bg-white shadow-[0_48px_96px_-40px_rgb(0_0_0/0.55)] ring-1 ring-black/10 select-none @container mask-[linear-gradient(to_bottom,black_82%,transparent)] sm:aspect-16/10"
+      className="relative aspect-3/4 cursor-col-resize overflow-hidden rounded-xl bg-white shadow-[0_48px_96px_-40px_rgb(0_0_0/0.55)] ring-1 ring-black/10 select-none @container mask-[linear-gradient(to_bottom,black_82%,transparent)] sm:aspect-16/10"
     >
       <div className="absolute inset-y-0 left-0 w-full min-w-220 sm:min-w-0">
         <ResumeThumbnail resume={props.preview} template={props.template} />
@@ -137,7 +137,7 @@ export function LandingReaderSheet(props: LandingReaderSheetProps) {
       <span
         aria-hidden
         className={cn(
-          "pointer-events-none absolute top-[3cqw] left-[3cqw] rounded-lg bg-neutral-900/6 px-2.5 py-1 text-[11px] font-medium text-neutral-700 transition-opacity duration-200 max-sm:hidden",
+          "pointer-events-none absolute top-[3cqw] left-[3cqw] rounded-sm bg-neutral-900/6 px-2.5 py-1 text-[11px] font-medium text-neutral-700 transition-opacity duration-200 max-sm:hidden",
           position < 24 && "opacity-0",
         )}
       >
@@ -154,7 +154,7 @@ export function LandingReaderSheet(props: LandingReaderSheetProps) {
             position > 70 && "opacity-0",
           )}
         >
-          <span className="shrink-0 rounded-lg bg-white/10 px-2.5 py-1 text-(--machine)">
+          <span className="shrink-0 rounded-sm bg-white/10 px-2.5 py-1 text-(--machine)">
             {t("machineLabel")}
           </span>
           <ReaderStatusLine status={props.status} chars={props.chars} />

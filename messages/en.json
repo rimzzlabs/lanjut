@@ -478,6 +478,9 @@
         "klasik": "A traditional all-serif CV: centered name and contacts, quiet centered headings, and italic dates. Timeless and formal.",
         "ketik": "A typewriter-flavored technical look: monospace name, headings, and dates over a clean sans body. Built for developers."
       }
+    },
+    "navbar": {
+      "starOnGithub": "Star us on GitHub"
     }
   },
   "forms": {
@@ -540,7 +543,7 @@
       "drawerDescription": "Pick a format and name your file.",
       "format": "Format",
       "fileName": "File name",
-      "fileNamePlaceholder": "Senior Frontend Engineer"
+      "fileNamePlaceholder": "Software Engineer"
     },
     "bug": {
       "title": "Report a bug",
@@ -716,7 +719,7 @@
       "emptyDescription": "Add internships to show early hands-on experience.",
       "itemLegend": "Internship {index}",
       "role": "Role",
-      "rolePlaceholder": "Frontend Engineering Intern",
+      "rolePlaceholder": "Software Engineering Intern",
       "company": "Company",
       "companyPlaceholder": "Acme Inc.",
       "location": "Location",
@@ -739,7 +742,7 @@
       "emptyDescription": "Add side projects, open-source work, or things you've shipped.",
       "itemLegend": "Project {index}",
       "name": "Project name",
-      "namePlaceholder": "react-a11y-kit",
+      "namePlaceholder": "pg-jobs",
       "role": "Role",
       "rolePlaceholder": "Maintainer",
       "url": "Project URL",

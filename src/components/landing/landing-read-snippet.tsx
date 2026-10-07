@@ -22,7 +22,7 @@ function LandingReadSnippetBody() {
   const lines = report ? A.take(report.lines, 4) : [];
 
   return (
-    <div className="rounded-3xl bg-(--ink) p-5 font-machine text-xs leading-[1.8]">
+    <div className="rounded-xl bg-(--ink) p-5 font-machine text-xs leading-[1.8]">
       <p className="mb-2 flex justify-between gap-3 text-(--machine-muted)">
         <span>{t("snippetLabel")}</span>
         {report && (

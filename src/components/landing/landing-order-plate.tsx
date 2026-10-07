@@ -44,7 +44,7 @@ function LandingOrderPlateBody() {
   );
 
   return (
-    <figure className="rounded-3xl bg-(--ink) p-5 font-machine text-xs md:p-6">
+    <figure className="rounded-xl bg-(--ink) p-5 font-machine text-xs md:p-6">
       <figcaption className="flex items-center justify-between gap-3 text-(--machine-muted)">
         <span>{t("orderTitle")}</span>
         <span className="flex items-center gap-1.5 text-(--machine)">

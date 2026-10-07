@@ -17,13 +17,13 @@ const t = getTranslator(locale, "landing");
 // one. "Open to remote roles" is the line it leaves for the person to place.
 const RAW = [
   "JOHN DOE",
-  "Senior Frontend Engineer",
+  "Software Engineer",
   "Open to remote roles",
   "+15550101234 · john.doe@example.com",
   "SUMMARY",
-  "Senior frontend engineer with 8+ years…",
+  "Software engineer with 8+ years…",
   "EXPERIENCE",
-  "Senior Frontend Engineer",
+  "Senior Software Engineer",
   "Acme Corp, San Francisco, CA",
 ];
 const HEADINGS = ["SUMMARY", "EXPERIENCE"];
@@ -32,14 +32,14 @@ const SORTED = [
     key: "sectionHeader",
     lines: [
       "JOHN DOE",
-      "Senior Frontend Engineer",
+      "Software Engineer",
       "+15550101234 · john.doe@example.com",
     ],
   },
-  { key: "sectionSummary", lines: ["Senior frontend engineer with 8+ years…"] },
+  { key: "sectionSummary", lines: ["Software engineer with 8+ years…"] },
   {
     key: "sectionExperience",
-    lines: ["Senior Frontend Engineer", "Acme Corp, San Francisco, CA"],
+    lines: ["Senior Software Engineer", "Acme Corp, San Francisco, CA"],
   },
 ];
 const LEFTOVER = "Open to remote roles";
@@ -68,7 +68,7 @@ const LEFTOVER = "Open to remote roles";
     aria-hidden="true"
     class="mt-14 grid grid-cols-1 items-center gap-6 md:mt-20 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-10 lg:gap-16"
   >
-    <div class="rounded-3xl bg-(--ink) p-6 font-machine text-xs leading-[1.9] md:p-8">
+    <div class="rounded-xl bg-(--ink) p-6 font-machine text-xs leading-[1.9] md:p-8">
       <p class="mb-4 text-(--machine-muted)">{t("importRawLabel")}</p>
       {
         RAW.map((line) => (

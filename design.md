@@ -121,7 +121,7 @@ column is `w-11/12 max-w-5xl` centered.
 - The evergreen accent and its ≤5% placement. The landing world uses its own logo
   green under the same budget.
 - The Inter body / Geist Mono pairing, on every page except the landing page.
-- The CTA voice (button shape, radius `--radius` 0.4rem, icon placement).
+- The CTA voice (button shape, radius `--radius` 1rem with `rounded-md` controls, icon placement).
 - Hairline rules (`border-foreground/15`) as the divider language, not card borders.
 
 ## What pages MAY differ on
@@ -132,8 +132,8 @@ column is `w-11/12 max-w-5xl` centered.
 ## Landing world: Two Readers
 
 The landing page (`/`, `src/pages/[...lang]/index.astro`) wraps its content in
-`<div data-world="readers">`. That attribute re-points the shadcn tokens inside the
-wrapper only. Every primitive on the page inherits the world, and the app keeps the
+`<body data-world="readers">` (the `world` prop of `RootLayout`). That attribute
+re-points the shadcn tokens on that page only. Every primitive on the page inherits the world, and the app keeps the
 evergreen broadsheet. The page has one subject: the same résumé, read by a person and
 by a machine.
 
@@ -197,7 +197,7 @@ through `<Font>` in `src/pages/[...lang]/index.astro`.
 `src/components/landing/landing-reader-sheet.tsx` is the page's one signature
 component. It sits in the hero, under the draft row.
 
-- One white sheet (`bg-white` in both themes, 4px radius, `ring-1 ring-black/10`, a
+- One white sheet (`bg-white` in both themes, `rounded-xl`, `ring-1 ring-black/10`, a
   soft drop shadow, a bottom fade mask). Aspect 3/4 on mobile, 16/10 from `sm`.
 - Left of the scanner: the live résumé render (`ResumeThumbnail`) in the chosen
   template. Right of it: an `--ink` panel in `font-machine` with the text a parser
@@ -232,7 +232,8 @@ from `md`. No section carries a kicker, eyebrow, or number above its heading.
   over template thumbnails in a grid of 3. On mobile it becomes a snap-scroll row.
   The heading column also holds an `--ink` plate with the section order the parser
   read (`landing-order-plate.tsx`). Picking a look re-reads the hero sheet; the plate
-  shows the same order again. The picked look takes `ring-2 ring-foreground`.
+  shows the same order again. The picked look takes `ring-2 ring-primary` with a 4px
+  `ring-offset-background` gap, and a green check beside its name.
 - Kept (`landing-kept.astro`): allowed section types as `bg-secondary` chips, the
   custom section as a dashed neutral chip. The kept-out list is a hairline `dl` with
   a muted x before each plain name.
@@ -249,7 +250,7 @@ from `md`. No section carries a kicker, eyebrow, or number above its heading.
 - Download (`landing-download.astro`): one hairline-ruled macOS row with the action
   and the unsigned-build note, then a single muted line for Windows and Linux.
 - FAQ (`landing-faq.astro`, `landing-faq.tsx`): a sticky heading column of 4 with a
-  GitHub issues link, beside the `Accordion` primitive at `rounded-3xl`. Each answer
+  GitHub issues link, beside the `Accordion` primitive at `rounded-xl`. Each answer
   says only what ships. Panels use `hiddenUntilFound`, so closed answers stay in the
   HTML for search and find-in-page.
 - Close (`landing-closure.astro`): a hero-size statement that Lanjut is free and open
@@ -268,29 +269,29 @@ panels. `--ink` marks machine content only. Never put human copy on it.
   close actions, and the macOS download.
 - The desktop nav is 56px tall (`h-14`). Its buttons are 40px (`h-10`, `size-10`).
   The logo takes no hover fill while the nav floats as a pill.
+- The primary action is the filled `Button` with a trailing `ArrowRightIcon`. The
+  secondary is `variant="outline"` with a leading `MagnifyingGlassIcon`.
 
 ### Corners
 
-- The landing world sets `--radius: 0.55rem`, softer than the app's `0.4rem`. A
-  control rounds to about a third of its height, as on rimzzlabs.com.
-- Controls (buttons, inputs, the select, nav buttons) use `rounded-2xl` (15.8px). Icon
-  buttons in the nav take `rounded-2xl` too, so every button in a bar matches.
-- The nav bars use `rounded-[calc(var(--radius)*1.8+0.5rem)]`, the `rounded-2xl` math on
-  the scoped `--radius` (a `var(--radius-2xl)` resolves on `:root`). Their buttons sit 8px
-  inside the edge, so the two curves stay concentric.
-- Ink plates, the reader sheet, and the FAQ use `rounded-3xl`. Chips and template
-  thumbnails use `rounded-xl`. The scanner handle stays a circle.
+- The landing page uses the app's `--radius: 1rem` and the Vega primitives, so its
+  controls take `rounded-md` (12.8px), as on rimzzlabs.com.
+- The nav bars use `rounded-[calc(var(--radius-md)+0.5rem)]`. Their buttons sit 8px
+  inside the edge, so the two curves stay concentric: the desktop pill is `h-14`
+  around 40px buttons, and the mobile bar is `h-12.5` around 36px buttons.
+- Ink plates, the reader sheet, and the FAQ use `rounded-xl`. Chips and template
+  thumbnails use `rounded-md`, and the sheet labels `rounded-sm`. The scanner handle
+  stays a circle.
 - `data-world` sits on `<body>` (the `world` prop of `RootLayout`), so popups that
   portal out of the page (select, dropdown, tooltip) share the same tokens.
-- The primary action is the filled `Button` with a trailing `ArrowRightIcon`. The
-  secondary is `variant="outline"` with a leading `MagnifyingGlassIcon`.
 
 ### Accent budget
 
 - The logo green (`--primary`) fills the primary actions, takes the one accent word
-  in the hero headline, and marks the focus ring. Link hover may use it.
-- Everything else stays neutral: the nav "Open app" is an outline button, the picked
-  look rings in `--foreground`, and check icons are `--foreground`.
+  in the hero headline, marks the focus ring, and rings the picked look with its
+  check. Link hover may use it.
+- Everything else stays neutral: the nav "Open app" is an outline button, and the
+  hero's parser check icons are `--foreground`.
 - `--scanner` is the brighter green. It belongs to the scanner line and handle only.
 - No section is carpeted in green. The large color fields on the page are `--ink`,
   not green.
@@ -320,7 +321,7 @@ The live values are in [`src/styles/globals.css`](src/styles/globals.css). Mirro
   --muted-foreground: oklch(0.505 0.022 140);
   --border: oklch(0.905 0.008 100);
   --ring: oklch(0.505 0.13 160);
-  --radius: 0.4rem;
+  --radius: 1rem;
 }
 ```
 

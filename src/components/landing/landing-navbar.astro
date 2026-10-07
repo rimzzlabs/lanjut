@@ -25,7 +25,7 @@ const builderHref = localizePath("/platform", locale);
     class="group/header absolute inset-x-0 top-2 z-40 transition-[top,translate,opacity] duration-300 ease-out data-[animate=false]:transition-none data-[state=hidden]:pointer-events-none data-[state=hidden]:fixed data-[state=hidden]:top-3 data-[state=hidden]:-translate-y-[calc(100%+1rem)] data-[state=hidden]:opacity-0 data-[state=pill]:fixed data-[state=pill]:top-3"
   >
     <div
-      class="relative isolate mx-auto flex h-14 w-11/12 max-w-6xl items-center rounded-[calc(var(--radius)*1.8+0.5rem)] border border-transparent transition-[padding,background-color,border-color,box-shadow] duration-300 ease-out before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] group-data-[animate=false]/header:transition-none group-data-[state=pill]/header:border-foreground/10 group-data-[state=pill]/header:bg-popover/70 dark:group-data-[state=pill]/header:bg-popover/85 group-data-[state=pill]/header:px-1.75 group-data-[state=pill]/header:shadow-md group-data-[state=pill]/header:before:backdrop-blur-2xl group-data-[state=pill]/header:before:backdrop-saturate-150"
+      class="relative isolate mx-auto flex h-14 w-11/12 max-w-6xl items-center rounded-[calc(var(--radius-md)+0.5rem)] border border-transparent transition-[padding,background-color,border-color,box-shadow] duration-300 ease-out before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] group-data-[animate=false]/header:transition-none group-data-[state=pill]/header:border-foreground/10 group-data-[state=pill]/header:bg-popover/70 dark:group-data-[state=pill]/header:bg-popover/85 group-data-[state=pill]/header:px-1.75 group-data-[state=pill]/header:shadow-md group-data-[state=pill]/header:before:backdrop-blur-2xl group-data-[state=pill]/header:before:backdrop-saturate-150"
     >
       <a
         href={homeHref}
@@ -43,7 +43,7 @@ const builderHref = localizePath("/platform", locale);
           client:media="(min-width: 48rem)"
           locale={locale}
           pathname={pathname}
-          buttonClassName="size-10 rounded-2xl"
+          buttonClassName="size-10"
         />
         <Separator orientation="vertical" className="my-2 bg-foreground/15" />
         <a
@@ -61,10 +61,10 @@ const builderHref = localizePath("/platform", locale);
 <header
   data-landing-mobile-bar
   data-hidden="false"
-  class="fixed inset-x-2.5 bottom-[calc(0.5rem+env(safe-area-inset-bottom))] z-40 rounded-[calc(var(--radius)*1.8+0.5rem)] border border-foreground/10 bg-popover/70 text-popover-foreground dark:bg-popover/85 shadow-md transition-[translate,opacity] duration-300 ease-out before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] before:backdrop-blur-2xl before:backdrop-saturate-150 data-[hidden=true]:pointer-events-none data-[hidden=true]:translate-y-[calc(100%+0.5rem+env(safe-area-inset-bottom))] data-[hidden=true]:opacity-0 has-focus-visible:pointer-events-auto has-focus-visible:translate-y-0 has-focus-visible:opacity-100 has-aria-expanded:pointer-events-auto has-aria-expanded:translate-y-0 has-aria-expanded:opacity-100 md:hidden"
+  class="fixed inset-x-2.5 bottom-[calc(0.5rem+env(safe-area-inset-bottom))] z-40 rounded-[calc(var(--radius-md)+0.5rem)] border border-foreground/10 bg-popover/70 text-popover-foreground dark:bg-popover/85 shadow-md transition-[translate,opacity] duration-300 ease-out before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] before:backdrop-blur-2xl before:backdrop-saturate-150 data-[hidden=true]:pointer-events-none data-[hidden=true]:translate-y-[calc(100%+0.5rem+env(safe-area-inset-bottom))] data-[hidden=true]:opacity-0 has-focus-visible:pointer-events-auto has-focus-visible:translate-y-0 has-focus-visible:opacity-100 has-aria-expanded:pointer-events-auto has-aria-expanded:translate-y-0 has-aria-expanded:opacity-100 md:hidden"
 >
-  <div class="flex h-12 items-center px-1.75">
-    <a href={homeHref} class={cn(buttonVariants({ variant: "ghost", size: "icon" }), "rounded-2xl")}>
+  <div class="flex h-12.5 items-center px-1.75">
+    <a href={homeHref} class={cn(buttonVariants({ variant: "ghost", size: "icon" }))}>
       <img src="/favicon.svg" alt="" width="20" height="20" class="size-5" />
       <span class="sr-only">Lanjut</span>
     </a>
@@ -75,7 +75,6 @@ const builderHref = localizePath("/platform", locale);
         locale={locale}
         pathname={pathname}
         side="top"
-        buttonClassName="rounded-2xl"
       />
       <a href={builderHref} class={cn(buttonVariants({ variant: "outline" }))}>
         {t("openApp")}

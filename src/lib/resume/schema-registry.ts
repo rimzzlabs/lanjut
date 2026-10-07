@@ -64,7 +64,7 @@ export const HEADER_SCHEMA: FieldSchema[] = [
     key: "jobTitle",
     label: "Job title",
     kind: "plain",
-    placeholder: "Senior Frontend Engineer",
+    placeholder: "Software Engineer",
   },
   { key: "email", label: "Email", kind: "plain", placeholder: "john@doe.dev" },
   {
@@ -189,7 +189,7 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
         key: "title",
         label: "Role",
         kind: "plain",
-        placeholder: "Frontend Engineering Intern",
+        placeholder: "Software Engineering Intern",
       },
       {
         key: "company",
@@ -244,7 +244,7 @@ export const SECTION_REGISTRY: Record<SectionType, SectionSchema> = {
         key: "title",
         label: "Project name",
         kind: "plain",
-        placeholder: "react-a11y-kit",
+        placeholder: "pg-jobs",
       },
       {
         key: "company",

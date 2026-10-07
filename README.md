@@ -63,7 +63,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Build targets | Web (default), desktop (`LANJUT_TARGET=desktop`) |
 | Desktop shell | Tauri 2 (macOS 13 or later) |
 | Internationalization | use-intl (English, Indonesian) |
-| UI components | shadcn (base-ui) |
+| UI components | shadcn (base-ui, Vega style) |
 | Icons | Phosphor (@phosphor-icons/react) |
 | Styling | Tailwind CSS |
 | Rich text editor | TipTap |

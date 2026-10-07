@@ -1,3 +1,4 @@
+import { CheckIcon } from "@phosphor-icons/react";
 import { useMemo } from "react";
 import { useTranslations } from "use-intl";
 import type { ResumePreview } from "@/components/editor/resume-preview";
@@ -36,7 +37,7 @@ function LandingLooksGrid() {
   const preview = useMemo(() => resumeToPreview(draftToResume(draft)), [draft]);
 
   return (
-    <ul className="mx-[-4.5%] flex snap-x snap-mandatory gap-4 overflow-x-auto px-[4.5%] pb-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-x-5 sm:gap-y-8 sm:overflow-visible sm:px-0">
+    <ul className="mx-[-4.5%] flex snap-x snap-mandatory gap-4 overflow-x-auto px-[4.5%] py-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-x-5 sm:gap-y-8 sm:overflow-visible sm:px-0">
       {TEMPLATES.map((item) => (
         <LandingLookItem
           key={item.id}
@@ -68,18 +69,28 @@ function LandingLookItem(props: LandingLookItemProps) {
         aria-pressed={props.selected}
         aria-label={t("looksPick", { name: props.name })}
         onClick={() => setTemplate(props.id)}
-        className="group block w-full rounded-xl text-left outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="group block w-full rounded-md text-left outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
       >
         <div
           className={cn(
-            "aspect-3/4 overflow-hidden rounded-xl bg-white ring-1 ring-black/10 transition-[box-shadow,translate] duration-200 group-hover:-translate-y-0.5",
-            props.selected && "ring-2 ring-foreground",
+            "aspect-3/4 overflow-hidden rounded-md bg-white ring-1 ring-black/10 transition-[box-shadow,translate] duration-200 group-hover:-translate-y-0.5",
+            props.selected &&
+              "ring-2 ring-primary ring-offset-4 ring-offset-background",
           )}
         >
           <ResumeThumbnail resume={props.preview} template={props.id} />
         </div>
         <p className="mt-3 flex items-baseline justify-between gap-3">
-          <span className="font-semibold">{props.name}</span>
+          <span className="inline-flex items-center gap-1.5 font-semibold">
+            {props.name}
+            {props.selected && (
+              <CheckIcon
+                aria-hidden
+                weight="bold"
+                className="size-4 text-primary"
+              />
+            )}
+          </span>
           <span className="text-right text-xs text-muted-foreground">
             {t(LOOK_KEYS[props.id])}
           </span>

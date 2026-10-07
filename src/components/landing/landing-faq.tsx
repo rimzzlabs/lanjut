@@ -33,7 +33,7 @@ export function LandingFaq(props: IslandProps) {
 
 function LandingFaqList() {
   return (
-    <Accordion className="rounded-3xl">
+    <Accordion className="rounded-xl">
       {FAQ_KEYS.map((key) => (
         <LandingFaqItem key={key} id={key} />
       ))}

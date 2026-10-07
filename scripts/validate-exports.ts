@@ -89,7 +89,8 @@ const SECTION_ORDER = [
 /** Fields (from the seed) that every export must carry so a parser can map them. */
 const REQUIRED_FIELDS = [
   "John Doe",
-  "Senior Frontend Engineer",
+  "Software Engineer",
+  "Senior Software Engineer",
   "john.doe@example.com",
   "johndoe.dev",
   "github.com/johndoe",

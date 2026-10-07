@@ -478,6 +478,9 @@
         "klasik": "CV serif tradisional: nama dan kontak di tengah, judul yang kalem di tengah, dan tanggal miring. Abadi dan formal.",
         "ketik": "Nuansa teknis ala mesin tik: nama, judul, dan tanggal monospace di atas isi sans yang bersih. Dibuat buat developer."
       }
+    },
+    "navbar": {
+      "starOnGithub": "Beri bintang di GitHub"
     }
   },
   "forms": {
@@ -540,7 +543,7 @@
       "drawerDescription": "Pilih format dan kasih nama berkasnya.",
       "format": "Format",
       "fileName": "Nama berkas",
-      "fileNamePlaceholder": "Senior Frontend Engineer"
+      "fileNamePlaceholder": "Software Engineer"
     },
     "bug": {
       "title": "Laporin bug",
@@ -716,7 +719,7 @@
       "emptyDescription": "Tambahin magang buat nunjukin pengalaman awal kamu.",
       "itemLegend": "Magang {index}",
       "role": "Posisi",
-      "rolePlaceholder": "Frontend Engineering Intern",
+      "rolePlaceholder": "Software Engineering Intern",
       "company": "Perusahaan",
       "companyPlaceholder": "Acme Inc.",
       "location": "Lokasi",
@@ -739,7 +742,7 @@
       "emptyDescription": "Tambahin proyek sampingan, kerjaan open-source, atau apa pun yang udah kamu rilis.",
       "itemLegend": "Proyek {index}",
       "name": "Nama proyek",
-      "namePlaceholder": "react-a11y-kit",
+      "namePlaceholder": "pg-jobs",
       "role": "Peran",
       "rolePlaceholder": "Maintainer",
       "url": "URL proyek",
