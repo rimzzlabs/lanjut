@@ -1,3 +1,4 @@
+import { inflateSync } from "node:zlib";
 import { A, G, O, pipe, S } from "@mobily/ts-belt";
 import type {
   ExperienceItemView,
@@ -97,9 +98,55 @@ function embeddedFamilies(buffer: Uint8Array): ReadonlyArray<string> {
   );
 }
 
+/**
+ * Text drawn with a stroke render mode (`1 Tr` or `2 Tr`). takumi-pdf fakes a
+ * weight above the heaviest face this way, which a browser never does.
+ */
+function strokedTextRuns(buffer: Uint8Array): number {
+  const raw = Buffer.from(buffer).toString("latin1");
+  return pipe(
+    Array.from(raw.matchAll(/stream\r?\n([\s\S]*?)endstream/g)),
+    A.map((match) => {
+      try {
+        return inflateSync(Buffer.from(match[1], "latin1")).toString("latin1");
+      } catch {
+        return "";
+      }
+    }),
+    A.map((content) =>
+      A.length(Array.from(content.matchAll(/(^|\s)[12] Tr\b/g))),
+    ),
+    A.reduce(0, (total, count) => total + count),
+  );
+}
+
 function failWhen(failed: boolean, message: string): ReadonlyArray<string> {
   if (!failed) return [];
   return [message];
+}
+
+const HEADING_PROBE = "HEADPROBE";
+// One-line summary paragraphs, stepped so the heading after them crosses the
+// page foot at some step in every template.
+const ORPHAN_STEPS = A.makeWithIndex(17, (step) => 16 + step * 3);
+
+/** A summary of `lines` paragraphs, then one experience entry under a marked heading. */
+function orphanProbe(params: {
+  preview: ResumePreview;
+  entry: ExperienceItemView;
+  lines: number;
+}): ResumePreview {
+  const { preview, entry, lines } = params;
+  return {
+    ...preview,
+    headings: { ...preview.headings, experience: HEADING_PROBE },
+    sectionOrder: [{ type: "experience", id: "experience" }],
+    summary: A.makeWithIndex(lines, (line) => ({
+      type: "paragraph",
+      runs: [{ text: `Summary line ${line}.` }],
+    })),
+    experience: [{ ...entry, description: probeDescription(0) }],
+  };
 }
 
 function pageOf(pages: ReadonlyArray<string>, marker: string): number {
@@ -128,6 +175,11 @@ async function checkTemplate(
   const fontErrors = failWhen(
     families !== expected,
     `${label}: embeds ${families}, expected ${expected}`,
+  );
+
+  const strokeErrors = failWhen(
+    strokedTextRuns(buffer) > 0,
+    `${label}: text is stroked to fake a heavier weight`,
   );
 
   const spacingErrors = await Promise.all(
@@ -171,9 +223,52 @@ async function checkTemplate(
   return pipe(
     checks.textErrors(text, label),
     A.concat(fontErrors),
+    A.concat(strokeErrors),
     A.concat(A.flat(spacingErrors)),
     A.concat(photoErrors),
     A.concat(splitErrors),
+  );
+}
+
+/**
+ * Sweeps the heading down the page until it reaches the page foot, and fails
+ * when it ever lands on another page than its first entry.
+ */
+async function checkHeadingOrphans(
+  params: TemplateCheckParams,
+): Promise<ReadonlyArray<string>> {
+  const { takumi, template, checks } = params;
+  const label = `TAKUMI(${template})`;
+  const entry = A.head(checks.preview.experience);
+  if (O.isNone(entry)) return [`${label}: seed has no experience entry`];
+  const placements = await Promise.all(
+    A.map(ORPHAN_STEPS, async (lines) => {
+      const pages = await checks.extractPdfPages(
+        await render({
+          takumi,
+          preview: orphanProbe({ preview: checks.preview, entry, lines }),
+          template,
+        }),
+      );
+      return {
+        lines,
+        heading: pageOf(pages, HEADING_PROBE),
+        entry: pageOf(pages, "START-0"),
+      };
+    }),
+  );
+  const crossed = A.some(placements, (placement) => placement.heading > 0);
+  const orphanErrors = pipe(
+    placements,
+    A.filter((placement) => placement.heading !== placement.entry),
+    A.map(
+      (placement) =>
+        `${label}: heading left at a page foot after ${placement.lines} summary lines`,
+    ),
+  );
+  return pipe(
+    failWhen(!crossed, `${label}: heading probe never crossed a page break`),
+    A.concat(orphanErrors),
   );
 }
 
@@ -203,8 +298,9 @@ async function checkLigatures(params: LigatureCheckParams): Promise<string[]> {
 
 /**
  * Runs the PDF export checks for every template: reading order and fields, at
- * both letter-spacing bounds too, font families, photo invariance, no entry
- * split across a page, and no fi/fl ligatures.
+ * both letter-spacing bounds too, font families, no faked weights, photo
+ * invariance, no entry split across a page, no heading left at a page foot,
+ * and no fi/fl ligatures.
  */
 export async function runTakumiChecks(
   checks: TakumiChecksParams,
@@ -216,12 +312,21 @@ export async function runTakumiChecks(
         checkTemplate({ takumi, template: summary.id, checks }),
       ),
     );
+    const orphanErrors = await Promise.all(
+      A.map(TEMPLATES, (summary) =>
+        checkHeadingOrphans({ takumi, template: summary.id, checks }),
+      ),
+    );
     const ligatureErrors = await Promise.all(
       A.map(["lora", "merriweather"], (fontId) =>
         checkLigatures({ takumi, fontId, checks }),
       ),
     );
-    return pipe(A.flat(templateErrors), A.concat(A.flat(ligatureErrors)));
+    return pipe(
+      A.flat(templateErrors),
+      A.concat(A.flat(orphanErrors)),
+      A.concat(A.flat(ligatureErrors)),
+    );
   } finally {
     await takumi.close();
   }
