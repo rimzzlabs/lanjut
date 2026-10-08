@@ -11,7 +11,7 @@ import { useLandingDraftStore, useResumeStore } from "@/lib/store";
 
 /**
  * Turns the landing draft into a created résumé and opens it in the editor. An
- * untouched draft opens the dashboard's create dialog instead.
+ * untouched draft opens the dashboard's create sheet instead.
  */
 export function useLandingDraftCreate() {
   const t = useTranslations("landing");

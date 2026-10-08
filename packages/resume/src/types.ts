@@ -5,7 +5,7 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 24;
+export const CURRENT_SCHEMA_VERSION = 25;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
@@ -123,6 +123,12 @@ export interface Resume {
   /** The résumé's name, e.g. "Software Engineer, Acme". Per-job tailoring is core. */
   title: string;
   /**
+   * The profile this résumé belongs to. Organization only: it never renders
+   * and never exports. Absent on résumés made before profiles, and those, like
+   * résumés whose profile no longer exists, belong to the first profile.
+   */
+  profileId?: string;
+  /**
    * Presentation-layer template rendering this document (e.g. "awal"). Kept a
    * loose string so the schema doesn't couple to the UI catalog; renderers fall
    * back to the default template for unknown ids.
@@ -220,4 +226,6 @@ export interface ResumeIndexEntry {
   id: string;
   title: string;
   updatedAt: string;
+  /** See `Resume.profileId`. */
+  profileId?: string;
 }

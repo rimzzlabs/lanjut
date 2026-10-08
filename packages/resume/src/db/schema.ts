@@ -1,5 +1,6 @@
 import { type DBSchema, type IDBPDatabase, openDB } from "idb";
 import type { Resume } from "..";
+import type { Profile } from "../profile";
 
 const DB_NAME = "lanjut";
 
@@ -11,12 +12,14 @@ const DB_NAME = "lanjut";
  *
  * v2: adds the `backups` store for raw pre-migration document snapshots.
  * v3: adds the `leftovers` store for import text that could not be placed.
+ * v4: adds the `profiles` store for the pre-fill profiles.
  */
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 
 /** Keys used in the single-value `app` meta store. */
 export const META_KEYS = {
   lastOpenedResumeId: "lastOpenedResumeId",
+  activeProfileId: "activeProfileId",
 } as const;
 
 /**
@@ -64,9 +67,30 @@ export interface LanjutDB extends DBSchema {
     key: string;
     value: ImportLeftovers;
   };
+  /** Personal information and a summary that fill new résumés. */
+  profiles: {
+    key: string;
+    value: Profile;
+  };
 }
 
 let dbPromise: Promise<IDBPDatabase<LanjutDB>> | null = null;
+
+/** Another tab on an older build holds the database open, so this tab cannot upgrade it yet. */
+export const DB_BLOCKED = "blocked";
+/** The database opened. Ends a `blocked` wait. */
+export const DB_READY = "ready";
+/** A newer build in another tab needs the database, so this tab let it go. */
+export const DB_OUTDATED = "outdated";
+
+/**
+ * Connection notices for the app, as plain events, so this layer stays free
+ * of React. A `DB_VERSION` bump needs every open connection on the old
+ * version to close first. A tab on this build closes its own when a newer
+ * build asks (`DB_OUTDATED`), and a tab that has to wait for an older build
+ * says so (`DB_BLOCKED`) until the database opens (`DB_READY`).
+ */
+export const DB_EVENTS = new EventTarget();
 
 /**
  * Lazily open the singleton database. Guarded against server rendering; this is
@@ -94,7 +118,24 @@ export function getDb(): Promise<IDBPDatabase<LanjutDB>> {
         if (!db.objectStoreNames.contains("leftovers")) {
           db.createObjectStore("leftovers", { keyPath: "resumeId" });
         }
+        if (!db.objectStoreNames.contains("profiles")) {
+          db.createObjectStore("profiles", { keyPath: "id" });
+        }
       },
+      blocked() {
+        DB_EVENTS.dispatchEvent(new Event(DB_BLOCKED));
+      },
+      blocking(_currentVersion, _blockedVersion, event) {
+        (event.target as IDBDatabase).close();
+        dbPromise = null;
+        DB_EVENTS.dispatchEvent(new Event(DB_OUTDATED));
+      },
+      terminated() {
+        dbPromise = null;
+      },
+    }).then((db) => {
+      DB_EVENTS.dispatchEvent(new Event(DB_READY));
+      return db;
     });
   }
   return dbPromise;

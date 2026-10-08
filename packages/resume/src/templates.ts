@@ -1,4 +1,4 @@
-import { A, G, pipe, S } from "@mobily/ts-belt";
+import { A, G, O, pipe, S } from "@mobily/ts-belt";
 
 /**
  * The catalog of résumé templates shown on the Browse Templates page. Presentation
@@ -31,6 +31,19 @@ export function resolveTemplateId(id: string): TemplateId {
   return DEFAULT_TEMPLATE_ID;
 }
 
+/** The display name of a persisted template id, after the same fallback. */
+export function templateNameOf(id: string): string {
+  const resolved = resolveTemplateId(id);
+  return pipe(
+    TEMPLATES,
+    A.find((template) => template.id === resolved),
+    O.mapWithDefault<TemplateSummary, string>(
+      resolved,
+      (template) => template.name,
+    ),
+  );
+}
+
 /**
  * Each template's baseline body line height. The editor's line-height slider
  * rests here, and the preview body renders it; the PDF is drawn from the same
@@ -58,12 +71,6 @@ export function templateHasContactIcons(id: string): boolean {
 }
 
 export type TemplateSort = "name-asc" | "name-desc" | "newest";
-
-export const TEMPLATE_SORTS: TemplateSort[] = [
-  "name-asc",
-  "name-desc",
-  "newest",
-];
 
 /** Shared by the Browse Templates page and the create dialog, so both list templates in the same order. */
 export const DEFAULT_TEMPLATE_SORT: TemplateSort = "name-asc";

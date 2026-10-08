@@ -12,6 +12,9 @@ export const EDITOR_DOCUMENT_ROUTE = `${EDITOR_PATHNAME}/:id`;
 
 export const TEMPLATE_PATHNAME = "/template";
 
+/** The profiles: the personal information and summary that fill new résumés. */
+export const PROFILE_PATHNAME = "/profile";
+
 type EditorHref = `${typeof EDITOR_PATHNAME}/${string}`;
 
 /** Builds the editor address. Every link and redirect into the editor goes through here. */

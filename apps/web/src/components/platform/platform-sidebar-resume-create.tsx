@@ -7,7 +7,7 @@ import {
 import { PlusIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
-import { PlatformResumeCreateDialog } from "./platform-resume-create-dialog";
+import { PlatformResumeCreateSheet } from "./platform-resume-create/platform-resume-create-sheet";
 
 export function PlatformSidebarResumeCreate() {
   const [open, setOpen] = useState(false);
@@ -31,7 +31,7 @@ export function PlatformSidebarResumeCreate() {
         <TooltipContent>{t("createResume")}</TooltipContent>
       </Tooltip>
 
-      <PlatformResumeCreateDialog open={open} onOpenChange={setOpen} />
+      <PlatformResumeCreateSheet open={open} onOpenChange={setOpen} />
     </>
   );
 }

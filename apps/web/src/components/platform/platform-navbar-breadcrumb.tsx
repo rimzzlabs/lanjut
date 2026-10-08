@@ -10,14 +10,20 @@ import { S } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
 import { useWorkspaceView } from "@/hooks/use-workspace-view";
 import { Link, usePathname } from "@/i18n/navigation";
-import { EDITOR_PATHNAME, TEMPLATE_PATHNAME } from "@/lib/routes";
+import {
+  EDITOR_PATHNAME,
+  PROFILE_PATHNAME,
+  TEMPLATE_PATHNAME,
+} from "@/lib/routes";
 
 export function PlatformNavbarBreadcrumb() {
   const pathname = usePathname();
   const view = useWorkspaceView();
   const t = useTranslations("platform.breadcrumb");
+  const tp = useTranslations("profile");
   const atTemplates = S.startsWith(pathname, TEMPLATE_PATHNAME);
-  const atLibrary = !atTemplates && view !== "editor";
+  const atProfiles = S.startsWith(pathname, PROFILE_PATHNAME);
+  const atLibrary = !atTemplates && !atProfiles && view !== "editor";
 
   return (
     <Breadcrumb>
@@ -37,6 +43,16 @@ export function PlatformNavbarBreadcrumb() {
 
             <BreadcrumbItem>
               <BreadcrumbPage>{t("editor")}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </>
+        )}
+
+        {atProfiles && (
+          <>
+            <BreadcrumbSeparator />
+
+            <BreadcrumbItem>
+              <BreadcrumbPage>{tp("profiles")}</BreadcrumbPage>
             </BreadcrumbItem>
           </>
         )}

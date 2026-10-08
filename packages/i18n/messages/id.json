@@ -50,10 +50,6 @@
         "title": "Pindah halaman",
         "content": "Bolak-balik antara dasbor dan galeri template dari sini."
       },
-      "resumes": {
-        "title": "Resume kamu",
-        "content": "Tiap resume yang kamu buat muncul di sini; pilih salah satu buat masuk ke editor."
-      },
       "replay": {
         "title": "Putar ulang kapan aja",
         "content": "Jalanin ulang panduan buat halaman yang lagi kamu buka pakai tombol ini."
@@ -64,13 +60,13 @@
         "title": "Jelajahi template",
         "content": "Template cuma ngubah tampilan: tipografi, spasi, aksen. Strukturnya tetap linear biar parser ATS selalu bisa baca resume kamu."
       },
+      "preview": {
+        "title": "Coba dulu",
+        "content": "Lihat template ini di contoh atau di salah satu resume kamu. Lalu mulai resume baru, atau pakai langsung di resume itu."
+      },
       "search": {
         "title": "Cari",
         "content": "Cari template berdasarkan nama."
-      },
-      "sort": {
-        "title": "Urutkan",
-        "content": "Urutkan galeri berdasarkan nama atau yang terbaru."
       }
     },
     "editor": {
@@ -127,6 +123,26 @@
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
         "0_19_0": [
+          {
+            "title": "Lihat resume kamu sebelum dibuat",
+            "description": "Membuat resume sekarang tinggal tiga langkah singkat: titik awal, template, lalu nama. Di layar besar, pratinjau di samping langkah menampilkan setiap halaman selagi kamu memilih, termasuk file yang kamu impor. Di ponsel, geser untuk melihat template lain."
+          },
+          {
+            "title": "Profil untuk tiap jenis pekerjaan",
+            "description": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya resumenya sendiri, dan setiap resume baru di dalamnya dimulai dengan nama, kontak, dan ringkasan profil itu. Kelola profil di halaman Profil yang baru, lalu ganti dari avatar di bilah atas. Tema, bahasa, dan animasi sekarang ada di Preferensi pada menu yang sama."
+          },
+          {
+            "title": "Pustaka yang mulai dari terakhir kamu berhenti",
+            "description": "Pustaka kamu sekarang dibuka dengan resume yang terakhir kamu edit, tinggal satu klik ke editor. Di bawahnya, mulai resume baru dari halaman kosong, contoh, file, atau template. Setiap resume menampilkan templatenya, dan kamu bisa mengurutkan berdasarkan nama atau edit terakhir serta beralih antara grid dan daftar."
+          },
+          {
+            "title": "Coba template di resume kamu sendiri",
+            "description": "Halaman template sekarang menampilkan setiap template dalam ukuran penuh, semua halamannya. Lihat di contoh atau di salah satu resume kamu, lalu pakai dengan satu klik. Kalau berubah pikiran, Urungkan di editor mengembalikan template lamanya."
+          },
+          {
+            "title": "Sidebar yang terlipat jadi ikon",
+            "description": "Sembunyikan sidebar dan sekarang ia terlipat jadi deretan ikon ramping, bukan hilang dari layar. Arahkan ke ikon untuk melihat namanya. Saat terbuka, sidebar menampilkan lima resume terbaru kamu."
+          },
           {
             "title": "PDF kamu sekarang sama dengan pratinjau",
             "description": "Unduhan PDF sekarang dibuat dari halaman yang sama dengan yang kamu lihat di editor, jadi huruf, ukuran, dan jarak di file sama dengan pratinjau. Teksnya tetap bisa dipilih untuk sistem pelacak pelamar."
@@ -420,9 +436,9 @@
       "reportBug": "Ada masalah?",
       "featureRequest": "Ajukan fitur",
       "myResume": "Resume Saya",
+      "recent": "Terbaru",
+      "viewAll": "Lihat semua",
       "createResume": "Buat Resume",
-      "noResume": "Belum ada resume",
-      "noResumeDescription": "Begitu kamu nambah resume, semuanya bakal muncul di sini.",
       "itemMenu": "Menu",
       "modify": "Ubah <b>{title}</b>",
       "rename": "Ganti nama",
@@ -435,16 +451,26 @@
       "searchResume": "Cari resume kamu",
       "resume": "Resume",
       "searchTemplates": "Cari template",
-      "sortNameAsc": "Nama (A-Z)",
-      "sortNameDesc": "Nama (Z-A)",
-      "sortNewest": "Terbaru",
-      "sortTemplates": "Urutkan template"
+      "sortNameAsc": "Nama (A-Z)"
     },
     "emptyState": {
       "title": "Belum ada resume",
       "description": "Belum ada yang tersimpan di perangkat ini. Yuk, mulai dari template atau bikin resume kosong.",
       "browseTemplates": "Jelajahi template",
-      "newResume": "Resume baru"
+      "profileTitle": "Belum ada resume di {name}",
+      "profileDescription": "Setiap profil menyimpan resumenya sendiri. Mulai satu di bawah, atau ganti profil dari avatar di bilah atas."
+    },
+    "library": {
+      "continue": "Lanjutkan yang terakhir kamu edit",
+      "openEditor": "Buka editor",
+      "templateHint": "Pilih tampilannya dulu, baru mulai.",
+      "all": "Semua resume",
+      "sort": "Urutkan resume",
+      "sortEdited": "Terakhir diedit",
+      "view": "Tampilan",
+      "viewGrid": "Grid",
+      "viewList": "Daftar",
+      "preview": "Pratinjau {title}"
     },
     "unreadable": {
       "title": "Beberapa resume butuh versi aplikasi yang lebih baru",
@@ -463,8 +489,7 @@
       "duplicate": "Duplikat",
       "copyOf": "Salinan dari {title}",
       "download": "Unduh",
-      "delete": "Hapus",
-      "newResume": "Resume baru"
+      "delete": "Hapus"
     },
     "templates": {
       "noMatch": "Nggak ada template yang cocok sama “{query}”.",
@@ -477,11 +502,62 @@
         "tebal": "Tampil tebal dan modern: nama gede, judul huruf kapital tebal di atas garis tebal, dan hierarki tipografi yang kuat.",
         "klasik": "CV serif tradisional: nama dan kontak di tengah, judul yang kalem di tengah, dan tanggal miring. Abadi dan formal.",
         "ketik": "Nuansa teknis ala mesin tik: nama, judul, dan tanggal monospace di atas isi sans yang bersih. Dibuat buat developer."
-      }
+      },
+      "listLabel": "Template",
+      "previewWith": "Pratinjau dengan",
+      "previewLabel": "Pratinjau {name}",
+      "applyTo": "Pakai di {title}",
+      "inUse": "Sedang dipakai"
     },
     "navbar": {
       "starOnGithub": "Beri bintang di GitHub"
+    },
+    "database": {
+      "blocked": "Tutup tab Lanjut lainnya untuk menyelesaikan pembaruan",
+      "blockedDescription": "Tab lain masih menjalankan versi lama dan memegang resume tersimpan kamu. Tab ini lanjut sendiri setelah tab itu ditutup atau disegarkan. Tidak ada yang hilang.",
+      "outdated": "Lanjut diperbarui di tab lain",
+      "outdatedDescription": "Segarkan tab ini untuk lanjut bekerja. Sampai saat itu, tab ini tidak bisa menyimpan perubahan.",
+      "refresh": "Segarkan"
     }
+  },
+  "profile": {
+    "guest": "Tamu",
+    "menuLabel": "Menu profil untuk {name}",
+    "profiles": "Profil",
+    "settings": "Pengaturan",
+    "settingsDescription": "Profil kamu dan preferensi perangkat ini.",
+    "preferences": "Preferensi",
+    "addProfile": "Tambah profil baru",
+    "newShort": "Profil baru",
+    "profileSection": "Profil",
+    "profileDescription": "Informasi pribadi dan ringkasan kamu. Resume baru di profil ini dimulai dengan data ini.",
+    "newTitle": "Profil baru",
+    "newDescription": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya resumenya sendiri, dan resume baru dimulai dengan informasinya.",
+    "name": "Nama profil",
+    "namePlaceholder": "Lowongan frontend",
+    "nameHint": "Hanya kamu yang melihat nama ini. Gunanya untuk membedakan profil.",
+    "save": "Simpan perubahan",
+    "create": "Tambah profil",
+    "deleteTitle": "Hapus profil",
+    "deleteDescription": "Resumenya pindah ke profil yang kamu pilih. Hanya informasi yang tersimpan di profil ini yang hilang.",
+    "deleteConfirm": "Hapus {name}?",
+    "prefillNote": "Resume ini masuk ke profil <b>{name}</b> dan dimulai dengan informasi pribadi serta ringkasannya.",
+    "preferencesDescription": "Tampilan dan gerak Lanjut di perangkat ini.",
+    "theme": "Tema",
+    "themeDescription": "Terang, gelap, atau ikut perangkat kamu.",
+    "themeLight": "Terang",
+    "themeDark": "Gelap",
+    "themeSystem": "Sistem",
+    "languageDescription": "Bahasa aplikasi. Setiap resume punya bahasanya sendiri.",
+    "animationDescription": "Mati menghentikan gerakan di layar. Sistem mengikuti perangkat kamu.",
+    "active": "Aktif",
+    "useProfile": "Pakai profil ini",
+    "draftHint": "Belum disimpan",
+    "resumeCount": "{count, plural, =0 {Belum ada resume} other {# resume}}",
+    "deleteMove": "{count} resumenya pindah ke profil di bawah. Hanya informasi yang tersimpan di profil ini yang hilang.",
+    "deleteEmpty": "Profil ini tidak punya resume. Hanya informasi yang tersimpan di profil ini yang hilang.",
+    "moveTo": "Pindahkan resume ke",
+    "joinNote": "Resume ini masuk ke profil <b>{name}</b>."
   },
   "forms": {
     "common": {
@@ -490,7 +566,9 @@
       "delete": "Hapus",
       "undo": "Urungkan",
       "download": "Unduh",
-      "openIssue": "Buka isu GitHub"
+      "openIssue": "Buka isu GitHub",
+      "back": "Kembali",
+      "next": "Lanjut"
     },
     "validation": {
       "titleMin": "Pakai minimal {min} karakter, ya.",
@@ -500,7 +578,8 @@
       "featureProblem": "Ceritain masalah yang mau diselesaikan.",
       "sectionTitleRequired": "Isi nama bagian.",
       "reporterNameRequired": "Isi nama kamu dulu, ya.",
-      "verificationRequired": "Selesain verifikasi singkatnya dulu, ya."
+      "verificationRequired": "Selesain verifikasi singkatnya dulu, ya.",
+      "profileNameRequired": "Beri nama profil ini."
     },
     "direct": {
       "name": "Nama kamu",
@@ -513,7 +592,7 @@
     },
     "create": {
       "title": "Buat resume baru",
-      "description": "Kasih nama, pilih titik awal, lalu pilih template.",
+      "description": "Pilih titik awal, pilih template, lalu kasih nama.",
       "label": "Nama resume",
       "placeholder": "Software Engineer",
       "template": "Template",
@@ -521,7 +600,21 @@
       "sourceSample": "Contoh",
       "sourceEmpty": "Kosong",
       "sourceImport": "Impor file",
-      "submit": "Buat resume"
+      "submit": "Buat resume",
+      "stepsLabel": "Langkah",
+      "stepStart": "Mulai",
+      "stepTemplate": "Template",
+      "stepReview": "Tinjau",
+      "stepOf": "Langkah {current} dari {total}",
+      "sourceSampleHint": "Contoh yang sudah terisi, tinggal kamu ubah jadi milikmu.",
+      "sourceEmptyHint": "Semua bagian, masih kosong dan siap kamu isi.",
+      "sourceImportHint": "Bawa resume PDF, JSON, atau YAML.",
+      "templateHint": "Pilih tampilan. Kamu bisa menggantinya kapan saja di editor.",
+      "reviewHint": "Kasih nama supaya gampang dicari di daftar resume kamu.",
+      "change": "Ganti",
+      "previewLabel": "Pratinjau",
+      "previewImport": "Taruh file untuk melihat resume kamu di sini.",
+      "showTemplate": "Tampilkan {name}"
     },
     "rename": {
       "title": "Ganti nama",

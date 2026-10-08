@@ -7,6 +7,7 @@ import {
 import { type PropsWithChildren, useMemo } from "react";
 import { useTranslations } from "use-intl";
 import { usePathname } from "@/i18n/navigation";
+import { scrollPageToTop } from "@/lib/page-scroll";
 import {
   useEditorChromeStore,
   useSidebarStore,
@@ -25,7 +26,7 @@ function prepareStep(tourName: string | null, stepIndex: number) {
   ) {
     return;
   }
-  if (step.scrollTop) window.scrollTo({ top: 0, behavior: "instant" });
+  if (step.scrollTop) scrollPageToTop();
   if (step.sidebar) {
     useSidebarStore.getState().ensureVisible(step.sidebar === "open");
   }

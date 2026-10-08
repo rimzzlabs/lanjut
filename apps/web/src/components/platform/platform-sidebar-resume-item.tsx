@@ -99,18 +99,11 @@ export function PlatformSidebarResumeItem(
               {t("duplicate")}
             </DropdownMenuItem>
 
-            {id !== resume.id && (
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  variant="destructive"
-                  onClick={openRemoveDialog}
-                >
-                  <TrashIcon />
-                  {t("delete")}
-                </DropdownMenuItem>
-              </>
-            )}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem variant="destructive" onClick={openRemoveDialog}>
+              <TrashIcon />
+              {t("delete")}
+            </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>

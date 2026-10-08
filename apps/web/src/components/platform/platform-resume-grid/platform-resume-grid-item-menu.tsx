@@ -24,12 +24,19 @@ import { PlatformResumeActionRename } from "../platform-resume-action-rename";
 
 interface PlatformResumeGridItemMenuProps {
   resume: { id: string; title: string };
+  /**
+   * `card` is the quiet trigger on a card. `toolbar` sits in a row of 36px
+   * buttons that already holds Download, so it matches their height and
+   * leaves Download out.
+   */
+  variant?: "card" | "toolbar";
 }
 
 export function PlatformResumeGridItemMenu(
   props: PlatformResumeGridItemMenuProps,
 ) {
   const { resume } = props;
+  const toolbar = props.variant === "toolbar";
   const t = useTranslations("platform.grid");
   const duplicateResume = useResumeStore((state) => state.duplicateResume);
   const [open, setOpen] = useState({
@@ -61,23 +68,34 @@ export function PlatformResumeGridItemMenu(
   return (
     <Fragment>
       <DropdownMenu>
-        <DropdownMenuTrigger render={<Button size="icon-sm" variant="ghost" />}>
+        <DropdownMenuTrigger
+          render={
+            <Button
+              size={toolbar ? "icon" : "icon-sm"}
+              variant={toolbar ? "outline" : "ghost"}
+            />
+          }
+        >
           <span className="sr-only">{t("menu")}</span>
           <DotsThreeIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
-            <DropdownMenuLabel>{t("menu")}</DropdownMenuLabel>
+            <DropdownMenuLabel className="sr-only">
+              {t("menu")}
+            </DropdownMenuLabel>
             <DropdownMenuItem onClick={openRenameDialog}>
               <PencilSimpleIcon /> {t("rename")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={onDuplicate}>
               <CopyIcon /> {t("duplicate")}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={openDownloadDialog}>
-              <DownloadSimpleIcon />
-              {t("download")}
-            </DropdownMenuItem>
+            {!toolbar && (
+              <DropdownMenuItem onClick={openDownloadDialog}>
+                <DownloadSimpleIcon />
+                {t("download")}
+              </DropdownMenuItem>
+            )}
 
             <DropdownMenuSeparator />
 

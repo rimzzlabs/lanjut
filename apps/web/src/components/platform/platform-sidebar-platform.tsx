@@ -6,16 +6,26 @@ import {
   SidebarMenuItem,
 } from "@lanjut/ui/components/sidebar";
 import { S } from "@mobily/ts-belt";
-import { LayoutIcon, SquaresFourIcon } from "@phosphor-icons/react";
+import {
+  IdentificationCardIcon,
+  LayoutIcon,
+  SquaresFourIcon,
+} from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { useWorkspaceView } from "@/hooks/use-workspace-view";
 import { Link, usePathname } from "@/i18n/navigation";
-import { EDITOR_PATHNAME, TEMPLATE_PATHNAME } from "@/lib/routes";
+import {
+  EDITOR_PATHNAME,
+  PROFILE_PATHNAME,
+  TEMPLATE_PATHNAME,
+} from "@/lib/routes";
+import { PlatformSidebarCollapsedCreate } from "./platform-sidebar-collapsed-create";
 
 export function PlatformSidebarPlatform() {
   const pathname = usePathname();
   const view = useWorkspaceView();
   const t = useTranslations("platform.sidebar");
+  const tp = useTranslations("profile");
 
   return (
     <SidebarGroup id="tour-sidebar-nav">
@@ -26,6 +36,7 @@ export function PlatformSidebarPlatform() {
             isActive={
               view === "library" && S.startsWith(pathname, EDITOR_PATHNAME)
             }
+            tooltip={t("dashboard")}
             render={<Link href={EDITOR_PATHNAME} />}
           >
             <LayoutIcon /> {t("dashboard")}
@@ -34,11 +45,22 @@ export function PlatformSidebarPlatform() {
         <SidebarMenuItem>
           <SidebarMenuButton
             isActive={S.startsWith(pathname, TEMPLATE_PATHNAME)}
+            tooltip={t("browseTemplate")}
             render={<Link href={TEMPLATE_PATHNAME} />}
           >
             <SquaresFourIcon /> {t("browseTemplate")}
           </SidebarMenuButton>
         </SidebarMenuItem>
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            isActive={S.startsWith(pathname, PROFILE_PATHNAME)}
+            tooltip={tp("profiles")}
+            render={<Link href={PROFILE_PATHNAME} />}
+          >
+            <IdentificationCardIcon /> {tp("profiles")}
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+        <PlatformSidebarCollapsedCreate />
       </SidebarMenu>
     </SidebarGroup>
   );

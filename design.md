@@ -22,14 +22,79 @@ editorial
   and deck over the draft row and the reader sheet. Then Looks, Kept, Import, Exports,
   Local, Download, FAQ, a statement close, and a footer of titled link groups (Product,
   Project, Support). No kickers, eyebrows, section numbers, or stat rows.
-- App pages (`/editor`, `/template`): **Workbench-minimal**. They load client-only, so
+- App pages (`/editor`, `/template`, `/profile`): **Workbench-minimal**. They load client-only, so
   the first paint is a full-page loader on the page background (see Motion). Moving
   between them keeps the shell. While a page's code loads, the content area shows a
-  skeleton of that page: the library's card grid, the template grid, or the editor's
-  blank sheet and side panel. Each skeleton is the loading state that the page itself
-  shows next, so the two hand over without a jump. A page header
-  (title + hairline rule) over a toolbar over a grid. Function carries the page; no
-  enrichment, no display serif.
+  skeleton of that page: the library, the template list beside a blank sheet, or the
+  editor's blank sheet and side panel. Each skeleton is the loading state that the
+  page itself shows next, so the two hand over without a jump. Creating a résumé
+  opens a wide Sheet in three steps (Start, Template, Review). From `lg` a preview
+  beside the steps shows every page of the résumé being created, including an
+  imported file; below `lg` the Template step is a carousel of page-wide previews,
+  and a tap on a slide opens every page of that template in a drawer. Function
+  carries the page; no enrichment, no display serif.
+- The app shell is the shadcn inset sidebar. The sidebar sits on `--sidebar`, and the
+  page is one `rounded-xl` panel with a `ring-foreground/10` hairline, 8px in from
+  the window edge from `md`. The panel holds the navbar over the page, and the page
+  scrolls inside the panel (`PlatformPageScroll`), not the window. Collapsed on
+  desktop, the sidebar folds to a rail of icons with tooltips. The résumé list hides
+  there, and a create button takes its place.
+- The sidebar reads top to bottom with no gaps: the wordmark, then Dashboard,
+  Templates, and Profiles, then "Recent" with the five résumés edited last and
+  "View all" when there are more, then Other (Guide and the feedback actions) and
+  Support. With no résumé saved, "Recent" is left out, not shown empty. The version
+  sits in the footer. A résumé's menu offers Delete even while it is open; deleting
+  the open résumé returns to the library first.
+- The navbar holds the sidebar trigger, the breadcrumb, and the save state on the
+  left. On the right it holds two 36px controls only: the GitHub link (icon only
+  below `md`) and the profile menu. The profile menu is the active profile's avatar
+  alone (photo or initials); its name, "Guest" until the person saves a profile,
+  is for screen readers. It opens a card with the avatar, name, person, and email,
+  the switch between profiles (each with its résumé count), and Settings,
+  Preferences, and Add new profile. A profile is a workspace: switching it changes
+  the library, Recent, and the template preview to that profile's résumés, and a
+  new résumé joins it. Those three open one surface: a wide Sheet from `lg` with the
+  sections in a side column, a Drawer below `lg` with the sections in a segmented
+  switch. Theme, language, and animation live in Preferences, not in the navbar.
+  The theme is three cards, each a small mockup of the app drawn with the real
+  tokens of its theme (`.light` or `.dark` on the mockup); System splits the
+  mockup diagonally.
+- The Profiles page (`/profile`) lists every profile (avatar, name, person, job
+  title, résumé count, an "Active" badge). From `lg` the list stays in view beside
+  the chosen profile's card: who it is, Use this profile or Active, the form, and
+  Delete. Below `lg` a row opens the same card in a drawer. Add new profile sits in
+  the page header; while its form shows, a dashed "New profile, not saved yet" row
+  is the current row in the list, and the form has Cancel. Delete shows only when
+  more than one profile exists, and its confirmation picks where the résumés move.
+- The library (`/editor`) and the template page (`/template`) share one frame: a page
+  header (title on the left, search and actions on the right, a hairline rule under
+  them) over sections in a `max-w-7xl` column. Each section has a small semibold
+  heading over its content.
+- The library leads with the résumé edited last: a wide card with its sheet, title,
+  template, edit time, Open editor, Download, and the menu (Rename, Duplicate,
+  Delete), all 36px high. Below `md` the card holds no buttons: a tap opens a
+  drawer with every page and all the actions. Then the start row: four
+  tiles (Blank, Sample, Import a file, Browse templates). The first three open the
+  create Sheet with that source chosen, and Blank and Sample open on the Template
+  step. Then all résumés, sorted by last edit or name, as a grid of cards or a list of
+  rows. A search shows only the matches. An empty library shows the empty message
+  over the start row.
+- From `lg` the template page is a list beside a preview. The list is a radio group
+  of template rows (sheet, name, description) that stays in view. The preview card
+  shows the chosen template at full size, every page, on the sample or on one saved
+  résumé ("Preview with"). Its bar (name, "Preview with", actions) stays at the top
+  while the pages scroll. Below `lg` the page shows template cards only, and a card
+  opens the same preview in a dialog that nearly fills the screen. With the sample,
+  the action is Use, which opens the create Sheet. With a saved résumé, the action is
+  Apply to that résumé: it opens the résumé and changes its template as one edit, so
+  Undo in the editor brings the old template back.
+- Corners in the app follow the Vega radii, and a nested corner is always
+  concentric: its radius is the outer radius less the gap between the two edges.
+  Cards are `rounded-xl` (22.4px). A tray 6px in (`p-1.5`) takes `rounded-lg`
+  (16px). A thumbnail or icon box 12px to 13px in (`p-3`, plus a 1px border) takes
+  `rounded-sm` (9.6px). Controls are `rounded-md`. Résumé paper that floats in a
+  tray, away from its edges, keeps a small radius (`rounded-xs` to `rounded`),
+  because it stands for a sheet of paper.
 - The editor is `/editor/<id>` on web and desktop, served by the same page as the
   library. It shows the **Workbench-minimal** editor surface inside the platform
   shell.
@@ -93,8 +158,8 @@ column is `w-11/12 max-w-5xl` centered.
   them green, and the Lanjut mark stamps the corner. The loop is 3.2s. Every element
   rests on the finished sheet, so reduced motion shows that sheet and only fades
   the lines.
-- The animation setting (System, On, Off) lives in the navbar settings menu, on the
-  landing page and in the app (`SiteSettingsMenu`). The head
+- The animation setting (System, On, Off) lives in the navbar settings menu on the
+  landing page (`SiteSettingsMenu`) and in Preferences in the app. The head
   script and `useMotionStore` write it to `data-motion` on `<html>`. System follows
   `prefers-reduced-motion`.
 - Reduced motion collapses spatial motion to opacity only. CSS reads `data-motion`
@@ -103,7 +168,9 @@ column is `w-11/12 max-w-5xl` centered.
 
 ## Microinteractions stance
 
-- Silent success over celebratory toasts.
+- Silent success over celebratory toasts. A toast is for something the person must
+  act on: Undo after a delete, closing another tab so a database upgrade can run,
+  or refreshing a tab that a newer build took over.
 - The editor navbar carries the save state of the open résumé: "Saved on this device",
   "Saving…", or a destructive "Not saved" button whose popover names the recovery.
   No toast, no animation beyond a 150ms fade.

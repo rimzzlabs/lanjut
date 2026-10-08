@@ -1,8 +1,14 @@
-import {
-  DEFAULT_TEMPLATE_SORT,
-  TEMPLATE_SORTS,
-} from "@lanjut/resume/templates";
+import { SORTED_TEMPLATES, type TemplateId } from "@lanjut/resume/templates";
+import { A, O, pipe } from "@mobily/ts-belt";
 import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
+
+const TEMPLATE_IDS = A.map(SORTED_TEMPLATES, (template) => template.id);
+
+const FIRST_TEMPLATE_ID: TemplateId = pipe(
+  TEMPLATE_IDS,
+  A.head,
+  O.getWithDefault<TemplateId>("awal"),
+);
 
 /**
  * Browse-Templates search query, held in the `q` URL param so it survives reload
@@ -17,12 +23,12 @@ export function useTemplateSearchQuery() {
   );
 }
 
-/** Browse-Templates sort order, held in the `sort` URL param (default name A–Z). */
-export function useTemplateSort() {
+/** The template shown in the preview, held in the `template` URL param. */
+export function useSelectedTemplate() {
   return useQueryState(
-    "sort",
-    parseAsStringLiteral(TEMPLATE_SORTS)
-      .withDefault(DEFAULT_TEMPLATE_SORT)
+    "template",
+    parseAsStringLiteral(TEMPLATE_IDS)
+      .withDefault(FIRST_TEMPLATE_ID)
       .withOptions({ clearOnDefault: true }),
   );
 }

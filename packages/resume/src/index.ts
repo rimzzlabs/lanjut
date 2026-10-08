@@ -12,6 +12,16 @@ export {
 export { RESUME_LABELS, RESUME_LANGUAGES } from "./labels";
 export { needsMigration, readSchemaVersion, runMigrations } from "./migrations";
 export {
+  applyProfile,
+  createGuestProfile,
+  createProfile,
+  GUEST_PROFILE_ID,
+  isProfileEmpty,
+  type Profile,
+  profilePersonName,
+  resolveResumeProfileId,
+} from "./profile";
+export {
   CANONICAL_SECTION_ORDER,
   CUSTOM_LIST_FIELDS,
   canonicalSectionIndex,
@@ -26,7 +36,13 @@ export {
   SECTION_REGISTRY,
   type SectionSchema,
 } from "./schema-registry";
-export { filterResumeIndex, nearestResumeById } from "./search";
+export {
+  filterResumeIndex,
+  nearestResumeById,
+  RESUME_SORTS,
+  type ResumeSort,
+  sortResumeIndex,
+} from "./search";
 export { SEED_RESUME } from "./seed";
 export {
   CURRENT_SCHEMA_VERSION,

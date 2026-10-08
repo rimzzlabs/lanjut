@@ -77,7 +77,7 @@ const BASE_STEP = {
   pointerRadius: 16,
 } satisfies Partial<Step>;
 
-// Library and template targets all sit at the top of a window-scrolled page.
+// Library and template targets all sit at the top of the page's scroll region.
 const TOP_STEP = {
   ...BASE_STEP,
   scrollTop: true,
@@ -111,13 +111,6 @@ export const TOUR_STEPS: AppTourMeta[] = [
       },
       {
         ...TOP_STEP,
-        id: "resumes",
-        sidebar: "open",
-        selector: "#tour-sidebar-resumes",
-        side: "right",
-      },
-      {
-        ...TOP_STEP,
         id: "replay",
         sidebar: "open",
         selector: "#tour-guide",
@@ -132,21 +125,21 @@ export const TOUR_STEPS: AppTourMeta[] = [
         ...TOP_STEP,
         id: "browse",
         sidebar: "closed",
-        selector: "#tour-template-grid > :first-child",
+        selector: "#tour-template-list",
         side: "right",
+      },
+      {
+        ...TOP_STEP,
+        id: "preview",
+        sidebar: "closed",
+        selector: "#tour-template-try",
+        side: "bottom-left",
       },
       {
         ...TOP_STEP,
         id: "search",
         sidebar: "closed",
         selector: "#tour-search-template",
-        side: "bottom-left",
-      },
-      {
-        ...TOP_STEP,
-        id: "sort",
-        sidebar: "closed",
-        selector: "#tour-sort-template",
         side: "bottom-right",
       },
     ],

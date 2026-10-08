@@ -98,7 +98,7 @@ export function PlatformSidebarChangelog() {
           {hasUnseen && (
             <span
               aria-hidden
-              className="ml-auto size-2 shrink-0 rounded-full bg-primary animate-pulse motion-reduce:animate-none"
+              className="ml-auto size-2 shrink-0 rounded-full bg-primary animate-pulse motion-reduce:animate-none group-data-[collapsible=icon]:absolute group-data-[collapsible=icon]:top-1 group-data-[collapsible=icon]:right-1"
             />
           )}
         </TooltipTrigger>

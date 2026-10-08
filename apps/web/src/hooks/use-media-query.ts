@@ -1,5 +1,6 @@
 import { useCallback, useSyncExternalStore } from "react";
 
+export const MEDIA_LG = "(min-width: 64rem)";
 export const MEDIA_XL = "(min-width: 80rem)";
 
 function serverMatches(): boolean | undefined {

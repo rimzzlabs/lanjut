@@ -13,7 +13,7 @@ import { EditorUndoShortcuts } from "./editor-undo-shortcuts";
 
 // overflow-clip, not hidden: a hidden box can still be scrolled by code, and a
 // tour's scrollIntoView would shift the whole editor out of place.
-const PANELS_CONTAINER = "h-[calc(100svh-3rem-1px)] min-h-0 overflow-clip";
+const PANELS_CONTAINER = "h-full min-h-0 overflow-clip";
 
 export function EditorPanels(props: { children: ReactNode }) {
   useEditorResume();

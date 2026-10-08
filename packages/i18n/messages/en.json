@@ -50,10 +50,6 @@
         "title": "Get around",
         "content": "Switch between your dashboard and the template gallery from here."
       },
-      "resumes": {
-        "title": "Your resumes",
-        "content": "Every resume you create shows up here; pick one to jump into the editor."
-      },
       "replay": {
         "title": "Replay anytime",
         "content": "Rerun the guide for whichever page you are on with this button."
@@ -64,13 +60,13 @@
         "title": "Browse templates",
         "content": "Templates change presentation only: typography, spacing, accents. The structure stays linear so ATS parsers can always read your resume."
       },
+      "preview": {
+        "title": "Try it on",
+        "content": "Preview the template on the sample or on one of your resumes. Then start a new resume with it, or apply it to that one."
+      },
       "search": {
         "title": "Search",
         "content": "Look up a template by name."
-      },
-      "sort": {
-        "title": "Sort",
-        "content": "Order the gallery by name or by newest."
       }
     },
     "editor": {
@@ -127,6 +123,26 @@
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
         "0_19_0": [
+          {
+            "title": "See your resume before you create it",
+            "description": "Creating a resume now takes three short steps: where to start, which template, and a name. On a large screen, a preview beside the steps shows every page as you choose, even for a file you import. On a phone, swipe through the templates."
+          },
+          {
+            "title": "Profiles for every kind of job",
+            "description": "Keep one profile for each kind of job or job market. Each profile keeps its own resumes, and every new resume in it starts with its name, contact details, and summary. Manage profiles on the new Profiles page, and switch between them from your avatar in the top bar. Theme, language, and animation now live in Preferences in the same menu."
+          },
+          {
+            "title": "A library that starts where you stopped",
+            "description": "Your library now opens on the resume you edited last, one click from the editor. Below it, start a new resume from a blank page, the sample, a file, or a template. Every resume shows its template, and you can sort by name or last edit and switch between a grid and a list."
+          },
+          {
+            "title": "Try a template on your own resume",
+            "description": "The template page now shows each template at full size, every page. Preview it on the sample or on one of your resumes, then apply it in one click. If you change your mind, Undo in the editor brings the old template back."
+          },
+          {
+            "title": "A sidebar that folds to icons",
+            "description": "Hide the sidebar and it now folds into a slim row of icons instead of leaving the screen. Hover an icon to see its name. Open, it lists your five latest resumes."
+          },
           {
             "title": "Your PDF now matches the preview",
             "description": "PDF downloads are now drawn from the same page you see in the editor, so the fonts, sizes, and spacing in the file match the preview. The text stays selectable for applicant tracking systems."
@@ -420,9 +436,9 @@
       "reportBug": "Report a bug",
       "featureRequest": "Feature request",
       "myResume": "My Resume",
+      "recent": "Recent",
+      "viewAll": "View all",
       "createResume": "Create Resume",
-      "noResume": "No resume yet",
-      "noResumeDescription": "When you add resume, they will be visible here.",
       "itemMenu": "Menu",
       "modify": "Modify <b>{title}</b>",
       "rename": "Rename",
@@ -435,16 +451,26 @@
       "searchResume": "Search your resume",
       "resume": "Resume",
       "searchTemplates": "Search templates",
-      "sortNameAsc": "Name (A–Z)",
-      "sortNameDesc": "Name (Z–A)",
-      "sortNewest": "Newest",
-      "sortTemplates": "Sort templates"
+      "sortNameAsc": "Name (A–Z)"
     },
     "emptyState": {
       "title": "No resumes yet",
       "description": "Nothing is saved on this device yet. Start from a template, or create a blank resume.",
       "browseTemplates": "Browse templates",
-      "newResume": "New resume"
+      "profileTitle": "No resumes in {name} yet",
+      "profileDescription": "Each profile keeps its own resumes. Start one below, or switch profiles from your avatar in the top bar."
+    },
+    "library": {
+      "continue": "Continue where you left off",
+      "openEditor": "Open editor",
+      "templateHint": "Pick a look first, then start.",
+      "all": "All resumes",
+      "sort": "Sort resumes",
+      "sortEdited": "Last edited",
+      "view": "View",
+      "viewGrid": "Grid",
+      "viewList": "List",
+      "preview": "Preview {title}"
     },
     "unreadable": {
       "title": "Some resumes need a newer version of the app",
@@ -463,8 +489,7 @@
       "duplicate": "Duplicate",
       "copyOf": "Copy of {title}",
       "download": "Download",
-      "delete": "Delete",
-      "newResume": "New resume"
+      "delete": "Delete"
     },
     "templates": {
       "noMatch": "No templates match “{query}”.",
@@ -477,11 +502,62 @@
         "tebal": "A bold, modern statement: oversized name, heavy uppercase headings over thick rules, and strong typographic hierarchy.",
         "klasik": "A traditional all-serif CV: centered name and contacts, quiet centered headings, and italic dates. Timeless and formal.",
         "ketik": "A typewriter-flavored technical look: monospace name, headings, and dates over a clean sans body. Built for developers."
-      }
+      },
+      "listLabel": "Templates",
+      "previewWith": "Preview with",
+      "previewLabel": "Preview of {name}",
+      "applyTo": "Apply to {title}",
+      "inUse": "In use"
     },
     "navbar": {
       "starOnGithub": "Star on GitHub"
+    },
+    "database": {
+      "blocked": "Close other Lanjut tabs to finish updating",
+      "blockedDescription": "Another tab still runs the older version and holds your saved resumes. This tab continues by itself once that tab is closed or refreshed. Nothing is lost.",
+      "outdated": "Lanjut was updated in another tab",
+      "outdatedDescription": "Refresh this tab to keep working. Until then, it cannot save changes.",
+      "refresh": "Refresh"
     }
+  },
+  "profile": {
+    "guest": "Guest",
+    "menuLabel": "Profile menu for {name}",
+    "profiles": "Profiles",
+    "settings": "Settings",
+    "settingsDescription": "Your profiles and the preferences of this device.",
+    "preferences": "Preferences",
+    "addProfile": "Add new profile",
+    "newShort": "New profile",
+    "profileSection": "Profile",
+    "profileDescription": "Your personal information and summary. New resumes in this profile start with them.",
+    "newTitle": "New profile",
+    "newDescription": "Keep one profile for each kind of job or job market. Each profile keeps its own resumes, and new resumes start with its information.",
+    "name": "Profile name",
+    "namePlaceholder": "Frontend roles",
+    "nameHint": "Only you see this name. It tells your profiles apart.",
+    "save": "Save changes",
+    "create": "Add profile",
+    "deleteTitle": "Delete profile",
+    "deleteDescription": "Its resumes move to a profile you pick. Only the information saved in this profile goes away.",
+    "deleteConfirm": "Delete {name}?",
+    "prefillNote": "This resume goes into the profile <b>{name}</b> and starts with its personal information and summary.",
+    "preferencesDescription": "How Lanjut looks and moves on this device.",
+    "theme": "Theme",
+    "themeDescription": "Light, dark, or the same as your device.",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "languageDescription": "The language of the app. Each resume keeps its own.",
+    "animationDescription": "Off stops movement on screen. System follows your device.",
+    "active": "Active",
+    "useProfile": "Use this profile",
+    "draftHint": "Not saved yet",
+    "resumeCount": "{count, plural, =0 {No resumes} one {# resume} other {# resumes}}",
+    "deleteMove": "{count, plural, one {Its # resume moves} other {Its # resumes move}} to the profile below. Only the information saved in this profile goes away.",
+    "deleteEmpty": "It holds no resumes. Only the information saved in this profile goes away.",
+    "moveTo": "Move resumes to",
+    "joinNote": "This resume goes into the profile <b>{name}</b>."
   },
   "forms": {
     "common": {
@@ -490,7 +566,9 @@
       "delete": "Delete",
       "undo": "Undo",
       "download": "Download",
-      "openIssue": "Open GitHub issue"
+      "openIssue": "Open GitHub issue",
+      "back": "Back",
+      "next": "Next"
     },
     "validation": {
       "titleMin": "Use at least {min} characters.",
@@ -500,7 +578,8 @@
       "featureProblem": "Describe the problem this would solve.",
       "sectionTitleRequired": "Enter a section name.",
       "reporterNameRequired": "Tell us your name first.",
-      "verificationRequired": "Finish the quick verification first."
+      "verificationRequired": "Finish the quick verification first.",
+      "profileNameRequired": "Name this profile."
     },
     "direct": {
       "name": "Your name",
@@ -513,7 +592,7 @@
     },
     "create": {
       "title": "Create a new resume",
-      "description": "Name it, choose where to start, and pick a template.",
+      "description": "Choose where to start, pick a template, then name it.",
       "label": "Resume name",
       "placeholder": "Software Engineer",
       "template": "Template",
@@ -521,7 +600,21 @@
       "sourceSample": "Sample",
       "sourceEmpty": "Blank",
       "sourceImport": "Import a file",
-      "submit": "Create resume"
+      "submit": "Create resume",
+      "stepsLabel": "Steps",
+      "stepStart": "Start",
+      "stepTemplate": "Template",
+      "stepReview": "Review",
+      "stepOf": "Step {current} of {total}",
+      "sourceSampleHint": "A filled-in example that you edit into your own.",
+      "sourceEmptyHint": "Every section, empty and ready for your words.",
+      "sourceImportHint": "Bring a PDF, JSON, or YAML resume.",
+      "templateHint": "Pick a look. You can change it any time in the editor.",
+      "reviewHint": "Name it so you can find it in your library.",
+      "change": "Change",
+      "previewLabel": "Preview",
+      "previewImport": "Drop a file to see your resume here.",
+      "showTemplate": "Show {name}"
     },
     "rename": {
       "title": "Rename",

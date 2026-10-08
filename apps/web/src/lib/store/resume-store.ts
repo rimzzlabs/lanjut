@@ -4,17 +4,15 @@ import {
   cloneResumeAsNew,
   convertCustomSection,
   createCustomSection,
-  createEmptyResume,
   isReorderableSection,
   type Resume,
   type ResumeIndexEntry,
-  type ResumeLanguage,
-  SEED_RESUME,
   updateSectionById,
   updateSections,
 } from "@lanjut/resume";
 import {
   deleteResume as dbDeleteResume,
+  getActiveProfileId,
   getResume,
   listResumeIndex,
   putLeftovers,
@@ -22,8 +20,8 @@ import {
   setLastOpenedResumeId,
 } from "@lanjut/resume/db";
 import { A, O, pipe, S } from "@mobily/ts-belt";
-import { nanoid } from "nanoid";
 import { create } from "zustand";
+import { buildNewResume, type CreateResumeOptions } from "./new-resume";
 import {
   flushOpenResumePersist,
   scheduleOpenResumePersist,
@@ -33,19 +31,6 @@ import { useSaveStatusStore } from "./save-status-store";
 
 type IndexStatus = "idle" | "loading" | "ready" | "error";
 type OpenStatus = "idle" | "loading" | "ready" | "missing";
-
-interface CreateResumeOptions {
-  templateId?: string;
-  /**
-   * Where the starting content comes from: the sample fixture (default), a blank
-   * document, or a parsed PDF import. When `import`, `imported` carries the
-   * already-parsed document and its leftovers.
-   */
-  source?: "sample" | "empty" | "import";
-  imported?: { resume: Resume; leftovers: string[] };
-  /** Document label language; defaults to English when omitted. */
-  language?: ResumeLanguage;
-}
 
 interface ResumeStoreState {
   /** The lightweight Library list, newest first. Not the full document bodies. */
@@ -79,6 +64,14 @@ interface ResumeStoreState {
   removeResume: (id: string) => Promise<Resume | undefined>;
   /** Re-insert a removed document (undo), writing it back to disk. */
   restoreResume: (resume: Resume) => Promise<void>;
+  /**
+   * Move résumés to another profile. Organization only: the edit time stays,
+   * so the library order does not change.
+   */
+  moveToProfile: (
+    ids: ReadonlyArray<string>,
+    profileId: string,
+  ) => Promise<void>;
   openResume: (id: string) => Promise<void>;
   /** Apply an edit to the open document; schedules a debounced persist. */
   updateOpen: (update: (resume: Resume) => Resume) => void;
@@ -144,7 +137,23 @@ function resetUndoHistory(): void {
 }
 
 function toIndexEntry(resume: Resume): ResumeIndexEntry {
-  return { id: resume.id, title: resume.title, updatedAt: resume.updatedAt };
+  return {
+    id: resume.id,
+    title: resume.title,
+    updatedAt: resume.updatedAt,
+    profileId: resume.profileId,
+  };
+}
+
+/** Data-last: moves a résumé or an index entry listed in `ids` to the profile. */
+function withProfileId<T extends { id: string; profileId?: string }>(
+  ids: ReadonlyArray<string>,
+  profileId: string,
+): (item: T) => T {
+  return (item) => {
+    if (!A.includes(ids, item.id)) return item;
+    return { ...item, profileId };
+  };
 }
 
 /** Upsert the given Resume's projection into the index, keeping newest-first order. */
@@ -159,17 +168,6 @@ function syncIndexEntry(
     A.sortBy((entry) => entry.updatedAt),
     A.reverse,
   );
-}
-
-/** The document a new résumé starts from: an import, a blank page, or the sample. */
-function startingResume(title: string, options?: CreateResumeOptions): Resume {
-  if (options?.source === "import" && options.imported) {
-    // The imported document is already parsed; adopt it, retitle it, and give
-    // it a fresh id so it never collides with the fixture's placeholder ids.
-    return { ...options.imported.resume, id: nanoid(), title };
-  }
-  if (options?.source === "empty") return createEmptyResume(title);
-  return cloneResumeAsNew(SEED_RESUME, title);
 }
 
 export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
@@ -198,12 +196,12 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
   },
 
   async createResume(title, options) {
-    const trimmed = S.trim(title);
-    const base = startingResume(trimmed, options);
-    const resume: Resume = {
-      ...base,
-      templateId: options?.templateId || base.templateId,
-      language: options?.language || base.language,
+    // A résumé made without a profile (the landing page) joins the active one.
+    const profileId =
+      options?.profile?.id ?? (await getActiveProfileId()) ?? undefined;
+    const resume = {
+      ...buildNewResume(S.trim(title), options),
+      profileId,
     };
     await putResume(resume);
     if (options?.source === "import" && options.imported) {
@@ -269,6 +267,25 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
   async restoreResume(resume) {
     await putResume(resume);
     set((state) => ({ index: syncIndexEntry(state.index, resume) }));
+  },
+
+  async moveToProfile(ids, profileId) {
+    const move = withProfileId<Resume>(ids, profileId);
+    const open = get().open;
+    await Promise.all(
+      A.map(ids, async (id) => {
+        const source = open?.id === id ? open : await getResume(id);
+        if (source) await putResume(move(source));
+      }),
+    );
+    // Undo snapshots of the open document follow it, so a rewind never
+    // carries it back to the old profile.
+    undoPast = A.map(undoPast, move);
+    undoFuture = A.map(undoFuture, move);
+    set((state) => ({
+      index: A.map(state.index, withProfileId(ids, profileId)),
+      open: state.open ? move(state.open) : state.open,
+    }));
   },
 
   async openResume(id) {

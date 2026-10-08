@@ -33,7 +33,7 @@ export type ResumeTitleForm = z.infer<
 export const RESUME_SOURCES = ["sample", "empty", "import"] as const;
 export type ResumeSource = (typeof RESUME_SOURCES)[number];
 
-/** The create dialog adds the content-source choice on top of the title field. */
+/** The create sheet adds the content-source choice on top of the title field. */
 export function createResumeCreateSchema(t: Translator) {
   return createResumeTitleSchema(t).extend({
     source: z.enum(RESUME_SOURCES),

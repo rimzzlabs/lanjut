@@ -13,7 +13,12 @@ import {
   AppRouterContext,
   PathnameContext,
 } from "@/i18n/navigation";
-import { EDITOR_PATHNAME, TEMPLATE_PATHNAME } from "@/lib/routes";
+import { scrollPageToTop } from "@/lib/page-scroll";
+import {
+  EDITOR_PATHNAME,
+  PROFILE_PATHNAME,
+  TEMPLATE_PATHNAME,
+} from "@/lib/routes";
 
 /** Fired after the app moves to another of its pages. */
 export const APP_NAVIGATE_EVENT = "lanjut:navigate";
@@ -22,6 +27,7 @@ function isAppPathname(pathname: string) {
   return (
     pathname === EDITOR_PATHNAME ||
     pathname === TEMPLATE_PATHNAME ||
+    pathname === PROFILE_PATHNAME ||
     S.startsWith(pathname, `${EDITOR_PATHNAME}/`)
   );
 }
@@ -41,7 +47,7 @@ function createAppRouter(locale: Locale, navigate: Navigate): AppRouter {
     go(href, replace) {
       const url = new URL(href, window.location.href);
       navigate(`${stripLocale(url.pathname)}${url.search}`, { replace });
-      if (!replace) window.scrollTo(0, 0);
+      if (!replace) scrollPageToTop();
       window.dispatchEvent(new Event(APP_NAVIGATE_EVENT));
     },
   };

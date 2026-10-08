@@ -72,7 +72,10 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-:root {
+/* `.light` re-points a subtree to the light tokens inside a dark page, as the
+   theme previews in Preferences do. */
+:root,
+.light {
   --background: oklch(0.988 0.006 92);
   --foreground: oklch(0.2 0.014 155);
   --card: oklch(0.995 0.004 92);
@@ -235,17 +238,16 @@
   margin-right: 0.5rem;
 }
 
-/* The static HTML always renders the sidebar expanded. The head script marks a
-   saved collapsed state on <html>, and these rules match the shadcn offcanvas
-   collapse until React hydrates and sets the same state itself. Unlayered, so
-   they win over the utilities. */
+/* The sidebar store starts expanded. The head script marks a saved collapsed
+   state on <html>, and these rules match the shadcn icon collapse of the inset
+   sidebar until React restores the same state itself. Unlayered, so they win
+   over the utilities. */
 html[data-sidebar="collapsed"] [data-slot="sidebar-gap"] {
-  width: 0;
+  width: calc(var(--sidebar-width-icon) + 1rem);
 }
 
-html[data-sidebar="collapsed"]
-  [data-slot="sidebar-container"][data-side="left"] {
-  left: calc(var(--sidebar-width) * -1);
+html[data-sidebar="collapsed"] [data-slot="sidebar-container"] {
+  width: calc(var(--sidebar-width-icon) + 1rem + 2px);
 }
 
 /* The landing hero entrance, in CSS so the static sections ship no JavaScript.

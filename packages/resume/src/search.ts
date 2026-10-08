@@ -61,3 +61,16 @@ export function filterResumeIndex(
     A.map((scored) => scored.entry),
   );
 }
+
+export type ResumeSort = "edited" | "name";
+
+export const RESUME_SORTS: ResumeSort[] = ["edited", "name"];
+
+/** The library order: newest edit first (the index order), or by title. */
+export function sortResumeIndex(
+  index: readonly ResumeIndexEntry[],
+  sort: ResumeSort,
+): readonly ResumeIndexEntry[] {
+  if (sort === "edited") return index;
+  return A.sort(index, (a, b) => a.title.localeCompare(b.title));
+}

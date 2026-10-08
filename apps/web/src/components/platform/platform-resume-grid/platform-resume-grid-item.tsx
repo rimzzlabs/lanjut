@@ -2,21 +2,18 @@ import type { ResumeIndexEntry } from "@lanjut/resume";
 import {
   Card,
   CardAction,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@lanjut/ui/components/card";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@lanjut/ui/components/tooltip";
-import { useFormatter, useTranslations } from "use-intl";
+import { useTranslations } from "use-intl";
+import { useResumeDocument } from "@/hooks/use-resume-document";
 import { Link } from "@/i18n/navigation";
 import { editorHref } from "@/lib/routes";
 import { TruncatedLabel } from "../../shared/truncated-label";
+import { PlatformPaperFrame } from "../platform-paper-frame";
+import { PlatformResumeMeta } from "../platform-resume-meta";
+import { PlatformResumeSheet } from "../platform-resume-sheet";
 import { PlatformResumeGridItemMenu } from "./platform-resume-grid-item-menu";
-import { PlatformResumeGridItemThumbnail } from "./platform-resume-grid-item-thumbnail";
 
 interface PlatformResumeGridItemProps {
   resume: ResumeIndexEntry;
@@ -25,22 +22,23 @@ interface PlatformResumeGridItemProps {
 export function PlatformResumeGridItem(props: PlatformResumeGridItemProps) {
   const { resume } = props;
   const t = useTranslations("platform.grid");
-  const formatter = useFormatter();
-  const updatedAt = new Date(resume.updatedAt);
+  const document = useResumeDocument(resume.id, resume.updatedAt);
   const href = editorHref(resume.id);
 
   return (
-    <Card size="sm" className="pt-0">
+    <Card size="sm" className="gap-3 p-1.5 pb-3">
       <div className="relative">
-        <PlatformResumeGridItemThumbnail resume={resume} />
+        <PlatformPaperFrame>
+          <PlatformResumeSheet document={document} />
+        </PlatformPaperFrame>
         <Link
           href={href}
           aria-label={t("open", { title: resume.title })}
-          className="absolute inset-0 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+          className="absolute inset-0 rounded-lg focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
         />
       </div>
 
-      <CardHeader>
+      <CardHeader className="px-2.5">
         <CardTitle className="min-w-0">
           <Link
             href={href}
@@ -49,23 +47,7 @@ export function PlatformResumeGridItem(props: PlatformResumeGridItemProps) {
             <TruncatedLabel text={resume.title} />
           </Link>
         </CardTitle>
-        <CardDescription className="text-xs">
-          {t("edited")}{" "}
-          <Tooltip>
-            <TooltipTrigger render={<time dateTime={resume.updatedAt} />}>
-              {formatter.relativeTime(updatedAt, Date.now())}
-            </TooltipTrigger>
-
-            <TooltipContent>
-              {formatter.dateTime(updatedAt, {
-                weekday: "short",
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-              })}
-            </TooltipContent>
-          </Tooltip>
-        </CardDescription>
+        <PlatformResumeMeta resume={resume} document={document} />
         <CardAction>
           <PlatformResumeGridItemMenu resume={resume} />
         </CardAction>

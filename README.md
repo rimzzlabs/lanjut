@@ -22,8 +22,9 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 ## Features
 
 - Six résumé templates, all sharing one linear document structure; only styling differs
-- Template gallery with search, sort, and live seed-data previews
-- Résumé library with live first-page thumbnails, rename, and delete
+- Template page with search and a full-size preview of every page, on the sample or on one of your own résumés, with one-click apply (undoable in the editor)
+- Profiles: keep one profile per kind of job or job market. Each profile keeps its own résumés and its personal information and summary, which every new résumé in it starts with. Manage them on the Profiles page, and switch from the avatar in the top bar, where Preferences also hold the theme, language, and animation settings
+- Résumé library that leads with the résumé edited last, quick ways to start a new one, and every résumé as a grid or a list with live first-page thumbnails, its template, sort, rename, duplicate, download, and delete
 - Print-accurate A4 preview with automatic pagination
 - Rich text editing per field, scoped to ATS-safe formatting (bold, italic, lists, links), with undo and redo per field
 - Optional company context for experience and internship entries, shown before achievements in every preview and export

@@ -1,65 +1,41 @@
-import { Button } from "@lanjut/ui/components/button";
 import {
   Empty,
-  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
 } from "@lanjut/ui/components/empty";
-import { A } from "@mobily/ts-belt";
-import {
-  FilePlusIcon,
-  MagnifyingGlassIcon,
-  TrayIcon,
-} from "@phosphor-icons/react";
-import { useState } from "react";
+import { TrayIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
-import { Link } from "@/i18n/navigation";
-import { TEMPLATE_PATHNAME } from "@/lib/routes";
-import { useResumeStore } from "@/lib/store";
-import { PlatformResumeCreateDialog } from "./platform-resume-create-dialog";
+import { useProfileLabel } from "@/hooks/use-profile-label";
+import { selectActiveProfile, useProfileStore } from "@/lib/store";
+import { PlatformLibraryStart } from "./platform-library-start/platform-library-start";
 
-export function PlatformEmptyState() {
-  const index = useResumeStore((state) => state.index);
-  const indexStatus = useResumeStore((state) => state.indexStatus);
-  const unreadableCount = useResumeStore((state) => state.unreadableCount);
-  const [open, setOpen] = useState(false);
+/**
+ * A library with nothing to show, then the ways to start. `device`: nothing
+ * is saved at all. `profile`: other profiles hold résumés, this one none.
+ */
+export function PlatformEmptyState(props: { scope: "device" | "profile" }) {
   const t = useTranslations("platform.emptyState");
-
-  // With unreadable documents present, "No résumés yet" would be a lie.
-  if (indexStatus !== "ready" || A.isNotEmpty(index) || unreadableCount > 0) {
-    return null;
-  }
+  const profile = useProfileStore(selectActiveProfile);
+  const label = useProfileLabel(profile);
+  const forProfile = props.scope === "profile";
+  const title = forProfile ? t("profileTitle", { name: label }) : t("title");
+  const description = t(forProfile ? "profileDescription" : "description");
 
   return (
-    <div className="min-h-[calc(100vh-16rem)] grid place-items-center">
-      <Empty className="px-0">
-        <EmptyContent>
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <TrayIcon />
-            </EmptyMedia>
-
-            <EmptyTitle>{t("title")}</EmptyTitle>
-            <EmptyDescription>{t("description")}</EmptyDescription>
-
-            <div className="inline-flex items-center gap-2">
-              <Button
-                nativeButton={false}
-                render={<Link href={TEMPLATE_PATHNAME} />}
-              >
-                <MagnifyingGlassIcon /> {t("browseTemplates")}
-              </Button>
-              <Button variant="secondary" onClick={() => setOpen(true)}>
-                <FilePlusIcon /> {t("newResume")}
-              </Button>
-            </div>
-          </EmptyHeader>
-        </EmptyContent>
-
-        <PlatformResumeCreateDialog open={open} onOpenChange={setOpen} />
+    <div className="flex flex-col gap-10 pt-6 md:pt-10">
+      <Empty className="p-0">
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <TrayIcon />
+          </EmptyMedia>
+          <EmptyTitle>{title}</EmptyTitle>
+          <EmptyDescription>{description}</EmptyDescription>
+        </EmptyHeader>
       </Empty>
+
+      <PlatformLibraryStart />
     </div>
   );
 }

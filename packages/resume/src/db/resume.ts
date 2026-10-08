@@ -86,12 +86,13 @@ async function readIndexEntry(
       id: resume.id,
       title: resume.title,
       updatedAt: resume.updatedAt,
+      profileId: resume.profileId,
     })),
   );
 }
 
 /**
- * The lightweight Library projection (id, title, updatedAt), newest first. Reads
+ * The lightweight Library projection (id, title, updatedAt, profileId), newest first. Reads
  * full bodies to migrate them, but returns only index fields; the full body of a
  * non-open Resume is not kept in memory. Migration failures are isolated per
  * document and counted, never deleted: one unreadable document must not make the

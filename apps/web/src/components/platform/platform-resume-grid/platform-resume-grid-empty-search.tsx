@@ -10,7 +10,7 @@ import {
 import { FilePlusIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
-import { PlatformResumeCreateDialog } from "../platform-resume-create-dialog";
+import { PlatformResumeCreateSheet } from "../platform-resume-create/platform-resume-create-sheet";
 
 interface PlatformResumeGridEmptySearchProps {
   query: string;
@@ -43,7 +43,7 @@ export function PlatformResumeGridEmptySearch(
         </Button>
       </EmptyContent>
 
-      <PlatformResumeCreateDialog
+      <PlatformResumeCreateSheet
         key={query}
         initialTitle={query}
         open={open}

@@ -15,7 +15,7 @@ export function EditorWorkspaceSkeleton() {
   const { open } = useSidebar();
 
   return (
-    <div className="flex h-[calc(100svh-3rem-1px)] min-h-0 overflow-clip">
+    <div className="flex h-full min-h-0 overflow-clip">
       <div className="min-w-0 flex-1 bg-muted px-6 py-10">
         <EditorPreviewSkeleton />
       </div>

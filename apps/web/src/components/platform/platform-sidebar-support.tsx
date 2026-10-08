@@ -18,6 +18,7 @@ export function PlatformSidebarSupport() {
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton
+            tooltip="Saweria"
             render={
               <ExternalLink href={DONATION_LINKS.saweria}>
                 <img
@@ -34,6 +35,7 @@ export function PlatformSidebarSupport() {
         </SidebarMenuItem>
         <SidebarMenuItem>
           <SidebarMenuButton
+            tooltip="SociaBuzz"
             render={
               <ExternalLink href={DONATION_LINKS.sociabuzz}>
                 <img
