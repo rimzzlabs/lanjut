@@ -7,6 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@lanjut/ui/components/dropdown-menu";
+import { Skeleton } from "@lanjut/ui/components/skeleton";
 import {
   GearSixIcon,
   PlusIcon,
@@ -35,6 +36,12 @@ export function ProfileMenu() {
   const profile = useProfileStore(selectActiveProfile);
   const openAt = useProfileSettingsStore((state) => state.openAt);
   const label = useProfileLabel(profile);
+  const status = useProfileStore((state) => state.status);
+
+  // Until the profiles load, the guest's initial would show and then swap.
+  if (status === "idle" || status === "loading") {
+    return <Skeleton className="size-9 rounded-full" />;
+  }
 
   return (
     <DropdownMenu>

@@ -7,8 +7,8 @@ import {
 } from "@/hooks/use-profile-resumes";
 import { useResumeSearchQuery } from "@/hooks/use-resume-search";
 import { useResumeStore } from "@/lib/store";
-import { PlatformEmptyState } from "./platform-empty-state";
 import { PlatformLibraryContinue } from "./platform-library-continue";
+import { PlatformLibraryEmpty } from "./platform-library-empty";
 import { PlatformLibrarySkeleton } from "./platform-library-skeleton";
 import { PlatformLibraryStart } from "./platform-library-start/platform-library-start";
 import { PlatformResumeCollection } from "./platform-resume-collection";
@@ -24,8 +24,6 @@ export function PlatformLibrary() {
   useHydrateProfiles();
   const ready = useProfileLibraryReady();
   const indexStatus = useResumeStore((state) => state.indexStatus);
-  const total = useResumeStore((state) => A.length(state.index));
-  const unreadableCount = useResumeStore((state) => state.unreadableCount);
   const resumes = useProfileResumes();
   const [query] = useResumeSearchQuery();
   const latest = A.head(resumes);
@@ -33,11 +31,7 @@ export function PlatformLibrary() {
   if (indexStatus === "error") return <PlatformResumeGridError />;
   if (!ready) return <PlatformLibrarySkeleton />;
 
-  if (O.isNone(latest)) {
-    // With unreadable documents present, "No résumés yet" would be a lie.
-    if (total === 0 && unreadableCount > 0) return <PlatformLibraryStart />;
-    return <PlatformEmptyState scope={total === 0 ? "device" : "profile"} />;
-  }
+  if (O.isNone(latest)) return <PlatformLibraryEmpty />;
 
   if (S.isNotEmpty(S.trim(query))) {
     return <PlatformResumeCollection index={resumes} query={query} />;

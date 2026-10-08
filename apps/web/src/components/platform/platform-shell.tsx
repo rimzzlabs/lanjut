@@ -23,7 +23,7 @@ export function PlatformShell(props: PropsWithChildren) {
             by its content (e.g. a long custom-section title), which otherwise
             pushes the layout past the viewport. The fixed height makes the
             second row a definite track, so each page scrolls inside it. */}
-        <SidebarInset className="grid h-svh min-w-0 grid-rows-[auto_minmax(0,1fr)] overflow-hidden md:h-[calc(100svh-1rem)] md:ring-1 md:ring-foreground/10">
+        <SidebarInset className="grid h-svh min-w-0 grid-rows-[auto_minmax(0,1fr)] overflow-hidden md:h-[calc(100svh-1rem)]">
           <PlatformNavbar />
           {props.children}
         </SidebarInset>

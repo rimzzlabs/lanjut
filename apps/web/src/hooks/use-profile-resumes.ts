@@ -1,6 +1,7 @@
 import { type ResumeIndexEntry, resolveResumeProfileId } from "@lanjut/resume";
 import { A, D, O } from "@mobily/ts-belt";
 import { useMemo } from "react";
+import { useTranslations } from "use-intl";
 import {
   selectActiveProfile,
   useProfileStore,
@@ -47,4 +48,24 @@ export function useProfileLibraryReady(): boolean {
     indexStatus === "ready" &&
     (profileStatus === "ready" || profileStatus === "error")
   );
+}
+
+/** How many résumés the active profile holds, or null until both stores load. */
+export function useProfileResumeCount(): number | null {
+  const ready = useProfileLibraryReady();
+  const resumes = useProfileResumes();
+  if (!ready) return null;
+  return A.length(resumes);
+}
+
+/**
+ * "3 resumes" for one profile, or an empty string until the library loads,
+ * so a count never reads "No resumes" before it is known.
+ */
+export function useProfileResumeCountText(id: string): string {
+  const t = useTranslations("profile");
+  const counts = useProfileResumeCounts();
+  const ready = useResumeStore((state) => state.indexStatus === "ready");
+  if (!ready) return "";
+  return t("resumeCount", { count: O.getWithDefault(D.get(counts, id), 0) });
 }

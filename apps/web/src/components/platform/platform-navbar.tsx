@@ -30,7 +30,7 @@ export function PlatformNavbar() {
             href={REPO_URL}
             className={cn(
               buttonVariants({ variant: "outline" }),
-              "gap-2 bg-neutral-800 hover:bg-neutral-700 dark:bg-background text-neutral-50 dark:text-stone-50 max-md:w-9 max-md:px-0",
+              "gap-2 bg-neutral-800 hover:bg-neutral-700 dark:bg-background text-neutral-50 hover:text-neutral-50 dark:text-stone-50 max-md:w-9 max-md:px-0",
             )}
           >
             <GithubLogoIcon weight="fill" />

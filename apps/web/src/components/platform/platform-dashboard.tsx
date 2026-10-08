@@ -13,7 +13,7 @@ export function PlatformDashboard() {
   return (
     <PlatformPageScroll>
       <PlatformPageHeader title={t("myResume")}>
-        <PlatformResumeToolbar />
+        <PlatformResumeToolbar withSheet />
       </PlatformPageHeader>
       <PlatformResumeUnreadableNotice />
       <PlatformLibrary />

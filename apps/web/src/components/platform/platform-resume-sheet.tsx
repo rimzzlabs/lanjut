@@ -1,12 +1,12 @@
 import type { Resume } from "@lanjut/resume";
 import { resolveTemplateId } from "@lanjut/resume/templates";
-import { Skeleton } from "@lanjut/ui/components/skeleton";
 import { useMemo } from "react";
 import { ResumeThumbnail } from "@/components/editor/resume-thumbnail";
 import {
   isResumePreviewEmpty,
   resumeToPreview,
 } from "@/components/editor/resume-to-preview";
+import { PlatformPaperSkeleton } from "./platform-paper-skeleton";
 import { PlatformResumeGridItemEmpty } from "./platform-resume-grid/platform-resume-grid-item-empty";
 
 /**
@@ -20,7 +20,7 @@ export function PlatformResumeSheet(props: { document: Resume | null }) {
   );
 
   if (!props.document || !preview) {
-    return <Skeleton className="aspect-210/297 w-full rounded-none" />;
+    return <PlatformPaperSkeleton />;
   }
 
   if (isResumePreviewEmpty(preview)) return <PlatformResumeGridItemEmpty />;

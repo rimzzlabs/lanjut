@@ -10,7 +10,12 @@ import { useResumeCreateSheet } from "@/hooks/use-resume-create-sheet";
 import { useResumeSearchQuery } from "@/hooks/use-resume-search";
 import { PlatformResumeCreateSheet } from "./platform-resume-create/platform-resume-create-sheet";
 
-export function PlatformResumeToolbar() {
+/**
+ * Search and the create action of the library. While the library's code
+ * loads, it renders without the sheet (`withSheet={false}`): the button still
+ * sets the address, and the library opens the sheet when it arrives.
+ */
+export function PlatformResumeToolbar(props: { withSheet: boolean }) {
   const [open, setOpen] = useResumeCreateSheet();
   const [query, setQuery] = useResumeSearchQuery();
   const t = useTranslations("platform.toolbar");
@@ -33,7 +38,9 @@ export function PlatformResumeToolbar() {
         <PlusIcon /> {t("resume")}
       </Button>
 
-      <PlatformResumeCreateSheet open={open} onOpenChange={setOpen} />
+      {props.withSheet && (
+        <PlatformResumeCreateSheet open={open} onOpenChange={setOpen} />
+      )}
     </div>
   );
 }

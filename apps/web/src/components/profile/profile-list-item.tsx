@@ -3,6 +3,7 @@ import { Badge } from "@lanjut/ui/components/badge";
 import { A, pipe, S } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
 import { useProfileLabel } from "@/hooks/use-profile-label";
+import { useProfileResumeCountText } from "@/hooks/use-profile-resumes";
 import { ProfileAvatar } from "./profile-avatar";
 import { profileDetailText } from "./profile-detail-text";
 
@@ -10,7 +11,6 @@ interface ProfileListItemProps {
   profile: Profile;
   active: boolean;
   selected: boolean;
-  count: number;
   onOpen: () => void;
 }
 
@@ -22,6 +22,7 @@ export function ProfileListItem(props: ProfileListItemProps) {
   const t = useTranslations("profile");
   const label = useProfileLabel(props.profile);
   const detail = profileDetailText(props.profile);
+  const countText = useProfileResumeCountText(props.profile.id);
 
   return (
     <button
@@ -34,11 +35,7 @@ export function ProfileListItem(props: ProfileListItemProps) {
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
         <span className="truncate text-sm font-medium">{label}</span>
         <span className="truncate text-xs text-muted-foreground">
-          {pipe(
-            [detail, t("resumeCount", { count: props.count })],
-            A.filter(S.isNotEmpty),
-            A.join(" · "),
-          )}
+          {pipe([detail, countText], A.filter(S.isNotEmpty), A.join(" · "))}
         </span>
       </span>
       {props.active && <Badge variant="secondary">{t("active")}</Badge>}

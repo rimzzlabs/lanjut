@@ -25,9 +25,13 @@ editorial
 - App pages (`/editor`, `/template`, `/profile`): **Workbench-minimal**. They load client-only, so
   the first paint is a full-page loader on the page background (see Motion). Moving
   between them keeps the shell. While a page's code loads, the content area shows a
-  skeleton of that page: the library, the template list beside a blank sheet, or the
-  editor's blank sheet and side panel. Each skeleton is the loading state that the
-  page itself shows next, so the two hand over without a jump. Creating a résumé
+  skeleton of that page: the library, the template list beside a blank sheet, the
+  profiles, or the editor's blank sheet and side panel. Each skeleton is the loading
+  state that the page itself shows next, so the two hand over without a jump. A
+  skeleton keeps real whatever needs no data (headings, start tiles, toolbars,
+  template names), follows the shape the data will take when it is already known,
+  and draws a loading résumé page as white paper with faint lines, never a grey
+  block. The avatar is a grey circle until the profiles load. Creating a résumé
   opens a wide Sheet in three steps (Start, Template, Review). From `lg` a preview
   beside the steps shows every page of the résumé being created, including an
   imported file; below `lg` the Template step is a carousel of page-wide previews,
