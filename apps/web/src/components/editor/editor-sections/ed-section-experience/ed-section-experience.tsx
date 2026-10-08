@@ -1,0 +1,27 @@
+import {
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@lanjut/ui/components/accordion";
+import { BriefcaseIcon } from "@phosphor-icons/react";
+import { useTranslations } from "use-intl";
+import { EditorSectionVisibility } from "../ed-section-visibility";
+import { EditorSectionExperienceForm } from "./ed-section-experience-form";
+
+export function EditorSectionExperience() {
+  const t = useTranslations("editor.experience");
+
+  return (
+    <AccordionItem value="experience" className="relative">
+      <AccordionTrigger className="items-center gap-3">
+        <BriefcaseIcon className="size-4" /> {t("accordionTitle")}
+      </AccordionTrigger>
+
+      <EditorSectionVisibility type="experience" />
+
+      <AccordionContent>
+        <EditorSectionExperienceForm />
+      </AccordionContent>
+    </AccordionItem>
+  );
+}

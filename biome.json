@@ -9,12 +9,12 @@
     "ignoreUnknown": true,
     "includes": [
       "**",
-      "!node_modules",
-      "!.astro",
-      "!dist",
-      "!dist-desktop",
-      "!build",
-      "!src-tauri"
+      "!**/node_modules",
+      "!**/.astro",
+      "!**/dist",
+      "!**/dist-desktop",
+      "!**/build",
+      "!apps/desktop/src-tauri"
     ]
   },
   "formatter": {

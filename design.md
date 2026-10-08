@@ -4,7 +4,7 @@ A locked design system for this app. Every page redesign reads this file before
 emitting code. Do not regenerate per page; extend or amend this file when the
 system needs to grow.
 
-The canonical token source is [`src/styles/globals.css`](src/styles/globals.css) (shadcn
+The canonical token source is [`apps/web/src/styles/globals.css`](src/styles/globals.css) (shadcn
 base-ui variables under `:root` / `.dark`). This file documents the intent behind
 those values and the structural rules that CSS cannot encode. Where a value and this
 file disagree, fix one to match the other; they must not drift.
@@ -82,7 +82,7 @@ column is `w-11/12 max-w-5xl` centered.
 - The landing entrance is CSS, so the static sections ship no JavaScript.
   `.landing-rise` plays once on load on the hero headline, deck, and reader, staggered
   120ms with `--rise`. Reduced motion swaps it for `landing-fade`. Both live in
-  `src/styles/globals.css`. The static sections below the hero have no scroll motion.
+  `apps/web/src/styles/globals.css`. The static sections below the hero have no scroll motion.
 - The reader sheet's intro sweep is the landing page's one authored motion. It is
   described under "Landing world: Two Readers".
 - Inside React islands and the app, `motion/react` carries the motion.
@@ -110,7 +110,7 @@ column is `w-11/12 max-w-5xl` centered.
   secondary variant does. Do not fade a fill with an alpha such as `bg-primary/80`: it lightens
   the evergreen under white text to 3.6:1.
 - Secondary CTA: `Button variant="outline"`, leading `MagnifyingGlassIcon`.
-- Copy is verb-led and drawn from `messages/*.json` (i18n); never hard-code English.
+- Copy is verb-led and drawn from `packages/i18n/messages/*.json` (i18n); never hard-code English.
 
 ## Per-page allowances
 
@@ -135,7 +135,7 @@ column is `w-11/12 max-w-5xl` centered.
 
 ## Landing world: Two Readers
 
-The landing page (`/`, `src/pages/[...lang]/index.astro`) wraps its content in
+The landing page (`/`, `apps/web/src/pages/[...lang]/index.astro`) wraps its content in
 `<body data-world="readers">` (the `world` prop of `RootLayout`). That attribute
 re-points the shadcn tokens on that page only. Every primitive on the page inherits the world, and the app keeps the
 evergreen broadsheet. The page has one subject: the same résumé, read by a person and
@@ -144,7 +144,7 @@ by a machine.
 ### Palette
 
 Tokens live under `[data-world="readers"]` and `.dark [data-world="readers"]` in
-`src/styles/globals.css`. The neutrals lean cool green (hue 165 to 168), not warm
+`apps/web/src/styles/globals.css`. The neutrals lean cool green (hue 165 to 168), not warm
 cream.
 
 Light:
@@ -183,7 +183,7 @@ inherits them, because they only ever sit on `--ink`.
 ### Faces
 
 Both faces are declared in `astro.config.ts` and loaded only by the landing page,
-through `<Font>` in `src/pages/[...lang]/index.astro`.
+through `<Font>` in `apps/web/src/pages/[...lang]/index.astro`.
 
 - **Schibsted Grotesk** (`--font-landing`, weights 400 to 900, preloaded). The world
   sets it as the wrapper's `font-family`, ahead of `--font-sans`. Headings use it at
@@ -198,7 +198,7 @@ through `<Font>` in `src/pages/[...lang]/index.astro`.
 
 ### Signature: the reader sheet
 
-`src/components/landing/landing-reader-sheet.tsx` is the page's one signature
+`apps/web/src/components/landing/landing-reader-sheet.tsx` is the page's one signature
 component. It sits in the hero, under the draft row.
 
 - One white sheet (`bg-white` in both themes, `rounded-xl`, `ring-1 ring-black/10`, a
@@ -207,7 +207,7 @@ component. It sits in the hero, under the draft row.
   template. Right of it: an `--ink` panel in `font-machine` with the text a parser
   pulled out of that page's PDF. Lines in all caps read as headings in `--machine`;
   the rest use `--machine-muted`.
-- The read is real. `src/hooks/use-landing-read.ts` renders the draft to a PDF and
+- The read is real. `apps/web/src/hooks/use-landing-read.ts` renders the draft to a PDF and
   reads it back through `runParserProof`. It starts when the sheet comes within 120px
   of the viewport, and runs again 900ms after typing pauses. A newer run supersedes an
   older one. Until a read lands, the panel shows the plain text export of the draft.
@@ -305,7 +305,7 @@ panels. `--ink` marks machine content only. Never put human copy on it.
 These override any generic design guidance:
 
 - Never restructure the résumé schema, IndexedDB layer, or export pipeline for looks.
-- Compose `src/components/ui/*` primitives; do not hand-roll their equivalents.
+- Compose `packages/ui/src/components/*` primitives; do not hand-roll their equivalents.
 - Named exports and named function declarations only. Props destructuring capped at 3.
 - No em-dashes in authored copy. Lean comments. Format with Biome.
 
@@ -313,7 +313,7 @@ These override any generic design guidance:
 
 ### shadcn/ui CSS variables (light)
 
-The live values are in [`src/styles/globals.css`](src/styles/globals.css). Mirror:
+The live values are in [`apps/web/src/styles/globals.css`](src/styles/globals.css). Mirror:
 
 ```css
 :root {

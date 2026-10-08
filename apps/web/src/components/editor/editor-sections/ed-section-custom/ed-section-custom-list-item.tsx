@@ -1,0 +1,124 @@
+import { PROSE_FEATURES } from "@lanjut/resume/schema-registry";
+import { Button } from "@lanjut/ui/components/button";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from "@lanjut/ui/components/field";
+import { Input } from "@lanjut/ui/components/input";
+import { TrashIcon } from "@phosphor-icons/react";
+import { type Control, Controller } from "react-hook-form";
+import { useTranslations } from "use-intl";
+import { RichTextField } from "../../rich-text/rich-text-field";
+import { DateRangeFields } from "../date-range-fields";
+import type { CustomListFormValues } from "../resume-form-adapter-custom";
+
+interface EditorSectionCustomListItemProps {
+  index: number;
+  control: Control<CustomListFormValues>;
+  onRemoveField: (index: number) => void;
+}
+
+export function EditorSectionCustomListItem(
+  props: EditorSectionCustomListItemProps,
+) {
+  const t = useTranslations("editor.custom");
+  const onRemove = () => {
+    props.onRemoveField(props.index);
+  };
+
+  return (
+    <FieldSet>
+      <FieldLegend className="sr-only" variant="label">
+        {t("itemLegend", { index: props.index + 1 })}
+      </FieldLegend>
+
+      <FieldGroup className="gap-3">
+        <Controller
+          control={props.control}
+          name={`entries.${props.index}.title`}
+          render={(controller) => {
+            const { field, fieldState } = controller;
+            return (
+              <Field>
+                <FieldLabel htmlFor={field.name}>{t("entryTitle")}</FieldLabel>
+                <div className="flex items-center gap-2">
+                  <Input
+                    placeholder={t("entryTitlePlaceholder")}
+                    {...field}
+                    id={field.name}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon-sm"
+                    onClick={onRemove}
+                  >
+                    <TrashIcon className="size-3.5 text-destructive" />
+                    <span className="sr-only">{t("removeEntry")}</span>
+                  </Button>
+                </div>
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            );
+          }}
+        />
+
+        <Controller
+          control={props.control}
+          name={`entries.${props.index}.subtitle`}
+          render={(controller) => {
+            const { field, fieldState } = controller;
+            return (
+              <Field>
+                <FieldLabel htmlFor={field.name}>
+                  {t("entrySubtitle")}
+                </FieldLabel>
+                <Input
+                  placeholder={t("entrySubtitlePlaceholder")}
+                  {...field}
+                  id={field.name}
+                />
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            );
+          }}
+        />
+
+        <DateRangeFields
+          control={props.control}
+          startName={`entries.${props.index}.startDate`}
+          endName={`entries.${props.index}.endDate`}
+          presentLabel={t("present")}
+        />
+
+        <Controller
+          control={props.control}
+          name={`entries.${props.index}.description`}
+          render={(controller) => {
+            const { field, fieldState } = controller;
+            return (
+              <Field>
+                <FieldLabel htmlFor={field.name}>
+                  {t("entryDescription")}
+                </FieldLabel>
+                <RichTextField
+                  id={field.name}
+                  value={field.value}
+                  features={PROSE_FEATURES}
+                  placeholder={t("entryDescriptionPlaceholder")}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                />
+                <FieldError errors={[fieldState.error]} />
+              </Field>
+            );
+          }}
+        />
+      </FieldGroup>
+    </FieldSet>
+  );
+}

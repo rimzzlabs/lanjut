@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 
-const config = JSON.parse(readFileSync("src-tauri/tauri.conf.json", "utf8"));
+const config = JSON.parse(
+  readFileSync("apps/desktop/src-tauri/tauri.conf.json", "utf8"),
+);
 const failures = [];
 
 // macOS ships the updater payload as a tarball of the .app bundle. A dmg-only
@@ -39,4 +41,6 @@ if (failures.length > 0) {
   for (const failure of failures) console.error(`✗ ${failure}`);
   process.exit(1);
 }
-console.log("✓ src-tauri/tauri.conf.json holds its load-bearing values");
+console.log(
+  "✓ apps/desktop/src-tauri/tauri.conf.json holds its load-bearing values",
+);

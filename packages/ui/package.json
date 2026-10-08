@@ -1,0 +1,46 @@
+{
+  "name": "@lanjut/ui",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./components/*": "./src/components/*.tsx",
+    "./lib/*": "./src/lib/*.ts",
+    "./hooks/*": "./src/hooks/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "ui:add": "shadcn add"
+  },
+  "dependencies": {
+    "@base-ui/react": "catalog:",
+    "@phosphor-icons/react": "catalog:",
+    "@shadcn/react": "^0.2.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "embla-carousel-react": "^8.6.0",
+    "input-otp": "^1.4.2",
+    "react-day-picker": "^10.0.1",
+    "react-resizable-panels": "^4.12.0",
+    "recharts": "3.8.0",
+    "sonner": "catalog:",
+    "tailwind-merge": "^3.6.0"
+  },
+  "peerDependencies": {
+    "next-themes": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "use-intl": "catalog:"
+  },
+  "devDependencies": {
+    "@lanjut/tsconfig": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "next-themes": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "shadcn": "^4.12.0",
+    "typescript": "catalog:",
+    "use-intl": "catalog:"
+  }
+}

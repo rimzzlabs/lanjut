@@ -1,0 +1,12 @@
+{
+  "name": "@lanjut/desktop",
+  "private": true,
+  "scripts": {
+    "dev": "LANJUT_TARGET=desktop tauri dev",
+    "build": "LANJUT_TARGET=desktop tauri build",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.11.4"
+  }
+}

@@ -1,0 +1,18 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import RootLayout from "@/components/shared/root-layout.astro";
+import { PlatformAppFromLocation } from "./platform-app-from-location";
+import PlatformLoading from "./platform-loading.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<RootLayout locale={locale} noindex>
+  <PlatformAppFromLocation client:only="react">
+    <PlatformLoading slot="fallback" locale={locale} />
+  </PlatformAppFromLocation>
+</RootLayout>

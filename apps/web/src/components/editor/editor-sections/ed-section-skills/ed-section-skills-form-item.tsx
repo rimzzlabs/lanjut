@@ -1,0 +1,117 @@
+import { Button } from "@lanjut/ui/components/button";
+import { Field, FieldError } from "@lanjut/ui/components/field";
+import { Input } from "@lanjut/ui/components/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@lanjut/ui/components/select";
+import { TrashIcon } from "@phosphor-icons/react";
+import { type Control, Controller } from "react-hook-form";
+import { useTranslations } from "use-intl";
+import { SortableItem } from "@/components/shared/sortable-list";
+import type { SkillsFormValues } from "../resume-form-adapter-lists";
+
+const PROFICIENCY_LEVELS = [
+  "Beginner",
+  "Intermediate",
+  "Advanced",
+  "Expert",
+] as const;
+
+interface EditorSectionSkillsFormItemProps {
+  id: string;
+  index: number;
+  showProficiency: boolean;
+  control: Control<SkillsFormValues>;
+  onRemoveField: (index: number) => void;
+}
+
+export function EditorSectionSkillsFormItem(
+  props: EditorSectionSkillsFormItemProps,
+) {
+  const t = useTranslations("editor.skills");
+
+  return (
+    <SortableItem id={props.id} handleLabel={t("reorder")}>
+      <div className="flex flex-col md:flex-row md:items-center gap-2">
+        <div
+          data-proficiency={props.showProficiency}
+          className="flex items-center gap-2 flex-1"
+        >
+          <Controller
+            control={props.control}
+            name={`skills.${props.index}.name`}
+            render={(controller) => {
+              const { field, fieldState } = controller;
+              return (
+                <Field className="flex-1">
+                  <Input
+                    placeholder={t("namePlaceholder")}
+                    {...field}
+                    id={field.name}
+                  />
+                  <FieldError errors={[fieldState.error]} />
+                </Field>
+              );
+            }}
+          />
+
+          <Button
+            type="button"
+            variant="outline"
+            size="icon-sm"
+            className="md:hidden"
+            onClick={() => props.onRemoveField(props.index)}
+          >
+            <TrashIcon className="size-3.5 text-destructive" />
+            <span className="sr-only">{t("remove")}</span>
+          </Button>
+        </div>
+
+        {props.showProficiency && (
+          <Controller
+            control={props.control}
+            name={`skills.${props.index}.level`}
+            render={(controller) => {
+              const { field } = controller;
+              return (
+                <Select
+                  value={field.value || null}
+                  onValueChange={(value) => field.onChange(value)}
+                >
+                  <SelectTrigger className="w-[87.888%] md:w-36">
+                    <SelectValue placeholder={t("proficiency")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {PROFICIENCY_LEVELS.map((level) => (
+                        <SelectItem key={level} value={level}>
+                          {level}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              );
+            }}
+          />
+        )}
+
+        <Button
+          type="button"
+          variant="outline"
+          size="icon-sm"
+          className="max-md:hidden"
+          onClick={() => props.onRemoveField(props.index)}
+        >
+          <TrashIcon className="size-3.5 text-destructive" />
+          <span className="sr-only">{t("remove")}</span>
+        </Button>
+      </div>
+    </SortableItem>
+  );
+}

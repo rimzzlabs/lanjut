@@ -1,0 +1,64 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import {
+  ArrowUpRightIcon,
+  CaretDownIcon,
+  DatabaseIcon,
+} from "@phosphor-icons/react";
+import { REPO_URL } from "@/lib/site";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale, "landing");
+
+// The real database and object store names from src/lib/db/schema.ts.
+const STORES = ["resumes", "app", "backups", "leftovers"];
+---
+
+<section class="mx-auto w-11/12 max-w-6xl pb-24 md:pb-36">
+  <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:items-center md:gap-12">
+    <div class="md:col-span-6">
+      <h2
+        class="text-[clamp(2rem,4vw,3rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance"
+      >
+        {t("localHeading")}
+      </h2>
+      <p class="mt-5 max-w-[52ch] text-muted-foreground">{t("localBody")}</p>
+      <p class="mt-6 text-sm">
+        {t("localSource")}{" "}
+        <a
+          href={REPO_URL}
+          target="_blank"
+          rel="noreferrer"
+          class="inline-flex items-center gap-1 rounded-xs font-medium underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        >
+          {t("localSourceLink")}
+          <ArrowUpRightIcon aria-hidden="true" className="size-3.5" />
+          <span class="sr-only">{t("newTab")}</span>
+        </a>
+      </p>
+    </div>
+
+    <figure class="md:col-span-6">
+      <figcaption class="mb-3 text-sm text-muted-foreground">
+        {t("localPanelCaption")}
+      </figcaption>
+      <div class="rounded-xl bg-(--ink) p-6 font-machine text-sm text-(--machine-muted) ring-1 ring-(--ink-line) md:p-8">
+        <p class="text-xs">Application / Storage / IndexedDB</p>
+        <p class="mt-5 flex items-center gap-2 text-(--machine)">
+          <CaretDownIcon aria-hidden="true" className="size-3.5" />
+          <DatabaseIcon aria-hidden="true" className="size-4" />
+          lanjut
+        </p>
+        <p class="mt-4 pl-6 text-xs">{t("localStores")}</p>
+        <ul class="mt-2 space-y-2 border-l border-(--ink-line) pl-6">
+          {STORES.map((store) => <li class="text-(--machine)">{store}</li>)}
+        </ul>
+      </div>
+    </figure>
+  </div>
+</section>

@@ -1,0 +1,47 @@
+import { resumeToJson, resumeToYaml } from "@lanjut/resume/interchange";
+import { Button } from "@lanjut/ui/components/button";
+import { CopyIcon } from "@phosphor-icons/react";
+import { toast } from "sonner";
+import { useTranslations } from "use-intl";
+import { useResumeStore } from "@/lib/store";
+
+/** Copy the open document to the clipboard in an interchange format. */
+export function EditorDocumentCopy() {
+  const open = useResumeStore((state) => state.open);
+  const t = useTranslations("editor.document");
+  if (!open) return null;
+
+  const copy = async (serialize: () => string) => {
+    try {
+      await navigator.clipboard.writeText(serialize());
+      toast.success(t("copied"));
+    } catch {
+      toast.error(t("copyFailed"));
+    }
+  };
+
+  return (
+    <div className="flex gap-2">
+      <Button
+        type="button"
+        variant="outline"
+        className="flex-1"
+        onClick={() => void copy(() => resumeToJson(open))}
+      >
+        <CopyIcon />
+        <span className="sr-only">{t("copyAs")} </span>
+        {t("copyJson")}
+      </Button>
+      <Button
+        type="button"
+        variant="outline"
+        className="flex-1"
+        onClick={() => void copy(() => resumeToYaml(open))}
+      >
+        <CopyIcon />
+        <span className="sr-only">{t("copyAs")} </span>
+        {t("copyYaml")}
+      </Button>
+    </div>
+  );
+}

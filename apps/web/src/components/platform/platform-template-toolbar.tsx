@@ -1,0 +1,74 @@
+import type { TemplateSort } from "@lanjut/resume/templates";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@lanjut/ui/components/input-group";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@lanjut/ui/components/select";
+import { A } from "@mobily/ts-belt";
+import { MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { useTranslations } from "use-intl";
+import {
+  useTemplateSearchQuery,
+  useTemplateSort,
+} from "@/hooks/use-template-search";
+
+const SORT_OPTIONS: { value: TemplateSort; labelKey: string }[] = [
+  { value: "name-asc", labelKey: "sortNameAsc" },
+  { value: "name-desc", labelKey: "sortNameDesc" },
+  { value: "newest", labelKey: "sortNewest" },
+];
+
+export function PlatformTemplateToolbar() {
+  const [query, setQuery] = useTemplateSearchQuery();
+  const [sort, setSort] = useTemplateSort();
+  const t = useTranslations("platform.toolbar");
+  const options = A.map(SORT_OPTIONS, (option) => ({
+    value: option.value,
+    label: t(option.labelKey),
+  }));
+
+  return (
+    <div className="flex items-center gap-2">
+      <InputGroup id="tour-search-template" className="max-w-xs">
+        <InputGroupAddon>
+          <MagnifyingGlassIcon />
+        </InputGroupAddon>
+        <InputGroupInput
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder={t("searchTemplates")}
+          aria-label={t("searchTemplates")}
+        />
+      </InputGroup>
+
+      <div id="tour-sort-template" className="ml-auto">
+        <Select
+          items={options}
+          value={sort}
+          onValueChange={(value) => setSort(value as TemplateSort)}
+        >
+          <SelectTrigger className="w-40" aria-label={t("sortTemplates")}>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {options.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
+  );
+}

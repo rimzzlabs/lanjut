@@ -1,0 +1,28 @@
+import {
+  DEFAULT_TEMPLATE_SORT,
+  TEMPLATE_SORTS,
+} from "@lanjut/resume/templates";
+import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
+
+/**
+ * Browse-Templates search query, held in the `q` URL param so it survives reload
+ * and is shareable. Throttled and dropped from the URL when empty.
+ */
+export function useTemplateSearchQuery() {
+  return useQueryState(
+    "q",
+    parseAsString
+      .withDefault("")
+      .withOptions({ clearOnDefault: true, throttleMs: 200 }),
+  );
+}
+
+/** Browse-Templates sort order, held in the `sort` URL param (default name A–Z). */
+export function useTemplateSort() {
+  return useQueryState(
+    "sort",
+    parseAsStringLiteral(TEMPLATE_SORTS)
+      .withDefault(DEFAULT_TEMPLATE_SORT)
+      .withOptions({ clearOnDefault: true }),
+  );
+}

@@ -1,0 +1,77 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { XIcon } from "@phosphor-icons/react";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale, "landing");
+
+const SECTIONS = [
+  "sectionHeader",
+  "sectionSummary",
+  "sectionExperience",
+  "sectionInternship",
+  "sectionProjects",
+  "sectionOrganizations",
+  "sectionEducation",
+  "sectionCertifications",
+  "sectionSkills",
+  "sectionLanguages",
+];
+
+const KEPT_OUT = [
+  { nameKey: "outTables", whyKey: "outTablesWhy" },
+  { nameKey: "outColumns", whyKey: "outColumnsWhy" },
+  { nameKey: "outBoxes", whyKey: "outBoxesWhy" },
+  { nameKey: "outImages", whyKey: "outImagesWhy" },
+];
+---
+
+<section class="mx-auto w-11/12 max-w-6xl pb-24 md:pb-36">
+  <div class="max-w-3xl">
+    <h2
+      class="text-[clamp(2rem,4vw,3rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance"
+    >
+      {t("keptHeading")}
+    </h2>
+    <p class="mt-5 max-w-[60ch] text-muted-foreground">{t("keptBody")}</p>
+  </div>
+
+  <div class="mt-12 grid grid-cols-1 gap-12 md:mt-16 md:grid-cols-12 md:gap-16">
+    <div class="md:col-span-5">
+      <h3 class="text-sm font-semibold">{t("keptAllowedTitle")}</h3>
+      <ul class="mt-5 flex flex-wrap gap-2">
+        {
+          SECTIONS.map((key) => (
+            <li class="rounded-md bg-secondary px-3 py-1.5 text-sm">{t(key)}</li>
+          ))
+        }
+        <li class="rounded-md border border-dashed border-foreground/30 px-3 py-1.5 text-sm">
+          {t("sectionCustom")}
+        </li>
+      </ul>
+    </div>
+
+    <div class="md:col-span-7">
+      <h3 class="text-sm font-semibold">{t("keptOutTitle")}</h3>
+      <dl class="mt-5 divide-y divide-border border-y border-border">
+        {
+          KEPT_OUT.map((item) => (
+            <div class="grid gap-1 py-4 sm:grid-cols-[13rem_1fr] sm:gap-6">
+              <dt class="flex items-center gap-2 font-semibold">
+                <XIcon aria-hidden="true" weight="bold" className="size-4 text-muted-foreground" />
+                {t(item.nameKey)}
+              </dt>
+              <dd class="text-sm text-muted-foreground">{t(item.whyKey)}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p class="mt-6 max-w-[60ch] text-sm text-muted-foreground">{t("keptPhoto")}</p>
+    </div>
+  </div>
+</section>

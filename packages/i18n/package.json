@@ -1,0 +1,22 @@
+{
+  "name": "@lanjut/i18n",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./routing": "./src/routing.ts",
+    "./translator": "./src/translator.ts",
+    "./messages": "./src/messages.ts",
+    "./messages/*.json": "./messages/*.json"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@mobily/ts-belt": "catalog:",
+    "use-intl": "catalog:"
+  },
+  "devDependencies": {
+    "@lanjut/tsconfig": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

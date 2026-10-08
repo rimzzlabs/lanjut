@@ -1,0 +1,373 @@
+import { isRichEmpty, type RichBlock } from "@lanjut/resume/rich-content";
+import type { ReorderableSectionType } from "@lanjut/resume/schema-registry";
+import type { SectionColumns } from "@lanjut/resume/types";
+import { A } from "@mobily/ts-belt";
+import type {
+  CertificateItemView,
+  CustomSectionView,
+  EducationItemView,
+  ExperienceItemView,
+  HeaderView,
+  LanguageItemView,
+  ResumePreview,
+  SkillItemView,
+} from "./resume-preview";
+
+/**
+ * Pagination metadata shared by every block. `keepWithNext` glues a block to the
+ * one after it (a section heading to its first entry) so a heading can never be
+ * orphaned at the foot of a page. `gapBefore` is the vertical space (px) that
+ * precedes the block when it is *not* the first on its page.
+ */
+interface BlockMeta {
+  id: string;
+  gapBefore: number;
+  keepWithNext: boolean;
+}
+
+/**
+ * The atomic units of the document, in linear reading order. Pagination groups
+ * this sequence into pages without ever reordering it, so parse/export order is
+ * preserved (see AGENTS.md two-layer rule).
+ */
+export type ResumeBlock = BlockMeta &
+  (
+    | { kind: "header"; header: HeaderView }
+    | { kind: "heading"; title: string }
+    | { kind: "summary"; body: ReadonlyArray<RichBlock> }
+    | { kind: "experience"; item: ExperienceItemView }
+    | { kind: "education"; item: EducationItemView }
+    | { kind: "certificate"; item: CertificateItemView }
+    | {
+        kind: "skills";
+        items: ReadonlyArray<SkillItemView>;
+        columns: SectionColumns;
+      }
+    | {
+        kind: "languages";
+        items: ReadonlyArray<LanguageItemView>;
+        columns: SectionColumns;
+      }
+  );
+
+const ATOMIC_KINDS = new Set<ResumeBlock["kind"]>([
+  "experience",
+  "education",
+  "certificate",
+]);
+
+/**
+ * Entry blocks are indivisible: their title, subtitle, and body must never be
+ * split across a page break. The on-screen paginator already treats every block
+ * as one unit; the PDF flow marks these `data-atomic` and keeps them together
+ * with `break-inside: avoid`, moving a whole entry to the next page rather
+ * than stranding its header.
+ */
+export function isAtomicBlock(block: ResumeBlock): boolean {
+  return ATOMIC_KINDS.has(block.kind);
+}
+
+const GAP = {
+  /** Space above a section heading. */
+  section: 24,
+  /** Space above a singleton section's body (summary, skills, languages). */
+  body: 8,
+  /** Space between repeated entries within a section. */
+  entry: 16,
+  /** Space above the first entry, directly under its heading. */
+  firstEntry: 8,
+} as const;
+
+function heading(id: string, title: string): ResumeBlock {
+  return {
+    id,
+    kind: "heading",
+    title,
+    gapBefore: GAP.section,
+    keepWithNext: true,
+  };
+}
+
+function entryGap(index: number): number {
+  return index === 0 ? GAP.firstEntry : GAP.entry;
+}
+
+function hasExperience(item: ExperienceItemView): boolean {
+  return Boolean(item.role || item.company) || !isRichEmpty(item.description);
+}
+
+function hasEducation(item: EducationItemView): boolean {
+  return Boolean(item.degree || item.institution);
+}
+
+function hasCertificate(item: CertificateItemView): boolean {
+  return Boolean(item.title || item.issuer);
+}
+
+function hasSkill(item: SkillItemView): boolean {
+  return Boolean(item.name);
+}
+
+function hasLanguage(item: LanguageItemView): boolean {
+  return Boolean(item.name);
+}
+
+interface ExperienceLikeBlocksParams {
+  items: ReadonlyArray<ExperienceItemView>;
+  headingId: string;
+  label: string;
+}
+
+// Internship, project, and organization entries reuse the "experience" block
+// kind: they render identically in every template and export, only the heading
+// differs. Each emitter drops empty entries first, then omits the whole section
+// (heading included) when nothing is left, so a sparse résumé shows only filled
+// sections.
+function experienceLikeBlocks(
+  params: ExperienceLikeBlocksParams,
+): ResumeBlock[] {
+  const { items, headingId, label } = params;
+  const filtered = A.filter(items, hasExperience);
+  if (A.isEmpty(filtered)) return [];
+  return [
+    heading(headingId, label),
+    ...A.mapWithIndex(
+      filtered,
+      (index, item): ResumeBlock => ({
+        id: item.id,
+        kind: "experience",
+        item,
+        gapBefore: entryGap(index),
+        keepWithNext: false,
+      }),
+    ),
+  ];
+}
+
+function educationBlocks(
+  items: ReadonlyArray<EducationItemView>,
+  label: string,
+): ResumeBlock[] {
+  const filtered = A.filter(items, hasEducation);
+  if (A.isEmpty(filtered)) return [];
+  return [
+    heading("education-heading", label),
+    ...A.mapWithIndex(
+      filtered,
+      (index, item): ResumeBlock => ({
+        id: item.id,
+        kind: "education",
+        item,
+        gapBefore: entryGap(index),
+        keepWithNext: false,
+      }),
+    ),
+  ];
+}
+
+function certificateBlocks(
+  items: ReadonlyArray<CertificateItemView>,
+  label: string,
+): ResumeBlock[] {
+  const filtered = A.filter(items, hasCertificate);
+  if (A.isEmpty(filtered)) return [];
+  return [
+    heading("certificates-heading", label),
+    ...A.mapWithIndex(
+      filtered,
+      (index, item): ResumeBlock => ({
+        id: item.id,
+        kind: "certificate",
+        item,
+        gapBefore: entryGap(index),
+        keepWithNext: false,
+      }),
+    ),
+  ];
+}
+
+interface SkillsBlocksParams {
+  items: ReadonlyArray<SkillItemView>;
+  columns: SectionColumns;
+  label: string;
+}
+
+function skillsBlocks(params: SkillsBlocksParams): ResumeBlock[] {
+  const { items, columns, label } = params;
+  const filtered = A.filter(items, hasSkill);
+  if (A.isEmpty(filtered)) return [];
+  return [
+    heading("skills-heading", label),
+    {
+      id: "skills-body",
+      kind: "skills",
+      items: filtered,
+      columns,
+      gapBefore: GAP.body,
+      keepWithNext: false,
+    },
+  ];
+}
+
+interface LanguagesBlocksParams {
+  items: ReadonlyArray<LanguageItemView>;
+  columns: SectionColumns;
+  label: string;
+}
+
+function languagesBlocks(params: LanguagesBlocksParams): ResumeBlock[] {
+  const { items, columns, label } = params;
+  const filtered = A.filter(items, hasLanguage);
+  if (A.isEmpty(filtered)) return [];
+  return [
+    heading("languages-heading", label),
+    {
+      id: "languages-body",
+      kind: "languages",
+      items: filtered,
+      columns,
+      gapBefore: GAP.body,
+      keepWithNext: false,
+    },
+  ];
+}
+
+// A custom section reuses existing block kinds: `rich` renders like Summary
+// (heading + one rich-text block), `list` renders like Experience (heading +
+// entries). Omitted when it has no content, so an empty custom section is hidden.
+function customBlocks(view: CustomSectionView): ResumeBlock[] {
+  const headingId = `custom-${view.id}-heading`;
+  if (view.variant === "list") {
+    const entries = A.filter(view.entries, hasExperience);
+    if (A.isEmpty(entries)) return [];
+    return [
+      heading(headingId, view.title),
+      ...A.mapWithIndex(
+        entries,
+        (index, item): ResumeBlock => ({
+          id: item.id,
+          kind: "experience",
+          item,
+          gapBefore: entryGap(index),
+          keepWithNext: false,
+        }),
+      ),
+    ];
+  }
+  if (isRichEmpty(view.body)) return [];
+  return [
+    heading(headingId, view.title),
+    {
+      id: `custom-${view.id}-body`,
+      kind: "summary",
+      body: view.body,
+      gapBefore: GAP.body,
+      keepWithNext: false,
+    },
+  ];
+}
+
+function summaryBlocks(resume: ResumePreview): ReadonlyArray<ResumeBlock> {
+  if (isRichEmpty(resume.summary)) return [];
+  return [
+    heading("summary-heading", resume.headings.summary),
+    {
+      id: "summary-body",
+      kind: "summary",
+      body: resume.summary,
+      gapBefore: GAP.body,
+      keepWithNext: false,
+    },
+  ];
+}
+
+function shiftHeading(block: ResumeBlock, spacing: number): ResumeBlock {
+  if (block.kind !== "heading") return block;
+  return { ...block, gapBefore: Math.max(0, block.gapBefore + spacing) };
+}
+
+/**
+ * Builds the linear block sequence. The Header and Summary are pinned at the top;
+ * every other section is emitted in the document's `sectionOrder` (the user's
+ * reordering), so pagination, PDF, and text export all follow the same order.
+ * Sections with no meaningful content are omitted (heading included).
+ */
+export function buildResumeBlocks(
+  resume: ResumePreview,
+): ReadonlyArray<ResumeBlock> {
+  const { headings } = resume;
+  const header: ResumeBlock = {
+    id: "header",
+    kind: "header",
+    header: resume.header,
+    gapBefore: 0,
+    keepWithNext: false,
+  };
+
+  const emitters: Record<
+    Exclude<ReorderableSectionType, "custom">,
+    () => ResumeBlock[]
+  > = {
+    experience: () =>
+      experienceLikeBlocks({
+        items: resume.experience,
+        headingId: "experience-heading",
+        label: headings.experience,
+      }),
+    internship: () =>
+      experienceLikeBlocks({
+        items: resume.internship,
+        headingId: "internship-heading",
+        label: headings.internship,
+      }),
+    projects: () =>
+      experienceLikeBlocks({
+        items: resume.projects,
+        headingId: "projects-heading",
+        label: headings.projects,
+      }),
+    organizations: () =>
+      experienceLikeBlocks({
+        items: resume.organizations,
+        headingId: "organizations-heading",
+        label: headings.organizations,
+      }),
+    education: () => educationBlocks(resume.education, headings.education),
+    certifications: () =>
+      certificateBlocks(resume.certificates, headings.certifications),
+    skills: () =>
+      skillsBlocks({
+        items: resume.skills,
+        columns: resume.skillsColumns,
+        label: headings.skills,
+      }),
+    languages: () =>
+      languagesBlocks({
+        items: resume.languages,
+        columns: resume.languagesColumns,
+        label: headings.languages,
+      }),
+  };
+
+  const customById = new Map(
+    A.map(resume.customSections, (section) => [section.id, section] as const),
+  );
+
+  const sections = A.flatMap(
+    resume.sectionOrder,
+    (ref): ReadonlyArray<ResumeBlock> => {
+      if (ref.type !== "custom") return emitters[ref.type]();
+      const view = customById.get(ref.id);
+      if (!view) return [];
+      return customBlocks(view);
+    },
+  );
+  const blocks = [header, ...summaryBlocks(resume), ...sections];
+
+  // Document-level section spacing adjusts only the gap above headings; the
+  // paginator and every PDF template consume `gapBefore`, so this single
+  // adjustment reaches all of them. Floored at zero so a tightened document
+  // collapses sections to flush instead of overlapping them.
+  if (resume.sectionSpacing === 0) return blocks;
+  return A.map(blocks, (block) => shiftHeading(block, resume.sectionSpacing));
+}

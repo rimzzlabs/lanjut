@@ -6,10 +6,10 @@ pre-migration backup store, and what the UI does when a document can't be read.
 
 ## Two versions, two jobs
 
-| Version | Lives in | Governs | Bump when |
-| --- | --- | --- | --- |
-| `DB_VERSION` (`src/lib/db/schema.ts`) | The IndexedDB database | Object stores and indexes only | Adding or changing a store or index |
-| `schemaVersion` (`src/lib/resume/types.ts`, `CURRENT_SCHEMA_VERSION`) | Each persisted document | The field shape of a résumé | Any persisted field-shape change |
+| Version                                                                    | Lives in                | Governs                        | Bump when                           |
+| -------------------------------------------------------------------------- | ----------------------- | ------------------------------ | ----------------------------------- |
+| `DB_VERSION` (`packages/resume/src/db/schema.ts`)                          | The IndexedDB database  | Object stores and indexes only | Adding or changing a store or index |
+| `schemaVersion` (`packages/resume/src/types.ts`, `CURRENT_SCHEMA_VERSION`) | Each persisted document | The field shape of a résumé    | Any persisted field-shape change    |
 
 Never bump `DB_VERSION` for a field-shape change, and never reshape documents
 inside idb's `upgrade` callback. The `upgrade` callback only creates stores
@@ -18,8 +18,8 @@ existing data.
 
 ## The migration ladder
 
-`src/lib/resume/migrations.ts` holds the ladder: one forward-only step per
-version, keyed by the version it migrates *from* (`LADDER[N]: vN → vN+1`).
+`packages/resume/src/migrations.ts` holds the ladder: one forward-only step per
+version, keyed by the version it migrates _from_ (`LADDER[N]: vN → vN+1`).
 `runMigrations` walks a document up the ladder at **read time, in memory**; the
 raw document on disk is untouched until the user's next edit persists the
 migrated shape.
@@ -54,7 +54,7 @@ writing a downgraded document over a newer one.
 
 ## Pre-migration backups
 
-Before the repository (`src/lib/db/resume.ts`) migrates a document, it snapshots
+Before the repository (`packages/resume/src/db/resume.ts`) migrates a document, it snapshots
 the raw pre-migration form into the `backups` object store, keyed by
 `${resumeId}@v${schemaVersion}`, one snapshot per document per ladder crossing.
 This happens on read, before the migrated shape has any chance of being

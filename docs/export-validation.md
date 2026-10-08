@@ -10,12 +10,12 @@ verification back this up.
 pnpm validate:exports
 ```
 
-`scripts/validate-exports.ts` regenerates all three exports from the seed résumé and
+`apps/web/scripts/validate-exports.ts` regenerates all three exports from the seed résumé and
 extracts their text with real parsers: `unpdf` for the PDF, `jszip` for the `.docx`
 XML, and the serializer output for `.txt`. It then asserts:
 
 - **Reading order**: `Summary → Experience → Education → Certificates → Skills →
-  Languages` appears in that order in every format.
+Languages` appears in that order in every format.
 - **Field mapping**: name, headline, email, website, each employer, an employer and a
   school location, company context, education, certificate, a representative skill,
   and a language are all present in the extracted text.
@@ -26,7 +26,7 @@ XML, and the serializer output for `.txt`. It then asserts:
   photo-free output. The photo is presentation-only; if it ever shifts, drops, or
   adds a character of extracted text, the gate fails.
 
-`scripts/takumi-checks.ts` loads the takumi-pdf renderer through Vite, the way the app
+`apps/web/scripts/takumi-checks.ts` loads the takumi-pdf renderer through Vite, the way the app
 bundles it, and runs the PDF checks on every template. It adds:
 
 - **Font families**: each template's PDF embeds the families it draws with (recorded

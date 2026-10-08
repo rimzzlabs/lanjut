@@ -1,0 +1,4 @@
+{
+  "extends": "@lanjut/tsconfig/base.json",
+  "include": ["src"]
+}

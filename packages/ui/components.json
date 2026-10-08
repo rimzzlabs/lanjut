@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "base-vega",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "../../apps/web/src/styles/globals.css",
+    "baseColor": "taupe",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "phosphor",
+  "rtl": false,
+  "aliases": {
+    "components": "@lanjut/ui/components",
+    "utils": "@lanjut/ui/lib/utils",
+    "ui": "@lanjut/ui/components",
+    "lib": "@lanjut/ui/lib",
+    "hooks": "@lanjut/ui/hooks"
+  },
+  "menuColor": "default",
+  "menuAccent": "subtle",
+  "registries": {}
+}

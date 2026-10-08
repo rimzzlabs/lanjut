@@ -1,0 +1,1079 @@
+{
+  "meta": {
+    "title": "Lanjut: Free, local-first ATS resume builder",
+    "description": "Lanjut is a free, open-source resume builder that stays entirely in your browser; no account, nothing uploaded. Style it freely; every export is structured to sail through applicant tracking systems."
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "id": "Indonesia"
+  },
+  "updater": {
+    "title": "Lanjut {version} is available",
+    "description": "You are up to date otherwise. Installing takes a moment and reopens the app.",
+    "install": "Install",
+    "later": "Not now",
+    "installing": "Downloading the update"
+  },
+  "nav": {
+    "skipToContent": "Skip to main content",
+    "main": "Main",
+    "toggleTheme": "Toggle theme",
+    "settings": "Settings",
+    "animation": "Animation",
+    "animationSystem": "System",
+    "animationOn": "On",
+    "animationOff": "Off",
+    "openApp": "Open app"
+  },
+  "tour": {
+    "controls": {
+      "skip": "Skip",
+      "back": "Back",
+      "next": "Next",
+      "done": "Done"
+    },
+    "library": {
+      "welcome": {
+        "title": "Welcome to Lanjut",
+        "content": "A free, local-first resume builder. Everything you write stays in this browser; nothing is ever sent to a server."
+      },
+      "create": {
+        "title": "Create a resume",
+        "content": "Start a new resume from here. You can keep as many as you like."
+      },
+      "search": {
+        "title": "Find it later",
+        "content": "Search your library by title once it grows."
+      },
+      "nav": {
+        "title": "Get around",
+        "content": "Switch between your dashboard and the template gallery from here."
+      },
+      "resumes": {
+        "title": "Your resumes",
+        "content": "Every resume you create shows up here; pick one to jump into the editor."
+      },
+      "replay": {
+        "title": "Replay anytime",
+        "content": "Rerun the guide for whichever page you are on with this button."
+      }
+    },
+    "template": {
+      "browse": {
+        "title": "Browse templates",
+        "content": "Templates change presentation only: typography, spacing, accents. The structure stays linear so ATS parsers can always read your resume."
+      },
+      "search": {
+        "title": "Search",
+        "content": "Look up a template by name."
+      },
+      "sort": {
+        "title": "Sort",
+        "content": "Order the gallery by name or by newest."
+      }
+    },
+    "editor": {
+      "preview": {
+        "title": "Live preview",
+        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically."
+      },
+      "sections": {
+        "title": "Editor tab",
+        "content": "Fill in each section here. Drag to reorder them or hide the ones you don't need; the structure stays ATS-parseable underneath."
+      },
+      "layout": {
+        "title": "Layout tab",
+        "content": "Swap templates from the Layout tab. Each one restyles typography and spacing only, so your content and its reading order never change."
+      },
+      "document": {
+        "title": "Document tab",
+        "content": "Style the whole resume here: font, sizes, spacing, line height, and letter spacing. It's also where you switch language and export or import as PDF, DOCX, JSON, or YAML."
+      }
+    },
+    "editor-sheet": {
+      "preview": {
+        "title": "Live preview",
+        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically."
+      },
+      "edit": {
+        "title": "Open the editor",
+        "content": "Tap Edit anytime to open this panel and make changes."
+      },
+      "sections": {
+        "title": "Editor tab",
+        "content": "Fill in each section here. Drag to reorder them or hide the ones you don't need; the structure stays ATS-parseable underneath."
+      },
+      "layout": {
+        "title": "Layout tab",
+        "content": "Swap templates from the Layout tab. Each one restyles typography and spacing only, so your content and its reading order never change."
+      },
+      "document": {
+        "title": "Document tab",
+        "content": "Style the whole resume here: font, sizes, spacing, line height, and letter spacing. It's also where you switch language and export or import as PDF, DOCX, JSON, or YAML."
+      }
+    }
+  },
+  "platform": {
+    "breadcrumb": {
+      "platform": "Dashboard",
+      "editor": "Editor",
+      "browseTemplates": "Browse Templates"
+    },
+    "changelog": {
+      "whatsNew": "What's new",
+      "description": "The latest from Lanjut",
+      "latest": "Latest",
+      "fullChangelog": "Full changelog on GitHub",
+      "entries": {
+        "0_19_0": [
+          {
+            "title": "Your PDF now matches the preview",
+            "description": "PDF downloads are now drawn from the same page you see in the editor, so the fonts, sizes, and spacing in the file match the preview. The text stays selectable for applicant tracking systems."
+          },
+          {
+            "title": "Turn animations off",
+            "description": "A new settings menu in the top bar holds your language and an animation switch. Pick Off to stop movement on screen, or System to follow your device. The theme switch now sits right next to it."
+          },
+          {
+            "title": "Know your résumé is saved",
+            "description": "The top bar of the editor now shows when your résumé is saved on this device. If the browser ever refuses to save, it tells you right away and how to keep a copy."
+          }
+        ],
+        "0_18_0": [
+          {
+            "title": "Add context about a company",
+            "description": "Experience and internship entries now have an optional company context field for briefly explaining an unfamiliar employer. It appears in every preview and export before your achievements."
+          }
+        ],
+        "0_17_1": [
+          {
+            "title": "The Mac app can update itself",
+            "description": "When a new version is out, the Mac app now offers it to you. It looks at most once every few days, and nothing installs until you click."
+          },
+          {
+            "title": "Bug fixes",
+            "description": "In the Mac app the sidebar covered the page when the app opened, and the button that hides it did nothing. Both are fixed."
+          }
+        ],
+        "0_16_0": [
+          {
+            "title": "Lanjut on your Mac",
+            "description": "There is now a Mac app. It is the same builder you already use, running on your own machine, and it keeps working with the network off. Your resumes stay on that machine. Download it from the link on the home page. It is a beta and it is not signed by Apple yet, so macOS will ask you to confirm the first time you open it."
+          },
+          {
+            "title": "A page for feedback",
+            "description": "Bug reports and feature requests now have their own page, so you can send one from anywhere, including from the Mac app. You still do not need a GitHub account."
+          }
+        ],
+        "0_14_0": [
+          {
+            "title": "Add a photo to your header",
+            "description": "You can now put a photo on your resume. It is optional and off by default. Add it in Personal Information, then pick the size, corner roundness, and position. It comes along in PDF and Word exports, and the text of your resume stays fully readable to parsers."
+          },
+          {
+            "title": "A fresh new look",
+            "description": "Lanjut has a new logo and a rebuilt landing page. The previews there are rendered by the real templates, so what you see is exactly what you get."
+          },
+          {
+            "title": "Support Lanjut",
+            "description": "Lanjut is free and always will be. If it helped you, you can now support development through Saweria or SociaBuzz, right from the sidebar or the footer."
+          }
+        ],
+        "0_13_0": [
+          {
+            "title": "One more link in your header",
+            "description": "A new optional Link field sits next to LinkedIn in Personal Information, for your portfolio, GitHub, or anything else. It shows in the preview and every export, and importing a PDF picks it up too."
+          }
+        ],
+        "0_12_0": [
+          {
+            "title": "Undo and redo",
+            "description": "Change your mind freely: every edit can now be undone and redone, from typing and deleted entries to section order and layout settings. Use the arrows beside the sidebar tabs or Ctrl/Cmd+Z, and each text field keeps its own history while you write."
+          },
+          {
+            "title": "One section at a time",
+            "description": "The editor list now keeps a single section open, so the form you are working in stays in view instead of pushing the others off screen."
+          },
+          {
+            "title": "Bug fixes",
+            "description": "Fixed three reported bugs: links in your exports now show as clickable, a stray dash no longer appears in the PDF contact line, and locations land in the right field when you import a PDF."
+          }
+        ],
+        "0_11_0": [
+          {
+            "title": "Company location",
+            "description": "Experience and internship entries now carry a location, shown next to the employer in the preview, the PDF, and every other export. Education locations render too, instead of being kept out of sight."
+          }
+        ],
+        "0_10_0": [
+          {
+            "title": "Feedback without a GitHub account",
+            "description": "Report a bug or request a feature right from the app; we file the GitHub issue for you under the name you provide, guarded by a quick verification."
+          },
+          {
+            "title": "JSON and YAML export and import",
+            "description": "Copy or download your resume as JSON or YAML, and import either back losslessly. Rich text travels as simple markdown."
+          },
+          {
+            "title": "Hide sections",
+            "description": "Every section, Summary included, now has an eye toggle in the editor list. Hidden sections keep their content but drop out of the preview and every export until you show them again."
+          },
+          {
+            "title": "Hide contact icons",
+            "description": "A new toggle in the Document tab hides the small icons next to your contact details, for a plainer header in the preview and PDF. Your contact text always stays."
+          },
+          {
+            "title": "Section spacing",
+            "description": "A slider in the Document tab adjusts the room above every section, in the preview and the PDF alike. Open it up for an airy layout, or tighten it below each template's default until sections sit flush."
+          },
+          {
+            "title": "Choose your font",
+            "description": "Pick from fifteen resume-safe fonts, grouped as sans, serif, and mono, and the whole document follows in the preview and the PDF. Every template keeps its own default until you choose, and the preview now renders the exact same font files the PDF embeds."
+          },
+          {
+            "title": "Line height and letter spacing",
+            "description": "Two more sliders in the Document tab, resting at each template's real values: tighten or loosen line height and letter spacing either way, both bounded to the range where PDF text still extracts cleanly, so your styling never costs you ATS parsing."
+          },
+          {
+            "title": "Font size controls",
+            "description": "Resize your name, section headings, and body text independently from the Document tab. Each slider scales its group on top of the template's proportions, so a bigger name never flattens the rest, and the preview and PDF stay in step."
+          }
+        ],
+        "0_9_0": [
+          {
+            "title": "Import from PDF",
+            "description": "Start a new resume from an existing PDF. Lanjut reads it in your browser and fills the sections for you to tidy up."
+          },
+          {
+            "title": "Custom sections",
+            "description": "Add your own sections beyond the built-in set, either as a rich text block or a list of entries."
+          },
+          {
+            "title": "Reorder certifications",
+            "description": "Drag certifications into the order you want, the same way skills and languages already work."
+          },
+          {
+            "title": "Hide proficiency",
+            "description": "Turn the proficiency level off on skills and languages when you would rather just list them, with a toggle in each section."
+          },
+          {
+            "title": "Language columns",
+            "description": "Show your languages in one column or two, matching the layout control already in Skills."
+          },
+          {
+            "title": "Undo a deletion",
+            "description": "Deleting a resume now waits ten seconds and shows an Undo, so an accidental delete is easy to take back."
+          },
+          {
+            "title": "Duplicate a resume",
+            "description": "Copy any resume from its menu to branch a new version without starting over."
+          }
+        ],
+        "0_8_0": [
+          {
+            "title": "Skills column layout",
+            "description": "A toggle in the Skills section switches between one and two columns, and your choice carries through to the preview and every export."
+          },
+          {
+            "title": "Newest entries first",
+            "description": "The editor lists your entries newest first, matching the order they appear in the preview, so the forms and your resume always line up."
+          },
+          {
+            "title": "New landing navbar",
+            "description": "The landing page has a new navigation bar, with a menu that opens cleanly on mobile."
+          },
+          {
+            "title": "Page load progress",
+            "description": "Moving between pages shows a slim progress bar at the top, so you get instant feedback while a page loads."
+          }
+        ],
+        "0_7_0": [
+          {
+            "title": "Internship section",
+            "description": "List internships as their own entries, separate from full-time roles, with the same fields as Experience."
+          },
+          {
+            "title": "Projects section",
+            "description": "Give side projects, open-source work, and anything you have shipped their own space, each with a name, link, dates, and description."
+          },
+          {
+            "title": "Blank resume preview",
+            "description": "A blank resume shows a preview placeholder in your library instead of an empty white card, so a new resume looks intentional until you start writing."
+          }
+        ],
+        "0_6_0": [
+          {
+            "title": "Bahasa Indonesia",
+            "description": "Switch the entire interface between English and Indonesian anytime with the language toggle in the navbar."
+          },
+          {
+            "title": "Per-resume language",
+            "description": "Pick English or Indonesian per document, and the section headings and dates in your PDF, DOCX, and TXT exports follow that choice."
+          },
+          {
+            "title": "Reorder skills and languages",
+            "description": "Grab the handle next to an entry and drag it into place, or use the keyboard to move it. The new order flows straight into the preview and every export."
+          },
+          {
+            "title": "Empty section prompts",
+            "description": "Instead of a lone button, each section without entries shows a short prompt for what to add."
+          },
+          {
+            "title": "Refreshed hero gradient",
+            "description": "The landing page hero heading has a new gradient, tuned for both light and dark mode."
+          }
+        ],
+        "0_5_0": [
+          {
+            "title": "Switch templates in the editor",
+            "description": "The new Layout tab shows your resume rendered in every template, and one click applies your pick."
+          },
+          {
+            "title": "Start from a blank resume",
+            "description": "Untick “Pre-fill with example content” in the create dialog to begin with a blank document instead of the example resume."
+          },
+          {
+            "title": "Emptyable sections",
+            "description": "Every entry has a delete button, and removing the last one drops the section from the preview until you add another."
+          }
+        ],
+        "0_4_0": [
+          {
+            "title": "Organization section",
+            "description": "Showcase volunteer, student, and community roles with dates and highlights, just like work experience. It shows up in every template and export, and existing resumes get it automatically."
+          },
+          {
+            "title": "Safer app updates",
+            "description": "A backup copy is kept on your device before any data-format upgrade, and a resume the app cannot read yet is flagged with a notice instead of disappearing."
+          },
+          {
+            "title": "Guided tour",
+            "description": "A guided tour walks you through the dashboard, the templates, and the editor on your first visit."
+          },
+          {
+            "title": "Landing page walkthrough",
+            "description": "The landing page walks through how Lanjut works, ending with a one-click way to start a new resume."
+          },
+          {
+            "title": "Report bugs and requests",
+            "description": "Report a bug or feature request from the sidebar; we prefill the GitHub issue for you."
+          },
+          {
+            "title": "Mobile drawers",
+            "description": "On your phone, dialogs open as drawers that are easier to reach and swipe away."
+          }
+        ],
+        "0_3_0": [
+          {
+            "title": "Template browser",
+            "description": "Browse templates on their own page, with search and sorting."
+          },
+          {
+            "title": "Five new templates",
+            "description": "Ketat, Luasa, Tebal, Klasik, and Ketik."
+          },
+          {
+            "title": "Live thumbnails",
+            "description": "Template and resume cards show a live thumbnail of your actual document."
+          },
+          {
+            "title": "Sidebar and quick actions",
+            "description": "The sidebar highlights where you are, and each resume gets a quick actions menu."
+          }
+        ],
+        "0_2_0": [
+          {
+            "title": "Export your resume",
+            "description": "Save your resume as PDF, DOCX, or plain text."
+          },
+          {
+            "title": "Rich text in the preview",
+            "description": "Bold, italics, links, and lists show up in the live preview."
+          },
+          {
+            "title": "Full editor sections",
+            "description": "The editor covers summary, experience, education, skills, certifications, and languages."
+          }
+        ]
+      }
+    },
+    "download": {
+      "trigger": "Resume",
+      "srDownload": "Download",
+      "title": "Download resume",
+      "description": "Pick a format and name your file."
+    },
+    "menu": {
+      "label": "Menu",
+      "downloadResume": "Download Resume"
+    },
+    "sidebar": {
+      "localFirst": "Local-First",
+      "tagline": "ATS Resume Builder",
+      "platform": "Platform",
+      "dashboard": "Dashboard",
+      "browseTemplate": "Browse Template",
+      "other": "Other",
+      "support": "Support",
+      "guide": "Guide",
+      "reportBug": "Report a bug",
+      "featureRequest": "Feature request",
+      "myResume": "My Resume",
+      "createResume": "Create Resume",
+      "noResume": "No resume yet",
+      "noResumeDescription": "When you add resume, they will be visible here.",
+      "itemMenu": "Menu",
+      "modify": "Modify <b>{title}</b>",
+      "rename": "Rename",
+      "duplicate": "Duplicate",
+      "copyOf": "Copy of {title}",
+      "delete": "Delete",
+      "label": "App navigation"
+    },
+    "toolbar": {
+      "searchResume": "Search your resume",
+      "resume": "Resume",
+      "searchTemplates": "Search templates",
+      "sortNameAsc": "Name (A–Z)",
+      "sortNameDesc": "Name (Z–A)",
+      "sortNewest": "Newest",
+      "sortTemplates": "Sort templates"
+    },
+    "emptyState": {
+      "title": "No resumes yet",
+      "description": "Nothing is saved on this device yet. Start from a template, or create a blank resume.",
+      "browseTemplates": "Browse templates",
+      "newResume": "New resume"
+    },
+    "unreadable": {
+      "title": "Some resumes need a newer version of the app",
+      "description": "{count, plural, one {# resume was} other {# resumes were}} saved by a newer version of Lanjut than the one this tab is running. They are still stored safely on this device. Refresh the page to update the app and see them again."
+    },
+    "grid": {
+      "emptyTitle": "No resumes match",
+      "create": "Create “{query}”",
+      "errorTitle": "Couldn't load your resumes",
+      "errorDescription": "Nothing was deleted. The library just failed to load from this browser's storage. Refresh the page to try again.",
+      "open": "Open {title}",
+      "emptyDocument": "Blank resume, nothing added yet",
+      "edited": "Edited",
+      "menu": "Menu",
+      "rename": "Rename",
+      "duplicate": "Duplicate",
+      "copyOf": "Copy of {title}",
+      "download": "Download",
+      "delete": "Delete",
+      "newResume": "New resume"
+    },
+    "templates": {
+      "noMatch": "No templates match “{query}”.",
+      "use": "Use {name}",
+      "useTemplate": "Use {name} template",
+      "descriptions": {
+        "awal": "A clean, single-column ATS-safe starter. Linear reading order, no columns or tables, with room for every section.",
+        "ketat": "A compact serif classic: centered ruled section headings, right-aligned contact column, and italic dates. Dense without feeling cramped.",
+        "luasa": "An airy minimalist layout: letterspaced headings, a single contact line, and slim accent bars. Generous whitespace throughout.",
+        "tebal": "A bold, modern statement: oversized name, heavy uppercase headings over thick rules, and strong typographic hierarchy.",
+        "klasik": "A traditional all-serif CV: centered name and contacts, quiet centered headings, and italic dates. Timeless and formal.",
+        "ketik": "A typewriter-flavored technical look: monospace name, headings, and dates over a clean sans body. Built for developers."
+      }
+    },
+    "navbar": {
+      "starOnGithub": "Star us on GitHub"
+    }
+  },
+  "forms": {
+    "common": {
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "undo": "Undo",
+      "download": "Download",
+      "openIssue": "Open GitHub issue"
+    },
+    "validation": {
+      "titleMin": "Use at least {min} characters.",
+      "titleMax": "Keep it to {max} characters or fewer.",
+      "fileNameRequired": "Name the file before downloading.",
+      "bugWhatHappened": "Describe what went wrong.",
+      "featureProblem": "Describe the problem this would solve.",
+      "sectionTitleRequired": "Enter a section name.",
+      "reporterNameRequired": "Tell us your name first.",
+      "verificationRequired": "Finish the quick verification first."
+    },
+    "direct": {
+      "name": "Your name",
+      "namePlaceholder": "e.g. Sinta",
+      "nameDescription": "Shown on the public GitHub issue so we know who it's from.",
+      "send": "Send it for me",
+      "githubAlt": "Have a GitHub account? Open a prefilled issue instead.",
+      "sentToast": "Sent! Thank you; we filed the GitHub issue for you.",
+      "errorToast": "Couldn't send it. Try again, or use the GitHub button."
+    },
+    "create": {
+      "title": "Create a new resume",
+      "description": "Name it, choose where to start, and pick a template.",
+      "label": "Resume name",
+      "placeholder": "Software Engineer",
+      "template": "Template",
+      "sourceLabel": "Start from",
+      "sourceSample": "Sample",
+      "sourceEmpty": "Blank",
+      "sourceImport": "Import a file",
+      "submit": "Create resume"
+    },
+    "rename": {
+      "title": "Rename",
+      "description": "You can rename this resume label to whatever you want. If the value of the label is same as before, it won't be saved.",
+      "label": "Resume label",
+      "placeholder": "e.g: Software Engineer",
+      "fieldDescription": "At least 3 characters or up. Max 100 characters."
+    },
+    "delete": {
+      "title": "Delete <b>{title}</b>?",
+      "description": "This will delete <b>{title}</b>. You'll have a few seconds to undo. Are you sure?",
+      "toast": "Deleting \"{title}\"..."
+    },
+    "download": {
+      "title": "Download {title}",
+      "description": "Pick a format and name your file. The export is generated in your browser.",
+      "missing": "This resume could not be loaded from this browser's storage.",
+      "drawerTitle": "Download resume",
+      "drawerDescription": "Pick a format and name your file.",
+      "format": "Format",
+      "fileName": "File name",
+      "fileNamePlaceholder": "Software Engineer"
+    },
+    "bug": {
+      "title": "Report a bug",
+      "description": "Send it right here and we'll file the GitHub issue for you; no account needed. If you have a GitHub account, you can open a prefilled issue yourself instead.",
+      "descriptionGitHubOnly": "This opens a prefilled GitHub issue for you to review and submit; a GitHub account is required, and your browser details are filled in for you.",
+      "whatHappened": "What happened?",
+      "whatHappenedPlaceholder": "The editor preview goes blank when...",
+      "whatHappenedDescription": "Include the steps to reproduce it; a numbered list works great.",
+      "area": "Where does the bug show up?",
+      "areaPlaceholder": "Area"
+    },
+    "feature": {
+      "title": "Request a feature",
+      "description": "Send it right here and we'll file the GitHub issue for you; no account needed. Note that resume structure (tables, columns, images) is out of scope by design; presentation is fair game.",
+      "descriptionGitHubOnly": "This opens a prefilled GitHub issue for you to review and submit; a GitHub account is required. Note that resume structure (tables, columns, images) is out of scope by design; presentation is fair game.",
+      "problem": "What problem does this solve?",
+      "problemPlaceholder": "When I tailor my resume for different roles, I have to...",
+      "problemDescription": "Describe the situation where you needed this, rather than the solution itself.",
+      "layer": "Which layer does this touch?",
+      "layerPlaceholder": "Layer"
+    },
+    "import": {
+      "dropPrompt": "Drop a PDF, JSON, or YAML file here, or click to browse",
+      "hint": "Your file is read on your device and never uploaded.",
+      "parsing": "Reading your resume…",
+      "parsed": "Ready to import",
+      "remove": "Remove file",
+      "errorUnsupported": "Only PDF, JSON, and YAML files are supported.",
+      "errorTooLarge": "That file is too large. The limit is 10 MB.",
+      "errorEmpty": "This PDF has no readable text. It looks scanned; try exporting a text-based PDF.",
+      "errorEncrypted": "This PDF is password-protected. Remove the password and try again.",
+      "errorGeneric": "We couldn't read this PDF. Try a different file.",
+      "disclaimer": "Importing is best-effort and can miss or misplace details. If something comes out wrong, it would really help if you",
+      "reportIssue": "report an issue",
+      "errorInvalidData": "This file isn't a valid resume export."
+    }
+  },
+  "feedback": {
+    "metaTitle": "Send feedback",
+    "metaDescription": "Report a bug or request a feature. We file the GitHub issue for you, so no account is needed.",
+    "kindLabel": "Choose bug report or feature request",
+    "sentTitle": "Thank you",
+    "sentBody": "We filed the GitHub issue for you. You can close this window.",
+    "sendAnother": "Send another",
+    "offlineToast": "You need to be online to send feedback. Check your connection and try again."
+  },
+  "editor": {
+    "common": {
+      "add": "Add"
+    },
+    "layout": {
+      "documentLanguage": "Document language",
+      "documentIcons": "Show contact icons",
+      "sectionSpacing": "Section spacing",
+      "documentFont": "Font",
+      "templateDefault": "Default",
+      "fontSans": "Sans",
+      "fontSerif": "Serif",
+      "fontMono": "Mono",
+      "lineHeight": "Line height",
+      "letterSpacing": "Letter spacing",
+      "fontSizeName": "Name size",
+      "fontSizeTitle": "Heading size",
+      "fontSizeBody": "Body size"
+    },
+    "chrome": {
+      "edit": "Edit",
+      "editorTitle": "Editor",
+      "editorDescription": "Resume Editor",
+      "tabEditor": "Editor",
+      "tabLayout": "Layout",
+      "notFound": "Resume not found",
+      "didYouMean": "did you mean:",
+      "notExist": "This resume doesn't exist in this browser's storage.",
+      "headTo": "or head to",
+      "dashboard": "Dashboard",
+      "or": "or",
+      "browseTemplates": "Browse Templates",
+      "showSection": "Show section",
+      "hideSection": "Hide section",
+      "reorderSection": "Reorder section",
+      "resetOrder": "Reset section order",
+      "sectionsHeading": "Sections",
+      "addSection": "Custom Section",
+      "tabDocument": "Document",
+      "undo": "Undo",
+      "redo": "Redo"
+    },
+    "dateRange": {
+      "startDate": "Start Date",
+      "startPlaceholder": "Start date",
+      "endDate": "End Date",
+      "endPlaceholder": "End date",
+      "present": "Present"
+    },
+    "personal": {
+      "accordionTitle": "Personal Information",
+      "personalInfo": "Personal Information",
+      "personalInfoDesc": "So HR can identify you",
+      "firstName": "First name",
+      "firstNamePlaceholder": "John",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Doe",
+      "jobTitle": "Job Title",
+      "jobTitlePlaceholder": "UX Engineer",
+      "contactInfo": "Contact Information",
+      "contactInfoDesc": "So HR can reach you easily",
+      "email": "Email address",
+      "emailPlaceholder": "john@acme.inc",
+      "phone": "Phone Number",
+      "phonePlaceholder": "+62812345678",
+      "website": "Website",
+      "websitePlaceholder": "rimzzlabs.com",
+      "linkedin": "LinkedIn",
+      "linkedinPlaceholder": "johndoe",
+      "link": "Link",
+      "linkPlaceholder": "github.com/johndoe",
+      "location": "Location",
+      "locationDesc": "Where are you from?",
+      "city": "City",
+      "cityPlaceholder": "Pandeglang",
+      "province": "Province",
+      "provincePlaceholder": "Banten",
+      "country": "Country",
+      "countryPlaceholder": "Indonesia",
+      "photo": "Photo",
+      "photoAdd": "Add photo",
+      "photoReplace": "Replace",
+      "photoRemove": "Remove",
+      "photoHint": "Optional. Common for applications in Indonesia; many ATS and US employers ignore or discourage photos. The text of your resume always stays fully readable to parsers.",
+      "photoError": "That file could not be read as an image.",
+      "photoSize": "Photo size",
+      "photoRadius": "Corner radius",
+      "photoAlign": "Position",
+      "photoAlignTop": "Top",
+      "photoAlignCenter": "Center",
+      "photoAlignBottom": "Bottom"
+    },
+    "summary": {
+      "accordionTitle": "Professional Summary",
+      "label": "Professional Summary",
+      "placeholder": "I'm a passionate UX engineer. Creating visually engaging..."
+    },
+    "experience": {
+      "accordionTitle": "Professional Experience",
+      "legend": "Professional Experience",
+      "legendDesc": "Describe your past experience",
+      "add": "Professional Experience",
+      "emptyTitle": "No experience yet",
+      "emptyDescription": "Add your roles to build out your work history.",
+      "itemLegend": "Experience {index}",
+      "jobTitle": "Job Title",
+      "jobTitlePlaceholder": "UX Engineer",
+      "company": "Company",
+      "companyPlaceholder": "Acme Inc.",
+      "location": "Location",
+      "locationPlaceholder": "San Francisco, CA",
+      "companyContext": "Company Context",
+      "companyContextPlaceholder": "B2B payments platform serving 2M merchants",
+      "companyWebsite": "Company Website",
+      "companyWebsitePlaceholder": "acme.com",
+      "present": "I currently work here",
+      "summary": "Summary",
+      "summaryPlaceholder": "Creating real-time application that....",
+      "remove": "Remove"
+    },
+    "internship": {
+      "accordionTitle": "Internship",
+      "legend": "Internship",
+      "legendDesc": "Add internships you've completed",
+      "add": "Internship",
+      "emptyTitle": "No internships yet",
+      "emptyDescription": "Add internships to show early hands-on experience.",
+      "itemLegend": "Internship {index}",
+      "role": "Role",
+      "rolePlaceholder": "Software Engineering Intern",
+      "company": "Company",
+      "companyPlaceholder": "Acme Inc.",
+      "location": "Location",
+      "locationPlaceholder": "San Francisco, CA",
+      "companyContext": "Company Context",
+      "companyContextPlaceholder": "B2B payments platform serving 2M merchants",
+      "companyWebsite": "Company Website",
+      "companyWebsitePlaceholder": "acme.com",
+      "present": "I'm currently interning here",
+      "summary": "Summary",
+      "summaryPlaceholder": "Built internal tooling that....",
+      "remove": "Remove"
+    },
+    "projects": {
+      "accordionTitle": "Projects",
+      "legend": "Projects",
+      "legendDesc": "Show off the things you've built",
+      "add": "Project",
+      "emptyTitle": "No projects yet",
+      "emptyDescription": "Add side projects, open-source work, or things you've shipped.",
+      "itemLegend": "Project {index}",
+      "name": "Project name",
+      "namePlaceholder": "pg-jobs",
+      "role": "Role",
+      "rolePlaceholder": "Maintainer",
+      "url": "Project URL",
+      "urlPlaceholder": "github.com/you/project",
+      "present": "This is ongoing",
+      "summary": "Description",
+      "summaryPlaceholder": "What it does, what you built, the impact....",
+      "remove": "Remove"
+    },
+    "organizations": {
+      "accordionTitle": "Organization",
+      "legend": "Organization Experience",
+      "legendDesc": "Describe your volunteer, student, and community roles",
+      "add": "Organization Experience",
+      "emptyTitle": "No organizations yet",
+      "emptyDescription": "Add volunteer, student, or community roles here.",
+      "itemLegend": "Organization {index}",
+      "role": "Role",
+      "rolePlaceholder": "Head of Public Relations",
+      "organization": "Organization",
+      "organizationPlaceholder": "Student Executive Board",
+      "present": "I'm currently active here",
+      "summary": "Summary",
+      "summaryPlaceholder": "Organized events that....",
+      "remove": "Remove"
+    },
+    "education": {
+      "accordionTitle": "Education",
+      "legend": "Education",
+      "legendDesc": "Where you studied",
+      "add": "Education",
+      "emptyTitle": "No education yet",
+      "emptyDescription": "Add your degrees, schools, and courses.",
+      "itemLegend": "Education {index}",
+      "institution": "Institution",
+      "institutionPlaceholder": "State University",
+      "degree": "Degree",
+      "degreePlaceholder": "B.Sc. Computer Science",
+      "location": "Location",
+      "locationPlaceholder": "Boston, MA",
+      "present": "I currently study here",
+      "details": "Details",
+      "detailsPlaceholder": "Graduated with honors. Relevant coursework…",
+      "remove": "Remove"
+    },
+    "certifications": {
+      "accordionTitle": "Certifications",
+      "legend": "Certifications",
+      "legendDesc": "Licenses and certifications",
+      "add": "Certification",
+      "emptyTitle": "No certifications yet",
+      "emptyDescription": "Add licenses and certifications you've earned.",
+      "itemLegend": "Certification {index}",
+      "name": "Name",
+      "namePlaceholder": "AWS Certified Solutions Architect",
+      "issuer": "Issuer",
+      "issuerPlaceholder": "Amazon Web Services",
+      "url": "Certificate URL",
+      "urlPlaceholder": "acme.com/cert",
+      "urlDesc": "Link to the certificate or the issuer's site.",
+      "reorder": "Reorder certification",
+      "remove": "Remove"
+    },
+    "skills": {
+      "accordionTitle": "Skills",
+      "legend": "Skills",
+      "legendDesc": "List your skills",
+      "add": "Skill",
+      "emptyTitle": "No skills yet",
+      "emptyDescription": "Add the tools and technologies you work with.",
+      "namePlaceholder": "TypeScript",
+      "proficiency": "Proficiency",
+      "reorder": "Reorder skill",
+      "remove": "Remove skill",
+      "columnsLabel": "Columns",
+      "columnsOne": "1",
+      "columnsOneAria": "One column",
+      "columnsTwo": "2",
+      "columnsTwoAria": "Two columns",
+      "proficiencyLabel": "Show proficiency"
+    },
+    "languages": {
+      "accordionTitle": "Languages",
+      "legend": "Languages",
+      "legendDesc": "Languages you speak",
+      "add": "Language",
+      "emptyTitle": "No languages yet",
+      "emptyDescription": "Add the languages you speak and your proficiency.",
+      "namePlaceholder": "English",
+      "proficiency": "Proficiency",
+      "proficiencyLabel": "Show proficiency",
+      "columnsLabel": "Columns",
+      "columnsOne": "1",
+      "columnsOneAria": "One column",
+      "columnsTwo": "2",
+      "columnsTwoAria": "Two columns",
+      "reorder": "Reorder language",
+      "remove": "Remove language"
+    },
+    "richText": {
+      "undo": "Undo",
+      "redo": "Redo",
+      "bold": "Bold",
+      "italic": "Italic",
+      "bulletList": "Bullet list",
+      "orderedList": "Ordered list",
+      "link": "Link",
+      "linkPlaceholder": "https://example.com",
+      "apply": "Apply",
+      "removeLink": "Remove link"
+    },
+    "custom": {
+      "defaultTitle": "Custom section",
+      "variantLabel": "Layout",
+      "variantText": "Text",
+      "variantTextAria": "Single text block",
+      "variantList": "List",
+      "variantListAria": "List of entries",
+      "menuLabel": "Section options",
+      "rename": "Rename",
+      "remove": "Delete",
+      "addHeading": "Add a section",
+      "addDescription": "Name your new section. You can rename it later.",
+      "renameHeading": "Rename section",
+      "renameDescription": "Give this section a new name.",
+      "nameLabel": "Section name",
+      "namePlaceholder": "Name this section",
+      "bodyLabel": "Content",
+      "bodyPlaceholder": "Write the section content…",
+      "addEntry": "Add entry",
+      "emptyTitle": "No entries yet",
+      "emptyDescription": "Add an entry to fill in this section.",
+      "itemLegend": "Entry {index}",
+      "entryTitle": "Title",
+      "entryTitlePlaceholder": "Entry title",
+      "entrySubtitle": "Subtitle",
+      "entrySubtitlePlaceholder": "Entry subtitle",
+      "present": "This is ongoing",
+      "entryDescription": "Description",
+      "entryDescriptionPlaceholder": "Add details…",
+      "removeEntry": "Remove entry"
+    },
+    "leftovers": {
+      "button": "Unplaced text ({count})",
+      "title": "Text we couldn't place",
+      "description": "The import couldn't fit these into a section. Copy anything worth keeping, then dismiss.",
+      "copy": "Copy",
+      "close": "Close",
+      "dismiss": "Dismiss all"
+    },
+    "document": {
+      "downloadHeading": "Download",
+      "importHeading": "Import resume",
+      "importHint": "Bring in details from an existing PDF resume, or restore a JSON or YAML export. It's read on your device and never uploaded.",
+      "replacePrompt": "This resume already has content. Replace it, or keep it and create a new one?",
+      "replace": "Replace this one",
+      "createNew": "Create new",
+      "stylingHeading": "Document styling",
+      "resetStyling": "Reset to defaults",
+      "resetStylingHint": "Reset document styling to default",
+      "copyHeading": "Copy",
+      "copyHint": "Copy this resume to the clipboard as structured text. Rich text travels as simple markdown, and pasting it into an import restores it exactly.",
+      "copyAs": "Copy as",
+      "copyJson": "JSON",
+      "copyYaml": "YAML",
+      "copied": "Copied to clipboard",
+      "copyFailed": "Couldn't copy to the clipboard."
+    },
+    "saveStatus": {
+      "saved": "Saved on this device",
+      "savedShort": "Saved",
+      "saving": "Saving…",
+      "failed": "Not saved",
+      "failedTitle": "This browser did not save your last change",
+      "failedBody": "Storage can be full or blocked, for example in a private window. Your changes are still on screen. Download a copy from the Document tab before you close this page."
+    }
+  },
+  "notFound": {
+    "metaTitle": "Page not found",
+    "title": "This page does not exist",
+    "body": "The link is broken, or the page moved.",
+    "home": "Go to the home page"
+  },
+  "ui": {
+    "close": "Close",
+    "toggleSidebar": "Toggle sidebar",
+    "loading": "Loading",
+    "breadcrumb": "Breadcrumb",
+    "pageOf": "Page {page} of {total}",
+    "done": "Done",
+    "notDone": "Not done"
+  },
+  "landing": {
+    "srHeading": "Lanjut, a free ATS résumé builder:",
+    "headingLine1": "Every résumé",
+    "headingLead": "is read ",
+    "headingAccent": "twice.",
+    "deck": "First a parser pulls out the text, then a recruiter looks at the page. Lanjut makes one résumé that works for both. It is free, and it never leaves your browser.",
+    "firstName": "First name",
+    "firstNamePlaceholder": "Your first name",
+    "lastName": "Last name",
+    "lastNamePlaceholder": "Your last name",
+    "role": "Role you're applying for",
+    "rolePlaceholder": "The role you want",
+    "look": "Look",
+    "humanLabel": "What the recruiter sees",
+    "machineLabel": "What the parser reads",
+    "scannerLabel": "Compare the two readings",
+    "scannerValue": "{percent}% of the page shown as styled",
+    "reading": "Reading your PDF…",
+    "readDone": "Read back from a real PDF · {chars, number} characters",
+    "readFallback": "Plain-text export. The PDF read failed in this browser.",
+    "checkName": "Name found",
+    "checkRole": "Role found",
+    "checkEmail": "Email intact",
+    "checkOrder": "Sections in order",
+    "sampleNote": "Your name and role, on sample content.",
+    "cta": "Continue in the builder",
+    "allTemplates": "See all six templates",
+    "noAccount": "No account. Nothing uploaded.",
+    "looksHeading": "Change the look. The order stays put.",
+    "looksBody": "Six templates, each with its own type and spacing. Pick one and the résumé above is read again. The sections come back in the same order, and every change to Lanjut is tested for it.",
+    "looksPick": "Use {name}",
+    "lookAwal": "Plain and roomy",
+    "lookKetat": "Compact serif",
+    "lookLuasa": "Airy, letterspaced",
+    "lookTebal": "Big name, heavy headings",
+    "lookKlasik": "All serif, centered",
+    "lookKetik": "Typewriter tone",
+    "localHeading": "Your résumé never leaves this browser.",
+    "localBody": "There is no account and no copy on a server. Lanjut keeps your résumés in your browser's own storage, and you can export them as PDF, DOCX, plain text, JSON, or YAML whenever you want.",
+    "localPanelCaption": "Where your work lives",
+    "localStores": "Object stores",
+    "localSource": "Lanjut is open source under AGPL-3.0.",
+    "localSourceLink": "Read the code on GitHub",
+    "appHeading": "Prefer an app?",
+    "appBody": "The same builder runs as a Mac app that keeps working offline.",
+    "macMeta": "macOS 13 or later",
+    "macCta": "Download for macOS",
+    "macNote": "It is a beta and not yet signed by Apple, so macOS asks you to confirm the first time you open it.",
+    "closeHeading": "Free to use, and open source.",
+    "closeBody": "There is no paid plan and no account to make. The code is public under AGPL-3.0, and anyone can read it or run their own copy.",
+    "closeCta": "Start your résumé",
+    "closeBrowse": "Browse templates",
+    "newTab": "opens in a new tab",
+    "footer": {
+      "tagline": "A free résumé builder that keeps your work in your browser.",
+      "product": "Product",
+      "project": "Project",
+      "support": "Support",
+      "builder": "Builder",
+      "templates": "Templates",
+      "download": "Download for macOS",
+      "github": "GitHub",
+      "rights": "© {year} Lanjut. Open source under AGPL-3.0."
+    },
+    "draftTitle": "My resume",
+    "keptHeading": "Some things stay out on purpose.",
+    "keptBody": "Parsers read a page from top to bottom. Anything that breaks that order can scramble your text, so Lanjut keeps it out of the content and leaves everything else up to you.",
+    "keptAllowedTitle": "Sections you can use",
+    "keptOutTitle": "Kept out of the text",
+    "sectionHeader": "Header",
+    "sectionSummary": "Summary",
+    "sectionExperience": "Experience",
+    "sectionInternship": "Internship",
+    "sectionProjects": "Projects",
+    "sectionOrganizations": "Organizations",
+    "sectionEducation": "Education",
+    "sectionCertifications": "Certifications",
+    "sectionSkills": "Skills",
+    "sectionLanguages": "Languages",
+    "sectionCustom": "Your own sections",
+    "outTables": "Tables",
+    "outTablesWhy": "Cells can be read in an order you never meant.",
+    "outColumns": "Two-column text",
+    "outColumnsWhy": "Side-by-side lines can merge into one jumbled line.",
+    "outBoxes": "Floating text boxes",
+    "outBoxesWhy": "Text outside the main flow is easy to skip.",
+    "outImages": "Pictures inside text",
+    "outImagesWhy": "A parser reads text, not images.",
+    "keptPhoto": "The header photo is the one exception. It is optional, off by default, and never changes the text a parser reads.",
+    "importHeading": "Already have a résumé? Start from it.",
+    "importBody": "Drop in a PDF, or a JSON or YAML file you exported earlier. Lanjut sorts what it finds into sections, and anything it can't place waits in a list you can copy from. The file is read in your browser, like everything else.",
+    "importFound": "Sorted into sections",
+    "importLeftovers": "Lines to place yourself",
+    "exportsHeading": "One résumé, five files.",
+    "exportsBody": "Each application asks for something different. All five come from the same résumé, so they never drift apart.",
+    "exportPdf": "For upload forms and email. It reads back in the same order you see.",
+    "exportDocx": "For recruiters and portals that ask for Word.",
+    "exportTxt": "For forms that want you to paste plain text.",
+    "exportJson": "A full copy you can import again later.",
+    "exportYaml": "The same copy, easier to read and edit by hand.",
+    "orderTitle": "Section order the parser read",
+    "orderNote": "Pick another template. The order stays the same.",
+    "importLink": "Import a file in the builder",
+    "importRawLabel": "Text from your PDF",
+    "snippetLabel": "Your PDF, read back",
+    "snippetChars": "{chars, number} characters",
+    "otherPlatforms": "Windows and Linux are coming soon.",
+    "faqHeading": "Common questions",
+    "faqMissing": "Not covered here?",
+    "faqMissingLink": "Ask on GitHub",
+    "faq": {
+      "free": {
+        "question": "Is Lanjut really free?",
+        "answer": "Yes. There is no paid plan and no account. If you want to support the work, you can donate through Saweria or SociaBuzz. Both links are in the footer."
+      },
+      "storage": {
+        "question": "Where is my résumé saved?",
+        "answer": "In this browser, on this device. Lanjut keeps your résumés in the browser's own storage and sends nothing to a server. If you clear your site data or switch browsers, the résumés stay behind, so export a JSON copy to move them or to keep a backup."
+      },
+      "files": {
+        "question": "Which file should I send?",
+        "answer": "Send the PDF to most upload forms and by email. Send the .docx when a portal or a recruiter asks for Word. Paste the .txt into forms that only take plain text."
+      },
+      "ats": {
+        "question": "Will my résumé get through an applicant tracking system?",
+        "answer": "No tool can promise that, because each company sets up its system its own way. Lanjut takes care of the part the file controls: real text in reading order, standard section headings, and contact details a parser can find. The sheet at the top of this page shows the text a parser reads back from your PDF."
+      },
+      "import": {
+        "question": "Can I import the résumé I already have?",
+        "answer": "Yes. Drop in a PDF, or a JSON or YAML file you exported from Lanjut. The PDF needs real text, so a scanned page or a password-protected file cannot be read. Any line Lanjut cannot place goes to a list you can copy from."
+      },
+      "language": {
+        "question": "Can I write my résumé in Indonesian?",
+        "answer": "Yes. Set the document language to Indonesian in the editor, and the fixed labels, such as section headings and dates, change with it. The app itself is in English and Indonesian too."
+      },
+      "photo": {
+        "question": "Can I add a photo?",
+        "answer": "Yes. The header photo is optional and off by default. It shows in the PDF and the .docx, the .txt leaves it out, and it never changes the text a parser reads."
+      }
+    }
+  }
+}

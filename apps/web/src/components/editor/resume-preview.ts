@@ -1,0 +1,204 @@
+/**
+ * View-model contract consumed by the editor's static preview components. This is
+ * deliberately decoupled from the persisted `Resume` domain model (see
+ * `@/lib/resume/types`): an adapter will project a `Resume` into this shape, so
+ * the presentation components never read the storage schema directly.
+ *
+ * Data → adapter → consumer: these types are the consumer contract.
+ */
+
+import type { RichBlock } from "@lanjut/resume/rich-content";
+import type { ReorderableSectionType } from "@lanjut/resume/schema-registry";
+import type {
+  CustomVariant,
+  ResumeLanguage,
+  SectionColumns,
+} from "@lanjut/resume/types";
+
+export type ContactKind =
+  | "phone"
+  | "email"
+  | "website"
+  | "linkedin"
+  | "link"
+  | "location";
+
+export interface ContactView {
+  kind: ContactKind;
+  /** Human-readable text shown to the reader. */
+  value: string;
+  /** Optional link target. Absent for non-navigable contacts (e.g. location). */
+  href?: string;
+}
+
+export interface HeaderView {
+  fullName: string;
+  headline: string;
+  /** Opt-in portrait as a data URL; absent when the user has not added one. */
+  photo?: string;
+  /** Resolved photo size in preview px (default 56). */
+  photoSize: number;
+  /** Resolved photo corner radius, percent of size: 0 square, 50 circle. */
+  photoRadius: number;
+  /** Resolved vertical anchor of the photo within the header strip. */
+  photoAlign: "top" | "center" | "bottom";
+  contacts: ReadonlyArray<ContactView>;
+  /** Presentation-only: whether contact icon glyphs are drawn; defaults to true. */
+  showIcons: boolean;
+}
+
+export interface ExperienceItemView {
+  id: string;
+  role: string;
+  roleHref?: string;
+  company: string;
+  companyHref?: string;
+  /**
+   * Where the job was based, rendered after the company on the same line. Only
+   * the section kinds that carry a location field (experience, internship) set
+   * it; projects, organizations, and custom lists leave it absent.
+   */
+  location?: string;
+  /** Optional one-line description of the employer, for unfamiliar companies. */
+  companyContext?: string;
+  startDate: string;
+  endDate: string;
+  description: ReadonlyArray<RichBlock>;
+}
+
+export interface EducationItemView {
+  id: string;
+  degree: string;
+  institution: string;
+  /** Rendered after the institution on the same line; empty when unset. */
+  location: string;
+  startDate: string;
+  endDate: string;
+  details: ReadonlyArray<RichBlock>;
+}
+
+export interface CertificateItemView {
+  id: string;
+  title: string;
+  issuer: string;
+  href?: string;
+  startDate: string;
+  endDate: string;
+}
+
+export interface SkillItemView {
+  id: string;
+  name: string;
+  proficiency: string;
+}
+
+export interface LanguageItemView {
+  id: string;
+  name: string;
+  proficiency: string;
+}
+
+/**
+ * A user-defined custom section. `rich` renders its `body` like Summary; `list`
+ * renders its `entries` through the experience path. Both are carried so the
+ * block builder can pick by `variant`, and each is addressed by `id` from the
+ * section order (unlike core sections, several custom sections can coexist).
+ */
+export interface CustomSectionView {
+  id: string;
+  title: string;
+  variant: CustomVariant;
+  body: ReadonlyArray<RichBlock>;
+  entries: ReadonlyArray<ExperienceItemView>;
+}
+
+/** A reference to a reorderable section in reading order, addressable by id. */
+export interface SectionRef {
+  type: ReorderableSectionType;
+  id: string;
+}
+
+/**
+ * The effective heading per core section: the stored section title when the
+ * user renamed it away from the registry default (only possible through the
+ * Code tab), otherwise the document-language label.
+ */
+export type SectionHeadings = Record<
+  "summary" | Exclude<ReorderableSectionType, "custom">,
+  string
+>;
+
+export interface ResumePreview {
+  /** Document language for fixed labels (headings, dates); drives localization. */
+  language: ResumeLanguage;
+  /**
+   * Presentation-only space adjustment above each section heading (px on
+   * screen, pt in PDF), on top of the template's baseline rhythm; 0 =
+   * baseline, clamped to -24..60 so the gap can reach flush but never
+   * negative.
+   */
+  sectionSpacing: number;
+  /**
+   * Resolved document font id from the catalog, or null for the template's
+   * shipped families. Applies to the whole document in preview and PDF.
+   */
+  font: string | null;
+  /**
+   * Document-wide tracking (px on screen, pt in PDF), clamped to the
+   * extraction-safe -0.5..0.5 range; 0 = template default (no tracking).
+   */
+  letterSpacing: number;
+  /**
+   * Document-wide unitless line height (clamped 1.2..2), or null for the
+   * template's baseline (TEMPLATE_LINE_HEIGHT).
+   */
+  lineHeight: number | null;
+  /**
+   * Per-group font-size multipliers over each template's baseline sizes
+   * (name+headline, section titles, body), clamped 0.8..1.2; 1 = default.
+   */
+  nameScale: number;
+  titleScale: number;
+  bodyScale: number;
+  headings: SectionHeadings;
+  /**
+   * The reorderable sections in document (reading) order. Drives the order blocks
+   * are emitted in after the pinned Header and Summary. Core types appear at most
+   * once; `custom` may repeat, so each ref carries the section `id` used to look
+   * it up in `customSections`. Empty sections are gated out at block-build time.
+   */
+  sectionOrder: ReadonlyArray<SectionRef>;
+  /** Custom sections by id, resolved from `sectionOrder` refs of type `custom`. */
+  customSections: ReadonlyArray<CustomSectionView>;
+  header: HeaderView;
+  summary: ReadonlyArray<RichBlock>;
+  experience: ReadonlyArray<ExperienceItemView>;
+  /**
+   * Internship entries are structurally identical to experience (same fields),
+   * so they reuse `ExperienceItemView` and every renderer's experience path;
+   * only the section heading differs.
+   */
+  internship: ReadonlyArray<ExperienceItemView>;
+  /**
+   * Project entries reuse `ExperienceItemView`: `role` holds the project name
+   * and `company` the contributor role, so they render through the experience
+   * path in every template and export; only the section heading differs. The
+   * project URL rides on `roleHref` (not `companyHref`).
+   */
+  projects: ReadonlyArray<ExperienceItemView>;
+  /**
+   * Organization entries (volunteer, student, community roles) are
+   * presentationally identical to experience entries, so they reuse
+   * `ExperienceItemView` (`company` holds the organization name) and every
+   * renderer's experience path.
+   */
+  organizations: ReadonlyArray<ExperienceItemView>;
+  education: ReadonlyArray<EducationItemView>;
+  certificates: ReadonlyArray<CertificateItemView>;
+  skills: ReadonlyArray<SkillItemView>;
+  /** Presentation-only column count for the skills grid; defaults to two. */
+  skillsColumns: SectionColumns;
+  languages: ReadonlyArray<LanguageItemView>;
+  /** Presentation-only column count for the languages grid; defaults to two. */
+  languagesColumns: SectionColumns;
+}

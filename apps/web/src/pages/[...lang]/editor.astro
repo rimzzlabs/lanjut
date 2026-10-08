@@ -1,0 +1,24 @@
+---
+import { type Locale, localeStaticPaths } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { PlatformApp } from "@/components/platform/platform-app";
+import PlatformLoading from "@/components/platform/platform-loading.astro";
+import RootLayout from "@/components/shared/root-layout.astro";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const locale = Astro.props.locale;
+const t = getTranslator(locale, "platform.sidebar");
+---
+
+<RootLayout locale={locale} title={t("dashboard")} noindex>
+  <PlatformApp client:only="react" locale={locale} pathname={Astro.url.pathname}>
+    <PlatformLoading slot="fallback" locale={locale} />
+  </PlatformApp>
+</RootLayout>

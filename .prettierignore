@@ -1,0 +1,9 @@
+# Prettier formats Markdown and YAML only. Biome owns code, JSON, and CSS.
+CHANGELOG.md
+pnpm-lock.yaml
+.agents/
+**/dist/
+**/dist-desktop/
+**/.astro/
+apps/desktop/src-tauri/target/
+apps/desktop/src-tauri/gen/
