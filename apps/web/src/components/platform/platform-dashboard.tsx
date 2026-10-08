@@ -1,6 +1,7 @@
 import { useTranslations } from "use-intl";
 import { PlatformEmptyState } from "@/components/platform/platform-empty-state";
 import { PlatformLibraryTour } from "@/components/platform/platform-library-tour";
+import { PlatformPageHeader } from "@/components/platform/platform-page-header";
 import { PlatformResumeGrid } from "@/components/platform/platform-resume-grid/platform-resume-grid";
 import { PlatformResumeToolbar } from "@/components/platform/platform-resume-toolbar";
 import { PlatformResumeUnreadableNotice } from "@/components/platform/platform-resume-unreadable-notice";
@@ -11,11 +12,7 @@ export function PlatformDashboard() {
 
   return (
     <div className="flex flex-col gap-4 p-4 md:p-6">
-      <header className="border-b border-border pb-4">
-        <h1 className="text-xl font-semibold tracking-tight">
-          {t("myResume")}
-        </h1>
-      </header>
+      <PlatformPageHeader title={t("myResume")} />
       <PlatformResumeToolbar />
       <PlatformResumeUnreadableNotice />
       <PlatformResumeGrid />

@@ -4,7 +4,6 @@ import {
   type SectionType,
 } from "@lanjut/resume";
 import { Accordion } from "@lanjut/ui/components/accordion";
-import { Skeleton } from "@lanjut/ui/components/skeleton";
 import { cn } from "@lanjut/ui/lib/utils";
 import { A } from "@mobily/ts-belt";
 import { type ReactNode, useState } from "react";
@@ -19,6 +18,7 @@ import { EditorSectionEducation } from "./ed-section-education/ed-section-educat
 import { EditorSectionExperience } from "./ed-section-experience/ed-section-experience";
 import { EditorSectionInternship } from "./ed-section-internship/ed-section-internship";
 import { EditorSectionLanguages } from "./ed-section-languages/ed-section-languages";
+import { EditorSectionListSkeleton } from "./ed-section-list-skeleton";
 import { EditorSectionOrganizations } from "./ed-section-organizations/ed-section-organizations";
 import { EditorSectionPersonal } from "./ed-section-personal/ed-section-personal";
 import { EditorSectionProjects } from "./ed-section-projects/ed-section-projects";
@@ -28,8 +28,6 @@ import {
   EditorSectionSortableItem,
   SECTION_TRIGGER_INSET,
 } from "./editor-section-sortable-item";
-
-const SKELETONS = [1, 2, 3, 4, 5, 6, 7];
 
 /** Maps each reorderable section type to its accordion editor. */
 const SECTION_EDITORS: Partial<Record<SectionType, () => ReactNode>> = {
@@ -75,17 +73,7 @@ export function EditorSectionList() {
       );
     }
 
-    return (
-      <div className="flex flex-col gap-3 px-4 divide-y">
-        {SKELETONS.map((s) => (
-          <div key={s} className="flex items-center gap-3 h-11 p-4">
-            <Skeleton className="size-5" />
-            <Skeleton className="h-5 w-32" />
-            <Skeleton className="size-5 ml-auto" />
-          </div>
-        ))}
-      </div>
-    );
+    return <EditorSectionListSkeleton />;
   }
 
   const reorderable = A.filter(open.sections, (section) =>

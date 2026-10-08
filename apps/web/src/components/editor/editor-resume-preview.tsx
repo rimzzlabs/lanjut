@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useMemo } from "react";
 import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import { useResumeStore } from "@/lib/store";
+import { EditorPreviewSkeleton } from "./editor-preview-skeleton";
 import { EditorResumeNotFound } from "./editor-resume-not-found";
 import { ResumeDocument } from "./resume-document";
 import { resumeToPreview } from "./resume-to-preview";
@@ -33,7 +34,7 @@ export function EditorResumePreview() {
       )}
       {!missing && (!open || !preview) && (
         <PreviewFade key="skeleton">
-          <PreviewSkeleton />
+          <EditorPreviewSkeleton />
         </PreviewFade>
       )}
       {!missing && open && preview && (
@@ -112,11 +113,5 @@ function PreviewFade(props: { children: ReactNode }) {
     >
       {props.children}
     </motion.div>
-  );
-}
-
-function PreviewSkeleton() {
-  return (
-    <div className="mx-auto aspect-210/297 w-full max-w-198.5 animate-pulse rounded border bg-white shadow-sm" />
   );
 }

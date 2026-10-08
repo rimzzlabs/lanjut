@@ -23,9 +23,11 @@ editorial
   Local, Download, FAQ, a statement close, and a footer of titled link groups (Product,
   Project, Support). No kickers, eyebrows, section numbers, or stat rows.
 - App pages (`/editor`, `/template`): **Workbench-minimal**. They load client-only, so
-  the first paint is a full-page loader (the mark and a spinner) on the page background.
-  Moving between them keeps the shell; only the content area shows a spinner while
-  that page's code loads. A page header
+  the first paint is a full-page loader on the page background (see Motion). Moving
+  between them keeps the shell. While a page's code loads, the content area shows a
+  skeleton of that page: the library's card grid, the template grid, or the editor's
+  blank sheet and side panel. Each skeleton is the loading state that the page itself
+  shows next, so the two hand over without a jump. A page header
   (title + hairline rule) over a toolbar over a grid. Function carries the page; no
   enrichment, no display serif.
 - The editor is `/editor/<id>` on web and desktop, served by the same page as the
@@ -86,6 +88,11 @@ column is `w-11/12 max-w-5xl` centered.
 - The reader sheet's intro sweep is the landing page's one authored motion. It is
   described under "Landing world: Two Readers".
 - Inside React islands and the app, `motion/react` carries the motion.
+- The app's full-page loader (`platform-loading.astro`) is SVG and CSS, so it plays
+  before any JavaScript. A sheet writes its lines, a scan beam reads them and turns
+  them green, and the Lanjut mark stamps the corner. The loop is 3.2s. Every element
+  rests on the finished sheet, so reduced motion shows that sheet and only fades
+  the lines.
 - The animation setting (System, On, Off) lives in the navbar settings menu, on the
   landing page and in the app (`SiteSettingsMenu`). The head
   script and `useMotionStore` write it to `data-motion` on `<html>`. System follows
