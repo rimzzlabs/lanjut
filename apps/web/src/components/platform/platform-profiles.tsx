@@ -11,6 +11,8 @@ import { useHydrateResumeLibrary } from "@/hooks/use-hydrate-resume-library";
 import { MEDIA_LG, useMediaQuery } from "@/hooks/use-media-query";
 import { NEW_PROFILE, useSelectedProfile } from "@/hooks/use-selected-profile";
 import { useProfileStore } from "@/lib/store";
+import { PROFILES_TOUR } from "@/lib/tour";
+import { TourAutostart } from "../tour/tour-autostart";
 import { PlatformPageHeader } from "./platform-page-header";
 import { PlatformPageScroll } from "./platform-page-scroll";
 import { PlatformProfilesBodySkeleton } from "./platform-profiles-skeleton";
@@ -36,7 +38,7 @@ export function PlatformProfiles() {
   return (
     <PlatformPageScroll>
       <PlatformPageHeader title={t("profiles")}>
-        <Button onClick={() => open(NEW_PROFILE)}>
+        <Button id="tour-add-profile" onClick={() => open(NEW_PROFILE)}>
           <PlusIcon data-icon="inline-start" />
           {t("addProfile")}
         </Button>
@@ -46,6 +48,7 @@ export function PlatformProfiles() {
       </p>
 
       {status !== "ready" && <PlatformProfilesBodySkeleton />}
+      {status === "ready" && <TourAutostart tour={PROFILES_TOUR} />}
       {status === "ready" && (
         <PlatformProfilesBody
           wide={Boolean(wide)}

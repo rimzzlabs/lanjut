@@ -55,7 +55,11 @@ export function PlatformLibraryStart() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section aria-labelledby={headingId} className="flex flex-col gap-3">
+    <section
+      id="tour-library-start"
+      aria-labelledby={headingId}
+      className="flex flex-col gap-3"
+    >
       <PlatformSectionHeading id={headingId}>
         {t("forms.create.title")}
       </PlatformSectionHeading>

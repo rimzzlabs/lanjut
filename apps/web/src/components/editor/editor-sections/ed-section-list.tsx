@@ -86,7 +86,7 @@ export function EditorSectionList() {
   // reaches them and the uncontrolled rich-text editors. Personal Details (the
   // Header) and Summary are pinned; the rest drag to reorder.
   return (
-    <>
+    <div className="lg:pb-4">
       <Accordion
         key={`${open.id}:${undoEpoch}`}
         value={openSections}
@@ -123,6 +123,6 @@ export function EditorSectionList() {
       </Accordion>
 
       <EditorSectionCustomAdd onAdded={(id) => setOpenSections([id])} />
-    </>
+    </div>
   );
 }

@@ -47,7 +47,12 @@ export function ProfileMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button variant="ghost" size="icon" className="rounded-full p-0" />
+          <Button
+            id="tour-profile-menu"
+            variant="ghost"
+            size="icon"
+            className="rounded-full p-0"
+          />
         }
       >
         <ProfileAvatar profile={profile} className="size-9" />

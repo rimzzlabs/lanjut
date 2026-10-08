@@ -42,17 +42,29 @@
         "title": "Buat resume",
         "content": "Mulai resume baru dari sini. Mau bikin sebanyak apa pun, bebas!"
       },
+      "start": {
+        "title": "Pilih cara memulai",
+        "content": "Mulai dari halaman kosong, contoh, resume yang sudah kamu punya, atau template."
+      },
       "search": {
         "title": "Cari nanti",
         "content": "Cari pustaka kamu berdasarkan judul kalau koleksinya udah banyak."
       },
       "nav": {
         "title": "Pindah halaman",
-        "content": "Bolak-balik antara dasbor dan galeri template dari sini."
+        "content": "Bolak-balik antara dasbor, galeri template, dan profil kamu dari sini."
       },
       "replay": {
         "title": "Putar ulang kapan aja",
         "content": "Jalanin ulang panduan buat halaman yang lagi kamu buka pakai tombol ini."
+      },
+      "navPhone": {
+        "title": "Pindah halaman",
+        "content": "Buka menu ini buat bolak-balik antara dasbor, galeri template, dan profil kamu."
+      },
+      "replayPhone": {
+        "title": "Putar ulang kapan aja",
+        "content": "Tekan Panduan di menu ini buat jalanin ulang panduan halaman yang lagi kamu buka."
       }
     },
     "template": {
@@ -108,6 +120,24 @@
         "title": "Tab Dokumen",
         "content": "Atur gaya seluruh resume di sini: font, ukuran, spasi, tinggi baris, dan jarak antarhuruf. Di sini juga kamu ganti bahasa dan ekspor atau impor sebagai PDF, DOCX, JSON, atau YAML."
       }
+    },
+    "profiles": {
+      "intro": {
+        "title": "Profil kamu",
+        "content": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya resumenya sendiri, dan resume baru dimulai dengan informasinya."
+      },
+      "list": {
+        "title": "Pilih untuk diubah",
+        "content": "Buka profil untuk mengubah nama, kontak, dan ringkasannya. Profil yang aktif ditandai, dan resumenya yang tampil di pustaka kamu."
+      },
+      "add": {
+        "title": "Tambah profil",
+        "content": "Buat profil lain saat kamu melamar jenis pekerjaan berbeda, atau di negara lain."
+      },
+      "switch": {
+        "title": "Ganti dari mana saja",
+        "content": "Avatar kamu di bilah atas bisa mengganti profil dari halaman mana pun."
+      }
     }
   },
   "platform": {
@@ -129,7 +159,7 @@
           },
           {
             "title": "Profil untuk tiap jenis pekerjaan",
-            "description": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya resumenya sendiri, dan setiap resume baru di dalamnya dimulai dengan nama, kontak, dan ringkasan profil itu. Kelola profil di halaman Profil yang baru, lalu ganti dari avatar di bilah atas. Tema, bahasa, dan animasi sekarang ada di Preferensi pada menu yang sama."
+            "description": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya resumenya sendiri, dan setiap resume baru di dalamnya dimulai dengan nama, kontak, dan ringkasan profil itu. Kelola profil di halaman Profil yang baru, lalu ganti dari avatar di bilah atas. Tur singkat memandu kamu saat pertama kali membukanya. Tema, bahasa, dan animasi sekarang ada di Preferensi pada menu yang sama."
           },
           {
             "title": "Pustaka yang mulai dari terakhir kamu berhenti",
@@ -162,6 +192,10 @@
           {
             "title": "Pastikan résumé kamu tersimpan",
             "description": "Bilah atas editor sekarang menunjukkan kapan résumé kamu tersimpan di perangkat ini. Kalau browser menolak menyimpan, kamu langsung diberi tahu dan cara menyimpan salinannya."
+          },
+          {
+            "title": "Perbaikan bug",
+            "description": "Selama tur, tombol yang ditunjuk sebuah langkah tidak lagi bereaksi pada klik atau tombol keyboard, jadi tur tidak bisa membuka menu atau panel di bawah kartunya sendiri."
           }
         ],
         "0_18_0": [

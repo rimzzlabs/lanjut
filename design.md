@@ -49,6 +49,13 @@ editorial
   Support. With no résumé saved, "Recent" is left out, not shown empty. The version
   sits in the footer. A résumé's menu offers Delete even while it is open; deleting
   the open résumé returns to the library first.
+- Guide starts the tour of the page on screen: the library, the templates, the
+  profiles, or the editor. Each tour also starts by itself the first time its page
+  opens. A tour only points. The spotlight blocks clicks on its target, and the page
+  under the card is inert, sheets included, so no step can open a sheet or a menu.
+  Focus moves to the card's primary button on each step. Below `md`, where the
+  sidebar is a sheet, the library tour's two sidebar steps point at the menu
+  button in the navbar and leave the sheet closed.
 - The navbar holds the sidebar trigger, the breadcrumb, and the save state on the
   left; below `md` the breadcrumb hides. On the right it holds two 36px controls only: the GitHub link (icon only
   below `md`) and the profile menu. The profile menu is the active profile's avatar

@@ -6,6 +6,11 @@ import { persist } from "zustand/middleware";
 // renders as a sheet controlled via `mobileControl`, not `open`.
 const MOBILE_QUERY = "(max-width: 767px)";
 
+/** Whether the sidebar renders as a sheet, below md. */
+export function isSidebarSheet(): boolean {
+  return window.matchMedia(MOBILE_QUERY).matches;
+}
+
 /** Holds `expanded` or `collapsed`. The head script in src/scripts/preferences.js reads it. */
 export const SIDEBAR_STATE_KEY = "lanjut:sidebar-state";
 
@@ -50,7 +55,7 @@ export const useSidebarStore = create<SidebarStoreState>()(
       mobileControl: null,
       registerMobileControl: (control) => set({ mobileControl: control }),
       ensureVisible: (visible) => {
-        if (window.matchMedia(MOBILE_QUERY).matches) {
+        if (isSidebarSheet()) {
           get().mobileControl?.(visible);
           return;
         }

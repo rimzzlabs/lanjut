@@ -32,7 +32,7 @@ export function EditorSidebarContent() {
     // left under the tabs, whatever the window, the sheet, or the import notice
     // above leave it. A panel taller than the window gets scrolled into view by
     // the tour, which drags the tabs out of sight.
-    <div className="grid h-full grid-rows-[auto_minmax(0,1fr)] py-6">
+    <div className="grid h-full grid-rows-[auto_minmax(0,1fr)] pt-6">
       <div>
         <EditorImportLeftovers />
       </div>

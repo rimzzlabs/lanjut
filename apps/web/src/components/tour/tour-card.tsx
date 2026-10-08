@@ -1,17 +1,36 @@
 import { Button } from "@lanjut/ui/components/button";
 import type { CardComponentProps } from "nextstepjs";
+import { useEffect, useId, useRef } from "react";
 import { useTranslations } from "use-intl";
 
+/**
+ * One step of a tour, as a small dialog. The page under it is inert while the
+ * tour runs, so focus moves to the primary button on every step: keyboard
+ * users keep going with Enter, and screen readers hear the step.
+ */
 export function TourCard(props: CardComponentProps) {
   const t = useTranslations("tour.controls");
+  const titleId = useId();
+  const contentId = useId();
+  const primaryRef = useRef<HTMLButtonElement>(null);
   const isLastStep = props.currentStep === props.totalSteps - 1;
 
+  // Moving focus into the card is a DOM effect the tour library leaves to us.
+  useEffect(() => {
+    if (props.currentStep >= 0) primaryRef.current?.focus();
+  }, [props.currentStep]);
+
   return (
-    <div className="w-80 rounded-2xl border bg-popover p-4 text-popover-foreground shadow-lg">
-      <h2 className="text-sm font-semibold tracking-tight">
+    <div
+      role="dialog"
+      aria-labelledby={titleId}
+      aria-describedby={contentId}
+      className="w-80 rounded-2xl border bg-popover p-4 text-popover-foreground shadow-lg"
+    >
+      <h2 id={titleId} className="text-sm font-semibold tracking-tight">
         {props.step.title}
       </h2>
-      <div className="pt-1.5 text-sm text-muted-foreground">
+      <div id={contentId} className="pt-1.5 text-sm text-muted-foreground">
         {props.step.content}
       </div>
 
@@ -32,7 +51,7 @@ export function TourCard(props: CardComponentProps) {
                 {t("back")}
               </Button>
             )}
-            <Button size="sm" onClick={props.nextStep}>
+            <Button ref={primaryRef} size="sm" onClick={props.nextStep}>
               {isLastStep ? t("done") : t("next")}
             </Button>
           </div>

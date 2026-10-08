@@ -17,7 +17,7 @@ export function PlatformNavbar() {
   return (
     <header className="border-b bg-background">
       <div className="flex h-12 items-center gap-2 px-4 md:px-6">
-        <SidebarTrigger />
+        <SidebarTrigger id="tour-menu-button" />
         <div className="max-md:hidden">
           <PlatformNavbarBreadcrumb />
         </div>

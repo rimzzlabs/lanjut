@@ -17,7 +17,11 @@ export function ProfileList(props: ProfileListProps) {
   const t = useTranslations("profile");
 
   return (
-    <ul aria-label={t("profiles")} className="flex flex-col gap-3">
+    <ul
+      id="tour-profile-list"
+      aria-label={t("profiles")}
+      className="flex flex-col gap-3"
+    >
       {props.profiles.map((profile) => (
         <li key={profile.id}>
           <ProfileListItem

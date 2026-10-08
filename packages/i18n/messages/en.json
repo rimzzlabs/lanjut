@@ -42,17 +42,29 @@
         "title": "Create a resume",
         "content": "Start a new resume from here. You can keep as many as you like."
       },
+      "start": {
+        "title": "Pick how to start",
+        "content": "Begin from a blank page, the sample, a resume you already have, or a template."
+      },
       "search": {
         "title": "Find it later",
         "content": "Search your library by title once it grows."
       },
       "nav": {
         "title": "Get around",
-        "content": "Switch between your dashboard and the template gallery from here."
+        "content": "Switch between your dashboard, the templates, and your profiles from here."
       },
       "replay": {
         "title": "Replay anytime",
         "content": "Rerun the guide for whichever page you are on with this button."
+      },
+      "navPhone": {
+        "title": "Get around",
+        "content": "Open this menu to switch between your dashboard, the templates, and your profiles."
+      },
+      "replayPhone": {
+        "title": "Replay anytime",
+        "content": "Press Guide in this menu to replay the tour for the page you are on."
       }
     },
     "template": {
@@ -108,6 +120,24 @@
         "title": "Document tab",
         "content": "Style the whole resume here: font, sizes, spacing, line height, and letter spacing. It's also where you switch language and export or import as PDF, DOCX, JSON, or YAML."
       }
+    },
+    "profiles": {
+      "intro": {
+        "title": "Your profiles",
+        "content": "Keep one profile for each kind of job or job market. Each profile keeps its own resumes, and new resumes start with its information."
+      },
+      "list": {
+        "title": "Pick one to edit",
+        "content": "Open a profile to change its name, contact details, and summary. The active one is marked, and its resumes are the ones your library shows."
+      },
+      "add": {
+        "title": "Add a profile",
+        "content": "Make another profile when you apply for a different kind of job, or in another country."
+      },
+      "switch": {
+        "title": "Switch from anywhere",
+        "content": "Your avatar in the top bar switches profiles from any page."
+      }
     }
   },
   "platform": {
@@ -129,7 +159,7 @@
           },
           {
             "title": "Profiles for every kind of job",
-            "description": "Keep one profile for each kind of job or job market. Each profile keeps its own resumes, and every new resume in it starts with its name, contact details, and summary. Manage profiles on the new Profiles page, and switch between them from your avatar in the top bar. Theme, language, and animation now live in Preferences in the same menu."
+            "description": "Keep one profile for each kind of job or job market. Each profile keeps its own resumes, and every new resume in it starts with its name, contact details, and summary. Manage profiles on the new Profiles page, and switch between them from your avatar in the top bar. A short tour shows you around the first time you open it. Theme, language, and animation now live in Preferences in the same menu."
           },
           {
             "title": "A library that starts where you stopped",
@@ -162,6 +192,10 @@
           {
             "title": "Know your résumé is saved",
             "description": "The top bar of the editor now shows when your résumé is saved on this device. If the browser ever refuses to save, it tells you right away and how to keep a copy."
+          },
+          {
+            "title": "Bug fixes",
+            "description": "During a guided tour, the button that a step points at no longer reacts to a click or a key, so the tour cannot open a menu or a sheet under its own card."
           }
         ],
         "0_18_0": [

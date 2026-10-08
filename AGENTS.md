@@ -34,7 +34,7 @@ Run scripts from the repo root. They forward to the workspace that owns them: `p
 - react-hook-form + zod + @hookform/resolvers (forms; every field goes through Controller, schemas in `apps/web/src/lib/forms`)
 - @dnd-kit (section and entry drag-to-reorder)
 - takumi-pdf (PDF export: renders the preview's own HTML and compiled CSS to PDF in the browser, through WebAssembly) and docx (.docx export)
-- nextstepjs (guided tour; a pnpm patch drops its Next.js wrapper export, and the tour uses `NextStepReact`)
+- nextstepjs (guided tour; a pnpm patch drops its Next.js wrapper export, and the tour uses `NextStepReact`). A tour only points: every step sets `disableInteraction`, and `TourProvider` makes the whole page inert while a tour shows, sheets included (`inertOutsideTour` in `apps/web/src/lib/tour-inert.ts`), so a step cannot click or focus its target
 - motion/react (animation)
 - zustand (in-memory state)
 - IndexedDB via idb (persistence layer)

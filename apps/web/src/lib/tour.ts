@@ -1,18 +1,20 @@
 import { A, F, O, pipe, S } from "@mobily/ts-belt";
 import type { Step } from "nextstepjs";
-import { TEMPLATE_PATHNAME } from "@/lib/routes";
+import { PROFILE_PATHNAME, TEMPLATE_PATHNAME } from "@/lib/routes";
 import type { EditorTab } from "@/lib/store";
 
 export const LIBRARY_TOUR = "library";
 export const TEMPLATE_TOUR = "template";
 export const EDITOR_TOUR = "editor";
 export const EDITOR_SHEET_TOUR = "editor-sheet";
+export const PROFILES_TOUR = "profiles";
 
 export type TourName =
   | typeof LIBRARY_TOUR
   | typeof TEMPLATE_TOUR
   | typeof EDITOR_TOUR
-  | typeof EDITOR_SHEET_TOUR;
+  | typeof EDITOR_SHEET_TOUR
+  | typeof PROFILES_TOUR;
 
 export interface AppStep extends Step {
   sidebar?: "open" | "closed";
@@ -23,8 +25,21 @@ export interface AppStep extends Step {
   sheet?: "open" | "closed";
 }
 
+/**
+ * A step's form below md, where the sidebar is a sheet narrower than the
+ * card. A step about the sidebar then points at the menu button and leaves
+ * the sheet closed.
+ */
+export interface PhoneStep {
+  /** Copy key, in place of the step's own. */
+  id: string;
+  selector: string;
+  side: Step["side"];
+}
+
 export interface AppStepMeta extends Omit<AppStep, "title" | "content"> {
   id: string;
+  phone?: PhoneStep;
 }
 
 export interface AppTourMeta {
@@ -40,41 +55,59 @@ export interface AppTour {
 export function tourForPathname(pathname: string, editing: boolean): TourName {
   if (editing) return EDITOR_TOUR;
   if (S.startsWith(pathname, TEMPLATE_PATHNAME)) return TEMPLATE_TOUR;
+  if (S.startsWith(pathname, PROFILE_PATHNAME)) return PROFILES_TOUR;
   return LIBRARY_TOUR;
+}
+
+function forScreen(step: AppStepMeta, phone: boolean): AppStepMeta {
+  if (!phone || step.phone === undefined) return step;
+  return { ...step, ...step.phone, sidebar: "closed" };
 }
 
 export function getTourStep(
   tourName: string | null,
   stepIndex: number,
+  phone: boolean,
 ): AppStepMeta | undefined {
   const tour = A.find(TOUR_STEPS, (t) => t.tour === tourName);
   return pipe(
     tour,
     O.flatMap((found) => A.get(found.steps, stepIndex)),
+    O.map((step) => forScreen(step, phone)),
     O.toUndefined,
   );
 }
 
-export function localizeTours(t: (key: string) => string): AppTour[] {
+export function localizeTours(
+  t: (key: string) => string,
+  phone: boolean,
+): AppTour[] {
   const tours = A.map(TOUR_STEPS, (tour) => ({
     tour: tour.tour,
     steps: F.toMutable(
-      A.map(tour.steps, (step) => ({
-        ...step,
-        title: t(`${tour.tour}.${step.id}.title`),
-        content: t(`${tour.tour}.${step.id}.content`),
-      })),
+      A.map(tour.steps, (meta) => {
+        const step = forScreen(meta, phone);
+        return {
+          ...step,
+          title: t(`${tour.tour}.${step.id}.title`),
+          content: t(`${tour.tour}.${step.id}.content`),
+        };
+      }),
     ),
   }));
   return F.toMutable(tours);
 }
 
+// A tour only points; it never lets the pointed-at control act. The blocker
+// over the spotlight stops clicks, and the provider makes the page inert, which
+// stops the keyboard too, so a step cannot open a sheet under its own card.
 const BASE_STEP = {
   icon: null,
   showControls: true,
   showSkip: true,
   pointerPadding: 12,
   pointerRadius: 16,
+  disableInteraction: true,
 } satisfies Partial<Step>;
 
 // Library and template targets all sit at the top of the page's scroll region.
@@ -97,6 +130,13 @@ export const TOUR_STEPS: AppTourMeta[] = [
       },
       {
         ...TOP_STEP,
+        id: "start",
+        sidebar: "closed",
+        selector: "#tour-library-start",
+        side: "bottom",
+      },
+      {
+        ...TOP_STEP,
         id: "search",
         sidebar: "closed",
         selector: "#tour-search-resume",
@@ -108,6 +148,11 @@ export const TOUR_STEPS: AppTourMeta[] = [
         sidebar: "open",
         selector: "#tour-sidebar-nav",
         side: "right",
+        phone: {
+          id: "navPhone",
+          selector: "#tour-menu-button",
+          side: "bottom-left",
+        },
       },
       {
         ...TOP_STEP,
@@ -115,6 +160,11 @@ export const TOUR_STEPS: AppTourMeta[] = [
         sidebar: "open",
         selector: "#tour-guide",
         side: "right",
+        phone: {
+          id: "replayPhone",
+          selector: "#tour-menu-button",
+          side: "bottom-left",
+        },
       },
     ],
   },
@@ -140,6 +190,33 @@ export const TOUR_STEPS: AppTourMeta[] = [
         id: "search",
         sidebar: "closed",
         selector: "#tour-search-template",
+        side: "bottom-right",
+      },
+    ],
+  },
+  {
+    tour: PROFILES_TOUR,
+    steps: [
+      { ...TOP_STEP, id: "intro", sidebar: "closed" },
+      {
+        ...TOP_STEP,
+        id: "list",
+        sidebar: "closed",
+        selector: "#tour-profile-list",
+        side: "right",
+      },
+      {
+        ...TOP_STEP,
+        id: "add",
+        sidebar: "closed",
+        selector: "#tour-add-profile",
+        side: "bottom-right",
+      },
+      {
+        ...TOP_STEP,
+        id: "switch",
+        sidebar: "closed",
+        selector: "#tour-profile-menu",
         side: "bottom-right",
       },
     ],
