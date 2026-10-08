@@ -29,7 +29,10 @@ export function PlatformNavbar() {
         <div className="inline-flex items-center gap-2 ml-auto">
           <ExternalLink
             href={REPO_URL}
-            className={cn(buttonVariants({ variant: "secondary" }), "gap-2")}
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "gap-2 bg-neutral-800 hover:bg-neutral-700 dark:bg-background text-neutral-50 dark:text-stone-50",
+            )}
           >
             <GithubLogoIcon weight="fill" />
             <span className="max-md:sr-only">{t("starOnGithub")}</span>
