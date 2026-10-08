@@ -7,30 +7,23 @@ import {
   useSidebar,
 } from "@lanjut/ui/components/sidebar";
 import { S } from "@mobily/ts-belt";
-import {
-  BugIcon,
-  PaperPlaneTiltIcon,
-  QuestionIcon,
-} from "@phosphor-icons/react";
+import { ChatCircleTextIcon, QuestionIcon } from "@phosphor-icons/react";
 import { useNextStep } from "nextstepjs";
 import { useTranslations } from "use-intl";
-import { useIssueReport } from "@/hooks/use-issue-report";
 import { MEDIA_XL, useMediaQuery } from "@/hooks/use-media-query";
+import { useOpenFeedback } from "@/hooks/use-open-feedback";
 import { useWorkspaceView } from "@/hooks/use-workspace-view";
 import { usePathname } from "@/i18n/navigation";
 import { PROFILE_PATHNAME } from "@/lib/routes";
 import { useResumeStore } from "@/lib/store";
 import { EDITOR_SHEET_TOUR, EDITOR_TOUR, tourForPathname } from "@/lib/tour";
-import {
-  preloadBugReportForm,
-  preloadFeatureRequestForm,
-} from "./platform-feedback-forms";
+import { preloadFeedbackFlow } from "./platform-feedback-sheet";
 
 export function PlatformSidebarOther() {
   const pathname = usePathname();
   const view = useWorkspaceView();
   const openStatus = useResumeStore((state) => state.openStatus);
-  const openIssueReport = useIssueReport();
+  const openFeedback = useOpenFeedback();
   const isDesktop = useMediaQuery(MEDIA_XL);
   const { startNextStep } = useNextStep();
   const { isMobile, setOpenMobile } = useSidebar();
@@ -60,28 +53,15 @@ export function PlatformSidebarOther() {
 
         <SidebarMenuItem>
           <SidebarMenuButton
-            tooltip={t("reportBug")}
-            onPointerEnter={() => void preloadBugReportForm()}
-            onFocus={() => void preloadBugReportForm()}
+            tooltip={t("feedback")}
+            onPointerEnter={() => void preloadFeedbackFlow()}
+            onFocus={() => void preloadFeedbackFlow()}
             onClick={() => {
               if (isMobile) setOpenMobile(false);
-              openIssueReport("bug");
+              openFeedback();
             }}
           >
-            <BugIcon /> {t("reportBug")}
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-        <SidebarMenuItem>
-          <SidebarMenuButton
-            tooltip={t("featureRequest")}
-            onPointerEnter={() => void preloadFeatureRequestForm()}
-            onFocus={() => void preloadFeatureRequestForm()}
-            onClick={() => {
-              if (isMobile) setOpenMobile(false);
-              openIssueReport("feature");
-            }}
-          >
-            <PaperPlaneTiltIcon /> {t("featureRequest")}
+            <ChatCircleTextIcon /> {t("feedback")}
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>

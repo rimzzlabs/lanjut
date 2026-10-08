@@ -45,7 +45,7 @@ editorial
   there, and a create button takes its place.
 - The sidebar reads top to bottom with no gaps: the wordmark, then Dashboard,
   Templates, and Profiles, then "Recent" with the five résumés edited last and
-  "View all" when there are more, then Other (Guide and the feedback actions) and
+  "View all" when there are more, then Other (Guide and Send feedback) and
   Support. With no résumé saved, "Recent" is left out, not shown empty. The version
   sits in the footer. A résumé's menu offers Delete even while it is open; deleting
   the open résumé returns to the library first.
@@ -111,10 +111,33 @@ editorial
   library. It shows the **Workbench-minimal** editor surface inside the platform
   shell. When the résumé does not exist, the not-found message takes the whole
   panel, with no side panel, edit sheet, or undo keys.
-- Utility pages (`/feedback`): **Workbench-minimal**, single column, capped at
-  `max-w-xl`. A kind switch over a heading over the form. Reached from the
-  sidebar dialogs' own surface or opened directly by the desktop app, which
-  passes `kind`, `area`, and `client` as search params.
+- Feedback is one guided flow in three steps (Kind, Details, Send), on two
+  surfaces: in the app, a sheet from `lg` and a drawer below it, opened from
+  "Send feedback" in the sidebar; and the `/feedback` page (**Workbench-minimal**,
+  single column, capped at `max-w-2xl`), which the desktop app opens in a window
+  with `kind`, `area`, `app`, `os`, `template`, `font`, and `doclang` as search
+  params (older builds still send `client`, and the page reads it).
+  - Kind: three radio cards, each with an icon and an example: something is
+    broken, an idea, a wrong word or translation. Under them, "Do you have a
+    GitHub account?" decides the delivery. "No, send it for me": Lanjut posts it
+    through the Worker. "Yes, I'll post it myself": the flow opens the issue
+    prefilled on GitHub, where GitHub tells them about replies. With direct
+    sending off, the question hides and every report takes the GitHub path.
+  - Details: required fields carry the red asterisk from the start, and an error
+    clears as soon as the field is fixed. Long answers use the minimal rich-text
+    editor (lists, bold, italic, underline, links) and reach GitHub as Markdown.
+    A bug asks for a short title, the area, what was done, what was
+    expected, what happened instead, and how often. An idea asks for the
+    situation first, then what would help, how it is handled today, and how much
+    it matters, under a scope note. A wording fix asks for the language, the text
+    as it is, and the better wording. Under a title, similar GitHub issues appear
+    as the reporter types, so they can add to one instead of filing it twice.
+  - Send: the report as it goes to GitHub and the technical details listed in
+    full behind a switch that leaves them out. When Lanjut posts it, an optional
+    public name and the bot check join them, and the primary action is Send; on
+    the GitHub path it is Open on GitHub, with no name and no bot check.
+  - After sending, a confirmation links to the issue, where the reporter can add a
+    screenshot.
 - Content pages: none currently.
 
 ## Theme — "evergreen broadsheet"

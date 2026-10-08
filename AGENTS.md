@@ -23,14 +23,14 @@ Run scripts from the repo root. They forward to the workspace that owns them: `p
 
 - pnpm workspace (apps and packages, see Repository Layout)
 - Astro (static output; every page is prerendered, React islands carry the interactive parts)
-- Cloudflare Workers static assets, plus one small Worker in `apps/web/worker/`. The Worker relays bug reports and feature requests on `/api/feedback`, serves the repository's contributor list on `/api/contributors` (fetched from GitHub and cached at the edge until 00:00 UTC), sends visitors to their language, and forwards old addresses. It is the sole server surface and never receives resume content. The desktop app does not call it for contributors: it makes no network call the person did not ask for.
+- Cloudflare Workers static assets, plus one small Worker in `apps/web/worker/`. The Worker files feedback (bugs, ideas, and wording fixes) as GitHub issues on `/api/feedback`, searches for similar issues on `/api/feedback/similar` (each query cached at the edge for an hour), serves the repository's contributor list on `/api/contributors` (fetched from GitHub and cached at the edge until 00:00 UTC), sends visitors to their language, and forwards old addresses. It is the sole server surface and never receives resume content. The desktop app does not call it for contributors: it makes no network call the person did not ask for.
 - Static desktop build selected by `LANJUT_TARGET=desktop`, written to `apps/web/dist-desktop/`. Tauri packages load only through dynamic imports behind `IS_DESKTOP`, so the web app never runs them.
 - Tauri 2 (desktop shell for macOS; `apps/desktop/src-tauri/`, system webview, loads the static export from disk)
 - use-intl (internationalization; English at `/` and Indonesian under `/id`, on web and desktop alike. `packages/i18n/messages/*.json` hold the copy. `@lanjut/i18n` holds the routing helpers and `getTranslator` for `.astro` files. `apps/web/src/i18n/navigation.tsx` holds the `Link`, `useRouter`, and `usePathname` replacements)
 - shadcn (base-ui primitives, Vega style: 36px controls, `rounded-md` on a `1rem` radius)
 - @phosphor-icons/react (icons; `components.json` sets shadcn's `iconLibrary` to `phosphor`, and code imports the `*Icon` names)
 - Tailwind CSS
-- [TipTap](https://tiptap.dev/docs) (rich text editing, restricted extension set). TipTap is the largest library in the app, so it stays off the first paint: editor forms render the lazy `RichTextField`, never `RichTextEditor` directly, and the platform feedback dialogs load their forms on demand (`platform-feedback-forms.tsx`).
+- [TipTap](https://tiptap.dev/docs) (rich text editing, restricted extension set). TipTap is the largest library in the app, so it stays off the first paint: editor forms render the lazy `RichTextField`, never `RichTextEditor` directly, and the profile form reaches it through `RichTextField` too. The feedback flow's long answers use it too, with one extra mark: underline. No résumé field enables underline (`PROSE_FEATURES` leaves it out), because the exports do not carry it. Feedback answers become GitHub Markdown on send (`feedback-markdown.ts`), and the flow loads on demand (`platform-feedback-sheet.tsx`).
 - react-hook-form + zod + @hookform/resolvers (forms; every field goes through Controller, schemas in `apps/web/src/lib/forms`)
 - @dnd-kit (section and entry drag-to-reorder)
 - takumi-pdf (PDF export: renders the preview's own HTML and compiled CSS to PDF in the browser, through WebAssembly) and docx (.docx export)
@@ -65,6 +65,8 @@ Run scripts from the repo root. They forward to the workspace that owns them: `p
 1. Structural layer. Fixed section types (header, summary, experience, internship, projects, organizations, education, certifications, skills, languages, plus custom sections from an approved variant list). The canonical type order and per-type field schemas live in `packages/resume/src/schema-registry.ts`. Each field has a restricted TipTap schema: bold, italic, bullet list, ordered list, link. No tables, no multi-column layout, no text boxes, no inline images, no custom heading levels beyond what the section template defines.
 
 2. Presentation layer. Typography, spacing, color, accent styles, section visual ordering. Fully customizable. Must never alter the underlying linear text structure used for parsing or export.
+
+Feedback has one shape in three places: `createFeedbackReportSchema` (`apps/web/src/lib/feedback/feedback-schema.ts`) validates a report in the form and again in the Worker, and `buildFeedbackIssue` writes the same issue for the Worker, the in-app preview, and the prefilled GitHub fallback. A report never carries résumé text; its technical details (app version, browser, system, page, and in the editor the template, font, and résumé language) are shown before sending and can be left out. Keep the `.github/ISSUE_TEMPLATE` forms in step with the areas and fields.
 
 Any feature request that adds structural freedom (tables, columns, floating elements, decorative icons in text runs) is out of scope unless it is presentation-only and degrades gracefully to plain text in export.
 

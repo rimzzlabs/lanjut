@@ -1,8 +1,7 @@
 import { Sidebar, SidebarInset } from "@lanjut/ui/components/sidebar";
 import type { PropsWithChildren } from "react";
-import { PlatformBugReportDialog } from "@/components/platform/platform-bug-report-dialog";
 import { PlatformDatabaseNotice } from "@/components/platform/platform-database-notice";
-import { PlatformFeatureRequestDialog } from "@/components/platform/platform-feature-request-dialog";
+import { PlatformFeedbackSheet } from "@/components/platform/platform-feedback-sheet";
 import { PlatformNavbar } from "@/components/platform/platform-navbar";
 import { PlatformSidebar } from "@/components/platform/platform-sidebar";
 import { PlatformSidebarProvider } from "@/components/platform/platform-sidebar-provider";
@@ -31,14 +30,9 @@ export function PlatformShell(props: PropsWithChildren) {
         <ProfileSettings />
         <PlatformDatabaseNotice />
 
-        {/* The desktop app files feedback through a hosted window, so these
-            never open there and their bot-check widget cannot run on its origin. */}
-        {!IS_DESKTOP && (
-          <>
-            <PlatformBugReportDialog />
-            <PlatformFeatureRequestDialog />
-          </>
-        )}
+        {/* The desktop app files feedback through a hosted window, so this
+            never opens there and its bot-check widget cannot run on its origin. */}
+        {!IS_DESKTOP && <PlatformFeedbackSheet />}
       </PlatformSidebarProvider>
     </TourProvider>
   );

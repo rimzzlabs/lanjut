@@ -44,7 +44,7 @@ export function RichTextEditor(props: RichTextEditorProps) {
       attributes: {
         ...idAttribute(props.id),
         class:
-          "tiptap-content max-h-56 min-h-24 overflow-y-auto rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30",
+          "tiptap-content max-h-56 min-h-24 overflow-y-auto rounded-md border border-input bg-transparent px-3 py-2 text-sm text-foreground outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/30 group-data-[invalid=true]/field:border-destructive group-data-[invalid=true]/field:ring-3 group-data-[invalid=true]/field:ring-destructive/20",
       },
     },
     onUpdate: (context) => {

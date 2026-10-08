@@ -2,11 +2,11 @@ import { Alert, AlertDescription } from "@lanjut/ui/components/alert";
 import { Button } from "@lanjut/ui/components/button";
 import { InfoIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
-import { useIssueReportStore } from "@/lib/store";
+import { useOpenFeedback } from "@/hooks/use-open-feedback";
 
 export function ResumeImportDisclaimer() {
   const t = useTranslations("forms.import");
-  const openIssueReport = useIssueReportStore((state) => state.setOpen);
+  const openFeedback = useOpenFeedback();
   return (
     <Alert>
       <InfoIcon className="size-4 mt-px" />
@@ -17,7 +17,7 @@ export function ResumeImportDisclaimer() {
             type="button"
             variant="link"
             className="h-auto p-0 align-baseline text-xs"
-            onClick={() => openIssueReport("bug")}
+            onClick={() => openFeedback({ kind: "bug", area: "import" })}
           >
             {t("reportIssue")}
           </Button>

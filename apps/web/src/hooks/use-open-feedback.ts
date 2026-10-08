@@ -5,28 +5,33 @@ import { useLocale, useTranslations } from "use-intl";
 import { useWorkspaceView } from "@/hooks/use-workspace-view";
 import { usePathname } from "@/i18n/navigation";
 import { IS_DESKTOP } from "@/lib/build-target";
+import { resumeDetails } from "@/lib/feedback/feedback-details";
 import type { FeedbackWindowOptions } from "@/lib/feedback-window";
 import { areaForPathname } from "@/lib/github-issue";
-import { useIssueReportStore } from "@/lib/store";
+import {
+  type OpenFeedbackOptions,
+  useFeedbackStore,
+  useResumeStore,
+} from "@/lib/store";
 
 /**
- * Opens the bug report or feature request surface. The web app has the form in a
- * dialog. The desktop app cannot: it ships no server to file the issue, and the
- * form's bot check will not run on a non-web origin, so it opens the hosted form
- * in a second window instead. That window needs the network, so an offline user
- * is told rather than handed an error page.
+ * Opens the feedback flow. The web app shows it in a sheet. The desktop app
+ * cannot: it ships no server to file the issue, and the bot check will not
+ * run on a non-web origin, so it opens the hosted page in a second window,
+ * naming the area and the open résumé's look. That window needs the
+ * network, so an offline user is told rather than handed an error page.
  */
-export function useIssueReport() {
-  const setOpen = useIssueReportStore((state) => state.setOpen);
+export function useOpenFeedback() {
+  const openFeedback = useFeedbackStore((state) => state.openFeedback);
   const pathname = usePathname();
   const editing = useWorkspaceView() === "editor";
   const locale = useLocale() as Locale;
   const t = useTranslations("feedback");
 
   return useCallback(
-    (kind: "bug" | "feature") => {
+    (options: OpenFeedbackOptions = {}) => {
       if (!IS_DESKTOP) {
-        setOpen(kind);
+        openFeedback(options);
         return;
       }
 
@@ -35,13 +40,15 @@ export function useIssueReport() {
         return;
       }
 
+      const resume = useResumeStore.getState().open;
       void openFeedbackWindowLazily({
-        kind,
-        area: areaForPathname(pathname, editing),
+        kind: options.kind,
+        area: options.area ?? areaForPathname(pathname, editing),
         locale,
+        resume: editing ? resumeDetails(resume) : {},
       });
     },
-    [setOpen, pathname, editing, locale, t],
+    [openFeedback, pathname, editing, locale, t],
   );
 }
 

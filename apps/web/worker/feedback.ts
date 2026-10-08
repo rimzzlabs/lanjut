@@ -1,9 +1,9 @@
-import { A } from "@mobily/ts-belt";
+import { buildFeedbackIssue } from "../src/lib/feedback/feedback-issue";
 import {
   type FeedbackPayload,
   feedbackPayloadSchema,
-} from "../src/lib/forms/feedback";
-import { GITHUB_REPO, issueTitle } from "../src/lib/github-issue";
+} from "../src/lib/feedback/feedback-schema";
+import { GITHUB_REPO } from "../src/lib/github-issue";
 import type { Env } from "./index";
 
 const TURNSTILE_VERIFY_URL =
@@ -38,55 +38,6 @@ async function verifyTurnstile(check: TurnstileCheck): Promise<boolean> {
   return outcome.success === true;
 }
 
-interface IssueRequest {
-  title: string;
-  body: string;
-  labels: string[];
-}
-
-function reportedBy(name: string): string {
-  return `---\n\n_Reported by **${name}** from the in-app feedback form; filed on their behalf by the maintainer._`;
-}
-
-function buildIssue(
-  payload: FeedbackPayload,
-  browser: string | null,
-): IssueRequest {
-  if (payload.kind === "bug") {
-    return {
-      title: issueTitle("fix(bug,via app):", payload.summary),
-      labels: ["bug"],
-      body: A.join(
-        [
-          "### What happened?",
-          payload.whatHappened,
-          "### Area",
-          payload.area,
-          "### Browser and OS",
-          payload.client ?? browser ?? "_Unknown._",
-          reportedBy(payload.name),
-        ],
-        "\n\n",
-      ),
-    };
-  }
-
-  return {
-    title: issueTitle("feat(via app):", payload.summary),
-    labels: ["enhancement"],
-    body: A.join(
-      [
-        "### What problem does this solve?",
-        payload.problem,
-        "### Which layer does this touch?",
-        payload.layer,
-        reportedBy(payload.name),
-      ],
-      "\n\n",
-    ),
-  };
-}
-
 async function readPayload(request: Request): Promise<FeedbackPayload> {
   try {
     return feedbackPayloadSchema.parse(await request.json());
@@ -111,7 +62,7 @@ export async function fileFeedback(request: Request, env: Env) {
   });
   if (!human) throw new FeedbackError("verification-failed", 403);
 
-  const issue = buildIssue(payload, request.headers.get("user-agent"));
+  const issue = buildFeedbackIssue(payload.report, payload.details);
   const response = await fetch(GITHUB_ISSUES_URL, {
     method: "POST",
     headers: {

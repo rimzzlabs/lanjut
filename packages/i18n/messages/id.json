@@ -148,6 +148,10 @@
             "description": "Pustaka kamu sekarang berterima kasih kepada semua yang membangun Lanjut, dengan jalan langsung untuk ikut: terjemahkan, perbaiki bug, atau buat fitur."
           },
           {
+            "title": "Masukan yang lebih cepat diperbaiki",
+            "description": "Kirim masukan sekarang memandumu ke hal yang paling membantu: apa yang kamu lakukan, apa yang kamu harapkan, dan apa yang terjadi. Laporan serupa muncul saat kamu mengetik, isi lampiran ditampilkan dengan jelas, dan kamu langsung mendapat tautan ke issue-nya. Kamu juga bisa menandai kata atau terjemahan yang salah."
+          },
+          {
             "title": "PDF kamu sekarang sama dengan pratinjau",
             "description": "Unduhan PDF sekarang dibuat dari halaman yang sama dengan yang kamu lihat di editor, jadi huruf, ukuran, dan jarak di file sama dengan pratinjau. Teksnya tetap bisa dipilih untuk sistem pelacak pelamar."
           },
@@ -449,7 +453,8 @@
       "duplicate": "Duplikat",
       "copyOf": "Salinan dari {title}",
       "delete": "Hapus",
-      "label": "Navigasi aplikasi"
+      "label": "Navigasi aplikasi",
+      "feedback": "Kirim masukan"
     },
     "toolbar": {
       "searchResume": "Cari resume kamu",
@@ -586,21 +591,10 @@
       "titleMin": "Pakai minimal {min} karakter, ya.",
       "titleMax": "Maksimal {max} karakter, ya.",
       "fileNameRequired": "Kasih nama berkasnya dulu sebelum unduh.",
-      "bugWhatHappened": "Ceritain apa yang salah.",
-      "featureProblem": "Ceritain masalah yang mau diselesaikan.",
       "sectionTitleRequired": "Isi nama bagian.",
-      "reporterNameRequired": "Isi nama kamu dulu, ya.",
       "verificationRequired": "Selesain verifikasi singkatnya dulu, ya.",
-      "profileNameRequired": "Beri nama profil ini."
-    },
-    "direct": {
-      "name": "Nama kamu",
-      "namePlaceholder": "mis. Sinta",
-      "nameDescription": "Ditampilin di isu GitHub publik biar kami tahu ini dari siapa.",
-      "send": "Kirimin buat aku",
-      "githubAlt": "Punya akun GitHub? Buka aja isu yang udah keisi.",
-      "sentToast": "Terkirim! Makasih ya; isu GitHub-nya udah kami buatin.",
-      "errorToast": "Gagal ngirim. Coba lagi, atau pakai tombol GitHub."
+      "profileNameRequired": "Beri nama profil ini.",
+      "feedbackRequired": "Isi bagian ini."
     },
     "create": {
       "title": "Buat resume baru",
@@ -650,26 +644,6 @@
       "fileName": "Nama berkas",
       "fileNamePlaceholder": "Software Engineer"
     },
-    "bug": {
-      "title": "Laporin bug",
-      "description": "Kirim langsung dari sini dan isu GitHub-nya kami buatin; nggak perlu akun. Kalau kamu punya akun GitHub, bisa juga buka isu yang udah keisi dan kirim sendiri.",
-      "descriptionGitHubOnly": "Ini bakal buka isu GitHub yang udah keisi buat kamu tinjau dan kirim; butuh akun GitHub, dan detail browser kamu udah diisiin otomatis.",
-      "whatHappened": "Apa yang terjadi?",
-      "whatHappenedPlaceholder": "Pratinjau editor jadi kosong pas...",
-      "whatHappenedDescription": "Sertain juga langkah buat ngereproduksinya; daftar bernomor cocok banget.",
-      "area": "Di mana bug-nya muncul?",
-      "areaPlaceholder": "Area"
-    },
-    "feature": {
-      "title": "Ajukan fitur baru",
-      "description": "Kirim langsung dari sini dan isu GitHub-nya kami buatin; nggak perlu akun. Oh iya, struktur resume (tabel, kolom, gambar) emang di luar cakupan; tapi presentasi bebas kamu usulin.",
-      "descriptionGitHubOnly": "Ini bakal buka GitHub Issue yang udah keisi buat kamu tinjau dan kirim; butuh akun GitHub. Oh iya, struktur resume (tabel, kolom, gambar) emang di luar cakupan; tapi presentasi bebas kamu usulin.",
-      "problem": "Masalah apa yang diselesaikan ini?",
-      "problemPlaceholder": "Pas nyesuaiin resume buat peran yang beda-beda, aku harus...",
-      "problemDescription": "Ceritain situasi pas kamu butuh ini, bukan solusinya.",
-      "layer": "Lapisan mana yang kena?",
-      "layerPlaceholder": "Lapisan"
-    },
     "import": {
       "dropPrompt": "Taruh file PDF, JSON, atau YAML di sini, atau klik untuk pilih",
       "hint": "File kamu dibaca di perangkatmu dan nggak pernah diunggah.",
@@ -688,12 +662,135 @@
   },
   "feedback": {
     "metaTitle": "Kirim masukan",
-    "metaDescription": "Laporkan bug atau ajukan fitur. Kami yang membuatkan issue GitHub-nya, jadi kamu tidak perlu akun.",
-    "kindLabel": "Pilih laporan bug atau permintaan fitur",
-    "sentTitle": "Terima kasih",
-    "sentBody": "Issue GitHub sudah kami buatkan. Jendela ini boleh kamu tutup.",
+    "metaDescription": "Laporkan bug, bagikan ide, atau perbaiki kata. Kami buatkan issue GitHub-nya, jadi kamu tidak perlu akun.",
+    "title": "Kirim masukan",
+    "description": "Masukan kamu jadi issue publik di GitHub, tempat semua bug dan ide dicatat.",
+    "stepsLabel": "Langkah",
+    "steps": {
+      "kind": "Jenis",
+      "details": "Detail",
+      "review": "Kirim"
+    },
+    "kindLabel": "Masukan jenis apa?",
+    "detailsTitle": "{kind}",
+    "reviewTitle": "Cek lalu kirim",
+    "kinds": {
+      "bug": {
+        "title": "Ada yang rusak",
+        "description": "Tombol tidak bereaksi, PDF terlihat salah, atau impor kehilangan satu bagian."
+      },
+      "idea": {
+        "title": "Aku punya ide",
+        "description": "Sesuatu yang bisa Lanjut lakukan, atau lakukan lebih baik."
+      },
+      "wording": {
+        "title": "Ada kata atau terjemahan yang salah",
+        "description": "Salah ketik, kalimat yang membingungkan, atau terjemahan yang kaku."
+      }
+    },
+    "accountLabel": "Kamu punya akun GitHub?",
+    "accounts": {
+      "none": {
+        "title": "Tidak, kirimkan untukku",
+        "description": "Kami kirim untukmu, jadi kamu tidak perlu akun. Tulis detailnya selengkap mungkin: kami tidak bisa bertanya lagi nanti."
+      },
+      "github": {
+        "title": "Ya, aku kirim sendiri",
+        "description": "Kami buka issue-nya di GitHub, sudah terisi. Kamu yang mengirim, dan GitHub memberi tahu saat ada balasan."
+      }
+    },
+    "titleHint": "Satu baris yang menjelaskan isinya.",
+    "titlePlaceholderBug": "PDF menampilkan tanda strip sebelum kota",
+    "titlePlaceholderIdea": "Simpan satu versi resume untuk tiap negara",
+    "area": "Di bagian mana?",
+    "where": "Teksnya muncul di mana?",
+    "areas": {
+      "editor": "Saat mengedit resume",
+      "preview": "Pratinjau",
+      "pdf": "Unduhan PDF",
+      "word": "Unduhan Word",
+      "other-export": "Teks, JSON, atau YAML",
+      "import": "Saat mengimpor file",
+      "templates": "Template",
+      "library": "Pustaka dan profil",
+      "desktop": "Aplikasi Mac",
+      "home": "Halaman utama",
+      "other": "Tempat lain"
+    },
+    "stepsField": "Apa yang kamu lakukan?",
+    "stepsHint": "Tulis langkahnya, satu per baris, supaya kami bisa mengulanginya.",
+    "stepsPlaceholder": "1. Membuka resume dengan template Luasa\n2. Menambahkan kota\n3. Mengunduhnya sebagai PDF",
+    "expected": "Apa yang kamu harapkan?",
+    "expectedPlaceholder": "Kotanya saja, seperti di pratinjau.",
+    "actual": "Apa yang terjadi?",
+    "actualHint": "Kalau ada pesan galat, salin di sini apa adanya.",
+    "actualPlaceholder": "PDF menampilkan tanda strip sebelum kota.",
+    "frequency": "Seberapa sering terjadi?",
+    "frequencies": {
+      "always": "Setiap kali",
+      "sometimes": "Kadang-kadang",
+      "once": "Sekali saja"
+    },
+    "scopeNote": "Setiap resume tetap satu kolom yang mudah dibaca sistem ATS, jadi tabel, kolom, dan kotak teks di luar cakupan. Tampilan, jarak, dan huruf boleh diusulkan.",
+    "goal": "Apa yang ingin kamu lakukan?",
+    "goalHint": "Ceritakan situasinya, bukan hanya solusinya. Ini membantu kami menemukan solusi terbaik.",
+    "goalPlaceholder": "Aku melamar kerja di dua negara dan menyimpan satu versi resume untuk masing-masing.",
+    "idea": "Apa yang akan membantu?",
+    "ideaPlaceholder": "Cara menyalin resume ke bahasa lain dalam satu langkah.",
+    "workaround": "Bagaimana caramu sekarang?",
+    "workaroundPlaceholder": "Aku menduplikasi resume dan menerjemahkannya manual.",
+    "impact": "Seberapa besar manfaatnya?",
+    "impacts": {
+      "nice": "Bagus kalau ada",
+      "time": "Menghemat waktuku",
+      "blocker": "Aku tidak bisa pakai Lanjut tanpanya"
+    },
+    "language": "Teksnya dalam bahasa apa?",
+    "current": "Teks yang sekarang",
+    "currentHint": "Salin apa adanya, supaya kami bisa menemukannya.",
+    "currentPlaceholder": "Simpan perubahaan",
+    "suggested": "Seharusnya bagaimana?",
+    "suggestedHint": "Kosongkan saja kalau kamu tidak yakin.",
+    "suggestedPlaceholder": "Simpan perubahan",
+    "note": "Ada lagi?",
+    "notePlaceholder": "Ada di tombol di bawah kolom Ringkasan.",
+    "similarTitle": "Sudah pernah dilaporkan?",
+    "similarHint": "Kalau salah satunya cocok, beri jempol atau komentar di sana saja.",
+    "similarOpen": "Terbuka",
+    "similarClosed": "Ditutup",
+    "previewTitle": "Yang dikirim ke GitHub",
+    "contactTitle": "Tentang kamu",
+    "name": "Nama kamu",
+    "namePlaceholder": "mis. Sinta",
+    "nameHint": "Tampil di issue publik. Kosongkan untuk tetap anonim.",
+    "includeDetails": "Sertakan detail teknis",
+    "detailsHint": "Ini membantu kami menemukan masalahnya. Teks resume kamu tidak pernah ikut.",
+    "details": {
+      "app": "Aplikasi",
+      "platform": "Platform",
+      "browser": "Browser",
+      "os": "Sistem",
+      "language": "Bahasa",
+      "page": "Halaman",
+      "template": "Template",
+      "font": "Huruf",
+      "documentLanguage": "Bahasa resume"
+    },
+    "cancel": "Batal",
+    "back": "Kembali",
+    "next": "Lanjut",
+    "send": "Kirim",
+    "openGitHub": "Buka di GitHub",
+    "errorToast": "Gagal terkirim. Coba lagi sebentar lagi.",
+    "sentTitle": "Terima kasih, sudah ada di GitHub",
+    "sentBody": "Simpan tautannya untuk mengikutinya: balasan dan perbaikan muncul di sana. Menambah tangkapan layar di sana butuh akun GitHub.",
+    "githubTitle": "Selesaikan di GitHub",
+    "githubBody": "Kami membuka issue yang sudah terisi. Cek dulu, lalu kirim di sana.",
+    "viewIssue": "Lihat issue-nya",
     "sendAnother": "Kirim lagi",
-    "offlineToast": "Kamu perlu online untuk mengirim masukan. Cek koneksi lalu coba lagi."
+    "close": "Tutup",
+    "offlineToast": "Kamu perlu online untuk mengirim masukan. Cek koneksimu lalu coba lagi.",
+    "titleField": "Judul singkat"
   },
   "editor": {
     "common": {
@@ -950,6 +1047,7 @@
       "redo": "Ulangi",
       "bold": "Tebal",
       "italic": "Miring",
+      "underline": "Garis bawah",
       "bulletList": "Daftar poin",
       "orderedList": "Daftar bernomor",
       "link": "Tautan",

@@ -10,6 +10,7 @@ import {
   ListNumbersIcon,
   TextBIcon,
   TextItalicIcon,
+  TextUnderlineIcon,
 } from "@phosphor-icons/react";
 import { type Editor, useEditorState } from "@tiptap/react";
 import { useTranslations } from "use-intl";
@@ -29,6 +30,7 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
       return {
         bold: editor.isActive("bold"),
         italic: editor.isActive("italic"),
+        underline: editor.isActive("underline"),
         bulletList: editor.isActive("bulletList"),
         orderedList: editor.isActive("orderedList"),
         link: editor.isActive("link"),
@@ -85,6 +87,18 @@ export function RichTextToolbar(props: RichTextToolbarProps) {
           }
         >
           <TextItalicIcon />
+        </Toggle>
+      )}
+      {has("underline") && (
+        <Toggle
+          size="xs"
+          aria-label={t("underline")}
+          pressed={state.underline}
+          onPressedChange={() =>
+            props.editor.chain().focus().toggleUnderline().run()
+          }
+        >
+          <TextUnderlineIcon />
         </Toggle>
       )}
       {has("bulletList") && (

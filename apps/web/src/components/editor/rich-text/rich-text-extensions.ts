@@ -11,6 +11,7 @@ import OrderedList from "@tiptap/extension-ordered-list";
 import Paragraph from "@tiptap/extension-paragraph";
 import Placeholder from "@tiptap/extension-placeholder";
 import Text from "@tiptap/extension-text";
+import Underline from "@tiptap/extension-underline";
 import { UndoRedo } from "@tiptap/extensions";
 
 /**
@@ -31,6 +32,7 @@ export function buildRichTextExtensions(
     [Boolean(placeholder), () => Placeholder.configure({ placeholder })],
     [has("bold"), () => Bold],
     [has("italic"), () => Italic],
+    [has("underline"), () => Underline],
     [has("bulletList"), () => BulletList],
     [has("orderedList"), () => OrderedList],
     // ListItem is the shared child node of both list types; register it once.

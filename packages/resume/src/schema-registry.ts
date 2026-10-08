@@ -10,6 +10,7 @@ import type { CustomVariant, FieldKey, SectionType } from "./types";
 export type RichTextFeature =
   | "bold"
   | "italic"
+  | "underline"
   | "bulletList"
   | "orderedList"
   | "link";
@@ -39,7 +40,11 @@ export interface SectionSchema {
   fields: FieldSchema[];
 }
 
-/** The default richtext allowlist shared by most body fields. */
+/**
+ * The default richtext allowlist shared by most body fields. Underline is not
+ * on it: no résumé field enables it, because the exports do not carry it and
+ * parsers read it as nothing. Only the feedback form turns it on.
+ */
 export const PROSE_FEATURES: RichTextFeature[] = [
   "bold",
   "italic",

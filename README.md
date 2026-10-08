@@ -38,7 +38,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Export to PDF (linear reading order preserved) and plain text / .docx
 - Copy, download, and re-import a résumé as JSON or YAML
 - Guided tour of the editor and library for first-time users
-- Send bug reports and feature requests in-app, no GitHub account required
+- Send feedback in-app: a guided form for bugs, ideas, and wording fixes that checks for similar issues and shows the technical details it attaches (never the text of your résumé). Without a GitHub account, Lanjut posts it for you and links to the issue; with one, it opens the issue prefilled for you to post
 - Local persistence via IndexedDB, no data leaves the browser. The editor's top bar confirms each save to the device and warns when the browser refuses one
 - Fully local: works offline after initial load
 
@@ -135,7 +135,7 @@ Changes to the export path are gated by `pnpm validate:exports`, which regenerat
 
 ## Contributing
 
-Bug reports and feature requests go through the issue forms; note the scope rules there: presentation is customizable, structure is not, and accounts/server storage are non-goals.
+Bug reports, feature requests, and wording fixes go through the issue forms (or "Send feedback" in the app); note the scope rules there: presentation is customizable, structure is not, and accounts/server storage are non-goals.
 
 Commit messages follow Conventional Commits via commitlint and commitizen, and every commit must be signed off (`git commit -s`) under the Developer Certificate of Origin. Run `pnpm commit` instead of `git commit` to use the prompt. Git hooks (lefthook) run Biome and Prettier on staged files before a commit, commitlint on the message, and a type check before a push. PR titles follow the same convention with a fully lowercase subject; they become the squash-merge commit.
 

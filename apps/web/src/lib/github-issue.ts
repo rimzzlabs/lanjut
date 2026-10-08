@@ -1,79 +1,39 @@
 import { pipe, S } from "@mobily/ts-belt";
-import type { BUG_AREAS } from "./forms/bug-report";
-import type { FEATURE_LAYERS } from "./forms/feature-request";
-import type { FeedbackPayload } from "./forms/feedback";
-import { EDITOR_PATHNAME, TEMPLATE_PATHNAME } from "./routes";
+import type { FeedbackIssue } from "./feedback/feedback-issue";
+import type { FeedbackArea, FeedbackPayload } from "./feedback/feedback-schema";
+import { EDITOR_PATHNAME, PROFILE_PATHNAME, TEMPLATE_PATHNAME } from "./routes";
 
 export const GITHUB_REPO = "rimzzlabs/lanjut";
 
 const NEW_ISSUE_URL = `https://github.com/${GITHUB_REPO}/issues/new`;
-const TITLE_SUBJECT_MAX_LENGTH = 72;
 
-export interface BugReportIssue {
-  title: string;
-  whatHappened: string;
-  area: (typeof BUG_AREAS)[number];
-}
+/** Prefilled issue addresses stay well under the length browsers and GitHub accept. */
+const FALLBACK_BODY_MAX_LENGTH = 6000;
 
-export interface FeatureRequestIssue {
-  title: string;
-  problem: string;
-  layer: (typeof FEATURE_LAYERS)[number];
-}
-
+/** The part of the app a report most likely concerns, from where it was opened. */
 export function areaForPathname(
   pathname: string,
   editing: boolean,
-): (typeof BUG_AREAS)[number] {
-  if (editing) return "Editor";
-  if (S.startsWith(pathname, EDITOR_PATHNAME)) return "Dashboard / library";
-  if (S.startsWith(pathname, TEMPLATE_PATHNAME)) return "Dashboard / library";
-  if (pathname === "/") return "Landing page";
-  return "Other";
-}
-
-/** Issue title from a report's first line, marked as coming from the app. */
-export function issueTitle(prefix: string, summaryLine: string): string {
-  const subject = pipe(
-    summaryLine,
-    S.replaceByRe(/^- /, ""),
-    S.trim,
-    S.slice(0, TITLE_SUBJECT_MAX_LENGTH),
-  );
-  return `${prefix} ${subject}`;
+): FeedbackArea {
+  if (editing) return "editor";
+  if (S.startsWith(pathname, TEMPLATE_PATHNAME)) return "templates";
+  if (S.startsWith(pathname, EDITOR_PATHNAME)) return "library";
+  if (S.startsWith(pathname, PROFILE_PATHNAME)) return "library";
+  if (pathname === "/") return "home";
+  return "other";
 }
 
 /**
- * GitHub prefills issue-form fields from query params keyed by the field ids
- * in the matching .github/ISSUE_TEMPLATE/*.yml; keep the param names in sync
- * with those files. Body fields are markdown strings; GitHub renders the
- * textareas as GFM.
+ * The new-issue page on GitHub, prefilled with the same title and body the
+ * Worker would file. For when direct sending is off; the reporter needs a
+ * GitHub account and submits it themselves.
  */
-function buildIssueUrl(params: Record<string, string>): string {
-  const search = new URLSearchParams();
-  for (const [key, value] of Object.entries(params)) {
-    if (value) search.set(key, value);
-  }
+export function buildFallbackIssueUrl(issue: FeedbackIssue): string {
+  const search = new URLSearchParams({
+    title: issue.title,
+    body: pipe(issue.body, S.slice(0, FALLBACK_BODY_MAX_LENGTH)),
+  });
   return `${NEW_ISSUE_URL}?${search.toString()}`;
-}
-
-export function buildBugReportUrl(issue: BugReportIssue): string {
-  return buildIssueUrl({
-    template: "bug-report.yml",
-    title: issue.title,
-    "what-happened": issue.whatHappened,
-    area: issue.area,
-    browser: navigator.userAgent,
-  });
-}
-
-export function buildFeatureRequestUrl(issue: FeatureRequestIssue): string {
-  return buildIssueUrl({
-    template: "feature-request.yml",
-    title: issue.title,
-    problem: issue.problem,
-    layer: issue.layer,
-  });
 }
 
 export interface FeedbackResult {

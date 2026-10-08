@@ -1,7 +1,11 @@
 import type { RichTextFeature } from "@lanjut/resume/schema-registry";
 import { Toggle } from "@lanjut/ui/components/toggle";
 import { A } from "@mobily/ts-belt";
-import { TextBIcon, TextItalicIcon } from "@phosphor-icons/react";
+import {
+  TextBIcon,
+  TextItalicIcon,
+  TextUnderlineIcon,
+} from "@phosphor-icons/react";
 import { type Editor, useEditorState } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import { useTranslations } from "use-intl";
@@ -21,6 +25,7 @@ export function RichTextBubbleMenu(props: RichTextBubbleMenuProps) {
       return {
         bold: editor.isActive("bold"),
         italic: editor.isActive("italic"),
+        underline: editor.isActive("underline"),
         link: editor.isActive("link"),
       };
     },
@@ -62,6 +67,18 @@ export function RichTextBubbleMenu(props: RichTextBubbleMenuProps) {
           }
         >
           <TextItalicIcon />
+        </Toggle>
+      )}
+      {has("underline") && (
+        <Toggle
+          size="xs"
+          aria-label={t("underline")}
+          pressed={state.underline}
+          onPressedChange={() =>
+            props.editor.chain().focus().toggleUnderline().run()
+          }
+        >
+          <TextUnderlineIcon />
         </Toggle>
       )}
       {has("link") && (

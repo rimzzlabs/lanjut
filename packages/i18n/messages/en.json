@@ -148,6 +148,10 @@
             "description": "Your library now thanks everyone who builds Lanjut, with a direct way to join them: translate it, fix a bug, or build a feature."
           },
           {
+            "title": "Feedback that gets fixed faster",
+            "description": "Send feedback now walks you through what helps most: what you did, what you expected, and what happened instead. It shows reports like yours as you type, tells you exactly what it attaches, and links you to the issue once it is filed. You can also point out a wrong word or translation."
+          },
+          {
             "title": "Your PDF now matches the preview",
             "description": "PDF downloads are now drawn from the same page you see in the editor, so the fonts, sizes, and spacing in the file match the preview. The text stays selectable for applicant tracking systems."
           },
@@ -449,7 +453,8 @@
       "duplicate": "Duplicate",
       "copyOf": "Copy of {title}",
       "delete": "Delete",
-      "label": "App navigation"
+      "label": "App navigation",
+      "feedback": "Send feedback"
     },
     "toolbar": {
       "searchResume": "Search your resume",
@@ -586,21 +591,10 @@
       "titleMin": "Use at least {min} characters.",
       "titleMax": "Keep it to {max} characters or fewer.",
       "fileNameRequired": "Name the file before downloading.",
-      "bugWhatHappened": "Describe what went wrong.",
-      "featureProblem": "Describe the problem this would solve.",
       "sectionTitleRequired": "Enter a section name.",
-      "reporterNameRequired": "Tell us your name first.",
       "verificationRequired": "Finish the quick verification first.",
-      "profileNameRequired": "Name this profile."
-    },
-    "direct": {
-      "name": "Your name",
-      "namePlaceholder": "e.g. Sinta",
-      "nameDescription": "Shown on the public GitHub issue so we know who it's from.",
-      "send": "Send it for me",
-      "githubAlt": "Have a GitHub account? Open a prefilled issue instead.",
-      "sentToast": "Sent! Thank you; we filed the GitHub issue for you.",
-      "errorToast": "Couldn't send it. Try again, or use the GitHub button."
+      "profileNameRequired": "Name this profile.",
+      "feedbackRequired": "Fill this in."
     },
     "create": {
       "title": "Create a new resume",
@@ -650,26 +644,6 @@
       "fileName": "File name",
       "fileNamePlaceholder": "Software Engineer"
     },
-    "bug": {
-      "title": "Report a bug",
-      "description": "Send it right here and we'll file the GitHub issue for you; no account needed. If you have a GitHub account, you can open a prefilled issue yourself instead.",
-      "descriptionGitHubOnly": "This opens a prefilled GitHub issue for you to review and submit; a GitHub account is required, and your browser details are filled in for you.",
-      "whatHappened": "What happened?",
-      "whatHappenedPlaceholder": "The editor preview goes blank when...",
-      "whatHappenedDescription": "Include the steps to reproduce it; a numbered list works great.",
-      "area": "Where does the bug show up?",
-      "areaPlaceholder": "Area"
-    },
-    "feature": {
-      "title": "Request a feature",
-      "description": "Send it right here and we'll file the GitHub issue for you; no account needed. Note that resume structure (tables, columns, images) is out of scope by design; presentation is fair game.",
-      "descriptionGitHubOnly": "This opens a prefilled GitHub issue for you to review and submit; a GitHub account is required. Note that resume structure (tables, columns, images) is out of scope by design; presentation is fair game.",
-      "problem": "What problem does this solve?",
-      "problemPlaceholder": "When I tailor my resume for different roles, I have to...",
-      "problemDescription": "Describe the situation where you needed this, rather than the solution itself.",
-      "layer": "Which layer does this touch?",
-      "layerPlaceholder": "Layer"
-    },
     "import": {
       "dropPrompt": "Drop a PDF, JSON, or YAML file here, or click to browse",
       "hint": "Your file is read on your device and never uploaded.",
@@ -688,12 +662,135 @@
   },
   "feedback": {
     "metaTitle": "Send feedback",
-    "metaDescription": "Report a bug or request a feature. We file the GitHub issue for you, so no account is needed.",
-    "kindLabel": "Choose bug report or feature request",
-    "sentTitle": "Thank you",
-    "sentBody": "We filed the GitHub issue for you. You can close this window.",
+    "metaDescription": "Report a bug, share an idea, or fix a word. We file the GitHub issue for you, so no account is needed.",
+    "title": "Send feedback",
+    "description": "It becomes a public issue on GitHub, where every bug and idea is tracked.",
+    "stepsLabel": "Steps",
+    "steps": {
+      "kind": "Kind",
+      "details": "Details",
+      "review": "Send"
+    },
+    "kindLabel": "What kind of feedback is it?",
+    "detailsTitle": "{kind}",
+    "reviewTitle": "Check it and send",
+    "kinds": {
+      "bug": {
+        "title": "Something is broken",
+        "description": "A button does nothing, the PDF looks wrong, or an import loses a section."
+      },
+      "idea": {
+        "title": "I have an idea",
+        "description": "Something Lanjut could do, or do better."
+      },
+      "wording": {
+        "title": "A word or translation is wrong",
+        "description": "A typo, an unclear sentence, or a clumsy translation."
+      }
+    },
+    "accountLabel": "Do you have a GitHub account?",
+    "accounts": {
+      "none": {
+        "title": "No, send it for me",
+        "description": "We post it for you, so you need no account. Add every detail: we cannot ask you questions later."
+      },
+      "github": {
+        "title": "Yes, I'll post it myself",
+        "description": "We open the issue on GitHub, already filled in. You post it, and GitHub tells you about replies."
+      }
+    },
+    "titleHint": "One line that says what it is about.",
+    "titlePlaceholderBug": "PDF shows a dash before my city",
+    "titlePlaceholderIdea": "Keep a version of my resume for each country",
+    "area": "Where in Lanjut?",
+    "where": "Where does the text show?",
+    "areas": {
+      "editor": "Editing a resume",
+      "preview": "The preview",
+      "pdf": "PDF download",
+      "word": "Word download",
+      "other-export": "Text, JSON, or YAML",
+      "import": "Importing a file",
+      "templates": "Templates",
+      "library": "Library and profiles",
+      "desktop": "The Mac app",
+      "home": "Home page",
+      "other": "Somewhere else"
+    },
+    "stepsField": "What did you do?",
+    "stepsHint": "The steps, one per line, so we can do the same.",
+    "stepsPlaceholder": "1. Opened a resume made with Luasa\n2. Added my city\n3. Downloaded it as a PDF",
+    "expected": "What did you expect?",
+    "expectedPlaceholder": "The city on its own, as in the preview.",
+    "actual": "What happened instead?",
+    "actualHint": "If you saw an error message, copy it here exactly.",
+    "actualPlaceholder": "The PDF shows a dash before the city.",
+    "frequency": "How often does it happen?",
+    "frequencies": {
+      "always": "Every time",
+      "sometimes": "Sometimes",
+      "once": "Only once"
+    },
+    "scopeNote": "Every resume stays one readable column for applicant tracking systems, so tables, columns, and text boxes are out of scope. Looks, spacing, and fonts are fair game.",
+    "goal": "What are you trying to do?",
+    "goalHint": "Tell us the situation, not only the solution. It helps us find the best fix.",
+    "goalPlaceholder": "I apply for jobs in two countries and keep a version of my resume for each.",
+    "idea": "What would help?",
+    "ideaPlaceholder": "A way to copy a resume into the other language in one step.",
+    "workaround": "How do you manage today?",
+    "workaroundPlaceholder": "I duplicate the resume and translate it by hand.",
+    "impact": "How much would it help?",
+    "impacts": {
+      "nice": "Nice to have",
+      "time": "Saves me time",
+      "blocker": "I can't use Lanjut without it"
+    },
+    "language": "Which language is the text in?",
+    "current": "The text as it is now",
+    "currentHint": "Copy it exactly, so we can find it.",
+    "currentPlaceholder": "Simpan perubahaan",
+    "suggested": "What should it say?",
+    "suggestedHint": "Leave it empty if you are not sure.",
+    "suggestedPlaceholder": "Simpan perubahan",
+    "note": "Anything else?",
+    "notePlaceholder": "It is on the button under the Summary field.",
+    "similarTitle": "Already reported?",
+    "similarHint": "If one of these matches, add a thumbs-up or a comment there instead.",
+    "similarOpen": "Open",
+    "similarClosed": "Closed",
+    "previewTitle": "What goes to GitHub",
+    "contactTitle": "About you",
+    "name": "Your name",
+    "namePlaceholder": "e.g. Sinta",
+    "nameHint": "Shown on the public issue. Leave it empty to stay anonymous.",
+    "includeDetails": "Include technical details",
+    "detailsHint": "They help us find the problem. They never include the text of your resume.",
+    "details": {
+      "app": "App",
+      "platform": "Platform",
+      "browser": "Browser",
+      "os": "System",
+      "language": "Language",
+      "page": "Page",
+      "template": "Template",
+      "font": "Font",
+      "documentLanguage": "Resume language"
+    },
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
+    "send": "Send",
+    "openGitHub": "Open on GitHub",
+    "errorToast": "It did not send. Try again in a moment.",
+    "sentTitle": "Thank you, it is on GitHub",
+    "sentBody": "Keep the link to follow it: replies and fixes show up there. Adding a screenshot there needs a GitHub account.",
+    "githubTitle": "Finish it on GitHub",
+    "githubBody": "We opened the issue with everything filled in. Check it, then submit it there.",
+    "viewIssue": "View the issue",
     "sendAnother": "Send another",
-    "offlineToast": "You need to be online to send feedback. Check your connection and try again."
+    "close": "Close",
+    "offlineToast": "You need to be online to send feedback. Check your connection and try again.",
+    "titleField": "Short title"
   },
   "editor": {
     "common": {
@@ -950,6 +1047,7 @@
       "redo": "Redo",
       "bold": "Bold",
       "italic": "Italic",
+      "underline": "Underline",
       "bulletList": "Bullet list",
       "orderedList": "Ordered list",
       "link": "Link",
