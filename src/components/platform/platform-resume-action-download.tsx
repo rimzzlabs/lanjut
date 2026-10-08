@@ -59,6 +59,7 @@ export function PlatformResumeActionDownload(
             key={props.resume.title}
             defaultFileName={props.resume.title}
             generating={loading || exporting}
+            autoFocusFileName
             onSubmit={(format, fileName) =>
               void handleDownload(format, fileName)
             }

@@ -27,6 +27,7 @@ import {
 import { useLandingDraftCreate } from "@/hooks/use-landing-draft-create";
 import { useLandingRead } from "@/hooks/use-landing-read";
 import { Link } from "@/i18n/navigation";
+import { TEMPLATE_PATHNAME } from "@/lib/routes";
 import {
   type LandingDraft,
   type LandingRead,
@@ -168,7 +169,7 @@ function LandingReadersBoard() {
           <p className="text-sm text-muted-foreground">
             {t("sampleNote")} {t("noAccount")}{" "}
             <Link
-              href="/platform/template"
+              href={TEMPLATE_PATHNAME}
               className="rounded-xs text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               {t("allTemplates")}

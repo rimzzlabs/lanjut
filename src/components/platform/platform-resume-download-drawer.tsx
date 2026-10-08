@@ -29,6 +29,7 @@ export function PlatformResumeDownloadDrawer(props: {
             key={`${resume?.id}-${props.open}`}
             defaultFileName={resume?.title ?? ""}
             generating={generating}
+            autoFocusFileName
             onSubmit={(format, fileName) =>
               void download(format, fileName).then(
                 (done) => done && props.onOpenChange(false),

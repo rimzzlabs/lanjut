@@ -10,6 +10,7 @@ import {
   useFeedbackClient,
 } from "@/hooks/use-feedback-params";
 import { useValidationTranslator } from "@/hooks/use-validation-translator";
+import { useWorkspaceView } from "@/hooks/use-workspace-view";
 import { usePathname } from "@/i18n/navigation";
 import {
   BUG_AREAS,
@@ -63,6 +64,7 @@ interface FeedbackBugReportFormProps {
 
 export function FeedbackBugReportForm(props: FeedbackBugReportFormProps) {
   const pathname = usePathname();
+  const editing = useWorkspaceView() === "editor";
   const prefilledArea = useFeedbackArea();
   const client = useFeedbackClient();
   const t = useTranslations("forms.bug");
@@ -76,7 +78,7 @@ export function FeedbackBugReportForm(props: FeedbackBugReportFormProps) {
     resolver: standardSchemaResolver(schema),
     defaultValues: {
       name: "",
-      area: prefilledArea ?? areaForPathname(pathname),
+      area: prefilledArea ?? areaForPathname(pathname, editing),
       whatHappened: emptyRichTextValue(),
       turnstileToken: "",
     },

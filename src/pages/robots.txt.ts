@@ -7,8 +7,10 @@ export function GET() {
       [
         "User-Agent: *",
         "Allow: /",
-        "Disallow: /platform",
-        "Disallow: /id/platform",
+        "Disallow: /editor",
+        "Disallow: /template",
+        "Disallow: /id/editor",
+        "Disallow: /id/template",
         "",
         `Sitemap: ${SITE.url}/sitemap.xml`,
         "",

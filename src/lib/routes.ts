@@ -1,22 +1,28 @@
-import { IS_DESKTOP } from "@/lib/build-target";
-
-export const EDITOR_PATHNAME = "/platform/editor";
-
-type EditorHref = `${typeof EDITOR_PATHNAME}?id=${string}`;
+import { IS_DESKTOP } from "./build-target";
 
 /**
- * Builds the editor address. Every link and redirect into the editor goes
- * through here. The site is static, so the id rides in a search param: there
- * is no page per user-generated id.
+ * The workspace. `/editor` is the résumé library and `/editor/<id>` opens that
+ * résumé in the editor. Both are served by the one editor page; the client
+ * router reads the id from the path.
  */
+export const EDITOR_PATHNAME = "/editor";
+
+/** The client route for one résumé in the editor. */
+export const EDITOR_DOCUMENT_ROUTE = `${EDITOR_PATHNAME}/:id`;
+
+export const TEMPLATE_PATHNAME = "/template";
+
+type EditorHref = `${typeof EDITOR_PATHNAME}/${string}`;
+
+/** Builds the editor address. Every link and redirect into the editor goes through here. */
 export function editorHref(id: string): EditorHref {
-  return `${EDITOR_PATHNAME}?id=${id}`;
+  return `${EDITOR_PATHNAME}/${encodeURIComponent(id)}`;
 }
 
 /**
  * Where the brand mark leads. The web app sends a visitor to the landing page.
  * The desktop app has nobody to sell itself to, so it stays in the workspace.
  */
-export function homeHref(): "/" | "/platform" {
-  return IS_DESKTOP ? "/platform" : "/";
+export function homeHref(): "/" | typeof EDITOR_PATHNAME {
+  return IS_DESKTOP ? EDITOR_PATHNAME : "/";
 }

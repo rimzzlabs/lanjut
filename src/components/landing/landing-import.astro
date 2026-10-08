@@ -4,6 +4,7 @@ import { ArrowDownIcon, ArrowRightIcon } from "@phosphor-icons/react";
 import { buttonVariants } from "@/components/ui/button";
 import { type Locale, localizePath } from "@/i18n/routing";
 import { getTranslator } from "@/i18n/translator";
+import { EDITOR_PATHNAME } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -55,7 +56,7 @@ const LEFTOVER = "Open to remote roles";
     <div class="md:col-span-5">
       <p class="max-w-[52ch] text-muted-foreground">{t("importBody")}</p>
       <a
-        href={localizePath("/platform?create=true", locale)}
+        href={localizePath(`${EDITOR_PATHNAME}?create=true`, locale)}
         class={cn(buttonVariants({ variant: "outline", size: "lg" }), "mt-6 h-11 gap-2 px-5")}
       >
         {t("importLink")}

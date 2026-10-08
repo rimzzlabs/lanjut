@@ -39,7 +39,7 @@ export function EditorSheet() {
           <SheetTitle>{t("editorTitle")}</SheetTitle>
           <SheetDescription>{t("editorDescription")}</SheetDescription>
         </SheetHeader>
-        <div className="flex-1">
+        <div className="min-h-0 flex-1">
           <EditorSidebarContent />
         </div>
       </SheetContent>

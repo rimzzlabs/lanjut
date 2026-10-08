@@ -7,6 +7,7 @@ import { useNextStep } from "nextstepjs";
 import { useTranslations } from "use-intl";
 import { useIssueReport } from "@/hooks/use-issue-report";
 import { MEDIA_XL, useMediaQuery } from "@/hooks/use-media-query";
+import { useWorkspaceView } from "@/hooks/use-workspace-view";
 import { usePathname } from "@/i18n/navigation";
 import { useResumeStore } from "@/lib/store";
 import { EDITOR_SHEET_TOUR, EDITOR_TOUR, tourForPathname } from "@/lib/tour";
@@ -25,6 +26,7 @@ import {
 
 export function PlatformSidebarOther() {
   const pathname = usePathname();
+  const view = useWorkspaceView();
   const openStatus = useResumeStore((state) => state.openStatus);
   const openIssueReport = useIssueReport();
   const isDesktop = useMediaQuery(MEDIA_XL);
@@ -32,7 +34,7 @@ export function PlatformSidebarOther() {
   const { isMobile, setOpenMobile } = useSidebar();
   const t = useTranslations("platform.sidebar");
 
-  const baseTour = tourForPathname(pathname);
+  const baseTour = tourForPathname(pathname, view === "editor");
   const tour =
     baseTour === EDITOR_TOUR && !isDesktop ? EDITOR_SHEET_TOUR : baseTour;
   const guideDisabled = baseTour === EDITOR_TOUR && openStatus !== "ready";

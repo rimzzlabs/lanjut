@@ -27,6 +27,11 @@ import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group";
 interface PlatformResumeDownloadFormProps {
   defaultFileName: string;
   generating: boolean;
+  /**
+   * Focus and select the file name on open. For a dialog only: on a page, the
+   * focus jumps into the middle of the panel and scrolls it.
+   */
+  autoFocusFileName?: boolean;
   onSubmit: (format: ExportFormat, fileName: string) => void;
 }
 
@@ -44,11 +49,12 @@ export function PlatformResumeDownloadForm(
   });
 
   useEffect(() => {
+    if (!props.autoFocusFileName) return;
     const frame = requestAnimationFrame(() => {
       form.setFocus("fileName", { shouldSelect: true });
     });
     return () => cancelAnimationFrame(frame);
-  }, [form]);
+  }, [form, props.autoFocusFileName]);
 
   const onSubmit = form.handleSubmit((values) => {
     props.onSubmit(values.format, values.fileName);

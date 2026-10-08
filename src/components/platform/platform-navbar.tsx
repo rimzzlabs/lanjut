@@ -1,7 +1,6 @@
-import { S } from "@mobily/ts-belt";
 import { GithubLogoIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
-import { usePathname } from "@/i18n/navigation";
+import { useWorkspaceView } from "@/hooks/use-workspace-view";
 import { REPO_URL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { EditorSaveStatus } from "../editor/editor-save-status";
@@ -13,7 +12,7 @@ import { SidebarTrigger } from "../ui/sidebar";
 import { PlatformNavbarBreadcrumb } from "./platform-navbar-breadcrumb";
 
 export function PlatformNavbar() {
-  const pathname = usePathname();
+  const view = useWorkspaceView();
   const t = useTranslations("platform.navbar");
 
   return (
@@ -21,7 +20,7 @@ export function PlatformNavbar() {
       <div className="h-12 flex items-center gap-2 px-6">
         <SidebarTrigger />
         <PlatformNavbarBreadcrumb />
-        {S.includes(pathname, "/editor") && (
+        {view === "editor" && (
           <div className="ml-2 inline-flex">
             <EditorSaveStatus />
           </div>

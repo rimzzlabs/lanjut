@@ -6,7 +6,7 @@
   "build": {
     "beforeDevCommand": "pnpm dev:astro",
     "beforeBuildCommand": "pnpm build",
-    "devUrl": "http://localhost:3000",
+    "devUrl": "http://localhost:4321",
     "frontendDist": "../dist-desktop"
   },
   "app": {
@@ -27,7 +27,7 @@
       {
         "label": "main",
         "title": "Lanjut (beta)",
-        "url": "/platform/",
+        "url": "/editor",
         "width": 1280,
         "height": 860,
         "minWidth": 960,

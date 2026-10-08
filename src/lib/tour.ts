@@ -1,6 +1,6 @@
 import { A, F, O, pipe, S } from "@mobily/ts-belt";
 import type { Step } from "nextstepjs";
-import { EDITOR_PATHNAME } from "@/lib/routes";
+import { TEMPLATE_PATHNAME } from "@/lib/routes";
 import type { EditorTab } from "@/lib/store";
 
 export const LIBRARY_TOUR = "library";
@@ -37,9 +37,9 @@ export interface AppTour {
   steps: AppStep[];
 }
 
-export function tourForPathname(pathname: string): TourName {
-  if (S.startsWith(pathname, EDITOR_PATHNAME)) return EDITOR_TOUR;
-  if (S.startsWith(pathname, "/platform/template")) return TEMPLATE_TOUR;
+export function tourForPathname(pathname: string, editing: boolean): TourName {
+  if (editing) return EDITOR_TOUR;
+  if (S.startsWith(pathname, TEMPLATE_PATHNAME)) return TEMPLATE_TOUR;
   return LIBRARY_TOUR;
 }
 

@@ -1,0 +1,85 @@
+import { lazy, Suspense, useEffect } from "react";
+import { useTranslations } from "use-intl";
+import { Redirect, Route, Switch } from "wouter";
+import { PlatformAppRouter } from "@/components/platform/platform-app-router";
+import { PlatformContentLoading } from "@/components/platform/platform-content-loading";
+import { PlatformShell } from "@/components/platform/platform-shell";
+import { AppProviders, type IslandProps } from "@/components/shared/providers";
+import { useEditorId } from "@/hooks/use-editor-id";
+import type { WorkspaceView } from "@/hooks/use-workspace-view";
+import {
+  EDITOR_DOCUMENT_ROUTE,
+  EDITOR_PATHNAME,
+  TEMPLATE_PATHNAME,
+} from "@/lib/routes";
+import { SITE } from "@/lib/site";
+
+const PlatformDashboard = lazy(() =>
+  import("@/components/platform/platform-dashboard").then((module) => ({
+    default: module.PlatformDashboard,
+  })),
+);
+const PlatformTemplates = lazy(() =>
+  import("@/components/platform/platform-templates").then((module) => ({
+    default: module.PlatformTemplates,
+  })),
+);
+const EditorWorkspace = lazy(() =>
+  import("@/components/editor/editor-workspace").then((module) => ({
+    default: module.EditorWorkspace,
+  })),
+);
+
+type AppPage = WorkspaceView | "templates";
+
+const PAGE_TITLE_KEYS: Record<AppPage, string> = {
+  library: "platform.sidebar.dashboard",
+  editor: "editor.chrome.editorTitle",
+  templates: "platform.breadcrumb.browseTemplates",
+};
+
+/**
+ * The app: the shell around the library, the editor, and the templates. One
+ * root serves `/editor` and `/template`, so moving between them keeps the shell
+ * and loads only the content, with its loading state inside the shell.
+ */
+export function PlatformApp(props: IslandProps) {
+  return (
+    <AppProviders locale={props.locale} pathname={props.pathname}>
+      <PlatformAppRouter>
+        <PlatformShell>
+          <Suspense fallback={<PlatformContentLoading />}>
+            <Switch>
+              <Route path={TEMPLATE_PATHNAME}>
+                <PlatformAppPage page="templates" />
+              </Route>
+              <Route path={EDITOR_DOCUMENT_ROUTE}>
+                <PlatformAppPage page="editor" />
+              </Route>
+              <Route path={EDITOR_PATHNAME}>
+                <PlatformAppPage page="library" />
+              </Route>
+              <Route>
+                <Redirect to={EDITOR_PATHNAME} replace />
+              </Route>
+            </Switch>
+          </Suspense>
+        </PlatformShell>
+      </PlatformAppRouter>
+    </AppProviders>
+  );
+}
+
+function PlatformAppPage(props: { page: AppPage }) {
+  const id = useEditorId();
+  const t = useTranslations();
+  const title = t(PAGE_TITLE_KEYS[props.page]);
+
+  useEffect(() => {
+    document.title = `${title} · ${SITE.name}`;
+  }, [title]);
+
+  if (props.page === "templates") return <PlatformTemplates />;
+  if (props.page === "library") return <PlatformDashboard />;
+  return <EditorWorkspace key={id} />;
+}

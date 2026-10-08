@@ -2,7 +2,7 @@ import { pipe, S } from "@mobily/ts-belt";
 import type { BUG_AREAS } from "./forms/bug-report";
 import type { FEATURE_LAYERS } from "./forms/feature-request";
 import type { FeedbackPayload } from "./forms/feedback";
-import { EDITOR_PATHNAME } from "./routes";
+import { EDITOR_PATHNAME, TEMPLATE_PATHNAME } from "./routes";
 
 export const GITHUB_REPO = "rimzzlabs/lanjut";
 
@@ -21,9 +21,13 @@ export interface FeatureRequestIssue {
   layer: (typeof FEATURE_LAYERS)[number];
 }
 
-export function areaForPathname(pathname: string): (typeof BUG_AREAS)[number] {
-  if (S.startsWith(pathname, EDITOR_PATHNAME)) return "Editor";
-  if (S.startsWith(pathname, "/platform")) return "Dashboard / library";
+export function areaForPathname(
+  pathname: string,
+  editing: boolean,
+): (typeof BUG_AREAS)[number] {
+  if (editing) return "Editor";
+  if (S.startsWith(pathname, EDITOR_PATHNAME)) return "Dashboard / library";
+  if (S.startsWith(pathname, TEMPLATE_PATHNAME)) return "Dashboard / library";
   if (pathname === "/") return "Landing page";
   return "Other";
 }

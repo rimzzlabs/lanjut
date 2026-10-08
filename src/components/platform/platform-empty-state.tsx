@@ -7,6 +7,7 @@ import {
 import { useState } from "react";
 import { useTranslations } from "use-intl";
 import { Link } from "@/i18n/navigation";
+import { TEMPLATE_PATHNAME } from "@/lib/routes";
 import { useResumeStore } from "@/lib/store";
 import { Button } from "../ui/button";
 import {
@@ -46,7 +47,7 @@ export function PlatformEmptyState() {
             <div className="inline-flex items-center gap-2">
               <Button
                 nativeButton={false}
-                render={<Link href="/platform/template" />}
+                render={<Link href={TEMPLATE_PATHNAME} />}
               >
                 <MagnifyingGlassIcon /> {t("browseTemplates")}
               </Button>

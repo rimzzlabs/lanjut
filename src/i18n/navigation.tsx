@@ -5,8 +5,9 @@ import { flushOpenResumePersist } from "@/lib/store/persistence";
 import { type Locale, localizePath } from "./routing";
 
 /**
- * The page path, without its locale prefix. Astro hands it to every island,
- * so the server render and the first client render agree.
+ * The page path, without its locale prefix. Astro hands it to every island, so
+ * the server render and the first client render agree. The app's router
+ * overrides it with the live path as the app moves between its pages.
  */
 export const PathnameContext = createContext("/");
 
@@ -19,25 +20,51 @@ interface NavigateOptions {
   scroll?: boolean;
 }
 
+/** Moves between the app pages without a document load. */
+export interface AppRouter {
+  /** Whether the app can show `href` in place. */
+  owns(href: string): boolean;
+  go(href: string, replace: boolean): void;
+}
+
 /**
- * Every page change is a full document load. A pending résumé write is
- * flushed first, so the next page reads what this one wrote.
+ * Set by the app's island root. Context does not cross islands, so a link on
+ * any other page (the landing page) never sees it.
  */
-async function navigate(href: string, replace: boolean) {
+export const AppRouterContext = createContext<AppRouter | null>(null);
+
+/**
+ * Inside the app, a move to another app page swaps the content and keeps the
+ * shell. Every other page change is a full document load. A pending résumé
+ * write is flushed first either way, so the next view reads what this one
+ * wrote.
+ */
+async function navigate(
+  href: string,
+  replace: boolean,
+  router: AppRouter | null,
+) {
   await flushOpenResumePersist();
+  if (router?.owns(href)) {
+    router.go(href, replace);
+    return;
+  }
   if (replace) window.location.replace(href);
   else window.location.assign(href);
 }
 
 export function useRouter() {
   const locale = useLocale() as Locale;
+  const router = useContext(AppRouterContext);
 
   return {
     push(href: string, options?: NavigateOptions) {
-      return navigate(localizePath(href, options?.locale ?? locale), false);
+      const target = localizePath(href, options?.locale ?? locale);
+      return navigate(target, false, router);
     },
     replace(href: string, options?: NavigateOptions) {
-      return navigate(localizePath(href, options?.locale ?? locale), true);
+      const target = localizePath(href, options?.locale ?? locale);
+      return navigate(target, true, router);
     },
   };
 }
@@ -57,6 +84,7 @@ export function Link(
   props: ComponentProps<"a"> & { href: string; locale?: Locale },
 ) {
   const current = useLocale() as Locale;
+  const router = useContext(AppRouterContext);
   const { locale, onClick, ...rest } = props;
   const href = localizePath(props.href, locale ?? current);
 
@@ -64,7 +92,7 @@ export function Link(
     onClick?.(event);
     if (event.defaultPrevented || !isPlainClick(event)) return;
     event.preventDefault();
-    void navigate(href, false);
+    void navigate(href, false, router);
   }
 
   return <a {...rest} href={href} onClick={handleClick} />;

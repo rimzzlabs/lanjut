@@ -1,6 +1,8 @@
 import { S } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
+import { useWorkspaceView } from "@/hooks/use-workspace-view";
 import { Link, usePathname } from "@/i18n/navigation";
+import { EDITOR_PATHNAME, TEMPLATE_PATHNAME } from "@/lib/routes";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,22 +14,24 @@ import {
 
 export function PlatformNavbarBreadcrumb() {
   const pathname = usePathname();
+  const view = useWorkspaceView();
   const t = useTranslations("platform.breadcrumb");
-  const atPlatform = S.endsWith(pathname, "/platform");
+  const atTemplates = S.startsWith(pathname, TEMPLATE_PATHNAME);
+  const atLibrary = !atTemplates && view !== "editor";
 
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          {atPlatform && <BreadcrumbPage>{t("platform")}</BreadcrumbPage>}
-          {!atPlatform && (
-            <BreadcrumbLink render={<Link href="/platform" />}>
+          {atLibrary && <BreadcrumbPage>{t("platform")}</BreadcrumbPage>}
+          {!atLibrary && (
+            <BreadcrumbLink render={<Link href={EDITOR_PATHNAME} />}>
               {t("platform")}
             </BreadcrumbLink>
           )}
         </BreadcrumbItem>
 
-        {S.includes(pathname, "/editor") && (
+        {view === "editor" && !atTemplates && (
           <>
             <BreadcrumbSeparator />
 
@@ -37,7 +41,7 @@ export function PlatformNavbarBreadcrumb() {
           </>
         )}
 
-        {S.includes(pathname, "/template") && (
+        {atTemplates && (
           <>
             <BreadcrumbSeparator />
 

@@ -6,7 +6,7 @@ import {
   draftToResume,
 } from "@/components/landing/landing-draft-resume";
 import { useRouter } from "@/i18n/navigation";
-import { editorHref } from "@/lib/routes";
+import { EDITOR_PATHNAME, editorHref } from "@/lib/routes";
 import { useLandingDraftStore, useResumeStore } from "@/lib/store";
 
 /**
@@ -22,7 +22,7 @@ export function useLandingDraftCreate() {
   async function create() {
     const { draft, template } = useLandingDraftStore.getState();
     if (!draftHasContent(draft)) {
-      router.push("/platform?create=true");
+      router.push(`${EDITOR_PATHNAME}?create=true`);
       return;
     }
     setCreating(true);

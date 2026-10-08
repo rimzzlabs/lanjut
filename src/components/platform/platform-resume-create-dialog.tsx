@@ -45,7 +45,8 @@ function titleFromFileName(name: string): string {
 
 interface PlatformResumeCreateDialogProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  /** May resolve once the address reflects the change, as the URL-held state does. */
+  onOpenChange: (open: boolean) => unknown;
   /** Prefills the label field. Remount (via `key`) to re-seed a new value. */
   initialTitle?: string;
   /** Presentation template for the new résumé; defaults to the starter (Awal). */
@@ -83,7 +84,9 @@ export function PlatformResumeCreateDialog(
     });
     form.reset({ title: "", source: "sample" });
     setImported(null);
-    props.onOpenChange(false);
+    // Close first, so the library's history entry loses `?create=true` before
+    // the editor's entry is pushed. Back then returns to a closed dialog.
+    await props.onOpenChange(false);
     router.push(editorHref(resume.id));
   });
 

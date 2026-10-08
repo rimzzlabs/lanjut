@@ -4,20 +4,9 @@ import { PlatformLibraryTour } from "@/components/platform/platform-library-tour
 import { PlatformResumeGrid } from "@/components/platform/platform-resume-grid/platform-resume-grid";
 import { PlatformResumeToolbar } from "@/components/platform/platform-resume-toolbar";
 import { PlatformResumeUnreadableNotice } from "@/components/platform/platform-resume-unreadable-notice";
-import { PlatformShell } from "@/components/platform/platform-shell";
-import { AppProviders, type IslandProps } from "@/components/shared/providers";
 
-export function PlatformDashboardPage(props: IslandProps) {
-  return (
-    <AppProviders locale={props.locale} pathname={props.pathname}>
-      <PlatformShell>
-        <PlatformDashboard />
-      </PlatformShell>
-    </AppProviders>
-  );
-}
-
-function PlatformDashboard() {
+/** The résumé library: the workspace when no résumé is open. */
+export function PlatformDashboard() {
   const t = useTranslations("platform.sidebar");
 
   return (

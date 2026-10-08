@@ -11,7 +11,9 @@ import { EditorSheet } from "./editor-sheet";
 import { EditorSidebar } from "./editor-sidebar";
 import { EditorUndoShortcuts } from "./editor-undo-shortcuts";
 
-const PANELS_CONTAINER = "h-[calc(100svh-3rem-1px)] min-h-0 overflow-hidden";
+// overflow-clip, not hidden: a hidden box can still be scrolled by code, and a
+// tour's scrollIntoView would shift the whole editor out of place.
+const PANELS_CONTAINER = "h-[calc(100svh-3rem-1px)] min-h-0 overflow-clip";
 
 export function EditorPanels(props: { children: ReactNode }) {
   useEditorResume();
@@ -21,7 +23,7 @@ export function EditorPanels(props: { children: ReactNode }) {
     return (
       <div className={PANELS_CONTAINER}>
         <EditorUndoShortcuts />
-        <ResizablePanelGroup style={{ overflow: "hidden" }}>
+        <ResizablePanelGroup style={{ overflow: "clip" }}>
           <ResizablePanel defaultSize="68%" minSize="40%" maxSize="72%">
             <EditorPreviewScroll>{props.children}</EditorPreviewScroll>
           </ResizablePanel>

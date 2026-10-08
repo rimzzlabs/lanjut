@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { toast } from "sonner";
 import { useLocale, useTranslations } from "use-intl";
+import { useWorkspaceView } from "@/hooks/use-workspace-view";
 import { usePathname } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { IS_DESKTOP } from "@/lib/build-target";
@@ -18,6 +19,7 @@ import { useIssueReportStore } from "@/lib/store";
 export function useIssueReport() {
   const setOpen = useIssueReportStore((state) => state.setOpen);
   const pathname = usePathname();
+  const editing = useWorkspaceView() === "editor";
   const locale = useLocale() as Locale;
   const t = useTranslations("feedback");
 
@@ -35,11 +37,11 @@ export function useIssueReport() {
 
       void openFeedbackWindowLazily({
         kind,
-        area: areaForPathname(pathname),
+        area: areaForPathname(pathname, editing),
         locale,
       });
     },
-    [setOpen, pathname, locale, t],
+    [setOpen, pathname, editing, locale, t],
   );
 }
 

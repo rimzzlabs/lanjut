@@ -33,9 +33,15 @@
       "/",
       "/platform",
       "/platform/*",
+      "/editor",
+      "/editor/*",
+      "/id/editor",
+      "/id/editor/*",
+      "/template",
       "/feedback",
       "/feedback/*",
-      "/id/platform/editor/*",
+      "/id/platform",
+      "/id/platform/*",
       "/en",
       "/en/*"
     ]

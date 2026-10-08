@@ -27,19 +27,21 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 - Biome (lint and format; not Prettier or ESLint)
 - commitlint + commitizen (commit message enforcement)
 - husky + lint-staged (pre-commit hooks)
-- nuqs (search params state)
+- nuqs (per-view search params state)
+- wouter (client routing between the app pages, `/editor` and `/template`)
 
 @mobily/ts-belt is the single utility library. Do not introduce radash or any second utility library with overlapping purpose.
 
 ## Pages and Islands
 
 - Pages live in `src/pages/[...lang]/` as `.astro` files. `localeStaticPaths` emits each page once per locale.
-- An application page (platform, editor, feedback) renders one React island root, for example `PlatformDashboardPage`. The root wraps its content in `AppProviders`.
+- An application page renders one React island root: `PlatformApp` at `/editor` and `/template`, and `FeedbackPage` at `/feedback`. The root wraps its content in `AppProviders`.
+- `/editor` and `/template` load client-only (`client:only="react"`) behind the static `PlatformLoading` fallback. They are not indexed and read everything from IndexedDB, so a server render would add a hydration step and nothing else. `/feedback` still renders on the server.
 - Landing sections are `.astro` components in `src/components/landing/`. Only the parts that need JavaScript are React islands: the navbar theme toggle and settings menu, the hero's two-readers sheet (the live résumé beside the text a PDF extractor reads back from it), the template picker, the FAQ accordion, and the closing actions. The landing page has its own scoped tokens and faces (`[data-world="readers"]` in `globals.css`, set on `<body>` through the `world` prop of `RootLayout`), so the app keeps its own look. An island that reads copy wraps itself in `IslandProviders`. Static sections take their copy from `getTranslator`.
 - Primitives with built-in labels (the Dialog and Sheet close button, `SidebarTrigger`, `Spinner`, `Breadcrumb`) read them from the `ui` messages namespace, so they render only inside an island that wraps `IslandProviders`. `ResumePage` takes its label as a prop instead, because the landing page renders it with no provider.
 - Each island is its own React root. React context does not cross islands, so each root carries its own providers. Module state does cross them: islands on one page share the same zustand stores.
-- Every page change is a full document load. `Link` and `useRouter` from `@/i18n/navigation` flush the pending resume write before they leave. State that must survive a page change lives in IndexedDB or in a zustand `persist` store.
-- The editor address is `/platform/editor?id=<id>` on web and desktop. `editorHref` and `useEditorId` own it. The Worker forwards the old `/platform/editor/<id>` links.
+- The app pages (`/editor`, `/template`) share one island root, `PlatformApp`. wouter routes between them under a `<Router base>` set to the locale prefix, so the shell stays mounted and only the content swaps. The content views load lazily inside the shell's `Suspense` boundary, so the full-page `PlatformLoading` fallback shows only on a document load. `useEditorId` reads the id from wouter's `/editor/:id` route, so every component sees the same location. nuqs keeps only per-view query state (search boxes, the create dialog, feedback params). Those views remount per route, so they read the URL afresh. Every other page change, including a language switch, is a full document load. `Link` and `useRouter` from `@/i18n/navigation` pick the right kind of move through `AppRouterContext`, and flush the pending résumé write first either way. State that must survive a document load lives in IndexedDB or in a zustand `persist` store.
+- The workspace lives under `/editor`: `/editor` is the résumé library and `/editor/<id>` opens that résumé in the editor. The templates page is `/template`. `EDITOR_PATHNAME`, `EDITOR_DOCUMENT_ROUTE`, `TEMPLATE_PATHNAME`, `editorHref`, and `useEditorId` own these addresses, and `useWorkspaceView` says which half of the workspace shows. No file exists per résumé, so every environment answers `/editor/<id>` with the editor page: the Worker fetches that asset and keeps the URL, `astro dev` rewrites the request in a Vite plugin in `astro.config.ts`, and the desktop build's root `index.html` boots the app (see Desktop shell). Older addresses forward in one 301 that keeps the rest of the query: `/platform`, `/platform/template`, `/platform/editor/<id>`, `/platform/editor?id=<id>`, and `/editor?id=<id>`. `legacyTarget` and `appPageFor` in `src/lib/route-rules.ts` hold both rules, for the Worker and the dev server alike.
 
 ## Architecture Rule: Two Layers
 
@@ -68,8 +70,12 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   (`com.rimzzlabs.lanjut`) keys the webview data directory, and with it every user's
   IndexedDB. `useHttpsScheme` (`false`) moves that same storage when flipped. Changing
   either orphans the résumés of everyone who already installed the app.
-- The window opens on `/platform/`. Tauri falls back from `<path>` to `<path>.html`
-  and then to `<path>/index.html`, so links need no trailing slash.
+- The window opens on `/editor`. Tauri falls back from `<path>` to `<path>.html`,
+  then to `<path>/index.html`, then to the root `index.html`, so links need no
+  trailing slash. `/editor/<id>` has no file, so a reload lands on the root file.
+  The desktop build therefore renders the app there (`PlatformDesktopRoot`), not the
+  landing page, and reads the language and route from the address. The desktop
+  window never shows the landing page.
 - `dangerousDisableAssetCspModification` lists `style-src` and must keep listing it.
   Tauri appends a hash source to every directive it manages. A `style-src` that
   carries a hash makes the browser ignore `'unsafe-inline'`. The app then drops every

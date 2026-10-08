@@ -7,7 +7,6 @@ import {
 import { AnimatePresence, motion } from "motion/react";
 import { useId, useState } from "react";
 import { useFormatter, useTranslations } from "use-intl";
-import { useIsClient } from "@/hooks/use-is-client";
 import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import {
   CHANGELOG,
@@ -44,7 +43,6 @@ const PANEL_TRANSITION = {
 };
 
 export function PlatformSidebarChangelog() {
-  const mounted = useIsClient();
   const t = useTranslations("platform.changelog");
   const [open, setOpen] = useState(false);
   const lastSeenVersion = useChangelogStore((state) => state.lastSeenVersion);
@@ -77,8 +75,6 @@ export function PlatformSidebarChangelog() {
       }
       return A.append(prev, version);
     });
-
-  if (!mounted) return null;
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>

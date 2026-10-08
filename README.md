@@ -73,6 +73,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Animation | motion/react |
 | State | zustand |
 | Search params state | nuqs |
+| App routing | wouter |
 | Persistence | IndexedDB (via idb) |
 | Utilities | @mobily/ts-belt |
 | Dates | date-fns |

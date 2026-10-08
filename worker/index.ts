@@ -1,10 +1,11 @@
 /**
  * The only server code Lanjut runs. Every page is a static file; this Worker
  * sits in front of a few paths to relay feedback, pick the visitor's language,
- * and forward editor links from before the static site. Résumé content never
- * reaches it.
+ * forward addresses from older layouts, and serve the editor page for
+ * /editor/<id>. Résumé content never reaches it.
  */
 import { S } from "@mobily/ts-belt";
+import { appPageFor, legacyTarget } from "../src/lib/route-rules";
 import { FeedbackError, fileFeedback } from "./feedback";
 import { localeRedirect } from "./locale";
 
@@ -13,9 +14,6 @@ export interface Env {
   GITHUB_ISSUE_TOKEN?: string;
   TURNSTILE_SECRET_KEY?: string;
 }
-
-// Editor links used to carry the id in the path: /platform/editor/<id>.
-const LEGACY_EDITOR_PATH = /^(\/id)?\/platform\/editor\/([^/]+)\/?$/;
 
 // English used to answer under /en as well. Desktop builds up to 0.18 still
 // open /en/feedback, so the prefix forwards instead of reading a 404.
@@ -51,13 +49,11 @@ export default {
       return Response.redirect(target.href, 308);
     }
 
-    const legacy = LEGACY_EDITOR_PATH.exec(url.pathname);
-    if (legacy) {
-      const target = new URL(`${legacy[1] ?? ""}/platform/editor`, url);
-      target.searchParams.set("id", decodeURIComponent(legacy[2]));
-      return Response.redirect(target.href, 301);
-    }
+    const legacy = legacyTarget(url);
+    if (legacy) return Response.redirect(legacy.href, 301);
 
-    return localeRedirect(request, url) ?? env.ASSETS.fetch(request);
+    const page = appPageFor(url.pathname);
+    const asset = page ? new Request(new URL(page, url), request) : request;
+    return localeRedirect(request, url) ?? env.ASSETS.fetch(asset);
   },
 };

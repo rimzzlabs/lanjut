@@ -2,6 +2,7 @@ import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/react";
 import { type PropsWithChildren, useEffect } from "react";
 import { IntlProvider } from "use-intl";
+import { Router } from "wouter";
 import { MESSAGES } from "@/i18n/messages";
 import { PathnameContext } from "@/i18n/navigation";
 import { type Locale, stripLocale } from "@/i18n/routing";
@@ -68,14 +69,18 @@ export function AppProviders(props: PropsWithChildren<IslandProps>) {
 
   return (
     <IslandProviders locale={props.locale} pathname={props.pathname}>
-      <NuqsAdapter>
-        {IS_DESKTOP && <DesktopLocaleMemory />}
-        {IS_DESKTOP && <DesktopUpdater />}
-        <AppThemeProvider>
-          <TooltipProvider>{props.children}</TooltipProvider>
-          <Toaster />
-        </AppThemeProvider>
-      </NuqsAdapter>
+      {/* wouter reads `location` while rendering unless a router supplies the
+          path and search, and /feedback renders on the server. */}
+      <Router ssrPath={props.pathname} ssrSearch="">
+        <NuqsAdapter>
+          {IS_DESKTOP && <DesktopLocaleMemory />}
+          {IS_DESKTOP && <DesktopUpdater />}
+          <AppThemeProvider>
+            <TooltipProvider>{props.children}</TooltipProvider>
+            <Toaster />
+          </AppThemeProvider>
+        </NuqsAdapter>
+      </Router>
     </IslandProviders>
   );
 }

@@ -4,7 +4,7 @@ import { TourAutostart } from "../tour/tour-autostart";
 
 /**
  * Holds the library tour back while the create dialog is deep-linked open
- * (`/platform?create=true`): the user arrived with an explicit goal, so the
+ * (`/editor?create=true`): the user arrived with an explicit goal, so the
  * dialog wins. The tour is deferred, not skipped; mounting TourAutostart on
  * close starts it if the user cancels, and saving routes to the editor where
  * the editor tour takes over.

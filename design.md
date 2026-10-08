@@ -22,11 +22,15 @@ editorial
   and deck over the draft row and the reader sheet. Then Looks, Kept, Import, Exports,
   Local, Download, FAQ, a statement close, and a footer of titled link groups (Product,
   Project, Support). No kickers, eyebrows, section numbers, or stat rows.
-- App pages (`/platform`, `/platform/template`): **Workbench-minimal**. A page header
+- App pages (`/editor`, `/template`): **Workbench-minimal**. They load client-only, so
+  the first paint is a full-page loader (the mark and a spinner) on the page background.
+  Moving between them keeps the shell; only the content area shows a spinner while
+  that page's code loads. A page header
   (title + hairline rule) over a toolbar over a grid. Function carries the page; no
   enrichment, no display serif.
-- The editor page is `/platform/editor?id=...` on web and desktop. It renders the
-  **Workbench-minimal** editor surface inside the platform shell.
+- The editor is `/editor/<id>` on web and desktop, served by the same page as the
+  library. It shows the **Workbench-minimal** editor surface inside the platform
+  shell.
 - Utility pages (`/feedback`): **Workbench-minimal**, single column, capped at
   `max-w-xl`. A kind switch over a heading over the form. Reached from the
   sidebar dialogs' own surface or opened directly by the desktop app, which

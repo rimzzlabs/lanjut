@@ -7,6 +7,7 @@ import {
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useLandingDraftCreate } from "@/hooks/use-landing-draft-create";
 import { Link } from "@/i18n/navigation";
+import { TEMPLATE_PATHNAME } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 
 /** The closing actions, carrying any draft typed in the hero into the editor. */
@@ -34,7 +35,7 @@ function LandingClosureButtons() {
         <ArrowRightIcon />
       </Button>
       <Link
-        href="/platform/template"
+        href={TEMPLATE_PATHNAME}
         className={cn(
           buttonVariants({ size: "lg", variant: "outline" }),
           "h-11 px-5",

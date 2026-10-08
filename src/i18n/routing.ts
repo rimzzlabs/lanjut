@@ -17,8 +17,8 @@ export function isLocale(value: unknown): value is Locale {
 const LOCALE_PREFIX = /^\/id(?=\/|$)/;
 
 /**
- * Drops the locale prefix and any trailing slash: `/id/platform/` becomes
- * `/platform`.
+ * Drops the locale prefix and any trailing slash: `/id/editor/` becomes
+ * `/editor`.
  */
 export function stripLocale(pathname: string): string {
   return (

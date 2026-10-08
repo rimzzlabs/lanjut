@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { type Locale, localizePath } from "@/i18n/routing";
 import { getTranslator } from "@/i18n/translator";
+import { EDITOR_PATHNAME } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 import { LandingNavbarSettings } from "./landing-navbar-settings";
 
@@ -15,7 +16,7 @@ interface Props {
 const { locale, pathname } = Astro.props;
 const t = getTranslator(locale, "nav");
 const homeHref = localizePath("/", locale);
-const builderHref = localizePath("/platform", locale);
+const builderHref = localizePath(EDITOR_PATHNAME, locale);
 ---
 
 <div class="relative hidden h-16 md:block">

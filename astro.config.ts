@@ -1,16 +1,45 @@
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
+import type { Plugin } from "vite";
+import { appPageFor, legacyTarget } from "./src/lib/route-rules";
 
 const desktop = process.env.LANJUT_TARGET === "desktop";
+
+/**
+ * The Worker routes page requests in production: it forwards older addresses
+ * and serves the editor page for /editor/<id>. Pages in `astro dev` never pass
+ * through it, so the dev server applies the same rules here. It reads the raw
+ * request, because Astro hides the query of a static page.
+ */
+function appRoutesInDev(): Plugin {
+  return {
+    name: "lanjut:app-routes",
+    configureServer(server) {
+      server.middlewares.use(function routeAppPage(request, response, next) {
+        const url = new URL(request.url ?? "/", "http://localhost");
+        const target = legacyTarget(url);
+        if (target) {
+          response.writeHead(301, {
+            Location: `${target.pathname}${target.search}`,
+          });
+          response.end();
+          return;
+        }
+        const page = appPageFor(url.pathname);
+        if (page) request.url = `${page}${url.search}`;
+        next();
+      });
+    },
+  };
+}
 
 export default defineConfig({
   site: "https://lanjut.org",
   // Separate output folders: the desktop build bakes a different target flag
   // into the bundle, so one build must never overwrite the other.
   outDir: desktop ? "dist-desktop" : "dist",
-  // Pages land where their source sits: platform/editor.astro becomes
-  // platform/editor.html, and id/404.astro the localized id/404.html.
+  // Pages land where their source sits: template.astro becomes template.html, and id/404.astro the localized id/404.html.
   build: { format: "preserve" },
   trailingSlash: "ignore",
   server: { port: 4321 },
@@ -82,7 +111,7 @@ export default defineConfig({
     },
   ],
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), appRoutesInDev()],
     // nextstepjs ships extensionless ESM imports, which Node cannot load
     // during prerender. Bundling it lets Vite resolve them.
     ssr: { noExternal: ["nextstepjs"] },

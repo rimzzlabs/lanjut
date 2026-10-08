@@ -3,7 +3,7 @@ import { useTranslations } from "use-intl";
 import { useEditorId } from "@/hooks/use-editor-id";
 import { Link } from "@/i18n/navigation";
 import { nearestResumeById } from "@/lib/resume";
-import { editorHref } from "@/lib/routes";
+import { EDITOR_PATHNAME, editorHref, TEMPLATE_PATHNAME } from "@/lib/routes";
 import { useResumeStore } from "@/lib/store";
 
 /**
@@ -43,14 +43,14 @@ export function EditorResumeNotFound() {
       <p className="text-xs text-neutral-500">
         {t("headTo")}{" "}
         <Link
-          href="/platform"
+          href={EDITOR_PATHNAME}
           className="font-medium text-primary underline-offset-4 hover:underline"
         >
           {t("dashboard")}
         </Link>{" "}
         {t("or")}{" "}
         <Link
-          href="/platform/template"
+          href={TEMPLATE_PATHNAME}
           className="font-medium text-primary underline-offset-4 hover:underline"
         >
           {t("browseTemplates")}
