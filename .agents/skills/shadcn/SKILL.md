@@ -1,596 +1,277 @@
 ---
 name: shadcn
-description: shadcn/ui expert guidance — CLI, component installation, composition patterns, custom registries, theming, Tailwind CSS integration, and high-quality interface design. Use when initializing shadcn, adding components, composing product UI, building custom registries, configuring themes, or troubleshooting component issues.
-metadata:
-  priority: 6
-  docs:
-    - "https://ui.shadcn.com/docs"
-    - "https://ui.shadcn.com/docs/components"
-  pathPatterns:
-    - 'components.json'
-    - 'components/ui/**'
-    - 'src/components/ui/**'
-    - 'apps/*/components/ui/**'
-    - 'apps/*/src/components/ui/**'
-    - 'packages/*/components/ui/**'
-    - 'packages/*/src/components/ui/**'
-  bashPatterns:
-    - '\bnpx\s+shadcn\b'
-    - '\bnpx\s+shadcn@latest\s+(init|add|build|search|list|migrate|info|docs|view)\b'
-    - '\bnpx\s+create-next-app\b'
-    - '\bbunx\s+create-next-app\b'
-    - '\bpnpm\s+create\s+next-app\b'
-    - '\bnpm\s+create\s+next-app\b'
-validate:
-  -
-    pattern: '"base"\s*:\s*"base-ui"'
-    message: 'AI Elements components use Radix-specific APIs (asChild, openDelay) and have type errors with Base UI. If this project uses AI Elements, reinitialize with: npx shadcn@latest init -d --base radix -f'
-    severity: warn
-retrieval:
-  aliases:
-    - shadcn ui
-    - component library
-    - ui components
-    - tailwind components
-  intents:
-    - add shadcn component
-    - set up shadcn
-    - customize theme
-    - build ui
-  entities:
-    - shadcn/ui
-    - Tailwind CSS
-    - registry
-    - theme
-    - components.json
-
+description: Manages shadcn components and projects — adding, searching, fixing, debugging, styling, and composing UI, including chat interfaces. Provides project context, component docs, and usage examples. Applies when working with shadcn/ui, component registries, presets, --preset codes, or any project with a components.json file. Also triggers for "shadcn init", "create an app with --preset", or "switch to --preset".
+user-invocable: false
+allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(bunx --bun shadcn@latest *)
 ---
 
 # shadcn/ui
 
-You are an expert in shadcn/ui — a collection of beautifully designed, accessible, and customizable React components built on Radix UI primitives and Tailwind CSS. Components are added directly to your codebase as source code, not installed as a dependency.
+A framework for building ui, components and design systems. Components are added as source code to the user's project via the CLI.
 
-## Key Concept
+> **IMPORTANT:** Run all CLI commands using the project's package runner: `npx shadcn@latest`, `pnpm dlx shadcn@latest`, or `bunx --bun shadcn@latest` — based on the project's `packageManager`. Examples below use `npx shadcn@latest` but substitute the correct runner for the project.
 
-shadcn/ui is **not a component library** in the traditional sense. You don't install it as a package. Instead, the CLI copies component source code into your project, giving you full ownership and customization ability.
+## Current Project Context
 
-## CLI Commands
-
-### Initialize (non-interactive — ALWAYS use this)
-
-**IMPORTANT**: `shadcn init` is interactive by default. Always use `-d` (defaults) for non-interactive initialization:
-
-```bash
-# Non-interactive init with defaults — USE THIS
-npx shadcn@latest init -d
-
-# Non-interactive with a preset (recommended for consistent design systems)
-npx shadcn@latest init --preset <code> -f
-
-# Non-interactive with explicit base library choice
-npx shadcn@latest init -d --base radix
-npx shadcn@latest init -d --base base-ui
-
-# Scaffold a full project template (CLI v4)
+```json
+!`npx shadcn@latest info --json`
 ```
 
-> **AI Elements compatibility**: Always use `--base radix` (the default) when the project uses or may use AI Elements. AI Elements components rely on Radix APIs and have type errors with Base UI.
+The JSON above contains the project config and installed components. Use `npx shadcn@latest docs <component>` to get documentation and example URLs for any component.
 
-```bash
-npx shadcn@latest init --template next -d
-npx shadcn@latest init --template vite -d
+## Principles
+
+1. **Use existing components first.** Use `npx shadcn@latest search` to check registries before writing custom UI. Check community registries too.
+2. **Compose, don't reinvent.** Settings page = Tabs + Card + form controls. Dashboard = Sidebar + Card + Chart + Table.
+3. **Use built-in variants before custom styles.** `variant="outline"`, `size="sm"`, etc.
+4. **Use semantic colors.** `bg-primary`, `text-muted-foreground` — never raw values like `bg-blue-500`.
+
+## Critical Rules
+
+These rules are **always enforced**. Each links to a file with Incorrect/Correct code pairs.
+
+### Styling & Tailwind → [styling.md](./rules/styling.md)
+
+- **`className` for layout, not styling.** Never override component colors or typography.
+- **No `space-x-*` or `space-y-*`.** Use `flex` with `gap-*`. For vertical stacks, `flex flex-col gap-*`.
+- **Use `size-*` when width and height are equal.** `size-10` not `w-10 h-10`.
+- **Use `truncate` shorthand.** Not `overflow-hidden text-ellipsis whitespace-nowrap`.
+- **No manual `dark:` color overrides.** Use semantic tokens (`bg-background`, `text-muted-foreground`).
+- **Use `cn()` for conditional classes.** Don't write manual template literal ternaries.
+- **No manual `z-index` on overlay components.** Dialog, Sheet, Popover, etc. handle their own stacking.
+
+### Forms & Inputs → [forms.md](./rules/forms.md)
+
+- **Forms use `FieldGroup` + `Field`.** Never use raw `div` with `space-y-*` or `grid gap-*` for form layout.
+- **`InputGroup` uses `InputGroupInput`/`InputGroupTextarea`.** Never raw `Input`/`Textarea` inside `InputGroup`.
+- **Buttons inside inputs use `InputGroup` + `InputGroupAddon`.**
+- **Option sets (2–7 choices) use `ToggleGroup`.** Don't loop `Button` with manual active state.
+- **`FieldSet` + `FieldLegend` for grouping related checkboxes/radios.** Don't use a `div` with a heading.
+- **Field validation uses `data-invalid` + `aria-invalid`.** `data-invalid` on `Field`, `aria-invalid` on the control. For disabled: `data-disabled` on `Field`, `disabled` on the control.
+
+### Component Structure → [composition.md](./rules/composition.md)
+
+- **Items always inside their Group.** `SelectItem` → `SelectGroup`. `DropdownMenuItem` → `DropdownMenuGroup`. `CommandItem` → `CommandGroup`.
+- **Use `asChild` (radix) or `render` (base) for custom triggers.** Check `base` field from `npx shadcn@latest info`. → [base-vs-radix.md](./rules/base-vs-radix.md)
+- **Dialog, Sheet, and Drawer always need a Title.** `DialogTitle`, `SheetTitle`, `DrawerTitle` required for accessibility. Use `className="sr-only"` if visually hidden.
+- **Use full Card composition.** `CardHeader`/`CardTitle`/`CardDescription`/`CardContent`/`CardFooter`. Don't dump everything in `CardContent`.
+- **Button has no `isPending`/`isLoading`.** Compose with `Spinner` + `data-icon` + `disabled`.
+- **`TabsTrigger` must be inside `TabsList`.** Never render triggers directly in `Tabs`.
+- **`Avatar` always needs `AvatarFallback`.** For when the image fails to load.
+
+### Use Components, Not Custom Markup → [composition.md](./rules/composition.md)
+
+- **Use existing components before custom markup.** Check if a component exists before writing a styled `div`.
+- **Callouts use `Alert`.** Don't build custom styled divs.
+- **Empty states use `Empty`.** Don't build custom empty state markup.
+- **Toast follows the project base.** Use `toast` from the `toast` component for
+  Base UI projects. Use `toast()` from `sonner` for Radix and React Aria
+  projects.
+- **Use `Separator`** instead of `<hr>` or `<div className="border-t">`.
+- **Use `Skeleton`** for loading placeholders. No custom `animate-pulse` divs.
+- **Use `Badge`** instead of custom styled spans.
+
+### Icons → [icons.md](./rules/icons.md)
+
+- **Icons in `Button` use `data-icon`.** `data-icon="inline-start"` or `data-icon="inline-end"` on the icon.
+- **No sizing classes on icons inside components.** Components handle icon sizing via CSS. No `size-4` or `w-4 h-4`.
+- **Pass icons as objects, not string keys.** `icon={CheckIcon}`, not a string lookup.
+
+### Chat & Messaging → [chat.md](./rules/chat.md)
+
+- **Chat UI composes the chat primitives.** Conversations use `MessageScroller`, rows use `Message`, surfaces use `Bubble`. Never hand-rolled bubble `div`s or a raw scroll container.
+- **`MessageScroller` owns scroll behavior.** Streaming follow, anchoring, and jump-to-latest (`MessageScrollerButton`) are built in. Don't write a `useStickToBottom`/`ResizeObserver` hook.
+- **Attachments use `Attachment`; system notes and dividers use `Marker`.** Not `Item` cards or `Separator` + a label.
+
+### CLI
+
+- **Never decode preset codes or build preset URLs manually.** Use `npx shadcn@latest preset decode <code>`, `preset url <code>`, or `preset open <code>`. For project-aware preset detection, use `npx shadcn@latest preset resolve`.
+- **Apply preset codes directly with the CLI.** Use `npx shadcn@latest apply <code>` for existing projects, or `npx shadcn@latest init --preset <code>` when initializing.
+
+## Key Patterns
+
+These are the most common patterns that differentiate correct shadcn/ui code. For edge cases, see the linked rule files above.
+
+```tsx
+// Form layout: FieldGroup + Field, not div + Label.
+<FieldGroup>
+  <Field>
+    <FieldLabel htmlFor="email">Email</FieldLabel>
+    <Input id="email" />
+  </Field>
+</FieldGroup>
+
+// Validation: data-invalid on Field, aria-invalid on the control.
+<Field data-invalid>
+  <FieldLabel>Email</FieldLabel>
+  <Input aria-invalid />
+  <FieldDescription>Invalid email.</FieldDescription>
+</Field>
+
+// Icons in buttons: data-icon, no sizing classes.
+<Button>
+  <SearchIcon data-icon="inline-start" />
+  Search
+</Button>
+
+// Spacing: gap-*, not space-y-*.
+<div className="flex flex-col gap-4">  // correct
+<div className="space-y-4">           // wrong
+
+// Equal dimensions: size-*, not w-* h-*.
+<Avatar className="size-10">   // correct
+<Avatar className="w-10 h-10"> // wrong
+
+// Status colors: Badge variants or semantic tokens, not raw colors.
+<Badge variant="secondary">+20.1%</Badge>    // correct
+<span className="text-emerald-600">+20.1%</span> // wrong
 ```
 
-Options:
-- `-d, --defaults` — **Use default configuration, skip all interactive prompts** (REQUIRED for CI/agent use)
-- `-y, --yes` — Skip confirmation prompts (does NOT skip library selection — use `-d` instead)
-- `-f, --force` — Force overwrite existing configuration
-- `-t, --template` — Scaffold full project template (`next`, `vite`, `react-router`, `astro`, `laravel`, `tanstack-start`)
-- `--preset` — Apply a design system preset (colors, theme, icons, fonts, radius) as a single shareable code
-- `--base` — Choose primitive library: `radix` (default) or `base-ui`
-- `--monorepo` — Set up a monorepo structure
+## Component Selection
 
-> **WARNING**: `-y`/`--yes` alone does NOT make init fully non-interactive — it still prompts for component library selection. Always use `-d` to skip ALL prompts.
+| Need                       | Use                                                                                                 |
+| -------------------------- | --------------------------------------------------------------------------------------------------- |
+| Button/action              | `Button` with appropriate variant                                                                   |
+| Form inputs                | `Input`, `Select`, `Combobox`, `Switch`, `Checkbox`, `RadioGroup`, `Textarea`, `InputOTP`, `Slider` |
+| Toggle between 2–5 options | `ToggleGroup` + `ToggleGroupItem`                                                                   |
+| Data display               | `Table`, `Card`, `Badge`, `Avatar`                                                                  |
+| Navigation                 | `Sidebar`, `NavigationMenu`, `Breadcrumb`, `Tabs`, `Pagination`                                     |
+| Overlays                   | `Dialog` (modal), `Sheet` (side panel), `Drawer` (bottom sheet), `AlertDialog` (confirmation)       |
+| Feedback                   | `toast` (Base UI), `sonner` (Radix/Aria), `Alert`, `Progress`, `Skeleton`, `Spinner`                 |
+| Command palette            | `Command` inside `Dialog`                                                                           |
+| Charts                     | `Chart` (wraps Recharts)                                                                            |
+| Layout                     | `Card`, `Separator`, `Resizable`, `ScrollArea`, `Accordion`, `Collapsible`                          |
+| Empty states               | `Empty`                                                                                             |
+| Menus                      | `DropdownMenu`, `ContextMenu`, `Menubar`                                                            |
+| Tooltips/info              | `Tooltip`, `HoverCard`, `Popover`                                                                   |
+| Chat / conversation UI     | `MessageScroller`, `Message`, `Bubble`, `Attachment`, `Marker`                                      |
 
-> **Deprecated in CLI v4**: `--style`, `--base-color`, `--src-dir`, `--no-base-style`, and `--css-variables` flags are removed and will error. The `registry:build` and `registry:mcp` registry types are also deprecated. Use `registry:base` and `registry:font` instead.
+## Key Fields
 
-The init command:
-1. Detects your framework (Next.js, Vite, React Router, Astro, Laravel, TanStack Start)
-2. Installs required dependencies (Radix UI, tailwind-merge, class-variance-authority)
-3. Creates `components.json` configuration
-4. Sets up the `cn()` utility function
-5. Configures CSS variables for theming
+The injected project context contains these key fields:
 
-### Add Components
+- **`aliases`** → use the actual alias prefix for imports (e.g. `@/`, `~/`), never hardcode.
+- **`isRSC`** → when `true`, components using `useState`, `useEffect`, event handlers, or browser APIs need `"use client"` at the top of the file. Always reference this field when advising on the directive.
+- **`tailwindVersion`** → `"v4"` uses `@theme inline` blocks; `"v3"` uses `tailwind.config.js`.
+- **`tailwindCssFile`** → the global CSS file where custom CSS variables are defined. Always edit this file, never create a new one.
+- **`style`** → component visual treatment (e.g. `nova`, `vega`).
+- **`base`** → primitive library (`radix` or `base`). Affects component APIs and available props.
+- **`iconLibrary`** → determines icon imports. Use `lucide-react` for `lucide`, `@tabler/icons-react` for `tabler`, etc. Never assume `lucide-react`.
+- **`resolvedPaths`** → exact file-system destinations for components, utils, hooks, etc.
+- **`framework`** → routing and file conventions (e.g. Next.js App Router vs Vite SPA).
+- **`packageManager`** → use this for any non-shadcn dependency installs (e.g. `pnpm add date-fns` vs `npm install date-fns`).
+- **`preset`** → resolved preset code and values for the current project. Use `npx shadcn@latest preset resolve --json` when you only need preset information.
+
+See [cli.md — `info` command](./cli.md) for the full field reference.
+
+## Component Docs, Examples, and Usage
+
+Run `npx shadcn@latest docs <component>` to get the URLs for a component's documentation, examples, and API reference. Fetch these URLs to get the actual content.
 
 ```bash
-# Add specific components
-npx shadcn@latest add button dialog card
+npx shadcn@latest docs button dialog select
+```
 
-# Add all available components
+**When creating, fixing, debugging, or using a component, always run `npx shadcn@latest docs` and fetch the URLs first.** This ensures you're working with the correct API and usage patterns rather than guessing.
+
+## Workflow
+
+1. **Get project context** — already injected above. Run `npx shadcn@latest info` again if you need to refresh.
+2. **Check installed components first** — before running `add`, always check the `components` list from project context or list the `resolvedPaths.ui` directory. Don't import components that haven't been added, and don't re-add ones already installed.
+3. **Find components** — `npx shadcn@latest search`.
+4. **Get docs and examples** — run `npx shadcn@latest docs <component>` to get URLs, then fetch them. Use `npx shadcn@latest view` to browse registry items you haven't installed. To preview changes to installed components, use `npx shadcn@latest add --diff`.
+5. **Install or update** — `npx shadcn@latest add`. When updating existing components, use `--dry-run` and `--diff` to preview changes first (see [Updating Components](#updating-components) below).
+6. **Fix imports in third-party components** — After adding components from community registries (e.g. `@bundui`, `@magicui`), check the added non-UI files for hardcoded import paths like `@/components/ui/...`. These won't match the project's actual aliases. Use `npx shadcn@latest info` to get the correct `ui` alias (e.g. `@workspace/ui/components`) and rewrite the imports accordingly. The CLI rewrites imports for its own UI files, but third-party registry components may use default paths that don't match the project.
+7. **Review added components** — After adding a component or block from any registry, **always read the added files and verify they are correct**. Check for missing sub-components (e.g. `SelectItem` without `SelectGroup`), missing imports, incorrect composition, or violations of the [Critical Rules](#critical-rules). Also replace any icon imports with the project's `iconLibrary` from the project context (e.g. if the registry item uses `lucide-react` but the project uses `hugeicons`, swap the imports and icon names accordingly). Fix all issues before moving on.
+8. **Registry must be explicit** — When the user asks to add a block or component, **do not guess the registry**. If no registry is specified (e.g. user says "add a login block" without specifying `@shadcn`, `@tailark`, `owner/repo`, etc.), ask which registry to use. Never default to a registry on behalf of the user.
+9. **Switching presets** — Ask the user first: **overwrite**, **partial**, **merge**, or **skip**?
+   - **Inspect current preset**: `npx shadcn@latest preset resolve`. Use `--json` when you need structured values.
+   - **Inspect incoming preset**: `npx shadcn@latest preset decode <code>`. Use `preset url <code>` or `preset open <code>` to share or open the preset builder.
+   - **Overwrite**: `npx shadcn@latest apply <code>`. Overwrites detected components, fonts, and CSS variables.
+   - **Partial**: `npx shadcn@latest apply <code> --only theme,font`. Updates only the selected preset parts without reinstalling UI components. Supported values are `theme` and `font`; comma-separated combinations are allowed. `icon` is intentionally not supported, because icon changes may require full component reinstall and transforms.
+   - **Merge**: `npx shadcn@latest init --preset <code> --force --no-reinstall`, then run `npx shadcn@latest info` to list installed components, then for each installed component use `--dry-run` and `--diff` to [smart merge](#updating-components) it individually.
+   - **Skip**: `npx shadcn@latest init --preset <code> --force --no-reinstall`. Only updates config and CSS, leaves components as-is.
+   - **Important**: Always run preset commands inside the user's project directory. `apply` only works in an existing project with a `components.json` file. The CLI automatically preserves the current base (`base` vs `radix`) from `components.json`. If you must use a scratch/temp directory (e.g. for `--dry-run` comparisons), pass `--base <current-base>` explicitly — preset codes do not encode the base.
+
+## Updating Components
+
+When the user asks to update a component from upstream while keeping their local changes, use `--dry-run` and `--diff` to intelligently merge. **NEVER fetch raw files from GitHub manually — always use the CLI.**
+
+1. Run `npx shadcn@latest add <component> --dry-run` to see all files that would be affected.
+2. For each file, run `npx shadcn@latest add <component> --diff <file>` to see what changed upstream vs local.
+3. Decide per file based on the diff:
+   - No local changes → safe to overwrite.
+   - Has local changes → read the local file, analyze the diff, and apply upstream updates while preserving local modifications.
+   - User says "just update everything" → use `--overwrite`, but confirm first.
+4. **Never use `--overwrite` without the user's explicit approval.**
+
+## Quick Reference
+
+```bash
+# Create a new project.
+npx shadcn@latest init --name my-app --preset base-nova
+npx shadcn@latest init --name my-app --preset a2r6bw --template vite
+
+# Create a monorepo project.
+npx shadcn@latest init --name my-app --preset base-nova --monorepo
+npx shadcn@latest init --name my-app --preset base-nova --template next --monorepo
+
+# Initialize existing project.
+npx shadcn@latest init --preset base-nova
+npx shadcn@latest init --defaults  # shortcut: --template=next --preset=nova (base style implied)
+
+# Apply a preset to an existing project.
+npx shadcn@latest apply a2r6bw
+npx shadcn@latest apply a2r6bw --only theme
+npx shadcn@latest apply a2r6bw --only font
+npx shadcn@latest apply a2r6bw --only theme,font
+
+# Inspect preset codes and project preset state.
+npx shadcn@latest preset decode a2r6bw
+npx shadcn@latest preset url a2r6bw
+npx shadcn@latest preset open a2r6bw
+npx shadcn@latest preset resolve
+npx shadcn@latest preset resolve --json
+
+# Add components.
+npx shadcn@latest add button card dialog
+npx shadcn@latest add @magicui/shimmer-button
+npx shadcn@latest add owner/repo/item
 npx shadcn@latest add --all
 
-# Add from a custom registry
-npx shadcn@latest add @v0/dashboard
-npx shadcn@latest add @acme/custom-button
+# Preview changes before adding/updating.
+npx shadcn@latest add button --dry-run
+npx shadcn@latest add button --diff button.tsx
+npx shadcn@latest add @acme/form --view button.tsx
+npx shadcn@latest add owner/repo/item --dry-run
 
-# Add from AI Elements registry
-npx shadcn@latest add https://elements.ai-sdk.dev/api/registry/all.json
+# Search registries.
+npx shadcn@latest search @shadcn -q "sidebar"
+npx shadcn@latest search @tailark -q "stats"
+npx shadcn@latest search owner/repo -q "login"
+npx shadcn@latest search                          # all configured registries
+npx shadcn@latest search @shadcn -q "menu" -t ui  # filter by item type
+
+# Get component docs and example URLs.
+npx shadcn@latest docs button dialog select
+
+# View registry item details (for items not yet installed).
+npx shadcn@latest view @shadcn/button
+npx shadcn@latest view owner/repo/item
 ```
 
-Options:
-- `-o, --overwrite` — Overwrite existing files
-- `-p, --path` — Custom install path
-- `-a, --all` — Install all components
-- `--dry-run` — Preview what will be added without writing files
-- `--diff` — Show diff of changes when updating existing components
-- `--view` — Display a registry item's source code inline
-
-### Search & List
-
-```bash
-npx shadcn@latest search button
-npx shadcn@latest list @v0
-```
-
-### Build (Custom Registry)
-
-```bash
-npx shadcn@latest build
-npx shadcn@latest build ./registry.json -o ./public/r
-```
-
-### View, Info & Docs (CLI v4)
-
-```bash
-# View a registry item's source before installing
-npx shadcn@latest view button
-
-# Show project diagnostics — config, installed components, dependencies
-npx shadcn@latest info
-
-# Get docs, code, and examples for any component (agent-friendly output)
-npx shadcn@latest docs button
-npx shadcn@latest docs dialog
-```
-
-> **`shadcn docs`** gives coding agents the context to use primitives correctly — returns code examples, API reference, and usage patterns inline.
-
-### Migrate
-
-```bash
-npx shadcn@latest migrate rtl    # RTL support migration
-npx shadcn@latest migrate radix  # Migrate to unified radix-ui package
-npx shadcn@latest migrate icons  # Icon library changes
-
-# Migrate components outside the default ui directory
-npx shadcn@latest migrate radix src/components/custom
-```
-
-## shadcn/skills (CLI v4)
-
-shadcn/skills gives coding agents the context they need to work with components and registries correctly. It covers both Radix and Base UI primitives, updated APIs, component patterns, and registry workflows. The skill knows how to use the CLI, when to invoke it, and which flags to pass — so agents produce code that matches your design system.
-
-Install: `pnpm dlx skills add shadcn/ui`
-
-## Unified Radix UI Package (February 2026)
-
-The `new-york` style now uses a single `radix-ui` package instead of individual `@radix-ui/react-*` packages:
-
-```tsx
-// OLD — individual packages
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-
-// NEW — unified package
-import { Dialog as DialogPrimitive } from "radix-ui"
-```
-
-To migrate existing projects: `npx shadcn@latest migrate radix`. After migration, remove unused `@radix-ui/react-*` packages from `package.json`.
-
-## Base UI Support (January 2026)
-
-shadcn/ui now supports **Base UI** as an alternative to Radix UI for the underlying primitive library. Components look and behave the same way regardless of which library you choose — only the underlying implementation changes.
-
-Choose during init: `npx shadcn@latest init --base base-ui`
-
-The CLI pulls the correct component variant based on your project configuration automatically.
-
-## Configuration (components.json)
-
-The `components.json` file configures how shadcn/ui works in your project:
-
-```json
-{
-  "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
-  "rsc": true,
-  "tsx": true,
-  "tailwind": {
-    "config": "tailwind.config.ts",
-    "css": "src/app/globals.css",
-    "baseColor": "zinc",  // Options: gray, neutral, slate, stone, zinc, mauve, olive, mist, taupe
-    "cssVariables": true
-  },
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
-  },
-  "registries": {
-    "v0": {
-      "url": "https://v0.dev/chat/api/registry"
-    },
-    "ai-elements": {
-      "url": "https://elements.ai-sdk.dev/api/registry"
-    }
-  }
-}
-```
-
-### Namespaced Registries
-
-Configure multiple registries for your project:
-
-```json
-{
-  "registries": {
-    "acme": {
-      "url": "https://acme.com/registry/{name}.json"
-    },
-    "private": {
-      "url": "https://internal.company.com/registry/{name}.json",
-      "headers": {
-        "Authorization": "Bearer ${REGISTRY_TOKEN}"
-      }
-    }
-  }
-}
-```
-
-Install using namespace syntax:
-
-```bash
-npx shadcn@latest add @acme/header @private/auth-form
-```
-
-## Theming
-
-### CSS Variables
-
-shadcn/ui uses CSS custom properties for theming, defined in `globals.css`:
-
-```css
-@theme inline {
-  --color-background: oklch(0.145 0 0);
-  --color-foreground: oklch(0.985 0 0);
-  --color-card: oklch(0.205 0 0);
-  --color-card-foreground: oklch(0.985 0 0);
-  --color-primary: oklch(0.488 0.243 264.376);
-  --color-primary-foreground: oklch(0.985 0 0);
-  --color-secondary: oklch(0.269 0 0);
-  --color-secondary-foreground: oklch(0.985 0 0);
-  --color-muted: oklch(0.269 0 0);
-  --color-muted-foreground: oklch(0.708 0 0);
-  --color-accent: oklch(0.269 0 0);
-  --color-accent-foreground: oklch(0.985 0 0);
-  --color-destructive: oklch(0.396 0.141 25.723);
-  --color-border: oklch(0.269 0 0);
-  --color-input: oklch(0.269 0 0);
-  --color-ring: oklch(0.488 0.243 264.376);
-  --radius: 0.625rem;
-  /* CLI v4: radius tokens use multiplicative calc instead of additive */
-  --radius-xs: calc(var(--radius) * 0.5);
-  --radius-sm: calc(var(--radius) * 0.75);
-  --radius-md: calc(var(--radius) * 0.875);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.5);
-}
-```
-
-### Dark Mode
-
-For dark mode, use the `dark` class on `<html>`:
-
-```tsx
-// app/layout.tsx
-<html lang="en" className="dark">
-```
-
-Or use next-themes for toggling:
-
-```tsx
-import { ThemeProvider } from 'next-themes'
-
-<ThemeProvider attribute="class" defaultTheme="dark">
-  {children}
-</ThemeProvider>
-```
-
-### Custom Colors
-
-Add application-specific colors alongside shadcn defaults:
-
-```css
-@theme inline {
-  /* shadcn defaults above... */
-
-  /* Custom app colors */
-  --color-priority-urgent: oklch(0.637 0.237 15.163);
-  --color-priority-high: oklch(0.705 0.213 47.604);
-  --color-status-done: oklch(0.723 0.219 149.579);
-}
-```
-
-Use in components:
-
-```tsx
-<span className="text-[var(--color-priority-urgent)]">Urgent</span>
-// Or with Tailwind v4 theme():
-<span className="text-priority-urgent">Urgent</span>
-```
-
-## Most Common Components
-
-| Component | Use Case |
-|-----------|----------|
-| `button` | Actions, form submission |
-| `card` | Content containers |
-| `dialog` | Modals, confirmation prompts |
-| `input` / `textarea` | Form fields |
-| `select` | Dropdowns |
-| `table` | Data display |
-| `tabs` | View switching |
-| `command` | Command palette (Cmd+K) |
-| `dropdown-menu` | Context menus |
-| `popover` | Floating content |
-| `tooltip` | Hover hints |
-| `badge` | Status indicators |
-| `avatar` | User profile images |
-| `scroll-area` | Scrollable containers |
-| `separator` | Visual dividers |
-| `label` | Form labels |
-| `sheet` | Slide-out panels |
-| `skeleton` | Loading placeholders |
-
-## Design Direction for shadcn on Vercel
-
-shadcn/ui is not only a component source generator. In the Vercel stack it is the default interface language. Do not stop at "the component works." Compose pages that feel deliberate, high-signal, and consistent.
-
-### Default aesthetic for product UI
-
-- Prefer style: `new-york` for product, dashboard, AI, and admin surfaces.
-- Default to dark mode for dashboards, AI apps, internal tools, settings, and developer-facing products. Use light mode only when the product is clearly content-first or editorial.
-- Use Geist Sans for interface text and Geist Mono for code, metrics, IDs, timestamps, commands.
-- Prefer zinc, neutral, or slate as the base palette. Use one accent color through `--color-primary`.
-- Build core surfaces from tokens: `bg-background`, `bg-card`, `text-foreground`, `text-muted-foreground`, `border-border`, `ring-ring`. Avoid ad-hoc hex values.
-- Keep radius consistent. The default `--radius: 0.625rem` is a strong baseline.
-- Use one density system per page: comfortable (`gap-6` / `p-6` / `text-sm`) or compact (`gap-4` / `p-4` / `text-sm`).
-- Keep icons quiet and consistent. Lucide icons at `h-4 w-4` or `h-5 w-5`.
-
-### Reach for this first
-
-| Use case | Reach for this first | Why |
-|----------|----------------------|-----|
-| Settings page | `Tabs` + `Card` + `Form` | Clear information grouping with predictable save flows |
-| Data dashboard | `Card` + `Badge` + `Table` + `DropdownMenu` | Covers summary, status, dense data, and row actions without custom shells |
-| CRUD table | `Table` + `DropdownMenu` + `Sheet` + `AlertDialog` | Supports browse, act, edit, and destructive confirmation in a standard pattern |
-| Auth screen | `Card` + `Label` + `Input` + `Button` + `Alert` | Keeps entry flows focused and gives errors a proper treatment |
-| Global search | `Command` + `Dialog` | Fast keyboard-first discovery with an established interaction model |
-| Mobile nav | `Sheet` + `Button` + `Separator` | Provides a compact navigation shell that adapts cleanly to small screens |
-| Detail page | header + `Badge` + `Separator` + `Card` | Balances hierarchy, metadata, and supporting content without over-nesting |
-| Filters | `Card` sidebar + `Sheet` + `Select` | Works for persistent desktop filters and collapsible mobile controls |
-| Empty/loading/error states | `Card` + `Skeleton` + `Alert` | Gives non-happy paths a designed surface instead of placeholder text |
-
-### Composition recipes
-
-- Settings page: `Tabs` + `Card` per group + `Separator` + save action
-- Admin dashboard: summary `Card`s + filter bar + `Table`
-- Entity detail: header + status `Badge` + main `Card` + side `Card` + `AlertDialog` for destructive
-- Search-heavy: `Command` for quick find, `Popover` for pickers, `Sheet` for mobile filters
-- Auth/onboarding: centered `Card` + social `Separator` + inline `Alert` for errors
-- Destructive flows: `AlertDialog` (not `Dialog`) for confirmation
-
-### Anti-patterns to avoid
-
-- Raw `button` / `input` / `select` / `div` when shadcn primitives exist
-- Repeated `div rounded-xl border p-6` instead of `Tabs` / `Table` / `Sheet` / `Dialog`
-- Multiple accent colors fighting each other
-- Nested cards inside cards inside cards
-- Large gradient backgrounds and glassmorphism on every surface
-- Mixing arbitrary spacing and radius values
-- Using `Dialog` for destructive confirmation instead of `AlertDialog`
-- Shipping empty/loading/error states without design treatment
-- Using ad-hoc Tailwind palette classes for foundational surfaces instead of theme tokens
-
-## Building a Custom Registry
-
-Create your own component registry to share across projects:
-
-### Registry Types (CLI v4)
-
-| Type | Purpose |
-|------|---------|
-| `registry:ui` | Individual UI components |
-| `registry:base` | Full design system payload — components, deps, CSS vars, fonts, config |
-| `registry:font` | Font configuration as a first-class registry item |
-
-### 1. Define registry.json
-
-```json
-[
-  {
-    "name": "my-component",
-    "type": "registry:ui",
-    "title": "My Component",
-    "description": "A custom component",
-    "files": [
-      {
-        "path": "components/my-component.tsx",
-        "type": "registry:ui"
-      }
-    ],
-    "dependencies": ["lucide-react"]
-  }
-]
-```
-
-### 2. Build
-
-```bash
-npx shadcn@latest build
-# Outputs to public/r/my-component.json
-```
-
-### 3. Consume
-
-```bash
-npx shadcn@latest add https://your-domain.com/r/my-component.json
-```
-
-## Component Gotchas
-
-### `shadcn init` Breaks Geist Font in Next.js (Tailwind v4)
-
-`shadcn init` rewrites `globals.css` and may introduce `--font-sans: var(--font-sans)` — a circular self-reference that breaks font loading. Tailwind v4's `@theme inline` resolves CSS custom properties at **parse time**, not runtime — so even `var(--font-geist-sans)` won't work because Next.js injects that variable via className at runtime.
-
-**The fix**: Use literal font family names in `@theme inline`:
-
-```css
-/* In @theme inline — CORRECT (literal names) */
---font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
---font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
-
-/* WRONG — circular, resolves to nothing */
---font-sans: var(--font-sans);
-
-/* ALSO WRONG — @theme inline can't resolve runtime CSS variables */
---font-sans: var(--font-geist-sans);
-```
-
-**After running `shadcn init`**, always:
-1. Replace font declarations in `@theme inline` with literal Geist font names (as shown above)
-2. Move the font variable classNames from `<body>` to `<html>` in `layout.tsx`:
-
-```tsx
-// layout.tsx — font variables on <html>, not <body>
-<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-  <body className="antialiased">
-```
-
-### Avatar Has No `size` Prop
-
-The shadcn Avatar component does **not** accept a `size` variant prop. Control size with Tailwind classes:
-
-```tsx
-// WRONG — no size variant exists
-<Avatar size="lg" />  // ❌ TypeScript error / silently ignored
-
-// CORRECT — use Tailwind
-<Avatar className="h-12 w-12">
-  <AvatarImage src={user.image} />
-  <AvatarFallback>JD</AvatarFallback>
-</Avatar>
-
-// Small avatar
-<Avatar className="h-6 w-6"> ... </Avatar>
-```
-
-This applies to most shadcn components — they use Tailwind classes for sizing, not variant props. If you need reusable size variants, add them yourself via `cva` in the component source.
-
-## Common Patterns
-
-### cn() Utility
-
-All shadcn components use the `cn()` utility for conditional class merging:
-
-```ts
-import { clsx, type ClassValue } from 'clsx'
-import { twMerge } from 'tailwind-merge'
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-```
-
-### Extending Components
-
-Since you own the source code, extend components directly:
-
-```tsx
-// components/ui/button.tsx — add your custom variant
-const buttonVariants = cva('...', {
-  variants: {
-    variant: {
-      default: '...',
-      destructive: '...',
-      // Add custom variants
-      success: 'bg-green-600 text-white hover:bg-green-700',
-      premium: 'bg-gradient-to-r from-purple-500 to-pink-500 text-white',
-    },
-  },
-})
-```
-
-### Wrapping with TooltipProvider
-
-Many components require `TooltipProvider` at the root:
-
-```tsx
-// app/layout.tsx
-import { TooltipProvider } from '@/components/ui/tooltip'
-
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en" className="dark">
-      <body>
-        <TooltipProvider>{children}</TooltipProvider>
-      </body>
-    </html>
-  )
-}
-```
-
-## Framework Support
-
-- **Next.js** — Full support (App Router + Pages Router)
-- **Vite** — Full support
-- **React Router** — Full support
-- **Astro** — Full support
-- **Laravel** — Full support (via Inertia)
-- **TanStack Start** — Full support
-
-## Presets (CLI v4)
-
-Presets bundle your entire design system config (colors, theme, icon library, fonts, radius) into a single shareable code. One string configures everything:
-
-```bash
-# Apply a preset during init
-npx shadcn@latest init --preset <code>
-
-# Switch presets in an existing project (reconfigures everything including components)
-npx shadcn@latest init --preset <code>
-```
-
-Build custom presets on `shadcn/create` — preview how colors, fonts, and radius apply to real components before publishing.
-
-## RTL Support (2026)
-
-The CLI handles RTL transformation at install time:
-
-```bash
-npx shadcn@latest migrate rtl
-```
-
-Converts directional classes (`ml-4`, `left-2`) to logical properties (`ms-4`, `start-2`) automatically.
-
-## Official Documentation
-
-- [shadcn/ui](https://ui.shadcn.com)
-- [Components](https://ui.shadcn.com/docs/components)
-- [CLI](https://ui.shadcn.com/docs/cli)
-- [Theming](https://ui.shadcn.com/docs/theming)
-- [Custom Registry](https://ui.shadcn.com/docs/registry)
-- [Registry Directory](https://ui.shadcn.com/docs/directory)
-- [GitHub: shadcn/ui](https://github.com/shadcn-ui/ui)
+**Named presets:** `nova`, `vega`, `maia`, `lyra`, `mira`, `luma`
+**Templates:** `next`, `vite`, `start`, `react-router`, `astro` (all support `--monorepo`) and `laravel` (not supported for monorepo)
+**Preset codes:** Version-prefixed base62 strings (e.g. `a2r6bw` or `b0`), from [ui.shadcn.com](https://ui.shadcn.com).
+
+## Detailed References
+
+- [rules/forms.md](./rules/forms.md) — FieldGroup, Field, InputGroup, ToggleGroup, FieldSet, validation states
+- [rules/composition.md](./rules/composition.md) — Groups, overlays, Card, Tabs, Avatar, Alert, Empty, Toast, Separator, Skeleton, Badge, Button loading
+- [rules/chat.md](./rules/chat.md) — MessageScroller, Message, Bubble, Attachment, Marker; streaming, anchoring, jump-to-latest
+- [rules/icons.md](./rules/icons.md) — data-icon, icon sizing, passing icons as objects
+- [rules/styling.md](./rules/styling.md) — Semantic colors, variants, className, spacing, size, truncate, dark mode, cn(), z-index
+- [rules/base-vs-radix.md](./rules/base-vs-radix.md) — asChild vs render, Select, ToggleGroup, Slider, Accordion
+- [cli.md](./cli.md) — Commands, flags, presets, templates
+- [registry.md](./registry.md) — Authoring source registries, `include`, item definitions, dependencies, GitHub registry rules
+- [customization.md](./customization.md) — Theming, CSS variables, extending components
