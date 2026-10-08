@@ -50,7 +50,7 @@ editorial
   sits in the footer. A résumé's menu offers Delete even while it is open; deleting
   the open résumé returns to the library first.
 - The navbar holds the sidebar trigger, the breadcrumb, and the save state on the
-  left. On the right it holds two 36px controls only: the GitHub link (icon only
+  left; below `md` the breadcrumb hides. On the right it holds two 36px controls only: the GitHub link (icon only
   below `md`) and the profile menu. The profile menu is the active profile's avatar
   alone (photo or initials); its name, "Guest" until the person saves a profile,
   is for screen readers. It opens a card with the avatar, name, person, and email,
@@ -74,15 +74,21 @@ editorial
   header (title on the left, search and actions on the right, a hairline rule under
   them) over sections in a `max-w-7xl` column. Each section has a small semibold
   heading over its content.
+- A résumé card is one link: its title stretches over the whole card
+  (`CARD_LINK`), so there is no button inside it to compete. Its actions sit in a
+  "…" menu that lifts above the link. Hover and focus ring the whole card.
 - The library leads with the résumé edited last: a wide card with its sheet, title,
-  template, edit time, Open editor, Download, and the menu (Rename, Duplicate,
-  Delete), all 36px high. Below `md` the card holds no buttons: a tap opens a
-  drawer with every page and all the actions. Then the start row: four
+  template, edit time, a quiet "Open editor →" label, and the "…" menu (Rename,
+  Duplicate, Download, Delete) in its corner. Below `md` a tap opens a drawer with
+  every page and all the actions. Then the start row: four
   tiles (Blank, Sample, Import a file, Browse templates). The first three open the
   create Sheet with that source chosen, and Blank and Sample open on the Template
   step. Then all résumés, sorted by last edit or name, as a grid of cards or a list of
-  rows. A search shows only the matches. An empty library shows the empty message
-  over the start row.
+  rows. Between the start row and all résumés, a thank-you band shows the
+  contributors' avatars (from GitHub, refreshed daily at 00:00 UTC) beside an
+  invitation and a "Contribute on GitHub" link; without the list, the invitation
+  stands alone. A search shows only the matches. An empty library shows the empty
+  message over the start row.
 - From `lg` the template page is a list beside a preview. The list is a radio group
   of template rows (sheet, name, description) that stays in view. The preview card
   shows the chosen template at full size, every page, on the sample or on one saved
@@ -98,10 +104,13 @@ editorial
   (16px). A thumbnail or icon box 12px to 13px in (`p-3`, plus a 1px border) takes
   `rounded-sm` (9.6px). Controls are `rounded-md`. Résumé paper that floats in a
   tray, away from its edges, keeps a small radius (`rounded-xs` to `rounded`),
-  because it stands for a sheet of paper.
+  because it stands for a sheet of paper. A picture card whose width changes a
+  lot (the theme picker) sets its radii in container units of its own width, so a
+  narrow card is less round than a wide one and the nested corners stay concentric.
 - The editor is `/editor/<id>` on web and desktop, served by the same page as the
   library. It shows the **Workbench-minimal** editor surface inside the platform
-  shell.
+  shell. When the résumé does not exist, the not-found message takes the whole
+  panel, with no side panel, edit sheet, or undo keys.
 - Utility pages (`/feedback`): **Workbench-minimal**, single column, capped at
   `max-w-xl`. A kind switch over a heading over the form. Reached from the
   sidebar dialogs' own surface or opened directly by the desktop app, which
@@ -336,7 +345,11 @@ from `md`. No section carries a kicker, eyebrow, or number above its heading.
   says only what ships. Panels use `hiddenUntilFound`, so closed answers stay in the
   HTML for search and find-in-page.
 - Close (`landing-closure.astro`): a hero-size statement that Lanjut is free and open
-  source, a deck that names the license, and the two actions.
+  source, a deck that names the license, and the two actions. Under a hairline rule
+  below them, the contributors row (`landing-contributors.tsx`): the contributors'
+  faces from the Worker's daily list, an invitation to translate, fix a bug, or build
+  a feature, and a plain "Contribute on GitHub" link. It shows the open-source claim
+  where the page makes it, and it adds no heading to compete with the statement.
 - Footer (`landing-footer.astro`): wordmark and tagline, then titled link groups, over
   a top hairline.
 

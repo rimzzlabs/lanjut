@@ -1,14 +1,15 @@
 import type { ResumeIndexEntry } from "@lanjut/resume";
-import { Button } from "@lanjut/ui/components/button";
 import { Card } from "@lanjut/ui/components/card";
 import { useIsMobile } from "@lanjut/ui/hooks/use-mobile";
-import { ArrowRightIcon, DownloadSimpleIcon } from "@phosphor-icons/react";
+import { cn } from "@lanjut/ui/lib/utils";
+import { ArrowRightIcon } from "@phosphor-icons/react";
 import { useId, useState } from "react";
 import { useTranslations } from "use-intl";
 import { useResumeDocument } from "@/hooks/use-resume-document";
 import { Link } from "@/i18n/navigation";
 import { editorHref } from "@/lib/routes";
 import { TruncatedLabel } from "../shared/truncated-label";
+import { CARD_LINK, CARD_LINK_RING } from "./platform-card-link";
 import {
   type ContinueAction,
   PlatformLibraryContinueDrawer,
@@ -23,9 +24,10 @@ import { PlatformResumeSheet } from "./platform-resume-sheet";
 import { PlatformSectionHeading } from "./platform-section-heading";
 
 /**
- * The résumé edited last, first in the library, one click from the editor.
- * On a phone the card holds no buttons: a tap opens a drawer with the pages
- * and every action.
+ * The résumé edited last, first in the library. The whole card is one link
+ * into the editor (the title stretches over it), so there is no button inside
+ * the card to compete with it; the other actions sit in the corner menu. On a
+ * phone a tap opens a drawer with the pages and every action instead.
  */
 export function PlatformLibraryContinue(props: { resume: ResumeIndexEntry }) {
   const { resume } = props;
@@ -35,7 +37,6 @@ export function PlatformLibraryContinue(props: { resume: ResumeIndexEntry }) {
   const document = useResumeDocument(resume.id, resume.updatedAt);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [action, setAction] = useState<ContinueAction | null>(null);
-  const href = editorHref(resume.id);
 
   function closeAction(open: boolean) {
     if (!open) setAction(null);
@@ -47,39 +48,28 @@ export function PlatformLibraryContinue(props: { resume: ResumeIndexEntry }) {
         {t("library.continue")}
       </PlatformSectionHeading>
 
-      <Card className="relative flex-row gap-0 p-1.5">
-        <div className="relative w-28 shrink-0 sm:w-60">
+      <Card className={cn("relative flex-row gap-0 p-1.5", CARD_LINK_RING)}>
+        <div className="w-28 shrink-0 sm:w-60">
           <PlatformPaperFrame>
             <PlatformResumeSheet document={document} />
           </PlatformPaperFrame>
-          {!isMobile && (
-            <Link
-              href={href}
-              aria-hidden
-              tabIndex={-1}
-              className="absolute inset-0 rounded-lg"
-            />
-          )}
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col justify-center gap-4 px-4 py-2 sm:justify-between sm:px-6 sm:py-4">
-          <div className="flex min-w-0 flex-col gap-1">
+          <div className="flex min-w-0 flex-col gap-1 md:pr-10">
             <h3 className="min-w-0 text-base font-semibold tracking-tight sm:text-lg">
               {isMobile && (
                 <button
                   type="button"
                   aria-label={t("library.preview", { title: resume.title })}
                   onClick={() => setDrawerOpen(true)}
-                  className="block w-full cursor-pointer text-left outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-3 focus-visible:after:ring-ring/50"
+                  className={cn(CARD_LINK, "w-full cursor-pointer text-left")}
                 >
                   <TruncatedLabel text={resume.title} />
                 </button>
               )}
               {!isMobile && (
-                <Link
-                  href={href}
-                  className="block rounded-xs hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-                >
+                <Link href={editorHref(resume.id)} className={CARD_LINK}>
                   <TruncatedLabel text={resume.title} />
                 </Link>
               )}
@@ -91,20 +81,20 @@ export function PlatformLibraryContinue(props: { resume: ResumeIndexEntry }) {
             />
           </div>
 
-          {!isMobile && (
-            <div className="flex flex-wrap items-center gap-2">
-              <Button nativeButton={false} render={<Link href={href} />}>
-                {t("library.openEditor")}
-                <ArrowRightIcon data-icon="inline-end" />
-              </Button>
-              <Button variant="outline" onClick={() => setAction("download")}>
-                <DownloadSimpleIcon data-icon="inline-start" />
-                {t("grid.download")}
-              </Button>
-              <PlatformResumeGridItemMenu resume={resume} variant="toolbar" />
-            </div>
-          )}
+          <span
+            aria-hidden
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary max-md:hidden"
+          >
+            {t("library.openEditor")}
+            <ArrowRightIcon className="size-4 transition-transform group-hover/card:translate-x-0.5" />
+          </span>
         </div>
+
+        {!isMobile && (
+          <div className="absolute top-3 right-3 z-10">
+            <PlatformResumeGridItemMenu resume={resume} />
+          </div>
+        )}
       </Card>
 
       {isMobile && (

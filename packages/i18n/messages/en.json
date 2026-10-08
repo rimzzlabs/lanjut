@@ -144,6 +144,10 @@
             "description": "Hide the sidebar and it now folds into a slim row of icons instead of leaving the screen. Hover an icon to see its name. Open, it lists your five latest resumes."
           },
           {
+            "title": "Meet the people behind Lanjut",
+            "description": "Your library now thanks everyone who builds Lanjut, with a direct way to join them: translate it, fix a bug, or build a feature."
+          },
+          {
             "title": "Your PDF now matches the preview",
             "description": "PDF downloads are now drawn from the same page you see in the editor, so the fonts, sizes, and spacing in the file match the preview. The text stays selectable for applicant tracking systems."
           },
@@ -518,6 +522,14 @@
       "outdated": "Lanjut was updated in another tab",
       "outdatedDescription": "Refresh this tab to keep working. Until then, it cannot save changes.",
       "refresh": "Refresh"
+    },
+    "contributors": {
+      "title": "Thanks to everyone building Lanjut",
+      "description": "Lanjut is free and open source, and it grows with every contribution. Translate it into your language, fix a bug, or build the feature you wish it had.",
+      "contribute": "Contribute on GitHub",
+      "listLabel": "Contributors",
+      "profile": "{login} on GitHub",
+      "more": "and {count} more"
     }
   },
   "profile": {
@@ -711,9 +723,7 @@
       "notFound": "Resume not found",
       "didYouMean": "did you mean:",
       "notExist": "This resume doesn't exist in this browser's storage.",
-      "headTo": "or head to",
       "dashboard": "Dashboard",
-      "or": "or",
       "browseTemplates": "Browse Templates",
       "showSection": "Show section",
       "hideSection": "Hide section",
@@ -1078,6 +1088,7 @@
     "macNote": "It is a beta and not yet signed by Apple, so macOS asks you to confirm the first time you open it.",
     "closeHeading": "Free to use, and open source.",
     "closeBody": "There is no paid plan and no account to make. The code is public under AGPL-3.0, and anyone can read it or run their own copy.",
+    "contributorsBody": "Made by people who give their time to it. Join them: add a translation, fix a bug, or build the feature you wish it had.",
     "closeCta": "Start your résumé",
     "closeBrowse": "Browse templates",
     "newTab": "opens in a new tab",

@@ -1,5 +1,14 @@
 import { nearestResumeById } from "@lanjut/resume";
-import { FileDashedIcon } from "@phosphor-icons/react";
+import { Button } from "@lanjut/ui/components/button";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@lanjut/ui/components/empty";
+import { FileDashedIcon, SquaresFourIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { useEditorId } from "@/hooks/use-editor-id";
 import { Link } from "@/i18n/navigation";
@@ -7,10 +16,11 @@ import { EDITOR_PATHNAME, editorHref, TEMPLATE_PATHNAME } from "@/lib/routes";
 import { useResumeStore } from "@/lib/store";
 
 /**
- * The editor's missing-résumé state. When the id in the URL doesn't resolve,
- * the library index is searched for the closest id within edit tolerance, a
- * "did you mean" for mangled or truncated links. Deleted résumés (no near id)
- * fall back to the plain message.
+ * The editor's missing-résumé state, in place of the whole editor: with no
+ * résumé there is nothing to edit, so the side panel stays out. When the id
+ * in the URL doesn't resolve, the library index is searched for the closest
+ * id within edit tolerance, a "did you mean" for mangled or truncated links.
+ * Deleted résumés (no near id) fall back to the plain message.
  */
 export function EditorResumeNotFound() {
   const id = useEditorId();
@@ -19,43 +29,33 @@ export function EditorResumeNotFound() {
   const t = useTranslations("editor.chrome");
 
   return (
-    <div className="mx-auto flex aspect-210/297 w-full max-w-198.5 flex-col items-center justify-center gap-1.5 rounded border bg-white text-sm text-neutral-600 shadow-sm">
-      <div className="mb-2 flex size-12 items-center justify-center rounded-xl border border-neutral-200 bg-neutral-50 text-neutral-500">
-        <FileDashedIcon className="size-5" />
-      </div>
-
-      <p className="font-medium text-neutral-950">{t("notFound")}</p>
-
-      {suggestion && (
-        <p>
-          {t("didYouMean")}{" "}
-          <Link
-            href={editorHref(suggestion.id)}
-            className="font-medium text-primary underline-offset-4 hover:underline"
-          >
-            {suggestion.title}
-          </Link>
-          ?
-        </p>
-      )}
-      {!suggestion && <p>{t("notExist")}</p>}
-
-      <p className="text-xs text-neutral-500">
-        {t("headTo")}{" "}
-        <Link
-          href={EDITOR_PATHNAME}
-          className="font-medium text-primary underline-offset-4 hover:underline"
-        >
+    <Empty>
+      <EmptyHeader>
+        <EmptyMedia variant="icon">
+          <FileDashedIcon />
+        </EmptyMedia>
+        <EmptyTitle>{t("notFound")}</EmptyTitle>
+        {suggestion && (
+          <EmptyDescription>
+            {t("didYouMean")}{" "}
+            <Link href={editorHref(suggestion.id)}>{suggestion.title}</Link>?
+          </EmptyDescription>
+        )}
+        {!suggestion && <EmptyDescription>{t("notExist")}</EmptyDescription>}
+      </EmptyHeader>
+      <EmptyContent className="flex-row justify-center">
+        <Button nativeButton={false} render={<Link href={EDITOR_PATHNAME} />}>
           {t("dashboard")}
-        </Link>{" "}
-        {t("or")}{" "}
-        <Link
-          href={TEMPLATE_PATHNAME}
-          className="font-medium text-primary underline-offset-4 hover:underline"
+        </Button>
+        <Button
+          variant="outline"
+          nativeButton={false}
+          render={<Link href={TEMPLATE_PATHNAME} />}
         >
+          <SquaresFourIcon data-icon="inline-start" />
           {t("browseTemplates")}
-        </Link>
-      </p>
-    </div>
+        </Button>
+      </EmptyContent>
+    </Empty>
   );
 }

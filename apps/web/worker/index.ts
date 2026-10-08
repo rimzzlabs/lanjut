@@ -1,11 +1,13 @@
 /**
  * The only server code Lanjut runs. Every page is a static file; this Worker
- * sits in front of a few paths to relay feedback, pick the visitor's language,
- * forward addresses from older layouts, and serve the editor page for
- * /editor/<id>. Résumé content never reaches it.
+ * sits in front of a few paths to relay feedback, serve the contributor list,
+ * pick the visitor's language, forward addresses from older layouts, and
+ * serve the editor page for /editor/<id>. Résumé content never reaches it.
  */
 import { S } from "@mobily/ts-belt";
+import { CONTRIBUTORS_PATH } from "../src/lib/contributors";
 import { appPageFor, legacyTarget } from "../src/lib/route-rules";
+import { serveContributors } from "./contributors";
 import { FeedbackError, fileFeedback } from "./feedback";
 import { localeRedirect } from "./locale";
 
@@ -32,8 +34,19 @@ async function relayFeedback(request: Request, env: Env) {
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(
+    request: Request,
+    env: Env,
+    context: { waitUntil(promise: Promise<unknown>): void },
+  ): Promise<Response> {
     const url = new URL(request.url);
+
+    if (url.pathname === CONTRIBUTORS_PATH) {
+      if (request.method !== "GET") {
+        return new Response(null, { status: 405, headers: { Allow: "GET" } });
+      }
+      return serveContributors(request, env, context);
+    }
 
     if (url.pathname === "/api/feedback") {
       if (request.method !== "POST") {

@@ -18,7 +18,9 @@ export function PlatformNavbar() {
     <header className="border-b bg-background">
       <div className="flex h-12 items-center gap-2 px-4 md:px-6">
         <SidebarTrigger />
-        <PlatformNavbarBreadcrumb />
+        <div className="max-md:hidden">
+          <PlatformNavbarBreadcrumb />
+        </div>
         {view === "editor" && (
           <div className="ml-2 inline-flex">
             <EditorSaveStatus />

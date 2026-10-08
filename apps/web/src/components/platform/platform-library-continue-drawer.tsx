@@ -56,7 +56,7 @@ export function PlatformLibraryContinueDrawer(
   return (
     <Drawer showSwipeHandle open={props.open} onOpenChange={props.onOpenChange}>
       <DrawerContent className="h-[calc(100dvh-3rem)]">
-        <div className="grid min-h-0 flex-1 grid-rows-[auto_minmax(0,1fr)_auto]">
+        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)_auto]">
           <DrawerHeader className="pb-4">
             <DrawerTitle className="truncate">{props.resume.title}</DrawerTitle>
             <DrawerDescription render={<div />}>

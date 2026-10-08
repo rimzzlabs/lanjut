@@ -144,6 +144,10 @@
             "description": "Sembunyikan sidebar dan sekarang ia terlipat jadi deretan ikon ramping, bukan hilang dari layar. Arahkan ke ikon untuk melihat namanya. Saat terbuka, sidebar menampilkan lima resume terbaru kamu."
           },
           {
+            "title": "Kenali orang-orang di balik Lanjut",
+            "description": "Pustaka kamu sekarang berterima kasih kepada semua yang membangun Lanjut, dengan jalan langsung untuk ikut: terjemahkan, perbaiki bug, atau buat fitur."
+          },
+          {
             "title": "PDF kamu sekarang sama dengan pratinjau",
             "description": "Unduhan PDF sekarang dibuat dari halaman yang sama dengan yang kamu lihat di editor, jadi huruf, ukuran, dan jarak di file sama dengan pratinjau. Teksnya tetap bisa dipilih untuk sistem pelacak pelamar."
           },
@@ -518,6 +522,14 @@
       "outdated": "Lanjut diperbarui di tab lain",
       "outdatedDescription": "Segarkan tab ini untuk lanjut bekerja. Sampai saat itu, tab ini tidak bisa menyimpan perubahan.",
       "refresh": "Segarkan"
+    },
+    "contributors": {
+      "title": "Terima kasih untuk semua yang membangun Lanjut",
+      "description": "Lanjut gratis dan open source, dan terus tumbuh dari setiap kontribusi. Terjemahkan ke bahasamu, perbaiki bug, atau buat fitur yang kamu inginkan.",
+      "contribute": "Kontribusi di GitHub",
+      "listLabel": "Kontributor",
+      "profile": "{login} di GitHub",
+      "more": "dan {count} lainnya"
     }
   },
   "profile": {
@@ -711,9 +723,7 @@
       "notFound": "Resume nggak ketemu",
       "didYouMean": "maksud kamu:",
       "notExist": "Resume ini nggak ada di penyimpanan browser ini.",
-      "headTo": "atau ke",
       "dashboard": "Dasbor",
-      "or": "atau",
       "browseTemplates": "Jelajahi Template",
       "showSection": "Tampilkan bagian",
       "hideSection": "Sembunyikan bagian",
@@ -1078,6 +1088,7 @@
     "macNote": "Masih beta dan belum ditandatangani Apple, jadi macOS minta konfirmasi saat pertama kali dibuka.",
     "closeHeading": "Gratis dipakai, dan open source.",
     "closeBody": "Nggak ada paket berbayar, dan nggak perlu bikin akun. Kodenya terbuka dengan lisensi AGPL-3.0, jadi siapa pun bisa membacanya atau menjalankan salinannya sendiri.",
+    "contributorsBody": "Dibuat oleh orang-orang yang menyumbangkan waktunya. Ikut bergabung: tambahkan terjemahan, perbaiki bug, atau buat fitur yang kamu inginkan.",
     "closeCta": "Mulai resume kamu",
     "closeBrowse": "Lihat template",
     "newTab": "terbuka di tab baru",

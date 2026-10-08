@@ -4,7 +4,6 @@ import { type ReactNode, useMemo } from "react";
 import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import { useResumeStore } from "@/lib/store";
 import { EditorPreviewSkeleton } from "./editor-preview-skeleton";
-import { EditorResumeNotFound } from "./editor-resume-not-found";
 import { ResumeDocument } from "./resume-document";
 import { resumeToPreview } from "./resume-to-preview";
 
@@ -23,15 +22,11 @@ export function EditorResumePreview() {
   const open = useResumeStore((state) => state.open);
   const openStatus = useResumeStore((state) => state.openStatus);
   const preview = useMemo(() => (open ? resumeToPreview(open) : null), [open]);
+  // EditorPanels shows a missing résumé in place of the whole editor.
   const missing = openStatus === "missing";
 
   return (
     <AnimatePresence mode="wait">
-      {missing && (
-        <PreviewEnter key="missing">
-          <EditorResumeNotFound />
-        </PreviewEnter>
-      )}
       {!missing && (!open || !preview) && (
         <PreviewFade key="skeleton">
           <EditorPreviewSkeleton />

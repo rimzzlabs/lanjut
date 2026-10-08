@@ -171,7 +171,7 @@ export function PlatformResumeCreateSheet(
 
         <form
           onSubmit={onSubmit}
-          className="grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)_auto]"
+          className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] grid-rows-[minmax(0,1fr)_auto]"
         >
           <div className="grid min-h-0 grid-cols-1 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
             <ScrollArea className="min-h-0">

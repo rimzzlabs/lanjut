@@ -7,6 +7,7 @@ import { ScrollArea } from "@lanjut/ui/components/scroll-area";
 import type { ReactNode } from "react";
 import { useEditorResume } from "@/hooks/use-editor-resume";
 import { MEDIA_XL, useMediaQuery } from "@/hooks/use-media-query";
+import { EditorResumeNotFound } from "./editor-resume-not-found";
 import { EditorSheet } from "./editor-sheet";
 import { EditorSidebar } from "./editor-sidebar";
 import { EditorUndoShortcuts } from "./editor-undo-shortcuts";
@@ -16,8 +17,18 @@ import { EditorUndoShortcuts } from "./editor-undo-shortcuts";
 const PANELS_CONTAINER = "h-full min-h-0 overflow-clip";
 
 export function EditorPanels(props: { children: ReactNode }) {
-  useEditorResume();
+  const openStatus = useEditorResume();
   const isDesktop = useMediaQuery(MEDIA_XL);
+
+  // No résumé, nothing to edit: the side panel, the edit sheet, and the undo
+  // keys stay out, and the message takes the whole panel.
+  if (openStatus === "missing") {
+    return (
+      <div className="grid h-full min-h-0 place-items-center overflow-clip p-6">
+        <EditorResumeNotFound />
+      </div>
+    );
+  }
 
   if (isDesktop) {
     return (

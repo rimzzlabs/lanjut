@@ -10,6 +10,9 @@ export const SITE = {
 /** The source repository, linked from the landing page and its footer. */
 export const REPO_URL = "https://github.com/rimzzlabs/lanjut";
 
+/** How to contribute, linked wherever Lanjut thanks its contributors. */
+export const CONTRIBUTING_URL = `${REPO_URL}/blob/main/CONTRIBUTING.md`;
+
 /** Donation profiles, shared by the landing footer and the platform sidebar. */
 export const DONATION_LINKS = {
   saweria: "https://saweria.co/rimzzlabs",

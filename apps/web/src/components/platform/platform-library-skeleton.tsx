@@ -5,6 +5,7 @@ import { useId } from "react";
 import { useTranslations } from "use-intl";
 import { useProfileResumeCount } from "@/hooks/use-profile-resumes";
 import { type LibraryView, useLibraryViewStore } from "@/lib/store";
+import { PlatformLibraryContributors } from "./platform-library-contributors";
 import { PlatformLibraryEmpty } from "./platform-library-empty";
 import { PlatformLibraryStart } from "./platform-library-start/platform-library-start";
 import { PlatformPaperFrame } from "./platform-paper-frame";
@@ -15,7 +16,7 @@ const MAX_CARDS = 8;
 
 /**
  * The library while it loads. Everything that needs no data is real: the
- * headings and the start tiles. Once the résumés are counted (the sidebar
+ * headings, the start tiles, and the contributors (which load on their own). Once the résumés are counted (the sidebar
  * reads them while the library's code loads), the rest takes the shape the
  * library will have: the continue card only with a résumé, and the list of
  * all résumés only with more than one, in the chosen view.
@@ -23,12 +24,20 @@ const MAX_CARDS = 8;
 export function PlatformLibrarySkeleton() {
   const count = useProfileResumeCount();
 
-  if (count === 0) return <PlatformLibraryEmpty />;
+  if (count === 0) {
+    return (
+      <>
+        <PlatformLibraryEmpty />
+        <PlatformLibraryContributors />
+      </>
+    );
+  }
 
   return (
     <>
       <PlatformLibraryContinueSkeleton />
       <PlatformLibraryStart />
+      <PlatformLibraryContributors />
       {count !== null && count > 1 && (
         <PlatformResumeCollectionSkeleton count={Math.min(count, MAX_CARDS)} />
       )}
@@ -56,11 +65,7 @@ function PlatformLibraryContinueSkeleton() {
             <Skeleton className="h-6 w-1/2" />
             <Skeleton className="h-4 w-1/3" />
           </div>
-          <div className="flex items-center gap-2 max-md:hidden">
-            <Skeleton className="h-9 w-36" />
-            <Skeleton className="h-9 w-28" />
-            <Skeleton className="size-9" />
-          </div>
+          <Skeleton className="h-5 w-28 max-md:hidden" />
         </div>
       </Card>
     </section>

@@ -24,19 +24,12 @@ import { PlatformResumeActionRename } from "../platform-resume-action-rename";
 
 interface PlatformResumeGridItemMenuProps {
   resume: { id: string; title: string };
-  /**
-   * `card` is the quiet trigger on a card. `toolbar` sits in a row of 36px
-   * buttons that already holds Download, so it matches their height and
-   * leaves Download out.
-   */
-  variant?: "card" | "toolbar";
 }
 
 export function PlatformResumeGridItemMenu(
   props: PlatformResumeGridItemMenuProps,
 ) {
   const { resume } = props;
-  const toolbar = props.variant === "toolbar";
   const t = useTranslations("platform.grid");
   const duplicateResume = useResumeStore((state) => state.duplicateResume);
   const [open, setOpen] = useState({
@@ -68,14 +61,7 @@ export function PlatformResumeGridItemMenu(
   return (
     <Fragment>
       <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <Button
-              size={toolbar ? "icon" : "icon-sm"}
-              variant={toolbar ? "outline" : "ghost"}
-            />
-          }
-        >
+        <DropdownMenuTrigger render={<Button size="icon-sm" variant="ghost" />}>
           <span className="sr-only">{t("menu")}</span>
           <DotsThreeIcon />
         </DropdownMenuTrigger>
@@ -90,12 +76,10 @@ export function PlatformResumeGridItemMenu(
             <DropdownMenuItem onClick={onDuplicate}>
               <CopyIcon /> {t("duplicate")}
             </DropdownMenuItem>
-            {!toolbar && (
-              <DropdownMenuItem onClick={openDownloadDialog}>
-                <DownloadSimpleIcon />
-                {t("download")}
-              </DropdownMenuItem>
-            )}
+            <DropdownMenuItem onClick={openDownloadDialog}>
+              <DownloadSimpleIcon />
+              {t("download")}
+            </DropdownMenuItem>
 
             <DropdownMenuSeparator />
 

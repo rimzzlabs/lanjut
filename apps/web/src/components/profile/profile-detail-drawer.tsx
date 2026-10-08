@@ -28,7 +28,7 @@ export function ProfileDetailDrawer(props: ProfileDetailDrawerProps) {
   return (
     <Drawer showSwipeHandle open={props.open} onOpenChange={props.onOpenChange}>
       <DrawerContent className="h-[calc(100dvh-3rem)]">
-        <div className="grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)]">
+        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] grid-rows-[minmax(0,1fr)]">
           <ProfileDetailDrawerTitle selection={props.selection} />
           <ScrollArea className="min-h-0">
             <div className="p-4 pb-8">

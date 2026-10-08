@@ -59,7 +59,7 @@ export function ProfileSettings() {
   return (
     <Drawer showSwipeHandle open={open} onOpenChange={setOpen}>
       <DrawerContent className="h-[calc(100dvh-3rem)]">
-        <div className="grid min-h-0 flex-1 grid-rows-[auto_minmax(0,1fr)]">
+        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)]">
           <DrawerHeader className="items-center gap-3 border-b pb-4">
             <DrawerTitle className="sr-only">{t("settings")}</DrawerTitle>
             <DrawerDescription className="sr-only">

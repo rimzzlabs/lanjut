@@ -5,11 +5,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@lanjut/ui/components/card";
-import { useTranslations } from "use-intl";
+import { cn } from "@lanjut/ui/lib/utils";
 import { useResumeDocument } from "@/hooks/use-resume-document";
 import { Link } from "@/i18n/navigation";
 import { editorHref } from "@/lib/routes";
 import { TruncatedLabel } from "../../shared/truncated-label";
+import { CARD_LINK, CARD_LINK_RING } from "../platform-card-link";
 import { PlatformPaperFrame } from "../platform-paper-frame";
 import { PlatformResumeMeta } from "../platform-resume-meta";
 import { PlatformResumeSheet } from "../platform-resume-sheet";
@@ -19,36 +20,28 @@ interface PlatformResumeGridItemProps {
   resume: ResumeIndexEntry;
 }
 
+/**
+ * One résumé as a card. The whole card is one link into the editor (the title
+ * stretches over it); only the menu sits above it.
+ */
 export function PlatformResumeGridItem(props: PlatformResumeGridItemProps) {
   const { resume } = props;
-  const t = useTranslations("platform.grid");
   const document = useResumeDocument(resume.id, resume.updatedAt);
-  const href = editorHref(resume.id);
 
   return (
-    <Card size="sm" className="gap-3 p-1.5 pb-3">
-      <div className="relative">
-        <PlatformPaperFrame>
-          <PlatformResumeSheet document={document} />
-        </PlatformPaperFrame>
-        <Link
-          href={href}
-          aria-label={t("open", { title: resume.title })}
-          className="absolute inset-0 rounded-lg focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
-        />
-      </div>
+    <Card size="sm" className={cn("relative gap-3 p-1.5 pb-3", CARD_LINK_RING)}>
+      <PlatformPaperFrame>
+        <PlatformResumeSheet document={document} />
+      </PlatformPaperFrame>
 
       <CardHeader className="px-2.5">
         <CardTitle className="min-w-0">
-          <Link
-            href={href}
-            className="block rounded-xs hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-          >
+          <Link href={editorHref(resume.id)} className={CARD_LINK}>
             <TruncatedLabel text={resume.title} />
           </Link>
         </CardTitle>
         <PlatformResumeMeta resume={resume} document={document} />
-        <CardAction>
+        <CardAction className="relative z-10">
           <PlatformResumeGridItemMenu resume={resume} />
         </CardAction>
       </CardHeader>

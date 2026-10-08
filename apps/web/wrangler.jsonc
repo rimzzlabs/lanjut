@@ -38,6 +38,7 @@
       "/id/editor",
       "/id/editor/*",
       "/template",
+      "/profile",
       "/feedback",
       "/feedback/*",
       "/id/platform",

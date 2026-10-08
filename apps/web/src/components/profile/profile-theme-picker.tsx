@@ -14,8 +14,12 @@ const THEMES = [
  * The theme as three pictures of the app, each named underneath. The card
  * holds the picture alone, so it stays a balanced frame; the name sits
  * outside it, and the wrapping `<label>` names the radio and makes the text
- * clickable too. The mockup sits 7px inside the card (6px padding and the 1px
- * border), so `rounded-lg` keeps it concentric with the card's `rounded-xl`.
+ * clickable too.
+ *
+ * The radii follow the item's width (container units), so a narrow card on a
+ * phone is not as round as a wide one: the card is 7cqw (16px at 230px wide),
+ * the picture sits 2.6cqw and the 1px border inside it, and its radius is the
+ * card's less that gap, so the corners stay concentric at every width.
  */
 export function ProfileThemePicker() {
   const t = useTranslations("profile");
@@ -32,10 +36,10 @@ export function ProfileThemePicker() {
         // biome-ignore lint/a11y/noLabelWithoutControl: the radio is the RadioCard inside, a base-ui button with role="radio".
         <label
           key={item.value}
-          className="flex cursor-pointer flex-col gap-2 text-sm text-muted-foreground transition-colors has-data-checked:font-medium has-data-checked:text-foreground"
+          className="@container flex cursor-pointer flex-col gap-2 text-sm text-muted-foreground transition-colors has-data-checked:font-medium has-data-checked:text-foreground"
         >
-          <RadioCard value={item.value} className="p-1.5">
-            <div className="relative aspect-16/10 overflow-hidden rounded-lg">
+          <RadioCard value={item.value} className="rounded-[7cqw] p-[2.6cqw]">
+            <div className="relative aspect-16/10 overflow-hidden rounded-[calc(4.4cqw-1px)]">
               <ProfileThemeMockup
                 theme={item.value === "dark" ? "dark" : "light"}
               />

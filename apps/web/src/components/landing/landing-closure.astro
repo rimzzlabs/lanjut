@@ -2,6 +2,7 @@
 import type { Locale } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
 import { LandingClosureActions } from "./landing-closure-actions";
+import { LandingContributors } from "./landing-contributors";
 
 interface Props {
   locale: Locale;
@@ -23,5 +24,8 @@ const t = getTranslator(locale, "landing");
   </p>
   <div class="mt-10">
     <LandingClosureActions client:visible locale={locale} pathname={pathname} />
+  </div>
+  <div class="mt-14 border-t border-border pt-8">
+    <LandingContributors client:visible locale={locale} pathname={pathname} />
   </div>
 </section>
