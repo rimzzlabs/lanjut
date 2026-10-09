@@ -394,11 +394,12 @@ component. It sits in the hero, under the draft row.
   older one. Until a read lands, the panel shows the plain text export of the draft.
 - The scanner is a 2px `--scanner` line with a glow, and a 44px round handle with
   `role="slider"`. Arrow keys move it 4%, Page Up and Page Down 12%, Home and End to
-  the edges. A mouse can drag anywhere on the sheet. Touch drags only from the handle,
-  so the page still scrolls.
-- The intro sweep waits 700ms, moves the scanner from 58% to 34%, then back to 58%,
+  the edges. A mouse can drag anywhere on the sheet. Touch drags from the handle, or
+  from anywhere on the sheet once the finger moves sideways. An up or down swipe still
+  scrolls the page.
+- The intro sweep waits 700ms, moves the scanner from 40% to 34%, then back to 40%,
   with the ease-out curve. Any key or drag stops it. Under reduced motion it never
-  plays, and the scanner rests at 58%.
+  plays, and the scanner rests at 40%.
 - Status ("reading", the character count, or the fallback) and the read checks sit in
   `font-machine` with Phosphor check and x icons. Labels on the sheet fade out when
   the scanner covers them, and hide below `sm`, where a plain caption row replaces

@@ -5,7 +5,6 @@ import { animate } from "motion/react";
 import {
   type KeyboardEvent,
   type PointerEvent,
-  type RefObject,
   useEffect,
   useRef,
   useState,
@@ -18,7 +17,6 @@ import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preferenc
 export type ReaderStatus = "reading" | "done" | "fallback";
 
 interface LandingReaderSheetProps {
-  sheetRef: RefObject<HTMLDivElement | null>;
   preview: ResumePreview;
   template: TemplateId;
   lines: ReadonlyArray<string>;
@@ -27,6 +25,8 @@ interface LandingReaderSheetProps {
 }
 
 const START = 40;
+// How far a touch on the sheet travels before it counts as a drag.
+const TOUCH_SLOP = 6;
 const KEY_STEP: Record<string, number> = {
   ArrowLeft: -4,
   ArrowDown: -4,
@@ -48,7 +48,9 @@ export function LandingReaderSheet(props: LandingReaderSheetProps) {
   const t = useTranslations("landing");
   const reduce = useReducedMotionPreference();
   const [position, setPosition] = useState(START);
+  const sheetRef = useRef<HTMLDivElement | null>(null);
   const draggingRef = useRef(false);
+  const pendingRef = useRef<{ x: number; y: number } | null>(null);
   const introRef = useRef<{ stop: () => void } | null>(null);
 
   useEffect(() => {
@@ -75,33 +77,88 @@ export function LandingReaderSheet(props: LandingReaderSheetProps) {
     };
   }, [reduce]);
 
+  // Safari on iOS can still scroll the page or open its text magnifier during
+  // a drag, whatever touch-action says. Only a non-passive touch listener can
+  // cancel that, and React attaches its touch listeners as passive.
+  function attachSheet(sheet: HTMLDivElement | null) {
+    sheetRef.current = sheet;
+    if (!sheet) return;
+    function onTouchStart(event: TouchEvent) {
+      const target = event.target as Element;
+      if (target.closest("[data-scanner-handle]")) event.preventDefault();
+    }
+    function onTouchMove(event: TouchEvent) {
+      if (draggingRef.current) {
+        event.preventDefault();
+        return;
+      }
+      const pending = pendingRef.current;
+      const touch = event.touches.item(0);
+      if (!pending || !touch) return;
+      const across = Math.abs(touch.clientX - pending.x);
+      if (across > Math.abs(touch.clientY - pending.y)) event.preventDefault();
+    }
+    sheet.addEventListener("touchstart", onTouchStart, { passive: false });
+    sheet.addEventListener("touchmove", onTouchMove, { passive: false });
+    return () => {
+      sheetRef.current = null;
+      sheet.removeEventListener("touchstart", onTouchStart);
+      sheet.removeEventListener("touchmove", onTouchMove);
+    };
+  }
+
   function stopIntro() {
     introRef.current?.stop();
     introRef.current = null;
   }
 
   function positionAt(clientX: number) {
-    const rect = props.sheetRef.current?.getBoundingClientRect();
+    const rect = sheetRef.current?.getBoundingClientRect();
     if (!rect || rect.width === 0) return position;
     return clamp(((clientX - rect.left) / rect.width) * 100);
   }
 
-  function onPointerDown(event: PointerEvent<HTMLDivElement>) {
-    const onHandle = (event.target as Element).closest("[data-scanner-handle]");
-    if (!onHandle && event.pointerType !== "mouse") return;
+  function startDrag(event: PointerEvent<HTMLDivElement>) {
     stopIntro();
+    pendingRef.current = null;
     draggingRef.current = true;
     event.currentTarget.setPointerCapture(event.pointerId);
     setPosition(positionAt(event.clientX));
   }
 
+  // A touch on the sheet itself waits for its direction: across moves the
+  // scanner, and up or down is left to the browser to scroll the page.
+  function onPointerDown(event: PointerEvent<HTMLDivElement>) {
+    const onHandle = (event.target as Element).closest("[data-scanner-handle]");
+    if (onHandle || event.pointerType === "mouse") {
+      startDrag(event);
+      return;
+    }
+    pendingRef.current = { x: event.clientX, y: event.clientY };
+  }
+
   function onPointerMove(event: PointerEvent<HTMLDivElement>) {
+    const pending = pendingRef.current;
+    if (pending) {
+      const across = Math.abs(event.clientX - pending.x);
+      const down = Math.abs(event.clientY - pending.y);
+      if (across >= TOUCH_SLOP && across > down) startDrag(event);
+      return;
+    }
     if (!draggingRef.current) return;
     setPosition(positionAt(event.clientX));
   }
 
   function endDrag() {
     draggingRef.current = false;
+    pendingRef.current = null;
+  }
+
+  // Safari captures a touch for the element under the finger before
+  // pointerdown. Taking it for the sheet makes that element lose capture, and
+  // the event bubbles here, so only the sheet's own loss ends the drag.
+  function onLostPointerCapture(event: PointerEvent<HTMLDivElement>) {
+    if (event.target === event.currentTarget) endDrag();
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
@@ -122,13 +179,13 @@ export function LandingReaderSheet(props: LandingReaderSheetProps) {
 
   return (
     <div
-      ref={props.sheetRef}
+      ref={attachSheet}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
-      onLostPointerCapture={endDrag}
-      className="relative aspect-3/4 cursor-col-resize overflow-hidden rounded-xl bg-white shadow-[0_48px_96px_-40px_rgb(0_0_0/0.55)] ring-1 ring-black/10 select-none @container mask-[linear-gradient(to_bottom,black_82%,transparent)] sm:aspect-16/10"
+      onLostPointerCapture={onLostPointerCapture}
+      className="relative aspect-3/4 cursor-col-resize touch-pan-y touch-pinch-zoom overflow-hidden rounded-xl bg-white shadow-[0_48px_96px_-40px_rgb(0_0_0/0.55)] ring-1 ring-black/10 select-none @container mask-[linear-gradient(to_bottom,black_82%,transparent)] sm:aspect-16/10"
     >
       <div className="absolute inset-y-0 left-0 w-full min-w-220 sm:min-w-0">
         <ResumeThumbnail resume={props.preview} template={props.template} />

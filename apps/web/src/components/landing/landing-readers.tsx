@@ -59,8 +59,8 @@ function LandingReadersBoard() {
   const setField = useLandingDraftStore((state) => state.setField);
   const setTemplate = useLandingDraftStore((state) => state.setTemplate);
   const { create, creating } = useLandingDraftCreate();
-  const sheetRef = useRef<HTMLDivElement>(null);
-  const read = useLandingRead(sheetRef, draft, template);
+  const readerRef = useRef<HTMLDivElement>(null);
+  const read = useLandingRead(readerRef, draft, template);
 
   const preview = useMemo(() => resumeToPreview(draftToResume(draft)), [draft]);
   const exportLines = useMemo(
@@ -143,7 +143,10 @@ function LandingReadersBoard() {
         <ArrowRightIcon />
       </Button>
 
-      <div className="order-2 col-span-2 mt-4 mb-4 md:order-0 md:col-span-5 md:mt-5 md:mb-0">
+      <div
+        ref={readerRef}
+        className="order-2 col-span-2 mt-4 mb-4 md:order-0 md:col-span-5 md:mt-5 md:mb-0"
+      >
         <p
           aria-hidden
           className="mb-2 flex justify-between gap-3 text-xs text-muted-foreground sm:hidden"
@@ -154,7 +157,6 @@ function LandingReadersBoard() {
           </span>
         </p>
         <LandingReaderSheet
-          sheetRef={sheetRef}
           preview={preview}
           template={template}
           lines={report?.lines ?? exportLines}
