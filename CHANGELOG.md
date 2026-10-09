@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.3](https://github.com/rimzzlabs/lanjut/compare/v0.20.2...v0.20.3) (2026-10-09)
+
+
+### Bug Fixes
+
+* show the template preview in a drawer that fits phones ([#213](https://github.com/rimzzlabs/lanjut/issues/213)) ([b62f703](https://github.com/rimzzlabs/lanjut/commit/b62f70375cb0b03183fd641f1274becbde96dddf))
+
 ## [0.20.2](https://github.com/rimzzlabs/lanjut/compare/v0.20.1...v0.20.2) (2026-10-09)
 
 
