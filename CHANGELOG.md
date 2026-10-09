@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.0](https://github.com/rimzzlabs/lanjut/compare/v0.19.1...v0.20.0) (2026-10-09)
+
+
+### Features
+
+* show what lanjut is in the share image ([#207](https://github.com/rimzzlabs/lanjut/issues/207)) ([71a34ae](https://github.com/rimzzlabs/lanjut/commit/71a34aeda3bab67ecbf78e845bbfabc38a333ee0))
+
 ## [0.19.1](https://github.com/rimzzlabs/lanjut/compare/v0.19.0...v0.19.1) (2026-10-09)
 
 
