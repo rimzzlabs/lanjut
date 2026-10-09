@@ -7,7 +7,9 @@
     "editorTitle": "Build your resume",
     "editorDescription": "Start a resume from a blank page, the sample, your old resume, or a template. Free, no account, and saved in your browser.",
     "templateTitle": "ATS resume templates",
-    "templateDescription": "Six free resume templates that keep an order applicant tracking systems can read. See each one as a full page, on the sample or on your own resume."
+    "templateDescription": "Six free resume templates that keep an order applicant tracking systems can read. See each one as a full page, on the sample or on your own resume.",
+    "changelogTitle": "Changelog",
+    "changelogDescription": "What changed in each Lanjut release: the new features and fixes in the free, open-source ATS resume builder."
   },
   "language": {
     "label": "Language",
@@ -178,14 +180,46 @@
     "breadcrumb": {
       "platform": "Dashboard",
       "editor": "Editor",
-      "browseTemplates": "Browse Templates"
+      "browseTemplates": "Browse Templates",
+      "changelog": "Changelog"
     },
     "changelog": {
-      "whatsNew": "What's new",
-      "description": "The latest from Lanjut",
+      "title": "Changelog",
+      "subtitle": "Release history for Lanjut",
+      "versions": "Versions",
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_20_3": [
+          {
+            "title": "Bug fixes",
+            "description": "On phones and tablets, a template preview now opens in a panel that slides up from the bottom of the screen, and the whole page fits its width."
+          }
+        ],
+        "0_20_2": [
+          {
+            "title": "Bug fixes",
+            "description": "On phones, the icon and the label on each tile under Create a new resume now line up."
+          }
+        ],
+        "0_20_1": [
+          {
+            "title": "Bug fixes",
+            "description": "Fixed two bugs on phones. On an iPhone, the sheet in the home page demo now moves when you drag it. The home page also no longer scrolls sideways."
+          }
+        ],
+        "0_20_0": [
+          {
+            "title": "A clearer link preview",
+            "description": "When you share a link to Lanjut in a chat or a post, its preview image now says what Lanjut is: a free, open-source resume builder that needs no account and keeps your resume on your device. A resume page sits beside the text. A link to the Indonesian site gets its own image, written in Indonesian."
+          }
+        ],
+        "0_19_1": [
+          {
+            "title": "Bug fixes",
+            "description": "The people who build Lanjut now appear on the home page as soon as it opens. Before, their faces stayed grey circles until you scrolled down to them."
+          }
+        ],
         "0_19_0": [
           {
             "title": "See your resume before you create it",
@@ -270,6 +304,12 @@
             "description": "Experience and internship entries now have an optional company context field for briefly explaining an unfamiliar employer. It appears in every preview and export before your achievements."
           }
         ],
+        "0_17_2": [
+          {
+            "title": "Bug fixes",
+            "description": "On phones, the resume demo on the home page ran far past the edge of the screen and made the whole page too wide. It now fits."
+          }
+        ],
         "0_17_1": [
           {
             "title": "The Mac app can update itself",
@@ -280,6 +320,24 @@
             "description": "In the Mac app the sidebar covered the page when the app opened, and the button that hides it did nothing. Both are fixed."
           }
         ],
+        "0_17_0": [
+          {
+            "title": "The Mac app checks for updates",
+            "description": "The Mac app now looks for new versions. This release went out without the files an update needs, so updates only began to work in 0.17.1."
+          }
+        ],
+        "0_16_2": [
+          {
+            "title": "Bug fixes",
+            "description": "In the Mac app, the sidebar opened on top of the page, and its collapse button did nothing until you switched languages. The window now lays out correctly when it opens."
+          }
+        ],
+        "0_16_1": [
+          {
+            "title": "Bug fixes",
+            "description": "The 0.16.0 release went out with no Mac app attached, so the download button on the home page led to an empty release. The app is there now."
+          }
+        ],
         "0_16_0": [
           {
             "title": "Lanjut on your Mac",
@@ -288,6 +346,12 @@
           {
             "title": "A page for feedback",
             "description": "Bug reports and feature requests now have their own page, so you can send one from anywhere, including from the Mac app. You still do not need a GitHub account."
+          }
+        ],
+        "0_15_0": [
+          {
+            "title": "Getting the Mac app ready",
+            "description": "This release built most of the Mac app. The Lanjut logo shows while it starts, you can send feedback from inside it, links open in your browser, and an export asks where to save the file. The download link came in the next release."
           }
         ],
         "0_14_0": [
@@ -330,6 +394,18 @@
             "description": "Experience and internship entries now carry a location, shown next to the employer in the preview, the PDF, and every other export. Education locations render too, instead of being kept out of sight."
           }
         ],
+        "0_10_2": [
+          {
+            "title": "Bug fixes",
+            "description": "An entry in your PDF no longer splits across two pages. When an entry does not fit at the bottom of a page, the whole entry moves to the next one, as it does in the preview."
+          }
+        ],
+        "0_10_1": [
+          {
+            "title": "Bug fixes",
+            "description": "Fixed two bugs. Words with fi or fl in your PDF now come through whole when a tool pulls out the text. \"fintech\" used to come back as \"fntech\", and some applicant tracking systems read PDFs this way. In the Projects section, the project name is now the link, not your role."
+          }
+        ],
         "0_10_0": [
           {
             "title": "Feedback without a GitHub account",
@@ -362,6 +438,24 @@
           {
             "title": "Font size controls",
             "description": "Resize your name, section headings, and body text independently from the Document tab. Each slider scales its group on top of the template's proportions, so a bigger name never flattens the rest, and the preview and PDF stay in step."
+          }
+        ],
+        "0_9_3": [
+          {
+            "title": "Bug fixes",
+            "description": "A deleted resume could come back after you reloaded the page. Deleting now removes it from your device at once, and Undo still brings it back while the countdown runs. The guided tour's backdrop also stands out in the dark theme now."
+          }
+        ],
+        "0_9_2": [
+          {
+            "title": "Bug fixes",
+            "description": "The home page loads faster on phones, because its screenshots now download at the size your screen shows them. The language switch also works better with screen readers."
+          }
+        ],
+        "0_9_1": [
+          {
+            "title": "Bug fixes",
+            "description": "A problem kept new versions of Lanjut from going live: the PDF and Word export code made the site too big to publish. It is fixed, and updates go out again."
           }
         ],
         "0_9_0": [
@@ -462,6 +556,12 @@
             "description": "Every entry has a delete button, and removing the last one drops the section from the preview until you add another."
           }
         ],
+        "0_4_1": [
+          {
+            "title": "Bug fixes",
+            "description": "On small screens, the buttons in the top bar sit in a row again, and the close button on side panels is rounded like the other controls."
+          }
+        ],
         "0_4_0": [
           {
             "title": "Organization section",
@@ -486,6 +586,12 @@
           {
             "title": "Mobile drawers",
             "description": "On your phone, dialogs open as drawers that are easier to reach and swipe away."
+          }
+        ],
+        "0_3_1": [
+          {
+            "title": "Bug fixes",
+            "description": "The image that shows when you share a link to Lanjut made the site too big to publish, so new versions could not go live. It is now a plain image file, and updates go out again."
           }
         ],
         "0_3_0": [
@@ -554,7 +660,9 @@
       "copyOf": "Copy of {title}",
       "delete": "Delete",
       "label": "App navigation",
-      "feedback": "Send feedback"
+      "feedback": "Send feedback",
+      "changelog": "Changelog",
+      "changelogUnseen": "New release"
     },
     "toolbar": {
       "searchResume": "Search your resume",

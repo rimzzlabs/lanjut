@@ -1,6 +1,7 @@
 import { lazy, type ReactNode, Suspense, useEffect } from "react";
 import { useTranslations } from "use-intl";
 import { Redirect, Route, Switch } from "wouter";
+import { ChangelogPage } from "@/components/changelog/changelog-page";
 import { EditorWorkspaceSkeleton } from "@/components/editor/editor-workspace-skeleton";
 import { PlatformAppRouter } from "@/components/platform/platform-app-router";
 import { PlatformDashboardSkeleton } from "@/components/platform/platform-dashboard-skeleton";
@@ -11,6 +12,7 @@ import { AppProviders, type IslandProps } from "@/components/shared/providers";
 import { useEditorId } from "@/hooks/use-editor-id";
 import type { WorkspaceView } from "@/hooks/use-workspace-view";
 import {
+  CHANGELOG_PATHNAME,
   EDITOR_DOCUMENT_ROUTE,
   EDITOR_PATHNAME,
   PROFILE_PATHNAME,
@@ -39,7 +41,8 @@ const EditorWorkspace = lazy(() =>
   })),
 );
 
-type AppPage = WorkspaceView | "templates" | "profiles";
+type LazyPage = WorkspaceView | "templates" | "profiles";
+type AppPage = LazyPage | "changelog";
 
 // The library and the templates keep the titles their pages are indexed
 // under: search engines read the title after this effect runs.
@@ -48,11 +51,12 @@ const PAGE_TITLE_KEYS: Record<AppPage, string> = {
   editor: "editor.chrome.editorTitle",
   templates: "meta.templateTitle",
   profiles: "profile.profiles",
+  changelog: "meta.changelogTitle",
 };
 
 // What each page shows inside the shell while its code loads: a skeleton of
 // the page itself, not a spinner.
-const PAGE_SKELETONS: Record<AppPage, ReactNode> = {
+const PAGE_SKELETONS: Record<LazyPage, ReactNode> = {
   library: <PlatformDashboardSkeleton />,
   editor: <EditorWorkspaceSkeleton />,
   templates: <PlatformTemplatesSkeleton />,
@@ -60,10 +64,10 @@ const PAGE_SKELETONS: Record<AppPage, ReactNode> = {
 };
 
 /**
- * The app: the shell around the library, the editor, the templates, and the
- * profiles. One root serves `/editor`, `/template`, and `/profile`, so moving
- * between them keeps the shell
- * and loads only the content, with a skeleton of that page inside the shell.
+ * The app: the shell around the library, the editor, the templates, the
+ * profiles, and the changelog. One root serves `/editor`, `/template`,
+ * `/profile`, and `/changelog`, so moving between them keeps the shell and
+ * loads only the content, with a skeleton of that page inside the shell.
  */
 export function PlatformApp(props: IslandProps) {
   return (
@@ -76,6 +80,9 @@ export function PlatformApp(props: IslandProps) {
             </Route>
             <Route path={PROFILE_PATHNAME}>
               <PlatformAppPage page="profiles" />
+            </Route>
+            <Route path={CHANGELOG_PATHNAME}>
+              <PlatformAppPage page="changelog" />
             </Route>
             <Route path={EDITOR_DOCUMENT_ROUTE}>
               <PlatformAppPage page="editor" />
@@ -101,6 +108,11 @@ function PlatformAppPage(props: { page: AppPage }) {
     document.title = `${title} · ${SITE.name}`;
   }, [title]);
 
+  // The changelog ships with the app, so it needs no boundary. React outlines
+  // a large boundary into a hidden block that a script reveals, and a crawler
+  // that runs no script would read the build's changelog as hidden.
+  if (props.page === "changelog") return <ChangelogPage />;
+
   return (
     <Suspense fallback={PAGE_SKELETONS[props.page]}>
       <PlatformAppPageView page={props.page} />
@@ -108,7 +120,7 @@ function PlatformAppPage(props: { page: AppPage }) {
   );
 }
 
-function PlatformAppPageView(props: { page: AppPage }) {
+function PlatformAppPageView(props: { page: LazyPage }) {
   const id = useEditorId();
 
   if (props.page === "templates") return <PlatformTemplates />;

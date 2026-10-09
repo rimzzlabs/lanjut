@@ -40,6 +40,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Back up a profile with all its résumés as one small file and import it on another device; nothing goes to a server, an import never deletes anything, and where both devices have a résumé the newer one wins
 - A readiness meter that shows what your résumé still needs, counting only your own words, never the sample's
 - Guided tours of the library, templates, profiles, and editor for first-time users
+- A changelog page with the highlights of every release, also published as Markdown at `/changelog.md` for agents
 - Send feedback in-app: a guided form for bugs, ideas, and wording fixes that checks for similar issues and shows the technical details it attaches (never the text of your résumé). Without a GitHub account, Lanjut posts it for you and links to the issue; with one, it opens the issue prefilled for you to post
 - Local persistence via IndexedDB, no data leaves the browser. The editor's top bar confirms each save to the device and warns when the browser refuses one
 - Fully local: works offline after initial load

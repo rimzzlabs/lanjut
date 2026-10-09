@@ -9,6 +9,7 @@ import { IntlProvider } from "use-intl";
 import { Router } from "wouter";
 import { PathnameContext } from "@/i18n/navigation";
 import { IS_DESKTOP } from "@/lib/build-target";
+import { publicPath } from "@/lib/seo";
 import { registerResumeFlushListeners } from "@/lib/store";
 import { DesktopLocaleMemory } from "./desktop-locale-memory";
 import { DesktopUpdater } from "./desktop-updater";
@@ -20,8 +21,9 @@ export interface IslandProps {
 }
 
 /**
- * Pages are rendered at build time, where no visitor time zone exists. Nothing
- * in the static HTML formats a date, so the browser's own zone is safe here.
+ * Pages are rendered at build time, where no visitor time zone exists. The one
+ * date in the static HTML, a changelog release day, names its own zone, so the
+ * browser's own zone is safe here.
  */
 function resolveTimeZone() {
   if (typeof window === "undefined") return "UTC";
@@ -70,8 +72,9 @@ export function AppProviders(props: PropsWithChildren<IslandProps>) {
   return (
     <IslandProviders locale={props.locale} pathname={props.pathname}>
       {/* wouter reads `location` while rendering unless a router supplies the
-          path and search, and /feedback renders on the server. */}
-      <Router ssrPath={props.pathname} ssrSearch="">
+          path and search, and /feedback and /changelog render on the server.
+          The build names /changelog.html, so the routes get the public path. */}
+      <Router ssrPath={publicPath(props.pathname)} ssrSearch="">
         <NuqsAdapter>
           {IS_DESKTOP && <DesktopLocaleMemory />}
           {IS_DESKTOP && <DesktopUpdater />}

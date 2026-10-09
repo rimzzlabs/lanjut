@@ -2,7 +2,11 @@
 import { type Locale, localizePath } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
-import { EDITOR_PATHNAME, TEMPLATE_PATHNAME } from "@/lib/routes";
+import {
+  CHANGELOG_PATHNAME,
+  EDITOR_PATHNAME,
+  TEMPLATE_PATHNAME,
+} from "@/lib/routes";
 import { DESKTOP_RELEASE_URL, DONATION_LINKS, REPO_URL } from "@/lib/site";
 
 interface Props {
@@ -55,6 +59,10 @@ const GROUPS: ReadonlyArray<{
     title: t("project"),
     links: [
       { label: t("github"), href: REPO_URL, external: true },
+      {
+        label: tSidebar("changelog"),
+        href: localizePath(CHANGELOG_PATHNAME, locale),
+      },
       { label: tSidebar("reportBug"), href: `${feedbackHref}?kind=bug` },
       {
         label: tSidebar("featureRequest"),

@@ -7,7 +7,9 @@
     "editorTitle": "Buat CV kamu",
     "editorDescription": "Mulai CV dari halaman kosong, contoh, CV lamamu, atau template. Gratis, tanpa akun, dan tersimpan di browser kamu.",
     "templateTitle": "Template CV ATS",
-    "templateDescription": "Enam template CV gratis yang urutannya tetap terbaca sistem pelacakan pelamar. Lihat tiap template satu halaman penuh, pada contoh atau CV kamu sendiri."
+    "templateDescription": "Enam template CV gratis yang urutannya tetap terbaca sistem pelacakan pelamar. Lihat tiap template satu halaman penuh, pada contoh atau CV kamu sendiri.",
+    "changelogTitle": "Catatan rilis",
+    "changelogDescription": "Apa yang berubah di setiap rilis Lanjut: fitur baru dan perbaikan di pembuat resume ATS yang gratis dan open source."
   },
   "language": {
     "label": "Bahasa",
@@ -178,14 +180,46 @@
     "breadcrumb": {
       "platform": "Dasbor",
       "editor": "Editor",
-      "browseTemplates": "Jelajahi Template"
+      "browseTemplates": "Jelajahi Template",
+      "changelog": "Catatan rilis"
     },
     "changelog": {
-      "whatsNew": "Apa yang baru",
-      "description": "Yang terbaru dari Lanjut",
+      "title": "Catatan rilis",
+      "subtitle": "Riwayat rilis Lanjut",
+      "versions": "Versi",
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_20_3": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Di ponsel dan tablet, pratinjau template sekarang terbuka di panel yang naik dari bawah layar, dan seluruh halamannya muat selebar panel."
+          }
+        ],
+        "0_20_2": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Di ponsel, ikon dan label di tiap kotak di bawah Buat resume baru sekarang sejajar."
+          }
+        ],
+        "0_20_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Dua bug di ponsel sudah diperbaiki. Di iPhone, lembar di demo halaman utama sekarang bisa digeser dengan jari. Halaman utama juga nggak lagi bergeser ke samping."
+          }
+        ],
+        "0_20_0": [
+          {
+            "title": "Pratinjau tautan yang lebih jelas",
+            "description": "Saat kamu membagikan tautan Lanjut di chat atau postingan, gambar pratinjaunya sekarang menjelaskan apa itu Lanjut: pembuat resume gratis dan open source, tanpa akun, dan resume kamu tetap di perangkat kamu. Di samping teksnya ada halaman resume. Tautan ke situs berbahasa Indonesia punya gambarnya sendiri, dalam bahasa Indonesia."
+          }
+        ],
+        "0_19_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Orang-orang di balik Lanjut sekarang langsung tampil di halaman utama begitu halamannya terbuka. Sebelumnya, foto mereka cuma lingkaran abu-abu sampai kamu menggulir ke sana."
+          }
+        ],
         "0_19_0": [
           {
             "title": "Lihat resume kamu sebelum dibuat",
@@ -270,6 +304,12 @@
             "description": "Entri pengalaman kerja dan magang sekarang punya kolom konteks perusahaan opsional untuk menjelaskan perusahaan yang belum dikenal secara singkat. Tampil di semua pratinjau dan ekspor sebelum pencapaian kamu."
           }
         ],
+        "0_17_2": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Di ponsel, demo resume di halaman utama melebar jauh melewati tepi layar dan bikin seluruh halaman terlalu lebar. Sekarang sudah pas."
+          }
+        ],
         "0_17_1": [
           {
             "title": "Aplikasi Mac bisa memperbarui dirinya",
@@ -280,6 +320,24 @@
             "description": "Di aplikasi Mac, sidebar menutupi halaman saat aplikasi dibuka, dan tombol untuk menyembunyikannya tidak berfungsi. Keduanya sudah diperbaiki."
           }
         ],
+        "0_17_0": [
+          {
+            "title": "Aplikasi Mac mengecek pembaruan",
+            "description": "Aplikasi Mac sekarang mencari versi baru. Rilis ini keluar tanpa berkas yang dibutuhkan untuk pembaruan, jadi pembaruan baru berjalan mulai 0.17.1."
+          }
+        ],
+        "0_16_2": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Di aplikasi Mac, sidebar terbuka menutupi halaman, dan tombol untuk melipatnya nggak berfungsi sampai kamu ganti bahasa. Sekarang tata letak jendelanya sudah benar sejak dibuka."
+          }
+        ],
+        "0_16_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Rilis 0.16.0 keluar tanpa aplikasi Mac, jadi tombol unduh di halaman utama mengarah ke rilis yang kosong. Sekarang aplikasinya sudah ada."
+          }
+        ],
         "0_16_0": [
           {
             "title": "Lanjut di Mac kamu",
@@ -288,6 +346,12 @@
           {
             "title": "Halaman khusus masukan",
             "description": "Laporan bug dan permintaan fitur sekarang punya halamannya sendiri, jadi bisa dikirim dari mana saja, termasuk dari aplikasi Mac. Kamu tetap tidak perlu akun GitHub."
+          }
+        ],
+        "0_15_0": [
+          {
+            "title": "Menyiapkan aplikasi Mac",
+            "description": "Rilis ini membangun sebagian besar aplikasi Mac. Logo Lanjut tampil selagi aplikasinya dibuka, kamu bisa kirim masukan dari dalam aplikasi, tautan terbuka di browser, dan ekspor menanyakan tempat menyimpan berkasnya. Tautan unduhnya hadir di rilis berikutnya."
           }
         ],
         "0_14_0": [
@@ -330,6 +394,18 @@
             "description": "Entri pengalaman kerja dan magang sekarang punya kolom lokasi, tampil di samping nama perusahaan di pratinjau, PDF, dan semua ekspor lainnya. Lokasi pendidikan juga ikut tampil, nggak lagi cuma tersimpan diam-diam."
           }
         ],
+        "0_10_2": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Entri di PDF kamu nggak lagi terpotong di dua halaman. Kalau satu entri nggak muat di bawah halaman, seluruh entrinya pindah ke halaman berikutnya, sama seperti di pratinjau."
+          }
+        ],
+        "0_10_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Dua bug sudah diperbaiki. Kata dengan fi atau fl di PDF kamu sekarang terbaca utuh saat teksnya diambil oleh sebuah alat. Dulu \"fintech\" terbaca jadi \"fntech\", dan beberapa sistem pelacak pelamar (ATS) membaca PDF dengan cara ini. Di bagian Proyek, nama proyek sekarang jadi tautannya, bukan peran kamu."
+          }
+        ],
         "0_10_0": [
           {
             "title": "Kirim masukan tanpa akun GitHub",
@@ -362,6 +438,24 @@
           {
             "title": "Kontrol ukuran font",
             "description": "Ubah ukuran nama, judul bagian, dan teks isi secara terpisah dari tab Dokumen. Tiap slider menskalakan kelompoknya di atas proporsi template, jadi nama yang lebih besar nggak pernah meratakan sisanya, dan pratinjau serta PDF tetap selaras."
+          }
+        ],
+        "0_9_3": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Resume yang sudah dihapus bisa muncul lagi setelah halaman dimuat ulang. Sekarang menghapus langsung membuangnya dari perangkat kamu, dan Urungkan tetap bisa mengembalikannya selama hitungan mundur berjalan. Latar tur panduan juga sekarang terlihat jelas di tema gelap."
+          }
+        ],
+        "0_9_2": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Halaman utama lebih cepat terbuka di ponsel, karena tangkapan layarnya sekarang diunduh sesuai ukuran yang tampil di layar. Tombol ganti bahasa juga lebih ramah pembaca layar."
+          }
+        ],
+        "0_9_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Ada masalah yang bikin versi baru Lanjut gagal terbit: kode ekspor PDF dan Word bikin situsnya terlalu besar. Sudah diperbaiki, dan pembaruan kembali berjalan."
           }
         ],
         "0_9_0": [
@@ -462,6 +556,12 @@
             "description": "Tiap entri punya tombol hapus, dan saat entri terakhir dihapus, bagian itu otomatis hilang dari pratinjau sampai kamu menambah lagi."
           }
         ],
+        "0_4_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Di layar kecil, tombol di bilah atas kembali berjajar, dan tombol tutup di panel samping sekarang membulat seperti kontrol lainnya."
+          }
+        ],
         "0_4_0": [
           {
             "title": "Bagian Organisasi",
@@ -486,6 +586,12 @@
           {
             "title": "Laci di ponsel",
             "description": "Di ponsel, dialog terbuka sebagai laci yang lebih mudah dijangkau dan bisa digeser untuk menutup."
+          }
+        ],
+        "0_3_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Gambar yang muncul saat kamu membagikan tautan Lanjut bikin situsnya terlalu besar untuk diterbitkan, jadi versi baru gagal terbit. Sekarang gambarnya berupa berkas biasa, dan pembaruan kembali berjalan."
           }
         ],
         "0_3_0": [
@@ -554,7 +660,9 @@
       "copyOf": "Salinan dari {title}",
       "delete": "Hapus",
       "label": "Navigasi aplikasi",
-      "feedback": "Kirim masukan"
+      "feedback": "Kirim masukan",
+      "changelog": "Catatan rilis",
+      "changelogUnseen": "Rilis baru"
     },
     "toolbar": {
       "searchResume": "Cari resume kamu",

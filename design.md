@@ -22,8 +22,11 @@ editorial
   and deck over the draft row and the reader sheet. Then Looks, Kept, Import, Exports,
   Local, Download, FAQ, a statement close, and a footer of titled link groups (Product,
   Project, Support). No kickers, eyebrows, section numbers, or stat rows.
-- App pages (`/editor`, `/template`, `/profile`): **Workbench-minimal**. They load client-only, so
-  the first paint is a full-page loader on the page background (see Motion). Moving
+- App pages (`/editor`, `/template`, `/profile`, `/changelog`): **Workbench-minimal**. They load
+  client-only, so the first paint is a full-page loader on the page background (see
+  Motion). The changelog is the exception: its first paint is the app itself, built
+  around the full release history, so the page reads the same before and after the
+  script runs. Moving
   between them keeps the shell. While a page's code loads, the content area shows a
   skeleton of that page: the library, the template list beside a blank sheet, the
   profiles, or the editor's blank sheet and side panel. Each skeleton is the loading
@@ -47,12 +50,13 @@ editorial
   there, and a create button takes its place.
 - The sidebar reads top to bottom with no gaps: the wordmark, then Dashboard,
   Templates, and Profiles, then "Recent" with the five résumés edited last and
-  "View all" when there are more, then Other (Guide and Send feedback) and
-  Support. With no résumé saved, "Recent" is left out, not shown empty. The version
-  sits in the footer. A résumé's menu offers Delete even while it is open; deleting
-  the open résumé returns to the library first.
+  "View all" when there are more, then Other (Guide, Changelog, and Send feedback)
+  and Support. With no résumé saved, "Recent" is left out, not shown empty.
+  Changelog shows a dot until the person opens it after a release. A résumé's menu
+  offers Delete even while it is open; deleting the open résumé returns to the
+  library first.
 - Guide starts the tour of the page on screen: the library, the templates, the
-  profiles, or the editor. Each tour also starts by itself the first time its page
+  profiles, or the editor. The changelog has no tour, so Guide is disabled there. Each tour also starts by itself the first time its page
   opens. A tour only points. The spotlight blocks clicks on its target, and the page
   under the card is inert, sheets included, so no step can open a sheet or a menu.
   Focus moves to the card's primary button on each step. The editor tour walks the
@@ -100,6 +104,14 @@ editorial
   header (title on the left, search and actions on the right, a hairline rule under
   them) over sections in a `max-w-7xl` column. Each section has a small semibold
   heading over its content.
+- The changelog (`/changelog`) is one release history in the same column: the
+  title and a subtitle over a hairline rule, then one row per release. On the left
+  of a row: the version in mono, which links to its GitHub release, the date, and
+  Latest on the newest. On the right: each highlight as a
+  title over its description. From `lg` the version column stays in view while its
+  release scrolls past. From `xl` a Versions list stays in view on the right, marks
+  the release being read, and scrolls on its own, keeping that release in view. Below `md` the version sits over the
+  highlights. The same history is Markdown at `/changelog.md`.
 - A résumé card is one link: its title stretches over the whole card
   (`CARD_LINK`), so there is no button inside it to compete. Its actions sit in a
   "…" menu that lifts above the link. Hover and focus ring the whole card.

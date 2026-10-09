@@ -11,6 +11,7 @@ import { useTranslations } from "use-intl";
 import { useWorkspaceView } from "@/hooks/use-workspace-view";
 import { Link, usePathname } from "@/i18n/navigation";
 import {
+  CHANGELOG_PATHNAME,
   EDITOR_PATHNAME,
   PROFILE_PATHNAME,
   TEMPLATE_PATHNAME,
@@ -23,7 +24,9 @@ export function PlatformNavbarBreadcrumb() {
   const tp = useTranslations("profile");
   const atTemplates = S.startsWith(pathname, TEMPLATE_PATHNAME);
   const atProfiles = S.startsWith(pathname, PROFILE_PATHNAME);
-  const atLibrary = !atTemplates && !atProfiles && view !== "editor";
+  const atChangelog = S.startsWith(pathname, CHANGELOG_PATHNAME);
+  const atLibrary =
+    !atTemplates && !atProfiles && !atChangelog && view !== "editor";
 
   return (
     <Breadcrumb>
@@ -53,6 +56,16 @@ export function PlatformNavbarBreadcrumb() {
 
             <BreadcrumbItem>
               <BreadcrumbPage>{tp("profiles")}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </>
+        )}
+
+        {atChangelog && (
+          <>
+            <BreadcrumbSeparator />
+
+            <BreadcrumbItem>
+              <BreadcrumbPage>{t("changelog")}</BreadcrumbPage>
             </BreadcrumbItem>
           </>
         )}
