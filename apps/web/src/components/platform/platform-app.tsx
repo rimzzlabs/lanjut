@@ -41,10 +41,12 @@ const EditorWorkspace = lazy(() =>
 
 type AppPage = WorkspaceView | "templates" | "profiles";
 
+// The library and the templates keep the titles their pages are indexed
+// under: search engines read the title after this effect runs.
 const PAGE_TITLE_KEYS: Record<AppPage, string> = {
-  library: "platform.sidebar.dashboard",
+  library: "meta.editorTitle",
   editor: "editor.chrome.editorTitle",
-  templates: "platform.breadcrumb.browseTemplates",
+  templates: "meta.templateTitle",
   profiles: "profile.profiles",
 };
 
