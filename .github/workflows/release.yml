@@ -108,7 +108,7 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      # The same guard the CI desktop job runs. A release builds from a tag, and
+      # The same guard the Desktop workflow runs. A release builds from a tag, and
       # nothing else on this path reads the config before the bundle is built.
       - name: Confirm the shell config still holds its load-bearing values
         run: node .github/scripts/check-tauri-config.mjs
