@@ -74,6 +74,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Forms                | react-hook-form + zod                                                    |
 | Drag and drop        | @dnd-kit                                                                 |
 | Export               | takumi-pdf (PDF from the preview HTML), docx                             |
+| SEO                  | astro-seo (head tags), @astrojs/sitemap                                  |
 | Animation            | motion/react                                                             |
 | State                | zustand                                                                  |
 | Search params state  | nuqs                                                                     |
