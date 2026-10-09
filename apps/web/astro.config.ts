@@ -1,8 +1,14 @@
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
+import { stripLocale } from "@lanjut/i18n/routing";
+import { A, F, O, pipe } from "@mobily/ts-belt";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 import type { Plugin } from "vite";
 import { appPageFor, legacyTarget } from "./src/lib/route-rules";
+import { INDEXED_PATHS, publicPath } from "./src/lib/seo";
+
+const pathOf = (url: string) => publicPath(new URL(url).pathname);
 
 const desktop = process.env.LANJUT_TARGET === "desktop";
 
@@ -48,6 +54,36 @@ export default defineConfig({
     react({
       babel: { plugins: [["babel-plugin-react-compiler", { target: "19" }]] },
     }),
+    // The web build only: the desktop app is never crawled.
+    ...(desktop
+      ? []
+      : [
+          sitemap({
+            filter: (page) =>
+              A.includes(INDEXED_PATHS, stripLocale(pathOf(page))),
+            i18n: { defaultLocale: "en", locales: { en: "en", id: "id" } },
+            changefreq: "daily",
+            lastmod: new Date(),
+            // The landing page, in each language, gets top priority, and
+            // every entry names the English page as x-default. Google reads
+            // neither priority nor changefreq, only lastmod.
+            serialize: (item) => ({
+              ...item,
+              ...(stripLocale(pathOf(item.url)) === "/" && { priority: 1 }),
+              links: pipe(
+                item.links ?? [],
+                A.find((link) => link.lang === "en"),
+                O.mapWithDefault(item.links ?? [], (english) =>
+                  A.append(item.links ?? [], {
+                    lang: "x-default",
+                    url: english.url,
+                  }),
+                ),
+                F.toMutable,
+              ),
+            }),
+          }),
+        ]),
   ],
   // Google, like next/font before it: the files carry the weight axis only.
   // Fontsource ships Fraunces with its optical-size axis, which narrows the

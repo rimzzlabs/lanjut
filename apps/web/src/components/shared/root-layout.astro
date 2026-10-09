@@ -3,6 +3,8 @@ import "@/styles/globals.css";
 import { Font } from "astro:assets";
 import type { Locale } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
+import { A, F } from "@mobily/ts-belt";
+import { SEO } from "astro-seo";
 import {
   absoluteUrl,
   alternatesOf,
@@ -27,6 +29,7 @@ const props = Astro.props;
 const t = getTranslator(props.locale, "meta");
 
 const OG_LOCALE: Record<Locale, string> = { en: "en_US", id: "id_ID" };
+const OTHER_LOCALE: Record<Locale, Locale> = { en: "id", id: "en" };
 
 const siteTitle = t("title");
 const title = props.title ? `${props.title} · ${SITE.name}` : siteTitle;
@@ -34,17 +37,28 @@ const description = props.description ?? t("description");
 const path = publicPath(Astro.url.pathname);
 const canonical = absoluteUrl(path);
 const ogImage = absoluteUrl(`/og/${props.locale}.png`);
-const alternates = alternatesOf(path);
-const xDefault = defaultAlternateOf(path);
-const keywords = [
-  "resume builder",
-  "ATS resume",
-  "applicant tracking system",
-  "CV builder",
-  "free resume builder",
-  "open source",
-  "local-first",
-].join(", ");
+const indexable = !props.noindex;
+const languageAlternates = F.toMutable(
+  A.append(
+    A.map(alternatesOf(path), (alternate) => ({
+      hrefLang: alternate.hreflang,
+      href: alternate.href,
+    })),
+    { hrefLang: "x-default", href: defaultAlternateOf(path) },
+  ),
+);
+const keywords = A.join(
+  [
+    "resume builder",
+    "ATS resume",
+    "applicant tracking system",
+    "CV builder",
+    "free resume builder",
+    "open source",
+    "local-first",
+  ],
+  ", ",
+);
 ---
 
 <!doctype html>
@@ -52,41 +66,44 @@ const keywords = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <meta name="application-name" content={SITE.name} />
-    <meta name="keywords" content={keywords} />
-    <meta name="author" content="Rizki Citra" />
-    <link rel="author" href="https://rimzzlabs.com" />
-    <meta name="creator" content="Rizki Citra" />
+    {/* astro-seo writes the search and share tags. The canonical is always
+        passed: its own default comes from Astro.url, which names the .html
+        file that the asset server redirects. */}
+    <SEO
+      title={title}
+      description={description}
+      canonical={indexable ? canonical : null}
+      noindex={props.noindex}
+      nofollow={props.noindex}
+      languageAlternates={indexable ? languageAlternates : undefined}
+      openGraph={{
+        basic: { title, type: "website", image: ogImage, url: canonical },
+        optional: {
+          siteName: SITE.name,
+          description,
+          locale: OG_LOCALE[props.locale],
+          localeAlternate: [OG_LOCALE[OTHER_LOCALE[props.locale]]],
+        },
+        image: { width: 1200, height: 630, alt: siteTitle },
+      }}
+      twitter={{
+        card: "summary_large_image",
+        title,
+        description,
+        image: ogImage,
+        imageAlt: siteTitle,
+      }}
+      extend={{
+        meta: [
+          { name: "application-name", content: SITE.name },
+          { name: "keywords", content: keywords },
+          { name: "author", content: "Rizki Citra" },
+          { name: "creator", content: "Rizki Citra" },
+        ],
+        link: [{ rel: "author", href: "https://rimzzlabs.com" }],
+      }}
+    />
     <meta name="theme-color" content="#1c6b4f" />
-    {
-      props.noindex ? (
-        <meta name="robots" content="noindex, nofollow" />
-      ) : (
-        <>
-          <link rel="canonical" href={canonical} />
-          {alternates.map((alternate) => (
-            <link rel="alternate" hreflang={alternate.hreflang} href={alternate.href} />
-          ))}
-          <link rel="alternate" hreflang="x-default" href={xDefault} />
-        </>
-      )
-    }
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:site_name" content={SITE.name} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:locale" content={OG_LOCALE[props.locale]} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={siteTitle} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />

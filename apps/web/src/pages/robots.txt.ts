@@ -13,7 +13,7 @@ export function GET() {
         "Allow: /",
         "Disallow: /api/",
         "",
-        `Sitemap: ${SITE.url}/sitemap.xml`,
+        `Sitemap: ${SITE.url}/sitemap-index.xml`,
         "",
       ],
       "\n",
