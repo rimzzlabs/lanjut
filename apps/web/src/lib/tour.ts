@@ -25,12 +25,8 @@ export interface AppStep extends Step {
   sheet?: "open" | "closed";
 }
 
-/**
- * A step's form below md, where the sidebar is a sheet narrower than the
- * card. A step about the sidebar then points at the menu button and leaves
- * the sheet closed.
- */
-export interface PhoneStep {
+/** A step's form on a smaller screen: its own copy, target, and side. */
+export interface StepVariant {
   /** Copy key, in place of the step's own. */
   id: string;
   selector: string;
@@ -39,7 +35,23 @@ export interface PhoneStep {
 
 export interface AppStepMeta extends Omit<AppStep, "title" | "content"> {
   id: string;
-  phone?: PhoneStep;
+  /**
+   * Below md, where the sidebar is a sheet narrower than the card. A step
+   * about the sidebar then points at the menu button and leaves the sheet
+   * closed.
+   */
+  phone?: StepVariant;
+  /**
+   * Below lg, where the Profiles page shows a profile's details in a drawer,
+   * so a step about them points at the list that opens it.
+   */
+  narrow?: StepVariant;
+}
+
+/** The screen a tour runs on: below md (`phone`), and below lg (`narrow`). */
+export interface TourScreen {
+  phone: boolean;
+  narrow: boolean;
 }
 
 export interface AppTourMeta {
@@ -59,34 +71,39 @@ export function tourForPathname(pathname: string, editing: boolean): TourName {
   return LIBRARY_TOUR;
 }
 
-function forScreen(step: AppStepMeta, phone: boolean): AppStepMeta {
-  if (!phone || step.phone === undefined) return step;
-  return { ...step, ...step.phone, sidebar: "closed" };
+function forScreen(step: AppStepMeta, screen: TourScreen): AppStepMeta {
+  if (screen.phone && step.phone !== undefined) {
+    return { ...step, ...step.phone, sidebar: "closed" };
+  }
+  if (screen.narrow && step.narrow !== undefined) {
+    return { ...step, ...step.narrow };
+  }
+  return step;
 }
 
 export function getTourStep(
   tourName: string | null,
   stepIndex: number,
-  phone: boolean,
+  screen: TourScreen,
 ): AppStepMeta | undefined {
   const tour = A.find(TOUR_STEPS, (t) => t.tour === tourName);
   return pipe(
     tour,
     O.flatMap((found) => A.get(found.steps, stepIndex)),
-    O.map((step) => forScreen(step, phone)),
+    O.map((step) => forScreen(step, screen)),
     O.toUndefined,
   );
 }
 
 export function localizeTours(
   t: (key: string) => string,
-  phone: boolean,
+  screen: TourScreen,
 ): AppTour[] {
   const tours = A.map(TOUR_STEPS, (tour) => ({
     tour: tour.tour,
     steps: F.toMutable(
       A.map(tour.steps, (meta) => {
-        const step = forScreen(meta, phone);
+        const step = forScreen(meta, screen);
         return {
           ...step,
           title: t(`${tour.tour}.${step.id}.title`),
@@ -211,6 +228,30 @@ export const TOUR_STEPS: AppTourMeta[] = [
         sidebar: "closed",
         selector: "#tour-add-profile",
         side: "bottom-right",
+      },
+      {
+        ...TOP_STEP,
+        id: "import",
+        sidebar: "closed",
+        selector: "#tour-import-profile",
+        side: "bottom-right",
+        phone: {
+          id: "import",
+          selector: "#tour-import-profile",
+          side: "bottom-left",
+        },
+      },
+      {
+        ...TOP_STEP,
+        id: "backup",
+        sidebar: "closed",
+        selector: "#tour-profile-backup",
+        side: "bottom",
+        narrow: {
+          id: "backupNarrow",
+          selector: "#tour-profile-list",
+          side: "bottom",
+        },
       },
       {
         ...TOP_STEP,

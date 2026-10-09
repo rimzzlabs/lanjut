@@ -38,6 +38,14 @@ function entryShape(fields: FieldSchema[]) {
   return z.strictObject(shape);
 }
 
+/** Header fields, by their key in the header schema. */
+export const interchangeHeaderSchema = entryShape(HEADER_SCHEMA);
+
+/** An opt-in portrait as a JPEG or PNG data URL. */
+export const interchangePhotoSchema = z
+  .string()
+  .regex(/^data:image\/(?:jpeg|png);base64,[A-Za-z0-9+/=]+$/);
+
 const summarySection = z.strictObject({
   type: z.literal("summary"),
   title: z.string().optional(),
@@ -103,12 +111,9 @@ export const interchangeSchema = z
     nameScale: z.number().min(0.8).max(1.2).optional(),
     titleScale: z.number().min(0.8).max(1.2).optional(),
     bodyScale: z.number().min(0.8).max(1.2).optional(),
-    header: entryShape(HEADER_SCHEMA).optional(),
+    header: interchangeHeaderSchema.optional(),
     /** Opt-in portrait as a data URL; kept out of the header field map since it is not text. */
-    photo: z
-      .string()
-      .regex(/^data:image\/(?:jpeg|png);base64,[A-Za-z0-9+/=]+$/)
-      .optional(),
+    photo: interchangePhotoSchema.optional(),
     photoSize: z.number().min(40).max(96).optional(),
     photoRadius: z.number().min(0).max(50).optional(),
     photoAlign: z.enum(["top", "center", "bottom"]).optional(),

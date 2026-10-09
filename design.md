@@ -57,7 +57,12 @@ editorial
   preview, the readiness bar, then the four tabs; below `xl` it shows the Edit
   button before the tabs. Below `md`, where the
   sidebar is a sheet, the library tour's two sidebar steps point at the menu
-  button in the navbar and leave the sheet closed.
+  button in the navbar and leave the sheet closed. The profiles tour walks the
+  list, Add new profile, Import profile, the Backup box, and the avatar menu.
+  Below `lg`, where a profile's details sit in a drawer, its Backup step points at
+  the list and says where Backup is (a step's `narrow` form, beside its `phone`
+  form below `md`). Below `sm` the two header buttons split the row, so every
+  card stays on screen.
 - The navbar holds the sidebar trigger, the breadcrumb, and the save state on the
   left; below `md` the breadcrumb hides. On the right it holds two 36px controls only: the GitHub link (icon only
   below `md`) and the profile menu. The profile menu is the active profile's avatar
@@ -79,6 +84,16 @@ editorial
   the page header; while its form shows, a dashed "New profile, not saved yet" row
   is the current row in the list, and the form has Cancel. Delete shows only when
   more than one profile exists, and its confirmation picks where the résumés move.
+- Under a profile's header, above its form, a Backup box (muted, no ring) says
+  what the file holds and offers Download backup, plus Share where the system can
+  share files (not in the Mac app). It sits high so a person finds it without
+  scrolling past the form, and so the tour can point at it with room for its card.
+  If a browser refuses the share, the backup downloads instead, with a toast that
+  says so. The page header holds Import profile (outline) beside Add new profile.
+  Import opens an alert dialog before anything changes: a line on the profile (new
+  here, the same details, replaced by the newer file, or kept), three counts (new
+  résumés, newer than the copy here, already up to date), and the note that nothing
+  is deleted and Lanjut switches to the profile.
 - The library (`/editor`) and the template page (`/template`) share one frame: a page
   header (title on the left, search and actions on the right, a hairline rule under
   them) over sections in a `max-w-7xl` column. Each section has a small semibold

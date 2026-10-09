@@ -8,6 +8,7 @@ import {
 } from "nextstepjs";
 import { type PropsWithChildren, useEffect, useMemo } from "react";
 import { useTranslations } from "use-intl";
+import { MEDIA_LG, useMediaQuery } from "@/hooks/use-media-query";
 import { usePathname } from "@/i18n/navigation";
 import { scrollPageToTop } from "@/lib/page-scroll";
 import {
@@ -16,14 +17,21 @@ import {
   useTourStore,
 } from "@/lib/store";
 import { isSidebarSheet } from "@/lib/store/sidebar-store";
-import { getTourStep, localizeTours } from "@/lib/tour";
+import { getTourStep, localizeTours, type TourScreen } from "@/lib/tour";
 import { inertOutsideTour } from "@/lib/tour-inert";
 import { TourCard } from "./tour-card";
 
 const SIDEBAR_SETTLE_MS = 450;
 
+function currentScreen(): TourScreen {
+  return {
+    phone: isSidebarSheet(),
+    narrow: !window.matchMedia(MEDIA_LG).matches,
+  };
+}
+
 function prepareStep(tourName: string | null, stepIndex: number) {
-  const step = getTourStep(tourName, stepIndex, isSidebarSheet());
+  const step = getTourStep(tourName, stepIndex, currentScreen());
   if (
     !step ||
     (!step.sidebar && !step.scrollTop && !step.sheet && !step.editorTab)
@@ -79,7 +87,11 @@ function handleTourEnd() {
 export function TourProvider(props: PropsWithChildren) {
   const t = useTranslations("tour");
   const phone = Boolean(useIsMobile());
-  const tours = useMemo(() => localizeTours(t, phone), [t, phone]);
+  const narrow = useMediaQuery(MEDIA_LG) === false;
+  const tours = useMemo(
+    () => localizeTours(t, { phone, narrow }),
+    [t, phone, narrow],
+  );
   const { resolvedTheme } = useTheme();
   const isDarkMode = resolvedTheme === "dark";
 

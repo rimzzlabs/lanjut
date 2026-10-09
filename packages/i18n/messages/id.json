@@ -150,6 +150,18 @@
         "title": "Tambah profil",
         "content": "Buat profil lain saat kamu melamar jenis pekerjaan berbeda, atau di negara lain."
       },
+      "import": {
+        "title": "Impor profil",
+        "content": "Pindah dari perangkat lain? Impor berkas cadangannya di sini. Lanjut menunjukkan apa yang ditambahkan sebelum ada yang berubah, dan nggak pernah menghapus apa pun."
+      },
+      "backup": {
+        "title": "Cadangkan profil",
+        "content": "Unduh profil ini beserta semua resumenya sebagai satu berkas, atau bagikan langsung ke ponselmu. Impor berkasnya di perangkat lain untuk lanjut di sana."
+      },
+      "backupNarrow": {
+        "title": "Cadangkan profil",
+        "content": "Buka satu profil, lalu cari Cadangan di bagian akhir detailnya. Dari situ kamu bisa mengunduh profil beserta semua resumenya sebagai satu berkas, atau membagikannya ke perangkat lain."
+      },
       "switch": {
         "title": "Ganti dari mana saja",
         "content": "Avatar kamu di bilah atas bisa mengganti profil dari halaman mana pun."
@@ -236,6 +248,10 @@
           {
             "title": "Tempel JSON atau YAML",
             "description": "Tempel resume yang kamu salin sebagai JSON atau YAML langsung di tab Dokumen. Teksnya berwarna, dan kesalahan langsung kelihatan sebelum kamu impor."
+          },
+          {
+            "title": "Cadangkan profil",
+            "description": "Unduh profil beserta semua resumenya sebagai satu berkas kecil, lalu impor di perangkat lain untuk lanjut di sana. Di ponsel, Bagikan mengirimnya lewat AirDrop, Nearby Share, atau aplikasi cloud. Nggak ada yang dikirim ke server, dan impor nggak pernah menghapus apa pun: kalau kedua perangkat punya resume yang sama, yang lebih baru yang dipakai."
           },
           {
             "title": "Perbaikan bug",
@@ -654,6 +670,32 @@
     "deleteMove": "{count} resumenya pindah ke profil di bawah. Hanya informasi yang tersimpan di profil ini yang hilang.",
     "deleteEmpty": "Profil ini tidak punya resume. Hanya informasi yang tersimpan di profil ini yang hilang.",
     "moveTo": "Pindahkan resume ke",
+    "backupTitle": "Cadangan",
+    "backupDescription": "{count, plural, =0 {Unduh profil ini sebagai satu berkas.} other {Unduh profil ini beserta # resumenya sebagai satu berkas.}} Impor berkasnya di perangkat lain untuk lanjut di sana.",
+    "backupDownload": "Unduh cadangan",
+    "backupShare": "Bagikan",
+    "backupSaved": "Cadangan diunduh",
+    "backupFailed": "Nggak bisa membuat cadangan. Coba lagi.",
+    "backupShareFallback": "Browser ini nggak bisa membagikan berkasnya, jadi berkasnya diunduh. Kirim dari folder unduhan.",
+    "importProfile": "Impor profil",
+    "importTitle": "Impor {name}?",
+    "importProfileAdd": "Profil ini baru di perangkat ini.",
+    "importProfileSame": "Perangkat ini sudah punya profil ini, dengan detail yang sama.",
+    "importProfileUpdate": "Perangkat ini sudah punya profil ini. Detail di berkas lebih baru, jadi menggantikan yang ada di sini.",
+    "importProfileKeep": "Perangkat ini sudah punya profil ini. Detail di sini sama baru atau lebih baru dari berkas, jadi tetap dipakai.",
+    "importNew": "Resume baru",
+    "importNewer": "Lebih baru dari salinan di sini",
+    "importSame": "Sudah terbaru",
+    "importNote": "Nggak ada yang dihapus dari perangkat ini. Lanjut pindah ke profil ini setelah impor.",
+    "importCancel": "Batal",
+    "importConfirm": "Impor",
+    "importDone": "{name} diimpor",
+    "importErrorInvalid": "Berkas ini bukan cadangan profil Lanjut.",
+    "importErrorResume": "Berkas ini berisi satu resume. Impor dari tab Dokumen di editor.",
+    "importErrorNewer": "Berkas ini dibuat versi Lanjut yang lebih baru. Perbarui Lanjut, lalu impor lagi.",
+    "importErrorRead": "Nggak bisa membaca berkas ini.",
+    "importErrorTooLarge": "Berkas ini terlalu besar untuk cadangan profil.",
+    "importErrorWrite": "Nggak bisa menyimpan impor. Nggak ada yang berubah. Coba lagi.",
     "joinNote": "Resume ini masuk ke profil <b>{name}</b>."
   },
   "forms": {

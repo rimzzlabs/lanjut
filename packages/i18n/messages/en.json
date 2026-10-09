@@ -150,6 +150,18 @@
         "title": "Add a profile",
         "content": "Make another profile when you apply for a different kind of job, or in another country."
       },
+      "import": {
+        "title": "Import a profile",
+        "content": "Moving from another device? Import its backup file here. Lanjut shows what the file adds before anything changes, and never deletes anything."
+      },
+      "backup": {
+        "title": "Back up a profile",
+        "content": "Download this profile and all its resumes as one file, or share it straight to your phone. Import the file on another device to carry on there."
+      },
+      "backupNarrow": {
+        "title": "Back up a profile",
+        "content": "Open a profile and find Backup at the end of its details. It downloads the profile and all its resumes as one file, or shares it to another device."
+      },
       "switch": {
         "title": "Switch from anywhere",
         "content": "Your avatar in the top bar switches profiles from any page."
@@ -236,6 +248,10 @@
           {
             "title": "Paste JSON or YAML",
             "description": "Paste a resume you copied as JSON or YAML into the Document tab. The text shows in color, and any mistake shows before you import it."
+          },
+          {
+            "title": "Back up a profile",
+            "description": "Download a profile with all its resumes as one small file, then import it on another device to carry on there. On a phone, Share sends it through AirDrop, Nearby Share, or a cloud app. Nothing goes to a server, and an import never deletes anything: where both devices have a resume, the newer one wins."
           },
           {
             "title": "Bug fixes",
@@ -654,6 +670,32 @@
     "deleteMove": "{count, plural, one {Its # resume moves} other {Its # resumes move}} to the profile below. Only the information saved in this profile goes away.",
     "deleteEmpty": "It holds no resumes. Only the information saved in this profile goes away.",
     "moveTo": "Move resumes to",
+    "backupTitle": "Backup",
+    "backupDescription": "{count, plural, =0 {Download this profile as one file.} one {Download this profile and its resume as one file.} other {Download this profile and its # resumes as one file.}} Import the file on another device to carry on there.",
+    "backupDownload": "Download backup",
+    "backupShare": "Share",
+    "backupSaved": "Backup downloaded",
+    "backupFailed": "Couldn't make the backup. Try again.",
+    "backupShareFallback": "This browser can't share the file, so it downloaded instead. Send it from your downloads.",
+    "importProfile": "Import profile",
+    "importTitle": "Import {name}?",
+    "importProfileAdd": "This profile is new on this device.",
+    "importProfileSame": "This device has this profile, with the same details.",
+    "importProfileUpdate": "This device has this profile. The details in the file are newer, so they replace the ones here.",
+    "importProfileKeep": "This device has this profile. Its details here are as new as the file's or newer, so they stay.",
+    "importNew": "New resumes",
+    "importNewer": "Newer than the copy here",
+    "importSame": "Already up to date",
+    "importNote": "Nothing on this device is deleted. Lanjut switches to this profile after the import.",
+    "importCancel": "Cancel",
+    "importConfirm": "Import",
+    "importDone": "{name} imported",
+    "importErrorInvalid": "This file is not a Lanjut profile backup.",
+    "importErrorResume": "This file holds one resume. Import it from the Document tab in the editor.",
+    "importErrorNewer": "A newer version of Lanjut made this file. Update Lanjut, then import it again.",
+    "importErrorRead": "Couldn't read this file.",
+    "importErrorTooLarge": "This file is too large to be a profile backup.",
+    "importErrorWrite": "Couldn't save the import. Nothing changed. Try again.",
     "joinNote": "This resume goes into the profile <b>{name}</b>."
   },
   "forms": {

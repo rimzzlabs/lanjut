@@ -1,6 +1,6 @@
 import { Button } from "@lanjut/ui/components/button";
 import { Skeleton } from "@lanjut/ui/components/skeleton";
-import { PlusIcon } from "@phosphor-icons/react";
+import { PlusIcon, TrayArrowUpIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { ProfileList } from "@/components/profile/profile-list";
 import { useSelectedProfile } from "@/hooks/use-selected-profile";
@@ -11,8 +11,8 @@ import { PlatformPageScroll } from "./platform-page-scroll";
 const ROW_KEYS = ["a", "b"];
 
 /**
- * The profiles page while its code loads. The header, its action, and the
- * line under it are real; the action waits, disabled, for the page.
+ * The profiles page while its code loads. The header, its actions, and the
+ * line under it are real; the actions wait, disabled, for the page.
  */
 export function PlatformProfilesSkeleton() {
   const t = useTranslations("profile");
@@ -20,10 +20,16 @@ export function PlatformProfilesSkeleton() {
   return (
     <PlatformPageScroll>
       <PlatformPageHeader title={t("profiles")}>
-        <Button disabled>
-          <PlusIcon data-icon="inline-start" />
-          {t("addProfile")}
-        </Button>
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center">
+          <Button variant="outline" disabled>
+            <TrayArrowUpIcon />
+            {t("importProfile")}
+          </Button>
+          <Button disabled>
+            <PlusIcon data-icon="inline-start" />
+            {t("addProfile")}
+          </Button>
+        </div>
       </PlatformPageHeader>
       <p className="-mt-2 max-w-prose text-sm text-muted-foreground">
         {t("newDescription")}

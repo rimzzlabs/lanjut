@@ -70,64 +70,70 @@ export function ProfileDelete(props: { profile: Profile }) {
   );
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl p-4 ring-1 ring-destructive/30 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex flex-col gap-0.5">
-        <span className="text-sm font-medium">{t("profile.deleteTitle")}</span>
-        <span className="text-sm text-muted-foreground">
-          {t("profile.deleteDescription")}
-        </span>
-      </div>
+    <div className="@container/delete rounded-xl p-4 ring-1 ring-destructive/30">
+      <div className="flex flex-col gap-3 @md/delete:flex-row @md/delete:items-center @md/delete:justify-between">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-sm font-medium">
+            {t("profile.deleteTitle")}
+          </span>
+          <span className="text-sm text-muted-foreground">
+            {t("profile.deleteDescription")}
+          </span>
+        </div>
 
-      <AlertDialog>
-        <AlertDialogTrigger
-          render={<Button variant="destructive" className="shrink-0" />}
-        >
-          <TrashIcon data-icon="inline-start" />
-          {t("profile.deleteTitle")}
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              {t("profile.deleteConfirm", { name: label })}
-            </AlertDialogTitle>
-            <AlertDialogDescription>{description}</AlertDialogDescription>
-          </AlertDialogHeader>
+        <AlertDialog>
+          <AlertDialogTrigger
+            render={<Button variant="destructive" className="shrink-0" />}
+          >
+            <TrashIcon data-icon="inline-start" />
+            {t("profile.deleteTitle")}
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                {t("profile.deleteConfirm", { name: label })}
+              </AlertDialogTitle>
+              <AlertDialogDescription>{description}</AlertDialogDescription>
+            </AlertDialogHeader>
 
-          {count > 0 && (
-            <Field>
-              <FieldLabel htmlFor={selectId}>{t("profile.moveTo")}</FieldLabel>
-              <Select
-                items={options}
-                value={target}
-                onValueChange={(value) => setTarget(value as string)}
+            {count > 0 && (
+              <Field>
+                <FieldLabel htmlFor={selectId}>
+                  {t("profile.moveTo")}
+                </FieldLabel>
+                <Select
+                  items={options}
+                  value={target}
+                  onValueChange={(value) => setTarget(value as string)}
+                >
+                  <SelectTrigger id={selectId} className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {options.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </Field>
+            )}
+
+            <AlertDialogFooter>
+              <AlertDialogCancel>{t("forms.common.cancel")}</AlertDialogCancel>
+              <AlertDialogAction
+                variant="destructive"
+                onClick={() => void removeProfile(props.profile.id, target)}
               >
-                <SelectTrigger id={selectId} className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {options.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </Field>
-          )}
-
-          <AlertDialogFooter>
-            <AlertDialogCancel>{t("forms.common.cancel")}</AlertDialogCancel>
-            <AlertDialogAction
-              variant="destructive"
-              onClick={() => void removeProfile(props.profile.id, target)}
-            >
-              {t("forms.common.delete")}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+                {t("forms.common.delete")}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
     </div>
   );
 }

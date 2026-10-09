@@ -8,6 +8,7 @@ import {
   selectProfile,
   useProfileStore,
 } from "@/lib/store";
+import { ProfileBackup } from "./profile-backup";
 import { ProfileDelete } from "./profile-delete";
 import { ProfileDetailHeader } from "./profile-detail-header";
 import { ProfileForm } from "./profile-form";
@@ -48,8 +49,9 @@ function ProfileDetailSaved(props: { id: string; framed: boolean }) {
   return (
     <div className="flex flex-col gap-6">
       <section className={cn("flex flex-col gap-6", props.framed && FRAME)}>
-        <div className="border-b pb-6">
+        <div className="flex flex-col gap-4 border-b pb-6">
           <ProfileDetailHeader profile={profile} />
+          <ProfileBackup key={`backup-${profile.id}`} profile={profile} />
         </div>
         <ProfileForm
           key={profile.id}
