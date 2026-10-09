@@ -1,0 +1,93 @@
+---
+import { Font } from "astro:assets";
+import { type Locale, localeStaticPaths } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import LandingClosure from "@/components/landing/landing-closure.astro";
+import LandingDownload from "@/components/landing/landing-download.astro";
+import LandingExports from "@/components/landing/landing-exports.astro";
+import LandingFaq from "@/components/landing/landing-faq.astro";
+import LandingFooter from "@/components/landing/landing-footer.astro";
+import LandingHero from "@/components/landing/landing-hero.astro";
+import LandingImport from "@/components/landing/landing-import.astro";
+import LandingKept from "@/components/landing/landing-kept.astro";
+import LandingLocal from "@/components/landing/landing-local.astro";
+import LandingLooks from "@/components/landing/landing-looks.astro";
+import LandingNavbar from "@/components/landing/landing-navbar.astro";
+import PlatformDesktopRoot from "@/components/platform/platform-desktop-root.astro";
+import RootLayout from "@/components/shared/root-layout.astro";
+import { IS_DESKTOP } from "@/lib/build-target";
+import { SITE } from "@/lib/site";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const locale = Astro.props.locale;
+const pathname = Astro.url.pathname;
+const t = getTranslator(locale, "meta");
+const tNav = getTranslator(locale, "nav");
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      name: SITE.name,
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      url: SITE.url,
+      description: t("description"),
+      inLanguage: locale,
+      isAccessibleForFree: true,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      author: {
+        "@type": "Person",
+        name: "Rizki Citra",
+        url: "https://rimzzlabs.com",
+      },
+    },
+    { "@type": "WebSite", name: SITE.name, url: SITE.url, inLanguage: locale },
+  ],
+};
+---
+
+{/* The desktop window never shows the landing page. Tauri falls back to
+    this root file for a path without one (/editor/<id> on a reload), so
+    the desktop build boots the app here. */}
+{IS_DESKTOP && <PlatformDesktopRoot locale={locale} />}
+{!IS_DESKTOP && (
+  <RootLayout locale={locale} world="readers">
+    <script
+      slot="head"
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(structuredData)}
+    />
+    <a
+      href="#main"
+      class="fixed top-4 left-4 -translate-y-40 focus:translate-0 z-50 rounded-md border bg-background px-4 py-2 text-sm font-medium shadow-lg outline-none ring-2 ring-ring transition"
+    >
+      {tNav("skipToContent")}
+    </a>
+
+    <Font slot="head" cssVariable="--font-landing" preload />
+    <Font slot="head" cssVariable="--font-machine" />
+      <LandingNavbar locale={locale} pathname={pathname} />
+      <main id="main">
+        <LandingHero locale={locale} pathname={pathname} />
+        <LandingLooks locale={locale} pathname={pathname} />
+        <LandingKept locale={locale} />
+        <LandingImport locale={locale} />
+        <LandingExports locale={locale} pathname={pathname} />
+        <LandingLocal locale={locale} />
+        <LandingDownload locale={locale} />
+        <LandingFaq locale={locale} pathname={pathname} />
+        <LandingClosure locale={locale} pathname={pathname} />
+      </main>
+      <LandingFooter locale={locale} />
+  </RootLayout>
+)}

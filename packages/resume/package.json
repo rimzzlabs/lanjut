@@ -1,0 +1,28 @@
+{
+  "name": "@lanjut/resume",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./import": "./src/import/index.ts",
+    "./interchange": "./src/interchange/index.ts",
+    "./db": "./src/db/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@mobily/ts-belt": "catalog:",
+    "@tiptap/core": "catalog:",
+    "idb": "^8.0.3",
+    "nanoid": "catalog:",
+    "unpdf": "catalog:",
+    "yaml": "^2.9.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@lanjut/tsconfig": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

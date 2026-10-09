@@ -22,8 +22,9 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 ## Features
 
 - Six résumé templates, all sharing one linear document structure; only styling differs
-- Template gallery with search, sort, and live seed-data previews
-- Résumé library with live first-page thumbnails, rename, and delete
+- Template page with search and a full-size preview of every page, on the sample or on one of your own résumés, with one-click apply (undoable in the editor)
+- Profiles: keep one profile per kind of job or job market. Each profile keeps its own résumés and its personal information and summary, which every new résumé in it starts with. Manage them on the Profiles page, and switch from the avatar in the top bar, where Preferences also hold the theme, language, and animation settings
+- Résumé library that leads with the résumé edited last, quick ways to start a new one, and every résumé as a grid or a list with live first-page thumbnails, its template, sort, rename, duplicate, download, and delete
 - Print-accurate A4 preview with automatic pagination
 - Rich text editing per field, scoped to ATS-safe formatting (bold, italic, lists, links), with undo and redo per field
 - Optional company context for experience and internship entries, shown before achievements in every preview and export
@@ -33,49 +34,55 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Drag to reorder sections and toggle any section's visibility (entries within a section sort by date automatically)
 - Document-level presentation controls: font, font size, section spacing, line height, letter spacing, contact-icon visibility, and a one-click style reset
 - Available in English and Indonesian (`use-intl`)
+- Theme toggle and one settings menu (language, animation) in the landing and app navbars. The animation setting (System, On, Off) follows the operating system's reduced-motion setting on System
 - Export to PDF (linear reading order preserved) and plain text / .docx
-- Copy, download, and re-import a résumé as JSON or YAML
-- Guided tour of the editor and library for first-time users
-- Send bug reports and feature requests in-app, no GitHub account required
-- Local persistence via IndexedDB, no data leaves the browser
+- Copy, download, and re-import a résumé as JSON or YAML, from a file or as pasted text shown in color
+- A readiness meter that shows what your résumé still needs, counting only your own words, never the sample's
+- Guided tours of the library, templates, profiles, and editor for first-time users
+- Send feedback in-app: a guided form for bugs, ideas, and wording fixes that checks for similar issues and shows the technical details it attaches (never the text of your résumé). Without a GitHub account, Lanjut posts it for you and links to the issue; with one, it opens the issue prefilled for you to post
+- Local persistence via IndexedDB, no data leaves the browser. The editor's top bar confirms each save to the device and warns when the browser refuses one
 - Fully local: works offline after initial load
 
 ## Templates
 
-| Template | Character |
-|---|---|
-| **Awal** | Clean single-column starter with room for every section |
-| **Ketat** | Compact serif classic: ruled headings, italic dates |
-| **Luasa** | Airy minimalist: letterspaced headings, generous whitespace |
-| **Tebal** | Bold modern statement: oversized name, heavy uppercase headings |
-| **Klasik** | Traditional all-serif CV: centered, quiet, formal |
-| **Ketik** | Typewriter-flavored technical look, built for developers |
+| Template   | Character                                                       |
+| ---------- | --------------------------------------------------------------- |
+| **Awal**   | Clean single-column starter with room for every section         |
+| **Ketat**  | Compact serif classic: ruled headings, italic dates             |
+| **Luasa**  | Airy minimalist: letterspaced headings, generous whitespace     |
+| **Tebal**  | Bold modern statement: oversized name, heavy uppercase headings |
+| **Klasik** | Traditional all-serif CV: centered, quiet, formal               |
+| **Ketik**  | Typewriter-flavored technical look, built for developers        |
 
 Every template renders the same linear block sequence, so switching templates never changes parse or export order.
 
 ## Tech Stack
 
-| Purpose | Library |
-|---|---|
-| Framework | Astro (static output, React islands) |
-| Hosting | Cloudflare Workers static assets, plus one Worker for the feedback relay |
-| Build targets | Web (default), desktop (`LANJUT_TARGET=desktop`) |
-| Desktop shell | Tauri 2 (macOS 13 or later) |
-| Internationalization | use-intl (English, Indonesian) |
-| UI components | shadcn (base-ui) |
-| Icons | Phosphor (@phosphor-icons/react) |
-| Styling | Tailwind CSS |
-| Rich text editor | TipTap |
-| Forms | react-hook-form + zod |
-| Drag and drop | @dnd-kit |
-| Export | takumi-pdf (PDF from the preview HTML), docx |
-| Animation | motion/react |
-| State | zustand |
-| Search params state | nuqs |
-| Persistence | IndexedDB (via idb) |
-| Utilities | @mobily/ts-belt |
-| Dates | date-fns |
-| Lint / format | Biome |
+| Purpose              | Library                                                                  |
+| -------------------- | ------------------------------------------------------------------------ |
+| Framework            | Astro (static output, React islands)                                     |
+| Hosting              | Cloudflare Workers static assets, plus one Worker for the feedback relay |
+| Build targets        | Web (default), desktop (`LANJUT_TARGET=desktop`)                         |
+| Desktop shell        | Tauri 2 (macOS 13 or later)                                              |
+| Internationalization | use-intl (English, Indonesian)                                           |
+| UI components        | shadcn (base-ui, Vega style)                                             |
+| Icons                | Phosphor (@phosphor-icons/react)                                         |
+| Styling              | Tailwind CSS                                                             |
+| Rich text editor     | TipTap                                                                   |
+| Syntax colors        | Lezer (JSON and YAML parsers, in the paste dialog)                       |
+| Forms                | react-hook-form + zod                                                    |
+| Drag and drop        | @dnd-kit                                                                 |
+| Export               | takumi-pdf (PDF from the preview HTML), docx                             |
+| Animation            | motion/react                                                             |
+| State                | zustand                                                                  |
+| Search params state  | nuqs                                                                     |
+| App routing          | wouter                                                                   |
+| Persistence          | IndexedDB (via idb)                                                      |
+| Utilities            | @mobily/ts-belt                                                          |
+| Dates                | date-fns                                                                 |
+| Lint / format        | Biome (code, JSON, CSS), Prettier (Markdown, YAML)                       |
+| Git hooks            | lefthook                                                                 |
+| Repository           | pnpm workspace                                                           |
 
 ## Getting Started
 
@@ -86,23 +93,36 @@ pnpm install
 pnpm dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:4321`.
+
+### Repository layout
+
+| Workspace           | What it holds                                                        |
+| ------------------- | -------------------------------------------------------------------- |
+| `apps/web`          | The Astro site, the React app, and the Worker                        |
+| `apps/desktop`      | The Tauri shell for macOS                                            |
+| `packages/resume`   | The résumé document: model, migrations, import, interchange, storage |
+| `packages/i18n`     | The English and Indonesian copy, and the routing helpers             |
+| `packages/ui`       | The shadcn primitives                                                |
+| `packages/tsconfig` | The shared TypeScript base                                           |
+
+Run every script from the repo root.
 
 ### Useful scripts
 
-| Script | What it does |
-|---|---|
-| `pnpm dev` | Start the Astro dev server and the feedback Worker |
-| `pnpm lint` / `pnpm format` | Check / write with Biome |
-| `pnpm typecheck` | Run `astro check` |
-| `pnpm build` | Generate the Open Graph images and build the site into `dist/` |
-| `LANJUT_TARGET=desktop pnpm build` | Build the static desktop assets into `dist-desktop/` |
-| `pnpm desktop:dev` | Run the desktop shell against the dev server |
-| `pnpm desktop:build` | Build the desktop app and installers |
-| `pnpm validate:exports` | Regenerate PDF/DOCX/TXT from the seed résumé and verify extraction order and field mapping |
-| `pnpm preview` | Build the site and serve it through the Worker locally |
-| `pnpm ship` | Build and deploy to Cloudflare |
-| `pnpm commit` | Commit via the commitizen prompt |
+| Script                             | What it does                                                                               |
+| ---------------------------------- | ------------------------------------------------------------------------------------------ |
+| `pnpm dev`                         | Start the Astro dev server and the feedback Worker                                         |
+| `pnpm lint` / `pnpm format`        | Check / write with Biome (code) and Prettier (Markdown, YAML)                              |
+| `pnpm typecheck`                   | Type-check every workspace                                                                 |
+| `pnpm build`                       | Build the site into `apps/web/dist/`                                                       |
+| `LANJUT_TARGET=desktop pnpm build` | Build the static desktop assets into `apps/web/dist-desktop/`                              |
+| `pnpm desktop:dev`                 | Run the desktop shell against the dev server                                               |
+| `pnpm desktop:build`               | Build the desktop app and installers                                                       |
+| `pnpm validate:exports`            | Regenerate PDF/DOCX/TXT from the seed résumé and verify extraction order and field mapping |
+| `pnpm preview`                     | Build the site and serve it through the Worker locally                                     |
+| `pnpm ship`                        | Build and deploy to Cloudflare                                                             |
+| `pnpm commit`                      | Commit via the commitizen prompt                                                           |
 
 ## Data and Privacy
 
@@ -117,12 +137,14 @@ Changes to the export path are gated by `pnpm validate:exports`, which regenerat
 
 ## Contributing
 
-Bug reports and feature requests go through the issue forms; note the scope rules there: presentation is customizable, structure is not, and accounts/server storage are non-goals.
+Bug reports, feature requests, and wording fixes go through the issue forms (or "Send feedback" in the app); note the scope rules there: presentation is customizable, structure is not, and accounts/server storage are non-goals.
 
-Commit messages follow Conventional Commits via commitlint and commitizen, and every commit must be signed off (`git commit -s`) under the Developer Certificate of Origin. Run `pnpm commit` instead of `git commit` to use the prompt. Pre-commit hooks (husky + lint-staged) run lint and format checks before any commit is accepted. PR titles follow the same convention with a fully lowercase subject; they become the squash-merge commit.
+Commit messages follow Conventional Commits via commitlint and commitizen, and every commit must be signed off (`git commit -s`) under the Developer Certificate of Origin. Run `pnpm commit` instead of `git commit` to use the prompt. Git hooks (lefthook) run Biome and Prettier on staged files before a commit, commitlint on the message, and a type check before a push. PR titles follow the same convention with a fully lowercase subject; they become the squash-merge commit.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow (setup, branches, commits, DCO, releases) and `AGENTS.md` for architecture rules and code conventions before submitting a PR.
 
 ## License
 
 [AGPL-3.0-only](LICENSE). Copyright © 2026 Lanjut Contributors.
+
+The third-party fonts use the SIL Open Font License 1.1. [`apps/web/FONTS.md`](apps/web/FONTS.md) lists each font with its source and license.

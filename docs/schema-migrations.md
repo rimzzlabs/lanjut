@@ -6,25 +6,41 @@ pre-migration backup store, and what the UI does when a document can't be read.
 
 ## Two versions, two jobs
 
-| Version | Lives in | Governs | Bump when |
-| --- | --- | --- | --- |
-| `DB_VERSION` (`src/lib/db/schema.ts`) | The IndexedDB database | Object stores and indexes only | Adding or changing a store or index |
-| `schemaVersion` (`src/lib/resume/types.ts`, `CURRENT_SCHEMA_VERSION`) | Each persisted document | The field shape of a résumé | Any persisted field-shape change |
+| Version                                                                    | Lives in                | Governs                        | Bump when                           |
+| -------------------------------------------------------------------------- | ----------------------- | ------------------------------ | ----------------------------------- |
+| `DB_VERSION` (`packages/resume/src/db/schema.ts`)                          | The IndexedDB database  | Object stores and indexes only | Adding or changing a store or index |
+| `schemaVersion` (`packages/resume/src/types.ts`, `CURRENT_SCHEMA_VERSION`) | Each persisted document | The field shape of a résumé    | Any persisted field-shape change    |
 
 Never bump `DB_VERSION` for a field-shape change, and never reshape documents
-inside idb's `upgrade` callback. The `upgrade` callback only creates stores
+inside idb's `upgrade` callback. Version 4 adds the `profiles` store, which holds
+the pre-fill profiles. A profile's `header` has the résumé header's shape and is
+not versioned, so a step that changes `HEADER_SCHEMA` must also carry the saved
+profiles across. The `upgrade` callback only creates stores
 guarded by `objectStoreNames.contains`, so opening the database can never drop
 existing data.
 
+### Open tabs during a `DB_VERSION` bump
+
+The browser runs the `upgrade` callback only after every connection on the old
+version closes. A tab still running an older build keeps its connection open,
+so a new tab waits. While it waits, `getDb` emits `DB_BLOCKED` on `DB_EVENTS`,
+and the app shows a notice that asks the person to close the other tab
+(`PlatformDatabaseNotice`). The notice goes away by itself on `DB_READY`.
+
+From `DB_VERSION` 4 on, a tab gives up its own connection when a newer build
+asks for it (idb's `blocking` callback), then emits `DB_OUTDATED`, and the app
+asks the person to refresh. Builds before version 4 have no such handler, so
+for the 3 to 4 bump the notice in the new tab is the only help.
+
 ## The migration ladder
 
-`src/lib/resume/migrations.ts` holds the ladder: one forward-only step per
-version, keyed by the version it migrates *from* (`LADDER[N]: vN → vN+1`).
+`packages/resume/src/migrations.ts` holds the ladder: one forward-only step per
+version, keyed by the version it migrates _from_ (`LADDER[N]: vN → vN+1`).
 `runMigrations` walks a document up the ladder at **read time, in memory**; the
 raw document on disk is untouched until the user's next edit persists the
 migrated shape.
 
-The steps live beside it. `migrations-v1-v11.ts` and `migrations-v11-v24.ts` hold
+The steps live beside it. `migrations-v1-v11.ts` and `migrations-v11-v25.ts` hold
 the steps by version range, and `migrations-shared.ts` holds the document type
 and the helpers they share. Write a new step in the newest range file, or start
 a new range file when that one passes 600 lines, then add it to `LADDER`.
@@ -43,9 +59,11 @@ Rules for every step:
   bump, and the ladder rung land in the same PR. A shipped gap in the ladder
   makes every older document unreadable.
 
-The current v23→v24 rung adds an empty plain-text `companyContext` field to
-Experience and Internship entries. Existing output stays unchanged until the user
-fills it, and `DB_VERSION` remains untouched because no object store or index changes.
+The current v24→v25 rung stamps the version for the optional `profileId`, the
+profile a résumé belongs to. It reshapes nothing: a résumé without `profileId`
+belongs to the first profile, which the app resolves at read time. The field is
+organization only, so it never renders and the JSON and YAML interchange leaves
+it out.
 
 Documents with a `schemaVersion` **newer** than the running app (a stale cached
 bundle or a long-lived old tab after a deploy) fail migration with an error.
@@ -54,7 +72,7 @@ writing a downgraded document over a newer one.
 
 ## Pre-migration backups
 
-Before the repository (`src/lib/db/resume.ts`) migrates a document, it snapshots
+Before the repository (`packages/resume/src/db/resume.ts`) migrates a document, it snapshots
 the raw pre-migration form into the `backups` object store, keyed by
 `${resumeId}@v${schemaVersion}`, one snapshot per document per ladder crossing.
 This happens on read, before the migrated shape has any chance of being

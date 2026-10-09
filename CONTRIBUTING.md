@@ -16,19 +16,27 @@ pnpm install
 pnpm dev
 ```
 
-The app runs at `http://localhost:3000`. There is no backend to configure: résumé data lives in your browser's IndexedDB and never leaves it. Keep it that way; no PR may send résumé content to a server, API route, or Worker.
+The app runs at `http://localhost:4321`. There is no backend to configure: résumé data lives in your browser's IndexedDB and never leaves it. Keep it that way; no PR may send résumé content to a server, API route, or Worker.
 
 Useful scripts:
 
-| Script | What it does |
-| --- | --- |
-| `pnpm dev` | Start the dev server |
-| `pnpm lint` | Biome lint and format check |
-| `pnpm format` | Apply Biome formatting |
-| `pnpm validate:exports` | Validate the export pipeline |
-| `pnpm build` | Astro production build |
-| `pnpm preview` | Build the site and serve it through the Worker locally |
-| `pnpm commit` | Guided Commitizen commit prompt |
+| Script                  | What it does                                           |
+| ----------------------- | ------------------------------------------------------ |
+| `pnpm dev`              | Start the dev server                                   |
+| `pnpm lint`             | Biome and Prettier lint and format check               |
+| `pnpm format`           | Apply Biome and Prettier formatting                    |
+| `pnpm validate:exports` | Validate the export pipeline                           |
+| `pnpm build`            | Astro production build                                 |
+| `pnpm preview`          | Build the site and serve it through the Worker locally |
+| `pnpm commit`           | Guided Commitizen commit prompt                        |
+
+`apps/web/scripts/` holds these files:
+
+- `validate-exports.ts` is `pnpm validate:exports`. It checks the PDF, .docx, and .txt exports of the seed résumé. [`docs/export-validation.md`](docs/export-validation.md) describes each check.
+- `takumi-checks.ts` holds the PDF checks of that run. `load-takumi-renderer.ts` loads the PDF renderer through Vite, so Tailwind compiles its stylesheet as the browser build does.
+- `build-square-bullet-font.py` writes `public/fonts/SquareBullet.ttf`. Run it only when you change the square bullet. [`apps/web/FONTS.md`](apps/web/FONTS.md) tells how.
+
+`apps/web/FONTS.md` also lists every font that the app ships, with its license. Read it before you add a font.
 
 ## Branches
 
@@ -62,7 +70,7 @@ git rebase --signoff main
 git push --force-with-lease
 ```
 
-Husky's pre-commit hook runs lint-staged (Biome) on staged files. Do not bypass hooks with `--no-verify`.
+lefthook installs the git hooks on `pnpm install`. Before a commit it runs Biome and Prettier on staged files, on the message it runs commitlint, and before a push it runs `pnpm typecheck`. Do not bypass hooks with `--no-verify`.
 
 ## Before opening a PR
 

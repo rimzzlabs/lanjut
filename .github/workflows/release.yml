@@ -62,7 +62,7 @@ jobs:
           PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
 
       - name: Deploy ${{ needs.release-please.outputs.tag_name }} to Cloudflare Workers
-        run: pnpm exec wrangler deploy
+        run: pnpm --filter @lanjut/web exec wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -101,7 +101,7 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
         with:
-          workspaces: src-tauri
+          workspaces: apps/desktop/src-tauri
           key: ${{ matrix.target }}
 
       - run: pnpm install --frozen-lockfile
@@ -130,6 +130,8 @@ jobs:
           PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
         with:
           releaseId: ${{ steps.release.outputs.id }}
+          projectPath: apps/desktop
+          tauriScript: pnpm tauri
           args: --target ${{ matrix.target }}
 
   publish:

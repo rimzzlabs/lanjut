@@ -1,59 +1,70 @@
 name: Bug report
-description: Something in Lanjut is broken or behaving unexpectedly.
-title: "fix: "
+description: Something in Lanjut is broken or behaves unexpectedly.
+title: "bug: "
 labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to report a bug. Lanjut is local-first — your résumé data lives only in your browser, so maintainers can't look anything up on a server. The details you provide here are all we have to go on.
-  - type: textarea
-    id: what-happened
-    attributes:
-      label: What happened?
-      description: A clear description of the bug, the steps to reproduce it (a numbered list works great), and what you expected instead. Screenshots and screen recordings help a lot.
-      placeholder: |
-        The editor preview goes blank when...
-        1. Create a résumé from the Ketat template
-        2. Add a second experience entry
-        3. Drag it above the first one
-    validations:
-      required: true
+        Thanks for reporting a bug. Lanjut is local-first: your résumé lives only in your browser, so the details below are all we have to go on. The in-app form ("Send feedback" in the sidebar) asks the same questions and fills in the technical details for you.
   - type: dropdown
     id: area
     attributes:
       label: Area
-      description: Where does the bug show up?
+      description: Where in Lanjut does it happen?
       options:
         - Editor
-        - Résumé preview
+        - Preview
+        - PDF download
+        - Word download
+        - Text, JSON, or YAML download
+        - Import
         - Templates
-        - Export (PDF / DOCX / TXT)
-        - Dashboard / library
-        - Landing page
+        - Library and profiles
+        - Mac app
+        - Home page
         - Other
     validations:
       required: true
-  - type: input
-    id: browser
+  - type: textarea
+    id: steps
     attributes:
-      label: Browser and OS
-      description: Storage is per-browser (IndexedDB), so this matters more than usual.
-      placeholder: e.g. Chrome 138 on macOS 15, Firefox 140 on Windows 11
+      label: What I did
+      description: The steps, one per line, so we can do the same.
+      placeholder: |
+        1. Opened a résumé made with Luasa
+        2. Added my city
+        3. Downloaded it as a PDF
     validations:
       required: true
   - type: textarea
-    id: console
+    id: expected
     attributes:
-      label: Console errors
-      description: Open the browser devtools console and paste any errors that appear when the bug happens.
-      render: text
-  - type: checkboxes
-    id: confirmations
+      label: What I expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
     attributes:
-      label: Before submitting
+      label: What happened instead
+      description: Copy any error message exactly. Screenshots help a lot.
+    validations:
+      required: true
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: Happens
       options:
-        - label: I searched existing issues and this hasn't been reported yet.
-          required: true
-        - label: I understand my résumé data never leaves my browser, so I've included enough detail (or a sample export) to reproduce the problem without it.
-          required: true
+        - Every time
+        - Sometimes
+        - Only once
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: App, browser, and system
+      description: The version is at the bottom of the sidebar. Storage is per browser, so this matters.
+      placeholder: e.g. Lanjut 0.19.0, Chrome 138 on macOS 15
+    validations:
+      required: true

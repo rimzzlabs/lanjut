@@ -1,0 +1,10 @@
+import type { RichBlock } from "@lanjut/resume/rich-content";
+import { ResumeRichText } from "./resume-rich-text";
+
+interface ResumeSummaryBodyProps {
+  body: ReadonlyArray<RichBlock>;
+}
+
+export function ResumeSummaryBody(props: ResumeSummaryBodyProps) {
+  return <ResumeRichText blocks={props.body} />;
+}

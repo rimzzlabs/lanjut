@@ -6,37 +6,50 @@ body:
   - type: markdown
     attributes:
       value: |
-        Before writing, a quick note on scope: Lanjut deliberately restricts the *structure* of a résumé so it parses cleanly in applicant tracking systems. Presentation (typography, spacing, color, section order) is fully customizable; structure (tables, multi-column layouts, text boxes, inline images) is not — regardless of how the request is framed. Accounts and server-side storage are also non-goals.
-  - type: textarea
-    id: problem
-    attributes:
-      label: What problem does this solve?
-      description: Describe the situation where you needed this, rather than the solution itself.
-      placeholder: When I tailor my résumé for different roles, I have to...
-    validations:
-      required: true
-  - type: textarea
-    id: alternatives
-    attributes:
-      label: Alternatives considered
-      description: Workarounds you use today, or other ways this could be solved. If you have a specific solution in mind, sketch it here.
+        A note on scope: every résumé stays one readable column so applicant tracking systems parse it cleanly. Tables, columns, and text boxes are out of scope; looks, spacing, fonts, and section order are fair game. Accounts and server-side storage are also non-goals.
   - type: dropdown
-    id: layer
+    id: area
     attributes:
-      label: Which layer does this touch?
+      label: Area
       options:
-        - Presentation (typography, spacing, color, ordering)
-        - Editor experience (no change to the document itself)
-        - Export (PDF / DOCX / TXT)
-        - Other / not sure
+        - Editor
+        - Preview
+        - PDF download
+        - Word download
+        - Text, JSON, or YAML download
+        - Import
+        - Templates
+        - Library and profiles
+        - Mac app
+        - Home page
+        - Other
     validations:
       required: true
-  - type: checkboxes
-    id: confirmations
+  - type: textarea
+    id: goal
     attributes:
-      label: Before submitting
+      label: What I am trying to do
+      description: The situation, not only the solution. It helps us find the best fix.
+      placeholder: I apply for jobs in two countries and keep a version of my résumé for each.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help
+    validations:
+      required: true
+  - type: textarea
+    id: workaround
+    attributes:
+      label: How I manage today
+  - type: dropdown
+    id: impact
+    attributes:
+      label: How much it would help
       options:
-        - label: I searched existing issues and this hasn't been requested yet.
-          required: true
-        - label: This request doesn't add structural freedom that breaks ATS parseability (tables, columns, floating elements, decorative icons in text), and doesn't require accounts or server-side storage.
-          required: true
+        - Nice to have
+        - Saves time
+        - Cannot use Lanjut without it
+    validations:
+      required: true

@@ -1,0 +1,25 @@
+---
+import { type Locale, localeStaticPaths } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { FeedbackPage } from "@/components/feedback/feedback-page";
+import RootLayout from "@/components/shared/root-layout.astro";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const locale = Astro.props.locale;
+const t = getTranslator(locale, "feedback");
+---
+
+<RootLayout
+  locale={locale}
+  title={t("metaTitle")}
+  description={t("metaDescription")}
+>
+  <FeedbackPage client:load locale={locale} pathname={Astro.url.pathname} />
+</RootLayout>

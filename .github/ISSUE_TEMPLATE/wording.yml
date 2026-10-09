@@ -1,0 +1,31 @@
+name: Wording or translation
+description: A typo, an unclear sentence, or a clumsy translation.
+title: "wording: "
+labels: ["area: translation"]
+body:
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - English
+        - Indonesian
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: The text now
+      description: Copy it exactly, so we can find it.
+    validations:
+      required: true
+  - type: textarea
+    id: suggested
+    attributes:
+      label: Better wording
+      description: Leave it empty if you are not sure.
+  - type: input
+    id: where
+    attributes:
+      label: Where it shows
+      placeholder: e.g. the button under the Summary field

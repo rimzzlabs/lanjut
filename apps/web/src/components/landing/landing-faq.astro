@@ -1,0 +1,43 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { ArrowUpRightIcon } from "@phosphor-icons/react";
+import { REPO_URL } from "@/lib/site";
+import { LandingFaq } from "./landing-faq";
+
+interface Props {
+  locale: Locale;
+  pathname: string;
+}
+
+const { locale, pathname } = Astro.props;
+const t = getTranslator(locale, "landing");
+---
+
+<section class="mx-auto w-11/12 max-w-6xl pb-24 md:pb-36">
+  <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
+    <div class="self-start md:sticky md:top-28 md:col-span-4">
+      <h2
+        class="text-[clamp(2rem,4vw,3rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance"
+      >
+        {t("faqHeading")}
+      </h2>
+      <p class="mt-5 text-muted-foreground">
+        {t("faqMissing")}{" "}
+        <a
+          href={`${REPO_URL}/issues`}
+          target="_blank"
+          rel="noreferrer"
+          class="inline-flex items-center gap-1 rounded-xs font-medium text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        >
+          {t("faqMissingLink")}
+          <ArrowUpRightIcon aria-hidden="true" className="size-3.5" />
+          <span class="sr-only">{t("newTab")}</span>
+        </a>
+      </p>
+    </div>
+    <div class="md:col-span-8">
+      <LandingFaq client:visible locale={locale} pathname={pathname} />
+    </div>
+  </div>
+</section>

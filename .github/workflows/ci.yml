@@ -52,7 +52,7 @@ jobs:
 
       - run: pnpm build
 
-      - run: pnpm exec wrangler deploy --dry-run --outdir .wrangler/dry-run
+      - run: pnpm --filter @lanjut/web exec wrangler deploy --dry-run --outdir .wrangler/dry-run
 
   desktop:
     # The desktop app is not covered by the checks job, and a broken Rust shell or
@@ -74,7 +74,7 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
         with:
-          workspaces: src-tauri
+          workspaces: apps/desktop/src-tauri
 
       - run: pnpm install --frozen-lockfile
 
@@ -86,9 +86,9 @@ jobs:
       - name: Confirm the export is where the app loads it from
         run: |
           set -euo pipefail
-          dist=$(node -p "require('./src-tauri/tauri.conf.json').build.frontendDist")
-          resolved="src-tauri/${dist}"
-          test -f "${resolved}/platform/index.html" \
+          dist=$(node -p "require('./apps/desktop/src-tauri/tauri.conf.json').build.frontendDist")
+          resolved="apps/desktop/src-tauri/${dist}"
+          test -f "${resolved}/editor.html" \
             || { echo "frontendDist ${dist} has no exported page"; exit 1; }
           test -f "${resolved}/splashscreen.html" \
             || { echo "frontendDist ${dist} has no splash screen"; exit 1; }
@@ -99,4 +99,4 @@ jobs:
         run: node .github/scripts/check-tauri-config.mjs
 
       - name: Build the desktop shell
-        run: cargo build --manifest-path src-tauri/Cargo.toml
+        run: cargo build --manifest-path apps/desktop/src-tauri/Cargo.toml

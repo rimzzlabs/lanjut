@@ -1,0 +1,1424 @@
+{
+  "meta": {
+    "title": "Lanjut: Bikin resume ATS gratis dan local-first",
+    "description": "Lanjut itu pembuat resume open source gratis yang sepenuhnya jalan di browser kamu; tanpa akun, tanpa unggah apa pun. Atur gayanya sesukamu; tiap ekspor tersusun rapi biar lolos sistem pelacakan pelamar."
+  },
+  "language": {
+    "label": "Bahasa",
+    "en": "Bahasa Inggris",
+    "id": "Bahasa Indonesia"
+  },
+  "updater": {
+    "title": "Lanjut {version} sudah tersedia",
+    "description": "Selain itu semuanya sudah terbaru. Pemasangan sebentar saja lalu aplikasi dibuka ulang.",
+    "install": "Pasang",
+    "later": "Nanti saja",
+    "installing": "Mengunduh pembaruan"
+  },
+  "nav": {
+    "skipToContent": "Lewati ke konten utama",
+    "main": "Utama",
+    "toggleTheme": "Ganti tema",
+    "settings": "Pengaturan",
+    "animation": "Animasi",
+    "animationSystem": "Sistem",
+    "animationOn": "Nyala",
+    "animationOff": "Mati",
+    "openApp": "Buka aplikasi"
+  },
+  "tour": {
+    "controls": {
+      "skip": "Lewati",
+      "back": "Kembali",
+      "next": "Lanjut",
+      "done": "Selesai"
+    },
+    "library": {
+      "welcome": {
+        "title": "Halo, selamat datang di Lanjut!",
+        "content": "Pembuat resume gratis dan local-first. Semua yang kamu tulis tetap di browser ini; nggak ada yang dikirim ke server."
+      },
+      "create": {
+        "title": "Buat resume",
+        "content": "Mulai resume baru dari sini. Mau bikin sebanyak apa pun, bebas!"
+      },
+      "start": {
+        "title": "Pilih cara memulai",
+        "content": "Mulai dari halaman kosong, contoh, resume yang sudah kamu punya, atau template."
+      },
+      "search": {
+        "title": "Cari nanti",
+        "content": "Cari pustaka kamu berdasarkan judul kalau koleksinya udah banyak."
+      },
+      "nav": {
+        "title": "Pindah halaman",
+        "content": "Bolak-balik antara dasbor, galeri template, dan profil kamu dari sini."
+      },
+      "replay": {
+        "title": "Putar ulang kapan aja",
+        "content": "Jalanin ulang panduan buat halaman yang lagi kamu buka pakai tombol ini."
+      },
+      "navPhone": {
+        "title": "Pindah halaman",
+        "content": "Buka menu ini buat bolak-balik antara dasbor, galeri template, dan profil kamu."
+      },
+      "replayPhone": {
+        "title": "Putar ulang kapan aja",
+        "content": "Tekan Panduan di menu ini buat jalanin ulang panduan halaman yang lagi kamu buka."
+      }
+    },
+    "template": {
+      "browse": {
+        "title": "Jelajahi template",
+        "content": "Template cuma ngubah tampilan: tipografi, spasi, aksen. Strukturnya tetap linear biar parser ATS selalu bisa baca resume kamu."
+      },
+      "preview": {
+        "title": "Coba dulu",
+        "content": "Lihat template ini di contoh atau di salah satu resume kamu. Lalu mulai resume baru, atau pakai langsung di resume itu."
+      },
+      "search": {
+        "title": "Cari",
+        "content": "Cari template berdasarkan nama."
+      }
+    },
+    "editor": {
+      "preview": {
+        "title": "Pratinjau langsung",
+        "content": "Ini pratinjau langsung kamu, persis seperti yang bakal diekspor. Update otomatis pas kamu ngetik dan langsung tersimpan di browser ini."
+      },
+      "readiness": {
+        "title": "Kesiapan",
+        "content": "Bilah ini nunjukin seberapa siap resume kamu untuk dikirim. Buka buat lihat yang masih kurang, lalu pilih satu poin buat langsung ke kolomnya. Cuma tulisan kamu sendiri yang dihitung, bukan isi contoh."
+      },
+      "sections": {
+        "title": "Tab Konten",
+        "content": "Isi tiap bagian di sini. Seret buat mengubah urutannya atau sembunyikan yang nggak kamu perlu; strukturnya tetap kebaca ATS di baliknya."
+      },
+      "layout": {
+        "title": "Tab Tata Letak",
+        "content": "Ganti template dari tab Tata Letak. Masing-masing cuma mengubah tipografi dan spasi, jadi konten dan urutan bacanya nggak pernah berubah."
+      },
+      "styling": {
+        "title": "Tab Gaya",
+        "content": "Atur gaya seluruh resume di sini, dalam tiga kelompok: Tipografi, Spasi, dan Umum. Kerapatan mengatur spasi dalam sekali klik, dan Umum mengganti bahasa resume."
+      },
+      "document": {
+        "title": "Tab Dokumen",
+        "content": "Unduh resume untuk dikirim, simpan cadangan JSON atau YAML, atau impor resume dari file atau teks yang ditempel."
+      }
+    },
+    "editor-sheet": {
+      "preview": {
+        "title": "Pratinjau langsung",
+        "content": "Ini pratinjau langsung kamu, persis seperti yang bakal diekspor. Update otomatis pas kamu ngetik dan langsung tersimpan di browser ini."
+      },
+      "readiness": {
+        "title": "Kesiapan",
+        "content": "Bilah ini nunjukin seberapa siap resume kamu untuk dikirim. Buka buat lihat yang masih kurang, lalu pilih satu poin buat langsung ke kolomnya. Cuma tulisan kamu sendiri yang dihitung, bukan isi contoh."
+      },
+      "edit": {
+        "title": "Buka editor",
+        "content": "Ketuk Edit kapan aja buat buka panel ini dan mulai mengubah."
+      },
+      "sections": {
+        "title": "Tab Konten",
+        "content": "Isi tiap bagian di sini. Seret buat mengubah urutannya atau sembunyikan yang nggak kamu perlu; strukturnya tetap kebaca ATS di baliknya."
+      },
+      "layout": {
+        "title": "Tab Tata Letak",
+        "content": "Ganti template dari tab Tata Letak. Masing-masing cuma mengubah tipografi dan spasi, jadi konten dan urutan bacanya nggak pernah berubah."
+      },
+      "styling": {
+        "title": "Tab Gaya",
+        "content": "Atur gaya seluruh resume di sini, dalam tiga kelompok: Tipografi, Spasi, dan Umum. Kerapatan mengatur spasi dalam sekali klik, dan Umum mengganti bahasa resume."
+      },
+      "document": {
+        "title": "Tab Dokumen",
+        "content": "Unduh resume untuk dikirim, simpan cadangan JSON atau YAML, atau impor resume dari file atau teks yang ditempel."
+      }
+    },
+    "profiles": {
+      "intro": {
+        "title": "Profil kamu",
+        "content": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya resumenya sendiri, dan resume baru dimulai dengan informasinya."
+      },
+      "list": {
+        "title": "Pilih untuk diubah",
+        "content": "Buka profil untuk mengubah nama, kontak, dan ringkasannya. Profil yang aktif ditandai, dan resumenya yang tampil di pustaka kamu."
+      },
+      "add": {
+        "title": "Tambah profil",
+        "content": "Buat profil lain saat kamu melamar jenis pekerjaan berbeda, atau di negara lain."
+      },
+      "switch": {
+        "title": "Ganti dari mana saja",
+        "content": "Avatar kamu di bilah atas bisa mengganti profil dari halaman mana pun."
+      }
+    }
+  },
+  "platform": {
+    "breadcrumb": {
+      "platform": "Dasbor",
+      "editor": "Editor",
+      "browseTemplates": "Jelajahi Template"
+    },
+    "changelog": {
+      "whatsNew": "Apa yang baru",
+      "description": "Yang terbaru dari Lanjut",
+      "latest": "Terbaru",
+      "fullChangelog": "Changelog lengkap di GitHub",
+      "entries": {
+        "0_19_0": [
+          {
+            "title": "Lihat resume kamu sebelum dibuat",
+            "description": "Membuat resume sekarang tinggal tiga langkah singkat: titik awal, template, lalu nama. Di layar besar, pratinjau di samping langkah menampilkan setiap halaman selagi kamu memilih, termasuk file yang kamu impor. Di ponsel, geser untuk melihat template lain."
+          },
+          {
+            "title": "Profil untuk tiap jenis pekerjaan",
+            "description": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya resumenya sendiri, dan setiap resume baru di dalamnya dimulai dengan nama, kontak, dan ringkasan profil itu. Kelola profil di halaman Profil yang baru, lalu ganti dari avatar di bilah atas. Tur singkat memandu kamu saat pertama kali membukanya. Tema, bahasa, dan animasi sekarang ada di Preferensi pada menu yang sama."
+          },
+          {
+            "title": "Pustaka yang mulai dari terakhir kamu berhenti",
+            "description": "Pustaka kamu sekarang dibuka dengan resume yang terakhir kamu edit, tinggal satu klik ke editor. Di bawahnya, mulai resume baru dari halaman kosong, contoh, file, atau template. Setiap resume menampilkan templatenya, dan kamu bisa mengurutkan berdasarkan nama atau edit terakhir serta beralih antara grid dan daftar."
+          },
+          {
+            "title": "Coba template di resume kamu sendiri",
+            "description": "Halaman template sekarang menampilkan setiap template dalam ukuran penuh, semua halamannya. Lihat di contoh atau di salah satu resume kamu, lalu pakai dengan satu klik. Kalau berubah pikiran, Urungkan di editor mengembalikan template lamanya."
+          },
+          {
+            "title": "Sidebar yang terlipat jadi ikon",
+            "description": "Sembunyikan sidebar dan sekarang ia terlipat jadi deretan ikon ramping, bukan hilang dari layar. Arahkan ke ikon untuk melihat namanya. Saat terbuka, sidebar menampilkan lima resume terbaru kamu."
+          },
+          {
+            "title": "Kenali orang-orang di balik Lanjut",
+            "description": "Pustaka kamu sekarang berterima kasih kepada semua yang membangun Lanjut, dengan jalan langsung untuk ikut: terjemahkan, perbaiki bug, atau buat fitur."
+          },
+          {
+            "title": "Masukan yang lebih cepat diperbaiki",
+            "description": "Kirim masukan sekarang memandumu ke hal yang paling membantu: apa yang kamu lakukan, apa yang kamu harapkan, dan apa yang terjadi. Laporan serupa muncul saat kamu mengetik, isi lampiran ditampilkan dengan jelas, dan kamu langsung mendapat tautan ke issue-nya. Kamu juga bisa menandai kata atau terjemahan yang salah."
+          },
+          {
+            "title": "PDF kamu sekarang sama dengan pratinjau",
+            "description": "Unduhan PDF sekarang dibuat dari halaman yang sama dengan yang kamu lihat di editor, jadi huruf, ukuran, dan jarak di file sama dengan pratinjau. Teksnya tetap bisa dipilih untuk sistem pelacak pelamar."
+          },
+          {
+            "title": "Matikan animasi",
+            "description": "Menu pengaturan baru di bilah atas berisi bahasa dan tombol animasi. Pilih Mati untuk menghentikan gerakan di layar, atau Sistem untuk mengikuti perangkat kamu. Tombol tema sekarang ada tepat di sebelahnya."
+          },
+          {
+            "title": "Pastikan résumé kamu tersimpan",
+            "description": "Bilah atas editor sekarang menunjukkan kapan résumé kamu tersimpan di perangkat ini. Kalau browser menolak menyimpan, kamu langsung diberi tahu dan cara menyimpan salinannya."
+          },
+          {
+            "title": "Lihat seberapa siap resume kamu",
+            "description": "Bilah di atas pratinjau resume menunjukkan seberapa siap resume kamu untuk dikirim, dari 0% sampai Siap dikirim. Buka untuk melihat yang masih kurang, lalu pilih satu poin untuk langsung ke kolomnya. Hanya tulisan kamu sendiri yang dihitung, bukan isi contoh. Kartu pertama di pustaka juga menunjukkan skor yang sama sebagai cincin."
+          },
+          {
+            "title": "Ruang pratinjau lebih lega di layar besar",
+            "description": "Di layar lebar, panel edit tetap di lebar yang nyaman, dan pratinjau halaman mendapat sisa ruangnya."
+          },
+          {
+            "title": "PDF pertama lebih cepat",
+            "description": "Unduhan PDF pertama kamu sekarang mulai lebih cepat. Editor menyiapkan pembuat PDF saat kamu membuka unduhan, dan hanya memuat font yang dipakai template kamu."
+          },
+          {
+            "title": "Tab Gaya",
+            "description": "Font, ukuran, spasi, dan bahasa resume sekarang punya tab sendiri: Gaya, dikelompokkan jadi Tipografi, Spasi, dan Umum. Tiap slider menunjukkan nilainya, tiap kelompok punya tombol atur ulang sendiri, dan pilihan Kerapatan (Rapat, Seimbang, Lega) mengatur spasi dalam sekali klik."
+          },
+          {
+            "title": "Tab Dokumen yang lebih jelas",
+            "description": "Tab Dokumen sekarang dikelompokkan jadi Unduh, Cadangan, dan Impor. Tiap format unduhan menjelaskan kapan dipakai, dan cadangan JSON atau YAML bisa disalin atau diunduh di satu tempat."
+          },
+          {
+            "title": "Formulir yang memakai panel lebar",
+            "description": "Seret panel edit jadi lebih lebar, dan kolom isian di tiap bagian tersusun berdampingan dalam dua kolom."
+          },
+          {
+            "title": "Tempel JSON atau YAML",
+            "description": "Tempel resume yang kamu salin sebagai JSON atau YAML langsung di tab Dokumen. Teksnya berwarna, dan kesalahan langsung kelihatan sebelum kamu impor."
+          },
+          {
+            "title": "Perbaikan bug",
+            "description": "Selama tur, tombol yang ditunjuk sebuah langkah tidak lagi bereaksi pada klik atau tombol keyboard, jadi tur tidak bisa membuka menu atau panel di bawah kartunya sendiri. Impor resume PDF sekarang menaruh tiap tautan di kolomnya sendiri, seperti situs kamu atau tautan sertifikat, bukan menampilkannya sebagai teks."
+          }
+        ],
+        "0_18_0": [
+          {
+            "title": "Tambahkan konteks perusahaan",
+            "description": "Entri pengalaman kerja dan magang sekarang punya kolom konteks perusahaan opsional untuk menjelaskan perusahaan yang belum dikenal secara singkat. Tampil di semua pratinjau dan ekspor sebelum pencapaian kamu."
+          }
+        ],
+        "0_17_1": [
+          {
+            "title": "Aplikasi Mac bisa memperbarui dirinya",
+            "description": "Kalau ada versi baru, aplikasi Mac sekarang menawarkannya ke kamu. Pengecekan paling sering beberapa hari sekali, dan tidak ada yang dipasang sebelum kamu klik."
+          },
+          {
+            "title": "Perbaikan bug",
+            "description": "Di aplikasi Mac, sidebar menutupi halaman saat aplikasi dibuka, dan tombol untuk menyembunyikannya tidak berfungsi. Keduanya sudah diperbaiki."
+          }
+        ],
+        "0_16_0": [
+          {
+            "title": "Lanjut di Mac kamu",
+            "description": "Sekarang ada aplikasi Mac. Isinya builder yang sama, jalan di perangkat kamu sendiri, dan tetap bisa dipakai waktu internet mati. Résumé kamu tetap tersimpan di situ. Unduh lewat tautan di halaman depan. Masih beta dan belum ditandatangani Apple, jadi macOS akan minta konfirmasi saat pertama kali dibuka."
+          },
+          {
+            "title": "Halaman khusus masukan",
+            "description": "Laporan bug dan permintaan fitur sekarang punya halamannya sendiri, jadi bisa dikirim dari mana saja, termasuk dari aplikasi Mac. Kamu tetap tidak perlu akun GitHub."
+          }
+        ],
+        "0_14_0": [
+          {
+            "title": "Pasang foto di header",
+            "description": "Sekarang kamu bisa pasang foto di resume. Sifatnya opsional dan mati secara bawaan. Tambahkan lewat Informasi Pribadi, lalu atur ukuran, kelengkungan sudut, dan posisinya. Foto ikut di ekspor PDF dan Word, dan teks resume kamu tetap terbaca penuh oleh parser."
+          },
+          {
+            "title": "Tampilan baru",
+            "description": "Lanjut punya logo baru dan halaman depan yang dibangun ulang. Pratinjau di sana dirender langsung dari template asli, jadi yang kamu lihat persis yang kamu dapat."
+          },
+          {
+            "title": "Dukung Lanjut",
+            "description": "Lanjut gratis dan akan selalu gratis. Kalau aplikasi ini membantu kamu, sekarang kamu bisa dukung pengembangannya lewat Saweria atau SociaBuzz, langsung dari sidebar atau footer."
+          }
+        ],
+        "0_13_0": [
+          {
+            "title": "Satu tautan lagi di header",
+            "description": "Ada kolom Tautan opsional baru di samping LinkedIn di Informasi Pribadi, untuk portofolio, GitHub, atau apa pun. Tampil di pratinjau dan semua ekspor, dan ikut terbaca saat impor PDF."
+          }
+        ],
+        "0_12_0": [
+          {
+            "title": "Urungkan dan ulangi",
+            "description": "Bebas berubah pikiran: semua editan sekarang bisa diurungkan dan diulangi, dari ketikan, entri yang terhapus, sampai urutan section dan pengaturan layout. Pakai tombol panah di samping tab sidebar atau Ctrl/Cmd+Z, dan tiap kolom teks juga menyimpan riwayatnya sendiri selagi kamu menulis."
+          },
+          {
+            "title": "Satu section dalam satu waktu",
+            "description": "Daftar editor sekarang hanya membuka satu section, jadi form yang lagi kamu isi tetap kelihatan, nggak terdorong keluar layar."
+          },
+          {
+            "title": "Perbaikan bug",
+            "description": "Tiga bug yang dilaporkan sudah diperbaiki: tautan di hasil ekspor sekarang kelihatan bisa diklik, tanda minus nyasar di baris kontak PDF sudah hilang, dan lokasi masuk ke kolom yang benar saat impor PDF."
+          }
+        ],
+        "0_11_0": [
+          {
+            "title": "Lokasi perusahaan",
+            "description": "Entri pengalaman kerja dan magang sekarang punya kolom lokasi, tampil di samping nama perusahaan di pratinjau, PDF, dan semua ekspor lainnya. Lokasi pendidikan juga ikut tampil, nggak lagi cuma tersimpan diam-diam."
+          }
+        ],
+        "0_10_0": [
+          {
+            "title": "Kirim masukan tanpa akun GitHub",
+            "description": "Laporin bug atau ajukan fitur langsung dari aplikasi; isu GitHub-nya kami buatin atas nama yang kamu isi, dijaga verifikasi singkat."
+          },
+          {
+            "title": "Ekspor dan impor JSON dan YAML",
+            "description": "Salin atau unduh resume kamu sebagai JSON atau YAML, dan impor keduanya kembali tanpa kehilangan apa pun. Teks kaya dibawa sebagai markdown sederhana."
+          },
+          {
+            "title": "Sembunyikan bagian",
+            "description": "Setiap bagian, termasuk Ringkasan, sekarang punya toggle mata di daftar editor. Bagian yang disembunyikan tetap menyimpan isinya tapi hilang dari pratinjau dan semua ekspor sampai kamu tampilkan lagi."
+          },
+          {
+            "title": "Sembunyikan ikon kontak",
+            "description": "Toggle baru di tab Dokumen menyembunyikan ikon kecil di samping detail kontak kamu, biar header lebih polos di pratinjau dan PDF. Teks kontaknya selalu tetap ada."
+          },
+          {
+            "title": "Jarak antarbagian",
+            "description": "Slider di tab Dokumen mengatur ruang di atas setiap bagian, di pratinjau maupun PDF. Longgarkan biar tampilannya lega, atau rapatkan di bawah bawaan template sampai antarbagian saling menempel."
+          },
+          {
+            "title": "Pilih font kamu",
+            "description": "Pilih dari lima belas font yang aman untuk resume, dikelompokkan jadi sans, serif, dan mono, dan seluruh dokumen mengikutinya di pratinjau maupun PDF. Setiap template tetap pakai bawaannya sampai kamu memilih, dan pratinjau sekarang merender berkas font yang persis sama dengan yang disematkan di PDF."
+          },
+          {
+            "title": "Tinggi baris dan jarak antarhuruf",
+            "description": "Dua slider baru di tab Dokumen yang berangkat dari nilai asli tiap template: rapatkan atau longgarkan tinggi baris dan jarak antarhuruf ke dua arah, keduanya dibatasi pada rentang di mana teks PDF masih terekstrak bersih, jadi gaya kamu nggak pernah mengorbankan parsing ATS."
+          },
+          {
+            "title": "Kontrol ukuran font",
+            "description": "Ubah ukuran nama, judul bagian, dan teks isi secara terpisah dari tab Dokumen. Tiap slider menskalakan kelompoknya di atas proporsi template, jadi nama yang lebih besar nggak pernah meratakan sisanya, dan pratinjau serta PDF tetap selaras."
+          }
+        ],
+        "0_9_0": [
+          {
+            "title": "Impor dari PDF",
+            "description": "Mulai resume baru dari PDF yang sudah ada. Lanjut membacanya di browser kamu dan mengisi bagian-bagiannya untuk kamu rapikan."
+          },
+          {
+            "title": "Bagian kustom",
+            "description": "Tambahkan bagianmu sendiri di luar set bawaan, bisa berupa blok teks kaya atau daftar entri."
+          },
+          {
+            "title": "Atur ulang sertifikat",
+            "description": "Seret sertifikat ke urutan yang kamu mau, sama seperti keahlian dan bahasa."
+          },
+          {
+            "title": "Sembunyikan tingkat",
+            "description": "Matikan tingkat kemahiran di keahlian dan bahasa kalau kamu cukup ingin menampilkan daftarnya saja, lewat tombol di tiap bagian."
+          },
+          {
+            "title": "Kolom bahasa",
+            "description": "Tampilkan bahasa dalam satu kolom atau dua, sama seperti kontrol tata letak yang sudah ada di Keahlian."
+          },
+          {
+            "title": "Urungkan penghapusan",
+            "description": "Menghapus resume kini menunggu sepuluh detik dan menampilkan Urungkan, jadi salah hapus gampang dibatalkan."
+          },
+          {
+            "title": "Duplikat resume",
+            "description": "Salin resume mana pun dari menunya untuk membuat versi baru tanpa mulai dari awal."
+          }
+        ],
+        "0_8_0": [
+          {
+            "title": "Tata letak kolom keahlian",
+            "description": "Tombol di bagian Keahlian mengganti antara satu dan dua kolom, dan pilihanmu ikut terbawa ke pratinjau dan semua ekspor."
+          },
+          {
+            "title": "Entri terbaru lebih dulu",
+            "description": "Editor menampilkan entri dari yang terbaru lebih dulu, sesuai urutannya di pratinjau, jadi formulir dan resume kamu selalu sejalan."
+          },
+          {
+            "title": "Bilah navigasi baru",
+            "description": "Halaman depan punya bilah navigasi baru, lengkap dengan menu yang rapi saat dibuka di ponsel."
+          },
+          {
+            "title": "Progres pemuatan halaman",
+            "description": "Berpindah antar halaman menampilkan bilah progres tipis di bagian atas, jadi kamu langsung dapat feedback saat halaman dimuat."
+          }
+        ],
+        "0_7_0": [
+          {
+            "title": "Bagian Magang",
+            "description": "Tulis pengalaman magang sebagai entri terpisah dari pekerjaan tetap, dengan kolom yang sama seperti Pengalaman."
+          },
+          {
+            "title": "Bagian Proyek",
+            "description": "Pamerkan proyek sampingan, kontribusi open-source, atau apa pun yang pernah kamu rilis, lengkap dengan nama, tautan, tanggal, dan deskripsi."
+          },
+          {
+            "title": "Pratinjau resume kosong",
+            "description": "Resume yang masih kosong menampilkan pratinjau samar di pustaka, bukan kartu putih polos, jadi resume baru tetap terlihat rapi sebelum kamu mulai mengisinya."
+          }
+        ],
+        "0_6_0": [
+          {
+            "title": "Bahasa Indonesia",
+            "description": "Ganti seluruh tampilan antara Bahasa Inggris dan Indonesia kapan saja lewat tombol bahasa di bilah navigasi."
+          },
+          {
+            "title": "Bahasa per resume",
+            "description": "Pilih Bahasa Inggris atau Indonesia per dokumen, dan judul bagian serta tanggal di ekspor PDF, DOCX, dan TXT kamu mengikuti pilihan itu."
+          },
+          {
+            "title": "Atur ulang keahlian dan bahasa",
+            "description": "Tahan pegangan di samping entri lalu geser ke posisinya, atau pindahkan pakai keyboard. Urutan barunya langsung diterapkan ke pratinjau dan semua ekspor."
+          },
+          {
+            "title": "Petunjuk bagian kosong",
+            "description": "Daripada cuma tombol, tiap bagian tanpa isi menampilkan petunjuk singkat tentang apa yang bisa kamu tambahkan."
+          },
+          {
+            "title": "Gradien hero baru",
+            "description": "Judul utama di halaman depan punya gradien warna baru yang lebih segar, cocok untuk mode terang maupun gelap."
+          }
+        ],
+        "0_5_0": [
+          {
+            "title": "Ganti template di editor",
+            "description": "Tab Tata Letak yang baru menampilkan resume kamu dalam setiap template, dan satu klik langsung menerapkan pilihanmu."
+          },
+          {
+            "title": "Mulai dari resume kosong",
+            "description": "Hilangkan centang “Isi otomatis dengan contoh konten” saat membuat resume, supaya kamu mulai dari dokumen kosong, bukan contoh."
+          },
+          {
+            "title": "Bagian bisa dikosongkan",
+            "description": "Tiap entri punya tombol hapus, dan saat entri terakhir dihapus, bagian itu otomatis hilang dari pratinjau sampai kamu menambah lagi."
+          }
+        ],
+        "0_4_0": [
+          {
+            "title": "Bagian Organisasi",
+            "description": "Tampilkan peran sukarelawan, mahasiswa, dan komunitas lengkap dengan tanggal dan poin pentingnya, sama seperti pengalaman kerja. Muncul di setiap template dan ekspor, dan resume lama kamu mendapatkannya secara otomatis."
+          },
+          {
+            "title": "Pembaruan aplikasi lebih aman",
+            "description": "Salinan cadangan disimpan di perangkatmu sebelum setiap perubahan format data, dan resume yang belum bisa dibaca aplikasi diberi tanda pemberitahuan, bukannya hilang."
+          },
+          {
+            "title": "Tur berpemandu",
+            "description": "Tur berpemandu menuntun kamu mengelilingi dasbor, template, dan editor saat pertama kali berkunjung."
+          },
+          {
+            "title": "Panduan halaman depan",
+            "description": "Halaman depan menjelaskan cara kerja Lanjut, dan ditutup dengan tombol satu klik untuk mulai membuat resume baru."
+          },
+          {
+            "title": "Laporkan bug dan permintaan",
+            "description": "Laporkan bug atau permintaan fitur dari bilah sisi; kami sudah menyiapkan isu GitHub-nya untuk kamu."
+          },
+          {
+            "title": "Laci di ponsel",
+            "description": "Di ponsel, dialog terbuka sebagai laci yang lebih mudah dijangkau dan bisa digeser untuk menutup."
+          }
+        ],
+        "0_3_0": [
+          {
+            "title": "Penjelajah template",
+            "description": "Jelajahi template di halaman tersendiri, lengkap dengan pencarian dan pengurutan."
+          },
+          {
+            "title": "Lima template baru",
+            "description": "Ketat, Luasa, Tebal, Klasik, dan Ketik."
+          },
+          {
+            "title": "Gambar kecil langsung",
+            "description": "Kartu template dan resume menampilkan gambar kecil langsung dari dokumen asli kamu."
+          },
+          {
+            "title": "Bilah sisi dan aksi cepat",
+            "description": "Bilah sisi menyorot posisi kamu, dan tiap resume punya menu aksi cepat."
+          }
+        ],
+        "0_2_0": [
+          {
+            "title": "Ekspor resume",
+            "description": "Simpan resume kamu ke PDF, DOCX, atau teks biasa."
+          },
+          {
+            "title": "Teks kaya di pratinjau",
+            "description": "Teks tebal, miring, tautan, dan daftar tampil di pratinjau langsung."
+          },
+          {
+            "title": "Semua bagian editor",
+            "description": "Editor mencakup ringkasan, pengalaman, pendidikan, keahlian, sertifikat, dan bahasa."
+          }
+        ]
+      }
+    },
+    "download": {
+      "trigger": "Resume",
+      "srDownload": "Unduh",
+      "title": "Unduh resume",
+      "description": "Pilih format dan kasih nama berkasnya."
+    },
+    "menu": {
+      "label": "Menu",
+      "downloadResume": "Unduh Resume"
+    },
+    "sidebar": {
+      "localFirst": "Local-First",
+      "tagline": "Pembuat Resume ATS",
+      "platform": "Platform",
+      "dashboard": "Dasbor",
+      "browseTemplate": "Jelajahi Template",
+      "other": "Lainnya",
+      "support": "Dukungan",
+      "guide": "Panduan",
+      "reportBug": "Ada masalah?",
+      "featureRequest": "Ajukan fitur",
+      "myResume": "Resume Saya",
+      "recent": "Terbaru",
+      "viewAll": "Lihat semua",
+      "createResume": "Buat Resume",
+      "itemMenu": "Menu",
+      "modify": "Ubah <b>{title}</b>",
+      "rename": "Ganti nama",
+      "duplicate": "Duplikat",
+      "copyOf": "Salinan dari {title}",
+      "delete": "Hapus",
+      "label": "Navigasi aplikasi",
+      "feedback": "Kirim masukan"
+    },
+    "toolbar": {
+      "searchResume": "Cari resume kamu",
+      "resume": "Resume",
+      "searchTemplates": "Cari template",
+      "sortNameAsc": "Nama (A-Z)"
+    },
+    "emptyState": {
+      "title": "Belum ada resume",
+      "description": "Belum ada yang tersimpan di perangkat ini. Yuk, mulai dari template atau bikin resume kosong.",
+      "browseTemplates": "Jelajahi template",
+      "profileTitle": "Belum ada resume di {name}",
+      "profileDescription": "Setiap profil menyimpan resumenya sendiri. Mulai satu di bawah, atau ganti profil dari avatar di bilah atas."
+    },
+    "library": {
+      "continue": "Lanjutkan yang terakhir kamu edit",
+      "openEditor": "Buka editor",
+      "readiness": "Kesiapan",
+      "readinessDone": "Siap dikirim",
+      "templateHint": "Pilih tampilannya dulu, baru mulai.",
+      "all": "Semua resume",
+      "sort": "Urutkan resume",
+      "sortEdited": "Terakhir diedit",
+      "view": "Tampilan",
+      "viewGrid": "Grid",
+      "viewList": "Daftar",
+      "preview": "Pratinjau {title}"
+    },
+    "unreadable": {
+      "title": "Beberapa resume butuh versi aplikasi yang lebih baru",
+      "description": "{count, plural, other {# resume}} disimpan sama versi Lanjut yang lebih baru dari yang jalan di tab ini. Tenang, semuanya tetap aman di perangkat kamu. Segarin halaman buat update aplikasinya dan lihat lagi."
+    },
+    "grid": {
+      "emptyTitle": "Nggak ada resume yang cocok",
+      "create": "Buat “{query}”",
+      "errorTitle": "Gagal memuat resume kamu",
+      "errorDescription": "Tenang, nggak ada yang kehapus. Pustakanya cuma gagal dimuat dari penyimpanan browser ini. Segarin halaman buat coba lagi.",
+      "open": "Buka {title}",
+      "emptyDocument": "Resume kosong, belum ada isinya",
+      "edited": "Diedit",
+      "menu": "Menu",
+      "rename": "Ganti nama",
+      "duplicate": "Duplikat",
+      "copyOf": "Salinan dari {title}",
+      "download": "Unduh",
+      "delete": "Hapus"
+    },
+    "templates": {
+      "noMatch": "Nggak ada template yang cocok sama “{query}”.",
+      "use": "Pakai {name}",
+      "useTemplate": "Pakai template {name}",
+      "descriptions": {
+        "awal": "Template awal yang bersih, satu kolom, dan aman buat ATS. Urutan baca linear, tanpa kolom atau tabel, dengan ruang buat tiap bagian.",
+        "ketat": "Klasik serif yang ringkas: judul bagian bergaris di tengah, kolom kontak rata kanan, dan tanggal miring. Padat tapi nggak sesak.",
+        "luasa": "Tata letak minimalis yang lega: judul berspasi lebar, satu baris kontak, dan bilah aksen tipis. Ruang kosong yang leluasa di seluruh bagian.",
+        "tebal": "Tampil tebal dan modern: nama gede, judul huruf kapital tebal di atas garis tebal, dan hierarki tipografi yang kuat.",
+        "klasik": "CV serif tradisional: nama dan kontak di tengah, judul yang kalem di tengah, dan tanggal miring. Abadi dan formal.",
+        "ketik": "Nuansa teknis ala mesin tik: nama, judul, dan tanggal monospace di atas isi sans yang bersih. Dibuat buat developer."
+      },
+      "listLabel": "Template",
+      "previewWith": "Pratinjau dengan",
+      "previewLabel": "Pratinjau {name}",
+      "applyTo": "Pakai di {title}",
+      "inUse": "Sedang dipakai"
+    },
+    "navbar": {
+      "starOnGithub": "Beri bintang di GitHub"
+    },
+    "database": {
+      "blocked": "Tutup tab Lanjut lainnya untuk menyelesaikan pembaruan",
+      "blockedDescription": "Tab lain masih menjalankan versi lama dan memegang resume tersimpan kamu. Tab ini lanjut sendiri setelah tab itu ditutup atau disegarkan. Tidak ada yang hilang.",
+      "outdated": "Lanjut diperbarui di tab lain",
+      "outdatedDescription": "Segarkan tab ini untuk lanjut bekerja. Sampai saat itu, tab ini tidak bisa menyimpan perubahan.",
+      "refresh": "Segarkan"
+    },
+    "contributors": {
+      "title": "Terima kasih untuk semua yang membangun Lanjut",
+      "description": "Lanjut gratis dan open source, dan terus tumbuh dari setiap kontribusi. Terjemahkan ke bahasamu, perbaiki bug, atau buat fitur yang kamu inginkan.",
+      "contribute": "Kontribusi di GitHub",
+      "listLabel": "Kontributor",
+      "profile": "{login} di GitHub",
+      "more": "dan {count} lainnya"
+    }
+  },
+  "profile": {
+    "guest": "Tamu",
+    "menuLabel": "Menu profil untuk {name}",
+    "profiles": "Profil",
+    "settings": "Pengaturan",
+    "settingsDescription": "Profil kamu dan preferensi perangkat ini.",
+    "preferences": "Preferensi",
+    "addProfile": "Tambah profil baru",
+    "newShort": "Profil baru",
+    "profileSection": "Profil",
+    "profileDescription": "Informasi pribadi dan ringkasan kamu. Resume baru di profil ini dimulai dengan data ini.",
+    "newTitle": "Profil baru",
+    "newDescription": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya resumenya sendiri, dan resume baru dimulai dengan informasinya.",
+    "name": "Nama profil",
+    "namePlaceholder": "Lowongan frontend",
+    "nameHint": "Hanya kamu yang melihat nama ini. Gunanya untuk membedakan profil.",
+    "save": "Simpan perubahan",
+    "create": "Tambah profil",
+    "deleteTitle": "Hapus profil",
+    "deleteDescription": "Resumenya pindah ke profil yang kamu pilih. Hanya informasi yang tersimpan di profil ini yang hilang.",
+    "deleteConfirm": "Hapus {name}?",
+    "prefillNote": "Resume ini masuk ke profil <b>{name}</b> dan dimulai dengan informasi pribadi serta ringkasannya.",
+    "preferencesDescription": "Tampilan dan gerak Lanjut di perangkat ini.",
+    "theme": "Tema",
+    "themeDescription": "Terang, gelap, atau ikut perangkat kamu.",
+    "themeLight": "Terang",
+    "themeDark": "Gelap",
+    "themeSystem": "Sistem",
+    "languageDescription": "Bahasa aplikasi. Setiap resume punya bahasanya sendiri.",
+    "animationDescription": "Mati menghentikan gerakan di layar. Sistem mengikuti perangkat kamu.",
+    "active": "Aktif",
+    "useProfile": "Pakai profil ini",
+    "draftHint": "Belum disimpan",
+    "resumeCount": "{count, plural, =0 {Belum ada resume} other {# resume}}",
+    "deleteMove": "{count} resumenya pindah ke profil di bawah. Hanya informasi yang tersimpan di profil ini yang hilang.",
+    "deleteEmpty": "Profil ini tidak punya resume. Hanya informasi yang tersimpan di profil ini yang hilang.",
+    "moveTo": "Pindahkan resume ke",
+    "joinNote": "Resume ini masuk ke profil <b>{name}</b>."
+  },
+  "forms": {
+    "common": {
+      "cancel": "Batal",
+      "save": "Simpan",
+      "delete": "Hapus",
+      "undo": "Urungkan",
+      "download": "Unduh",
+      "openIssue": "Buka isu GitHub",
+      "back": "Kembali",
+      "next": "Lanjut"
+    },
+    "validation": {
+      "titleMin": "Pakai minimal {min} karakter, ya.",
+      "titleMax": "Maksimal {max} karakter, ya.",
+      "fileNameRequired": "Kasih nama berkasnya dulu sebelum unduh.",
+      "sectionTitleRequired": "Isi nama bagian.",
+      "verificationRequired": "Selesain verifikasi singkatnya dulu, ya.",
+      "profileNameRequired": "Beri nama profil ini.",
+      "feedbackRequired": "Isi bagian ini."
+    },
+    "create": {
+      "title": "Buat resume baru",
+      "description": "Pilih titik awal, pilih template, lalu kasih nama.",
+      "label": "Nama resume",
+      "placeholder": "Software Engineer",
+      "template": "Template",
+      "sourceLabel": "Mulai dari",
+      "sourceSample": "Contoh",
+      "sourceEmpty": "Kosong",
+      "sourceImport": "Impor file",
+      "submit": "Buat resume",
+      "stepsLabel": "Langkah",
+      "stepStart": "Mulai",
+      "stepTemplate": "Template",
+      "stepReview": "Tinjau",
+      "stepOf": "Langkah {current} dari {total}",
+      "sourceSampleHint": "Contoh yang sudah terisi, tinggal kamu ubah jadi milikmu.",
+      "sourceEmptyHint": "Semua bagian, masih kosong dan siap kamu isi.",
+      "sourceImportHint": "Bawa resume PDF, JSON, atau YAML.",
+      "templateHint": "Pilih tampilan. Kamu bisa menggantinya kapan saja di editor.",
+      "reviewHint": "Kasih nama supaya gampang dicari di daftar resume kamu.",
+      "change": "Ganti",
+      "previewLabel": "Pratinjau",
+      "previewImport": "Taruh file untuk melihat resume kamu di sini.",
+      "showTemplate": "Tampilkan {name}"
+    },
+    "rename": {
+      "title": "Ganti nama",
+      "description": "Ganti label resume ini jadi apa aja yang kamu mau. Kalau nilainya sama kayak sebelumnya, nggak bakal disimpan.",
+      "label": "Label resume",
+      "placeholder": "mis: Software Engineer",
+      "fieldDescription": "Minimal 3 karakter. Maksimal 100 karakter."
+    },
+    "delete": {
+      "title": "Hapus <b>{title}</b>?",
+      "description": "Ini bakal ngehapus <b>{title}</b>. Kamu punya beberapa detik buat ngebatalin. Yakin?",
+      "toast": "Menghapus \"{title}\"..."
+    },
+    "download": {
+      "title": "Unduh {title}",
+      "description": "Pilih format dan kasih nama berkasnya. Ekspornya dibikin langsung di browser kamu.",
+      "missing": "Resume ini nggak bisa dimuat dari penyimpanan browser ini.",
+      "drawerTitle": "Unduh resume",
+      "drawerDescription": "Pilih format dan kasih nama berkasnya.",
+      "format": "Format",
+      "formatHint": {
+        "pdf": "Tata letakmu tetap terjaga. Paling cocok untuk email dan kebanyakan situs lowongan.",
+        "docx": "Untuk situs dan formulir yang minta berkas Word.",
+        "txt": "Teks polos tanpa tata letak, untuk ditempel ke formulir lamaran.",
+        "json": "Data terstruktur, untuk cadangan atau aplikasi lain.",
+        "yaml": "Teks terstruktur yang gampang dibaca dan diedit manual."
+      },
+      "fileName": "Nama berkas",
+      "fileNamePlaceholder": "Software Engineer",
+      "downloadAs": "Unduh {format}"
+    },
+    "import": {
+      "dropPrompt": "Taruh file PDF, JSON, atau YAML di sini, atau klik untuk pilih",
+      "hint": "File kamu dibaca di perangkatmu dan nggak pernah diunggah.",
+      "parsing": "Membaca resume kamu…",
+      "parsed": "Siap diimpor",
+      "remove": "Hapus file",
+      "errorUnsupported": "Cuma file PDF, JSON, dan YAML yang didukung.",
+      "errorTooLarge": "File-nya kegedean. Maksimal 10 MB.",
+      "errorEmpty": "PDF ini nggak ada teks yang kebaca. Kelihatannya hasil scan; coba ekspor PDF berbasis teks.",
+      "errorEncrypted": "PDF ini dikunci password. Hapus dulu passwordnya lalu coba lagi.",
+      "errorGeneric": "Kami nggak bisa baca PDF ini. Coba file lain.",
+      "disclaimer": "Impor sifatnya best-effort dan bisa saja melewatkan atau salah menempatkan detail. Kalau ada yang keliru, sangat membantu kalau kamu",
+      "reportIssue": "laporkan masalahnya",
+      "errorInvalidData": "File ini bukan ekspor resume yang valid."
+    }
+  },
+  "feedback": {
+    "metaTitle": "Kirim masukan",
+    "metaDescription": "Laporkan bug, bagikan ide, atau perbaiki kata. Kami buatkan issue GitHub-nya, jadi kamu tidak perlu akun.",
+    "title": "Kirim masukan",
+    "description": "Masukan kamu jadi issue publik di GitHub, tempat semua bug dan ide dicatat.",
+    "stepsLabel": "Langkah",
+    "steps": {
+      "kind": "Jenis",
+      "details": "Detail",
+      "review": "Kirim"
+    },
+    "kindLabel": "Masukan jenis apa?",
+    "detailsTitle": "{kind}",
+    "reviewTitle": "Cek lalu kirim",
+    "kinds": {
+      "bug": {
+        "title": "Ada yang rusak",
+        "description": "Tombol tidak bereaksi, PDF terlihat salah, atau impor kehilangan satu bagian."
+      },
+      "idea": {
+        "title": "Aku punya ide",
+        "description": "Sesuatu yang bisa Lanjut lakukan, atau lakukan lebih baik."
+      },
+      "wording": {
+        "title": "Ada kata atau terjemahan yang salah",
+        "description": "Salah ketik, kalimat yang membingungkan, atau terjemahan yang kaku."
+      }
+    },
+    "accountLabel": "Kamu punya akun GitHub?",
+    "accounts": {
+      "none": {
+        "title": "Tidak, kirimkan untukku",
+        "description": "Kami kirim untukmu, jadi kamu tidak perlu akun. Tulis detailnya selengkap mungkin: kami tidak bisa bertanya lagi nanti."
+      },
+      "github": {
+        "title": "Ya, aku kirim sendiri",
+        "description": "Kami buka issue-nya di GitHub, sudah terisi. Kamu yang mengirim, dan GitHub memberi tahu saat ada balasan."
+      }
+    },
+    "titleHint": "Satu baris yang menjelaskan isinya.",
+    "titlePlaceholderBug": "PDF menampilkan tanda strip sebelum kota",
+    "titlePlaceholderIdea": "Simpan satu versi resume untuk tiap negara",
+    "area": "Di bagian mana?",
+    "where": "Teksnya muncul di mana?",
+    "areas": {
+      "editor": "Saat mengedit resume",
+      "preview": "Pratinjau",
+      "pdf": "Unduhan PDF",
+      "word": "Unduhan Word",
+      "other-export": "Teks, JSON, atau YAML",
+      "import": "Saat mengimpor file",
+      "templates": "Template",
+      "library": "Pustaka dan profil",
+      "desktop": "Aplikasi Mac",
+      "home": "Halaman utama",
+      "other": "Tempat lain"
+    },
+    "stepsField": "Apa yang kamu lakukan?",
+    "stepsHint": "Tulis langkahnya, satu per baris, supaya kami bisa mengulanginya.",
+    "stepsPlaceholder": "1. Membuka resume dengan template Luasa\n2. Menambahkan kota\n3. Mengunduhnya sebagai PDF",
+    "expected": "Apa yang kamu harapkan?",
+    "expectedPlaceholder": "Kotanya saja, seperti di pratinjau.",
+    "actual": "Apa yang terjadi?",
+    "actualHint": "Kalau ada pesan galat, salin di sini apa adanya.",
+    "actualPlaceholder": "PDF menampilkan tanda strip sebelum kota.",
+    "frequency": "Seberapa sering terjadi?",
+    "frequencies": {
+      "always": "Setiap kali",
+      "sometimes": "Kadang-kadang",
+      "once": "Sekali saja"
+    },
+    "scopeNote": "Setiap resume tetap satu kolom yang mudah dibaca sistem ATS, jadi tabel, kolom, dan kotak teks di luar cakupan. Tampilan, jarak, dan huruf boleh diusulkan.",
+    "goal": "Apa yang ingin kamu lakukan?",
+    "goalHint": "Ceritakan situasinya, bukan hanya solusinya. Ini membantu kami menemukan solusi terbaik.",
+    "goalPlaceholder": "Aku melamar kerja di dua negara dan menyimpan satu versi resume untuk masing-masing.",
+    "idea": "Apa yang akan membantu?",
+    "ideaPlaceholder": "Cara menyalin resume ke bahasa lain dalam satu langkah.",
+    "workaround": "Bagaimana caramu sekarang?",
+    "workaroundPlaceholder": "Aku menduplikasi resume dan menerjemahkannya manual.",
+    "impact": "Seberapa besar manfaatnya?",
+    "impacts": {
+      "nice": "Bagus kalau ada",
+      "time": "Menghemat waktuku",
+      "blocker": "Aku tidak bisa pakai Lanjut tanpanya"
+    },
+    "language": "Teksnya dalam bahasa apa?",
+    "current": "Teks yang sekarang",
+    "currentHint": "Salin apa adanya, supaya kami bisa menemukannya.",
+    "currentPlaceholder": "Simpan perubahaan",
+    "suggested": "Seharusnya bagaimana?",
+    "suggestedHint": "Kosongkan saja kalau kamu tidak yakin.",
+    "suggestedPlaceholder": "Simpan perubahan",
+    "note": "Ada lagi?",
+    "notePlaceholder": "Ada di tombol di bawah kolom Ringkasan.",
+    "similarTitle": "Sudah pernah dilaporkan?",
+    "similarHint": "Kalau salah satunya cocok, beri jempol atau komentar di sana saja.",
+    "similarOpen": "Terbuka",
+    "similarClosed": "Ditutup",
+    "previewTitle": "Yang dikirim ke GitHub",
+    "contactTitle": "Tentang kamu",
+    "name": "Nama kamu",
+    "namePlaceholder": "mis. Sinta",
+    "nameHint": "Tampil di issue publik. Kosongkan untuk tetap anonim.",
+    "includeDetails": "Sertakan detail teknis",
+    "detailsHint": "Ini membantu kami menemukan masalahnya. Teks resume kamu tidak pernah ikut.",
+    "details": {
+      "app": "Aplikasi",
+      "platform": "Platform",
+      "browser": "Browser",
+      "os": "Sistem",
+      "language": "Bahasa",
+      "page": "Halaman",
+      "template": "Template",
+      "font": "Huruf",
+      "documentLanguage": "Bahasa resume"
+    },
+    "cancel": "Batal",
+    "back": "Kembali",
+    "next": "Lanjut",
+    "send": "Kirim",
+    "openGitHub": "Buka di GitHub",
+    "errorToast": "Gagal terkirim. Coba lagi sebentar lagi.",
+    "sentTitle": "Terima kasih, sudah ada di GitHub",
+    "sentBody": "Simpan tautannya untuk mengikutinya: balasan dan perbaikan muncul di sana. Menambah tangkapan layar di sana butuh akun GitHub.",
+    "githubTitle": "Selesaikan di GitHub",
+    "githubBody": "Kami membuka issue yang sudah terisi. Cek dulu, lalu kirim di sana.",
+    "viewIssue": "Lihat issue-nya",
+    "sendAnother": "Kirim lagi",
+    "close": "Tutup",
+    "offlineToast": "Kamu perlu online untuk mengirim masukan. Cek koneksimu lalu coba lagi.",
+    "titleField": "Judul singkat"
+  },
+  "editor": {
+    "common": {
+      "add": "Tambah"
+    },
+    "layout": {
+      "documentLanguage": "Bahasa dokumen",
+      "documentIcons": "Tampilkan ikon kontak",
+      "documentFont": "Font",
+      "templateDefault": "Bawaan",
+      "fontSans": "Sans",
+      "fontSerif": "Serif",
+      "fontMono": "Mono",
+      "fontSizeName": "Ukuran nama",
+      "fontSizeTitle": "Ukuran judul",
+      "fontSizeBody": "Ukuran isi"
+    },
+    "styling": {
+      "typography": "Tipografi",
+      "typographyHint": "Jenis huruf, dan seberapa besar tiap jenis teks.",
+      "spacing": "Spasi",
+      "spacingHint": "Ruang antarbagian, antarbaris, dan antarhuruf. Rapatkan biar muat lebih banyak di satu halaman.",
+      "density": "Kerapatan",
+      "compact": "Rapat",
+      "balanced": "Seimbang",
+      "airy": "Lega",
+      "general": "Umum",
+      "generalHint": "Bahasa judul dan tanggal, serta ikon kontak.",
+      "resetTypography": "Atur ulang tipografi",
+      "resetSpacing": "Atur ulang spasi",
+      "betweenSections": "Antarbagian",
+      "betweenLines": "Antarbaris",
+      "betweenLetters": "Antarhuruf",
+      "default": "Bawaan"
+    },
+    "chrome": {
+      "edit": "Edit",
+      "editorTitle": "Editor",
+      "editorDescription": "Editor Resume",
+      "tabContent": "Konten",
+      "tabLayout": "Tata Letak",
+      "tabStyling": "Gaya",
+      "notFound": "Resume nggak ketemu",
+      "didYouMean": "maksud kamu:",
+      "notExist": "Resume ini nggak ada di penyimpanan browser ini.",
+      "dashboard": "Dasbor",
+      "browseTemplates": "Jelajahi Template",
+      "showSection": "Tampilkan bagian",
+      "hideSection": "Sembunyikan bagian",
+      "reorderSection": "Ubah urutan bagian",
+      "resetOrder": "Setel ulang urutan bagian",
+      "sectionsHeading": "Bagian",
+      "addSection": "Bagian Khusus",
+      "tabDocument": "Dokumen",
+      "undo": "Urungkan",
+      "redo": "Ulangi"
+    },
+    "dateRange": {
+      "startDate": "Tanggal Mulai",
+      "startPlaceholder": "Tanggal mulai",
+      "endDate": "Tanggal Selesai",
+      "endPlaceholder": "Tanggal selesai",
+      "present": "Sekarang"
+    },
+    "personal": {
+      "accordionTitle": "Informasi Pribadi",
+      "personalInfo": "Informasi Pribadi",
+      "personalInfoDesc": "Biar HRD bisa kenalin kamu",
+      "firstName": "Nama depan",
+      "firstNamePlaceholder": "John",
+      "lastName": "Nama belakang",
+      "lastNamePlaceholder": "Doe",
+      "jobTitle": "Jabatan",
+      "jobTitlePlaceholder": "UX Engineer",
+      "contactInfo": "Informasi Kontak",
+      "contactInfoDesc": "Biar HRD gampang ngehubungin kamu",
+      "email": "Alamat email",
+      "emailPlaceholder": "john@acme.inc",
+      "phone": "Nomor telepon",
+      "phonePlaceholder": "+62812345678",
+      "website": "Situs web",
+      "websitePlaceholder": "rimzzlabs.com",
+      "linkedin": "LinkedIn",
+      "linkedinPlaceholder": "johndoe",
+      "link": "Tautan",
+      "linkPlaceholder": "github.com/johndoe",
+      "location": "Lokasi",
+      "locationDesc": "Kamu dari mana?",
+      "city": "Kota",
+      "cityPlaceholder": "Pandeglang",
+      "province": "Provinsi",
+      "provincePlaceholder": "Banten",
+      "country": "Negara",
+      "countryPlaceholder": "Indonesia",
+      "photo": "Foto",
+      "photoAdd": "Tambah foto",
+      "photoReplace": "Ganti",
+      "photoRemove": "Hapus",
+      "photoHint": "Opsional. Umum untuk lamaran di Indonesia; banyak ATS dan perusahaan luar mengabaikan atau tidak menyarankan foto. Teks resume kamu tetap terbaca penuh oleh parser.",
+      "photoError": "File itu tidak bisa dibaca sebagai gambar.",
+      "photoSize": "Ukuran foto",
+      "photoRadius": "Sudut foto",
+      "photoAlign": "Posisi",
+      "photoAlignTop": "Atas",
+      "photoAlignCenter": "Tengah",
+      "photoAlignBottom": "Bawah"
+    },
+    "summary": {
+      "accordionTitle": "Ringkasan",
+      "label": "Ringkasan Profesional",
+      "placeholder": "Saya seorang UX engineer yang antusias. Bikin pengalaman yang menarik secara visual..."
+    },
+    "experience": {
+      "accordionTitle": "Pengalaman Kerja",
+      "legend": "Pengalaman Profesional",
+      "legendDesc": "Ceritain pengalaman kamu sebelumnya",
+      "add": "Pengalaman Profesional",
+      "emptyTitle": "Belum ada pengalaman",
+      "emptyDescription": "Tambahin peran kamu buat nyusun riwayat kerja.",
+      "itemLegend": "Pengalaman {index}",
+      "jobTitle": "Jabatan",
+      "jobTitlePlaceholder": "UX Engineer",
+      "company": "Perusahaan",
+      "companyPlaceholder": "Acme Inc.",
+      "location": "Lokasi",
+      "locationPlaceholder": "Jakarta, Indonesia",
+      "companyContext": "Konteks perusahaan",
+      "companyContextPlaceholder": "Platform pembayaran B2B yang melayani 2 juta merchant",
+      "companyWebsite": "Situs web perusahaan",
+      "companyWebsitePlaceholder": "acme.com",
+      "present": "Masih kerja di sini sekarang",
+      "summary": "Ringkasan",
+      "summaryPlaceholder": "Membuat aplikasi real-time yang....",
+      "remove": "Hapus"
+    },
+    "internship": {
+      "accordionTitle": "Magang",
+      "legend": "Magang",
+      "legendDesc": "Tambahin pengalaman magang kamu",
+      "add": "Magang",
+      "emptyTitle": "Belum ada magang",
+      "emptyDescription": "Tambahin magang buat nunjukin pengalaman awal kamu.",
+      "itemLegend": "Magang {index}",
+      "role": "Posisi",
+      "rolePlaceholder": "Software Engineering Intern",
+      "company": "Perusahaan",
+      "companyPlaceholder": "Acme Inc.",
+      "location": "Lokasi",
+      "locationPlaceholder": "Jakarta, Indonesia",
+      "companyContext": "Konteks perusahaan",
+      "companyContextPlaceholder": "Platform pembayaran B2B yang melayani 2 juta merchant",
+      "companyWebsite": "Situs web perusahaan",
+      "companyWebsitePlaceholder": "acme.com",
+      "present": "Masih magang di sini sekarang",
+      "summary": "Ringkasan",
+      "summaryPlaceholder": "Membuat internal tooling yang....",
+      "remove": "Hapus"
+    },
+    "projects": {
+      "accordionTitle": "Proyek",
+      "legend": "Proyek",
+      "legendDesc": "Pamerin hal-hal yang udah kamu bikin",
+      "add": "Proyek",
+      "emptyTitle": "Belum ada proyek",
+      "emptyDescription": "Tambahin proyek sampingan, kerjaan open-source, atau apa pun yang udah kamu rilis.",
+      "itemLegend": "Proyek {index}",
+      "name": "Nama proyek",
+      "namePlaceholder": "pg-jobs",
+      "role": "Peran",
+      "rolePlaceholder": "Maintainer",
+      "url": "URL proyek",
+      "urlPlaceholder": "github.com/kamu/proyek",
+      "present": "Masih jalan",
+      "summary": "Deskripsi",
+      "summaryPlaceholder": "Fungsinya apa, kamu bikin apa, dampaknya....",
+      "remove": "Hapus"
+    },
+    "organizations": {
+      "accordionTitle": "Organisasi",
+      "legend": "Pengalaman Organisasi",
+      "legendDesc": "Ceritain peran sukarelawan, mahasiswa, dan komunitas kamu",
+      "add": "Pengalaman Organisasi",
+      "emptyTitle": "Belum ada organisasi",
+      "emptyDescription": "Tambahin peran sukarelawan, mahasiswa, atau komunitas di sini.",
+      "itemLegend": "Organisasi {index}",
+      "role": "Peran",
+      "rolePlaceholder": "Head of Public Relations",
+      "organization": "Organisasi",
+      "organizationPlaceholder": "Student Executive Board",
+      "present": "Masih aktif di sini sekarang",
+      "summary": "Ringkasan",
+      "summaryPlaceholder": "Mengorganisir acara yang....",
+      "remove": "Hapus"
+    },
+    "education": {
+      "accordionTitle": "Pendidikan",
+      "legend": "Pendidikan",
+      "legendDesc": "Tempat kamu menempuh pendidikan",
+      "add": "Pendidikan",
+      "emptyTitle": "Belum ada pendidikan",
+      "emptyDescription": "Tambahin gelar, sekolah, dan kursus kamu.",
+      "itemLegend": "Pendidikan {index}",
+      "institution": "Institusi",
+      "institutionPlaceholder": "State University",
+      "degree": "Gelar",
+      "degreePlaceholder": "B.Sc. Computer Science",
+      "location": "Lokasi",
+      "locationPlaceholder": "Boston, MA",
+      "present": "Masih belajar di sini sekarang",
+      "details": "Detail",
+      "detailsPlaceholder": "Lulus dengan predikat cum laude. Mata kuliah relevan…",
+      "remove": "Hapus"
+    },
+    "certifications": {
+      "accordionTitle": "Sertifikat",
+      "legend": "Sertifikat",
+      "legendDesc": "Lisensi dan sertifikat",
+      "add": "Sertifikat",
+      "emptyTitle": "Belum ada sertifikat",
+      "emptyDescription": "Tambahin lisensi dan sertifikat yang udah kamu raih.",
+      "itemLegend": "Sertifikat {index}",
+      "name": "Nama",
+      "namePlaceholder": "AWS Certified Solutions Architect",
+      "issuer": "Penerbit",
+      "issuerPlaceholder": "Amazon Web Services",
+      "url": "URL Sertifikat",
+      "urlPlaceholder": "acme.com/cert",
+      "urlDesc": "Tautan ke sertifikat atau situs penerbitnya.",
+      "reorder": "Ubah urutan sertifikat",
+      "remove": "Hapus"
+    },
+    "skills": {
+      "accordionTitle": "Keahlian",
+      "legend": "Keahlian",
+      "legendDesc": "Cantumin keahlian kamu",
+      "add": "Keahlian",
+      "emptyTitle": "Belum ada keahlian",
+      "emptyDescription": "Tambahin alat dan teknologi yang kamu pakai.",
+      "namePlaceholder": "TypeScript",
+      "proficiency": "Tingkat",
+      "reorder": "Ubah urutan keahlian",
+      "remove": "Hapus keahlian",
+      "columnsLabel": "Kolom",
+      "columnsOne": "1",
+      "columnsOneAria": "Satu kolom",
+      "columnsTwo": "2",
+      "columnsTwoAria": "Dua kolom",
+      "proficiencyLabel": "Tampilkan tingkat"
+    },
+    "languages": {
+      "accordionTitle": "Bahasa",
+      "legend": "Bahasa",
+      "legendDesc": "Bahasa yang kamu kuasai",
+      "add": "Bahasa",
+      "emptyTitle": "Belum ada bahasa",
+      "emptyDescription": "Tambahin bahasa yang kamu kuasai dan tingkatnya.",
+      "namePlaceholder": "English",
+      "proficiency": "Tingkat",
+      "proficiencyLabel": "Tampilkan tingkat",
+      "columnsLabel": "Kolom",
+      "columnsOne": "1",
+      "columnsOneAria": "Satu kolom",
+      "columnsTwo": "2",
+      "columnsTwoAria": "Dua kolom",
+      "reorder": "Ubah urutan bahasa",
+      "remove": "Hapus bahasa"
+    },
+    "richText": {
+      "undo": "Urungkan",
+      "redo": "Ulangi",
+      "bold": "Tebal",
+      "italic": "Miring",
+      "underline": "Garis bawah",
+      "bulletList": "Daftar poin",
+      "orderedList": "Daftar bernomor",
+      "link": "Tautan",
+      "linkPlaceholder": "https://example.com",
+      "apply": "Terapkan",
+      "removeLink": "Hapus tautan"
+    },
+    "custom": {
+      "defaultTitle": "Bagian khusus",
+      "variantLabel": "Tata letak",
+      "variantText": "Teks",
+      "variantTextAria": "Satu blok teks",
+      "variantList": "Daftar",
+      "variantListAria": "Daftar entri",
+      "menuLabel": "Opsi bagian",
+      "rename": "Ganti nama",
+      "remove": "Hapus",
+      "addHeading": "Tambah bagian",
+      "addDescription": "Beri nama bagian barumu. Bisa diganti nanti.",
+      "renameHeading": "Ganti nama bagian",
+      "renameDescription": "Beri nama baru untuk bagian ini.",
+      "nameLabel": "Nama bagian",
+      "namePlaceholder": "Beri nama bagian ini",
+      "bodyLabel": "Konten",
+      "bodyPlaceholder": "Tulis konten bagian…",
+      "addEntry": "Tambah entri",
+      "emptyTitle": "Belum ada entri",
+      "emptyDescription": "Tambah entri untuk mengisi bagian ini.",
+      "itemLegend": "Entri {index}",
+      "entryTitle": "Judul",
+      "entryTitlePlaceholder": "Judul entri",
+      "entrySubtitle": "Subjudul",
+      "entrySubtitlePlaceholder": "Subjudul entri",
+      "present": "Masih berlangsung",
+      "entryDescription": "Deskripsi",
+      "entryDescriptionPlaceholder": "Tambah detail…",
+      "removeEntry": "Hapus entri"
+    },
+    "leftovers": {
+      "button": "Teks tak tertempatkan ({count})",
+      "title": "Teks yang nggak bisa ditempatkan",
+      "description": "Impor nggak bisa memasukkan ini ke bagian mana pun. Salin yang mau kamu simpan, lalu buang.",
+      "copy": "Salin",
+      "close": "Tutup",
+      "dismiss": "Buang semua"
+    },
+    "document": {
+      "downloadHeading": "Unduh",
+      "downloadHint": "Ambil berkas untuk dikirim bareng lamaranmu.",
+      "backupHeading": "Cadangan",
+      "backupHint": "Simpan salinan sebagai JSON atau YAML, atau edit di aplikasi lain.",
+      "backupFormat": "Format cadangan",
+      "copy": "Salin",
+      "downloadFile": "Unduh",
+      "importHeading": "Impor resume",
+      "importHint": "Ambil resume PDF, atau pulihkan cadangan JSON atau YAML.",
+      "or": "atau",
+      "replacePrompt": "Resume ini sudah ada isinya. Ganti isinya, atau simpan lalu buat yang baru?",
+      "replace": "Ganti yang ini",
+      "createNew": "Buat baru",
+      "copied": "Disalin ke clipboard",
+      "copyFailed": "Nggak bisa menyalin ke clipboard."
+    },
+    "paste": {
+      "open": "Tempel JSON atau YAML",
+      "title": "Tempel JSON atau YAML",
+      "description": "Tempel resume yang disalin Lanjut sebagai JSON atau YAML. Kamu bisa membetulkannya di sini sebelum diimpor.",
+      "label": "Resume sebagai JSON atau YAML",
+      "placeholder": "Tempel di sini",
+      "ready": "Siap diimpor",
+      "syntaxError": "Ada kesalahan sintaks di {format} ini",
+      "schemaError": "Teks ini nggak cocok dengan resume Lanjut",
+      "moreIssues": "Dan {count} masalah lainnya",
+      "import": "Impor",
+      "replace": "Ganti resume ini",
+      "createNew": "Buat resume baru",
+      "imported": "Resume diimpor",
+      "pastedTitle": "Resume tempelan"
+    },
+    "saveStatus": {
+      "saved": "Tersimpan di perangkat ini",
+      "savedShort": "Tersimpan",
+      "saving": "Menyimpan…",
+      "failed": "Belum tersimpan",
+      "failedTitle": "Browser ini tidak menyimpan perubahan terakhirmu",
+      "failedBody": "Penyimpanan bisa penuh atau diblokir, misalnya di jendela pribadi. Perubahanmu masih ada di layar. Unduh salinan dari tab Dokumen sebelum kamu menutup halaman ini."
+    },
+    "readiness": {
+      "percent": "{percent}% siap",
+      "ready": "Siap dikirim",
+      "title": "Yang masih dibutuhkan resume kamu",
+      "description": "Tiap poin dihitung kalau isinya tulisan kamu sendiri, bukan isi contoh.",
+      "readyTitle": "Siap dikirim",
+      "readyDescription": "Semua poin sudah berisi tulisan kamu sendiri. Unduh resume kamu dari tab Dokumen.",
+      "done": "Selesai",
+      "todo": "Belum",
+      "sectionDone": "Lengkap",
+      "sectionTodo": "Perlu dilengkapi",
+      "checks": {
+        "name": "Isi nama kamu",
+        "jobTitle": "Isi jabatan",
+        "email": "Isi alamat email",
+        "phone": "Isi nomor telepon",
+        "location": "Isi kota atau negara",
+        "summary": "Tulis ringkasan minimal {min} kata",
+        "experience": "Tambah pengalaman kerja dengan tanggal mulai",
+        "bullets": "Tulis {min} poin tentang pekerjaan kamu",
+        "education": "Tambah pendidikan",
+        "skills": "Isi {min} keahlian"
+      }
+    }
+  },
+  "notFound": {
+    "metaTitle": "Halaman tidak ditemukan",
+    "title": "Halaman ini tidak ada",
+    "body": "Tautannya rusak, atau halamannya sudah pindah.",
+    "home": "Ke beranda"
+  },
+  "ui": {
+    "close": "Tutup",
+    "toggleSidebar": "Tampilkan atau sembunyikan sidebar",
+    "loading": "Memuat",
+    "breadcrumb": "Jalur navigasi",
+    "pageOf": "Halaman {page} dari {total}",
+    "done": "Selesai",
+    "notDone": "Belum"
+  },
+  "landing": {
+    "srHeading": "Lanjut, pembuat resume ATS gratis:",
+    "headingLine1": "Setiap resume",
+    "headingLead": "dibaca ",
+    "headingAccent": "dua kali.",
+    "deck": "Pertama, parser mengambil teksnya. Lalu perekrut melihat tampilannya. Lanjut bikin satu resume yang pas untuk keduanya. Gratis, dan nggak pernah keluar dari browser kamu.",
+    "firstName": "Nama depan",
+    "firstNamePlaceholder": "Nama depanmu",
+    "lastName": "Nama belakang",
+    "lastNamePlaceholder": "Nama belakangmu",
+    "role": "Posisi yang kamu lamar",
+    "rolePlaceholder": "Posisi incaranmu",
+    "look": "Tampilan",
+    "humanLabel": "Yang dilihat perekrut",
+    "machineLabel": "Yang dibaca parser",
+    "scannerLabel": "Bandingkan dua cara baca",
+    "scannerValue": "{percent}% halaman tampil dengan gaya",
+    "reading": "Membaca PDF kamu…",
+    "readDone": "Dibaca ulang dari PDF asli · {chars, number} karakter",
+    "readFallback": "Ekspor teks biasa. Pembacaan PDF gagal di browser ini.",
+    "checkName": "Nama terbaca",
+    "checkRole": "Posisi terbaca",
+    "checkEmail": "Email utuh",
+    "checkOrder": "Urutan section terjaga",
+    "sampleNote": "Nama dan posisimu, di atas konten contoh.",
+    "cta": "Lanjut ke editor",
+    "allTemplates": "Lihat keenam template",
+    "noAccount": "Tanpa akun. Tanpa unggah.",
+    "looksHeading": "Ganti tampilannya. Urutannya tetap.",
+    "looksBody": "Enam template, masing-masing dengan huruf dan spasinya sendiri. Pilih satu dan resume di atas dibaca ulang. Section-nya kembali dengan urutan yang sama, dan setiap perubahan di Lanjut diuji untuk itu.",
+    "looksPick": "Pakai {name}",
+    "lookAwal": "Polos dan lega",
+    "lookKetat": "Serif yang padat",
+    "lookLuasa": "Lapang, huruf renggang",
+    "lookTebal": "Nama besar, judul tebal",
+    "lookKlasik": "Serif penuh, rata tengah",
+    "lookKetik": "Nuansa mesin tik",
+    "localHeading": "Resume kamu nggak pernah keluar dari browser ini.",
+    "localBody": "Nggak ada akun dan nggak ada salinan di server. Lanjut menyimpan resume kamu di penyimpanan browser kamu sendiri, dan kamu bisa mengekspornya ke PDF, DOCX, teks biasa, JSON, atau YAML kapan saja.",
+    "localPanelCaption": "Tempat kerjaanmu tersimpan",
+    "localStores": "Object store",
+    "localSource": "Lanjut open source dengan lisensi AGPL-3.0.",
+    "localSourceLink": "Baca kodenya di GitHub",
+    "appHeading": "Lebih suka aplikasi?",
+    "appBody": "Editor yang sama juga ada sebagai aplikasi Mac yang tetap jalan tanpa internet.",
+    "macMeta": "macOS 13 ke atas",
+    "macCta": "Unduh untuk macOS",
+    "macNote": "Masih beta dan belum ditandatangani Apple, jadi macOS minta konfirmasi saat pertama kali dibuka.",
+    "closeHeading": "Gratis dipakai, dan open source.",
+    "closeBody": "Nggak ada paket berbayar, dan nggak perlu bikin akun. Kodenya terbuka dengan lisensi AGPL-3.0, jadi siapa pun bisa membacanya atau menjalankan salinannya sendiri.",
+    "contributorsBody": "Dibuat oleh orang-orang yang menyumbangkan waktunya. Ikut bergabung: tambahkan terjemahan, perbaiki bug, atau buat fitur yang kamu inginkan.",
+    "closeCta": "Mulai resume kamu",
+    "closeBrowse": "Lihat template",
+    "newTab": "terbuka di tab baru",
+    "footer": {
+      "tagline": "Pembuat resume gratis yang menyimpan kerjaanmu di browser kamu.",
+      "product": "Produk",
+      "project": "Proyek",
+      "support": "Dukungan",
+      "editor": "Editor",
+      "templates": "Template",
+      "download": "Unduh untuk macOS",
+      "github": "GitHub",
+      "rights": "© {year} Lanjut. Open source dengan lisensi AGPL-3.0."
+    },
+    "draftTitle": "Resume saya",
+    "keptHeading": "Ada yang sengaja nggak dimasukkan.",
+    "keptBody": "Parser membaca halaman dari atas ke bawah. Apa pun yang merusak urutan itu bisa mengacak teksmu, jadi Lanjut menjauhkannya dari isi resume dan menyerahkan sisanya ke kamu.",
+    "keptAllowedTitle": "Section yang bisa kamu pakai",
+    "keptOutTitle": "Dijauhkan dari teks",
+    "sectionHeader": "Header",
+    "sectionSummary": "Ringkasan",
+    "sectionExperience": "Pengalaman",
+    "sectionInternship": "Magang",
+    "sectionProjects": "Proyek",
+    "sectionOrganizations": "Organisasi",
+    "sectionEducation": "Pendidikan",
+    "sectionCertifications": "Sertifikasi",
+    "sectionSkills": "Keahlian",
+    "sectionLanguages": "Bahasa",
+    "sectionCustom": "Section buatanmu sendiri",
+    "outTables": "Tabel",
+    "outTablesWhy": "Isi sel bisa terbaca dengan urutan yang nggak kamu maksud.",
+    "outColumns": "Teks dua kolom",
+    "outColumnsWhy": "Baris yang bersebelahan bisa tergabung jadi satu baris berantakan.",
+    "outBoxes": "Kotak teks melayang",
+    "outBoxesWhy": "Teks di luar alur utama gampang terlewat.",
+    "outImages": "Gambar di dalam teks",
+    "outImagesWhy": "Parser membaca teks, bukan gambar.",
+    "keptPhoto": "Foto di header satu-satunya pengecualian. Sifatnya opsional, mati secara bawaan, dan nggak pernah mengubah teks yang dibaca parser.",
+    "importHeading": "Sudah punya resume? Mulai dari situ.",
+    "importBody": "Masukkan PDF, atau file JSON atau YAML yang pernah kamu ekspor. Lanjut memilah isinya ke dalam section, dan bagian yang belum bisa ditempatkan menunggu di daftar yang bisa kamu salin. Filenya dibaca di browser kamu, sama seperti yang lainnya.",
+    "importFound": "Dipilah ke dalam section",
+    "importLeftovers": "Baris untuk kamu tempatkan sendiri",
+    "exportsHeading": "Satu resume, lima file.",
+    "exportsBody": "Tiap lamaran minta format yang berbeda. Kelimanya berasal dari resume yang sama, jadi isinya nggak pernah berbeda.",
+    "exportPdf": "Untuk formulir unggah dan email. Terbaca ulang dengan urutan yang sama seperti yang kamu lihat.",
+    "exportDocx": "Untuk perekrut dan portal yang minta file Word.",
+    "exportTxt": "Untuk formulir yang minta teks biasa ditempel.",
+    "exportJson": "Salinan lengkap yang bisa kamu impor lagi nanti.",
+    "exportYaml": "Salinan yang sama, lebih mudah dibaca dan diedit manual.",
+    "orderTitle": "Urutan section yang dibaca parser",
+    "orderNote": "Pilih template lain. Urutannya tetap sama.",
+    "importLink": "Impor file di editor",
+    "importRawLabel": "Teks dari PDF kamu",
+    "snippetLabel": "PDF kamu, dibaca ulang",
+    "snippetChars": "{chars, number} karakter",
+    "otherPlatforms": "Windows dan Linux segera hadir.",
+    "faqHeading": "Pertanyaan umum",
+    "faqMissing": "Pertanyaanmu nggak ada di sini?",
+    "faqMissingLink": "Tanya di GitHub",
+    "faq": {
+      "free": {
+        "question": "Lanjut beneran gratis?",
+        "answer": "Iya. Nggak ada paket berbayar dan nggak perlu akun. Kalau mau mendukung, kamu bisa berdonasi lewat Saweria atau SociaBuzz. Tautannya ada di footer."
+      },
+      "storage": {
+        "question": "Resume aku disimpan di mana?",
+        "answer": "Di browser ini, di perangkat ini. Lanjut menyimpan resume kamu di penyimpanan bawaan browser dan nggak mengirim apa pun ke server. Kalau kamu menghapus data situs atau pindah browser, resume kamu tertinggal, jadi ekspor salinan JSON untuk memindahkan atau mencadangkannya."
+      },
+      "files": {
+        "question": "File mana yang harus aku kirim?",
+        "answer": "Kirim PDF untuk sebagian besar formulir unggah dan lewat email. Kirim .docx kalau portal atau perekrut minta file Word. Tempel .txt ke formulir yang cuma menerima teks biasa."
+      },
+      "ats": {
+        "question": "Apakah resume aku bakal lolos ATS?",
+        "answer": "Nggak ada alat yang bisa menjanjikan itu, karena tiap perusahaan mengatur sistemnya sendiri. Lanjut mengurus bagian yang ditentukan file: teks asli sesuai urutan baca, judul section yang standar, dan kontak yang bisa ditemukan parser. Lembar di bagian atas halaman ini menunjukkan teks yang dibaca parser dari PDF kamu."
+      },
+      "import": {
+        "question": "Bisa impor resume yang sudah aku punya?",
+        "answer": "Bisa. Masukkan PDF, atau file JSON atau YAML yang kamu ekspor dari Lanjut. PDF-nya harus berisi teks asli, jadi halaman hasil scan atau file yang dikunci kata sandi nggak bisa dibaca. Baris yang nggak bisa ditempatkan Lanjut masuk ke daftar yang bisa kamu salin."
+      },
+      "language": {
+        "question": "Bisa bikin resume dalam bahasa Inggris?",
+        "answer": "Bisa. Atur bahasa dokumen ke Inggris di editor, dan label tetap seperti judul section dan tanggal ikut berubah. Aplikasinya sendiri tersedia dalam bahasa Indonesia dan Inggris."
+      },
+      "photo": {
+        "question": "Bisa pasang foto?",
+        "answer": "Bisa. Foto di header itu opsional dan mati secara bawaan. Foto muncul di PDF dan .docx, file .txt nggak menyertakannya, dan foto nggak pernah mengubah teks yang dibaca parser."
+      }
+    }
+  }
+}

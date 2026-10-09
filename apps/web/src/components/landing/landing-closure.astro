@@ -1,0 +1,31 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { LandingClosureActions } from "./landing-closure-actions";
+import { LandingContributors } from "./landing-contributors";
+
+interface Props {
+  locale: Locale;
+  pathname: string;
+}
+
+const { locale, pathname } = Astro.props;
+const t = getTranslator(locale, "landing");
+---
+
+<section class="mx-auto w-11/12 max-w-6xl pb-28 md:pb-40">
+  <h2
+    class="max-w-4xl text-[clamp(2.75rem,8vw,6rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-balance"
+  >
+    {t("closeHeading")}
+  </h2>
+  <p class="mt-6 max-w-[52ch] text-base text-muted-foreground sm:text-lg">
+    {t("closeBody")}
+  </p>
+  <div class="mt-10">
+    <LandingClosureActions client:visible locale={locale} pathname={pathname} />
+  </div>
+  <div class="mt-14 border-t border-border pt-8">
+    <LandingContributors client:visible locale={locale} pathname={pathname} />
+  </div>
+</section>
