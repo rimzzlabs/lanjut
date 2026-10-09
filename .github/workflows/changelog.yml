@@ -27,6 +27,7 @@ jobs:
       - name: Check the changelog entry for the next release
         env:
           TITLE: ${{ github.event.pull_request.title }}
+          BODY: ${{ github.event.pull_request.body }}
           LABELS: ${{ toJSON(github.event.pull_request.labels.*.name) }}
           BASE_REF: ${{ github.base_ref }}
         run: node .github/scripts/check-changelog.mjs

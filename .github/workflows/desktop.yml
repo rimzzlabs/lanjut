@@ -1,8 +1,9 @@
 name: Desktop
 
-# The desktop build takes about four minutes on a macOS runner, so pull
-# requests skip it. It runs once on main after each merge instead, and on
-# demand for a branch that changes the shell:
+# The desktop builds are the slowest checks, so pull requests skip them. After
+# each merge to main, `check` builds the shell on macOS, Windows, and Linux. On
+# demand, `installers` bundles every target and attaches the installers to the
+# run, to test on real machines before a release ships them:
 #   gh workflow run desktop.yml --ref <branch>
 on:
   push:
@@ -12,20 +13,31 @@ on:
 permissions:
   contents: read
 
-# Only the newest main matters. An older run is dropped when a merge arrives.
+# Only the newest run per branch matters. An older run is dropped when a newer
+# one starts.
 concurrency:
-  group: desktop-${{ github.ref }}
+  group: desktop-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  desktop:
+  check:
     # The desktop app is not covered by the checks job, and a broken Rust shell or
     # a misplaced static export is invisible to lint and typecheck. This builds
     # both halves on a clean checkout, which is the only place a stale local
     # artifact cannot hide a fault. A release merge skips it: the release
     # workflow builds the app for every architecture from the same commit.
-    if: "!startsWith(github.event.head_commit.message, 'chore(main): release ')"
-    runs-on: macos-latest
+    if: >-
+      github.event_name == 'push' &&
+      !startsWith(github.event.head_commit.message, 'chore(main): release ')
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, windows-latest, ubuntu-22.04]
     steps:
       - uses: actions/checkout@v7
 
@@ -41,6 +53,13 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: apps/desktop/src-tauri
+          key: check-${{ matrix.platform }}
+
+      - name: Install the Linux webview and bundling libraries
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf xdg-utils libfuse2
 
       - run: pnpm install --frozen-lockfile
 
@@ -66,3 +85,78 @@ jobs:
 
       - name: Build the desktop shell
         run: cargo build --manifest-path apps/desktop/src-tauri/Cargo.toml
+
+  installers:
+    # The same targets the release builds. These installers carry no update
+    # signature, so they need no secret and never reach the updater.
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos-latest
+            target: aarch64-apple-darwin
+          - platform: macos-latest
+            target: x86_64-apple-darwin
+          - platform: windows-latest
+            target: x86_64-pc-windows-msvc
+          # WiX makes no ARM64 MSI, so this target builds the NSIS installer only.
+          - platform: windows-latest
+            target: aarch64-pc-windows-msvc
+            bundles: --bundles nsis
+          # Built on the oldest Ubuntu the app supports: a Linux build runs only
+          # on a glibc as new as the one it was built against, or newer.
+          - platform: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+          - platform: ubuntu-22.04-arm
+            target: aarch64-unknown-linux-gnu
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri
+          key: installers-${{ matrix.target }}
+
+      - name: Install the Linux webview and bundling libraries
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf xdg-utils libfuse2
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Confirm the shell config still holds its load-bearing values
+        run: node .github/scripts/check-tauri-config.mjs
+
+      - name: Bundle ${{ matrix.target }}
+        working-directory: apps/desktop
+        run: pnpm tauri build --target ${{ matrix.target }} ${{ matrix.bundles }} --config '{"bundle":{"createUpdaterArtifacts":false}}'
+        env:
+          LANJUT_TARGET: desktop
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lanjut-${{ matrix.target }}
+          retention-days: 7
+          if-no-files-found: error
+          path: |
+            apps/desktop/src-tauri/target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+            apps/desktop/src-tauri/target/${{ matrix.target }}/release/bundle/nsis/*.exe
+            apps/desktop/src-tauri/target/${{ matrix.target }}/release/bundle/msi/*.msi
+            apps/desktop/src-tauri/target/${{ matrix.target }}/release/bundle/appimage/*.AppImage
+            apps/desktop/src-tauri/target/${{ matrix.target }}/release/bundle/deb/*.deb
+            apps/desktop/src-tauri/target/${{ matrix.target }}/release/bundle/rpm/*.rpm

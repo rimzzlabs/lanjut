@@ -37,6 +37,37 @@ if (styleSrc?.includes("'unsafe-inline'") && !styleSrcExempt) {
   );
 }
 
+// The identifier names the data folder on every system, and with it every
+// user's IndexedDB. A new identifier opens an empty library.
+if (config.identifier !== "com.rimzzlabs.lanjut") {
+  failures.push(
+    'identifier must stay "com.rimzzlabs.lanjut". It keys the data folder ' +
+      "that holds every installed user's résumés.",
+  );
+}
+
+// On Windows the scheme sets the app's origin, http://tauri.localhost or
+// https://tauri.localhost, and IndexedDB is kept per origin.
+const main = config.app?.windows?.find((window) => window.label === "main");
+if (main?.useHttpsScheme !== false) {
+  failures.push(
+    "the main window must keep useHttpsScheme: false. On Windows a flip moves " +
+      "the app to another origin, and its users open an empty library.",
+  );
+}
+
+// Windows matches an MSI update to the installed app by this code. Tauri
+// derives it from the product name, so a rename would install a second copy.
+if (
+  config.bundle?.windows?.wix?.upgradeCode !==
+  "d74b5259-696f-51ba-b46e-b015a9db0a89"
+) {
+  failures.push(
+    "bundle.windows.wix.upgradeCode must stay d74b5259-696f-51ba-b46e-b015a9db0a89, " +
+      "or an MSI update installs beside the old app instead of over it.",
+  );
+}
+
 if (failures.length > 0) {
   for (const failure of failures) console.error(`✗ ${failure}`);
   process.exit(1);
