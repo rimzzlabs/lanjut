@@ -1,10 +1,11 @@
 import { A, F, G, O, pipe, S } from "@mobily/ts-belt";
 import { createEmptyResume, type Resume, type ResumeLanguage } from "..";
 import { detectHeading, type HeadingMatch } from "./headings";
+import type { PdfLink } from "./links";
 import { DATE_RANGE_RE } from "./parse-entry-split";
 import { fillHeader, isContactLine } from "./parse-header";
-import { BULLET_RE } from "./parse-rich-lines";
-import { type Block, fillBlock } from "./parse-sections";
+import { BULLET_RE, isLinkLine, type LinkLineRules } from "./parse-rich-lines";
+import { type Block, fillBlock, type ParseState } from "./parse-sections";
 
 export interface ParseOptions {
   title: string;
@@ -41,6 +42,7 @@ function reassembleLines(
       !BULLET_RE.test(line) &&
       !DATE_RANGE_RE.test(line) &&
       !isContactLine(line) &&
+      !isLinkLine(line) &&
       !/[.!?:]$/.test(prev) &&
       (/^[a-z]/.test(line) || /[-–—]$/.test(prev));
     if (!isContinuation) return A.append(result, line);
@@ -64,11 +66,15 @@ interface BlockSplit {
 // Everything before the first recognized section is the preamble (name,
 // contacts, location). A custom (all-caps) heading there is really the name,
 // so custom headings are only honored once a recognized section has started.
+// A line of contacts or links is never a heading, though a word in it can
+// match one: "Portfolio" in "GitHub | Portfolio", "about" in a URL.
 function blockHeading(
   line: string,
   seenRecognizedHeading: boolean,
+  rules: LinkLineRules,
 ): HeadingMatch | null {
   if (S.isEmpty(S.trim(line))) return null;
+  if (isContactLine(line) || isLinkLine(line, rules)) return null;
   const heading = detectHeading(line);
   if (heading?.type === "custom" && !seenRecognizedHeading) return null;
   return heading;
@@ -81,13 +87,16 @@ function appendLine(line: string) {
   });
 }
 
-function splitBlocks(lines: ReadonlyArray<string>): ReadonlyArray<Block> {
+function splitBlocks(
+  lines: ReadonlyArray<string>,
+  rules: LinkLineRules,
+): ReadonlyArray<Block> {
   const initial: BlockSplit = {
     blocks: [{ heading: null, lines: [] }],
     seenRecognizedHeading: false,
   };
   const split = A.reduce(lines, initial, (acc, line) => {
-    const heading = blockHeading(line, acc.seenRecognizedHeading);
+    const heading = blockHeading(line, acc.seenRecognizedHeading, rules);
     if (heading === null) {
       const lastIdx = A.length(acc.blocks) - 1;
       return {
@@ -108,9 +117,14 @@ function splitBlocks(lines: ReadonlyArray<string>): ReadonlyArray<Block> {
  * Parse extracted résumé text into a structured document. Conservative by
  * design: fills only high-confidence data (contacts, dates, section text),
  * routes unrecognized headings to custom sections, and returns anything it
- * cannot place as leftovers rather than guessing.
+ * cannot place as leftovers rather than guessing. `links` are the PDF's own
+ * links, which put each address in a link field instead of the text.
  */
-export function parseResumeText(text: string, opts: ParseOptions): ParseResult {
+export function parseResumeText(
+  text: string,
+  opts: ParseOptions,
+  links: ReadonlyArray<PdfLink> = [],
+): ParseResult {
   const base: Resume = {
     ...createEmptyResume(opts.title),
     language: opts.language,
@@ -119,7 +133,16 @@ export function parseResumeText(text: string, opts: ParseOptions): ParseResult {
   const lines = reassembleLines(
     pipe(text, S.splitByRe(/\r?\n/), A.filter(G.isString)),
   );
-  const blocks = splitBlocks(lines);
+  const blocks = splitBlocks(lines, {
+    labels: new Set(
+      pipe(
+        links,
+        A.map((link) => link.label),
+        A.reject(S.isEmpty),
+      ),
+    ),
+    bareDomains: true,
+  });
   const preamble = pipe(
     A.head(blocks),
     O.filter((block) => block.heading === null),
@@ -128,7 +151,15 @@ export function parseResumeText(text: string, opts: ParseOptions): ParseResult {
       () => [],
     ),
   );
-  const header = fillHeader({ resume: base, preamble, allText: text });
-  const resume = A.reduce(blocks, header.resume, fillBlock);
-  return { resume, leftovers: F.toMutable(header.leftovers) };
+  const header = fillHeader({ resume: base, preamble, allText: text, links });
+  const initial: ParseState = {
+    resume: header.resume,
+    leftovers: header.leftovers,
+  };
+  const parsed = A.reduce(
+    blocks,
+    initial,
+    fillBlock({ links, headerUrls: header.urls }),
+  );
+  return { resume: parsed.resume, leftovers: F.toMutable(parsed.leftovers) };
 }

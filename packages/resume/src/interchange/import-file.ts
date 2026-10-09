@@ -30,11 +30,12 @@ function presentSettings(content: ResumeContent): Partial<Resume> {
 }
 
 /**
- * Build a full Resume from an exported interchange file. Unlike the PDF path
- * this is exact, so there are never leftovers; any validation failure rejects
- * the file wholesale instead of importing a partial document.
+ * Build a full Resume from a parsed interchange document, from a file or
+ * pasted text. Unlike the PDF path this is exact, so there are never
+ * leftovers; any validation failure rejects the document wholesale instead of
+ * importing a partial one.
  */
-function buildImportedResume(
+export function importParsedResume(
   parsed: ParseInterchangeResult,
   options: ParseOptions,
 ): InterchangeImportResult {
@@ -60,12 +61,12 @@ export function importResumeFromJson(
   text: string,
   options: ParseOptions,
 ): InterchangeImportResult {
-  return buildImportedResume(parseResumeJson(text), options);
+  return importParsedResume(parseResumeJson(text), options);
 }
 
 export function importResumeFromYaml(
   text: string,
   options: ParseOptions,
 ): InterchangeImportResult {
-  return buildImportedResume(parseResumeYaml(text), options);
+  return importParsedResume(parseResumeYaml(text), options);
 }

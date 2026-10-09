@@ -5,6 +5,7 @@ import { cn } from "@lanjut/ui/lib/utils";
 import { ArrowRightIcon } from "@phosphor-icons/react";
 import { useId, useState } from "react";
 import { useTranslations } from "use-intl";
+import { preloadPdfExportById } from "@/components/editor/preload-pdf-export";
 import { useResumeDocument } from "@/hooks/use-resume-document";
 import { Link } from "@/i18n/navigation";
 import { editorHref } from "@/lib/routes";
@@ -104,6 +105,7 @@ export function PlatformLibraryContinue(props: { resume: ResumeIndexEntry }) {
           resume={resume}
           document={document}
           onAction={(next) => {
+            if (next === "download") preloadPdfExportById(resume.id);
             setDrawerOpen(false);
             setAction(next);
           }}

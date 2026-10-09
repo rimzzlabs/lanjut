@@ -4,7 +4,7 @@ import { useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
 import { useResumeStore } from "@/lib/store";
 
-export function EditorDocumentLanguage() {
+export function EditorStylingLanguage() {
   const language = useResumeStore((state) => state.open?.language);
   const updateOpen = useResumeStore((state) => state.updateOpen);
   const t = useTranslations("editor.layout");

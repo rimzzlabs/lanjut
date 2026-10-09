@@ -53,7 +53,7 @@ export function EditorSectionPersonalForm() {
           </FieldDescription>
           <FieldGroup>
             <EditorSectionPersonalPhoto />
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               <Controller
                 control={form.control}
                 name="firstName"
@@ -127,7 +127,7 @@ export function EditorSectionPersonalForm() {
             {t("contactInfoDesc")}
           </FieldDescription>
           <FieldGroup>
-            <div className="grid gap-6 2xl:grid-cols-2 2xl:gap-3">
+            <div className="grid gap-7 @md/field-group:grid-cols-2 @md/field-group:gap-x-3">
               <Controller
                 control={form.control}
                 name="email"
@@ -166,49 +166,51 @@ export function EditorSectionPersonalForm() {
                   );
                 }}
               />
+              <Controller
+                control={form.control}
+                name="website"
+                render={(controller) => {
+                  const { field, fieldState } = controller;
+                  return (
+                    <Field>
+                      <FieldLabel htmlFor={field.name}>
+                        {t("website")}
+                      </FieldLabel>
+                      <UrlInput
+                        id={field.name}
+                        value={field.value}
+                        placeholder={t("websitePlaceholder")}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                      />
+                      <FieldError errors={[fieldState.error]} />
+                    </Field>
+                  );
+                }}
+              />
+              <Controller
+                control={form.control}
+                name="linkedin"
+                render={(controller) => {
+                  const { field, fieldState } = controller;
+                  return (
+                    <Field>
+                      <FieldLabel htmlFor={field.name}>
+                        {t("linkedin")}
+                      </FieldLabel>
+                      <LinkedinInput
+                        id={field.name}
+                        value={field.value}
+                        placeholder={t("linkedinPlaceholder")}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                      />
+                      <FieldError errors={[fieldState.error]} />
+                    </Field>
+                  );
+                }}
+              />
             </div>
-            <Controller
-              control={form.control}
-              name="website"
-              render={(controller) => {
-                const { field, fieldState } = controller;
-                return (
-                  <Field>
-                    <FieldLabel htmlFor={field.name}>{t("website")}</FieldLabel>
-                    <UrlInput
-                      id={field.name}
-                      value={field.value}
-                      placeholder={t("websitePlaceholder")}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                    />
-                    <FieldError errors={[fieldState.error]} />
-                  </Field>
-                );
-              }}
-            />
-            <Controller
-              control={form.control}
-              name="linkedin"
-              render={(controller) => {
-                const { field, fieldState } = controller;
-                return (
-                  <Field>
-                    <FieldLabel htmlFor={field.name}>
-                      {t("linkedin")}
-                    </FieldLabel>
-                    <LinkedinInput
-                      id={field.name}
-                      value={field.value}
-                      placeholder={t("linkedinPlaceholder")}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                    />
-                    <FieldError errors={[fieldState.error]} />
-                  </Field>
-                );
-              }}
-            />
             <Controller
               control={form.control}
               name="link"
@@ -240,7 +242,7 @@ export function EditorSectionPersonalForm() {
             {t("locationDesc")}
           </FieldDescription>
           <FieldGroup>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-7 @md/field-group:grid-cols-3">
               <Controller
                 control={form.control}
                 name="city"
@@ -279,26 +281,28 @@ export function EditorSectionPersonalForm() {
                   );
                 }}
               />
-            </div>
 
-            <Controller
-              control={form.control}
-              name="country"
-              render={(controller) => {
-                const { field, fieldState } = controller;
-                return (
-                  <Field>
-                    <FieldLabel htmlFor={field.name}>{t("country")}</FieldLabel>
-                    <Input
-                      placeholder={t("countryPlaceholder")}
-                      {...field}
-                      id={field.name}
-                    />
-                    <FieldError errors={[fieldState.error]} />
-                  </Field>
-                );
-              }}
-            />
+              <Controller
+                control={form.control}
+                name="country"
+                render={(controller) => {
+                  const { field, fieldState } = controller;
+                  return (
+                    <Field className="col-span-2 @md/field-group:col-span-1">
+                      <FieldLabel htmlFor={field.name}>
+                        {t("country")}
+                      </FieldLabel>
+                      <Input
+                        placeholder={t("countryPlaceholder")}
+                        {...field}
+                        id={field.name}
+                      />
+                      <FieldError errors={[fieldState.error]} />
+                    </Field>
+                  );
+                }}
+              />
+            </div>
           </FieldGroup>
         </FieldSet>
       </FieldGroup>

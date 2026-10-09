@@ -75,46 +75,48 @@ export function EditorSectionCertificationsFormItem(
             }}
           />
 
-          <Controller
-            control={props.control}
-            name={`certifications.${props.index}.issuer`}
-            render={(controller) => {
-              const { field, fieldState } = controller;
-              return (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>{t("issuer")}</FieldLabel>
-                  <Input
-                    placeholder={t("issuerPlaceholder")}
-                    {...field}
-                    id={field.name}
-                  />
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              );
-            }}
-          />
+          <div className="grid gap-3 @md/field-group:grid-cols-2">
+            <Controller
+              control={props.control}
+              name={`certifications.${props.index}.issuer`}
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field>
+                    <FieldLabel htmlFor={field.name}>{t("issuer")}</FieldLabel>
+                    <Input
+                      placeholder={t("issuerPlaceholder")}
+                      {...field}
+                      id={field.name}
+                    />
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
+            />
 
-          <Controller
-            control={props.control}
-            name={`certifications.${props.index}.url`}
-            render={(controller) => {
-              const { field, fieldState } = controller;
-              return (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>{t("url")}</FieldLabel>
-                  <UrlInput
-                    id={field.name}
-                    value={field.value}
-                    placeholder={t("urlPlaceholder")}
-                    onChange={field.onChange}
-                    onBlur={field.onBlur}
-                  />
-                  <FieldDescription>{t("urlDesc")}</FieldDescription>
-                  <FieldError errors={[fieldState.error]} />
-                </Field>
-              );
-            }}
-          />
+            <Controller
+              control={props.control}
+              name={`certifications.${props.index}.url`}
+              render={(controller) => {
+                const { field, fieldState } = controller;
+                return (
+                  <Field>
+                    <FieldLabel htmlFor={field.name}>{t("url")}</FieldLabel>
+                    <UrlInput
+                      id={field.name}
+                      value={field.value}
+                      placeholder={t("urlPlaceholder")}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                    <FieldDescription>{t("urlDesc")}</FieldDescription>
+                    <FieldError errors={[fieldState.error]} />
+                  </Field>
+                );
+              }}
+            />
+          </div>
         </FieldGroup>
       </FieldSet>
     </SortableItem>

@@ -33,7 +33,10 @@ bundles it, and runs the PDF checks on every template. It adds:
   in `takumi-checks.ts` from the react-pdf exports it replaced, plus SquareBullet for
   Luasa's square bullets). A stylesheet rule the
   renderer drops (it once lost the serif and mono families) fails here instead of
-  silently printing in Inter.
+  silently printing in Inter. The export loads only these families
+  (`TEMPLATE_FAMILIES` in `takumi-fonts.ts`), with Inter always loaded as the
+  fallback, or the chosen font and Inter. Keep the two lists in step: a family a
+  template draws with but does not load fails this check.
 - **No faked weights**: no text is drawn with a stroke render mode. takumi-pdf
   strokes the 700 face to fake a heavier weight, which a browser never does.
 - **No hidden text**: no fill is drawn at zero opacity. Text drawn that way is

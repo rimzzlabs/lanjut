@@ -3,7 +3,7 @@ import { Switch } from "@lanjut/ui/components/switch";
 import { useTranslations } from "use-intl";
 import { useResumeStore } from "@/lib/store";
 
-export function EditorDocumentIcon() {
+export function EditorStylingIcons() {
   const templateId = useResumeStore((state) => state.open?.templateId);
   const showIcons = useResumeStore((state) => state.open?.showIcons ?? true);
   const updateOpen = useResumeStore((state) => state.updateOpen);

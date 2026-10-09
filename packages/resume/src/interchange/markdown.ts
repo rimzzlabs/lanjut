@@ -1,6 +1,7 @@
 import { A, F, G, O, pipe, S } from "@mobily/ts-belt";
 import type { JSONContent } from "@tiptap/core";
 import { emptyRichTextValue } from "..";
+import { safeHref } from "../link";
 import {
   type InlineRun,
   type RichBlock,
@@ -218,7 +219,7 @@ function parseSegment(src: string, marks: InlineMarks): ReadonlyArray<Piece> {
       const paren = linkTargetEnd(src, close);
       if (close !== -1 && paren !== -1) {
         flush();
-        const href = unescapeText(S.slice(src, close + 2, paren));
+        const href = safeHref(unescapeText(S.slice(src, close + 2, paren)));
         nest(S.slice(src, i + 1, close), { ...marks, href });
         i = paren + 1;
         continue;

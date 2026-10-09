@@ -5,6 +5,7 @@ import {
   type FieldKey,
   type SectionType,
 } from "..";
+import type { PdfLink } from "./links";
 import {
   DATE_RANGE_RE,
   findDateRange,
@@ -186,7 +187,7 @@ function dateFields(lines: ReadonlyArray<string>): Fields {
   return { startDate: plain(range.start), endDate: plain(range.end) };
 }
 
-interface DatedKeys {
+export interface DatedKeys {
   title: FieldKey;
   subject: FieldKey;
   body: FieldKey;
@@ -199,7 +200,11 @@ function subjectFields(keys: DatedKeys, subtitle: string | undefined): Fields {
   return subtitleFields({ key, subtitle, withLocation });
 }
 
-export function datedEntry(type: SectionType, keys: DatedKeys) {
+export function datedEntry(
+  type: SectionType,
+  keys: DatedKeys,
+  links: ReadonlyArray<PdfLink> = [],
+) {
   return (lines: ReadonlyArray<string>): Entry => {
     const base = createEmptyEntry(type);
     const { title, subtitle, descLines } = extractEntryHeader(lines);
@@ -210,7 +215,7 @@ export function datedEntry(type: SectionType, keys: DatedKeys) {
         ...dateFields(lines),
         ...plainIfPresent(keys.title, title),
         ...subjectFields(keys, subtitle),
-        [keys.body]: richFromLines(descLines),
+        [keys.body]: richFromLines(descLines, links),
       },
     };
   };

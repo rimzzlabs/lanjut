@@ -1,6 +1,10 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { Button } from "@lanjut/ui/components/button";
-import { Field, FieldLabel } from "@lanjut/ui/components/field";
+import {
+  Field,
+  FieldDescription,
+  FieldLabel,
+} from "@lanjut/ui/components/field";
 import {
   InputGroup,
   InputGroupAddon,
@@ -29,6 +33,8 @@ import {
 
 interface PlatformResumeDownloadFormProps {
   defaultFileName: string;
+  /** The formats to offer, PDF first. Defaults to every export format. */
+  formats?: ReadonlyArray<ExportFormat>;
   generating: boolean;
   /**
    * Focus and select the file name on open. For a dialog only: on a page, the
@@ -42,7 +48,6 @@ export function PlatformResumeDownloadForm(
   props: PlatformResumeDownloadFormProps,
 ) {
   const t = useTranslations("forms.download");
-  const tc = useTranslations("forms.common");
   const tv = useValidationTranslator();
   const schema = useMemo(() => createDownloadFileSchema(tv), [tv]);
   const form = useForm<DownloadFileForm>({
@@ -88,7 +93,7 @@ export function PlatformResumeDownloadForm(
                   );
                 }}
               >
-                {EXPORT_FORMATS.map((value) => (
+                {(props.formats ?? EXPORT_FORMATS).map((value) => (
                   <ToggleGroupItem key={value} value={value} className="flex-1">
                     {S.toUpperCase(value)}
                   </ToggleGroupItem>
@@ -97,6 +102,7 @@ export function PlatformResumeDownloadForm(
             );
           }}
         />
+        <FieldDescription>{t(`formatHint.${format}`)}</FieldDescription>
       </Field>
 
       <Controller
@@ -129,7 +135,7 @@ export function PlatformResumeDownloadForm(
         disabled={props.generating || !form.formState.isValid}
       >
         {props.generating ? <Spinner /> : <DownloadSimpleIcon />}{" "}
-        {tc("download")}
+        {t("downloadAs", { format: S.toUpperCase(format) })}
       </Button>
     </form>
   );

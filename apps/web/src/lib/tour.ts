@@ -235,7 +235,7 @@ export const TOUR_STEPS: AppTourMeta[] = [
       {
         ...BASE_STEP,
         id: "sections",
-        editorTab: "editor",
+        editorTab: "content",
         selector: "#tour-editor-sections",
         side: "left",
       },
@@ -244,6 +244,13 @@ export const TOUR_STEPS: AppTourMeta[] = [
         id: "layout",
         editorTab: "layout",
         selector: "#tour-editor-layout",
+        side: "left",
+      },
+      {
+        ...BASE_STEP,
+        id: "styling",
+        editorTab: "styling",
+        selector: "#tour-editor-styling",
         side: "left",
       },
       {
@@ -257,7 +264,7 @@ export const TOUR_STEPS: AppTourMeta[] = [
   },
   {
     // Small screens: the sidebar lives in a sheet, so the tab steps open it
-    // first, then switch the tab, walking the same three tabs as desktop.
+    // first, then switch the tab, walking the same four tabs as desktop.
     tour: EDITOR_SHEET_TOUR,
     steps: [
       {
@@ -277,7 +284,7 @@ export const TOUR_STEPS: AppTourMeta[] = [
         ...BASE_STEP,
         id: "sections",
         sheet: "open",
-        editorTab: "editor",
+        editorTab: "content",
         selector: "#tour-editor-sections",
         side: "left",
       },
@@ -287,6 +294,14 @@ export const TOUR_STEPS: AppTourMeta[] = [
         sheet: "open",
         editorTab: "layout",
         selector: "#tour-editor-layout",
+        side: "left",
+      },
+      {
+        ...BASE_STEP,
+        id: "styling",
+        sheet: "open",
+        editorTab: "styling",
+        selector: "#tour-editor-styling",
         side: "left",
       },
       {

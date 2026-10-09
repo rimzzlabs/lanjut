@@ -1,5 +1,5 @@
 import type { TemplateId } from "@lanjut/resume/templates";
-import { F } from "@mobily/ts-belt";
+import { A, F } from "@mobily/ts-belt";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { PdfRenderer } from "takumi-pdf";
@@ -44,11 +44,29 @@ export function renderResumePdf(
     css: RESUME_PDF_CSS,
     // takumi-pdf takes a mutable font list.
     fonts: F.toMutable(
-      resumeFontLoaders({ fontId: preview.font ?? undefined, readFile }),
+      resumeFontLoaders({
+        fontId: preview.font ?? undefined,
+        template,
+        readFile,
+      }),
     ),
     lang: preview.language,
     // A character no font covers shows as a box, as in the preview, rather
     // than failing the whole export.
     uncoveredText: "placeholder",
   });
+}
+
+interface WarmUpParams {
+  template: TemplateId;
+  fontId: string | undefined;
+}
+
+/**
+ * Registers the fonts a résumé draws with before its first export, so the
+ * click only renders. Loading this module has already compiled the renderer.
+ */
+export async function warmUpResumePdf(params: WarmUpParams): Promise<void> {
+  const fonts = resumeFontLoaders({ ...params, readFile: fetchFontFile });
+  await Promise.all(A.map(fonts, (font) => renderer().registerFont(font)));
 }

@@ -1,15 +1,11 @@
-import type { ResumeLanguage } from "@lanjut/resume";
 import type { ParseResult } from "@lanjut/resume/import";
 import { Button } from "@lanjut/ui/components/button";
 import { pipe, S } from "@mobily/ts-belt";
 import { useState } from "react";
-import { useLocale, useTranslations } from "use-intl";
+import { useTranslations } from "use-intl";
 import { PlatformResumeImportDropzone } from "@/components/platform/platform-resume-import-dropzone";
-import { ResumeImportDisclaimer } from "@/components/shared/resume-import-disclaimer";
-import { useRouter } from "@/i18n/navigation";
-import { editorHref } from "@/lib/routes";
 import { useResumeStore } from "@/lib/store";
-import { isResumePreviewEmpty, resumeToPreview } from "./resume-to-preview";
+import { useEditorImport } from "./use-editor-import";
 
 /** Strip an imported file's name down to a résumé title. */
 function titleFromFileName(name: string): string {
@@ -22,25 +18,18 @@ interface Pending {
 }
 
 /**
- * Import a PDF or JSON export into the editor. When the open document already has content the
- * user chooses to replace it in place or create a separate new résumé; a blank
- * document is filled directly without asking.
+ * Import a PDF, JSON, or YAML file into the editor. When the open document
+ * already has content the user chooses to replace it in place or create a
+ * separate new résumé; a blank document is filled directly without asking.
  */
 export function EditorDocumentImport() {
-  const open = useResumeStore((state) => state.open);
-  const replaceOpenWithImport = useResumeStore(
-    (state) => state.replaceOpenWithImport,
-  );
-  const createResume = useResumeStore((state) => state.createResume);
-  const router = useRouter();
-  const locale = useLocale();
+  const hasOpen = useResumeStore((state) => state.open !== null);
+  const { isBlank, replace: replaceOpen, createFromImport } = useEditorImport();
   const t = useTranslations("editor.document");
   const [dropzoneKey, setDropzoneKey] = useState(0);
   const [pending, setPending] = useState<Pending | null>(null);
 
-  if (!open) return null;
-
-  const isBlank = isResumePreviewEmpty(resumeToPreview(open));
+  if (!hasOpen) return null;
 
   const reset = () => {
     setPending(null);
@@ -50,7 +39,7 @@ export function EditorDocumentImport() {
   const onParsed = (file: File, result: ParseResult) => {
     // A blank document has nothing to lose, so fill it in place without asking.
     if (isBlank) {
-      replaceOpenWithImport(result);
+      replaceOpen(result);
       reset();
     } else {
       setPending({ file, result });
@@ -59,25 +48,21 @@ export function EditorDocumentImport() {
 
   const replace = () => {
     if (!pending) return;
-    replaceOpenWithImport(pending.result);
+    replaceOpen(pending.result);
     reset();
   };
 
   const createNew = async () => {
     if (!pending) return;
-    const resume = await createResume(titleFromFileName(pending.file.name), {
-      source: "import",
-      imported: pending.result,
-      templateId: open.templateId,
-      language: locale as ResumeLanguage,
-    });
+    await createFromImport(
+      pending.result,
+      titleFromFileName(pending.file.name),
+    );
     reset();
-    router.push(editorHref(resume.id));
   };
 
   return (
     <div className="flex flex-col gap-3">
-      <ResumeImportDisclaimer />
       <PlatformResumeImportDropzone
         key={dropzoneKey}
         onParsingChange={() => {}}

@@ -117,7 +117,48 @@ editorial
 - The editor is `/editor/<id>` on web and desktop, served by the same page as the
   library. It shows the **Workbench-minimal** editor surface inside the platform
   shell. When the résumé does not exist, the not-found message takes the whole
-  panel, with no side panel, edit sheet, or undo keys.
+  panel, with no side panel, edit sheet, or undo keys. From `xl`, the side panel
+  holds a width in rem, so a wide screen gives its extra room to the page preview.
+  It opens at 29% of the window, from 22rem to 28rem, and drags from 22rem to 40rem.
+  It keeps its width when the window resizes. The tabs are Content, Layout,
+  Styling, and Document, and fill the panel's width.
+- The Styling and Document tabs group their controls by intent. Each group is an
+  `EditorPanelSection`: an icon in a muted square, a title, one line on what the
+  group is for, an optional action beside the title, then the controls.
+  - Styling: Typography (font, name, heading, and body size), Spacing (a Density
+    choice of Compact, Balanced, or Airy, then between sections, lines, and
+    letters), and General (résumé language, contact icons). Density sets the
+    space between sections and the line height, as an offset from the
+    template's own line height. Letter spacing is not density, so it stays. No
+    segment shows as chosen once a slider moves off every preset. Typography and Spacing each have their own reset, turned off while
+    the group has its defaults. Language is content, so no reset touches it.
+    Each slider row shows its value beside its label: a percent for sizes, a
+    signed px offset or "Default" for spacing, and the line height to two
+    decimals.
+  - Document: Download (PDF, DOCX, or TXT, with a line on when to use the chosen
+    format and a "Download PDF" button), Backup (a JSON or YAML switch, then Copy
+    and Download), and Import (the file drop area, an "or" rule, the paste
+    button, and the import disclaimer). The library's download dialog shows the
+    same format hints for all five formats.
+- The Content tab's forms follow the panel's width, not the window's. When a
+  form is 28rem wide or more (the panel at about 30rem), paired fields sit side
+  by side: company and location, context and website, email and phone, website
+  and LinkedIn, issuer and certificate URL, and city, province, and country in
+  one row. A title with its remove button, dates, and rich text stay full width.
+- The paste dialog (`EditorDocumentPaste`) shows the pasted JSON or YAML in color
+  in a `CodeTextarea` and checks it as the person types. It shows "Ready to
+  import", the parser's syntax error, or the first three fields that do not match.
+  On a blank résumé it offers Import. Otherwise it offers Replace this resume and
+  Create a new resume, as a file import does.
+- A bar above the page preview holds the readiness meter: a label ("60%
+  ready", then "Ready to send") beside a thin `Progress` bar, spanning the
+  paper's width, and from `xl` undo and redo at its end. Below `xl`, undo and redo
+  sit at the top of the edit sheet, beside its close button. The bar stays in
+  place, and only the page scrolls under it.
+  The label opens a popover with ten checks. Each check opens its section on the
+  Content tab and focuses its field. Below `xl`, it opens the edit sheet first. Personal
+  Information, Summary, Experience, Education, and Skills carry a mark beside
+  their title: a filled check when their checks pass, a dashed circle when not.
 - Feedback is one guided flow in three steps (Kind, Details, Send), on two
   surfaces: in the app, a sheet from `lg` and a drawer below it, opened from
   "Send feedback" in the sidebar; and the `/feedback` page (**Workbench-minimal**,
@@ -359,7 +400,7 @@ from `md`. No section carries a kicker, eyebrow, or number above its heading.
   custom section as a dashed neutral chip. The kept-out list is a hairline `dl` with
   a muted x before each plain name.
 - Import (`landing-import.astro`): heading over 7 columns beside the deck and an
-  outline link to the builder's import, then a full-width diagram below. Raw extracted
+  outline link to the editor's import, then a full-width diagram below. Raw extracted
   lines sit on an `--ink` plate, then an arrow, then a hairline `dl` of the sections
   `parseResumeText` sorts them into. The one line it cannot place stays in Martian
   Mono under the leftovers label.

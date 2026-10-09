@@ -1,3 +1,4 @@
+import type { TemplateId } from "@lanjut/resume/templates";
 import { A, pipe } from "@mobily/ts-belt";
 import { FONTS, resolveFont } from "@/lib/fonts";
 
@@ -16,8 +17,18 @@ export async function fetchFontFile(file: string): Promise<Uint8Array> {
 export const SQUARE_BULLET_FAMILY = "Square Bullet";
 const SQUARE_BULLET_FILE = "SquareBullet.ttf";
 
-// Every template falls back to these three; resumeTypographyStyle names them.
-const DEFAULT_FAMILIES: ReadonlyArray<string> = ["Inter", "Lora", "GeistMono"];
+// The families each template draws with when no font is chosen, as the export
+// check records them (`EXPECTED_FAMILIES` in scripts/takumi-checks.ts). Inter
+// is in every set: it is the fallback for anything a template leaves unset.
+// Loading only these keeps Lora (about 840 KB) out of most first exports.
+const TEMPLATE_FAMILIES: Record<TemplateId, ReadonlyArray<string>> = {
+  awal: ["Inter"],
+  ketat: ["Inter", "Lora"],
+  luasa: ["Inter", "Lora"],
+  tebal: ["Inter"],
+  klasik: ["Inter", "Lora"],
+  ketik: ["Inter", "GeistMono"],
+};
 
 interface FontLoader {
   key: string;
@@ -29,24 +40,31 @@ interface FontLoader {
 
 interface ResumeFontLoadersParams {
   fontId: string | undefined;
+  template: TemplateId;
   readFile: ReadFontFile;
 }
 
+function resumeFamilies(
+  fontId: string | undefined,
+  template: TemplateId,
+): ReadonlyArray<string> {
+  const override = resolveFont(fontId);
+  // A chosen font takes the sans, serif, and mono slots alike
+  // (resumeTypographyStyle), so it needs only itself and the fallback.
+  if (override) return A.uniq([override.family, "Inter"]);
+  return TEMPLATE_FAMILIES[template];
+}
+
 /**
- * Lazy font loaders for the families a résumé can draw with: the three
- * defaults and the chosen override. Each face registers under the CSS family
- * name the preview uses, keyed by file so faces of one family stay distinct.
+ * Lazy font loaders for the families a résumé draws with: its template's
+ * faces, or the chosen font. Each face registers under the CSS family name the
+ * preview uses, keyed by file so faces of one family stay distinct.
  */
 export function resumeFontLoaders(
   params: ResumeFontLoadersParams,
 ): ReadonlyArray<FontLoader> {
-  const { fontId, readFile } = params;
-  const override = resolveFont(fontId);
-  const families = pipe(
-    DEFAULT_FAMILIES,
-    A.concat(override ? [override.family] : []),
-    A.uniq,
-  );
+  const { fontId, template, readFile } = params;
+  const families = resumeFamilies(fontId, template);
   return pipe(
     FONTS,
     A.filter((font) => A.includes(families, font.family)),

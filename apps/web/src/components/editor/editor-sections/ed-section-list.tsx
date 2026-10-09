@@ -6,10 +6,10 @@ import {
 import { Accordion } from "@lanjut/ui/components/accordion";
 import { cn } from "@lanjut/ui/lib/utils";
 import { A } from "@mobily/ts-belt";
-import { type ReactNode, useState } from "react";
+import type { ReactNode } from "react";
 import { useTranslations } from "use-intl";
 import { SortableList } from "@/components/shared/sortable-list";
-import { useResumeStore } from "@/lib/store";
+import { useEditorChromeStore, useResumeStore } from "@/lib/store";
 import { preloadRichTextEditor } from "../rich-text/rich-text-field";
 import { EditorSectionCertifications } from "./ed-section-certifications/ed-section-certifications";
 import { EditorSectionCustom } from "./ed-section-custom/ed-section-custom";
@@ -62,7 +62,10 @@ export function EditorSectionList() {
   // newly added one can be opened by id) and the section type for the rest;
   // explicit values keep the open section open across the undo-epoch remount.
   // Stale ids from another résumé simply match nothing.
-  const [openSections, setOpenSections] = useState<string[]>([]);
+  const openSections = useEditorChromeStore((state) => state.openSections);
+  const setOpenSections = useEditorChromeStore(
+    (state) => state.setOpenSections,
+  );
 
   if (!open) {
     if (openStatus === "missing") {

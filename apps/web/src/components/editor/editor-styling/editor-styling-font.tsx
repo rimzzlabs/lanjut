@@ -22,7 +22,7 @@ const GROUP_KEY = {
 /** Sentinel Select value for "no override"; the document stores no font id. */
 const TEMPLATE_DEFAULT = "template-default";
 
-export function EditorDocumentFont() {
+export function EditorStylingFont() {
   const hasOpen = useResumeStore((state) => state.open !== null);
   const font = useResumeStore((state) => state.open?.font ?? TEMPLATE_DEFAULT);
   const updateOpen = useResumeStore((state) => state.updateOpen);

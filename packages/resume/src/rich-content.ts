@@ -1,5 +1,6 @@
 import { A, O, pipe, S } from "@mobily/ts-belt";
 import type { JSONContent } from "@tiptap/core";
+import { safeHref } from "./link";
 
 /**
  * A run of inline text carrying the restricted schema's marks (bold, italic,
@@ -31,10 +32,10 @@ function markOf(
 ): Partial<InlineRun> {
   if (mark.type === "bold") return { bold: true };
   if (mark.type === "italic") return { italic: true };
-  if (mark.type === "link" && mark.attrs?.href) {
-    return { href: String(mark.attrs.href) };
-  }
-  return {};
+  if (mark.type !== "link" || !mark.attrs?.href) return {};
+  const href = safeHref(String(mark.attrs.href));
+  if (href === undefined) return {};
+  return { href };
 }
 
 function runFromText(node: JSONContent): InlineRun {

@@ -20,5 +20,8 @@ export async function importResumeFromPdf(
 ): Promise<ImportResult> {
   const extracted = await extractPdfText(bytes);
   if (!extracted.ok) return extracted;
-  return { ok: true, ...parseResumeText(extracted.text, options) };
+  return {
+    ok: true,
+    ...parseResumeText(extracted.text, options, extracted.links),
+  };
 }

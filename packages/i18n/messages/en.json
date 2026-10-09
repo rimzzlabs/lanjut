@@ -84,41 +84,49 @@
     "editor": {
       "preview": {
         "title": "Live preview",
-        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically."
+        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically. The bar on top shows what your resume still needs."
       },
       "sections": {
-        "title": "Editor tab",
+        "title": "Content tab",
         "content": "Fill in each section here. Drag to reorder them or hide the ones you don't need; the structure stays ATS-parseable underneath."
       },
       "layout": {
         "title": "Layout tab",
         "content": "Swap templates from the Layout tab. Each one restyles typography and spacing only, so your content and its reading order never change."
       },
+      "styling": {
+        "title": "Styling tab",
+        "content": "Style the whole resume here: font, sizes, spacing, line height, and letter spacing. It's also where you switch the resume's language."
+      },
       "document": {
         "title": "Document tab",
-        "content": "Style the whole resume here: font, sizes, spacing, line height, and letter spacing. It's also where you switch language and export or import as PDF, DOCX, JSON, or YAML."
+        "content": "Download your resume to send it, keep a JSON or YAML backup, or import a resume from a file or pasted text."
       }
     },
     "editor-sheet": {
       "preview": {
         "title": "Live preview",
-        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically."
+        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically. The bar on top shows what your resume still needs."
       },
       "edit": {
         "title": "Open the editor",
         "content": "Tap Edit anytime to open this panel and make changes."
       },
       "sections": {
-        "title": "Editor tab",
+        "title": "Content tab",
         "content": "Fill in each section here. Drag to reorder them or hide the ones you don't need; the structure stays ATS-parseable underneath."
       },
       "layout": {
         "title": "Layout tab",
         "content": "Swap templates from the Layout tab. Each one restyles typography and spacing only, so your content and its reading order never change."
       },
+      "styling": {
+        "title": "Styling tab",
+        "content": "Style the whole resume here: font, sizes, spacing, line height, and letter spacing. It's also where you switch the resume's language."
+      },
       "document": {
         "title": "Document tab",
-        "content": "Style the whole resume here: font, sizes, spacing, line height, and letter spacing. It's also where you switch language and export or import as PDF, DOCX, JSON, or YAML."
+        "content": "Download your resume to send it, keep a JSON or YAML backup, or import a resume from a file or pasted text."
       }
     },
     "profiles": {
@@ -194,8 +202,36 @@
             "description": "The top bar of the editor now shows when your résumé is saved on this device. If the browser ever refuses to save, it tells you right away and how to keep a copy."
           },
           {
+            "title": "See how ready your resume is",
+            "description": "A bar above your resume preview shows how ready it is to send, from 0% to Ready to send. Open it to see what is still missing, and pick an item to go straight to that field. Only your own words count, not the sample's."
+          },
+          {
+            "title": "More room for the preview on large screens",
+            "description": "On a wide screen, the editing panel keeps a comfortable width, and the page preview gets the extra room."
+          },
+          {
+            "title": "A faster first PDF",
+            "description": "Your first PDF download now starts sooner. The editor gets the PDF maker ready while you open the download, and it loads only the fonts your template uses."
+          },
+          {
+            "title": "A Styling tab",
+            "description": "Font, sizes, spacing, and the resume's language now have their own Styling tab, grouped into Typography, Spacing, and General. Each slider shows its value, each group has its own reset, and a Density choice (Compact, Balanced, Airy) sets the spacing in one click."
+          },
+          {
+            "title": "A clearer Document tab",
+            "description": "The Document tab is now grouped into Download, Backup, and Import. Each download format says when to use it, and a JSON or YAML backup can be copied or downloaded in one place."
+          },
+          {
+            "title": "Forms that use a wider panel",
+            "description": "Drag the editing panel wider, and the fields in each section sit side by side in two columns."
+          },
+          {
+            "title": "Paste JSON or YAML",
+            "description": "Paste a resume you copied as JSON or YAML into the Document tab. The text shows in color, and any mistake shows before you import it."
+          },
+          {
             "title": "Bug fixes",
-            "description": "During a guided tour, the button that a step points at no longer reacts to a click or a key, so the tour cannot open a menu or a sheet under its own card."
+            "description": "During a guided tour, the button that a step points at no longer reacts to a click or a key, so the tour cannot open a menu or a sheet under its own card. Importing a PDF résumé now puts each link in its own field, such as your website or a certificate link, instead of showing the address as text."
           }
         ],
         "0_18_0": [
@@ -675,8 +711,16 @@
       "drawerTitle": "Download resume",
       "drawerDescription": "Pick a format and name your file.",
       "format": "Format",
+      "formatHint": {
+        "pdf": "Keeps your layout. Best for email and most job sites.",
+        "docx": "For job sites and forms that ask for a Word file.",
+        "txt": "Plain text with no layout, for pasting into application forms.",
+        "json": "Structured data, for a backup or for another app.",
+        "yaml": "Structured text that is easy to read and edit by hand."
+      },
       "fileName": "File name",
-      "fileNamePlaceholder": "Software Engineer"
+      "fileNamePlaceholder": "Software Engineer",
+      "downloadAs": "Download {format}"
     },
     "import": {
       "dropPrompt": "Drop a PDF, JSON, or YAML file here, or click to browse",
@@ -833,24 +877,40 @@
     "layout": {
       "documentLanguage": "Document language",
       "documentIcons": "Show contact icons",
-      "sectionSpacing": "Section spacing",
       "documentFont": "Font",
       "templateDefault": "Default",
       "fontSans": "Sans",
       "fontSerif": "Serif",
       "fontMono": "Mono",
-      "lineHeight": "Line height",
-      "letterSpacing": "Letter spacing",
       "fontSizeName": "Name size",
       "fontSizeTitle": "Heading size",
       "fontSizeBody": "Body size"
+    },
+    "styling": {
+      "typography": "Typography",
+      "typographyHint": "The typeface, and how large each kind of text is.",
+      "spacing": "Spacing",
+      "spacingHint": "The room between sections, lines, and letters. Tighten it to fit more on a page.",
+      "density": "Density",
+      "compact": "Compact",
+      "balanced": "Balanced",
+      "airy": "Airy",
+      "general": "General",
+      "generalHint": "The language of headings and dates, and the contact icons.",
+      "resetTypography": "Reset typography",
+      "resetSpacing": "Reset spacing",
+      "betweenSections": "Between sections",
+      "betweenLines": "Between lines",
+      "betweenLetters": "Between letters",
+      "default": "Default"
     },
     "chrome": {
       "edit": "Edit",
       "editorTitle": "Editor",
       "editorDescription": "Resume Editor",
-      "tabEditor": "Editor",
+      "tabContent": "Content",
       "tabLayout": "Layout",
+      "tabStyling": "Styling",
       "notFound": "Resume not found",
       "didYouMean": "did you mean:",
       "notExist": "This resume doesn't exist in this browser's storage.",
@@ -1130,21 +1190,36 @@
     },
     "document": {
       "downloadHeading": "Download",
+      "downloadHint": "Get a file to send with your applications.",
+      "backupHeading": "Backup",
+      "backupHint": "Keep a copy as JSON or YAML, or edit it in another app.",
+      "backupFormat": "Backup format",
+      "copy": "Copy",
+      "downloadFile": "Download",
       "importHeading": "Import resume",
-      "importHint": "Bring in details from an existing PDF resume, or restore a JSON or YAML export. It's read on your device and never uploaded.",
+      "importHint": "Bring in a PDF resume, or restore a JSON or YAML backup.",
+      "or": "or",
       "replacePrompt": "This resume already has content. Replace it, or keep it and create a new one?",
       "replace": "Replace this one",
       "createNew": "Create new",
-      "stylingHeading": "Document styling",
-      "resetStyling": "Reset to defaults",
-      "resetStylingHint": "Reset document styling to default",
-      "copyHeading": "Copy",
-      "copyHint": "Copy this resume to the clipboard as structured text. Rich text travels as simple markdown, and pasting it into an import restores it exactly.",
-      "copyAs": "Copy as",
-      "copyJson": "JSON",
-      "copyYaml": "YAML",
       "copied": "Copied to clipboard",
       "copyFailed": "Couldn't copy to the clipboard."
+    },
+    "paste": {
+      "open": "Paste JSON or YAML",
+      "title": "Paste JSON or YAML",
+      "description": "Paste a resume that Lanjut copied as JSON or YAML. You can fix it here before you import it.",
+      "label": "Resume as JSON or YAML",
+      "placeholder": "Paste here",
+      "ready": "Ready to import",
+      "syntaxError": "This {format} has a syntax error",
+      "schemaError": "This text does not match a Lanjut resume",
+      "moreIssues": "{count, plural, one {And # more problem} other {And # more problems}}",
+      "import": "Import",
+      "replace": "Replace this resume",
+      "createNew": "Create a new resume",
+      "imported": "Resume imported",
+      "pastedTitle": "Pasted resume"
     },
     "saveStatus": {
       "saved": "Saved on this device",
@@ -1153,6 +1228,30 @@
       "failed": "Not saved",
       "failedTitle": "This browser did not save your last change",
       "failedBody": "Storage can be full or blocked, for example in a private window. Your changes are still on screen. Download a copy from the Document tab before you close this page."
+    },
+    "readiness": {
+      "percent": "{percent}% ready",
+      "ready": "Ready to send",
+      "title": "What your resume still needs",
+      "description": "An item counts once it holds your own words, not the sample's.",
+      "readyTitle": "Ready to send",
+      "readyDescription": "Every item holds your own words. Download your resume from the Document tab.",
+      "done": "Done",
+      "todo": "To do",
+      "sectionDone": "Complete",
+      "sectionTodo": "Needs work",
+      "checks": {
+        "name": "Add your name",
+        "jobTitle": "Add a job title",
+        "email": "Add an email address",
+        "phone": "Add a phone number",
+        "location": "Add your city or country",
+        "summary": "Write a summary of {min} words or more",
+        "experience": "Add a job with a start date",
+        "bullets": "Write {min} bullet points about your work",
+        "education": "Add your education",
+        "skills": "List {min} skills"
+      }
     }
   },
   "notFound": {
@@ -1195,7 +1294,7 @@
     "checkEmail": "Email intact",
     "checkOrder": "Sections in order",
     "sampleNote": "Your name and role, on sample content.",
-    "cta": "Continue in the builder",
+    "cta": "Continue in the editor",
     "allTemplates": "See all six templates",
     "noAccount": "No account. Nothing uploaded.",
     "looksHeading": "Change the look. The order stays put.",
@@ -1214,7 +1313,7 @@
     "localSource": "Lanjut is open source under AGPL-3.0.",
     "localSourceLink": "Read the code on GitHub",
     "appHeading": "Prefer an app?",
-    "appBody": "The same builder runs as a Mac app that keeps working offline.",
+    "appBody": "The same editor runs as a Mac app that keeps working offline.",
     "macMeta": "macOS 13 or later",
     "macCta": "Download for macOS",
     "macNote": "It is a beta and not yet signed by Apple, so macOS asks you to confirm the first time you open it.",
@@ -1229,7 +1328,7 @@
       "product": "Product",
       "project": "Project",
       "support": "Support",
-      "builder": "Builder",
+      "editor": "Editor",
       "templates": "Templates",
       "download": "Download for macOS",
       "github": "GitHub",
@@ -1273,7 +1372,7 @@
     "exportYaml": "The same copy, easier to read and edit by hand.",
     "orderTitle": "Section order the parser read",
     "orderNote": "Pick another template. The order stays the same.",
-    "importLink": "Import a file in the builder",
+    "importLink": "Import a file in the editor",
     "importRawLabel": "Text from your PDF",
     "snippetLabel": "Your PDF, read back",
     "snippetChars": "{chars, number} characters",

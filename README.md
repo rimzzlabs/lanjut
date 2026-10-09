@@ -36,7 +36,8 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Available in English and Indonesian (`use-intl`)
 - Theme toggle and one settings menu (language, animation) in the landing and app navbars. The animation setting (System, On, Off) follows the operating system's reduced-motion setting on System
 - Export to PDF (linear reading order preserved) and plain text / .docx
-- Copy, download, and re-import a résumé as JSON or YAML
+- Copy, download, and re-import a résumé as JSON or YAML, from a file or as pasted text shown in color
+- A readiness meter that shows what your résumé still needs, counting only your own words, never the sample's
 - Guided tours of the library, templates, profiles, and editor for first-time users
 - Send feedback in-app: a guided form for bugs, ideas, and wording fixes that checks for similar issues and shows the technical details it attaches (never the text of your résumé). Without a GitHub account, Lanjut posts it for you and links to the issue; with one, it opens the issue prefilled for you to post
 - Local persistence via IndexedDB, no data leaves the browser. The editor's top bar confirms each save to the device and warns when the browser refuses one
@@ -68,6 +69,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Icons                | Phosphor (@phosphor-icons/react)                                         |
 | Styling              | Tailwind CSS                                                             |
 | Rich text editor     | TipTap                                                                   |
+| Syntax colors        | Lezer (JSON and YAML parsers, in the paste dialog)                       |
 | Forms                | react-hook-form + zod                                                    |
 | Drag and drop        | @dnd-kit                                                                 |
 | Export               | takumi-pdf (PDF from the preview HTML), docx                             |

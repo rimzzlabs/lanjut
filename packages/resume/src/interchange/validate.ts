@@ -7,7 +7,7 @@ export interface InterchangeIssue {
   message: string;
 }
 
-/** Shared result shape for every text serialization (JSON files, YAML editor). */
+/** Shared result shape for every text serialization (JSON and YAML, from a file or pasted). */
 export type ParseInterchangeResult =
   | { ok: true; content: ResumeContent }
   | { ok: false; kind: "syntax"; message: string }

@@ -84,41 +84,49 @@
     "editor": {
       "preview": {
         "title": "Pratinjau langsung",
-        "content": "Ini pratinjau langsung kamu, persis seperti yang bakal diekspor. Update otomatis pas kamu ngetik dan langsung tersimpan di browser ini."
+        "content": "Ini pratinjau langsung kamu, persis seperti yang bakal diekspor. Update otomatis pas kamu ngetik dan langsung tersimpan di browser ini. Bilah di atasnya nunjukin apa yang masih dibutuhkan resume kamu."
       },
       "sections": {
-        "title": "Tab Editor",
+        "title": "Tab Konten",
         "content": "Isi tiap bagian di sini. Seret buat mengubah urutannya atau sembunyikan yang nggak kamu perlu; strukturnya tetap kebaca ATS di baliknya."
       },
       "layout": {
         "title": "Tab Tata Letak",
         "content": "Ganti template dari tab Tata Letak. Masing-masing cuma mengubah tipografi dan spasi, jadi konten dan urutan bacanya nggak pernah berubah."
       },
+      "styling": {
+        "title": "Tab Gaya",
+        "content": "Atur gaya seluruh resume di sini: font, ukuran, spasi, tinggi baris, dan jarak antarhuruf. Di sini juga kamu ganti bahasa resume."
+      },
       "document": {
         "title": "Tab Dokumen",
-        "content": "Atur gaya seluruh resume di sini: font, ukuran, spasi, tinggi baris, dan jarak antarhuruf. Di sini juga kamu ganti bahasa dan ekspor atau impor sebagai PDF, DOCX, JSON, atau YAML."
+        "content": "Unduh resume untuk dikirim, simpan cadangan JSON atau YAML, atau impor resume dari file atau teks yang ditempel."
       }
     },
     "editor-sheet": {
       "preview": {
         "title": "Pratinjau langsung",
-        "content": "Ini pratinjau langsung kamu, persis seperti yang bakal diekspor. Update otomatis pas kamu ngetik dan langsung tersimpan di browser ini."
+        "content": "Ini pratinjau langsung kamu, persis seperti yang bakal diekspor. Update otomatis pas kamu ngetik dan langsung tersimpan di browser ini. Bilah di atasnya nunjukin apa yang masih dibutuhkan resume kamu."
       },
       "edit": {
         "title": "Buka editor",
         "content": "Ketuk Edit kapan aja buat buka panel ini dan mulai mengubah."
       },
       "sections": {
-        "title": "Tab Editor",
+        "title": "Tab Konten",
         "content": "Isi tiap bagian di sini. Seret buat mengubah urutannya atau sembunyikan yang nggak kamu perlu; strukturnya tetap kebaca ATS di baliknya."
       },
       "layout": {
         "title": "Tab Tata Letak",
         "content": "Ganti template dari tab Tata Letak. Masing-masing cuma mengubah tipografi dan spasi, jadi konten dan urutan bacanya nggak pernah berubah."
       },
+      "styling": {
+        "title": "Tab Gaya",
+        "content": "Atur gaya seluruh resume di sini: font, ukuran, spasi, tinggi baris, dan jarak antarhuruf. Di sini juga kamu ganti bahasa resume."
+      },
       "document": {
         "title": "Tab Dokumen",
-        "content": "Atur gaya seluruh resume di sini: font, ukuran, spasi, tinggi baris, dan jarak antarhuruf. Di sini juga kamu ganti bahasa dan ekspor atau impor sebagai PDF, DOCX, JSON, atau YAML."
+        "content": "Unduh resume untuk dikirim, simpan cadangan JSON atau YAML, atau impor resume dari file atau teks yang ditempel."
       }
     },
     "profiles": {
@@ -194,8 +202,36 @@
             "description": "Bilah atas editor sekarang menunjukkan kapan résumé kamu tersimpan di perangkat ini. Kalau browser menolak menyimpan, kamu langsung diberi tahu dan cara menyimpan salinannya."
           },
           {
+            "title": "Lihat seberapa siap resume kamu",
+            "description": "Bilah di atas pratinjau resume menunjukkan seberapa siap resume kamu untuk dikirim, dari 0% sampai Siap dikirim. Buka untuk melihat yang masih kurang, lalu pilih satu poin untuk langsung ke kolomnya. Hanya tulisan kamu sendiri yang dihitung, bukan isi contoh."
+          },
+          {
+            "title": "Ruang pratinjau lebih lega di layar besar",
+            "description": "Di layar lebar, panel edit tetap di lebar yang nyaman, dan pratinjau halaman mendapat sisa ruangnya."
+          },
+          {
+            "title": "PDF pertama lebih cepat",
+            "description": "Unduhan PDF pertama kamu sekarang mulai lebih cepat. Editor menyiapkan pembuat PDF saat kamu membuka unduhan, dan hanya memuat font yang dipakai template kamu."
+          },
+          {
+            "title": "Tab Gaya",
+            "description": "Font, ukuran, spasi, dan bahasa resume sekarang punya tab sendiri: Gaya, dikelompokkan jadi Tipografi, Spasi, dan Umum. Tiap slider menunjukkan nilainya, tiap kelompok punya tombol atur ulang sendiri, dan pilihan Kerapatan (Rapat, Seimbang, Lega) mengatur spasi dalam sekali klik."
+          },
+          {
+            "title": "Tab Dokumen yang lebih jelas",
+            "description": "Tab Dokumen sekarang dikelompokkan jadi Unduh, Cadangan, dan Impor. Tiap format unduhan menjelaskan kapan dipakai, dan cadangan JSON atau YAML bisa disalin atau diunduh di satu tempat."
+          },
+          {
+            "title": "Formulir yang memakai panel lebar",
+            "description": "Seret panel edit jadi lebih lebar, dan kolom isian di tiap bagian tersusun berdampingan dalam dua kolom."
+          },
+          {
+            "title": "Tempel JSON atau YAML",
+            "description": "Tempel resume yang kamu salin sebagai JSON atau YAML langsung di tab Dokumen. Teksnya berwarna, dan kesalahan langsung kelihatan sebelum kamu impor."
+          },
+          {
             "title": "Perbaikan bug",
-            "description": "Selama tur, tombol yang ditunjuk sebuah langkah tidak lagi bereaksi pada klik atau tombol keyboard, jadi tur tidak bisa membuka menu atau panel di bawah kartunya sendiri."
+            "description": "Selama tur, tombol yang ditunjuk sebuah langkah tidak lagi bereaksi pada klik atau tombol keyboard, jadi tur tidak bisa membuka menu atau panel di bawah kartunya sendiri. Impor resume PDF sekarang menaruh tiap tautan di kolomnya sendiri, seperti situs kamu atau tautan sertifikat, bukan menampilkannya sebagai teks."
           }
         ],
         "0_18_0": [
@@ -675,8 +711,16 @@
       "drawerTitle": "Unduh resume",
       "drawerDescription": "Pilih format dan kasih nama berkasnya.",
       "format": "Format",
+      "formatHint": {
+        "pdf": "Tata letakmu tetap terjaga. Paling cocok untuk email dan kebanyakan situs lowongan.",
+        "docx": "Untuk situs dan formulir yang minta berkas Word.",
+        "txt": "Teks polos tanpa tata letak, untuk ditempel ke formulir lamaran.",
+        "json": "Data terstruktur, untuk cadangan atau aplikasi lain.",
+        "yaml": "Teks terstruktur yang gampang dibaca dan diedit manual."
+      },
       "fileName": "Nama berkas",
-      "fileNamePlaceholder": "Software Engineer"
+      "fileNamePlaceholder": "Software Engineer",
+      "downloadAs": "Unduh {format}"
     },
     "import": {
       "dropPrompt": "Taruh file PDF, JSON, atau YAML di sini, atau klik untuk pilih",
@@ -833,24 +877,40 @@
     "layout": {
       "documentLanguage": "Bahasa dokumen",
       "documentIcons": "Tampilkan ikon kontak",
-      "sectionSpacing": "Jarak antarbagian",
       "documentFont": "Font",
       "templateDefault": "Bawaan",
       "fontSans": "Sans",
       "fontSerif": "Serif",
       "fontMono": "Mono",
-      "lineHeight": "Tinggi baris",
-      "letterSpacing": "Jarak antarhuruf",
       "fontSizeName": "Ukuran nama",
       "fontSizeTitle": "Ukuran judul",
       "fontSizeBody": "Ukuran isi"
+    },
+    "styling": {
+      "typography": "Tipografi",
+      "typographyHint": "Jenis huruf, dan seberapa besar tiap jenis teks.",
+      "spacing": "Spasi",
+      "spacingHint": "Ruang antarbagian, antarbaris, dan antarhuruf. Rapatkan biar muat lebih banyak di satu halaman.",
+      "density": "Kerapatan",
+      "compact": "Rapat",
+      "balanced": "Seimbang",
+      "airy": "Lega",
+      "general": "Umum",
+      "generalHint": "Bahasa judul dan tanggal, serta ikon kontak.",
+      "resetTypography": "Atur ulang tipografi",
+      "resetSpacing": "Atur ulang spasi",
+      "betweenSections": "Antarbagian",
+      "betweenLines": "Antarbaris",
+      "betweenLetters": "Antarhuruf",
+      "default": "Bawaan"
     },
     "chrome": {
       "edit": "Edit",
       "editorTitle": "Editor",
       "editorDescription": "Editor Resume",
-      "tabEditor": "Editor",
+      "tabContent": "Konten",
       "tabLayout": "Tata Letak",
+      "tabStyling": "Gaya",
       "notFound": "Resume nggak ketemu",
       "didYouMean": "maksud kamu:",
       "notExist": "Resume ini nggak ada di penyimpanan browser ini.",
@@ -1130,21 +1190,36 @@
     },
     "document": {
       "downloadHeading": "Unduh",
+      "downloadHint": "Ambil berkas untuk dikirim bareng lamaranmu.",
+      "backupHeading": "Cadangan",
+      "backupHint": "Simpan salinan sebagai JSON atau YAML, atau edit di aplikasi lain.",
+      "backupFormat": "Format cadangan",
+      "copy": "Salin",
+      "downloadFile": "Unduh",
       "importHeading": "Impor resume",
-      "importHint": "Ambil detail dari resume PDF yang sudah ada, atau pulihkan ekspor JSON atau YAML. Dibaca di perangkatmu dan nggak pernah diunggah.",
+      "importHint": "Ambil resume PDF, atau pulihkan cadangan JSON atau YAML.",
+      "or": "atau",
       "replacePrompt": "Resume ini sudah ada isinya. Ganti isinya, atau simpan lalu buat yang baru?",
       "replace": "Ganti yang ini",
       "createNew": "Buat baru",
-      "stylingHeading": "Gaya dokumen",
-      "resetStyling": "Kembalikan ke bawaan",
-      "resetStylingHint": "Kembalikan gaya dokumen ke bawaan",
-      "copyHeading": "Salin",
-      "copyHint": "Salin resume ini ke clipboard sebagai teks terstruktur. Teks kaya dibawa sebagai markdown sederhana, dan menempelkannya ke impor akan memulihkannya persis.",
-      "copyAs": "Salin sebagai",
-      "copyJson": "JSON",
-      "copyYaml": "YAML",
       "copied": "Disalin ke clipboard",
       "copyFailed": "Nggak bisa menyalin ke clipboard."
+    },
+    "paste": {
+      "open": "Tempel JSON atau YAML",
+      "title": "Tempel JSON atau YAML",
+      "description": "Tempel resume yang disalin Lanjut sebagai JSON atau YAML. Kamu bisa membetulkannya di sini sebelum diimpor.",
+      "label": "Resume sebagai JSON atau YAML",
+      "placeholder": "Tempel di sini",
+      "ready": "Siap diimpor",
+      "syntaxError": "Ada kesalahan sintaks di {format} ini",
+      "schemaError": "Teks ini nggak cocok dengan resume Lanjut",
+      "moreIssues": "Dan {count} masalah lainnya",
+      "import": "Impor",
+      "replace": "Ganti resume ini",
+      "createNew": "Buat resume baru",
+      "imported": "Resume diimpor",
+      "pastedTitle": "Resume tempelan"
     },
     "saveStatus": {
       "saved": "Tersimpan di perangkat ini",
@@ -1153,6 +1228,30 @@
       "failed": "Belum tersimpan",
       "failedTitle": "Browser ini tidak menyimpan perubahan terakhirmu",
       "failedBody": "Penyimpanan bisa penuh atau diblokir, misalnya di jendela pribadi. Perubahanmu masih ada di layar. Unduh salinan dari tab Dokumen sebelum kamu menutup halaman ini."
+    },
+    "readiness": {
+      "percent": "{percent}% siap",
+      "ready": "Siap dikirim",
+      "title": "Yang masih dibutuhkan resume kamu",
+      "description": "Tiap poin dihitung kalau isinya tulisan kamu sendiri, bukan isi contoh.",
+      "readyTitle": "Siap dikirim",
+      "readyDescription": "Semua poin sudah berisi tulisan kamu sendiri. Unduh resume kamu dari tab Dokumen.",
+      "done": "Selesai",
+      "todo": "Belum",
+      "sectionDone": "Lengkap",
+      "sectionTodo": "Perlu dilengkapi",
+      "checks": {
+        "name": "Isi nama kamu",
+        "jobTitle": "Isi jabatan",
+        "email": "Isi alamat email",
+        "phone": "Isi nomor telepon",
+        "location": "Isi kota atau negara",
+        "summary": "Tulis ringkasan minimal {min} kata",
+        "experience": "Tambah pengalaman kerja dengan tanggal mulai",
+        "bullets": "Tulis {min} poin tentang pekerjaan kamu",
+        "education": "Tambah pendidikan",
+        "skills": "Isi {min} keahlian"
+      }
     }
   },
   "notFound": {
@@ -1195,7 +1294,7 @@
     "checkEmail": "Email utuh",
     "checkOrder": "Urutan section terjaga",
     "sampleNote": "Nama dan posisimu, di atas konten contoh.",
-    "cta": "Lanjut ke builder",
+    "cta": "Lanjut ke editor",
     "allTemplates": "Lihat keenam template",
     "noAccount": "Tanpa akun. Tanpa unggah.",
     "looksHeading": "Ganti tampilannya. Urutannya tetap.",
@@ -1214,7 +1313,7 @@
     "localSource": "Lanjut open source dengan lisensi AGPL-3.0.",
     "localSourceLink": "Baca kodenya di GitHub",
     "appHeading": "Lebih suka aplikasi?",
-    "appBody": "Builder yang sama juga ada sebagai aplikasi Mac yang tetap jalan tanpa internet.",
+    "appBody": "Editor yang sama juga ada sebagai aplikasi Mac yang tetap jalan tanpa internet.",
     "macMeta": "macOS 13 ke atas",
     "macCta": "Unduh untuk macOS",
     "macNote": "Masih beta dan belum ditandatangani Apple, jadi macOS minta konfirmasi saat pertama kali dibuka.",
@@ -1229,7 +1328,7 @@
       "product": "Produk",
       "project": "Proyek",
       "support": "Dukungan",
-      "builder": "Builder",
+      "editor": "Editor",
       "templates": "Template",
       "download": "Unduh untuk macOS",
       "github": "GitHub",
@@ -1273,7 +1372,7 @@
     "exportYaml": "Salinan yang sama, lebih mudah dibaca dan diedit manual.",
     "orderTitle": "Urutan section yang dibaca parser",
     "orderNote": "Pilih template lain. Urutannya tetap sama.",
-    "importLink": "Impor file di builder",
+    "importLink": "Impor file di editor",
     "importRawLabel": "Teks dari PDF kamu",
     "snippetLabel": "PDF kamu, dibaca ulang",
     "snippetChars": "{chars, number} karakter",

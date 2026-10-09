@@ -17,6 +17,7 @@ import {
 } from "@phosphor-icons/react";
 import { Fragment, useState } from "react";
 import { useTranslations } from "use-intl";
+import { preloadPdfExportById } from "@/components/editor/preload-pdf-export";
 import { useResumeStore } from "@/lib/store";
 import { PlatformResumeActionDelete } from "../platform-resume-action-delete";
 import { PlatformResumeActionDownload } from "../platform-resume-action-download";
@@ -52,8 +53,10 @@ export function PlatformResumeGridItemMenu(
     setOpen((prev) => ({ ...prev, rename: next }));
   };
 
-  const openDownloadDialog = () =>
+  const openDownloadDialog = () => {
+    preloadPdfExportById(resume.id);
     setOpen((prev) => ({ ...prev, download: true }));
+  };
   const onOpenDownload = (next: boolean) => {
     setOpen((prev) => ({ ...prev, download: next }));
   };

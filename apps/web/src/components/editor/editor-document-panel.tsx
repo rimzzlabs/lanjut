@@ -1,55 +1,56 @@
+import { Separator } from "@lanjut/ui/components/separator";
+import {
+  DownloadSimpleIcon,
+  FloppyDiskBackIcon,
+  TrayArrowUpIcon,
+} from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
-import { EditorDocumentCopy } from "./editor-document-copy";
+import { ResumeImportDisclaimer } from "@/components/shared/resume-import-disclaimer";
+import { EditorDocumentBackup } from "./editor-document-backup";
 import { EditorDocumentDownload } from "./editor-document-download";
-import { EditorDocumentFont } from "./editor-document-font";
-import { EditorDocumentFontSize } from "./editor-document-font-size";
-import { EditorDocumentIcon } from "./editor-document-icon";
 import { EditorDocumentImport } from "./editor-document-import";
-import { EditorDocumentLanguage } from "./editor-document-language";
-import { EditorDocumentLetterSpacing } from "./editor-document-letter-spacing";
-import { EditorDocumentLineHeight } from "./editor-document-line-height";
-import { EditorDocumentSpacing } from "./editor-document-spacing";
-import { EditorDocumentStyleReset } from "./editor-document-style-reset";
+import { EditorDocumentPaste } from "./editor-document-paste";
+import { EditorPanelSection } from "./editor-panel-section";
 
-/** The Document tab: document-level actions (language, export, import). */
+/**
+ * The Document tab, grouped by what the person wants to do with the résumé:
+ * send it, keep a copy of it, or bring one in.
+ */
 export function EditorDocumentPanel() {
   const t = useTranslations("editor.document");
+
   return (
     <div className="flex flex-col divide-y px-4">
-      <section className="flex flex-col gap-3 py-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-medium">{t("stylingHeading")}</h3>
-          <EditorDocumentStyleReset />
-        </div>
-        <EditorDocumentIcon />
-        <EditorDocumentLanguage />
-        <EditorDocumentFont />
-        <EditorDocumentFontSize />
-        <EditorDocumentSpacing />
-        <EditorDocumentLineHeight />
-        <EditorDocumentLetterSpacing />
-      </section>
-
-      <section className="py-4">
-        <h3 className="text-sm font-medium">{t("copyHeading")}</h3>
-        <p className="mb-3 text-xs text-muted-foreground text-balance">
-          {t("copyHint")}
-        </p>
-        <EditorDocumentCopy />
-      </section>
-
-      <section className="py-4">
-        <h3 className="mb-3 text-sm font-medium">{t("downloadHeading")}</h3>
+      <EditorPanelSection
+        icon={<DownloadSimpleIcon />}
+        title={t("downloadHeading")}
+        description={t("downloadHint")}
+      >
         <EditorDocumentDownload />
-      </section>
+      </EditorPanelSection>
 
-      <section className="py-4">
-        <h3 className="text-sm font-medium">{t("importHeading")}</h3>
-        <p className="mb-3 text-xs text-muted-foreground text-balance">
-          {t("importHint")}
-        </p>
+      <EditorPanelSection
+        icon={<FloppyDiskBackIcon />}
+        title={t("backupHeading")}
+        description={t("backupHint")}
+      >
+        <EditorDocumentBackup />
+      </EditorPanelSection>
+
+      <EditorPanelSection
+        icon={<TrayArrowUpIcon />}
+        title={t("importHeading")}
+        description={t("importHint")}
+      >
         <EditorDocumentImport />
-      </section>
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <Separator className="flex-1" />
+          {t("or")}
+          <Separator className="flex-1" />
+        </div>
+        <EditorDocumentPaste />
+        <ResumeImportDisclaimer />
+      </EditorPanelSection>
     </div>
   );
 }

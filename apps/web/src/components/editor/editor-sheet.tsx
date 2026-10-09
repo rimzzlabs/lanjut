@@ -10,7 +10,9 @@ import {
 import { PencilSimpleLineIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { useEditorChromeStore } from "@/lib/store";
+import { takeJumpField } from "./editor-readiness/check-target";
 import { EditorSidebarContent } from "./editor-sidebar-content";
+import { EditorUndoRedo } from "./editor-undo-redo";
 
 export function EditorSheet() {
   const t = useTranslations("editor.chrome");
@@ -33,14 +35,20 @@ export function EditorSheet() {
 
       <SheetContent
         side="right"
+        initialFocus={takeJumpField}
         className="data-[side=right]:w-11/12 md:data-[side=right]:w-3/4 gap-0 sm:max-w-lg"
       >
         <SheetHeader className="sr-only">
           <SheetTitle>{t("editorTitle")}</SheetTitle>
           <SheetDescription>{t("editorDescription")}</SheetDescription>
         </SheetHeader>
+        {/* Undo and redo share the close button's row: under the tabs, a
+            narrow phone has no room for them. */}
+        <div className="flex shrink-0 items-center px-3 pt-4">
+          <EditorUndoRedo />
+        </div>
         <div className="min-h-0 flex-1">
-          <EditorSidebarContent />
+          <EditorSidebarContent className="pt-0" />
         </div>
       </SheetContent>
     </Sheet>

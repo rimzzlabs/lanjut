@@ -1,5 +1,5 @@
 import { A, G, O, pipe, S } from "@mobily/ts-belt";
-import { BULLET_RE } from "./parse-rich-lines";
+import { BULLET_RE, isLinkLine } from "./parse-rich-lines";
 
 // --- sections --------------------------------------------------------------
 
@@ -79,6 +79,7 @@ function splitDatedEntries(lines: ReadonlyArray<string>): EntryLines {
  * which starts lowercase. */
 function looksLikeEntryHeader(line: string): boolean {
   const trimmed = S.trim(line);
+  if (isLinkLine(trimmed)) return false;
   return (
     DATE_RANGE_RE.test(trimmed) ||
     (/^[A-Z0-9]/.test(trimmed) &&

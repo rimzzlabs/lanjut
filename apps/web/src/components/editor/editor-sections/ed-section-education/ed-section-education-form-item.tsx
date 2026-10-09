@@ -67,7 +67,7 @@ export function EditorSectionEducationFormItem(
           }}
         />
 
-        <div className="grid gap-6 2xl:grid-cols-2 2xl:gap-3">
+        <div className="grid gap-6 @md/field-group:grid-cols-2 @md/field-group:gap-3">
           <Controller
             control={props.control}
             name={`educations.${props.index}.degree`}

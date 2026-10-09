@@ -47,6 +47,10 @@
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+  --color-syntax-key: var(--syntax-key);
+  --color-syntax-string: var(--syntax-string);
+  --color-syntax-number: var(--syntax-number);
+  --color-syntax-literal: var(--syntax-literal);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -99,6 +103,11 @@
   --chart-3: oklch(0.596 0.145 163.225);
   --chart-4: oklch(0.508 0.118 165.612);
   --chart-5: oklch(0.432 0.095 166.913);
+  /* Syntax colors for JSON and YAML in the paste dialog. */
+  --syntax-key: oklch(0.47 0.12 250);
+  --syntax-string: oklch(0.5 0.12 150);
+  --syntax-number: oklch(0.55 0.14 55);
+  --syntax-literal: oklch(0.52 0.17 330);
   --radius: 1rem;
   --sidebar: oklch(0.976 0.007 92);
   --sidebar-foreground: oklch(0.2 0.014 155);
@@ -134,6 +143,10 @@
   --chart-3: oklch(0.596 0.145 163.225);
   --chart-4: oklch(0.508 0.118 165.612);
   --chart-5: oklch(0.432 0.095 166.913);
+  --syntax-key: oklch(0.8 0.09 245);
+  --syntax-string: oklch(0.8 0.12 155);
+  --syntax-number: oklch(0.82 0.12 70);
+  --syntax-literal: oklch(0.8 0.12 330);
   --sidebar: oklch(0.2 0.015 155);
   --sidebar-foreground: oklch(0.965 0.006 95);
   --sidebar-primary: oklch(0.72 0.13 162);

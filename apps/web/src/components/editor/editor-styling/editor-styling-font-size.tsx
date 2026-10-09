@@ -1,7 +1,7 @@
 import type { Resume } from "@lanjut/resume";
-import { Slider } from "@lanjut/ui/components/slider";
-import { useTranslations } from "use-intl";
+import { useFormatter, useTranslations } from "use-intl";
 import { useResumeStore } from "@/lib/store";
+import { EditorStylingSlider } from "./editor-styling-slider";
 
 const SCALE_MIN = 0.8;
 const SCALE_MAX = 1.2;
@@ -15,40 +15,34 @@ const ROWS: { field: ScaleField; labelKey: string }[] = [
   { field: "bodyScale", labelKey: "fontSizeBody" },
 ];
 
-/** One labeled font-size scale slider; rests at 100% and adjusts both ways. */
+/** One font-size scale; rests at 100% and adjusts both ways. */
 function FontSizeRow(props: { field: ScaleField; labelKey: string }) {
   const value = useResumeStore((state) => state.open?.[props.field] ?? 1);
   const updateOpen = useResumeStore((state) => state.updateOpen);
   const t = useTranslations("editor.layout");
-  const id = `font-size-${props.field}`;
+  const format = useFormatter();
 
-  const onValueChange = (next: number | readonly number[]) => {
-    const raw = Array.isArray(next) ? next[0] : (next as number);
+  const onValueChange = (next: number) => {
     updateOpen((resume: Resume) => ({
       ...resume,
-      [props.field]: Math.round(raw * 100) / 100,
+      [props.field]: Math.round(next * 100) / 100,
     }));
   };
 
   return (
-    <div className="flex items-center justify-between gap-3">
-      <span id={id} className="shrink-0 text-sm text-muted-foreground">
-        {t(props.labelKey)}
-      </span>
-      <Slider
-        aria-labelledby={id}
-        className="max-w-36"
-        value={value}
-        onValueChange={onValueChange}
-        min={SCALE_MIN}
-        max={SCALE_MAX}
-        step={SCALE_STEP}
-      />
-    </div>
+    <EditorStylingSlider
+      label={t(props.labelKey)}
+      value={value}
+      display={format.number(value, { style: "percent" })}
+      min={SCALE_MIN}
+      max={SCALE_MAX}
+      step={SCALE_STEP}
+      onValueChange={onValueChange}
+    />
   );
 }
 
-export function EditorDocumentFontSize() {
+export function EditorStylingFontSize() {
   const hasOpen = useResumeStore((state) => state.open !== null);
   if (!hasOpen) return null;
   return (
