@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.2](https://github.com/rimzzlabs/lanjut/compare/v0.20.1...v0.20.2) (2026-10-09)
+
+
+### Bug Fixes
+
+* center the start tile icon and label on phones ([#211](https://github.com/rimzzlabs/lanjut/issues/211)) ([83aae03](https://github.com/rimzzlabs/lanjut/commit/83aae030ce2eb208bd1918406f0a600046abaa7c))
+
 ## [0.20.1](https://github.com/rimzzlabs/lanjut/compare/v0.20.0...v0.20.1) (2026-10-09)
 
 
