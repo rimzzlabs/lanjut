@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.1](https://github.com/rimzzlabs/lanjut/compare/v0.21.0...v0.21.1) (2026-10-09)
+
+
+### Bug Fixes
+
+* add the missing 0.21.0 changelog entry ([#217](https://github.com/rimzzlabs/lanjut/issues/217)) ([9556099](https://github.com/rimzzlabs/lanjut/commit/95560999c8de1e26be5a5b81fa17de7d16faee6a))
+
 ## [0.21.0](https://github.com/rimzzlabs/lanjut/compare/v0.20.3...v0.21.0) (2026-10-09)
 
 
