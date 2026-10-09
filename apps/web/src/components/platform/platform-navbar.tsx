@@ -15,8 +15,10 @@ export function PlatformNavbar() {
   const t = useTranslations("platform.navbar");
 
   return (
-    <header className="border-b bg-background">
-      <div className="flex h-12 items-center gap-2 px-4 md:px-6">
+    // From md the bar sits on the shell, above the page panel, and is as tall
+    // as the sidebar's logo row, so the two line up.
+    <header className="border-b bg-background md:border-b-0 md:bg-transparent">
+      <div className="flex h-12 items-center gap-2 px-4 md:h-16 md:px-6">
         <SidebarTrigger id="tour-menu-button" />
         <div className="max-md:hidden">
           <PlatformNavbarBreadcrumb />

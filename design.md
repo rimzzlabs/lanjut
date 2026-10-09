@@ -37,10 +37,12 @@ editorial
   imported file; below `lg` the Template step is a carousel of page-wide previews,
   and a tap on a slide opens every page of that template in a drawer. Function
   carries the page; no enrichment, no display serif.
-- The app shell is the shadcn inset sidebar. The sidebar sits on `--sidebar`, and the
-  page is one `rounded-xl` panel with a `ring-foreground/10` hairline, 8px in from
-  the window edge from `md`. The panel holds the navbar over the page, and the page
-  scrolls inside the panel (`PlatformPageScroll`), not the window. Collapsed on
+- The app shell: from `md` the sidebar and the navbar sit on
+  `--sidebar`, the navbar beside the sidebar and as tall as its wordmark row. The
+  page is one panel under the navbar: a border on its top and left, a `rounded-xl`
+  top-left corner, and no gap to the window's right and bottom edges. Below `md`
+  the navbar has a bottom border and the page fills the screen. The page scrolls
+  inside the panel (`PlatformPageScroll`), not the window. Collapsed on
   desktop, the sidebar folds to a rail of icons with tooltips. The résumé list hides
   there, and a create button takes its place.
 - The sidebar reads top to bottom with no gaps: the wordmark, then Dashboard,
@@ -171,8 +173,8 @@ editorial
   On a blank résumé it offers Import. Otherwise it offers Replace this resume and
   Create a new resume, as a file import does.
 - A bar above the page preview holds the readiness meter: a label ("60%
-  ready", then "Ready to send") beside a thin `Progress` bar, spanning the
-  paper's width, and from `xl` undo and redo at its end. Below `xl`, undo and redo
+  ready", then "Ready to send") beside a thin `Progress` bar that fills the
+  preview's width, and from `xl` undo and redo at its right edge. Below `xl`, undo and redo
   sit at the top of the edit sheet, beside its close button. The bar stays in
   place, and only the page scrolls under it.
   The label opens a popover with ten checks. Each check opens its section on the
