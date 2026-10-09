@@ -10,6 +10,10 @@ import { PlatformLibraryEmpty } from "./platform-library-empty";
 import { PlatformLibraryStart } from "./platform-library-start/platform-library-start";
 import { PlatformPaperFrame } from "./platform-paper-frame";
 import { PlatformPaperSkeleton } from "./platform-paper-skeleton";
+import {
+  PlatformResumeReadinessLineSkeleton,
+  PlatformResumeReadinessSkeleton,
+} from "./platform-resume-readiness";
 import { PlatformSectionHeading } from "./platform-section-heading";
 
 const MAX_CARDS = 8;
@@ -64,8 +68,14 @@ function PlatformLibraryContinueSkeleton() {
           <div className="flex flex-col gap-2">
             <Skeleton className="h-6 w-1/2" />
             <Skeleton className="h-4 w-1/3" />
+            <div className="sm:hidden">
+              <PlatformResumeReadinessLineSkeleton />
+            </div>
           </div>
           <Skeleton className="h-5 w-28 max-md:hidden" />
+        </div>
+        <div className="flex shrink-0 items-center pr-14 max-sm:hidden">
+          <PlatformResumeReadinessSkeleton />
         </div>
       </Card>
     </section>

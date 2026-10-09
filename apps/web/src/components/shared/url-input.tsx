@@ -8,6 +8,7 @@ import { S } from "@mobily/ts-belt";
 
 interface UrlInputProps {
   id?: string;
+  "aria-describedby"?: string;
   value: string;
   placeholder?: string;
   onChange: (value: string) => void;
@@ -29,6 +30,7 @@ export function UrlInput(props: UrlInputProps) {
       </InputGroupAddon>
       <InputGroupInput
         id={props.id}
+        aria-describedby={props["aria-describedby"]}
         value={display}
         placeholder={props.placeholder}
         onChange={(event) => props.onChange(event.target.value)}

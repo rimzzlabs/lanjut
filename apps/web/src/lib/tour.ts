@@ -234,6 +234,12 @@ export const TOUR_STEPS: AppTourMeta[] = [
       },
       {
         ...BASE_STEP,
+        id: "readiness",
+        selector: "#tour-editor-readiness",
+        side: "bottom",
+      },
+      {
+        ...BASE_STEP,
         id: "sections",
         editorTab: "content",
         selector: "#tour-editor-sections",
@@ -264,7 +270,9 @@ export const TOUR_STEPS: AppTourMeta[] = [
   },
   {
     // Small screens: the sidebar lives in a sheet, so the tab steps open it
-    // first, then switch the tab, walking the same four tabs as desktop.
+    // first, then switch the tab, walking the same four tabs as desktop. They
+    // point at the tab row: the sheet fills a phone, so a card beside a tab's
+    // panel has no room and lands off screen.
     tour: EDITOR_SHEET_TOUR,
     steps: [
       {
@@ -272,6 +280,13 @@ export const TOUR_STEPS: AppTourMeta[] = [
         id: "preview",
         sheet: "closed",
         selector: "#tour-editor-preview",
+      },
+      {
+        ...BASE_STEP,
+        id: "readiness",
+        sheet: "closed",
+        selector: "#tour-editor-readiness",
+        side: "bottom",
       },
       {
         ...BASE_STEP,
@@ -285,32 +300,32 @@ export const TOUR_STEPS: AppTourMeta[] = [
         id: "sections",
         sheet: "open",
         editorTab: "content",
-        selector: "#tour-editor-sections",
-        side: "left",
+        selector: "#tour-editor-tabs",
+        side: "bottom",
       },
       {
         ...BASE_STEP,
         id: "layout",
         sheet: "open",
         editorTab: "layout",
-        selector: "#tour-editor-layout",
-        side: "left",
+        selector: "#tour-editor-tabs",
+        side: "bottom",
       },
       {
         ...BASE_STEP,
         id: "styling",
         sheet: "open",
         editorTab: "styling",
-        selector: "#tour-editor-styling",
-        side: "left",
+        selector: "#tour-editor-tabs",
+        side: "bottom",
       },
       {
         ...BASE_STEP,
         id: "document",
         sheet: "open",
         editorTab: "document",
-        selector: "#tour-editor-document",
-        side: "left",
+        selector: "#tour-editor-tabs",
+        side: "bottom",
       },
     ],
   },

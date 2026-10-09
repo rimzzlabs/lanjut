@@ -59,7 +59,7 @@ export function EditorSidebarContent(props: { className?: string }) {
         className="grid min-h-0 grid-rows-[auto_minmax(0,1fr)]"
       >
         <div className="shrink-0 px-4">
-          <TabsList className="w-full">
+          <TabsList id="tour-editor-tabs" className="w-full">
             {TABS.map((item) => (
               <TabsTrigger key={item.value} value={item.value} id={item.id}>
                 {t(item.labelKey)}

@@ -69,7 +69,12 @@ function EditorPreviewScroll(props: { children: ReactNode }) {
       className="grid h-full grid-cols-[minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)]"
     >
       <EditorPreviewBar>
-        <EditorReadiness />
+        <div
+          id="tour-editor-readiness"
+          className="flex min-w-0 flex-1 items-center gap-3"
+        >
+          <EditorReadiness />
+        </div>
         <div className="hidden xl:flex">
           <EditorUndoRedo />
         </div>

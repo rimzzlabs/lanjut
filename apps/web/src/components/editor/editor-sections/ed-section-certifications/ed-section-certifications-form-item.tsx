@@ -100,17 +100,23 @@ export function EditorSectionCertificationsFormItem(
               name={`certifications.${props.index}.url`}
               render={(controller) => {
                 const { field, fieldState } = controller;
+                const descriptionId = `${field.name}-description`;
                 return (
                   <Field>
                     <FieldLabel htmlFor={field.name}>{t("url")}</FieldLabel>
                     <UrlInput
                       id={field.name}
+                      aria-describedby={descriptionId}
                       value={field.value}
                       placeholder={t("urlPlaceholder")}
                       onChange={field.onChange}
                       onBlur={field.onBlur}
                     />
-                    <FieldDescription>{t("urlDesc")}</FieldDescription>
+                    {/* Read out with the field, but hidden: beside Issuer, a
+                        visible line leaves the two columns uneven. */}
+                    <FieldDescription id={descriptionId} className="sr-only">
+                      {t("urlDesc")}
+                    </FieldDescription>
                     <FieldError errors={[fieldState.error]} />
                   </Field>
                 );

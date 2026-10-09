@@ -53,7 +53,9 @@ editorial
   profiles, or the editor. Each tour also starts by itself the first time its page
   opens. A tour only points. The spotlight blocks clicks on its target, and the page
   under the card is inert, sheets included, so no step can open a sheet or a menu.
-  Focus moves to the card's primary button on each step. Below `md`, where the
+  Focus moves to the card's primary button on each step. The editor tour walks the
+  preview, the readiness bar, then the four tabs; below `xl` it shows the Edit
+  button before the tabs. Below `md`, where the
   sidebar is a sheet, the library tour's two sidebar steps point at the menu
   button in the navbar and leave the sheet closed.
 - The navbar holds the sidebar trigger, the breadcrumb, and the save state on the
@@ -85,8 +87,11 @@ editorial
   (`CARD_LINK`), so there is no button inside it to compete. Its actions sit in a
   "…" menu that lifts above the link. Hover and focus ring the whole card.
 - The library leads with the résumé edited last: a wide card with its sheet, title,
-  template, edit time, a quiet "Open editor →" label, and the "…" menu (Rename,
-  Duplicate, Download, Delete) in its corner. Below `md` a tap opens a drawer with
+  template, edit time, a quiet "Open editor →" label, its readiness as a ring
+  (`ProgressRing`) with the percent inside and "Readiness" under it (below `sm`,
+  a 16px ring and "60% ready" under the edit time, so the title keeps its width),
+  and the "…" menu (Rename, Duplicate, Download,
+  Delete) in its corner. Below `md` a tap opens a drawer with
   every page and all the actions. Then the start row: four
   tiles (Blank, Sample, Import a file, Browse templates). The first three open the
   create Sheet with that source chosen, and Blank and Sample open on the Template

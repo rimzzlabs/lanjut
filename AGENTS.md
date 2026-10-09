@@ -12,7 +12,7 @@ A pnpm workspace. Shared tooling (Biome, Prettier, commitlint, lefthook) lives a
 - `apps/desktop` (`@lanjut/desktop`): the Tauri shell in `src-tauri/`. It loads `apps/web/dist-desktop`.
 - `packages/resume` (`@lanjut/resume`): the résumé document. It holds the types, the schema registry, the migration ladder, the seed, PDF import, JSON and YAML interchange, the IndexedDB layer, and the template registry. Plain TypeScript with no React.
 - `packages/i18n` (`@lanjut/i18n`): the copy (`messages/*.json`) and the routing and translator helpers.
-- `packages/ui` (`@lanjut/ui`): the shadcn primitives, the custom primitives that shadcn does not have (`radio-card`, `code-textarea`), `cn`, and `use-mobile`. Import a primitive as `@lanjut/ui/components/<name>`. Only this package imports `@base-ui/react`.
+- `packages/ui` (`@lanjut/ui`): the shadcn primitives, the custom primitives that shadcn does not have (`radio-card`, `code-textarea`, `progress-ring`), `cn`, and `use-mobile`. Import a primitive as `@lanjut/ui/components/<name>`. Only this package imports `@base-ui/react`.
 - `packages/tsconfig` (`@lanjut/tsconfig`): the TypeScript base that the packages extend.
 
 Packages ship TypeScript source, and the app compiles them. A package never imports the app. Inside a package, import its own files by relative path. Across workspaces, import by package name. `apps/web/src/styles/globals.css` lists `packages/ui/src` as a Tailwind `@source`, because Tailwind scans only the app by default.

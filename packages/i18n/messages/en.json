@@ -84,7 +84,11 @@
     "editor": {
       "preview": {
         "title": "Live preview",
-        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically. The bar on top shows what your resume still needs."
+        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically."
+      },
+      "readiness": {
+        "title": "Readiness",
+        "content": "This bar shows how ready your resume is to send. Open it to see what is still missing, and pick an item to go straight to that field. Only your own words count, not the sample's."
       },
       "sections": {
         "title": "Content tab",
@@ -96,7 +100,7 @@
       },
       "styling": {
         "title": "Styling tab",
-        "content": "Style the whole resume here: font, sizes, spacing, line height, and letter spacing. It's also where you switch the resume's language."
+        "content": "Style the whole resume here, in three groups: Typography, Spacing, and General. Density sets the spacing in one click, and General switches the resume's language."
       },
       "document": {
         "title": "Document tab",
@@ -106,7 +110,11 @@
     "editor-sheet": {
       "preview": {
         "title": "Live preview",
-        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically. The bar on top shows what your resume still needs."
+        "content": "This is your live preview, exactly what gets exported. It updates as you type and saves to this browser automatically."
+      },
+      "readiness": {
+        "title": "Readiness",
+        "content": "This bar shows how ready your resume is to send. Open it to see what is still missing, and pick an item to go straight to that field. Only your own words count, not the sample's."
       },
       "edit": {
         "title": "Open the editor",
@@ -122,7 +130,7 @@
       },
       "styling": {
         "title": "Styling tab",
-        "content": "Style the whole resume here: font, sizes, spacing, line height, and letter spacing. It's also where you switch the resume's language."
+        "content": "Style the whole resume here, in three groups: Typography, Spacing, and General. Density sets the spacing in one click, and General switches the resume's language."
       },
       "document": {
         "title": "Document tab",
@@ -203,7 +211,7 @@
           },
           {
             "title": "See how ready your resume is",
-            "description": "A bar above your resume preview shows how ready it is to send, from 0% to Ready to send. Open it to see what is still missing, and pick an item to go straight to that field. Only your own words count, not the sample's."
+            "description": "A bar above your resume preview shows how ready it is to send, from 0% to Ready to send. Open it to see what is still missing, and pick an item to go straight to that field. Only your own words count, not the sample's. The library's first card shows the same score as a ring."
           },
           {
             "title": "More room for the preview on large screens",
@@ -542,6 +550,8 @@
     "library": {
       "continue": "Continue where you left off",
       "openEditor": "Open editor",
+      "readiness": "Readiness",
+      "readinessDone": "Ready to send",
       "templateHint": "Pick a look first, then start.",
       "all": "All resumes",
       "sort": "Sort resumes",

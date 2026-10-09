@@ -21,6 +21,10 @@ import { PlatformResumeActionDownload } from "./platform-resume-action-download"
 import { PlatformResumeActionRename } from "./platform-resume-action-rename";
 import { PlatformResumeGridItemMenu } from "./platform-resume-grid/platform-resume-grid-item-menu";
 import { PlatformResumeMeta } from "./platform-resume-meta";
+import {
+  PlatformResumeReadiness,
+  PlatformResumeReadinessLine,
+} from "./platform-resume-readiness";
 import { PlatformResumeSheet } from "./platform-resume-sheet";
 import { PlatformSectionHeading } from "./platform-section-heading";
 
@@ -80,6 +84,9 @@ export function PlatformLibraryContinue(props: { resume: ResumeIndexEntry }) {
               document={document}
               className="sm:text-sm"
             />
+            <div className="mt-1 sm:hidden">
+              <PlatformResumeReadinessLine document={document} />
+            </div>
           </div>
 
           <span
@@ -89,6 +96,12 @@ export function PlatformLibraryContinue(props: { resume: ResumeIndexEntry }) {
             {t("library.openEditor")}
             <ArrowRightIcon className="size-4 transition-transform group-hover/card:translate-x-0.5" />
           </span>
+        </div>
+
+        {/* The ring is positioned, so it would sit above the card's stretched
+            link and swallow its clicks. */}
+        <div className="pointer-events-none flex shrink-0 items-center pr-14 max-sm:hidden">
+          <PlatformResumeReadiness document={document} />
         </div>
 
         {!isMobile && (
