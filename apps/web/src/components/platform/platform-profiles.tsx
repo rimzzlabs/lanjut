@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTranslations } from "use-intl";
 import { ProfileDetail } from "@/components/profile/profile-detail";
 import { ProfileDetailDrawer } from "@/components/profile/profile-detail-drawer";
+import { ProfileImport } from "@/components/profile/profile-import";
 import { ProfileList } from "@/components/profile/profile-list";
 import { useHydrateProfiles } from "@/hooks/use-hydrate-profiles";
 import { useHydrateResumeLibrary } from "@/hooks/use-hydrate-resume-library";
@@ -38,10 +39,13 @@ export function PlatformProfiles() {
   return (
     <PlatformPageScroll>
       <PlatformPageHeader title={t("profiles")}>
-        <Button id="tour-add-profile" onClick={() => open(NEW_PROFILE)}>
-          <PlusIcon data-icon="inline-start" />
-          {t("addProfile")}
-        </Button>
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center">
+          <ProfileImport onImported={open} />
+          <Button id="tour-add-profile" onClick={() => open(NEW_PROFILE)}>
+            <PlusIcon data-icon="inline-start" />
+            {t("addProfile")}
+          </Button>
+        </div>
       </PlatformPageHeader>
       <p className="-mt-2 max-w-prose text-sm text-muted-foreground">
         {t("newDescription")}

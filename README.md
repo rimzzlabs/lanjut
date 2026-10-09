@@ -37,6 +37,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Theme toggle and one settings menu (language, animation) in the landing and app navbars. The animation setting (System, On, Off) follows the operating system's reduced-motion setting on System
 - Export to PDF (linear reading order preserved) and plain text / .docx
 - Copy, download, and re-import a résumé as JSON or YAML, from a file or as pasted text shown in color
+- Back up a profile with all its résumés as one small file and import it on another device; nothing goes to a server, an import never deletes anything, and where both devices have a résumé the newer one wins
 - A readiness meter that shows what your résumé still needs, counting only your own words, never the sample's
 - Guided tours of the library, templates, profiles, and editor for first-time users
 - Send feedback in-app: a guided form for bugs, ideas, and wording fixes that checks for similar issues and shows the technical details it attaches (never the text of your résumé). Without a GitHub account, Lanjut posts it for you and links to the issue; with one, it opens the issue prefilled for you to post

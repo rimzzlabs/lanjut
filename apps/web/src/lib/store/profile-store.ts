@@ -30,6 +30,12 @@ interface ProfileStoreState {
   addProfile: (profile: Profile) => Promise<void>;
   /** Save changes to a profile, the unsaved guest included. */
   saveProfile: (profile: Profile) => Promise<void>;
+  /**
+   * Save a profile from a backup file as it is, edit time included, unless
+   * this device's copy is kept, then make it the active one. The guest is
+   * saved first, as when adding a profile.
+   */
+  importProfile: (profile: Profile, keepLocal: boolean) => Promise<void>;
   /** Delete a profile after its résumés move to `targetId`. */
   removeProfile: (id: string, targetId: string) => Promise<void>;
   setActive: (id: string) => Promise<void>;
@@ -94,6 +100,36 @@ export const useProfileStore = create<ProfileStoreState>()((set, get) => ({
     await setActiveProfileId(profile.id);
     set((state) => ({
       profiles: upsert(state.profiles, profile),
+      activeId: profile.id,
+    }));
+  },
+
+  async importProfile(profile, keepLocal) {
+    // A résumé with no known profile belongs to the oldest one. An imported
+    // profile can be older, so pin those résumés where they show now first.
+    const resumes = useResumeStore.getState();
+    if (resumes.indexStatus !== "ready") await resumes.hydrateIndex();
+    const known = (id: string | undefined) =>
+      A.some(get().profiles, (item) => item.id === id);
+    const unowned = pipe(
+      useResumeStore.getState().index,
+      A.reject((entry) => known(entry.profileId)),
+      A.map((entry) => entry.id),
+    );
+    if (!A.isEmpty(unowned)) {
+      await useResumeStore
+        .getState()
+        .moveToProfile(unowned, firstId(get().profiles));
+    }
+    const guest = A.filter(
+      get().profiles,
+      (item) => item.id === GUEST_PROFILE_ID && item.id !== profile.id,
+    );
+    await Promise.all(A.map(guest, putProfile));
+    if (!keepLocal) await putProfile(profile);
+    await setActiveProfileId(profile.id);
+    set((state) => ({
+      profiles: keepLocal ? state.profiles : upsert(state.profiles, profile),
       activeId: profile.id,
     }));
   },

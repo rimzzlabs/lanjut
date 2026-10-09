@@ -127,15 +127,34 @@ function sectionToInterchange(section: Section): InterchangeSection {
   return base as InterchangeSection;
 }
 
-export function resumeToInterchange(resume: Resume): InterchangeResume {
-  const header = pipe(
+/** The header's text fields as strings, by key. The photo stays out. */
+export function headerToInterchange(header: Header): Record<string, string> {
+  return pipe(
     HEADER_SCHEMA,
     A.map((field): readonly [string, string] => [
       field.key,
-      fieldToString(resume.header.fields[field.key]),
+      fieldToString(header.fields[field.key]),
     ]),
     D.fromPairs,
   );
+}
+
+/** A header from its interchange fields and photo; absent fields stay empty. */
+export function headerFromInterchange(
+  values: Readonly<Record<string, string | undefined>> | undefined,
+  photo: string | undefined,
+): Header {
+  const empty = createEmptyHeader();
+  const fields = A.reduce(HEADER_SCHEMA, empty.fields, (acc, field) => {
+    const value = values?.[field.key];
+    if (value === undefined) return acc;
+    return D.set(acc, field.key, { kind: "plain", value: S.trim(value) });
+  });
+  return withPhoto({ ...empty, fields }, photo);
+}
+
+export function resumeToInterchange(resume: Resume): InterchangeResume {
+  const header = headerToInterchange(resume.header);
   return {
     format: INTERCHANGE_FORMAT,
     version: INTERCHANGE_VERSION,
@@ -287,13 +306,7 @@ function completeSections(
 }
 
 export function interchangeToContent(data: InterchangeResume): ResumeContent {
-  const empty = createEmptyHeader();
-  const fields = A.reduce(HEADER_SCHEMA, empty.fields, (acc, field) => {
-    const value = data.header?.[field.key];
-    if (value === undefined) return acc;
-    return D.set(acc, field.key, { kind: "plain", value: S.trim(value) });
-  });
-  const header = withPhoto({ ...empty, fields }, data.photo);
+  const header = headerFromInterchange(data.header, data.photo);
 
   // Summary is pinned first; core sections the document omits are appended
   // empty so the editor always has its full fixed set.

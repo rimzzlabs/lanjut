@@ -65,6 +65,13 @@ interface ResumeStoreState {
   /** Re-insert a removed document (undo), writing it back to disk. */
   restoreResume: (resume: Resume) => Promise<void>;
   /**
+   * Write imported documents as they are (ids and edit times included) and
+   * add them to the index. A pending save of the open document lands first,
+   * and an open document the import replaces reloads, so neither overwrites
+   * the other.
+   */
+  importResumes: (resumes: ReadonlyArray<Resume>) => Promise<void>;
+  /**
    * Move résumés to another profile. Organization only: the edit time stays,
    * so the library order does not change.
    */
@@ -267,6 +274,21 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
   async restoreResume(resume) {
     await putResume(resume);
     set((state) => ({ index: syncIndexEntry(state.index, resume) }));
+  },
+
+  async importResumes(resumes) {
+    await flushOpenResumePersist();
+    await Promise.all(A.map(resumes, putResume));
+    const reopened = A.find(resumes, (resume) => resume.id === get().open?.id);
+    if (O.isSome(reopened)) resetUndoHistory();
+    set((state) => ({
+      index: A.reduce(resumes, state.index, syncIndexEntry),
+      ...(O.isSome(reopened) && {
+        open: reopened,
+        canUndo: false,
+        canRedo: false,
+      }),
+    }));
   },
 
   async moveToProfile(ids, profileId) {
