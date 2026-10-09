@@ -190,6 +190,18 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_21_1": [
+          {
+            "title": "Bug fixes",
+            "description": "The changelog was missing the 0.21.0 release. It is there now."
+          }
+        ],
+        "0_21_0": [
+          {
+            "title": "Every release in one place",
+            "description": "The changelog now has its own page, Changelog, under Other in the sidebar. It lists every Lanjut release, newest first, with its date and what changed, and each version links to its release on GitHub. The footer of the home page links to it too."
+          }
+        ],
         "0_20_3": [
           {
             "title": "Bug fixes",

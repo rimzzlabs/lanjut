@@ -190,6 +190,18 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_21_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Catatan rilis belum mencantumkan rilis 0.21.0. Sekarang sudah ada."
+          }
+        ],
+        "0_21_0": [
+          {
+            "title": "Semua rilis di satu tempat",
+            "description": "Catatan rilis sekarang punya halaman sendiri, di sidebar bagian Lainnya. Isinya setiap rilis Lanjut, dari yang terbaru, lengkap dengan tanggal dan apa yang berubah, dan tiap versi tertaut ke rilisnya di GitHub. Footer halaman utama juga menautkannya."
+          }
+        ],
         "0_20_3": [
           {
             "title": "Perbaikan bug",
