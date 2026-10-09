@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.1](https://github.com/rimzzlabs/lanjut/compare/v0.20.0...v0.20.1) (2026-10-09)
+
+
+### Bug Fixes
+
+* touch dragging and sideways overflow on the landing page on phones ([#209](https://github.com/rimzzlabs/lanjut/issues/209)) ([5bfe1b0](https://github.com/rimzzlabs/lanjut/commit/5bfe1b06935080f8f73d14038265a51076257763))
+
 ## [0.20.0](https://github.com/rimzzlabs/lanjut/compare/v0.19.1...v0.20.0) (2026-10-09)
 
 
