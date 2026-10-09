@@ -1,7 +1,10 @@
-import { A, G, pipe } from "@mobily/ts-belt";
+import { A, G, pipe, R } from "@mobily/ts-belt";
+import { GITHUB_REPO } from "./github-issue";
 
 /** The same-origin address of the contributor list the Worker keeps. */
 export const CONTRIBUTORS_PATH = "/api/contributors";
+
+const GITHUB_CONTRIBUTORS_URL = `https://api.github.com/repos/${GITHUB_REPO}/contributors?per_page=100`;
 
 /** One person who contributed to the repository, as the dashboard shows them. */
 export interface Contributor {
@@ -50,6 +53,32 @@ export function parseGithubContributors(
       contributions: item.contributions,
     })),
   );
+}
+
+/**
+ * The repository's contributors, straight from GitHub. The Worker and the
+ * site build both ask through this. A token lifts GitHub's rate limit;
+ * without one the request goes out unauthenticated. A refused or failed
+ * request comes back as an error value: its HTTP status, or 0 when no
+ * answer came.
+ */
+export async function fetchGithubContributors(
+  token: string | undefined,
+  userAgent: string,
+): Promise<R.Result<ReadonlyArray<Contributor>, number>> {
+  try {
+    const response = await fetch(GITHUB_CONTRIBUTORS_URL, {
+      headers: {
+        Accept: "application/vnd.github+json",
+        "User-Agent": userAgent,
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+    });
+    if (!response.ok) return R.makeError(response.status);
+    return R.makeOk(parseGithubContributors(await response.json()));
+  } catch {
+    return R.makeError(0);
+  }
 }
 
 function isContributor(value: unknown): value is Contributor {

@@ -1,6 +1,7 @@
 ---
 import type { Locale } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
+import { contributorsAtBuild } from "@/lib/contributors-build";
 import { LandingClosureActions } from "./landing-closure-actions";
 import { LandingContributors } from "./landing-contributors";
 
@@ -11,6 +12,7 @@ interface Props {
 
 const { locale, pathname } = Astro.props;
 const t = getTranslator(locale, "landing");
+const contributors = await contributorsAtBuild();
 ---
 
 <section class="mx-auto w-11/12 max-w-6xl pb-28 md:pb-40">
@@ -26,6 +28,11 @@ const t = getTranslator(locale, "landing");
     <LandingClosureActions client:visible locale={locale} pathname={pathname} />
   </div>
   <div class="mt-14 border-t border-border pt-8">
-    <LandingContributors client:visible locale={locale} pathname={pathname} />
+    <LandingContributors
+      client:visible
+      locale={locale}
+      pathname={pathname}
+      contributors={contributors}
+    />
   </div>
 </section>

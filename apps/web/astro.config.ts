@@ -3,7 +3,7 @@ import sitemap from "@astrojs/sitemap";
 import { stripLocale } from "@lanjut/i18n/routing";
 import { A, F, O, pipe } from "@mobily/ts-belt";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig, envField, fontProviders } from "astro/config";
 import type { Plugin } from "vite";
 import { appPageFor, legacyTarget } from "./src/lib/route-rules";
 import { INDEXED_PATHS, publicPath } from "./src/lib/seo";
@@ -49,6 +49,16 @@ export default defineConfig({
   build: { format: "preserve" },
   trailingSlash: "ignore",
   server: { port: 4321 },
+  // Read at build time only, for the contributor list on the landing page.
+  env: {
+    schema: {
+      GITHUB_TOKEN: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
+    },
+  },
   devToolbar: { enabled: false },
   integrations: [
     react({

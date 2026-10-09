@@ -1,3 +1,4 @@
+import { A } from "@mobily/ts-belt";
 import { useEffect, useState } from "react";
 import { IS_DESKTOP } from "@/lib/build-target";
 import {
@@ -24,15 +25,25 @@ function loadContributors(): Promise<ReadonlyArray<Contributor>> {
   return request;
 }
 
+function initialState(initial: ReadonlyArray<Contributor>): ContributorsState {
+  if (IS_DESKTOP) return { status: "unavailable" };
+  if (!A.isEmpty(initial)) return { status: "ready", contributors: initial };
+  return { status: "loading" };
+}
+
 /**
- * The repository's contributors, from the Worker's daily copy. The desktop
- * app makes no request: it has no Worker of its own, and it makes no network
- * call the person did not ask for. A failed request leaves the list out; the
- * invitation to contribute still shows. Fetching is an external-system effect.
+ * The repository's contributors, from the Worker's daily copy. A page that
+ * rendered a list at build time passes it as `initial`: it shows at once and
+ * stays if the refresh fails. The desktop app makes no request: it has no
+ * Worker of its own, and it makes no network call the person did not ask for.
+ * Without any list, the invitation to contribute still shows. Fetching is an
+ * external-system effect.
  */
-export function useContributors(): ContributorsState {
+export function useContributors(
+  initial: ReadonlyArray<Contributor> = [],
+): ContributorsState {
   const [state, setState] = useState<ContributorsState>(() =>
-    IS_DESKTOP ? { status: "unavailable" } : { status: "loading" },
+    initialState(initial),
   );
 
   useEffect(() => {
@@ -44,7 +55,10 @@ export function useContributors(): ContributorsState {
       },
       () => {
         request = null;
-        if (!cancelled) setState({ status: "unavailable" });
+        if (cancelled) return;
+        setState((current) =>
+          current.status === "ready" ? current : { status: "unavailable" },
+        );
       },
     );
     return () => {

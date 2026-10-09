@@ -441,9 +441,9 @@ from `md`. No section carries a kicker, eyebrow, or number above its heading.
 - Close (`landing-closure.astro`): a hero-size statement that Lanjut is free and open
   source, a deck that names the license, and the two actions. Under a hairline rule
   below them, the contributors row (`landing-contributors.tsx`): the contributors'
-  faces from the Worker's daily list, an invitation to translate, fix a bug, or build
-  a feature, and a plain "Contribute on GitHub" link. It shows the open-source claim
-  where the page makes it, and it adds no heading to compete with the statement.
+  faces (from the build, then refreshed from the Worker's daily list), an invitation
+  to translate, fix a bug, or build a feature, and a plain "Contribute on GitHub"
+  link. It shows the open-source claim where the page makes it, and it adds no heading to compete with the statement.
 - Footer (`landing-footer.astro`): wordmark and tagline, then titled link groups, over
   a top hairline.
 

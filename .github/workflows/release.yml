@@ -56,10 +56,12 @@ jobs:
 
       - run: pnpm validate:exports
 
-      # Public Turnstile site key, inlined at build time.
+      # Public Turnstile site key, inlined at build time. The token lets the
+      # landing page list the contributors past the anonymous rate limit.
       - run: pnpm build
         env:
           PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy ${{ needs.release-please.outputs.tag_name }} to Cloudflare Workers
         run: pnpm --filter @lanjut/web exec wrangler deploy

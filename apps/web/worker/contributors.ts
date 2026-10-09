@@ -1,11 +1,9 @@
+import { R } from "@mobily/ts-belt";
 import {
   CONTRIBUTORS_PATH,
-  parseGithubContributors,
+  fetchGithubContributors,
   secondsUntilUtcMidnight,
 } from "../src/lib/contributors";
-import { GITHUB_REPO } from "../src/lib/github-issue";
-
-const GITHUB_CONTRIBUTORS_URL = `https://api.github.com/repos/${GITHUB_REPO}/contributors?per_page=100`;
 
 interface ContributorsEnv {
   GITHUB_ISSUE_TOKEN?: string;
@@ -34,31 +32,29 @@ export async function serveContributors(
   const cached = await edgeCache.match(key);
   if (cached) return cached;
 
-  const github = await fetch(GITHUB_CONTRIBUTORS_URL, {
-    headers: {
-      Accept: "application/vnd.github+json",
-      "User-Agent": "lanjut-worker",
-      ...(env.GITHUB_ISSUE_TOKEN && {
-        Authorization: `Bearer ${env.GITHUB_ISSUE_TOKEN}`,
-      }),
-    },
-  });
-  if (!github.ok) {
-    return Response.json(
-      { error: "GitHub did not answer." },
-      { status: 502, headers: { "Cache-Control": "no-store" } },
-    );
-  }
-
-  const response = Response.json(
-    { contributors: parseGithubContributors(await github.json()) },
-    {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Cache-Control": `public, max-age=${secondsUntilUtcMidnight(new Date())}`,
-      },
-    },
+  const github = await fetchGithubContributors(
+    env.GITHUB_ISSUE_TOKEN,
+    "lanjut-worker",
   );
-  context.waitUntil(edgeCache.put(key, response.clone()));
-  return response;
+  return R.match(
+    github,
+    (contributors) => {
+      const response = Response.json(
+        { contributors },
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Cache-Control": `public, max-age=${secondsUntilUtcMidnight(new Date())}`,
+          },
+        },
+      );
+      context.waitUntil(edgeCache.put(key, response.clone()));
+      return response;
+    },
+    () =>
+      Response.json(
+        { error: "GitHub did not answer." },
+        { status: 502, headers: { "Cache-Control": "no-store" } },
+      ),
+  );
 }
