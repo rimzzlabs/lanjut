@@ -2,6 +2,7 @@ import type { Locale } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
 import { A } from "@mobily/ts-belt";
 import { FAQ_KEYS } from "@/components/landing/landing-faq-keys";
+import type { Contributor } from "./contributors";
 import { absoluteUrl } from "./seo";
 import { DESKTOP_RELEASE_URL, REPO_URL, SITE } from "./site";
 
@@ -16,7 +17,11 @@ const AUTHOR_ID = "https://rimzzlabs.com/#person";
  * what Lanjut is and costs, and the FAQ repeats the questions on the page
  * so a search engine or an AI answer can quote them.
  */
-export function homeStructuredData(locale: Locale, pagePath: string) {
+export function homeStructuredData(
+  locale: Locale,
+  pagePath: string,
+  contributors: ReadonlyArray<Contributor>,
+) {
   const t = getTranslator(locale, "meta");
   const tLanding = getTranslator(locale, "landing");
   const pageUrl = absoluteUrl(pagePath);
@@ -54,6 +59,11 @@ export function homeStructuredData(locale: Locale, pagePath: string) {
         sameAs: [REPO_URL],
         isPartOf: { "@id": WEBSITE_ID },
         author: { "@id": AUTHOR_ID },
+        contributor: A.map(contributors, (contributor) => ({
+          "@type": "Person",
+          name: contributor.login,
+          url: contributor.profileUrl,
+        })),
       },
       {
         "@type": "Person",

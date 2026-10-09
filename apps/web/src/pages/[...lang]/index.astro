@@ -16,6 +16,7 @@ import LandingNavbar from "@/components/landing/landing-navbar.astro";
 import PlatformDesktopRoot from "@/components/platform/platform-desktop-root.astro";
 import RootLayout from "@/components/shared/root-layout.astro";
 import { IS_DESKTOP } from "@/lib/build-target";
+import { contributorsAtBuild } from "@/lib/contributors-build";
 import { publicPath } from "@/lib/seo";
 import { homeStructuredData } from "@/lib/structured-data";
 
@@ -31,7 +32,11 @@ const locale = Astro.props.locale;
 const pathname = Astro.url.pathname;
 const tNav = getTranslator(locale, "nav");
 
-const structuredData = homeStructuredData(locale, publicPath(pathname));
+const structuredData = homeStructuredData(
+  locale,
+  publicPath(pathname),
+  await contributorsAtBuild(),
+);
 ---
 
 {/* The desktop window never shows the landing page. Tauri falls back to

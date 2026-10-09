@@ -3,7 +3,6 @@ import {
   AvatarFallback,
   AvatarGroup,
   AvatarGroupCount,
-  AvatarImage,
 } from "@lanjut/ui/components/avatar";
 import { Skeleton } from "@lanjut/ui/components/skeleton";
 import { cn } from "@lanjut/ui/lib/utils";
@@ -78,22 +77,30 @@ export function ContributorFaces(props: ContributorFacesProps) {
   );
 }
 
+// A plain img over the initial, not AvatarImage: base-ui renders its image
+// only after the browser loads it, so the static page would show no faces.
 function ContributorFace(props: { contributor: Contributor }) {
   const t = useTranslations("platform.contributors");
-  const label = t("profile", { login: props.contributor.login });
 
   return (
     <Avatar
       title={props.contributor.login}
       className="transition-transform hover:z-10 hover:-translate-y-0.5"
-      render={
-        <ExternalLink href={props.contributor.profileUrl} aria-label={label} />
-      }
+      render={<ExternalLink href={props.contributor.profileUrl} />}
     >
-      <AvatarImage src={props.contributor.avatarUrl} alt="" />
-      <AvatarFallback className="text-xs">
+      <img
+        src={props.contributor.avatarUrl}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 size-full rounded-full object-cover"
+      />
+      <AvatarFallback aria-hidden className="text-xs">
         {S.toUpperCase(S.slice(props.contributor.login, 0, 1))}
       </AvatarFallback>
+      <span className="sr-only">
+        {t("profile", { login: props.contributor.login })}
+      </span>
     </Avatar>
   );
 }

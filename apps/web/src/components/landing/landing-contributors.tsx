@@ -7,25 +7,31 @@ import {
   IslandProviders,
 } from "@/components/shared/providers";
 import { useContributors } from "@/hooks/use-contributors";
+import type { Contributor } from "@/lib/contributors";
 import { CONTRIBUTING_URL } from "@/lib/site";
 
 /**
  * The people behind the open-source claim of the close, under its actions:
- * their faces, an invitation, and the way to contribute. It loads the
- * Worker's daily list when it comes into view; without the list, the
+ * their faces, an invitation, and the way to contribute. The list comes from
+ * the build, so the static page already names everyone, then refreshes from
+ * the Worker's daily copy once the row is in view. Without any list, the
  * invitation stands alone.
  */
-export function LandingContributors(props: IslandProps) {
+export function LandingContributors(
+  props: IslandProps & { contributors: ReadonlyArray<Contributor> },
+) {
   return (
     <IslandProviders locale={props.locale} pathname={props.pathname}>
-      <LandingContributorsRow />
+      <LandingContributorsRow contributors={props.contributors} />
     </IslandProviders>
   );
 }
 
-function LandingContributorsRow() {
+function LandingContributorsRow(props: {
+  contributors: ReadonlyArray<Contributor>;
+}) {
   const t = useTranslations();
-  const state = useContributors();
+  const state = useContributors(props.contributors);
 
   return (
     <div className="flex flex-col gap-5 md:flex-row md:items-center md:gap-8">

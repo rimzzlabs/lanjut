@@ -50,7 +50,11 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      # The landing page lists the contributors at build time. The token keeps
+      # that request clear of the anonymous rate limit that runners share.
       - run: pnpm build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: pnpm --filter @lanjut/web exec wrangler deploy --dry-run --outdir .wrangler/dry-run
 
