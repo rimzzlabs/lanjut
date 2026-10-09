@@ -167,7 +167,7 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 
 ## Documentation
 
-- Docs are part of the change, not a follow-up. Before opening a PR, check whether the change makes any of these stale and update the affected ones in the same PR:
+- Docs are part of the change, not a follow-up. So is the changelog entry (see Changelog). Before opening a PR, check whether the change makes any of these stale and update the affected ones in the same PR:
   - `README.md`: user-facing features, template list, tech stack table, scripts.
   - `AGENTS.md`: tech stack, section types, architecture rules, conventions.
   - `design.md`: design system, tokens, routes, page-type families.
@@ -176,6 +176,15 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   - `apps/web/FONTS.md` and `apps/web/public/fonts/OFL.txt`: any font that is added, removed, or updated, in `public/` or in the Astro `fonts` config. A family with a Reserved Font Name ships as its unmodified upstream files, never as a subset (`FONTS.md` says why).
 - Common triggers: adding or removing a dependency (tech stack lists), a new section type or field shape (section-type lists), a new user-facing capability (README features), a new script (scripts tables), a new route or server surface (`design.md`, the data-flow rule).
 - Verify every documented claim against the code before writing it. Describe what ships, not intended behavior. A doc that overstates the product is worse than a missing line.
+
+## Changelog
+
+- The changelog entry is part of the change, like the docs. A PR whose title release-please releases (`feat`, `fix`, `perf`, or a breaking `!`) adds its entry in the same PR. If you cannot tell whether people who use Lanjut will notice the change, ask before you open the PR.
+- The entry goes under the version that the next release will carry. Take the version in `.release-please-manifest.json` and apply the highest change merged since its tag, this PR included: breaking is major, `feat` is minor, `fix` and `perf` are patch. If a later PR raises the bump, that PR renames the key.
+- Add `{ version, date }` at the top of `CHANGELOG` in `apps/web/src/lib/changelog.ts`, and the highlights to `platform.changelog.entries.<x_y_z>` in both `packages/i18n/messages/en.json` and `id.json`. Use the date the PR merges. After the release, set it to the tag date if the two differ.
+- Write one highlight per feature, for people who do not code. Fold every fix in a release into one "Bug fixes" entry. Write the Indonesian copy in the app's casual voice.
+- A `chore`, `docs`, `ci`, or `refactor` PR makes no release. An entry that such a PR adds goes live only with the next release, or with `pnpm ship`.
+- The Changelog workflow runs `.github/scripts/check-changelog.mjs` on every PR. It fails a releasing PR that adds no entry for the next version in both languages. It also fails any PR whose changelog lists a version that is neither a tag nor the next release. A change that nobody can see takes the `no-changelog` label. Run the check before you open a PR: `TITLE="<pr title>" node .github/scripts/check-changelog.mjs`.
 
 ## Commits
 
