@@ -32,16 +32,19 @@ export function PlatformTemplatePreviewActions(
   const [createOpen, setCreateOpen] = useState(false);
 
   return (
-    <div className="flex shrink-0 flex-wrap items-center gap-2">
+    <div className="flex shrink-0 flex-wrap items-center gap-2 max-sm:contents">
       {props.target && (
-        <TargetAction
-          template={props.template}
-          target={props.target}
-          document={props.document}
-        />
+        <div className="flex flex-wrap items-center gap-2 max-sm:order-2 max-sm:col-span-2">
+          <TargetAction
+            template={props.template}
+            target={props.target}
+            document={props.document}
+          />
+        </div>
       )}
       <Button
         variant={props.target ? "outline" : "default"}
+        className="max-sm:order-1"
         onClick={() => setCreateOpen(true)}
       >
         {t("use", { name: props.template.name })}
@@ -79,6 +82,7 @@ function TargetAction(props: {
         </Badge>
         <Button
           nativeButton={false}
+          className="max-sm:flex-1"
           render={<Link href={editorHref(props.target.id)} />}
         >
           <span className="max-w-48 truncate">
@@ -92,6 +96,7 @@ function TargetAction(props: {
 
   return (
     <Button
+      className="max-sm:flex-1"
       disabled={!props.document || applying}
       onClick={async () => {
         setApplying(true);
