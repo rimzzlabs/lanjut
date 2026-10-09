@@ -24,13 +24,15 @@ export function absoluteUrl(path: string): string {
 
 /**
  * The pages search engines may index, as unlocalized paths. The editor and
- * the templates are where a visitor starts, so they are listed; `/profile`
- * holds nothing but the visitor's own data, so it stays out.
+ * the templates are where a visitor starts, and the changelog is the release
+ * history, so they are listed; `/profile` holds nothing but the visitor's own
+ * data, so it stays out.
  */
 export const INDEXED_PATHS: ReadonlyArray<string> = [
   "/",
   "/editor",
   "/template",
+  "/changelog",
   "/feedback",
 ];
 

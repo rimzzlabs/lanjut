@@ -4,6 +4,7 @@ import { S } from "@mobily/ts-belt";
 import { LATEST_CHANGELOG_VERSION } from "../changelog";
 import { resolveFont } from "../fonts";
 import {
+  CHANGELOG_PATHNAME,
   EDITOR_PATHNAME,
   PROFILE_PATHNAME,
   TEMPLATE_PATHNAME,
@@ -21,6 +22,7 @@ export function pageName(pathname: string, editing: boolean): string {
   if (editing) return "Editor";
   if (S.startsWith(pathname, TEMPLATE_PATHNAME)) return "Templates";
   if (S.startsWith(pathname, PROFILE_PATHNAME)) return "Profiles";
+  if (S.startsWith(pathname, CHANGELOG_PATHNAME)) return "Changelog";
   if (S.startsWith(pathname, EDITOR_PATHNAME)) return "Library";
   if (pathname === "/") return "Home";
   return "Other";

@@ -1,0 +1,43 @@
+---
+import {
+  type Locale,
+  localeStaticPaths,
+  localizePath,
+} from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { PlatformApp } from "@/components/platform/platform-app";
+import RootLayout from "@/components/shared/root-layout.astro";
+import { CHANGELOG_MARKDOWN_PATHNAME } from "@/lib/changelog-markdown";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const locale = Astro.props.locale;
+const pathname = Astro.url.pathname;
+const t = getTranslator(locale, "meta");
+---
+
+<RootLayout
+  locale={locale}
+  title={t("changelogTitle")}
+  description={t("changelogDescription")}
+>
+  <link
+    slot="head"
+    rel="alternate"
+    type="text/markdown"
+    href={localizePath(CHANGELOG_MARKDOWN_PATHNAME, locale)}
+  />
+  {/* The app still mounts client-only, but its fallback is the same app
+      rendered at build time: the shell around the full release history.
+      Crawlers and agents read the changelog in that HTML, and the app then
+      takes over with the same content in place. */}
+  <PlatformApp client:only="react" locale={locale} pathname={pathname}>
+    <PlatformApp slot="fallback" locale={locale} pathname={pathname} />
+  </PlatformApp>
+</RootLayout>

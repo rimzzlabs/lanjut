@@ -2,7 +2,6 @@ import { SidebarContent, useSidebar } from "@lanjut/ui/components/sidebar";
 import { useEffect } from "react";
 import { useTranslations } from "use-intl";
 import { APP_NAVIGATE_EVENT } from "./platform-app-router";
-import { PlatformSidebarFooter } from "./platform-sidebar-footer";
 import { PlatformSidebarHeader } from "./platform-sidebar-header";
 import { PlatformSidebarOther } from "./platform-sidebar-other";
 import { PlatformSidebarPlatform } from "./platform-sidebar-platform";
@@ -24,17 +23,14 @@ export function PlatformSidebar() {
   }, [setOpenMobile]);
 
   return (
-    <>
-      <SidebarContent>
-        <nav aria-label={t("label")} className="flex flex-col gap-2">
-          <PlatformSidebarHeader />
-          <PlatformSidebarPlatform />
-          <PlatformSidebarResume />
-          <PlatformSidebarOther />
-          <PlatformSidebarSupport />
-        </nav>
-      </SidebarContent>
-      <PlatformSidebarFooter />
-    </>
+    <SidebarContent>
+      <nav aria-label={t("label")} className="flex flex-col gap-2">
+        <PlatformSidebarHeader />
+        <PlatformSidebarPlatform />
+        <PlatformSidebarResume />
+        <PlatformSidebarOther />
+        <PlatformSidebarSupport />
+      </nav>
+    </SidebarContent>
   );
 }

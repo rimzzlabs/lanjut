@@ -39,6 +39,7 @@
       "/id/editor/*",
       "/template",
       "/profile",
+      "/changelog",
       "/feedback",
       "/feedback/*",
       "/id/platform",

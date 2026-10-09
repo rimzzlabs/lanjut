@@ -15,6 +15,7 @@ import {
 } from "@/i18n/navigation";
 import { scrollPageToTop } from "@/lib/page-scroll";
 import {
+  CHANGELOG_PATHNAME,
   EDITOR_PATHNAME,
   PROFILE_PATHNAME,
   TEMPLATE_PATHNAME,
@@ -28,6 +29,7 @@ function isAppPathname(pathname: string) {
     pathname === EDITOR_PATHNAME ||
     pathname === TEMPLATE_PATHNAME ||
     pathname === PROFILE_PATHNAME ||
+    pathname === CHANGELOG_PATHNAME ||
     S.startsWith(pathname, `${EDITOR_PATHNAME}/`)
   );
 }

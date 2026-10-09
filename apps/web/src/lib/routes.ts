@@ -15,6 +15,9 @@ export const TEMPLATE_PATHNAME = "/template";
 /** The profiles: the personal information and summary that fill new résumés. */
 export const PROFILE_PATHNAME = "/profile";
 
+/** The release history. It renders inside the app shell and is indexed. */
+export const CHANGELOG_PATHNAME = "/changelog";
+
 type EditorHref = `${typeof EDITOR_PATHNAME}/${string}`;
 
 /** Builds the editor address. Every link and redirect into the editor goes through here. */
