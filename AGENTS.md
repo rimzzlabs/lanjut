@@ -143,6 +143,10 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   and GitHub adds those checks beside the old ones rather than replacing them, so the
   commit stays red even after the assets arrive. The 0.17.1 release reads that way.
   Keep the `tag` input for a run that is too old to repeat.
+- Pull requests do not build the desktop app, because the macOS build is the slowest
+  check. The Desktop workflow (`.github/workflows/desktop.yml`) builds it on `main` after
+  each merge, except a release merge, and on demand for a branch that changes the shell
+  (`gh workflow run desktop.yml --ref <branch>`).
 - An update check is a network call the user did not ask for. It runs at most once
   every three days, a failure is silent, and nothing installs without a click.
 - Biome ignores `apps/desktop/src-tauri`. Rust is formatted by `cargo fmt`, and the JSON config files
