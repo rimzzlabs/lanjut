@@ -195,7 +195,7 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 
 - TypeScript strict mode on.
 - No `any` without inline justification comment.
-- Components live in `apps/web/src/components/<domain-name>/*`, grouped by their domain (e.g. `apps/web/src/components/landing/landing-hero.tsx`). Never a global `components/` dump by type, and never colocated under `apps/web/src/pages/` route folders.
+- Components live in `apps/web/src/components/<domain-name>/*`, grouped by their domain (e.g. `apps/web/src/components/landing/landing-hero.astro`). Never a global `components/` dump by type, and never colocated under `apps/web/src/pages/` route folders.
 - Shared non-primitive components (used across domains, but not base UI primitives) live in `apps/web/src/components/shared/*`.
 - Shared UI primitives only in the shadcn-managed `packages/ui/src/components` directory.
 - The primitives carry local edits that `shadcn add --overwrite` erases: labels from the `ui` messages namespace (dialog, sheet, sidebar, spinner, breadcrumb), the `color-mix` primary hover on the button and the badge, the slider value bubble, the `Input` guard for an `undefined` value, the required asterisk on `FieldLabel`, the toggle `xs` size, the boxed `Accordion`, and the Biome suppressions. Diff against git and restore them after a re-add. The CLI also writes `import { cn } from "cn"` and adds a `cn` package: point the import at `@/lib/utils` and drop the package.

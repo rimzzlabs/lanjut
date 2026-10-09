@@ -4,7 +4,7 @@ A locked design system for this app. Every page redesign reads this file before
 emitting code. Do not regenerate per page; extend or amend this file when the
 system needs to grow.
 
-The canonical token source is [`apps/web/src/styles/globals.css`](src/styles/globals.css) (shadcn
+The canonical token source is [`apps/web/src/styles/globals.css`](apps/web/src/styles/globals.css) (shadcn
 base-ui variables under `:root` / `.dark`). This file documents the intent behind
 those values and the structural rules that CSS cannot encode. Where a value and this
 file disagree, fix one to match the other; they must not drift.
@@ -495,7 +495,7 @@ These override any generic design guidance:
 
 ### shadcn/ui CSS variables (light)
 
-The live values are in [`apps/web/src/styles/globals.css`](src/styles/globals.css). Mirror:
+The live values are in [`apps/web/src/styles/globals.css`](apps/web/src/styles/globals.css). Mirror:
 
 ```css
 :root {

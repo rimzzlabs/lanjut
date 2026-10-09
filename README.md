@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/favicon.svg" alt="" width="56" height="56" />
+  <img src="apps/web/public/favicon.svg" alt="" width="56" height="56" />
 </p>
 
 <h1 align="center">Lanjut</h1>
