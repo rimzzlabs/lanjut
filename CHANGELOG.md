@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.0](https://github.com/rimzzlabs/lanjut/compare/v0.20.3...v0.21.0) (2026-10-09)
+
+
+### Features
+
+* move the changelog to its own indexed page ([#215](https://github.com/rimzzlabs/lanjut/issues/215)) ([77bfb44](https://github.com/rimzzlabs/lanjut/commit/77bfb44abb9f209c8894664e5a3d77a6c1ca36ae))
+
 ## [0.20.3](https://github.com/rimzzlabs/lanjut/compare/v0.20.2...v0.20.3) (2026-10-09)
 
 
