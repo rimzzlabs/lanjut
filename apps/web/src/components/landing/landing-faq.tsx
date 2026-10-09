@@ -9,18 +9,7 @@ import {
   type IslandProps,
   IslandProviders,
 } from "@/components/shared/providers";
-
-const FAQ_KEYS = [
-  "free",
-  "storage",
-  "files",
-  "ats",
-  "import",
-  "language",
-  "photo",
-] as const;
-
-type FaqKey = (typeof FAQ_KEYS)[number];
+import { FAQ_KEYS, type FaqKey } from "./landing-faq-keys";
 
 /** The questions people have before they start, answered from what ships. */
 export function LandingFaq(props: IslandProps) {

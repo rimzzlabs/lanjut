@@ -14,10 +14,14 @@ interface Props {
 }
 
 const locale = Astro.props.locale;
-const t = getTranslator(locale, "platform.sidebar");
+const t = getTranslator(locale, "meta");
 ---
 
-<RootLayout locale={locale} title={t("dashboard")} noindex>
+<RootLayout
+  locale={locale}
+  title={t("editorTitle")}
+  description={t("editorDescription")}
+>
   <PlatformApp client:only="react" locale={locale} pathname={Astro.url.pathname}>
     <PlatformLoading slot="fallback" locale={locale} />
   </PlatformApp>

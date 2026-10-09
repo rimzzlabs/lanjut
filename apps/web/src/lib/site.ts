@@ -1,10 +1,10 @@
-/** Canonical site identity, shared by metadata, Open Graph, robots, and the sitemap. */
+/**
+ * Canonical site identity, shared by metadata, Open Graph, robots, and the
+ * sitemap. Titles and descriptions live in the `meta` messages, per language.
+ */
 export const SITE = {
   name: "Lanjut",
   url: "https://lanjut.org",
-  title: "Lanjut: Free, local-first ATS resume builder",
-  description:
-    "Lanjut is a free, open-source resume builder that stays entirely in your browser; no account, nothing uploaded. Style it freely; every export is structured to sail through applicant tracking systems.",
 } as const;
 
 /** The source repository, linked from the landing page and its footer. */

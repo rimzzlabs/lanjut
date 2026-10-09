@@ -1,7 +1,13 @@
 {
   "meta": {
-    "title": "Lanjut: Free, local-first ATS resume builder",
-    "description": "Lanjut is a free, open-source resume builder that stays entirely in your browser; no account, nothing uploaded. Style it freely; every export is structured to sail through applicant tracking systems."
+    "title": "Free ATS Resume & CV Builder, No Account | Lanjut",
+    "description": "Build an ATS-friendly resume or CV for free. Open source, no account, no sign-up: your resume stays in your browser. Export PDF, Word, or plain text.",
+    "category": "Resume builder",
+    "features": "ATS-friendly PDF, Word (DOCX), and plain-text export; six templates; import from PDF, JSON, or YAML; English and Indonesian; works in the browser with no account; profile backups that move to another device",
+    "editorTitle": "Build your resume",
+    "editorDescription": "Start a resume from a blank page, the sample, your old resume, or a template. Free, no account, and saved in your browser.",
+    "templateTitle": "ATS resume templates",
+    "templateDescription": "Six free resume templates that keep an order applicant tracking systems can read. See each one as a full page, on the sample or on your own resume."
   },
   "language": {
     "label": "Language",
@@ -24,7 +30,7 @@
     "animationSystem": "System",
     "animationOn": "On",
     "animationOff": "Off",
-    "openApp": "Open app"
+    "openApp": "Build now"
   },
   "tour": {
     "controls": {
@@ -1380,7 +1386,7 @@
       "product": "Product",
       "project": "Project",
       "support": "Support",
-      "editor": "Editor",
+      "editor": "Build a resume",
       "templates": "Templates",
       "download": "Download for macOS",
       "github": "GitHub",
@@ -1437,9 +1443,17 @@
         "question": "Is Lanjut really free?",
         "answer": "Yes. There is no paid plan and no account. If you want to support the work, you can donate through Saweria or SociaBuzz. Both links are in the footer."
       },
+      "account": {
+        "question": "Do I need an account?",
+        "answer": "No. Open the editor and start writing. There is no sign-up, no login, and no email to give, because your résumés stay in this browser instead of on a server."
+      },
+      "openSource": {
+        "question": "Is Lanjut open source?",
+        "answer": "Yes. The code is on GitHub under the AGPL-3.0 license. You can read how it works, report a bug, or contribute a fix or a translation."
+      },
       "storage": {
         "question": "Where is my résumé saved?",
-        "answer": "In this browser, on this device. Lanjut keeps your résumés in the browser's own storage and sends nothing to a server. If you clear your site data or switch browsers, the résumés stay behind, so export a JSON copy to move them or to keep a backup."
+        "answer": "In this browser, on this device. Lanjut keeps your résumés in the browser's own storage and sends nothing to a server. If you clear your site data or switch browsers, the résumés stay behind, so back up your profile on the Profiles page. One file holds the profile and all its résumés, and it imports on another device."
       },
       "files": {
         "question": "Which file should I send?",
@@ -1448,6 +1462,10 @@
       "ats": {
         "question": "Will my résumé get through an applicant tracking system?",
         "answer": "No tool can promise that, because each company sets up its system its own way. Lanjut takes care of the part the file controls: real text in reading order, standard section headings, and contact details a parser can find. The sheet at the top of this page shows the text a parser reads back from your PDF."
+      },
+      "cv": {
+        "question": "Is Lanjut a CV builder too?",
+        "answer": "Yes. Many countries call a résumé a CV, and Lanjut builds the same document under either name: your experience, education, and skills, in an order an applicant tracking system can read."
       },
       "import": {
         "question": "Can I import the résumé I already have?",

@@ -1,7 +1,13 @@
 {
   "meta": {
-    "title": "Lanjut: Bikin resume ATS gratis dan local-first",
-    "description": "Lanjut itu pembuat resume open source gratis yang sepenuhnya jalan di browser kamu; tanpa akun, tanpa unggah apa pun. Atur gayanya sesukamu; tiap ekspor tersusun rapi biar lolos sistem pelacakan pelamar."
+    "title": "Buat CV ATS Gratis, Tanpa Akun | Lanjut",
+    "description": "Buat CV dan resume ramah ATS secara gratis. Open source, tanpa akun, tanpa daftar: CV kamu tetap di browser. Ekspor ke PDF, Word, atau teks.",
+    "category": "Pembuat CV dan resume",
+    "features": "Ekspor PDF, Word (DOCX), dan teks polos yang ramah ATS; enam template; impor dari PDF, JSON, atau YAML; bahasa Inggris dan Indonesia; jalan di browser tanpa akun; cadangan profil untuk pindah perangkat",
+    "editorTitle": "Buat CV kamu",
+    "editorDescription": "Mulai CV dari halaman kosong, contoh, CV lamamu, atau template. Gratis, tanpa akun, dan tersimpan di browser kamu.",
+    "templateTitle": "Template CV ATS",
+    "templateDescription": "Enam template CV gratis yang urutannya tetap terbaca sistem pelacakan pelamar. Lihat tiap template satu halaman penuh, pada contoh atau CV kamu sendiri."
   },
   "language": {
     "label": "Bahasa",
@@ -24,7 +30,7 @@
     "animationSystem": "Sistem",
     "animationOn": "Nyala",
     "animationOff": "Mati",
-    "openApp": "Buka aplikasi"
+    "openApp": "Buat sekarang"
   },
   "tour": {
     "controls": {
@@ -1380,7 +1386,7 @@
       "product": "Produk",
       "project": "Proyek",
       "support": "Dukungan",
-      "editor": "Editor",
+      "editor": "Buat CV",
       "templates": "Template",
       "download": "Unduh untuk macOS",
       "github": "GitHub",
@@ -1437,9 +1443,17 @@
         "question": "Lanjut beneran gratis?",
         "answer": "Iya. Nggak ada paket berbayar dan nggak perlu akun. Kalau mau mendukung, kamu bisa berdonasi lewat Saweria atau SociaBuzz. Tautannya ada di footer."
       },
+      "account": {
+        "question": "Perlu bikin akun?",
+        "answer": "Nggak. Buka editor dan langsung tulis. Nggak ada pendaftaran, login, atau email yang diminta, karena resume kamu tersimpan di browser ini, bukan di server."
+      },
+      "openSource": {
+        "question": "Lanjut open source?",
+        "answer": "Iya. Kodenya ada di GitHub dengan lisensi AGPL-3.0. Kamu bisa lihat cara kerjanya, melaporkan bug, atau ikut menyumbang perbaikan dan terjemahan."
+      },
       "storage": {
         "question": "Resume aku disimpan di mana?",
-        "answer": "Di browser ini, di perangkat ini. Lanjut menyimpan resume kamu di penyimpanan bawaan browser dan nggak mengirim apa pun ke server. Kalau kamu menghapus data situs atau pindah browser, resume kamu tertinggal, jadi ekspor salinan JSON untuk memindahkan atau mencadangkannya."
+        "answer": "Di browser ini, di perangkat ini. Lanjut menyimpan resume kamu di penyimpanan bawaan browser dan nggak mengirim apa pun ke server. Kalau kamu menghapus data situs atau pindah browser, resume kamu tertinggal, jadi cadangkan profil kamu di halaman Profil. Satu berkas berisi profil beserta semua resumenya, dan bisa diimpor di perangkat lain."
       },
       "files": {
         "question": "File mana yang harus aku kirim?",
@@ -1448,6 +1462,10 @@
       "ats": {
         "question": "Apakah resume aku bakal lolos ATS?",
         "answer": "Nggak ada alat yang bisa menjanjikan itu, karena tiap perusahaan mengatur sistemnya sendiri. Lanjut mengurus bagian yang ditentukan file: teks asli sesuai urutan baca, judul section yang standar, dan kontak yang bisa ditemukan parser. Lembar di bagian atas halaman ini menunjukkan teks yang dibaca parser dari PDF kamu."
+      },
+      "cv": {
+        "question": "Lanjut bisa buat CV juga?",
+        "answer": "Bisa. Di Indonesia, CV dan resume biasanya berarti dokumen yang sama, dan Lanjut membuat keduanya: pengalaman, pendidikan, dan keahlian kamu dalam urutan yang bisa dibaca sistem pelacakan pelamar (ATS)."
       },
       "import": {
         "question": "Bisa impor resume yang sudah aku punya?",

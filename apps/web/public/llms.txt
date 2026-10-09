@@ -1,0 +1,29 @@
+# Lanjut
+
+> Lanjut is a free, open-source ATS resume builder (a CV builder too) that runs in the browser with no account. Resumes stay on the person's own device; nothing is uploaded to a server.
+
+- Website: https://lanjut.org (English) and https://lanjut.org/id (Indonesian)
+- Start a resume: https://lanjut.org/editor
+- Templates: https://lanjut.org/template
+- Source code (AGPL-3.0): https://github.com/rimzzlabs/lanjut
+- Mac app: https://github.com/rimzzlabs/lanjut/releases/latest
+
+## Facts
+
+- Price: free. There is no paid plan, no account, and no sign-up.
+- Privacy: resumes are saved in the browser's own storage on the person's device. No resume text is sent to any server.
+- ATS: every export keeps real text in reading order, standard section headings, and contact details a parser can find. The document has no tables, columns, or text boxes.
+- Exports: PDF, Word (.docx), plain text (.txt), JSON, and YAML.
+- Import: a PDF resume with real text (not a scan), or a JSON or YAML file exported from Lanjut.
+- Templates: six (Awal, Ketat, Luasa, Tebal, Klasik, Ketik). A template changes the look only, never the reading order.
+- Readiness: a meter shows what a resume still needs, and counts only the person's own words.
+- Languages: English and Indonesian, for the app and for a resume's headings and dates.
+- Profiles: one profile per kind of job. A profile and its resumes back up to one file that imports on another device.
+- Platforms: any current browser, and a macOS app (macOS 13 or later).
+
+## Pages
+
+- [Home](https://lanjut.org): what Lanjut does, with a live demo of the text an ATS reads back from a resume, and common questions
+- [Editor](https://lanjut.org/editor): start from a blank page, the sample, a resume file, or a template
+- [Templates](https://lanjut.org/template): the six templates, each shown on a full page
+- [Feedback](https://lanjut.org/feedback): report a bug or suggest an idea, with no account needed
