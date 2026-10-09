@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.19.0](https://github.com/rimzzlabs/lanjut/compare/v0.18.0...v0.19.0) (2026-10-09)
+
+
+### Features
+
+* back up a profile and import it on another device ([#199](https://github.com/rimzzlabs/lanjut/issues/199)) ([dad5b26](https://github.com/rimzzlabs/lanjut/commit/dad5b26ac03a5836f4b42a8c0d66585b4a96f7d6))
+* export pdfs with takumi from the preview html ([#196](https://github.com/rimzzlabs/lanjut/issues/196)) ([11e5aff](https://github.com/rimzzlabs/lanjut/commit/11e5aff014530154be3019bb2b1d18e0c2016610))
+* make lanjut easier to find in search and ai answers ([#201](https://github.com/rimzzlabs/lanjut/issues/201)) ([3db5ca5](https://github.com/rimzzlabs/lanjut/commit/3db5ca54d04f2783eeddf00b713a75e4e2b05d52))
+* restructure the repo as a workspace and overhaul the app ([#198](https://github.com/rimzzlabs/lanjut/issues/198)) ([b79c7d9](https://github.com/rimzzlabs/lanjut/commit/b79c7d9b69cf1924c0dc6b23e6d8795ed636de65))
+* run the page panel to the window edge ([#202](https://github.com/rimzzlabs/lanjut/issues/202)) ([d939492](https://github.com/rimzzlabs/lanjut/commit/d93949215b7a2f3a9c4ecc85300f1196f1557fe0))
+
+
+### Refactors
+
+* apply the rts conventions across the codebase ([#194](https://github.com/rimzzlabs/lanjut/issues/194)) ([20e1789](https://github.com/rimzzlabs/lanjut/commit/20e1789a5ccaa9a5e1825ef43d2cc6283cb07753))
+* migrate the app from next.js to astro ([#192](https://github.com/rimzzlabs/lanjut/issues/192)) ([7e36617](https://github.com/rimzzlabs/lanjut/commit/7e36617963fec9835eda159349e99f5166674150))
+* replace lucide icons with phosphor icons ([#197](https://github.com/rimzzlabs/lanjut/issues/197)) ([e7657ae](https://github.com/rimzzlabs/lanjut/commit/e7657ae674f1c926c0197014690060782126b1da))
+
+
+### Documentation
+
+* point the readme logo and doc links at apps/web ([#200](https://github.com/rimzzlabs/lanjut/issues/200)) ([8218c6a](https://github.com/rimzzlabs/lanjut/commit/8218c6a2193f94948880d5a233a7bd0250fbb1f9))
+
 ## [0.18.0](https://github.com/rimzzlabs/lanjut/compare/v0.17.2...v0.18.0) (2026-09-27)
 
 
