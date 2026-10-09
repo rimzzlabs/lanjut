@@ -11,7 +11,7 @@ interface PlatformTemplateCardsProps {
   onOpen: (template: TemplateId) => void;
 }
 
-/** Below `lg`: the templates as cards. A card opens its preview in a dialog. */
+/** Below `lg`: the templates as cards. A card opens its preview in a drawer. */
 export function PlatformTemplateCards(props: PlatformTemplateCardsProps) {
   const t = useTranslations("platform.templates");
 

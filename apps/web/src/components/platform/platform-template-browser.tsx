@@ -20,7 +20,7 @@ import {
   useTemplateSearchQuery,
 } from "@/hooks/use-template-search";
 import { PlatformTemplateCards } from "./platform-template-cards/platform-template-cards";
-import { PlatformTemplateDialog } from "./platform-template-dialog";
+import { PlatformTemplateDrawer } from "./platform-template-drawer";
 import { PlatformTemplateList } from "./platform-template-list/platform-template-list";
 import { PlatformTemplatePreview } from "./platform-template-preview/platform-template-preview";
 import { SAMPLE_SOURCE } from "./platform-template-preview/platform-template-preview-source";
@@ -31,7 +31,7 @@ const SEED_PREVIEW = resumeToPreview(SEED_RESUME);
  * Pick a template, then see it at full size on the sample or on one of your
  * own résumés. From `lg` the list sits beside the preview and stays in view
  * while the pages scroll. Below `lg` the templates are cards, and a card opens
- * its preview in a dialog.
+ * its preview in a drawer.
  */
 export function PlatformTemplateBrowser() {
   useHydrateResumeLibrary();
@@ -40,7 +40,7 @@ export function PlatformTemplateBrowser() {
   const [query] = useTemplateSearchQuery();
   const [templateId, setTemplateId] = useSelectedTemplate();
   const [source, setSource] = useState(SAMPLE_SOURCE);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const index = useProfileResumes();
   const target = pipe(
     index,
@@ -87,12 +87,12 @@ export function PlatformTemplateBrowser() {
           query={S.trim(query)}
           onOpen={(id: TemplateId) => {
             void setTemplateId(id);
-            setDialogOpen(true);
+            setDrawerOpen(true);
           }}
         />
-        <PlatformTemplateDialog
-          open={dialogOpen}
-          onOpenChange={setDialogOpen}
+        <PlatformTemplateDrawer
+          open={drawerOpen}
+          onOpenChange={setDrawerOpen}
           {...previewProps}
         />
       </>

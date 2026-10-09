@@ -18,9 +18,9 @@ interface PlatformTemplatePreviewProps {
   resumes: readonly ResumeIndexEntry[];
   target: ResumeIndexEntry | undefined;
   document: Resume | null;
-  /** `card` stands on the page; `plain` fills a dialog that is the card. */
+  /** `card` stands on the page; `plain` fills a drawer that is the card. */
   variant: "card" | "plain";
-  /** Sits at the end of the sticky bar, such as a dialog's close button. */
+  /** Sits at the end of the sticky bar, such as a drawer's close button. */
   headerEnd?: ReactNode;
 }
 
@@ -45,18 +45,21 @@ export function PlatformTemplatePreview(props: PlatformTemplatePreviewProps) {
       <div
         className={cn(
           "sticky top-0 z-10 flex flex-wrap items-center gap-x-4 gap-y-3 border-b bg-card px-3 py-3 sm:px-4",
-          props.headerEnd && "pr-12 sm:pr-12",
+          props.headerEnd && "sm:pr-12",
         )}
       >
         <h2
           id={headingId}
-          className="mr-auto text-lg font-semibold tracking-tight"
+          className={cn(
+            "mr-auto text-lg leading-8 font-semibold tracking-tight",
+            props.headerEnd && "max-sm:pr-10",
+          )}
         >
           {props.template.name}
         </h2>
         <div
           id="tour-template-try"
-          className="flex min-w-0 flex-wrap items-center gap-2"
+          className="flex min-w-0 flex-wrap items-center gap-2 max-sm:grid max-sm:basis-full max-sm:grid-cols-2"
         >
           <PlatformTemplatePreviewSource
             value={props.source}

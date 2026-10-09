@@ -38,7 +38,10 @@ export function PlatformTemplatePreviewSource(
 
   return (
     <div className="flex min-w-0 items-center gap-2">
-      <span id={labelId} className="shrink-0 text-sm text-muted-foreground">
+      <span
+        id={labelId}
+        className="shrink-0 text-sm text-muted-foreground max-sm:sr-only"
+      >
         {t("platform.templates.previewWith")}
       </span>
       <Select
@@ -49,7 +52,7 @@ export function PlatformTemplatePreviewSource(
         <SelectTrigger
           size="sm"
           aria-labelledby={labelId}
-          className="max-w-56 min-w-0"
+          className="max-w-56 min-w-0 max-sm:w-full max-sm:max-w-none max-sm:data-[size=sm]:h-9"
         >
           <SelectValue />
         </SelectTrigger>

@@ -123,7 +123,9 @@ editorial
   shows the chosen template at full size, every page, on the sample or on one saved
   résumé ("Preview with"). Its bar (name, "Preview with", actions) stays at the top
   while the pages scroll. Below `lg` the page shows template cards only, and a card
-  opens the same preview in a dialog that nearly fills the screen. With the sample,
+  opens the same preview in a bottom drawer that rises to near the top of the screen.
+  On a phone, the bar puts the name and the close button on one row, and the
+  content switch and Use below it in two columns. With the sample,
   the action is Use, which opens the create Sheet. With a saved résumé, the action is
   Apply to that résumé: it opens the résumé and changes its template as one edit, so
   Undo in the editor brings the old template back.
