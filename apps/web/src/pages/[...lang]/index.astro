@@ -16,7 +16,8 @@ import LandingNavbar from "@/components/landing/landing-navbar.astro";
 import PlatformDesktopRoot from "@/components/platform/platform-desktop-root.astro";
 import RootLayout from "@/components/shared/root-layout.astro";
 import { IS_DESKTOP } from "@/lib/build-target";
-import { SITE } from "@/lib/site";
+import { publicPath } from "@/lib/seo";
+import { homeStructuredData } from "@/lib/structured-data";
 
 export function getStaticPaths() {
   return localeStaticPaths();
@@ -28,31 +29,9 @@ interface Props {
 
 const locale = Astro.props.locale;
 const pathname = Astro.url.pathname;
-const t = getTranslator(locale, "meta");
 const tNav = getTranslator(locale, "nav");
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "SoftwareApplication",
-      name: SITE.name,
-      applicationCategory: "BusinessApplication",
-      operatingSystem: "Web",
-      url: SITE.url,
-      description: t("description"),
-      inLanguage: locale,
-      isAccessibleForFree: true,
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-      author: {
-        "@type": "Person",
-        name: "Rizki Citra",
-        url: "https://rimzzlabs.com",
-      },
-    },
-    { "@type": "WebSite", name: SITE.name, url: SITE.url, inLanguage: locale },
-  ],
-};
+const structuredData = homeStructuredData(locale, publicPath(pathname));
 ---
 
 {/* The desktop window never shows the landing page. Tauri falls back to

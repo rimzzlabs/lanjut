@@ -1,16 +1,17 @@
 import { A } from "@mobily/ts-belt";
 import { SITE } from "@/lib/site";
 
+// Every page stays crawlable, `/profile` included: it carries `noindex`, and
+// a crawler must be let in to read it. A disallowed page that others link to
+// can still be indexed, from its links alone. AI search crawlers fall under
+// `*` as well.
 export function GET() {
   return new Response(
     A.join(
       [
         "User-Agent: *",
         "Allow: /",
-        "Disallow: /editor",
-        "Disallow: /template",
-        "Disallow: /id/editor",
-        "Disallow: /id/template",
+        "Disallow: /api/",
         "",
         `Sitemap: ${SITE.url}/sitemap.xml`,
         "",

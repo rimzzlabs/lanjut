@@ -476,7 +476,7 @@ panels. `--ink` marks machine content only. Never put human copy on it.
 - The logo green (`--primary`) fills the primary actions, takes the one accent word
   in the hero headline, marks the focus ring, and rings the picked look with its
   check. Link hover may use it.
-- Everything else stays neutral: the nav "Open app" is an outline button, and the
+- Everything else stays neutral: the nav "Build now" is an outline button, and the
   hero's parser check icons are `--foreground`.
 - `--scanner` is the brighter green. It belongs to the scanner line and handle only.
 - No section is carpeted in green. The large color fields on the page are `--ink`,
