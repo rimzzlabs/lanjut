@@ -4,8 +4,9 @@ import { readFileSync } from "node:fs";
 // A pull request whose title release-please turns into a release must add the
 // changelog entry for the version that release will carry. The release PR
 // itself opens with the default token, so no check ever runs on it: the entry
-// has to arrive with the change. Run with TITLE (the PR title), LABELS (a JSON
-// array of label names), and BASE_REF (the base branch).
+// has to arrive with the change. Run with TITLE (the PR title), BODY (the PR
+// description, which becomes the squash commit's body), LABELS (a JSON array of
+// label names), and BASE_REF (the base branch).
 
 const CHANGELOG_FILE = "apps/web/src/lib/changelog.ts";
 const LOCALES = ["en", "id"];
@@ -51,6 +52,12 @@ function highest(levels) {
 
 const keyOf = (version) => version.replaceAll(".", "_");
 
+// A "Release-As: x.y.z" line in a commit body makes release-please cut exactly
+// that version, whatever the commit type.
+function releaseAsOf(text) {
+  return /^release-as:\s*v?(\d+\.\d+\.\d+)\s*$/im.exec(text)?.[1] ?? null;
+}
+
 const title = process.env.TITLE ?? "";
 const labels = JSON.parse(process.env.LABELS || "[]");
 const base = `origin/${process.env.BASE_REF || "main"}`;
@@ -60,8 +67,13 @@ const pending = git("log", `v${released}..${base}`, "--format=%s")
   .split("\n")
   .filter(Boolean);
 const ownBump = bumpOf(title);
+const ownReleaseAs = releaseAsOf(process.env.BODY ?? "");
+const releaseAs =
+  ownReleaseAs ??
+  releaseAsOf(git("log", `v${released}..${base}`, "--format=%B"));
 const pendingBump = highest([...pending.map(bumpOf), ownBump]);
-const next = pendingBump ? bump(released, pendingBump) : null;
+const next = releaseAs ?? (pendingBump ? bump(released, pendingBump) : null);
+const ownReleases = Boolean(ownBump || ownReleaseAs);
 
 const versions = [
   ...readFileSync(CHANGELOG_FILE, "utf8").matchAll(/version: "([\d.]+)"/g),
@@ -95,7 +107,7 @@ for (const version of versions) {
   }
 }
 
-if (ownBump && !labels.includes(SKIP_LABEL)) {
+if (ownReleases && !labels.includes(SKIP_LABEL)) {
   if (!versions.includes(next)) {
     failures.push(
       `"${title}" goes into release ${next}. Add { version: "${next}", date } to ${CHANGELOG_FILE}.`,
@@ -121,7 +133,7 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-if (ownBump && labels.includes(SKIP_LABEL)) {
+if (ownReleases && labels.includes(SKIP_LABEL)) {
   console.log(`Skipped: the "${SKIP_LABEL}" label is set.`);
 } else if (next) {
   console.log(`Changelog is ready for ${next}.`);

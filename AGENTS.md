@@ -89,10 +89,14 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 
 ## Desktop shell
 
-- `apps/desktop/src-tauri/tauri.conf.json` holds two values that must never change. `identifier`
+- `apps/desktop/src-tauri/tauri.conf.json` holds three values that must never change. `identifier`
   (`com.rimzzlabs.lanjut`) keys the webview data directory, and with it every user's
-  IndexedDB. `useHttpsScheme` (`false`) moves that same storage when flipped. Changing
-  either orphans the résumés of everyone who already installed the app.
+  IndexedDB. `useHttpsScheme` (`false`) sets the app's origin on Windows
+  (`http://tauri.localhost`), and IndexedDB is kept per origin, so a flip moves that same
+  storage. Changing either orphans the résumés of everyone who already installed the app.
+  `bundle.windows.wix.upgradeCode` is pinned to Tauri's default for the name Lanjut. An MSI
+  matches an update to the installed app by it, so a new code installs a second copy.
+  `.github/scripts/check-tauri-config.mjs` fails CI when any of the three changes.
 - The window opens on `/editor`. Tauri falls back from `<path>` to `<path>.html`,
   then to `<path>/index.html`, then to the root `index.html`, so links need no
   trailing slash. `/editor/<id>` has no file, so a reload lands on the root file.
@@ -111,8 +115,17 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   anchor will work on the web and do nothing at all in the desktop app. The function
   resolves false when the user cancels the save dialog, which is not an error.
 - The app requires macOS 13 (`bundle.macOS.minimumSystemVersion`). PDF export runs takumi-pdf's WebAssembly, which the CSP allows through `'wasm-unsafe-eval'` in `script-src`, and WebKit honors that keyword only from Safari 16, which macOS 13 ships. Lowering the minimum breaks PDF export on older systems.
-- macOS is the only desktop target. The shell has never been built or run on Windows,
-  so do not describe it as supported until it has been.
+- macOS is the only shipped desktop target. `bundle.targets` also lists the Windows
+  installers (NSIS, MSI) and the Linux packages (AppImage, `.deb`, `.rpm`). Tauri builds
+  only the targets of the system it runs on, so the Mac build still makes `.app` and
+  `.dmg`. The release builds macOS only. Windows (x64, ARM64) and Linux (x64, ARM64)
+  build on demand for testing. Do not describe them as supported until they pass the
+  test checklist on real machines and ship. They ship together as 1.0.0: that PR adds
+  them to the release matrix and to `PLATFORMS`, and its description carries
+  `Release-As: 1.0.0`.
+- WiX makes no ARM64 MSI, so Windows ARM64 builds the NSIS installer only
+  (`--bundles nsis`). Linux builds on `ubuntu-22.04`, the oldest Ubuntu supported,
+  because a Linux build runs only on a glibc as new as the one it was built against.
 - A tagged release publishes one `.dmg` per architecture. The build is unsigned, so
   macOS refuses to open it until the quarantine attribute is cleared. That is a paid
   Apple membership away from being fixed, not a code change.
@@ -143,10 +156,12 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   and GitHub adds those checks beside the old ones rather than replacing them, so the
   commit stays red even after the assets arrive. The 0.17.1 release reads that way.
   Keep the `tag` input for a run that is too old to repeat.
-- Pull requests do not build the desktop app, because the macOS build is the slowest
-  check. The Desktop workflow (`.github/workflows/desktop.yml`) builds it on `main` after
-  each merge, except a release merge, and on demand for a branch that changes the shell
-  (`gh workflow run desktop.yml --ref <branch>`).
+- Pull requests do not build the desktop app, because the desktop builds are the
+  slowest checks. The Desktop workflow (`.github/workflows/desktop.yml`) builds the shell
+  on macOS, Windows, and Linux on `main` after each merge, except a release merge. On
+  demand (`gh workflow run desktop.yml --ref <branch>`), its `installers` job bundles all
+  six targets and attaches the installers to the run for seven days. They carry no
+  update signature, so they need no secret and the updater never offers them.
 - An update check is a network call the user did not ask for. It runs at most once
   every three days, a failure is silent, and nothing installs without a click.
 - Biome ignores `apps/desktop/src-tauri`. Rust is formatted by `cargo fmt`, and the JSON config files
@@ -183,6 +198,7 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 - The entry goes under the version that the next release will carry. Take the version in `.release-please-manifest.json` and apply the highest change merged since its tag, this PR included: breaking is major, `feat` is minor, `fix` and `perf` are patch. If a later PR raises the bump, that PR renames the key.
 - Add `{ version, date }` at the top of `CHANGELOG` in `apps/web/src/lib/changelog.ts`, and the highlights to `platform.changelog.entries.<x_y_z>` in both `packages/i18n/messages/en.json` and `id.json`. Use the date the PR merges. After the release, set it to the tag date if the two differ.
 - Write one highlight per feature, for people who do not code. Fold every fix in a release into one "Bug fixes" entry. Write the Indonesian copy in the app's casual voice.
+- A `Release-As: x.y.z` line in the PR description makes release-please cut exactly that version, because GitHub writes the description into the squash commit's body. The check reads it too.
 - A `chore`, `docs`, `ci`, or `refactor` PR makes no release. An entry that such a PR adds goes live only with the next release, or with `pnpm ship`.
 - The Changelog workflow runs `.github/scripts/check-changelog.mjs` on every PR. It fails a releasing PR that adds no entry for the next version in both languages. It also fails any PR whose changelog lists a version that is neither a tag nor the next release. A change that nobody can see takes the `no-changelog` label. Run the check before you open a PR: `TITLE="<pr title>" node .github/scripts/check-changelog.mjs`.
 
