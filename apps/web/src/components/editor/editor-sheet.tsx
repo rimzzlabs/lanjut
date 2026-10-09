@@ -12,7 +12,6 @@ import { useTranslations } from "use-intl";
 import { useEditorChromeStore } from "@/lib/store";
 import { takeJumpField } from "./editor-readiness/check-target";
 import { EditorSidebarContent } from "./editor-sidebar-content";
-import { EditorUndoRedo } from "./editor-undo-redo";
 
 export function EditorSheet() {
   const t = useTranslations("editor.chrome");
@@ -42,13 +41,10 @@ export function EditorSheet() {
           <SheetTitle>{t("editorTitle")}</SheetTitle>
           <SheetDescription>{t("editorDescription")}</SheetDescription>
         </SheetHeader>
-        {/* Undo and redo share the close button's row: under the tabs, a
-            narrow phone has no room for them. */}
-        <div className="flex shrink-0 items-center px-3 pt-4">
-          <EditorUndoRedo />
-        </div>
+        {/* The tabs start below the close button, with a gap: beside it, a
+            narrow phone has no room for all four. */}
         <div className="min-h-0 flex-1">
-          <EditorSidebarContent className="pt-0" />
+          <EditorSidebarContent className="pt-16" />
         </div>
       </SheetContent>
     </Sheet>

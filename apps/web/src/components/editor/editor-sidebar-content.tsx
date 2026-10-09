@@ -16,7 +16,6 @@ import { EditorDocumentPanel } from "./editor-document-panel";
 import { EditorImportLeftovers } from "./editor-import-leftovers";
 import { EditorLayoutTemplateList } from "./editor-layout/ed-layout-template-list";
 import { EditorSectionList } from "./editor-sections/ed-section-list";
-import { EditorSectionOrderReset } from "./editor-sections/ed-section-order-reset";
 import { EditorStylingPanel } from "./editor-styling/editor-styling-panel";
 import { preloadPdfExport } from "./preload-pdf-export";
 
@@ -70,13 +69,10 @@ export function EditorSidebarContent(props: { className?: string }) {
 
         <TabsContent value="content">
           <ScrollArea id="tour-editor-sections" className="h-full">
-            <div className="flex items-center justify-end px-4 pt-4">
-              <h3 className="text-sm font-medium sr-only">
-                {t("sectionsHeading")}
-              </h3>
-              <EditorSectionOrderReset />
+            <h3 className="sr-only">{t("sectionsHeading")}</h3>
+            <div className="pt-2">
+              <EditorSectionList />
             </div>
-            <EditorSectionList />
           </ScrollArea>
         </TabsContent>
 

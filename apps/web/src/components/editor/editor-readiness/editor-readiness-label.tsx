@@ -5,7 +5,10 @@ import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preferenc
 
 const ENTER = { opacity: 0, y: 4 };
 
-/** "60% ready", and "Ready to send" once every check passes. */
+/**
+ * "60% ready", and "Ready to send" once every check passes. A phone shows
+ * the percent alone to save room; the full label stays for screen readers.
+ */
 export function EditorReadinessLabel(props: { percent: number }) {
   const t = useTranslations("editor.readiness");
   const reduceMotion = useReducedMotionPreference();
@@ -19,7 +22,12 @@ export function EditorReadinessLabel(props: { percent: number }) {
       className="inline-flex items-center gap-1.5"
     >
       {ready && <SealCheckIcon weight="fill" className="text-primary" />}
-      {ready ? t("ready") : t("percent", { percent: props.percent })}
+      <span className="max-sm:sr-only">
+        {ready ? t("ready") : t("percent", { percent: props.percent })}
+      </span>
+      <span aria-hidden="true" className="sm:hidden">
+        {t("percentShort", { percent: props.percent })}
+      </span>
     </motion.span>
   );
 }
