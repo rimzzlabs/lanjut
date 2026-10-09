@@ -10,10 +10,9 @@ export function EditorSidebarSkeleton() {
       </div>
 
       <div className="min-h-0 overflow-clip">
-        <div className="flex justify-end px-4 pt-4">
-          <EditorIconButtonSkeleton />
+        <div className="pt-2">
+          <EditorSectionListSkeleton />
         </div>
-        <EditorSectionListSkeleton />
       </div>
     </div>
   );

@@ -173,9 +173,10 @@ editorial
   On a blank résumé it offers Import. Otherwise it offers Replace this resume and
   Create a new resume, as a file import does.
 - A bar above the page preview holds the readiness meter: a label ("60%
-  ready", then "Ready to send") beside a thin `Progress` bar that fills the
-  preview's width, and from `xl` undo and redo at its right edge. Below `xl`, undo and redo
-  sit at the top of the edit sheet, beside its close button. The bar stays in
+  ready", then "Ready to send"; "60%" alone on a phone) beside a thin `Progress`
+  bar that fills the preview's width. At its right edge, on every screen, sit undo,
+  redo, a rule, and Reset section order. They live only there; in the edit sheet
+  below `xl`, the tabs start under the close button, with a gap. The bar stays in
   place, and only the page scrolls under it.
   The label opens a popover with ten checks. Each check opens its section on the
   Content tab and focuses its field. Below `xl`, it opens the edit sheet first. Personal

@@ -7,12 +7,12 @@ import { ScrollArea } from "@lanjut/ui/components/scroll-area";
 import type { ReactNode } from "react";
 import { useEditorResume } from "@/hooks/use-editor-resume";
 import { MEDIA_XL, useMediaQuery } from "@/hooks/use-media-query";
+import { EditorPreviewActions } from "./editor-preview-actions";
 import { EditorPreviewBar } from "./editor-preview-bar";
 import { EditorReadiness } from "./editor-readiness/editor-readiness";
 import { EditorResumeNotFound } from "./editor-resume-not-found";
 import { EditorSheet } from "./editor-sheet";
 import { EditorSidebar } from "./editor-sidebar";
-import { EditorUndoRedo } from "./editor-undo-redo";
 import { EditorUndoShortcuts } from "./editor-undo-shortcuts";
 
 // overflow-clip, not hidden: a hidden box can still be scrolled by code, and a
@@ -75,9 +75,7 @@ function EditorPreviewScroll(props: { children: ReactNode }) {
         >
           <EditorReadiness />
         </div>
-        <div className="hidden xl:flex">
-          <EditorUndoRedo />
-        </div>
+        <EditorPreviewActions />
       </EditorPreviewBar>
       <ScrollArea className="h-full">
         <div className="bg-muted px-6 py-10 min-h-screen">{props.children}</div>

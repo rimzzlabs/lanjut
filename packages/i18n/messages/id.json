@@ -1289,6 +1289,7 @@
     },
     "readiness": {
       "percent": "{percent}% siap",
+      "percentShort": "{percent}%",
       "ready": "Siap dikirim",
       "title": "Yang masih dibutuhkan resume kamu",
       "description": "Tiap poin dihitung kalau isinya tulisan kamu sendiri, bukan isi contoh.",

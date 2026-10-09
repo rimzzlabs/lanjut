@@ -1289,6 +1289,7 @@
     },
     "readiness": {
       "percent": "{percent}% ready",
+      "percentShort": "{percent}%",
       "ready": "Ready to send",
       "title": "What your resume still needs",
       "description": "An item counts once it holds your own words, not the sample's.",

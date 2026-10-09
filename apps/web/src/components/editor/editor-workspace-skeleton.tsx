@@ -1,3 +1,4 @@
+import { Separator } from "@lanjut/ui/components/separator";
 import { Skeleton } from "@lanjut/ui/components/skeleton";
 import { EditorPreviewBar } from "./editor-preview-bar";
 import { EditorPreviewSkeleton } from "./editor-preview-skeleton";
@@ -20,8 +21,10 @@ export function EditorWorkspaceSkeleton() {
       <div className="flex min-w-0 flex-1 flex-col">
         <EditorPreviewBar>
           <EditorReadinessSkeleton />
-          <div className="hidden xl:flex">
+          <div className="flex shrink-0 items-center gap-1">
             <EditorIconButtonSkeleton />
+            <EditorIconButtonSkeleton />
+            <Separator orientation="vertical" className="h-4" />
             <EditorIconButtonSkeleton />
           </div>
         </EditorPreviewBar>

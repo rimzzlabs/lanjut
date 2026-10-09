@@ -4,7 +4,7 @@ import { Skeleton } from "@lanjut/ui/components/skeleton";
 export function EditorReadinessSkeleton() {
   return (
     <>
-      <Skeleton className="h-4 w-24" />
+      <Skeleton className="h-4 w-10 sm:w-24" />
       <Skeleton className="h-1.5 flex-1 rounded-full" />
     </>
   );
