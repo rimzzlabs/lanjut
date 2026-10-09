@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.1](https://github.com/rimzzlabs/lanjut/compare/v0.19.0...v0.19.1) (2026-10-09)
+
+
+### Bug Fixes
+
+* pre-render the contributor list on the landing page ([#204](https://github.com/rimzzlabs/lanjut/issues/204)) ([cb4dbbd](https://github.com/rimzzlabs/lanjut/commit/cb4dbbd841dd1c122e5d12676f62c7091ab0b62e))
+
 ## [0.19.0](https://github.com/rimzzlabs/lanjut/compare/v0.18.0...v0.19.0) (2026-10-09)
 
 
