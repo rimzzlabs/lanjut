@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_21_2": [
+          {
+            "title": "Bug fixes",
+            "description": "Russian and other Cyrillic text now prints in your PDF with every template and font. With the default fonts it used to come out blank. Letters such as ł, ő, and ş from other European languages print now too."
+          }
+        ],
         "0_21_1": [
           {
             "title": "Bug fixes",

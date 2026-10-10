@@ -7,6 +7,7 @@ import type {
   ExperienceItemView,
   ResumePreview,
 } from "@/components/editor/resume-preview";
+import { FONTS } from "@/lib/fonts";
 import {
   loadTakumiRenderer,
   type TakumiRenderer,
@@ -427,11 +428,42 @@ async function checkLigatures(params: LigatureCheckParams): Promise<string[]> {
   return errors;
 }
 
+// Russian text, the case of issue #195. Some templates set text in capitals,
+// so the check compares lower case.
+const CYRILLIC_PROBE = "Опыт работы в Москве";
+
+interface CyrillicCheckParams {
+  takumi: TakumiRenderer;
+  template: TemplateId;
+  fontId?: string;
+  checks: TakumiChecksParams;
+}
+
+async function checkCyrillic(params: CyrillicCheckParams): Promise<string[]> {
+  const { takumi, template, fontId, checks } = params;
+  const preview: ResumePreview = {
+    ...checks.preview,
+    ...(fontId !== undefined && { font: fontId }),
+    summary: [{ type: "paragraph", runs: [{ text: CYRILLIC_PROBE }] }],
+  };
+  const buffer = await render({ takumi, preview, template });
+  const text = await checks.extractPdfText(buffer);
+  const label = `TAKUMI Cyrillic (${fontId ?? template})`;
+  const found = S.includes(S.toLowerCase(text), S.toLowerCase(CYRILLIC_PROBE));
+  console.log(`${label}: ${found ? "reads back" : "FAILED"}`);
+  return [
+    ...failWhen(
+      !found,
+      `${label}: "${CYRILLIC_PROBE}" does not read back from the PDF`,
+    ),
+  ];
+}
+
 /**
  * Runs the PDF export checks for every template: reading order and fields, at
  * both letter-spacing bounds too, font families, no faked weights, photo
  * invariance, no entry split across a page, no heading left at a page foot,
- * and no fi/fl ligatures.
+ * no fi/fl ligatures, and Cyrillic text in every template and font.
  */
 export async function runTakumiChecks(
   checks: TakumiChecksParams,
@@ -453,10 +485,19 @@ export async function runTakumiChecks(
         checkLigatures({ takumi, fontId, checks }),
       ),
     );
+    const cyrillicErrors = await Promise.all([
+      ...A.map(TEMPLATES, (summary) =>
+        checkCyrillic({ takumi, template: summary.id, checks }),
+      ),
+      ...A.map(FONTS, (font) =>
+        checkCyrillic({ takumi, template: "awal", fontId: font.id, checks }),
+      ),
+    ]);
     return pipe(
       A.flat(templateErrors),
       A.concat(A.flat(orphanErrors)),
       A.concat(A.flat(ligatureErrors)),
+      A.concat(A.flat(cyrillicErrors)),
     );
   } finally {
     await takumi.close();

@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_21_2": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Teks Rusia dan aksara Kiril lainnya sekarang tercetak di PDF kamu, di semua template dan font. Dulu teks itu kosong kalau pakai font bawaan. Huruf seperti ł, ő, dan ş dari bahasa Eropa lainnya juga sudah tercetak."
+          }
+        ],
         "0_21_1": [
           {
             "title": "Perbaikan bug",
