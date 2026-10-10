@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.2](https://github.com/rimzzlabs/lanjut/compare/v0.21.1...v0.21.2) (2026-10-10)
+
+
+### Bug Fixes
+
+* print cyrillic text in every pdf font ([#221](https://github.com/rimzzlabs/lanjut/issues/221)) ([72d009c](https://github.com/rimzzlabs/lanjut/commit/72d009c0411b9c5972e661b820fcb658c5ab0dad))
+
 ## [0.21.1](https://github.com/rimzzlabs/lanjut/compare/v0.21.0...v0.21.1) (2026-10-09)
 
 
