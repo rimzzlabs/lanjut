@@ -5,6 +5,7 @@ import { A, F, O, pipe } from "@mobily/ts-belt";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField, fontProviders } from "astro/config";
 import type { Plugin } from "vite";
+import { serviceWorker } from "./service-worker/build";
 import { appPageFor, legacyTarget } from "./src/lib/route-rules";
 import { INDEXED_PATHS, publicPath } from "./src/lib/seo";
 
@@ -64,10 +65,12 @@ export default defineConfig({
     react({
       babel: { plugins: [["babel-plugin-react-compiler", { target: "19" }]] },
     }),
-    // The web build only: the desktop app is never crawled.
+    // The web build only: the desktop app is never crawled, and it loads its
+    // files from disk, so it needs no service worker.
     ...(desktop
       ? []
       : [
+          serviceWorker(),
           sitemap({
             filter: (page) =>
               A.includes(INDEXED_PATHS, stripLocale(pathOf(page))),

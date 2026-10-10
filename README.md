@@ -43,7 +43,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - A changelog page with the highlights of every release, also published as Markdown at `/changelog.md` for agents
 - Send feedback in-app: a guided form for bugs, ideas, and wording fixes that checks for similar issues and shows the technical details it attaches (never the text of your résumé). Without a GitHub account, Lanjut posts it for you and links to the issue; with one, it opens the issue prefilled for you to post
 - Local persistence via IndexedDB, no data leaves the browser. The editor's top bar confirms each save to the device and warns when the browser refuses one
-- Fully local: works offline after initial load
+- Works offline: after the first visit to the app, the site opens, edits, and exports with no network. The PDF fonts of a template download the first time it uses them (see [docs/offline.md](docs/offline.md))
 
 ## Templates
 
@@ -81,6 +81,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Search params state  | nuqs                                                                     |
 | App routing          | wouter                                                                   |
 | Persistence          | IndexedDB (via idb)                                                      |
+| Offline              | Service worker (`apps/web/service-worker/`), web build only              |
 | Utilities            | @mobily/ts-belt                                                          |
 | Dates                | date-fns                                                                 |
 | Lint / format        | Biome (code, JSON, CSS), Prettier (Markdown, YAML)                       |

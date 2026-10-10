@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_24_0": [
+          {
+            "title": "Works offline",
+            "description": "After your first visit to the app, Lanjut opens, saves, and exports with no internet. A PDF in a template you have not used yet needs the internet once, to get its fonts."
+          }
+        ],
         "0_23_1": [
           {
             "title": "Bug fixes",
@@ -930,7 +936,9 @@
       },
       "fileName": "File name",
       "fileNamePlaceholder": "Software Engineer",
-      "downloadAs": "Download {format}"
+      "downloadAs": "Download {format}",
+      "offlineTitle": "This export needs the internet once",
+      "offlineDescription": "Some files it needs, such as the fonts for this template, are not on this device yet. Connect to the internet, then export again. After that, it works offline."
     },
     "import": {
       "dropPrompt": "Drop a PDF, JSON, or YAML file here, or click to browse",

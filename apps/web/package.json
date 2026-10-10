@@ -11,7 +11,7 @@
     "ship": "astro build && wrangler deploy",
     "upload": "astro build && wrangler versions upload",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv worker/cloudflare-env.d.ts",
-    "typecheck": "astro check",
+    "typecheck": "astro check && tsc -p service-worker",
     "validate:exports": "tsx scripts/validate-exports.ts"
   },
   "dependencies": {

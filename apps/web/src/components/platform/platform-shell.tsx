@@ -3,6 +3,7 @@ import type { PropsWithChildren } from "react";
 import { PlatformDatabaseNotice } from "@/components/platform/platform-database-notice";
 import { PlatformFeedbackSheet } from "@/components/platform/platform-feedback-sheet";
 import { PlatformNavbar } from "@/components/platform/platform-navbar";
+import { PlatformOfflineCache } from "@/components/platform/platform-offline-cache";
 import { PlatformSidebar } from "@/components/platform/platform-sidebar";
 import { PlatformSidebarProvider } from "@/components/platform/platform-sidebar-provider";
 import { ProfileSettings } from "@/components/profile/profile-settings";
@@ -35,6 +36,7 @@ export function PlatformShell(props: PropsWithChildren) {
 
         <ProfileSettings />
         <PlatformDatabaseNotice />
+        <PlatformOfflineCache />
 
         {/* The desktop app files feedback through a hosted window, so this
             never opens there and its bot-check widget cannot run on its origin. */}

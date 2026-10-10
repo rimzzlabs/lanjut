@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_24_0": [
+          {
+            "title": "Bisa dipakai offline",
+            "description": "Setelah kunjungan pertama ke aplikasi, Lanjut bisa dibuka, menyimpan, dan mengekspor tanpa internet. PDF dengan template yang belum pernah kamu pakai butuh internet sekali dulu, buat ambil font-nya."
+          }
+        ],
         "0_23_1": [
           {
             "title": "Perbaikan bug",
@@ -930,7 +936,9 @@
       },
       "fileName": "Nama berkas",
       "fileNamePlaceholder": "Software Engineer",
-      "downloadAs": "Unduh {format}"
+      "downloadAs": "Unduh {format}",
+      "offlineTitle": "Ekspor ini butuh internet sekali dulu",
+      "offlineDescription": "Beberapa file yang dibutuhin, misalnya font template ini, belum ada di perangkat kamu. Nyalain internet, terus ekspor lagi. Setelah itu, bisa jalan tanpa internet."
     },
     "import": {
       "dropPrompt": "Taruh file PDF, JSON, atau YAML di sini, atau klik untuk pilih",
