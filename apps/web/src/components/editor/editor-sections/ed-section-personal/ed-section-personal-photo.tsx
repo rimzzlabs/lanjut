@@ -243,8 +243,10 @@ export function EditorSectionPersonalPhoto() {
           </div>
         </div>
       )}
-      <FieldDescription>{t("photoDropHint")}</FieldDescription>
-      <FieldDescription>{t("photoHint")}</FieldDescription>
+      <FieldDescription className="flex flex-col gap-1">
+        <span>{t("photoDropHint")}</span>
+        <span>{t("photoHint")}</span>
+      </FieldDescription>
     </Field>
   );
 }
