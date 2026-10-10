@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_21_3": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Impor PDF buatan Lanjut sekarang mengembalikan baris konteks perusahaan, tautan perusahaan dan proyek, serta penerbit tiap sertifikat, dan membaca tata letak Ketat dan Luasa dengan benar. Teks yang tercetak dalam huruf kapital tetap kembali dalam huruf kapital."
+          }
+        ],
         "0_21_2": [
           {
             "title": "Perbaikan bug",

@@ -22,6 +22,11 @@ export async function importResumeFromPdf(
   if (!extracted.ok) return extracted;
   return {
     ok: true,
-    ...parseResumeText(extracted.text, options, extracted.links),
+    ...parseResumeText(
+      extracted.text,
+      options,
+      extracted.links,
+      extracted.source,
+    ),
   };
 }

@@ -29,6 +29,9 @@ export function findDateRange(
 
 type EntryLines = ReadonlyArray<ReadonlyArray<string>>;
 
+/** Whether a dated line is an entry's subject line, so its title sits above it. */
+export type SubjectDated = (line: string, above: string) => boolean;
+
 interface EntrySplit {
   entries: EntryLines;
   current: ReadonlyArray<string>;
@@ -53,9 +56,13 @@ function splitEntries(lines: ReadonlyArray<string>): EntryLines {
 /**
  * Split a dated section (experience, education) into entries. When several lines
  * carry a date range, each begins a new entry (the common one-role-per-block
- * layout); otherwise fall back to blank-line boundaries.
+ * layout); otherwise fall back to blank-line boundaries. A dated subject line
+ * begins its entry one line up, at the title above it.
  */
-function splitDatedEntries(lines: ReadonlyArray<string>): EntryLines {
+function splitDatedEntries(
+  lines: ReadonlyArray<string>,
+  subjectDated: SubjectDated,
+): EntryLines {
   const nonEmpty = A.filter(lines, (line) => S.isNotEmpty(S.trim(line)));
   const dateLines = pipe(
     nonEmpty,
@@ -66,10 +73,18 @@ function splitDatedEntries(lines: ReadonlyArray<string>): EntryLines {
 
   const initial: EntrySplit = { entries: [], current: [] };
   const split = A.reduce(nonEmpty, initial, (acc, line) => {
-    if (DATE_RANGE_RE.test(line)) {
-      return { entries: closeEntry(acc), current: [line] };
+    if (!DATE_RANGE_RE.test(line)) {
+      return { entries: acc.entries, current: A.append(acc.current, line) };
     }
-    return { entries: acc.entries, current: A.append(acc.current, line) };
+    const above = A.last(acc.current);
+    if (O.isSome(above) && subjectDated(line, above)) {
+      const kept = A.take(acc.current, A.length(acc.current) - 1);
+      return {
+        entries: closeEntry({ ...acc, current: kept }),
+        current: [above, line],
+      };
+    }
+    return { entries: closeEntry(acc), current: [line] };
   });
   return closeEntry(split);
 }
@@ -100,10 +115,11 @@ interface ExperienceSplit extends EntrySplit {
 
 export function splitExperienceEntries(
   lines: ReadonlyArray<string>,
+  subjectDated: SubjectDated = () => false,
 ): EntryLines {
   const nonEmpty = A.filter(lines, (line) => S.isNotEmpty(S.trim(line)));
   if (!A.some(nonEmpty, (line) => BULLET_RE.test(line))) {
-    return splitDatedEntries(nonEmpty);
+    return splitDatedEntries(nonEmpty, subjectDated);
   }
   const initial: ExperienceSplit = {
     entries: [],

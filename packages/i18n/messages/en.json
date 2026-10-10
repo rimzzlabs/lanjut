@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_21_3": [
+          {
+            "title": "Bug fixes",
+            "description": "Importing a PDF that Lanjut made now brings back the company context line, company and project links, and each certificate’s issuer, and reads the Ketat and Luasa layouts correctly. Text the PDF prints in capitals still comes back in capitals."
+          }
+        ],
         "0_21_2": [
           {
             "title": "Bug fixes",

@@ -55,6 +55,12 @@ bundles it, and runs the PDF checks on every template. It adds:
 - **Cyrillic reads back**: a Russian summary in every template, and in every font a
   person can pick, must read back as the same Russian text. A face with no glyph for
   a letter prints nothing there, so this catches a font cut down to Latin only.
+- **Import round trip** (`scripts/import-checks.ts`): the sample résumé, exported with
+  each template, imports back with every field that template prints. Entries match by
+  content, because the PDF lists them by date. Text compares without case, because some
+  templates print text in capitals, and bold, italics, and inline links are not
+  compared, because a PDF's text layer does not carry them. `NOT_PRINTED` lists the
+  fields a template leaves out of its PDF.
 
 This is the pdftotext-equivalent text-extraction test required by `AGENTS.md`. **Run it
 after any change to an export path** (`takumi/`, `docx/`, `resume-to-text.ts`,
