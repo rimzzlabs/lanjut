@@ -15,6 +15,7 @@ export {
   getLastOpenedResumeId,
   getResume,
   listResumeIndex,
+  type PutResumeError,
   putResume,
   type ResumeIndexResult,
   setLastOpenedResumeId,

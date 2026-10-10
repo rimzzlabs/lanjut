@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type SaveStatus = "saved" | "saving" | "failed";
+export type SaveStatus = "saved" | "saving" | "failed" | "outdated";
 
 interface SaveStatusState {
   status: SaveStatus;

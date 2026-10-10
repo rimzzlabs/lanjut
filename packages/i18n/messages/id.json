@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_23_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Kalau versi Lanjut yang lebih lama masih terbuka di tab lain, tab itu nggak lagi menimpa resume yang sudah diubah versi yang lebih baru. Tab itu kasih tahu kamu dan minta kamu segarin halaman."
+          }
+        ],
         "0_23_0": [
           {
             "title": "Tempel atau tarik foto kamu",
@@ -729,7 +735,9 @@
     },
     "unreadable": {
       "title": "Beberapa resume butuh versi aplikasi yang lebih baru",
-      "description": "{count, plural, other {# resume}} disimpan sama versi Lanjut yang lebih baru dari yang jalan di tab ini. Tenang, semuanya tetap aman di perangkat kamu. Segarin halaman buat update aplikasinya dan lihat lagi."
+      "description": "{count, plural, other {# resume}} disimpan sama versi Lanjut yang lebih baru dari yang jalan di tab ini. Tenang, semuanya tetap aman di perangkat kamu.",
+      "refresh": "Segarin halaman buat update aplikasinya dan lihat lagi.",
+      "refreshOffline": "Nyalain internet dulu, terus segarin halaman buat update aplikasinya dan lihat lagi."
     },
     "grid": {
       "emptyTitle": "Nggak ada resume yang cocok",
@@ -1433,7 +1441,11 @@
       "saving": "Menyimpan…",
       "failed": "Belum tersimpan",
       "failedTitle": "Browser ini tidak menyimpan perubahan terakhirmu",
-      "failedBody": "Penyimpanan bisa penuh atau diblokir, misalnya di jendela pribadi. Perubahanmu masih ada di layar. Unduh salinan dari tab Dokumen sebelum kamu menutup halaman ini."
+      "failedBody": "Penyimpanan bisa penuh atau diblokir, misalnya di jendela pribadi. Perubahanmu masih ada di layar. Unduh salinan dari tab Dokumen sebelum kamu menutup halaman ini.",
+      "outdatedTitle": "Resume ini sudah diubah versi Lanjut yang lebih baru",
+      "outdatedBody": "Tab ini masih jalan di versi lama, jadi perubahan terakhirmu nggak disimpan. Dengan begitu, perubahan dari versi baru tetap aman. Segarin halaman buat update aplikasinya dan lanjut edit.",
+      "outdatedBodyOffline": "Tab ini masih jalan di versi lama, jadi perubahan terakhirmu nggak disimpan. Dengan begitu, perubahan dari versi baru tetap aman. Nyalain internet dulu, terus segarin halaman buat update aplikasinya.",
+      "refresh": "Segarkan"
     },
     "readiness": {
       "percent": "{percent}% siap",

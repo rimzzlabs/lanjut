@@ -1,6 +1,6 @@
 import type { Resume } from "@lanjut/resume";
 import { putResume } from "@lanjut/resume/db";
-import { F } from "@mobily/ts-belt";
+import { F, R } from "@mobily/ts-belt";
 import { useSaveStatusStore } from "./save-status-store";
 
 /**
@@ -24,7 +24,7 @@ function persistOpenNow(): Promise<void> {
   if (!resume) return Promise.resolve();
   const { setStatus } = useSaveStatusStore.getState();
   return putResume(resume).then(
-    () => setStatus("saved"),
+    (result) => setStatus(R.isOk(result) ? "saved" : "outdated"),
     () => setStatus("failed"),
   );
 }
@@ -42,7 +42,9 @@ const controlled = F.makeControlledDebounce(
 );
 
 export function scheduleOpenResumePersist(): void {
-  useSaveStatusStore.getState().setStatus("saving");
+  const { status, setStatus } = useSaveStatusStore.getState();
+  // A newer build owns the stored copy until a refresh, so no write can land.
+  if (status !== "outdated") setStatus("saving");
   controlled.schedule();
 }
 

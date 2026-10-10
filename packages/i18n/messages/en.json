@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_23_1": [
+          {
+            "title": "Bug fixes",
+            "description": "If an older copy of Lanjut is still open in another tab, it no longer saves over a resume that a newer copy changed. It tells you so and asks you to refresh the page."
+          }
+        ],
         "0_23_0": [
           {
             "title": "Paste or drop your photo",
@@ -729,7 +735,9 @@
     },
     "unreadable": {
       "title": "Some resumes need a newer version of the app",
-      "description": "{count, plural, one {# resume was} other {# resumes were}} saved by a newer version of Lanjut than the one this tab is running. They are still stored safely on this device. Refresh the page to update the app and see them again."
+      "description": "{count, plural, one {# resume was} other {# resumes were}} saved by a newer version of Lanjut than the one this tab is running. They are still stored safely on this device.",
+      "refresh": "Refresh the page to update the app and see them again.",
+      "refreshOffline": "Connect to the internet, then refresh the page to update the app and see them again."
     },
     "grid": {
       "emptyTitle": "No resumes match",
@@ -1433,7 +1441,11 @@
       "saving": "Saving…",
       "failed": "Not saved",
       "failedTitle": "This browser did not save your last change",
-      "failedBody": "Storage can be full or blocked, for example in a private window. Your changes are still on screen. Download a copy from the Document tab before you close this page."
+      "failedBody": "Storage can be full or blocked, for example in a private window. Your changes are still on screen. Download a copy from the Document tab before you close this page.",
+      "outdatedTitle": "A newer version of Lanjut changed this resume",
+      "outdatedBody": "This tab runs an older version, so it did not save your last change. That keeps the newer changes safe. Refresh the page to update the app and keep editing.",
+      "outdatedBodyOffline": "This tab runs an older version, so it did not save your last change. That keeps the newer changes safe. Connect to the internet, then refresh the page to update the app.",
+      "refresh": "Refresh"
     },
     "readiness": {
       "percent": "{percent}% ready",
