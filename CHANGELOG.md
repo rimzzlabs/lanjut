@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.0](https://github.com/rimzzlabs/lanjut/compare/v0.21.3...v0.22.0) (2026-10-10)
+
+
+### Features
+
+* lead a resume with skills ([#222](https://github.com/rimzzlabs/lanjut/issues/222)) ([5c099b6](https://github.com/rimzzlabs/lanjut/commit/5c099b6cda06aa2a58c2b9ab8c95f895b792da37))
+
 ## [0.21.3](https://github.com/rimzzlabs/lanjut/compare/v0.21.2...v0.21.3) (2026-10-10)
 
 
