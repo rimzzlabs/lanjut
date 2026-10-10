@@ -14,10 +14,11 @@ permissions:
   contents: read
 
 # Only the newest run per branch matters. An older run is dropped when a newer
-# one starts.
+# one starts, except by a release merge: its own run skips the check, so it
+# must not cancel the check of the merge before it.
 concurrency:
   group: desktop-${{ github.ref }}-${{ github.event_name }}
-  cancel-in-progress: true
+  cancel-in-progress: "${{ !startsWith(github.event.head_commit.message || '', 'chore(main): release ') }}"
 
 defaults:
   run:
