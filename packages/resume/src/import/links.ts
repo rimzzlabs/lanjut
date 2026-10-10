@@ -1,9 +1,10 @@
 import { A, G, O, pipe, S } from "@mobily/ts-belt";
 
-/** A link the PDF carries: where it goes, and the text drawn under it. */
+/** A link the PDF carries: where it goes, the text drawn under it, and its line. */
 export interface PdfLink {
   url: string;
   label: string;
+  line: string;
 }
 
 const SCHEME_URL_G_RE = /(?:https?:\/\/|www\.)[^\s|<>"]+/gi;

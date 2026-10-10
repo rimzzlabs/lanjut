@@ -1,3 +1,4 @@
+import { pdfCreator } from "@lanjut/resume/pdf-source";
 import type { TemplateId } from "@lanjut/resume/templates";
 import { A, F } from "@mobily/ts-belt";
 import { createElement } from "react";
@@ -51,6 +52,8 @@ export function renderResumePdf(
       }),
     ),
     lang: preview.language,
+    // Names the template, so importing this PDF knows its layout.
+    metadata: { creator: pdfCreator(template) },
     // A character no font covers shows as a box, as in the preview, rather
     // than failing the whole export.
     uncoveredText: "placeholder",

@@ -11,14 +11,17 @@ import {
   updateSections,
 } from "..";
 import { getSectionSchema } from "../schema-registry";
+import type { TemplateId } from "../templates";
 import type { HeadingMatch } from "./headings";
 import { findUrls, type PdfLink, urlKey } from "./links";
 import {
   type DatedKeys,
   datedEntry,
   EDUCATION_KEYS,
+  entryLayout,
   experienceKeys,
   plainIfPresent,
+  subjectDated,
 } from "./parse-entry-fields";
 import { splitExperienceEntries, splitItems } from "./parse-entry-split";
 import {
@@ -33,6 +36,8 @@ export interface ParseContext {
   links: ReadonlyArray<PdfLink>;
   /** Keys (`urlKey`) of the addresses the header already holds. */
   headerUrls: ReadonlySet<string>;
+  /** The template that made the PDF, when Lanjut made it. */
+  source?: TemplateId;
 }
 
 export interface ParseState {
@@ -93,18 +98,55 @@ function labelTarget(
   );
 }
 
-/** An entry's own address: a link line inside it, else a link on its title or subject. */
+/**
+ * The target of a PDF link that sits on one of an entry's heading lines, the
+ * lines above its first bullet. Matches where the link's run also holds other
+ * text, such as a company link inside "Acme Corp, San Francisco, CA".
+ */
+function headingLineTarget(
+  lines: ReadonlyArray<string>,
+  context: ParseContext,
+): O.Option<string> {
+  const heading = pipe(
+    lines,
+    A.takeWhile((line) => !BULLET_RE.test(line)),
+    A.map(S.trim),
+  );
+  return pipe(
+    context.links,
+    A.find(
+      (link) =>
+        S.isNotEmpty(link.line) &&
+        A.includes(heading, link.line) &&
+        !context.headerUrls.has(urlKey(link.url)),
+    ),
+    O.map((link) => link.url),
+  );
+}
+
+/**
+ * An entry's own address: a link line inside it, else a link on its title or
+ * subject, else a link on one of its heading lines.
+ */
 function entryWebsite(
   entry: Entry,
   keys: DatedKeys,
   split: LinkSplit,
-  links: ReadonlyArray<PdfLink>,
+  context: ParseContext,
 ): O.Option<string> {
   const written = A.head(split.urls);
   if (O.isSome(written)) return written;
-  const title = labelTarget(plainValue(entry.fields[keys.title]), links);
+  const title = labelTarget(
+    plainValue(entry.fields[keys.title]),
+    context.links,
+  );
   if (O.isSome(title)) return title;
-  return labelTarget(plainValue(entry.fields[keys.subject]), links);
+  const subject = labelTarget(
+    plainValue(entry.fields[keys.subject]),
+    context.links,
+  );
+  if (O.isSome(subject)) return subject;
+  return headingLineTarget(split.lines, context);
 }
 
 interface EntryFill {
@@ -118,9 +160,14 @@ function datedFill(section: Section, keys: DatedKeys, context: ParseContext) {
     if (A.isEmpty(trimmedNonEmpty(split.lines))) {
       return { entry: undefined, leftovers: split.urls };
     }
-    const entry = datedEntry(section.type, keys, context.links)(split.lines);
+    const entry = datedEntry(
+      section.type,
+      keys,
+      context.links,
+      context.source,
+    )(split.lines);
     if (!hasWebsite(section.type)) return { entry, leftovers: split.urls };
-    const website = entryWebsite(entry, keys, split, context.links);
+    const website = entryWebsite(entry, keys, split, context);
     if (O.isNone(website)) return { entry, leftovers: split.urls };
     return {
       entry: { ...entry, fields: { ...entry.fields, website: plain(website) } },
@@ -136,7 +183,10 @@ function fillDated(
   context: ParseContext,
 ): SectionFill {
   const fills = A.map(
-    splitExperienceEntries(lines),
+    splitExperienceEntries(
+      lines,
+      subjectDated(entryLayout(keys, context.source)),
+    ),
     datedFill(section, keys, context),
   );
   return {
@@ -299,6 +349,61 @@ function attachUrl(acc: CertificateFill, line: string): CertificateFill {
   };
 }
 
+// Words of a certificate's name, never of the body that issues it.
+const CERTIFICATE_WORDS =
+  /\b(?:certified|certificate|certification|associate|professional|specialist|developer|engineer|architect|administrator|practitioner|fundamentals|expert)\b/i;
+
+function looksLikeIssuer(text: string): boolean {
+  return (
+    !/\d/.test(text) &&
+    !CERTIFICATE_WORDS.test(text) &&
+    pipe(text, S.splitByRe(/\s+/), A.length) <= 6
+  );
+}
+
+/**
+ * Lanjut prints a certificate's name, then its issuer on the next line. Other
+ * résumés often print one certificate per line, so a line becomes the issuer
+ * only with evidence: the PDF names its Lanjut template, or the name above
+ * carries its own link. The line itself must carry no link and read like an
+ * issuer.
+ */
+function wantsIssuer(
+  acc: CertificateFill,
+  line: string,
+  linked: O.Option<string>,
+  context: ParseContext,
+): boolean {
+  const ready = O.mapWithDefault(
+    A.last(acc.entries),
+    false,
+    (entry) =>
+      S.isEmpty(plainValue(entry.fields.issuer)) &&
+      (context.source !== undefined ||
+        S.isNotEmpty(plainValue(entry.fields.url))),
+  );
+  return (
+    ready &&
+    O.isNone(linked) &&
+    A.isEmpty(findUrls(line)) &&
+    looksLikeIssuer(certificateName(line))
+  );
+}
+
+function withIssuer(acc: CertificateFill, issuer: string): CertificateFill {
+  return {
+    ...acc,
+    entries: A.updateAt(
+      acc.entries,
+      A.length(acc.entries) - 1,
+      (entry): Entry => ({
+        ...entry,
+        fields: { ...entry.fields, issuer: plain(issuer) },
+      }),
+    ),
+  };
+}
+
 function fillCertifications(
   section: Section,
   lines: ReadonlyArray<string>,
@@ -310,9 +415,9 @@ function fillCertifications(
     // A line of links is the verification link of the certificate above it,
     // not a certificate of its own.
     if (isLinkLine(line) || S.isEmpty(name)) return attachUrl(acc, line);
-    const url = either(A.head(findUrls(line)), () =>
-      labelTarget(name, context.links),
-    );
+    const linked = labelTarget(name, context.links);
+    if (wantsIssuer(acc, line, linked, context)) return withIssuer(acc, name);
+    const url = either(A.head(findUrls(line)), () => linked);
     const base = createEmptyEntry("certifications");
     const entry: Entry = {
       ...base,

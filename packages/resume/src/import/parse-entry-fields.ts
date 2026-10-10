@@ -5,10 +5,12 @@ import {
   type FieldKey,
   type SectionType,
 } from "..";
+import type { TemplateId } from "../templates";
 import type { PdfLink } from "./links";
 import {
   DATE_RANGE_RE,
   findDateRange,
+  type SubjectDated,
   stripDateRange,
 } from "./parse-entry-split";
 import type { Fields } from "./parse-header";
@@ -30,15 +32,64 @@ function isSubtitleLine(line: O.Option<string>): line is string {
   );
 }
 
+// Lanjut templates that print the dates on the subject line, under the title:
+// "Senior Software Engineer" over "Acme Corp, San Francisco, CA  Mar 2022".
+const DATES_ON_SUBJECT: ReadonlySet<TemplateId> = new Set(["ketat"]);
+
+function hasLocationTail(text: string): boolean {
+  return splitSubtitleLocation(text).location !== undefined;
+}
+
+export interface EntryLayout {
+  /** The PDF's own template prints the dates on the subject line. */
+  datesOnSubject: boolean;
+  /** The subject can carry a location, which marks the subject line. */
+  withLocation: boolean;
+}
+
+/** How a dated section's entries lay out, from its keys and the PDF's template. */
+export function entryLayout(
+  keys: DatedKeys,
+  source: TemplateId | undefined,
+): EntryLayout {
+  return {
+    datesOnSubject: source !== undefined && DATES_ON_SUBJECT.has(source),
+    withLocation: keys.withLocation,
+  };
+}
+
+/**
+ * Whether a dated line is the subject line under its title: the template
+ * prints dates there, or the line ends in a location and the line above does
+ * not, as in "Role / Company, City dates".
+ */
+export function subjectDated(layout: EntryLayout): SubjectDated {
+  return (line, above) => {
+    const stripped = stripDateRange(line);
+    if (S.isEmpty(stripped) || !isSubtitleLine(above)) return false;
+    if (layout.datesOnSubject) return true;
+    return (
+      layout.withLocation &&
+      hasLocationTail(stripped) &&
+      !hasLocationTail(S.trim(above))
+    );
+  };
+}
+
 /**
  * Pull the title and subtitle (role/employer, or degree/institution) from an
  * entry. The line carrying the date range is the title; the adjacent short line
  * is the subtitle, whether it sits above or below the date, so both
- * "Role dates / Company" and "Company / Role dates" layouts work. Everything
- * else is the description. With no date range, falls back to first-line title,
- * second short line subtitle.
+ * "Role dates / Company" and "Company / Role dates" layouts work. The dated
+ * line is the subtitle instead when the PDF's template prints dates there, or
+ * when it ends in a location and the line above does not, as in
+ * "Role / Company, City dates". Everything else is the description. With no
+ * date range, falls back to first-line title, second short line subtitle.
  */
-function extractEntryHeader(lines: ReadonlyArray<string>): EntryHeader {
+function extractEntryHeader(
+  lines: ReadonlyArray<string>,
+  layout: EntryLayout,
+): EntryHeader {
   const dateIdx = A.getIndexBy(lines, (line) => DATE_RANGE_RE.test(line));
   if (O.isNone(dateIdx)) {
     let i = 0;
@@ -73,6 +124,22 @@ function extractEntryHeader(lines: ReadonlyArray<string>): EntryHeader {
   );
   const before = A.get(lines, dateIdx - 1);
   const after = A.get(lines, dateIdx + 1);
+  const dated = A.get(lines, dateIdx);
+  const datedIsSubject =
+    title !== undefined &&
+    O.isSome(dated) &&
+    O.isSome(before) &&
+    subjectDated(layout)(dated, before);
+  if (datedIsSubject) {
+    return {
+      title: S.trim(before),
+      subtitle: title,
+      descLines: A.filterWithIndex(
+        lines,
+        (idx) => idx !== dateIdx && idx !== dateIdx - 1,
+      ),
+    };
+  }
   let subtitle: string | undefined;
   if (isSubtitleLine(before)) {
     subtitle = S.trim(before);
@@ -192,6 +259,34 @@ export interface DatedKeys {
   subject: FieldKey;
   body: FieldKey;
   withLocation: boolean;
+  /** The plain line that sits between the heading and the bullets, if the type has one. */
+  context?: FieldKey;
+}
+
+interface BodySplit {
+  context?: string;
+  bodyLines: ReadonlyArray<string>;
+}
+
+/**
+ * Exports print an entry's company context as its own line under the heading,
+ * before the bullets. One or two plain lines followed by bullets read as that
+ * context. A longer plain paragraph stays the description.
+ */
+function splitContext(
+  key: FieldKey | undefined,
+  lines: ReadonlyArray<string>,
+): BodySplit {
+  if (key === undefined) return { bodyLines: lines };
+  const lead = A.takeWhile(lines, (line) => !BULLET_RE.test(line));
+  const rest = A.drop(lines, A.length(lead));
+  if (A.isEmpty(lead) || A.length(lead) > 2 || A.isEmpty(rest)) {
+    return { bodyLines: lines };
+  }
+  return {
+    context: pipe(lead, A.map(S.trim), A.join(" ")),
+    bodyLines: rest,
+  };
 }
 
 function subjectFields(keys: DatedKeys, subtitle: string | undefined): Fields {
@@ -204,10 +299,15 @@ export function datedEntry(
   type: SectionType,
   keys: DatedKeys,
   links: ReadonlyArray<PdfLink> = [],
+  source?: TemplateId,
 ) {
   return (lines: ReadonlyArray<string>): Entry => {
     const base = createEmptyEntry(type);
-    const { title, subtitle, descLines } = extractEntryHeader(lines);
+    const { title, subtitle, descLines } = extractEntryHeader(
+      lines,
+      entryLayout(keys, source),
+    );
+    const { context, bodyLines } = splitContext(keys.context, descLines);
     return {
       ...base,
       fields: {
@@ -215,7 +315,9 @@ export function datedEntry(
         ...dateFields(lines),
         ...plainIfPresent(keys.title, title),
         ...subjectFields(keys, subtitle),
-        [keys.body]: richFromLines(descLines, links),
+        ...(keys.context !== undefined &&
+          plainIfPresent(keys.context, context)),
+        [keys.body]: richFromLines(bodyLines, links),
       },
     };
   };
@@ -230,11 +332,13 @@ export function experienceKeys(type: SectionType): DatedKeys {
       withLocation: false,
     };
   }
+  const employer = type === "experience" || type === "internship";
   return {
     title: "title",
     subject: "company",
     body: "description",
-    withLocation: type === "experience" || type === "internship",
+    withLocation: employer,
+    ...(employer && { context: "companyContext" }),
   };
 }
 
