@@ -9,6 +9,12 @@ const LEGACY_PLATFORM_PATH =
 // /editor?id=<id>: the editor address before the id moved into the path.
 const QUERY_EDITOR_PATH = /^(\/id)?\/editor\/?$/;
 
+/**
+ * Sent by the service worker when it downloads a page to keep offline. The
+ * Worker then serves each page at its own address, with no language redirect.
+ */
+export const PRECACHE_HEADER = "x-lanjut-precache";
+
 // /editor/<id>: no file exists per résumé, so the one editor page answers.
 const EDITOR_DOCUMENT_PATH = /^(\/id)?\/editor\/[^/]+\/?$/;
 

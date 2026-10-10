@@ -7,6 +7,7 @@ import {
   routing,
 } from "@lanjut/i18n/routing";
 import { A, G, O, pipe, S } from "@mobily/ts-belt";
+import { PRECACHE_HEADER } from "../src/lib/route-rules";
 
 function cookieLocale(header: string | null): Locale | null {
   if (!G.isString(header)) return null;
@@ -50,6 +51,7 @@ function acceptedLocale(header: string | null): Locale | null {
  * the language switcher wins over the browser's languages.
  */
 export function localeRedirect(request: Request, url: URL): Response | null {
+  if (request.headers.has(PRECACHE_HEADER)) return null;
   if (localeFromPath(url.pathname) !== routing.defaultLocale) return null;
 
   const preferred =
