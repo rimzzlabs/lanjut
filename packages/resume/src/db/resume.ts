@@ -1,6 +1,11 @@
 import { A, G, O, pipe, R } from "@mobily/ts-belt";
 import type { Resume, ResumeIndexEntry } from "..";
-import { needsMigration, readSchemaVersion, runMigrations } from "..";
+import {
+  CURRENT_SCHEMA_VERSION,
+  needsMigration,
+  readSchemaVersion,
+  runMigrations,
+} from "..";
 import { getDb, META_KEYS } from "./schema";
 
 export interface ResumeIndexResult {
@@ -35,14 +40,28 @@ async function backupRawResume(db: Db, raw: unknown): Promise<void> {
   );
 }
 
+/** A newer app build migrated the stored copy, so this build must not write over it. */
+export type PutResumeError = "newer-schema";
+
 /**
  * Persist a whole Resume document. Resolves once the write transaction has
  * committed, so callers can await it as a flush primitive (e.g. on resume-switch
  * or page-hide). The store owns updatedAt stamping; the repository persists as-is.
+ * A tab on an older build can hold a résumé that a newer build has since
+ * migrated, and writing it back drops the newer fields, so a newer copy stays.
  */
-export async function putResume(resume: Resume): Promise<void> {
+export async function putResume(
+  resume: Resume,
+): Promise<R.Result<Resume, PutResumeError>> {
   const db = await getDb();
-  await db.put("resumes", resume);
+  const tx = db.transaction("resumes", "readwrite");
+  const stored = await tx.store.get(resume.id);
+  if (readSchemaVersion(stored) > CURRENT_SCHEMA_VERSION) {
+    await tx.done;
+    return R.makeError("newer-schema");
+  }
+  await Promise.all([tx.store.put(resume), tx.done]);
+  return R.makeOk(resume);
 }
 
 /**

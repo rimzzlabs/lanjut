@@ -20,7 +20,7 @@ import {
   putResume,
   setLastOpenedResumeId,
 } from "@lanjut/resume/db";
-import { A, O, pipe, S } from "@mobily/ts-belt";
+import { A, O, pipe, R, S } from "@mobily/ts-belt";
 import { create } from "zustand";
 import { buildNewResume, type CreateResumeOptions } from "./new-resume";
 import {
@@ -237,7 +237,8 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
       title: S.trim(title),
       updatedAt: new Date().toISOString(),
     };
-    await putResume(next);
+    const saved = await putResume(next);
+    if (R.isError(saved)) return;
     set((state) => ({
       index: syncIndexEntry(state.index, next),
       open: state.open?.id === id ? next : state.open,
@@ -279,11 +280,14 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
 
   async importResumes(resumes) {
     await flushOpenResumePersist();
-    await Promise.all(A.map(resumes, putResume));
-    const reopened = A.find(resumes, (resume) => resume.id === get().open?.id);
+    const written = A.filterMap(
+      await Promise.all(A.map(resumes, putResume)),
+      R.toOption,
+    );
+    const reopened = A.find(written, (resume) => resume.id === get().open?.id);
     if (O.isSome(reopened)) resetUndoHistory();
     set((state) => ({
-      index: A.reduce(resumes, state.index, syncIndexEntry),
+      index: A.reduce(written, state.index, syncIndexEntry),
       ...(O.isSome(reopened) && {
         open: reopened,
         canUndo: false,

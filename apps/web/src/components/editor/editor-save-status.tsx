@@ -7,8 +7,14 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "@lanjut/ui/components/popover";
-import { HardDriveIcon, WarningIcon } from "@phosphor-icons/react";
+import {
+  ArrowClockwiseIcon,
+  HardDriveIcon,
+  WarningIcon,
+} from "@phosphor-icons/react";
+import type { PropsWithChildren } from "react";
 import { useTranslations } from "use-intl";
+import { useOnline } from "@/hooks/use-online";
 import { useResumeStore, useSaveStatusStore } from "@/lib/store";
 
 /** Confirms each write of the open résumé to this device, and says so plainly when one fails. */
@@ -18,6 +24,7 @@ export function EditorSaveStatus() {
 
   if (!ready) return null;
   if (status === "failed") return <EditorSaveFailed />;
+  if (status === "outdated") return <EditorSaveOutdated />;
   return <EditorSaveProgress saving={status === "saving"} />;
 }
 
@@ -51,10 +58,43 @@ function EditorSavedLabel() {
 function EditorSaveFailed() {
   const t = useTranslations("editor.saveStatus");
 
+  return <EditorSaveProblem title={t("failedTitle")} body={t("failedBody")} />;
+}
+
+/** A newer build in another tab migrated this résumé, so this tab cannot save it. */
+function EditorSaveOutdated() {
+  const t = useTranslations("editor.saveStatus");
+  const online = useOnline();
+
+  return (
+    <EditorSaveProblem
+      title={t("outdatedTitle")}
+      body={online ? t("outdatedBody") : t("outdatedBodyOffline")}
+    >
+      {online && (
+        <Button
+          size="sm"
+          className="self-start"
+          onClick={() => window.location.reload()}
+        >
+          <ArrowClockwiseIcon />
+          {t("refresh")}
+        </Button>
+      )}
+    </EditorSaveProblem>
+  );
+}
+
+function EditorSaveProblem(
+  props: PropsWithChildren<{ title: string; body: string }>,
+) {
+  const { title, body, children } = props;
+  const t = useTranslations("editor.saveStatus");
+
   return (
     <>
       <p role="alert" className="sr-only">
-        {t("failedTitle")}
+        {title}
       </p>
       <Popover>
         <PopoverTrigger
@@ -67,9 +107,10 @@ function EditorSaveFailed() {
         </PopoverTrigger>
         <PopoverContent align="start" className="w-80">
           <PopoverHeader>
-            <PopoverTitle>{t("failedTitle")}</PopoverTitle>
-            <PopoverDescription>{t("failedBody")}</PopoverDescription>
+            <PopoverTitle>{title}</PopoverTitle>
+            <PopoverDescription>{body}</PopoverDescription>
           </PopoverHeader>
+          {children}
         </PopoverContent>
       </Popover>
     </>

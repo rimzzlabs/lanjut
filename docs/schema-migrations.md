@@ -70,6 +70,13 @@ bundle or a long-lived old tab after a deploy) fail migration with an error.
 That is deliberate: there is no forward compatibility, and guessing would risk
 writing a downgraded document over a newer one.
 
+Writes have the same guard. An old tab can hold a résumé in memory from before a
+newer tab migrated it. `putResume` reads the stored `schemaVersion` in the same
+readwrite transaction, and if it is newer than `CURRENT_SCHEMA_VERSION`, it does
+not write and returns `R.makeError("newer-schema")`. The editor save status then
+shows "Not saved" with a refresh prompt (`outdated` in the save status store),
+and later edits in that tab stay unsaved until a refresh.
+
 ## Pre-migration backups
 
 Before the repository (`packages/resume/src/db/resume.ts`) migrates a document, it snapshots
@@ -91,7 +98,8 @@ Migration failures are isolated per document and **nothing is ever deleted**:
   document cannot empty the whole Library.
 - The Library shows a notice ("saved by a newer version, refresh to update")
   when `unreadableCount > 0`, and the empty state is suppressed so the user is
-  never told they have no résumés while unreadable ones exist.
+  never told they have no résumés while unreadable ones exist. With no network,
+  the notice asks for a connection before the refresh.
 - Opening an unreadable document resolves to the `missing` state instead of a
   stuck loading state.
 - A total index failure (storage itself unreadable) sets `indexStatus` to
