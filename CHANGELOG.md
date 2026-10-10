@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.0](https://github.com/rimzzlabs/lanjut/compare/v0.22.0...v0.23.0) (2026-10-10)
+
+
+### Features
+
+* paste or drop a header photo ([#220](https://github.com/rimzzlabs/lanjut/issues/220)) ([defaa50](https://github.com/rimzzlabs/lanjut/commit/defaa508036a2a7bed262a8ad25987f357c1d810))
+
 ## [0.22.0](https://github.com/rimzzlabs/lanjut/compare/v0.21.3...v0.22.0) (2026-10-10)
 
 
