@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.3](https://github.com/rimzzlabs/lanjut/compare/v0.21.2...v0.21.3) (2026-10-10)
+
+
+### Bug Fixes
+
+* read lanjut pdfs back with every field ([#223](https://github.com/rimzzlabs/lanjut/issues/223)) ([0284ebc](https://github.com/rimzzlabs/lanjut/commit/0284ebc95ef2abb18df8ab59dde2d64b0dbab078))
+
 ## [0.21.2](https://github.com/rimzzlabs/lanjut/compare/v0.21.1...v0.21.2) (2026-10-10)
 
 
