@@ -52,6 +52,9 @@ bundles it, and runs the PDF checks on every template. It adds:
   its first entry must print on the same page.
 - **No ligatures**: Lora and Merriweather résumés keep `fi` and `fl` as separate
   glyphs, read from the embedded ToUnicode maps (`bfchar` and `bfrange`).
+- **Cyrillic reads back**: a Russian summary in every template, and in every font a
+  person can pick, must read back as the same Russian text. A face with no glyph for
+  a letter prints nothing there, so this catches a font cut down to Latin only.
 
 This is the pdftotext-equivalent text-extraction test required by `AGENTS.md`. **Run it
 after any change to an export path** (`takumi/`, `docx/`, `resume-to-text.ts`,

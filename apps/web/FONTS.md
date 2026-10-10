@@ -29,7 +29,14 @@ Merriweather is version 2.002, the last release with static files. Merriweather 
 
 ### Other families
 
-These nine families have no Reserved Font Name. Each file is a static TTF that holds only the Latin characters.
+These nine families have no Reserved Font Name. Each file is a static TTF from Google Fonts, cut to the Latin, Latin Extended, and Cyrillic characters that the family has. `scripts/build-resume-fonts.py` makes the cut. Courier Prime has no Cyrillic, so the PDF export draws Cyrillic letters in it with Inter: takumi-pdf takes a glyph that a face lacks from another loaded face.
+
+To rebuild these files, for example after a new upstream version, run the script from `apps/web` with [uv](https://docs.astral.sh/uv/). `--check` reports and writes nothing. The script refuses to write a face whose existing characters change width, because that would move the text of résumés that already exist.
+
+```sh
+uv run scripts/build-resume-fonts.py --check
+uv run scripts/build-resume-fonts.py
+```
 
 | Family         | SemiBold | Version | Upstream project                                                                  |
 | -------------- | -------- | ------- | --------------------------------------------------------------------------------- |
@@ -73,6 +80,7 @@ uv run scripts/build-square-bullet-font.py
 
 1. Put the static TTF files in `public/fonts/`. Name them `<Prefix>-<Variant>.ttf`, the names that `faceSet` in `src/lib/fonts.ts` expects.
    If the family has a Reserved Font Name, use the unmodified upstream files. Do not subset or convert them.
+   Otherwise, add the family to `FAMILIES` in `scripts/build-resume-fonts.py` and run it, so the files carry Cyrillic like the others.
 2. Add the family to `FontId`, `FONTS`, and `FONT_LABELS` in `src/lib/fonts.ts`.
 3. Copy the copyright line from the family's own `OFL.txt` to the top of `public/fonts/OFL.txt`.
 4. Add a row for the family to the correct table on this page.
