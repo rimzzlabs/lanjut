@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_23_0": [
+          {
+            "title": "Tempel atau tarik foto kamu",
+            "description": "Kolom foto di Informasi Pribadi sekarang menerima gambar yang kamu tempel atau tarik. Salin foto, buka Informasi Pribadi, lalu tekan Ctrl+V atau Cmd+V. Atau tarik file gambarnya ke kolom foto."
+          }
+        ],
         "0_22_0": [
           {
             "title": "Tampilkan keahlian lebih dulu",
@@ -1167,6 +1173,8 @@
       "photoRemove": "Hapus",
       "photoHint": "Opsional. Umum untuk lamaran di Indonesia; banyak ATS dan perusahaan luar mengabaikan atau tidak menyarankan foto. Teks resume kamu tetap terbaca penuh oleh parser.",
       "photoError": "File itu tidak bisa dibaca sebagai gambar.",
+      "photoDropHint": "Kamu juga bisa menempelkan gambar, atau menariknya ke sini.",
+      "photoPasted": "Foto dari clipboard sudah ditambahkan.",
       "photoSize": "Ukuran foto",
       "photoRadius": "Sudut foto",
       "photoAlign": "Posisi",

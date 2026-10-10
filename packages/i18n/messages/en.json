@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_23_0": [
+          {
+            "title": "Paste or drop your photo",
+            "description": "The photo field in Personal Information now takes an image you paste or drop. Copy a photo, open Personal Information, and press Ctrl+V or Cmd+V. Or drag the image file onto the photo field."
+          }
+        ],
         "0_22_0": [
           {
             "title": "Lead with your skills",
@@ -1167,6 +1173,8 @@
       "photoRemove": "Remove",
       "photoHint": "Optional. Common for applications in Indonesia; many ATS and US employers ignore or discourage photos. The text of your resume always stays fully readable to parsers.",
       "photoError": "That file could not be read as an image.",
+      "photoDropHint": "You can also paste an image, or drop one here.",
+      "photoPasted": "Photo added from the clipboard.",
       "photoSize": "Photo size",
       "photoRadius": "Corner radius",
       "photoAlign": "Position",

@@ -5,8 +5,10 @@ import {
   FieldLabel,
 } from "@lanjut/ui/components/field";
 import { Slider } from "@lanjut/ui/components/slider";
+import { cn } from "@lanjut/ui/lib/utils";
+import { A, O, pipe, S } from "@mobily/ts-belt";
 import { ImageIcon, TrashIcon } from "@phosphor-icons/react";
-import { useRef } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
@@ -23,10 +25,29 @@ function toSingle(value: number | readonly number[]): number {
   return Array.isArray(value) ? value[0] : (value as number);
 }
 
+function imageIn(transfer: DataTransfer | null): File | undefined {
+  if (!transfer) return undefined;
+  return pipe(
+    Array.from(transfer.files),
+    A.find((file) => S.startsWith(file.type, "image/")),
+    O.toUndefined,
+  );
+}
+
+function isTyping(target: EventTarget | null): boolean {
+  return (
+    target instanceof HTMLElement &&
+    (target.isContentEditable ||
+      target.closest("input, textarea, select") !== null)
+  );
+}
+
 /**
  * Opt-in portrait control. Lives outside react-hook-form on purpose: the photo
  * is not a text field, so it reads from the store and writes through
- * updateOpen, which also makes every change undoable.
+ * updateOpen, which also makes every change undoable. Besides the file picker,
+ * it takes an image dropped on it, or pasted while the section is open and no
+ * text field has focus.
  */
 export function EditorSectionPersonalPhoto() {
   const photo = useResumeStore((state) => state.open?.header.photo);
@@ -38,22 +59,70 @@ export function EditorSectionPersonalPhoto() {
   const updateOpen = useResumeStore((state) => state.updateOpen);
   const t = useTranslations("editor.personal");
   const inputRef = useRef<HTMLInputElement>(null);
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const [dragging, setDragging] = useState(false);
 
   async function onFile(file: File | undefined) {
-    if (!file) return;
+    if (!file) return false;
     const processed = await processPhotoFile(file);
     if (!processed) {
       toast.error(t("photoError"));
-      return;
+      return false;
     }
     updateOpen((resume) => ({
       ...resume,
       header: { ...resume.header, photo: processed },
     }));
+    return true;
   }
 
+  const onPaste = useEffectEvent(async (event: ClipboardEvent) => {
+    if (isTyping(event.target)) return;
+    // On a phone the editor is itself a sheet, so only a dialog that does not
+    // hold this field means the paste was meant for something else.
+    const dialog =
+      event.target instanceof Element
+        ? event.target.closest('[role="dialog"], [role="alertdialog"]')
+        : null;
+    if (dialog && !dialog.contains(fieldRef.current)) return;
+    const file = imageIn(event.clipboardData);
+    if (!file) return;
+    event.preventDefault();
+    if (await onFile(file)) toast.success(t("photoPasted"));
+  });
+
+  useEffect(() => {
+    function listener(event: ClipboardEvent) {
+      void onPaste(event);
+    }
+    document.addEventListener("paste", listener);
+    return () => document.removeEventListener("paste", listener);
+  }, []);
+
   return (
-    <Field>
+    <Field
+      ref={fieldRef}
+      className={cn(
+        "rounded-md transition-shadow",
+        dragging && "ring-2 ring-ring/50 ring-offset-4 ring-offset-background",
+      )}
+      onDragOver={(event) => {
+        if (!event.dataTransfer.types.includes("Files")) return;
+        event.preventDefault();
+        setDragging(true);
+      }}
+      onDragLeave={(event) => {
+        if (event.currentTarget.contains(event.relatedTarget as Node | null)) {
+          return;
+        }
+        setDragging(false);
+      }}
+      onDrop={(event) => {
+        event.preventDefault();
+        setDragging(false);
+        void onFile(imageIn(event.dataTransfer));
+      }}
+    >
       <FieldLabel htmlFor="header-photo">{t("photo")}</FieldLabel>
       <div className="flex items-center gap-3">
         {Boolean(photo) && (
@@ -174,7 +243,10 @@ export function EditorSectionPersonalPhoto() {
           </div>
         </div>
       )}
-      <FieldDescription>{t("photoHint")}</FieldDescription>
+      <FieldDescription className="flex flex-col gap-1">
+        <span>{t("photoDropHint")}</span>
+        <span>{t("photoHint")}</span>
+      </FieldDescription>
     </Field>
   );
 }
