@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_22_0": [
+          {
+            "title": "Lead with your skills",
+            "description": "The section order menu, beside undo and redo above the preview, now offers Skills first. It moves Skills right below your summary, for a resume that leads with what you can do. Experience first brings back the standard order. Your entries still list the newest first."
+          }
+        ],
         "0_21_3": [
           {
             "title": "Bug fixes",
@@ -1109,7 +1115,9 @@
       "showSection": "Show section",
       "hideSection": "Hide section",
       "reorderSection": "Reorder section",
-      "resetOrder": "Reset section order",
+      "sectionOrder": "Section order",
+      "orderExperienceFirst": "Experience first",
+      "orderSkillsFirst": "Skills first",
       "sectionsHeading": "Sections",
       "addSection": "Custom Section",
       "tabDocument": "Document",

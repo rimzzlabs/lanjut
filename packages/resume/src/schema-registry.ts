@@ -502,8 +502,41 @@ export function isReorderableSection(type: SectionType): boolean {
   return REORDERABLE_SECTION_SET.has(type);
 }
 
+/**
+ * The section orders a person can apply in one step. `experience-first` is the
+ * canonical order. `skills-first` moves Skills directly below the Summary, for
+ * a résumé that leads with what the person can do (often called functional).
+ * Both change section order only: entries keep their date order, so every
+ * export still reads as a dated history.
+ */
+export type SectionOrderPreset = "experience-first" | "skills-first";
+
+export const SECTION_ORDER_PRESETS: Record<
+  SectionOrderPreset,
+  ReadonlyArray<SectionType>
+> = {
+  "experience-first": CANONICAL_SECTION_ORDER,
+  "skills-first": [
+    "summary",
+    "skills",
+    ...A.reject(
+      CANONICAL_SECTION_ORDER,
+      (type) => type === "summary" || type === "skills",
+    ),
+  ],
+};
+
+/** Sort key for a Section type in a preset; unknown types sort last, preserving their order. */
+export function presetSectionIndex(
+  preset: SectionOrderPreset,
+  type: string,
+): number {
+  const order = SECTION_ORDER_PRESETS[preset];
+  const index = A.getIndexBy(order, (item) => item === type);
+  return O.getWithDefault(index, A.length(order));
+}
+
 /** Sort key for a Section type; unknown types sort last, preserving their order. */
 export function canonicalSectionIndex(type: string): number {
-  const index = A.getIndexBy(CANONICAL_SECTION_ORDER, (item) => item === type);
-  return O.getWithDefault(index, A.length(CANONICAL_SECTION_ORDER));
+  return presetSectionIndex("experience-first", type);
 }

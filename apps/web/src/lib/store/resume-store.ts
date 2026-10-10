@@ -1,12 +1,13 @@
 import {
   type CustomVariant,
-  canonicalSectionIndex,
   cloneResumeAsNew,
   convertCustomSection,
   createCustomSection,
   isReorderableSection,
+  presetSectionIndex,
   type Resume,
   type ResumeIndexEntry,
+  type SectionOrderPreset,
   updateSectionById,
   updateSections,
 } from "@lanjut/resume";
@@ -93,7 +94,7 @@ interface ResumeStoreState {
    */
   reorderSections: (from: number, to: number) => void;
   /** Restore sections to the canonical reading order (the default). */
-  resetSectionOrder: () => void;
+  applySectionOrder: (preset: SectionOrderPreset) => void;
   /** Append a new custom section (rich variant) with the given title; returns its id. */
   addCustomSection: (title: string) => string;
   /** Rename a custom section by id; no-op for a core or missing section. */
@@ -428,15 +429,16 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     });
   },
 
-  resetSectionOrder() {
-    // Stable sort by canonical index; unknown types keep their relative order
-    // at the end. Pinned sections already sort to their fixed slots.
+  applySectionOrder(preset) {
+    // Stable sort by the preset's index; unknown types keep their relative
+    // order at the end. Pinned sections already sort to their fixed slots.
     get().updateOpen((resume) =>
       updateSections(
         resume,
         A.sort(
           (a, b) =>
-            canonicalSectionIndex(a.type) - canonicalSectionIndex(b.type),
+            presetSectionIndex(preset, a.type) -
+            presetSectionIndex(preset, b.type),
         ),
       ),
     );

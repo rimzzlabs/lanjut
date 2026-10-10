@@ -170,6 +170,7 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
 ## Reordering
 
 - Section reordering (drag-to-reorder via @dnd-kit, `reorderSections` in the store) changes ordering metadata only. It does not alter content schema. Summary is pinned below the Header and does not participate; every other section type is reorderable (`REORDERABLE_SECTION_TYPES` in `packages/resume/src/schema-registry.ts`). Entries within a section are not manually reordered; they sort by date.
+- The Section order menu applies a whole order in one undoable step (`applySectionOrder`): `experience-first`, the canonical order, or `skills-first`, which moves Skills directly below the Summary (`SECTION_ORDER_PRESETS`). Like a drag, it changes ordering metadata only, and entries keep their date order. A request for a non-chronological résumé gets skills first, never entries out of date order.
 
 ## Export
 
