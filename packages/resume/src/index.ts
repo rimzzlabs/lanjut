@@ -30,10 +30,13 @@ export {
   getSectionSchema,
   HEADER_SCHEMA,
   isReorderableSection,
+  presetSectionIndex,
   REORDERABLE_SECTION_TYPES,
   type ReorderableSectionType,
   type RichTextFeature,
+  SECTION_ORDER_PRESETS,
   SECTION_REGISTRY,
+  type SectionOrderPreset,
   type SectionSchema,
 } from "./schema-registry";
 export {

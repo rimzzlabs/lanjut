@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_22_0": [
+          {
+            "title": "Tampilkan keahlian lebih dulu",
+            "description": "Menu urutan bagian, di samping tombol urungkan dan ulangi di atas pratinjau, sekarang punya pilihan Keahlian dulu. Bagian Keahlian pindah tepat di bawah ringkasan, untuk resume yang menonjolkan kemampuan kamu. Pengalaman dulu mengembalikan urutan standar. Entri kamu tetap urut dari yang terbaru."
+          }
+        ],
         "0_21_3": [
           {
             "title": "Perbaikan bug",
@@ -1109,7 +1115,9 @@
       "showSection": "Tampilkan bagian",
       "hideSection": "Sembunyikan bagian",
       "reorderSection": "Ubah urutan bagian",
-      "resetOrder": "Setel ulang urutan bagian",
+      "sectionOrder": "Urutan bagian",
+      "orderExperienceFirst": "Pengalaman dulu",
+      "orderSkillsFirst": "Keahlian dulu",
       "sectionsHeading": "Bagian",
       "addSection": "Bagian Khusus",
       "tabDocument": "Dokumen",

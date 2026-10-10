@@ -189,7 +189,9 @@ editorial
 - A bar above the page preview holds the readiness meter: a label ("60%
   ready", then "Ready to send"; "60%" alone on a phone) beside a thin `Progress`
   bar that fills the preview's width. At its right edge, on every screen, sit undo,
-  redo, a rule, and Reset section order. They live only there; in the edit sheet
+  redo, a rule, and the Section order menu (Experience first, Skills first). The
+  menu marks the order the sections follow, and none after a manual drag. They
+  live only there; in the edit sheet
   below `xl`, the tabs start under the close button, with a gap. The bar stays in
   place, and only the page scrolls under it.
   The label opens a popover with ten checks. Each check opens its section on the
