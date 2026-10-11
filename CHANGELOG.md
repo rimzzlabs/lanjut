@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.1](https://github.com/rimzzlabs/lanjut/compare/v0.24.0...v0.24.1) (2026-10-11)
+
+
+### Bug Fixes
+
+* refuse a save over another window's changes ([#235](https://github.com/rimzzlabs/lanjut/issues/235)) ([a6c0be8](https://github.com/rimzzlabs/lanjut/commit/a6c0be8164ae852366441c5f1fec82fd7e7f0323))
+
 ## [0.24.0](https://github.com/rimzzlabs/lanjut/compare/v0.23.1...v0.24.0) (2026-10-10)
 
 
