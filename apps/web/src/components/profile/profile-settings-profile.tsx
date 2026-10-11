@@ -1,3 +1,4 @@
+import { revisionOf } from "@lanjut/resume/db";
 import { useTranslations } from "use-intl";
 import {
   selectActiveProfile,
@@ -22,7 +23,7 @@ export function ProfileSettingsProfile() {
         description={t("profileDescription")}
       />
       <ProfileForm
-        key={profile.id}
+        key={`${profile.id}:${revisionOf(profile)}`}
         profile={profile}
         submitLabel={t("save")}
         onSubmit={saveProfile}

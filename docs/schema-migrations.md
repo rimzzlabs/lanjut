@@ -40,7 +40,7 @@ version, keyed by the version it migrates _from_ (`LADDER[N]: vN → vN+1`).
 raw document on disk is untouched until the user's next edit persists the
 migrated shape.
 
-The steps live beside it. `migrations-v1-v11.ts` and `migrations-v11-v25.ts` hold
+The steps live beside it. `migrations-v1-v11.ts` and `migrations-v11-v26.ts` hold
 the steps by version range, and `migrations-shared.ts` holds the document type
 and the helpers they share. Write a new step in the newest range file, or start
 a new range file when that one passes 600 lines, then add it to `LADDER`.
@@ -59,11 +59,17 @@ Rules for every step:
   bump, and the ladder rung land in the same PR. A shipped gap in the ladder
   makes every older document unreadable.
 
-The current v24→v25 rung stamps the version for the optional `profileId`, the
-profile a résumé belongs to. It reshapes nothing: a résumé without `profileId`
-belongs to the first profile, which the app resolves at read time. The field is
+The v24→v25 rung stamps the version for the optional `profileId`, the profile
+a résumé belongs to. It reshapes nothing: a résumé without `profileId` belongs
+to the first profile, which the app resolves at read time. The field is
 organization only, so it never renders and the JSON and YAML interchange leaves
 it out.
+
+The current v25→v26 rung stamps the version for the optional `revision`, the
+count of writes of the stored copy. It reshapes nothing: a résumé without
+`revision` reads as 0. A profile has the same optional field, and profiles are
+not versioned, so it needs no rung. The field is storage only: it never renders,
+and the interchange and the profile backup leave it out.
 
 Documents with a `schemaVersion` **newer** than the running app (a stale cached
 bundle or a long-lived old tab after a deploy) fail migration with an error.
@@ -76,6 +82,25 @@ readwrite transaction, and if it is newer than `CURRENT_SCHEMA_VERSION`, it does
 not write and returns `R.makeError("newer-schema")`. The editor save status then
 shows "Not saved" with a refresh prompt (`outdated` in the save status store),
 and later edits in that tab stay unsaved until a refresh.
+
+## Revisions
+
+Two windows of one browser share one IndexedDB. `writeRevised`
+(`packages/resume/src/db/revision.ts`) reads the stored copy in the same
+readwrite transaction as the write, and writes only when the stored `revision`
+is the one the window expects. Each write adds one. `putResume` and
+`putProfile` both go through it.
+
+- A number expects that revision: the window read or last wrote it. The
+  resume store keeps it as `openRevision` for the open résumé.
+- `"new"` expects no stored copy: a new, duplicated, or restored item.
+- `"replace"` writes over whatever is stored: an import the person chose.
+
+A refused write resolves to `R.makeError("changed")` or `R.makeError("deleted")`.
+The editor and the profile page then show a dialog with no cancel: keep the
+other version, save this window's version as a copy, restore a deleted item, or
+close it. Writes of the open résumé run one after another (`queueOpenWrite`), so
+a window never conflicts with its own previous write.
 
 ## Pre-migration backups
 

@@ -6,6 +6,7 @@ import { PlatformNavbar } from "@/components/platform/platform-navbar";
 import { PlatformOfflineCache } from "@/components/platform/platform-offline-cache";
 import { PlatformSidebar } from "@/components/platform/platform-sidebar";
 import { PlatformSidebarProvider } from "@/components/platform/platform-sidebar-provider";
+import { ProfileConflictNotice } from "@/components/profile/profile-conflict-notice";
 import { ProfileSettings } from "@/components/profile/profile-settings";
 import { TourProvider } from "@/components/tour/tour-provider";
 import { IS_DESKTOP } from "@/lib/build-target";
@@ -37,6 +38,7 @@ export function PlatformShell(props: PropsWithChildren) {
         <ProfileSettings />
         <PlatformDatabaseNotice />
         <PlatformOfflineCache />
+        <ProfileConflictNotice />
 
         {/* The desktop app files feedback through a hosted window, so this
             never opens there and its bot-check widget cannot run on its origin. */}

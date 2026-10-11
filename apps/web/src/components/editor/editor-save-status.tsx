@@ -25,6 +25,8 @@ export function EditorSaveStatus() {
   if (!ready) return null;
   if (status === "failed") return <EditorSaveFailed />;
   if (status === "outdated") return <EditorSaveOutdated />;
+  if (status === "changed") return <EditorSaveConflict kind="changed" />;
+  if (status === "deleted") return <EditorSaveConflict kind="deleted" />;
   return <EditorSaveProgress saving={status === "saving"} />;
 }
 
@@ -83,6 +85,15 @@ function EditorSaveOutdated() {
       )}
     </EditorSaveProblem>
   );
+}
+
+/** Another window saved or deleted the open résumé first; the conflict dialog asks what to keep. */
+function EditorSaveConflict(props: { kind: "changed" | "deleted" }) {
+  const t = useTranslations("conflict");
+  const title = t(`${props.kind}Title`, { item: "resume" });
+  const body = t(`${props.kind}Description`);
+
+  return <EditorSaveProblem title={title} body={body} />;
 }
 
 function EditorSaveProblem(

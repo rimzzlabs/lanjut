@@ -21,6 +21,11 @@ export {
   setLastOpenedResumeId,
 } from "./resume";
 export {
+  type ExpectedRevision,
+  type RevisionError,
+  revisionOf,
+} from "./revision";
+export {
   DB_BLOCKED,
   DB_EVENTS,
   DB_OUTDATED,
