@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.0](https://github.com/rimzzlabs/lanjut/compare/v0.25.0...v0.26.0) (2026-10-11)
+
+
+### Features
+
+* add developer mode with a markdown, yaml, and json code view ([#239](https://github.com/rimzzlabs/lanjut/issues/239)) ([18d5fea](https://github.com/rimzzlabs/lanjut/commit/18d5feadc92ab1dcbdf6c698b8cd35d748ef6943))
+
 ## [0.25.0](https://github.com/rimzzlabs/lanjut/compare/v0.24.1...v0.25.0) (2026-10-11)
 
 
