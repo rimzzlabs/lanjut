@@ -1,6 +1,6 @@
 import type { ReadinessTarget } from "@lanjut/resume/readiness";
 import { MEDIA_XL } from "@/hooks/use-media-query";
-import { useEditorChromeStore } from "@/lib/store";
+import { runAfterCodeGuard, useEditorChromeStore } from "@/lib/store";
 import { sectionAnchorId } from "../editor-sections/section-anchor";
 
 const FOCUSABLE = "input, textarea, [contenteditable='true']";
@@ -9,10 +9,16 @@ const FOCUSABLE = "input, textarea, [contenteditable='true']";
  * Opens the section a check points at, on the Content tab, and scrolls it
  * into view. Below xl the tab lives in the edit sheet, so the sheet opens
  * too and focuses the field itself (`takeJumpField`). The section's form
- * renders after this update, so the scroll waits a frame.
+ * renders after this update, so the scroll waits a frame. From the code mode
+ * it goes to the forms first, where the field is.
  */
 export function openCheckTarget(target: ReadinessTarget) {
+  runAfterCodeGuard(() => showCheckTarget(target));
+}
+
+function showCheckTarget(target: ReadinessTarget) {
   const chrome = useEditorChromeStore.getState();
+  chrome.setMode("form");
   chrome.setActiveTab("content");
   chrome.setOpenSections([target.section]);
   if (!window.matchMedia(MEDIA_XL).matches) {

@@ -26,6 +26,11 @@ Languages` appears in that order in every format.
   photo-free output. The photo is presentation-only; if it ever shifts, drops, or
   adds a character of extracted text, the gate fails.
 
+`apps/web/scripts/markdown-checks.ts` checks the Markdown of the code mode
+(`docs/markdown-dialect.md`). The Markdown of the sample and of a hard case must read
+back as the same résumé, with no text left out. It also fails when more than one
+heading in four of the sample carries a `{type=...}` attribute.
+
 `apps/web/scripts/takumi-checks.ts` loads the takumi-pdf renderer through Vite, the way the app
 bundles it, and runs the PDF checks on every template. It adds:
 

@@ -11,7 +11,7 @@ export type InterchangeImportResult =
   | { ok: false };
 
 /** Settings that stay absent on the Resume unless the file sets them. */
-const OPTIONAL_SETTINGS = [
+export const OPTIONAL_SETTINGS = [
   "font",
   "lineHeight",
   "nameScale",
@@ -22,7 +22,7 @@ const OPTIONAL_SETTINGS = [
   "photoAlign",
 ] as const;
 
-function presentSettings(content: ResumeContent): Partial<Resume> {
+export function presentSettings(content: ResumeContent): Partial<Resume> {
   return D.filter(
     D.selectKeys(content, OPTIONAL_SETTINGS),
     (value) => value !== undefined,

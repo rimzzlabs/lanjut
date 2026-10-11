@@ -15,6 +15,7 @@ import { buildAwalDocx } from "@/components/editor/docx/resume-to-docx";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import { resumeToText } from "@/components/editor/resume-to-text";
 import { runImportChecks } from "./import-checks";
+import { runMarkdownChecks } from "./markdown-checks";
 import { runTakumiChecks } from "./takumi-checks";
 
 /**
@@ -248,6 +249,7 @@ async function main(): Promise<void> {
   });
   errors.push(...takumiErrors);
   errors.push(...(await runImportChecks()));
+  errors.push(...(await runMarkdownChecks()));
 
   if (errors.length > 0) {
     for (const error of errors) console.error(`  ✗ ${error}`);

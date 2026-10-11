@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_26_0": [
+          {
+            "title": "Mode developer: resume kamu sebagai teks",
+            "description": "Nyalakan Mode developer di Preferensi, dan editor dapat tombol Form dan Kode. Kode menampilkan resume kamu sebagai Markdown, YAML, atau JSON, sendirian atau di samping halaman, dan halamannya ikut berubah selagi kamu ngetik. Kalau teksnya ada kesalahan, Lanjut nggak menerapkannya, jadi resume kamu tetap seperti sebelumnya. Mode developer mati sampai kamu nyalakan sendiri."
+          }
+        ],
         "0_25_0": [
           {
             "title": "Satu tab yang mengedit",
@@ -839,6 +845,8 @@
     "themeSystem": "Sistem",
     "languageDescription": "Bahasa aplikasi. Setiap resume punya bahasanya sendiri.",
     "animationDescription": "Mati menghentikan gerakan di layar. Sistem mengikuti perangkat kamu.",
+    "developerMode": "Mode developer",
+    "developerModeDescription": "Menambahkan tombol Form dan Kode di editor. Edit resume sebagai Markdown, YAML, atau JSON.",
     "active": "Aktif",
     "useProfile": "Pakai profil ini",
     "draftHint": "Belum disimpan",
@@ -1454,6 +1462,27 @@
       "createNew": "Buat resume baru",
       "imported": "Resume diimpor",
       "pastedTitle": "Resume tempelan"
+    },
+    "code": {
+      "modeLabel": "Mode editor",
+      "modeForm": "Form",
+      "modeCode": "Kode",
+      "viewLabel": "Tampilan",
+      "viewCode": "Kode",
+      "viewSplit": "Bagi dua",
+      "viewPreview": "Pratinjau",
+      "formatLabel": "Format",
+      "label": "Resume sebagai {format}",
+      "keys": "<key>Tab</key> untuk indentasi. <key>Esc</key> lalu <key>Tab</key> untuk keluar.",
+      "statusValid": "Diterapkan",
+      "statusInvalid": "Belum diterapkan",
+      "statusPending": "Mengecek",
+      "moreIssues": "+{count} lagi",
+      "ignored": "Diterapkan, tapi {count} blok nggak punya kolom di bagiannya, jadi nggak ikut tersimpan",
+      "discardTitle": "Buang teks ini?",
+      "discardDescription": "Teksnya masih ada kesalahan, jadi Lanjut belum menerapkannya. Resume tetap pakai versi valid terakhir.",
+      "discardCancel": "Terus edit",
+      "discardConfirm": "Buang"
     },
     "saveStatus": {
       "saved": "Tersimpan di perangkat ini",

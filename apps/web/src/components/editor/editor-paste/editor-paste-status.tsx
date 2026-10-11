@@ -6,9 +6,10 @@ import {
   AlertTitle,
 } from "@lanjut/ui/components/alert";
 import { Badge } from "@lanjut/ui/components/badge";
-import { A, O, pipe, S } from "@mobily/ts-belt";
+import { A, S } from "@mobily/ts-belt";
 import { CheckCircleIcon, WarningCircleIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
+import { firstLine } from "../parser-message";
 
 const SHOWN_ISSUES = 3;
 
@@ -79,17 +80,5 @@ function PasteStatusBody(props: {
         {more > 0 && <p>{t("moreIssues", { count: more })}</p>}
       </AlertDescription>
     </Alert>
-  );
-}
-
-// A parser message can carry a code excerpt on the lines after the first,
-// which the first line introduces with a colon.
-function firstLine(message: string): string {
-  return pipe(
-    message,
-    S.split("\n"),
-    A.head,
-    O.getWithDefault(message),
-    S.replaceByRe(/:\s*$/, ""),
   );
 }

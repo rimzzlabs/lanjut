@@ -1,9 +1,14 @@
 import { routing } from "@lanjut/i18n/routing";
+import { Switch } from "@lanjut/ui/components/switch";
 import { A } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
 import { useLocaleSwitch } from "@/hooks/use-locale-switch";
-import { isMotionSetting, useMotionStore } from "@/lib/store";
+import {
+  isMotionSetting,
+  useDeveloperModeStore,
+  useMotionStore,
+} from "@/lib/store";
 import { ProfilePreferenceRow } from "./profile-preference-row";
 import { ProfileSettingsHeading } from "./profile-settings-heading";
 import { ProfileThemePicker } from "./profile-theme-picker";
@@ -16,12 +21,14 @@ const MOTION_LABEL_KEYS: Record<(typeof MOTION_SETTINGS)[number], string> = {
   off: "animationOff",
 };
 
-/** How the app looks and moves on this device: theme, language, animation. */
+/** How the app looks and moves on this device: theme, language, animation, and Developer mode. */
 export function ProfileSettingsPreferences() {
   const t = useTranslations();
   const { locale, switchLocale } = useLocaleSwitch();
   const motion = useMotionStore((state) => state.setting);
   const setMotion = useMotionStore((state) => state.setSetting);
+  const developerMode = useDeveloperModeStore((state) => state.enabled);
+  const setDeveloperMode = useDeveloperModeStore((state) => state.setEnabled);
 
   return (
     <div className="flex flex-col gap-4">
@@ -68,6 +75,17 @@ export function ProfileSettingsPreferences() {
               value,
               label: t(`nav.${MOTION_LABEL_KEYS[value]}`),
             }))}
+          />
+        </ProfilePreferenceRow>
+
+        <ProfilePreferenceRow
+          label={t("profile.developerMode")}
+          description={t("profile.developerModeDescription")}
+        >
+          <Switch
+            aria-label={t("profile.developerMode")}
+            checked={developerMode}
+            onCheckedChange={(checked) => setDeveloperMode(checked)}
           />
         </ProfilePreferenceRow>
       </div>

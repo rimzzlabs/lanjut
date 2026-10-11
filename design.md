@@ -79,7 +79,8 @@ editorial
   the library, Recent, and the template preview to that profile's résumés, and a
   new résumé joins it. Those three open one surface: a wide Sheet from `lg` with the
   sections in a side column, a Drawer below `lg` with the sections in a segmented
-  switch. Theme, language, and animation live in Preferences, not in the navbar.
+  switch. Theme, language, animation, and Developer mode live in Preferences, not
+  in the navbar. Developer mode is a `Switch`, off by default.
   The theme is three cards, each a small mockup of the app drawn with the real
   tokens of its theme (`.light` or `.dark` on the mockup); System splits the
   mockup diagonally.
@@ -158,6 +159,25 @@ editorial
   It opens at 29% of the window, from 22rem to 28rem, and drags from 22rem to 40rem.
   It keeps its width when the window resizes. The tabs are Content, Layout,
   Styling, and Document, and fill the panel's width.
+- With Developer mode on, the editor has a code mode. A Form/Code `SegmentedControl`
+  is the first item of the bar at the top left of the editor: the preview bar in the
+  forms, and the code toolbar in the code mode. It is never in the navbar, and
+  nothing that changes width comes before it, so it does not move. The code toolbar
+  spans the editor. After the Form/Code switch it holds the view switch, three icon
+  segments with a tooltip each (code, split, preview), and at its right edge the
+  format `Select` (Markdown, YAML, JSON). In a split the code is the main panel on
+  the left and the page is on the right, each from 30% of the width. Below `xl` a
+  split has no room, so the views are code and preview. The code is a
+  `CodeTextarea` that fills its panel, with no border and no ring: the caret shows
+  focus, and the line under the code shows an error. The code, the toolbar, and
+  that line share one left edge. Tab and Shift+Tab change the indent, and Escape,
+  then Tab, leaves the code: from `lg` the right end of the line says so in `Kbd`
+  keys. One
+  line of fixed height under it says "Applied", or "Not applied" with the first
+  error, so the code does not move as the person types. The page follows a valid
+  text at once and keeps the last valid version while the text has an error. A
+  format change or the switch back to Form asks first when it drops a text with an
+  error. Layout, Styling, and Document stay in Form.
 - The Styling and Document tabs group their controls by intent. Each group is an
   `EditorPanelSection`: an icon in a muted square, a title, one line on what the
   group is for, an optional action beside the title, then the controls.
