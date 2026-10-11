@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_25_0": [
+          {
+            "title": "Satu tab yang mengedit",
+            "description": "Kalau resume atau profil yang sama dibuka di dua tab, cuma satu tab yang bisa mengedit. Tab lainnya kasih tahu kalau lagi dibuka di tempat lain, dan tombol Edit di sini memindahkan pengeditan ke tab itu. Daftar resume dan profil kamu sekarang juga ikut update antar tab."
+          }
+        ],
         "0_24_1": [
           {
             "title": "Perbaikan bug",
@@ -1664,6 +1670,9 @@
     "deletedTitle": "{item, select, resume {Resume} other {Profil}} ini dihapus di jendela lain",
     "deletedDescription": "Perubahanmu di jendela ini belum tersimpan. Pulihkan dengan perubahanmu, atau tutup.",
     "restore": "Pulihkan",
-    "close": "Tutup"
+    "close": "Tutup",
+    "frozenTitle": "{item, select, resume {Resume} other {Profil}} ini lagi dibuka di jendela lain",
+    "frozenDescription": "Cuma satu jendela yang bisa mengedit dalam satu waktu, biar nggak ada perubahan yang hilang. Yang kamu lihat di sini bisa belum terbaru.",
+    "editHere": "Edit di sini"
   }
 }

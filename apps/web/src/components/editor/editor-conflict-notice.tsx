@@ -4,6 +4,11 @@ import { ConflictDialog } from "@/components/shared/conflict-dialog";
 import { useRouter } from "@/i18n/navigation";
 import { EDITOR_PATHNAME, editorHref } from "@/lib/routes";
 import { useResumeStore, useSaveStatusStore } from "@/lib/store";
+import {
+  closeOpenResume,
+  reloadOpenResume,
+  restoreOpenResume,
+} from "@/lib/store/resume-store-windows";
 import type { SaveStatus } from "@/lib/store/save-status-store";
 
 function conflictOf(status: SaveStatus): RevisionError | null {
@@ -16,9 +21,6 @@ export function EditorConflictNotice() {
   const t = useTranslations("platform.grid");
   const router = useRouter();
   const kind = useSaveStatusStore((state) => conflictOf(state.status));
-  const reloadOpen = useResumeStore((state) => state.reloadOpen);
-  const restoreOpen = useResumeStore((state) => state.restoreOpen);
-  const closeOpen = useResumeStore((state) => state.closeOpen);
   const duplicateResume = useResumeStore((state) => state.duplicateResume);
 
   async function saveCopy() {
@@ -31,16 +33,16 @@ export function EditorConflictNotice() {
 
   async function close() {
     await router.push(EDITOR_PATHNAME);
-    closeOpen();
+    closeOpenResume();
   }
 
   return (
     <ConflictDialog
       kind={kind}
       item="resume"
-      onKeepOther={() => void reloadOpen()}
+      onKeepOther={() => void reloadOpenResume()}
       onSaveCopy={() => void saveCopy()}
-      onRestore={() => void restoreOpen()}
+      onRestore={() => void restoreOpenResume()}
       onClose={() => void close()}
     />
   );

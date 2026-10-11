@@ -12,24 +12,22 @@ import {
   updateSections,
 } from "@lanjut/resume";
 import {
-  deleteResume as dbDeleteResume,
   getActiveProfileId,
   getResume,
   listResumeIndex,
   type PutResumeError,
   putLeftovers,
-  putResume,
   revisionOf,
   setLastOpenedResumeId,
 } from "@lanjut/resume/db";
 import { A, O, pipe, R, S } from "@mobily/ts-belt";
 import { create } from "zustand";
+import { isEditFrozen } from "../edit-lock";
+import { deleteResumeAnnounced, putResumeAnnounced } from "./announced-writes";
 import { buildNewResume, type CreateResumeOptions } from "./new-resume";
 import {
-  cancelOpenResumePersist,
   flushOpenResumePersist,
   queueOpenWrite,
-  refusedStatus,
   scheduleOpenResumePersist,
   setOpenPersistTarget,
 } from "./persistence";
@@ -93,15 +91,6 @@ interface ResumeStoreState {
     profileId: string,
   ) => Promise<void>;
   openResume: (id: string) => Promise<void>;
-  /** Replace the open document with its stored copy, as a fresh open does. */
-  reloadOpen: () => Promise<void>;
-  /** Write the open document back after another window deleted it. */
-  restoreOpen: () => Promise<void>;
-  /**
-   * Drop the open document without writing it, and from the index, after
-   * another window deleted it. Call it after leaving the editor.
-   */
-  closeOpen: () => void;
   /** Apply an edit to the open document; schedules a debounced persist. */
   updateOpen: (update: (resume: Resume) => Resume) => void;
   /** Rewind the open document one undo step; no-op when the history is empty. */
@@ -159,7 +148,7 @@ let undoPast: ReadonlyArray<Resume> = [];
 let undoFuture: ReadonlyArray<Resume> = [];
 let undoGroupUntil = 0;
 
-function resetUndoHistory(): void {
+export function resetUndoHistory(): void {
   undoPast = [];
   undoFuture = [];
   undoGroupUntil = 0;
@@ -199,7 +188,10 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
       ...buildNewResume(S.trim(title), options),
       profileId,
     };
-    const written = R.getWithDefault(await putResume(resume, "new"), resume);
+    const written = R.getWithDefault(
+      await putResumeAnnounced(resume, "new"),
+      resume,
+    );
     if (options?.source === "import" && options.imported) {
       await putLeftovers(resume.id, options.imported.leftovers);
       set((state) => ({ leftoversVersion: state.leftoversVersion + 1 }));
@@ -218,7 +210,7 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
   },
 
   async renameResume(id, title) {
-    if (get().open?.id === id) {
+    if (editableOpen(id)) {
       get().updateOpen((resume) => ({ ...resume, title: S.trim(title) }));
       await flushOpenResumePersist();
       return;
@@ -230,24 +222,23 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
       title: S.trim(title),
       updatedAt: new Date().toISOString(),
     };
-    const saved = await putResume(next, revisionOf(source));
+    const saved = await putResumeAnnounced(next, revisionOf(source));
     if (R.isError(saved)) return;
     set((state) => ({ index: syncIndexEntry(state.index, next) }));
   },
 
   async duplicateResume(id, title) {
-    const current = get().open;
-    const source = current?.id === id ? current : await getResume(id);
+    const source = editableOpen(id) ?? (await getResume(id));
     if (!source) return undefined;
     const copy = cloneResumeAsNew(source, title);
-    await putResume(copy, "new");
+    await putResumeAnnounced(copy, "new");
     set((state) => ({ index: syncIndexEntry(state.index, copy) }));
     return copy;
   },
 
   async removeResume(id) {
     const current = get().open;
-    const removed = current?.id === id ? current : await getResume(id);
+    const removed = editableOpen(id) ?? (await getResume(id));
     if (current?.id === id) resetUndoHistory();
     set((state) => {
       const isOpen = state.open?.id === id;
@@ -259,12 +250,12 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
         canRedo: isOpen ? false : state.canRedo,
       };
     });
-    await dbDeleteResume(id);
+    await deleteResumeAnnounced(id);
     return removed;
   },
 
   async restoreResume(resume) {
-    const saved = await putResume(resume, "new");
+    const saved = await putResumeAnnounced(resume, "new");
     if (R.isError(saved)) return;
     set((state) => ({ index: syncIndexEntry(state.index, resume) }));
   },
@@ -272,7 +263,9 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
   async importResumes(resumes) {
     await flushOpenResumePersist();
     const results = await queueOpenWrite(() =>
-      Promise.all(A.map(resumes, (resume) => putResume(resume, "replace"))),
+      Promise.all(
+        A.map(resumes, (resume) => putResumeAnnounced(resume, "replace")),
+      ),
     );
     const written = A.filterMap(results, R.toOption);
     const reopened = A.find(written, (resume) => resume.id === get().open?.id);
@@ -293,11 +286,11 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     const results = await queueOpenWrite(() =>
       Promise.all(
         A.map(ids, async (id) => {
-          const open = get().open;
-          if (open?.id === id) return putResume(move(open), get().openRevision);
+          const open = editableOpen(id);
+          if (open) return putResumeAnnounced(move(open), get().openRevision);
           const source = await getResume(id);
           if (!source) return R.makeError<Resume, PutResumeError>("deleted");
-          return putResume(move(source), revisionOf(source));
+          return putResumeAnnounced(move(source), revisionOf(source));
         }),
       ),
     );
@@ -339,64 +332,9 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     useSaveStatusStore.getState().setStatus("saved");
   },
 
-  async reloadOpen() {
-    const current = get().open;
-    if (!current) return;
-    cancelOpenResumePersist();
-    const stored = await getResume(current.id).catch(() => undefined);
-    if (!stored) {
-      useSaveStatusStore.getState().setStatus("deleted");
-      return;
-    }
-    resetUndoHistory();
-    set((state) => ({
-      open: stored,
-      openRevision: revisionOf(stored),
-      index: syncIndexEntry(state.index, stored),
-      undoEpoch: state.undoEpoch + 1,
-      canUndo: false,
-      canRedo: false,
-    }));
-    useSaveStatusStore.getState().setStatus("saved");
-  },
-
-  async restoreOpen() {
-    const open = get().open;
-    if (!open) return;
-    cancelOpenResumePersist();
-    const saved = await queueOpenWrite(() => putResume(open, "new"));
-    const { setStatus } = useSaveStatusStore.getState();
-    R.match(
-      saved,
-      (written) => {
-        set((state) => ({
-          openRevision: revisionOf(written),
-          index: syncIndexEntry(state.index, written),
-        }));
-        setStatus("saved");
-      },
-      (error) => setStatus(refusedStatus(error)),
-    );
-  },
-
-  closeOpen() {
-    const open = get().open;
-    cancelOpenResumePersist();
-    resetUndoHistory();
-    set((state) => ({
-      index: A.reject(state.index, (item) => item.id === open?.id),
-      open: null,
-      openRevision: 0,
-      openStatus: "idle",
-      canUndo: false,
-      canRedo: false,
-    }));
-    useSaveStatusStore.getState().setStatus("saved");
-  },
-
   updateOpen(update) {
     const current = get().open;
-    if (!current) return;
+    if (!current || isEditFrozen("resume", current.id)) return;
     const updated = update(current);
     if (updated === current) return;
     const next = { ...updated, updatedAt: new Date().toISOString() };
@@ -419,6 +357,7 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     const current = get().open;
     const previous = A.last(undoPast);
     if (!current || O.isNone(previous)) return;
+    if (isEditFrozen("resume", current.id)) return;
     undoPast = A.initOrEmpty(undoPast);
     undoFuture = A.append(undoFuture, current);
     undoGroupUntil = 0;
@@ -437,6 +376,7 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     const current = get().open;
     const next = A.last(undoFuture);
     if (!current || O.isNone(next)) return;
+    if (isEditFrozen("resume", current.id)) return;
     undoFuture = A.initOrEmpty(undoFuture);
     undoPast = A.append(undoPast, current);
     undoGroupUntil = 0;
@@ -577,6 +517,13 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     return flushOpenResumePersist();
   },
 }));
+
+/** The open document when it is `id` and this window edits it, not a frozen copy. */
+function editableOpen(id: string): Resume | null {
+  const open = useResumeStore.getState().open;
+  if (open?.id !== id || isEditFrozen("resume", id)) return null;
+  return open;
+}
 
 function readOpenCopy() {
   const state = useResumeStore.getState();

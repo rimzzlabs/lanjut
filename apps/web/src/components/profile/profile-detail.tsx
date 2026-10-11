@@ -1,5 +1,4 @@
 import { createProfile } from "@lanjut/resume";
-import { revisionOf } from "@lanjut/resume/db";
 import { cn } from "@lanjut/ui/lib/utils";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
@@ -13,6 +12,7 @@ import { ProfileBackup } from "./profile-backup";
 import { ProfileDelete } from "./profile-delete";
 import { ProfileDetailHeader } from "./profile-detail-header";
 import { ProfileForm } from "./profile-form";
+import { ProfileLockedForm } from "./profile-locked-form";
 import { ProfileSettingsHeading } from "./profile-settings-heading";
 
 const FRAME = "rounded-xl bg-card p-4 ring-1 ring-foreground/10 sm:p-6";
@@ -42,9 +42,7 @@ export function ProfileDetail(props: ProfileDetailProps) {
 }
 
 function ProfileDetailSaved(props: { id: string; framed: boolean }) {
-  const t = useTranslations("profile");
   const profile = useProfileStore(selectProfile(props.id));
-  const saveProfile = useProfileStore((state) => state.saveProfile);
   const canDelete = useProfileStore(selectCanDeleteProfile);
 
   return (
@@ -54,12 +52,7 @@ function ProfileDetailSaved(props: { id: string; framed: boolean }) {
           <ProfileDetailHeader profile={profile} />
           <ProfileBackup key={`backup-${profile.id}`} profile={profile} />
         </div>
-        <ProfileForm
-          key={`${profile.id}:${revisionOf(profile)}`}
-          profile={profile}
-          submitLabel={t("save")}
-          onSubmit={saveProfile}
-        />
+        <ProfileLockedForm profile={profile} />
       </section>
       {canDelete && <ProfileDelete key={profile.id} profile={profile} />}
     </div>

@@ -6,16 +6,19 @@ import {
   resolveResumeProfileId,
 } from "@lanjut/resume";
 import {
-  deleteProfile,
   getActiveProfileId,
   listProfiles,
-  putProfile,
   type RevisionError,
   revisionOf,
   setActiveProfileId,
 } from "@lanjut/resume/db";
 import { A, O, pipe, R } from "@mobily/ts-belt";
 import { create } from "zustand";
+import { isEditingHere } from "../edit-lock";
+import {
+  deleteProfileAnnounced,
+  putProfileAnnounced,
+} from "./announced-writes";
 import { useResumeStore } from "./resume-store";
 
 type ProfileStatus = "idle" | "loading" | "ready" | "error";
@@ -118,8 +121,10 @@ export const useProfileStore = create<ProfileStoreState>()((set, get) => ({
       get().profiles,
       (item) => item.id === GUEST_PROFILE_ID,
     );
-    await Promise.all(A.map(guest, (item) => putProfile(item, "replace")));
-    const saved = await putProfile(profile, "new");
+    await Promise.all(
+      A.map(guest, (item) => putProfileAnnounced(item, "replace")),
+    );
+    const saved = await putProfileAnnounced(profile, "new");
     const written = R.getWithDefault(saved, profile);
     await setActiveProfileId(profile.id);
     set((state) => ({
@@ -149,9 +154,11 @@ export const useProfileStore = create<ProfileStoreState>()((set, get) => ({
       get().profiles,
       (item) => item.id === GUEST_PROFILE_ID && item.id !== profile.id,
     );
-    await Promise.all(A.map(guest, (item) => putProfile(item, "replace")));
+    await Promise.all(
+      A.map(guest, (item) => putProfileAnnounced(item, "replace")),
+    );
     if (!keepLocal) {
-      const saved = await putProfile(profile, "replace");
+      const saved = await putProfileAnnounced(profile, "replace");
       const written = R.getWithDefault(saved, profile);
       set((state) => ({ profiles: upsert(state.profiles, written) }));
     }
@@ -164,7 +171,7 @@ export const useProfileStore = create<ProfileStoreState>()((set, get) => ({
     // The guest has one fixed id and nothing to conflict with until saved.
     const expected =
       profile.id === GUEST_PROFILE_ID ? "replace" : revisionOf(profile);
-    const saved = await putProfile(next, expected);
+    const saved = await putProfileAnnounced(next, expected);
     return R.match(
       saved,
       (written) => {
@@ -190,14 +197,14 @@ export const useProfileStore = create<ProfileStoreState>()((set, get) => ({
       header: conflict.profile.header,
       summary: conflict.profile.summary,
     };
-    await putProfile(copy, "new");
+    await putProfileAnnounced(copy, "new");
     await reloadProfiles();
   },
 
   async restoreProfile() {
     const conflict = get().conflict;
     if (!conflict) return;
-    const saved = await putProfile(conflict.profile, "new");
+    const saved = await putProfileAnnounced(conflict.profile, "new");
     R.match(
       saved,
       (written) =>
@@ -226,7 +233,7 @@ export const useProfileStore = create<ProfileStoreState>()((set, get) => ({
       A.map((entry) => entry.id),
     );
     await useResumeStore.getState().moveToProfile(owned, targetId);
-    await deleteProfile(id);
+    await deleteProfileAnnounced(id);
     const profiles = withGuest(
       A.reject(get().profiles, (item) => item.id === id),
     );
@@ -253,6 +260,32 @@ async function reloadProfiles(): Promise<void> {
     profiles,
     activeId: known ? activeId : firstId(profiles),
     conflict: null,
+  });
+}
+
+/**
+ * Another window saved or deleted a profile: the list follows the stored
+ * copies. A profile that this window edits keeps its own copy, so its form
+ * does not change under the person; the revision check speaks on its save.
+ */
+export async function syncProfilesFromDisk(): Promise<void> {
+  const stored = await listProfiles();
+  const state = useProfileStore.getState();
+  const held = A.filter(state.profiles, (item) =>
+    isEditingHere("profile", item.id),
+  );
+  const profiles = withGuest(
+    pipe(
+      stored,
+      A.reject((item) => A.some(held, (own) => own.id === item.id)),
+      A.concat(held),
+      A.sort((a, b) => a.createdAt.localeCompare(b.createdAt)),
+    ),
+  );
+  const known = A.some(profiles, (item) => item.id === state.activeId);
+  useProfileStore.setState({
+    profiles,
+    activeId: known ? state.activeId : firstId(profiles),
   });
 }
 

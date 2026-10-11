@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_25_0": [
+          {
+            "title": "One tab edits at a time",
+            "description": "Open the same resume or profile in two tabs, and only one tab edits it. The other shows that it is open elsewhere, and Edit here moves the editing to that tab. Your library and your profile list now update across tabs too."
+          }
+        ],
         "0_24_1": [
           {
             "title": "Bug fixes",
@@ -1664,6 +1670,9 @@
     "deletedTitle": "This {item, select, resume {resume} other {profile}} was deleted in another window",
     "deletedDescription": "Your changes in this window are not saved. Restore it with your changes, or close it.",
     "restore": "Restore it",
-    "close": "Close"
+    "close": "Close",
+    "frozenTitle": "This {item, select, resume {resume} other {profile}} is open in another window",
+    "frozenDescription": "Only one window edits it at a time, so no change is lost. What you see here can be out of date.",
+    "editHere": "Edit here"
   }
 }

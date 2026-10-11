@@ -1,6 +1,7 @@
 import type { Resume } from "@lanjut/resume";
-import { type PutResumeError, putResume } from "@lanjut/resume/db";
+import type { PutResumeError } from "@lanjut/resume/db";
 import { A, F, R } from "@mobily/ts-belt";
+import { putResumeAnnounced } from "./announced-writes";
 import { type SaveStatus, useSaveStatusStore } from "./save-status-store";
 
 /** The open résumé and the stored revision this window read or last wrote. */
@@ -62,7 +63,7 @@ function writeOpen(): Promise<void> {
   const open = target.read();
   if (!open) return Promise.resolve();
   const { setStatus } = useSaveStatusStore.getState();
-  return putResume(open.resume, open.revision).then(
+  return putResumeAnnounced(open.resume, open.revision).then(
     (result) =>
       R.match(
         result,
