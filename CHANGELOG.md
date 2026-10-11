@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.0](https://github.com/rimzzlabs/lanjut/compare/v0.23.1...v0.24.0) (2026-10-10)
+
+
+### Features
+
+* make the web app work offline ([#233](https://github.com/rimzzlabs/lanjut/issues/233)) ([29f9186](https://github.com/rimzzlabs/lanjut/commit/29f9186ae5dd43bcb9345ef8606b0787295f6ad7))
+
 ## [0.23.1](https://github.com/rimzzlabs/lanjut/compare/v0.23.0...v0.23.1) (2026-10-10)
 
 
