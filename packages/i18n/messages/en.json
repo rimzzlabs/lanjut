@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_26_0": [
+          {
+            "title": "Developer mode: your resume as text",
+            "description": "Turn on Developer mode in Preferences, and the editor gets a Form and Code switch. Code shows your resume as Markdown, YAML, or JSON, alone or beside the page, and the page follows the text as you type. Lanjut does not apply a text that has an error, so your resume stays as it was. Developer mode is off until you turn it on."
+          }
+        ],
         "0_25_0": [
           {
             "title": "One tab edits at a time",
@@ -839,6 +845,8 @@
     "themeSystem": "System",
     "languageDescription": "The language of the app. Each resume keeps its own.",
     "animationDescription": "Off stops movement on screen. System follows your device.",
+    "developerMode": "Developer mode",
+    "developerModeDescription": "Adds a Form and Code switch to the editor. Edit a resume as Markdown, YAML, or JSON.",
     "active": "Active",
     "useProfile": "Use this profile",
     "draftHint": "Not saved yet",
@@ -1454,6 +1462,27 @@
       "createNew": "Create a new resume",
       "imported": "Resume imported",
       "pastedTitle": "Pasted resume"
+    },
+    "code": {
+      "modeLabel": "Editor mode",
+      "modeForm": "Form",
+      "modeCode": "Code",
+      "viewLabel": "View",
+      "viewCode": "Code",
+      "viewSplit": "Split",
+      "viewPreview": "Preview",
+      "formatLabel": "Format",
+      "label": "Resume as {format}",
+      "keys": "<key>Tab</key> indents. <key>Esc</key> then <key>Tab</key> leaves.",
+      "statusValid": "Applied",
+      "statusInvalid": "Not applied",
+      "statusPending": "Checking",
+      "moreIssues": "+{count} more",
+      "ignored": "{count, plural, one {Applied, but # block has no field in its section and is left out} other {Applied, but # blocks have no field in their section and are left out}}",
+      "discardTitle": "Discard this text?",
+      "discardDescription": "The text has an error, so Lanjut did not apply it. The resume keeps its last valid version.",
+      "discardCancel": "Keep editing",
+      "discardConfirm": "Discard"
     },
     "saveStatus": {
       "saved": "Saved on this device",

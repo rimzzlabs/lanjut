@@ -1,5 +1,20 @@
 export { useChangelogStore } from "./changelog-store";
-export { type EditorTab, useEditorChromeStore } from "./editor-chrome-store";
+export {
+  type CodeView,
+  useDeveloperModeStore,
+} from "./developer-mode-store";
+export {
+  type EditorMode,
+  type EditorTab,
+  useEditorChromeStore,
+} from "./editor-chrome-store";
+export {
+  type CodeDraft,
+  isCodeModeOn,
+  liveDraft,
+  runAfterCodeGuard,
+  useEditorCodeStore,
+} from "./editor-code-store";
 export {
   type OpenFeedbackOptions,
   useFeedbackStore,

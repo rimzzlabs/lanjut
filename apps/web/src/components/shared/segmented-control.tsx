@@ -2,10 +2,15 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@lanjut/ui/components/toggle-group";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@lanjut/ui/components/tooltip";
 import { cn } from "@lanjut/ui/lib/utils";
 import { A, O, pipe, S } from "@mobily/ts-belt";
 import { motion } from "motion/react";
-import { useId } from "react";
+import { type ReactNode, useId } from "react";
 import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 
 export interface SegmentedItem {
@@ -14,6 +19,8 @@ export interface SegmentedItem {
   label: string;
   /** Full accessible name announced to assistive tech, e.g. "English". */
   ariaLabel?: string;
+  /** Shown in place of the label, which then names the item in a tooltip. */
+  icon?: ReactNode;
 }
 
 const INSTANT = { duration: 0 };
@@ -45,7 +52,6 @@ interface SegmentedControlProps {
  */
 export function SegmentedControl(props: SegmentedControlProps) {
   const layoutId = useId();
-  const reduceMotion = useReducedMotionPreference();
 
   return (
     <ToggleGroup
@@ -61,32 +67,72 @@ export function SegmentedControl(props: SegmentedControlProps) {
         props.className,
       )}
     >
-      {props.items.map((item) => {
-        const active = item.value === props.value;
-        const accessibleName = accessibleNameOf(item);
-        return (
-          <ToggleGroupItem
-            key={item.value}
-            value={item.value}
-            aria-label={accessibleName}
-            className={cn(
-              "relative min-w-9 cursor-pointer rounded-xl px-2.5 text-xs transition-colors hover:bg-transparent focus-visible:ring-2 aria-pressed:bg-transparent",
-              active && "text-foreground",
-              !active && "text-muted-foreground hover:text-foreground",
-            )}
-          >
-            {active && (
-              <motion.span
-                aria-hidden
-                layoutId={layoutId}
-                className="absolute inset-0 rounded-xl bg-background shadow-sm"
-                transition={reduceMotion ? INSTANT : PILL_SPRING}
-              />
-            )}
-            <span className="relative z-10">{item.label}</span>
-          </ToggleGroupItem>
-        );
-      })}
+      {props.items.map((item) => (
+        <SegmentedControlItem
+          key={item.value}
+          item={item}
+          active={item.value === props.value}
+          layoutId={layoutId}
+        />
+      ))}
     </ToggleGroup>
+  );
+}
+
+interface SegmentedControlItemProps {
+  item: SegmentedItem;
+  active: boolean;
+  layoutId: string;
+}
+
+function SegmentedControlItem(props: SegmentedControlItemProps) {
+  const { item, active, layoutId } = props;
+  const reduceMotion = useReducedMotionPreference();
+  const name = accessibleNameOf(item);
+  const className = cn(
+    "relative min-w-9 cursor-pointer rounded-xl px-2.5 text-xs transition-colors hover:bg-transparent focus-visible:ring-2 aria-pressed:bg-transparent",
+    active && "text-foreground",
+    !active && "text-muted-foreground hover:text-foreground",
+  );
+  const content = (
+    <>
+      {active && (
+        <motion.span
+          aria-hidden
+          layoutId={layoutId}
+          className="absolute inset-0 rounded-xl bg-background shadow-sm"
+          transition={reduceMotion ? INSTANT : PILL_SPRING}
+        />
+      )}
+      <span className="relative z-10">{item.icon ?? item.label}</span>
+    </>
+  );
+
+  if (!item.icon) {
+    return (
+      <ToggleGroupItem
+        value={item.value}
+        aria-label={name}
+        className={className}
+      >
+        {content}
+      </ToggleGroupItem>
+    );
+  }
+  return (
+    <Tooltip>
+      <TooltipTrigger
+        render={
+          <ToggleGroupItem
+            value={item.value}
+            aria-label={name}
+            className={className}
+          />
+        }
+      >
+        {content}
+      </TooltipTrigger>
+      <TooltipContent>{item.label}</TooltipContent>
+    </Tooltip>
   );
 }

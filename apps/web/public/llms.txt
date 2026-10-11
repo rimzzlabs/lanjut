@@ -19,6 +19,7 @@
 - Templates: six (Awal, Ketat, Luasa, Tebal, Klasik, Ketik). A template changes the look only, never the reading order.
 - Readiness: a meter shows what a resume still needs, and counts only the person's own words.
 - Languages: English and Indonesian, for the app and for a resume's headings and dates.
+- Developer mode: off by default. With it on in Preferences, the editor shows a resume as Markdown, YAML, or JSON beside the page, and the page follows the text.
 - Profiles: one profile per kind of job. A profile and its resumes back up to one file that imports on another device.
 - Platforms: any current browser, and a macOS app (macOS 13 or later).
 

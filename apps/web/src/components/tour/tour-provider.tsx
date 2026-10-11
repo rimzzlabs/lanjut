@@ -62,6 +62,8 @@ function prepareStep(tourName: string | null, stepIndex: number) {
 function handleTourStart(tourName: string | null) {
   if (!tourName) return;
   useTourStore.getState().markSeen(tourName);
+  // The tours point at the forms, which the code mode does not show.
+  useEditorChromeStore.getState().setMode("form");
   prepareStep(tourName, 0);
 }
 

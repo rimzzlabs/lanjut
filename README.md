@@ -37,6 +37,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Theme toggle and one settings menu (language, animation) in the landing and app navbars. The animation setting (System, On, Off) follows the operating system's reduced-motion setting on System
 - Export to PDF (linear reading order preserved) and plain text / .docx
 - Copy, download, and re-import a résumé as JSON or YAML, from a file or as pasted text shown in color
+- Developer mode (off by default, in Preferences): a Form/Code switch in the editor shows the résumé as Markdown, YAML, or JSON in three views (code, split, preview). The page follows the text as you type, and a text with an error never reaches the résumé
 - Back up a profile with all its résumés as one small file and import it on another device; nothing goes to a server, an import never deletes anything, and where both devices have a résumé the newer one wins
 - A readiness meter that shows what your résumé still needs, counting only your own words, never the sample's
 - Guided tours of the library, templates, profiles, and editor for first-time users
@@ -72,7 +73,8 @@ Every template renders the same linear block sequence, so switching templates ne
 | Icons                | Phosphor (@phosphor-icons/react)                                         |
 | Styling              | Tailwind CSS                                                             |
 | Rich text editor     | TipTap                                                                   |
-| Syntax colors        | Lezer (JSON and YAML parsers, in the paste dialog)                       |
+| Syntax colors        | Lezer (JSON and YAML parsers, in the paste dialog and the code mode)     |
+| Markdown             | comark (reads the Markdown of the code mode)                             |
 | Forms                | react-hook-form + zod                                                    |
 | Drag and drop        | @dnd-kit                                                                 |
 | Export               | takumi-pdf (PDF from the preview HTML), docx                             |

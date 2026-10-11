@@ -12,13 +12,18 @@ const LAYER =
  * caret, and the selection, and draws its own glyphs transparent. A mirror
  * under it draws the same text from `highlighted`. Both sit in one grid cell,
  * so the cell grows with the text and the frame scrolls the two as one. Give
- * the frame a height through `className`.
+ * the frame a height through `className`. `layerClassName` goes to both
+ * layers, so a change of padding keeps them alike.
  */
 function CodeTextarea({
   className,
+  layerClassName,
   highlighted,
   ...props
-}: React.ComponentProps<"textarea"> & { highlighted: React.ReactNode }) {
+}: React.ComponentProps<"textarea"> & {
+  highlighted: React.ReactNode;
+  layerClassName?: string;
+}) {
   return (
     <div
       data-slot="code-textarea"
@@ -29,7 +34,10 @@ function CodeTextarea({
     >
       <ScrollArea className="min-h-0">
         <div className="grid min-h-full">
-          <pre aria-hidden className={cn(LAYER, "pointer-events-none")}>
+          <pre
+            aria-hidden
+            className={cn(LAYER, layerClassName, "pointer-events-none")}
+          >
             {highlighted}
             {/* A textarea ending in a line break shows an empty last line; a
                 pre needs one more break to show it too. */}
@@ -43,6 +51,7 @@ function CodeTextarea({
             autoCorrect="off"
             className={cn(
               LAYER,
+              layerClassName,
               "resize-none overflow-hidden bg-transparent text-transparent caret-foreground outline-none selection:bg-primary/25 placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
             )}
             {...props}

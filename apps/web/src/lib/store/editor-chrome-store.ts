@@ -4,6 +4,9 @@ import { create } from "zustand";
 /** The editor sidebar's tabs, in display order. */
 export type EditorTab = "content" | "layout" | "styling" | "document";
 
+/** How the résumé is edited: the forms, or its text in the code mode. */
+export type EditorMode = "form" | "code";
+
 /**
  * Imperative control over the editor's sidebar chrome: which tab is active and,
  * on small screens, whether the editing sheet is open. Held in a store (rather
@@ -14,6 +17,9 @@ export type EditorTab = "content" | "layout" | "styling" | "document";
 interface EditorChromeState {
   activeTab: EditorTab;
   setActiveTab: (tab: EditorTab) => void;
+  /** Read it through `useEditorMode`: the code mode needs Developer mode on. */
+  mode: EditorMode;
+  setMode: (mode: EditorMode) => void;
   /** Only meaningful below xl, where the sidebar renders as a sheet. */
   sheetOpen: boolean;
   setSheetOpen: (open: boolean) => void;
@@ -32,6 +38,8 @@ interface EditorChromeState {
 export const useEditorChromeStore = create<EditorChromeState>()((set) => ({
   activeTab: "content",
   setActiveTab: (activeTab) => set({ activeTab }),
+  mode: "form",
+  setMode: (mode) => set({ mode }),
   sheetOpen: false,
   setSheetOpen: (sheetOpen) => set({ sheetOpen }),
   openSections: [],
