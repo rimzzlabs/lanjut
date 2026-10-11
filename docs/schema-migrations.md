@@ -102,6 +102,9 @@ other version, save this window's version as a copy, restore a deleted item, or
 close it. Writes of the open résumé run one after another (`queueOpenWrite`), so
 a window never conflicts with its own previous write.
 
+The revision check is the second guard. The first is the edit lock, which lets
+one window edit an item at a time: see `docs/multi-window.md`.
+
 ## Pre-migration backups
 
 Before the repository (`packages/resume/src/db/resume.ts`) migrates a document, it snapshots
