@@ -27,7 +27,8 @@ import {
   migrateV22toV23,
   migrateV23toV24,
   migrateV24toV25,
-} from "./migrations-v11-v25";
+  migrateV25toV26,
+} from "./migrations-v11-v26";
 import { CURRENT_SCHEMA_VERSION, type Resume } from "./types";
 
 /**
@@ -68,6 +69,7 @@ const LADDER: Record<number, Migration> = {
   22: migrateV22toV23,
   23: migrateV23toV24,
   24: migrateV24toV25,
+  25: migrateV25toV26,
 };
 
 /** The persisted schemaVersion of a raw document; 0 when absent or malformed. */

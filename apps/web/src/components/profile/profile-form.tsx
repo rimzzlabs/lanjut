@@ -32,14 +32,16 @@ import { ProfileFormText } from "./profile-form-text";
 interface ProfileFormProps {
   profile: Profile;
   submitLabel: string;
-  onSubmit: (profile: Profile) => Promise<void>;
+  /** Resolves whether the profile was saved. A refused save keeps the form as typed. */
+  onSubmit: (profile: Profile) => Promise<boolean>;
   /** Shows Cancel beside the submit button. */
   onCancel?: () => void;
 }
 
 /**
  * A profile's name, then the personal information and the summary it fills
- * new résumés with. Remount it (via `key`) to load another profile.
+ * new résumés with. Remount it (via `key`) to load another profile, or a new
+ * revision of this one.
  */
 export function ProfileForm(props: ProfileFormProps) {
   const t = useTranslations();
@@ -52,8 +54,10 @@ export function ProfileForm(props: ProfileFormProps) {
   const { isDirty, isSubmitting } = form.formState;
 
   const onSubmit = form.handleSubmit(async (values) => {
-    await props.onSubmit(applyProfileFormValues(props.profile, values));
-    form.reset(values);
+    const saved = await props.onSubmit(
+      applyProfileFormValues(props.profile, values),
+    );
+    if (saved) form.reset(values);
   });
 
   return (

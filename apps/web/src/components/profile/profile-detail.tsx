@@ -1,4 +1,5 @@
 import { createProfile } from "@lanjut/resume";
+import { revisionOf } from "@lanjut/resume/db";
 import { cn } from "@lanjut/ui/lib/utils";
 import { useState } from "react";
 import { useTranslations } from "use-intl";
@@ -54,7 +55,7 @@ function ProfileDetailSaved(props: { id: string; framed: boolean }) {
           <ProfileBackup key={`backup-${profile.id}`} profile={profile} />
         </div>
         <ProfileForm
-          key={profile.id}
+          key={`${profile.id}:${revisionOf(profile)}`}
           profile={profile}
           submitLabel={t("save")}
           onSubmit={saveProfile}
@@ -89,6 +90,7 @@ function ProfileDetailNew(props: {
         onSubmit={async (profile) => {
           await addProfile(profile);
           props.onCreated(profile.id);
+          return true;
         }}
       />
     </section>

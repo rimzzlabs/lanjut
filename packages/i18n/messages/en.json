@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_24_1": [
+          {
+            "title": "Bug fixes",
+            "description": "If the same resume or profile is open in two tabs, saving in one no longer overwrites changes made in the other. Lanjut asks which version to keep, and can save yours as a copy."
+          }
+        ],
         "0_24_0": [
           {
             "title": "Works offline",
@@ -1649,5 +1655,15 @@
         "answer": "Yes. The header photo is optional and off by default. It shows in the PDF and the .docx, the .txt leaves it out, and it never changes the text a parser reads."
       }
     }
+  },
+  "conflict": {
+    "changedTitle": "Another window changed this {item, select, resume {resume} other {profile}}",
+    "changedDescription": "Your last changes in this window are not saved. Keep the version from the other window, or save yours as a copy.",
+    "keepOther": "Keep the other version",
+    "saveCopy": "Save mine as a copy",
+    "deletedTitle": "This {item, select, resume {resume} other {profile}} was deleted in another window",
+    "deletedDescription": "Your changes in this window are not saved. Restore it with your changes, or close it.",
+    "restore": "Restore it",
+    "close": "Close"
   }
 }

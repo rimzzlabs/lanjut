@@ -5,7 +5,7 @@ import type { JSONContent } from "@tiptap/core";
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 25;
+export const CURRENT_SCHEMA_VERSION = 26;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
@@ -212,6 +212,13 @@ export interface Resume {
   bodyScale?: number;
   header: Header;
   sections: ReadonlyArray<Section>;
+  /**
+   * How many times the stored copy was written. Each write adds one, and a
+   * write that expects another number is refused, so a window never saves over
+   * a copy it did not read. Absent on résumés from before it, which read as 0.
+   * Storage only: it never renders and the interchange leaves it out.
+   */
+  revision?: number;
   /** ISO 8601. */
   createdAt: string;
   /** ISO 8601. */

@@ -1,5 +1,6 @@
 import {
   createGuestProfile,
+  createProfile,
   GUEST_PROFILE_ID,
   type Profile,
   resolveResumeProfileId,
@@ -9,27 +10,48 @@ import {
   getActiveProfileId,
   listProfiles,
   putProfile,
+  type RevisionError,
+  revisionOf,
   setActiveProfileId,
 } from "@lanjut/resume/db";
-import { A, O, pipe } from "@mobily/ts-belt";
+import { A, O, pipe, R } from "@mobily/ts-belt";
 import { create } from "zustand";
 import { useResumeStore } from "./resume-store";
 
 type ProfileStatus = "idle" | "loading" | "ready" | "error";
+
+/** A save that another window got to first, with this window's version. */
+export interface ProfileConflict {
+  kind: RevisionError;
+  profile: Profile;
+}
 
 interface ProfileStoreState {
   /** Saved profiles, oldest first. Holds the unsaved guest when none is saved. */
   profiles: ReadonlyArray<Profile>;
   activeId: string;
   status: ProfileStatus;
+  /** Set when a save is refused, until the person picks a version. */
+  conflict: ProfileConflict | null;
   hydrate: () => Promise<void>;
   /**
    * Save a new profile and make it the active one. The guest is saved with
    * it, so the résumés it holds keep a profile of their own.
    */
   addProfile: (profile: Profile) => Promise<void>;
-  /** Save changes to a profile, the unsaved guest included. */
-  saveProfile: (profile: Profile) => Promise<void>;
+  /**
+   * Save changes to a profile, the unsaved guest included. Resolves false when
+   * another window changed or deleted it first, and sets `conflict`.
+   */
+  saveProfile: (profile: Profile) => Promise<boolean>;
+  /** Drop this window's version and load the stored profiles. */
+  keepStoredProfile: () => Promise<void>;
+  /** Save this window's version as a new profile named `name`. */
+  saveProfileAsCopy: (name: string) => Promise<void>;
+  /** Write this window's version back after another window deleted it. */
+  restoreProfile: () => Promise<void>;
+  /** Drop this window's version of a profile another window deleted. */
+  closeDeletedProfile: () => Promise<void>;
   /**
    * Save a profile from a backup file as it is, edit time included, unless
    * this device's copy is kept, then make it the active one. The guest is
@@ -70,6 +92,7 @@ export const useProfileStore = create<ProfileStoreState>()((set, get) => ({
   profiles: GUEST_ONLY,
   activeId: GUEST_PROFILE_ID,
   status: "idle",
+  conflict: null,
 
   async hydrate() {
     set({ status: "loading" });
@@ -95,11 +118,12 @@ export const useProfileStore = create<ProfileStoreState>()((set, get) => ({
       get().profiles,
       (item) => item.id === GUEST_PROFILE_ID,
     );
-    await Promise.all(A.map(guest, putProfile));
-    await putProfile(profile);
+    await Promise.all(A.map(guest, (item) => putProfile(item, "replace")));
+    const saved = await putProfile(profile, "new");
+    const written = R.getWithDefault(saved, profile);
     await setActiveProfileId(profile.id);
     set((state) => ({
-      profiles: upsert(state.profiles, profile),
+      profiles: upsert(state.profiles, written),
       activeId: profile.id,
     }));
   },
@@ -125,19 +149,68 @@ export const useProfileStore = create<ProfileStoreState>()((set, get) => ({
       get().profiles,
       (item) => item.id === GUEST_PROFILE_ID && item.id !== profile.id,
     );
-    await Promise.all(A.map(guest, putProfile));
-    if (!keepLocal) await putProfile(profile);
+    await Promise.all(A.map(guest, (item) => putProfile(item, "replace")));
+    if (!keepLocal) {
+      const saved = await putProfile(profile, "replace");
+      const written = R.getWithDefault(saved, profile);
+      set((state) => ({ profiles: upsert(state.profiles, written) }));
+    }
     await setActiveProfileId(profile.id);
-    set((state) => ({
-      profiles: keepLocal ? state.profiles : upsert(state.profiles, profile),
-      activeId: profile.id,
-    }));
+    set({ activeId: profile.id });
   },
 
   async saveProfile(profile) {
     const next = { ...profile, updatedAt: new Date().toISOString() };
-    await putProfile(next);
-    set((state) => ({ profiles: upsert(state.profiles, next) }));
+    // The guest has one fixed id and nothing to conflict with until saved.
+    const expected =
+      profile.id === GUEST_PROFILE_ID ? "replace" : revisionOf(profile);
+    const saved = await putProfile(next, expected);
+    return R.match(
+      saved,
+      (written) => {
+        set((state) => ({ profiles: upsert(state.profiles, written) }));
+        return true;
+      },
+      (kind) => {
+        set({ conflict: { kind, profile: next } });
+        return false;
+      },
+    );
+  },
+
+  async keepStoredProfile() {
+    await reloadProfiles();
+  },
+
+  async saveProfileAsCopy(name) {
+    const conflict = get().conflict;
+    if (!conflict) return;
+    const copy: Profile = {
+      ...createProfile(name),
+      header: conflict.profile.header,
+      summary: conflict.profile.summary,
+    };
+    await putProfile(copy, "new");
+    await reloadProfiles();
+  },
+
+  async restoreProfile() {
+    const conflict = get().conflict;
+    if (!conflict) return;
+    const saved = await putProfile(conflict.profile, "new");
+    R.match(
+      saved,
+      (written) =>
+        set((state) => ({
+          profiles: upsert(state.profiles, written),
+          conflict: null,
+        })),
+      (kind) => set({ conflict: { ...conflict, kind } }),
+    );
+  },
+
+  async closeDeletedProfile() {
+    await reloadProfiles();
   },
 
   async removeProfile(id, targetId) {
@@ -167,6 +240,21 @@ export const useProfileStore = create<ProfileStoreState>()((set, get) => ({
     await setActiveProfileId(id);
   },
 }));
+
+/**
+ * Reads the stored profiles again after a conflict, quietly: the list keeps
+ * showing while it loads, and the active profile stays when it still exists.
+ */
+async function reloadProfiles(): Promise<void> {
+  const profiles = withGuest(await listProfiles());
+  const activeId = useProfileStore.getState().activeId;
+  const known = A.some(profiles, (item) => item.id === activeId);
+  useProfileStore.setState({
+    profiles,
+    activeId: known ? activeId : firstId(profiles),
+    conflict: null,
+  });
+}
 
 /** The active profile. Falls back to the first, so it is always defined. */
 export function selectActiveProfile(state: ProfileStoreState): Profile {

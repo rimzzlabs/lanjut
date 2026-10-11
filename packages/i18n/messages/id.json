@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_24_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Kalau resume atau profil yang sama terbuka di dua tab, menyimpan di satu tab nggak lagi menimpa perubahan dari tab lain. Lanjut nanya versi mana yang mau dipakai, dan bisa simpan punyamu sebagai salinan."
+          }
+        ],
         "0_24_0": [
           {
             "title": "Bisa dipakai offline",
@@ -1649,5 +1655,15 @@
         "answer": "Bisa. Foto di header itu opsional dan mati secara bawaan. Foto muncul di PDF dan .docx, file .txt nggak menyertakannya, dan foto nggak pernah mengubah teks yang dibaca parser."
       }
     }
+  },
+  "conflict": {
+    "changedTitle": "{item, select, resume {Resume} other {Profil}} ini diubah di jendela lain",
+    "changedDescription": "Perubahan terakhirmu di jendela ini belum tersimpan. Pakai versi dari jendela lain, atau simpan punyamu sebagai salinan.",
+    "keepOther": "Pakai versi lain",
+    "saveCopy": "Simpan punyaku sebagai salinan",
+    "deletedTitle": "{item, select, resume {Resume} other {Profil}} ini dihapus di jendela lain",
+    "deletedDescription": "Perubahanmu di jendela ini belum tersimpan. Pulihkan dengan perubahanmu, atau tutup.",
+    "restore": "Pulihkan",
+    "close": "Tutup"
   }
 }

@@ -1,6 +1,16 @@
 import { create } from "zustand";
 
-export type SaveStatus = "saved" | "saving" | "failed" | "outdated";
+/**
+ * `outdated`: a newer build migrated the stored copy. `changed` and `deleted`:
+ * another window wrote or deleted it since this window read it.
+ */
+export type SaveStatus =
+  | "saved"
+  | "saving"
+  | "failed"
+  | "outdated"
+  | "changed"
+  | "deleted";
 
 interface SaveStatusState {
   status: SaveStatus;

@@ -19,6 +19,8 @@ export interface Profile {
   name: string;
   header: Header;
   summary: JSONContent;
+  /** How many times the stored copy was written; see `Resume.revision`. */
+  revision?: number;
   /** ISO 8601. */
   createdAt: string;
   /** ISO 8601. */

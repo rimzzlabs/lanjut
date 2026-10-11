@@ -261,3 +261,12 @@ function withV24CompanyContext(
 export function migrateV24toV25(doc: ResumeDoc): ResumeDoc {
   return structuredClone(doc);
 }
+
+/**
+ * v25→v26: the document gains an optional `revision`, the count of its writes.
+ * Absence reads as 0, so nothing is reshaped; the step exists to stamp the
+ * version and keep the ladder gap-free.
+ */
+export function migrateV25toV26(doc: ResumeDoc): ResumeDoc {
+  return structuredClone(doc);
+}

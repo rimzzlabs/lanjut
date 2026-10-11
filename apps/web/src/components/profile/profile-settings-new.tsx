@@ -24,6 +24,7 @@ export function ProfileSettingsNew() {
         onSubmit={async (profile) => {
           await addProfile(profile);
           openAt("profile");
+          return true;
         }}
       />
     </div>
