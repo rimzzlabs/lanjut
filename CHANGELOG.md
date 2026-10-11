@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.0](https://github.com/rimzzlabs/lanjut/compare/v0.24.1...v0.25.0) (2026-10-11)
+
+
+### Features
+
+* let one window edit a resume or profile at a time ([#237](https://github.com/rimzzlabs/lanjut/issues/237)) ([012554a](https://github.com/rimzzlabs/lanjut/commit/012554af1e15deb918fc0f499528aa7e951417a1))
+
 ## [0.24.1](https://github.com/rimzzlabs/lanjut/compare/v0.24.0...v0.24.1) (2026-10-11)
 
 
