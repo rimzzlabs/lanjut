@@ -5,6 +5,7 @@ import { useId } from "react";
 import { useTranslations } from "use-intl";
 import { useProfileResumeCount } from "@/hooks/use-profile-resumes";
 import { type LibraryView, useLibraryViewStore } from "@/lib/store";
+import { PlatformEmptyState } from "./platform-empty-state";
 import { PlatformLibraryContributors } from "./platform-library-contributors";
 import { PlatformLibraryEmpty } from "./platform-library-empty";
 import { PlatformLibraryStart } from "./platform-library-start/platform-library-start";
@@ -28,6 +29,8 @@ const MAX_CARDS = 8;
 export function PlatformLibrarySkeleton() {
   const count = useProfileResumeCount();
 
+  if (count === null) return <PlatformLibraryUncountedSkeleton />;
+
   if (count === 0) {
     return (
       <>
@@ -42,9 +45,30 @@ export function PlatformLibrarySkeleton() {
       <PlatformLibraryContinueSkeleton />
       <PlatformLibraryStart />
       <PlatformLibraryContributors />
-      {count !== null && count > 1 && (
+      {count > 1 && (
         <PlatformResumeCollectionSkeleton count={Math.min(count, MAX_CARDS)} />
       )}
+    </>
+  );
+}
+
+/**
+ * Before the résumés are counted, as in the static shell. The library opens
+ * on the empty state or on the continue card, and the two differ in height,
+ * so both are here. globals.css shows the one that the last page load had
+ * (the head script marks it on <html>), and the start tiles stay in place.
+ */
+function PlatformLibraryUncountedSkeleton() {
+  return (
+    <>
+      <div className="contents" data-library-loading="empty">
+        <PlatformEmptyState scope="unknown" />
+      </div>
+      <div className="contents" data-library-loading="some">
+        <PlatformLibraryContinueSkeleton />
+        <PlatformLibraryStart />
+      </div>
+      <PlatformLibraryContributors />
     </>
   );
 }
@@ -65,10 +89,10 @@ function PlatformLibraryContinueSkeleton() {
           </PlatformPaperFrame>
         </div>
         <div className="flex min-w-0 flex-1 flex-col justify-center gap-4 px-4 py-2 sm:justify-between sm:px-6 sm:py-4">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1 sm:gap-2">
             <Skeleton className="h-6 w-1/2" />
             <Skeleton className="h-4 w-1/3" />
-            <div className="sm:hidden">
+            <div className="mt-1 sm:hidden">
               <PlatformResumeReadinessLineSkeleton />
             </div>
           </div>

@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_26_1": [
+          {
+            "title": "Pages show at once",
+            "description": "When you open your library, the templates, your profiles, or a resume in a browser, the page layout now shows right away and your content fills in a moment later. The loading animation that covered the whole page no longer shows there."
+          }
+        ],
         "0_26_0": [
           {
             "title": "Developer mode: your resume as text",

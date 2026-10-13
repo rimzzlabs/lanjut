@@ -9,13 +9,16 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { LATEST_CHANGELOG_VERSION } from "@/lib/changelog";
 import { CHANGELOG_PATHNAME } from "@/lib/routes";
 import { useChangelogStore } from "@/lib/store";
+import { useIsStaticShell } from "./platform-static-shell";
 
 /** The link to the changelog, with a dot until the latest release is read. */
 export function PlatformSidebarChangelog() {
   const t = useTranslations("platform.sidebar");
   const pathname = usePathname();
   const lastSeenVersion = useChangelogStore((state) => state.lastSeenVersion);
-  const hasUnseen = lastSeenVersion !== LATEST_CHANGELOG_VERSION;
+  // The static shell cannot know what the person read, so it shows no dot.
+  const isStatic = useIsStaticShell();
+  const hasUnseen = !isStatic && lastSeenVersion !== LATEST_CHANGELOG_VERSION;
 
   return (
     <SidebarMenuItem>

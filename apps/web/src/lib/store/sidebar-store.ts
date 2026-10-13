@@ -16,7 +16,7 @@ export const SIDEBAR_STATE_KEY = "lanjut:sidebar-state";
 
 /**
  * Saves the sidebar state where the head script finds it on the next page
- * load, and marks it on <html> for the pre-hydration CSS in globals.css.
+ * load, and marks it on <html> for the width rules in globals.css.
  */
 function saveSidebarState(open: boolean) {
   const state = open ? "expanded" : "collapsed";
@@ -28,11 +28,15 @@ function saveSidebarState(open: boolean) {
   }
 }
 
+/** The state the head script read from storage. A build has no document, and it renders expanded. */
+function savedOpen(): boolean {
+  if (typeof document === "undefined") return true;
+  return document.documentElement.dataset.sidebar !== "collapsed";
+}
+
 interface SidebarStoreState {
   open: boolean;
   setOpen: (open: boolean) => void;
-  /** Takes the state the head script read from storage. */
-  restoreOpen: () => void;
   locale: Locale | null;
   setLocale: (locale: Locale) => void;
   mobileControl: ((open: boolean) => void) | null;
@@ -43,13 +47,11 @@ interface SidebarStoreState {
 export const useSidebarStore = create<SidebarStoreState>()(
   persist(
     (set, get) => ({
-      open: true,
+      open: savedOpen(),
       setOpen: (open) => {
         set({ open });
         saveSidebarState(open);
       },
-      restoreOpen: () =>
-        set({ open: document.documentElement.dataset.sidebar !== "collapsed" }),
       locale: null,
       setLocale: (locale) => set({ locale }),
       mobileControl: null,

@@ -1,8 +1,7 @@
 ---
 import { type Locale, localeStaticPaths } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
-import { PlatformApp } from "@/components/platform/platform-app";
-import PlatformLoading from "@/components/platform/platform-loading.astro";
+import PlatformAppPage from "@/components/platform/platform-app-page.astro";
 import RootLayout from "@/components/shared/root-layout.astro";
 
 export function getStaticPaths() {
@@ -22,7 +21,5 @@ const t = getTranslator(locale, "meta");
   title={t("templateTitle")}
   description={t("templateDescription")}
 >
-  <PlatformApp client:only="react" locale={locale} pathname={Astro.url.pathname}>
-    <PlatformLoading slot="fallback" locale={locale} />
-  </PlatformApp>
+  <PlatformAppPage locale={locale} pathname={Astro.url.pathname} />
 </RootLayout>

@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_26_1": [
+          {
+            "title": "Halaman langsung tampil",
+            "description": "Saat kamu membuka daftar resume, template, profil, atau sebuah resume di browser, tata letak halamannya sekarang langsung muncul, lalu isinya menyusul sesaat kemudian. Animasi loading yang menutupi satu halaman penuh nggak muncul lagi di sana."
+          }
+        ],
         "0_26_0": [
           {
             "title": "Mode developer: resume kamu sebagai teks",
