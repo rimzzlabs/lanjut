@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.1](https://github.com/rimzzlabs/lanjut/compare/v0.26.0...v0.26.1) (2026-10-13)
+
+
+### Performance
+
+* show the app shell at once on every app page ([#241](https://github.com/rimzzlabs/lanjut/issues/241)) ([abc0f63](https://github.com/rimzzlabs/lanjut/commit/abc0f63cbda3bc6ed1ba96b6a941c15526217b4d))
+
 ## [0.26.0](https://github.com/rimzzlabs/lanjut/compare/v0.25.0...v0.26.0) (2026-10-11)
 
 
