@@ -8,7 +8,6 @@ export function PlatformSidebarProvider(props: { children: ReactNode }) {
 
   useEffect(() => {
     void useSidebarStore.persist.rehydrate();
-    useSidebarStore.getState().restoreOpen();
   }, []);
 
   return (

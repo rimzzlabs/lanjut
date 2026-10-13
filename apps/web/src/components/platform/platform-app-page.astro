@@ -1,0 +1,41 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import {
+  PlatformApp,
+  PlatformAppStatic,
+  STATIC_SHELL_ATTRIBUTE,
+} from "./platform-app";
+
+interface StaticShell {
+  pathname: string;
+  /** Set when one file answers more than one route. The head script picks the shell to show. */
+  view?: "library" | "editor";
+}
+
+interface Props {
+  locale: Locale;
+  pathname: string;
+  /** One static shell for each route that this file answers. The default is the page itself. */
+  shells?: ReadonlyArray<StaticShell>;
+}
+
+const { locale, pathname } = Astro.props;
+const shells = Astro.props.shells ?? [{ pathname }];
+---
+
+{/* The app mounts client-only, because it reads everything from storage. Until
+    it does, the page shows the same app as static HTML: the shell around a
+    skeleton of the page. The static shell sits beside the island, not in its
+    fallback slot: Astro writes a slot into the page twice. */}
+<PlatformApp client:only="react" locale={locale} pathname={pathname} />
+{
+  shells.map((shell) => (
+    <div
+      class="contents"
+      data-workspace-view={shell.view}
+      {...{ [STATIC_SHELL_ATTRIBUTE]: "" }}
+    >
+      <PlatformAppStatic locale={locale} pathname={shell.pathname} />
+    </div>
+  ))
+}

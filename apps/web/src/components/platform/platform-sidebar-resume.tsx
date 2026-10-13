@@ -15,12 +15,14 @@ import {
   useProfileResumes,
 } from "@/hooks/use-profile-resumes";
 import { Link } from "@/i18n/navigation";
+import { RECENT_LIMIT } from "@/lib/recent-rows";
 import { EDITOR_PATHNAME } from "@/lib/routes";
 import { PlatformSidebarResumeCreate } from "./platform-sidebar-resume-create";
 import { PlatformSidebarResumeItem } from "./platform-sidebar-resume-item";
 
-const RECENT_LIMIT = 5;
-const SKELETON_KEYS = ["a", "b", "c"];
+// One for each row the list can show: RECENT_LIMIT résumés and "View all".
+// globals.css keeps as many as the list had on the last page load.
+const LOADING_KEYS = ["a", "b", "c", "d", "e", "f"];
 
 /**
  * The active profile's résumés edited last, newest first. With none saved
@@ -32,11 +34,15 @@ export function PlatformSidebarResume() {
   const ready = useProfileLibraryReady();
   const t = useTranslations("platform.sidebar");
   const recent = A.take(index, RECENT_LIMIT);
+  const hasMore = A.length(index) > RECENT_LIMIT;
 
   if (ready && A.isEmpty(index)) return null;
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+    <SidebarGroup
+      data-recent-loading={ready ? undefined : ""}
+      className="group-data-[collapsible=icon]:hidden"
+    >
       <SidebarGroupLabel>
         <span>{t("recent")}</span>
 
@@ -45,7 +51,7 @@ export function PlatformSidebarResume() {
 
       <SidebarMenu>
         {!ready &&
-          SKELETON_KEYS.map((key) => (
+          LOADING_KEYS.map((key) => (
             <SidebarMenuItem key={key}>
               <SidebarMenuSkeleton />
             </SidebarMenuItem>
@@ -54,7 +60,7 @@ export function PlatformSidebarResume() {
           recent.map((resume) => (
             <PlatformSidebarResumeItem key={resume.id} resume={resume} />
           ))}
-        {ready && A.length(index) > RECENT_LIMIT && (
+        {ready && hasMore && (
           <SidebarMenuItem>
             <SidebarMenuButton
               className="text-sidebar-foreground/70"

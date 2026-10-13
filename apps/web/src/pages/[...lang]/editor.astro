@@ -1,9 +1,13 @@
 ---
-import { type Locale, localeStaticPaths } from "@lanjut/i18n/routing";
+import {
+  type Locale,
+  localeStaticPaths,
+  localizePath,
+} from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
-import { PlatformApp } from "@/components/platform/platform-app";
-import PlatformLoading from "@/components/platform/platform-loading.astro";
+import PlatformAppPage from "@/components/platform/platform-app-page.astro";
 import RootLayout from "@/components/shared/root-layout.astro";
+import { editorHref } from "@/lib/routes";
 
 export function getStaticPaths() {
   return localeStaticPaths();
@@ -14,7 +18,12 @@ interface Props {
 }
 
 const locale = Astro.props.locale;
+const pathname = Astro.url.pathname;
 const t = getTranslator(locale, "meta");
+
+// This file answers the library and every `/editor/<id>`, so it holds a
+// static shell for each. Any id gives the editor's shell.
+const documentPathname = localizePath(editorHref("_"), locale);
 ---
 
 <RootLayout
@@ -22,7 +31,12 @@ const t = getTranslator(locale, "meta");
   title={t("editorTitle")}
   description={t("editorDescription")}
 >
-  <PlatformApp client:only="react" locale={locale} pathname={Astro.url.pathname}>
-    <PlatformLoading slot="fallback" locale={locale} />
-  </PlatformApp>
+  <PlatformAppPage
+    locale={locale}
+    pathname={pathname}
+    shells={[
+      { pathname, view: "library" },
+      { pathname: documentPathname, view: "editor" },
+    ]}
+  />
 </RootLayout>

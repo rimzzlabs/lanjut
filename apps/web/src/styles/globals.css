@@ -251,16 +251,47 @@
   margin-right: 0.5rem;
 }
 
-/* The sidebar store starts expanded. The head script marks a saved collapsed
-   state on <html>, and these rules match the shadcn icon collapse of the inset
-   sidebar until React restores the same state itself. Unlayered, so they win
-   over the utilities. */
+/* The head script marks a saved collapsed state on <html>, and it sets the icon
+   state on the sidebar of a static shell. These rules give the widths of the
+   shadcn icon collapse from the mark alone, so the sidebar never starts wide.
+   Unlayered, so they win over the utilities. */
 html[data-sidebar="collapsed"] [data-slot="sidebar-gap"] {
   width: calc(var(--sidebar-width-icon) + 1rem);
 }
 
 html[data-sidebar="collapsed"] [data-slot="sidebar-container"] {
   width: calc(var(--sidebar-width-icon) + 1rem + 2px);
+}
+
+/* The Recent list of the sidebar reads storage. The head script marks on <html>
+   the number of rows it had last, and its loading rows take that number, so the
+   groups under it stay in place. With no number, the group stays out, as it
+   does with no résumé. */
+html:not([data-recent]) [data-recent-loading],
+html[data-recent="0"] [data-recent-loading],
+html[data-recent="1"] [data-recent-loading] li:nth-child(n + 2),
+html[data-recent="2"] [data-recent-loading] li:nth-child(n + 3),
+html[data-recent="3"] [data-recent-loading] li:nth-child(n + 4),
+html[data-recent="4"] [data-recent-loading] li:nth-child(n + 5),
+html[data-recent="5"] [data-recent-loading] li:nth-child(n + 6) {
+  display: none;
+}
+
+/* The library opens on the empty state or on the Continue card, and its loading
+   state holds both. The same number picks one: the card for 1 or more, and the
+   empty state for 0 and for no number. */
+html[data-recent]:not([data-recent="0"]) [data-library-loading="empty"],
+html[data-recent="0"] [data-library-loading="some"],
+html:not([data-recent]) [data-library-loading="some"] {
+  display: none;
+}
+
+/* /editor and /editor/<id> are one file with a static shell for each route.
+   The head script names the route on <html>, and the other shell stays out.
+   With no script, the library shows. */
+html[data-workspace="editor"] [data-workspace-view="library"],
+html:not([data-workspace="editor"]) [data-workspace-view="editor"] {
+  display: none;
 }
 
 /* The landing hero entrance, in CSS so the static sections ship no JavaScript.

@@ -2,6 +2,7 @@ import { Sidebar, SidebarInset } from "@lanjut/ui/components/sidebar";
 import type { PropsWithChildren } from "react";
 import { PlatformDatabaseNotice } from "@/components/platform/platform-database-notice";
 import { PlatformFeedbackSheet } from "@/components/platform/platform-feedback-sheet";
+import { PlatformLibraryMemory } from "@/components/platform/platform-library-memory";
 import { PlatformNavbar } from "@/components/platform/platform-navbar";
 import { PlatformOfflineCache } from "@/components/platform/platform-offline-cache";
 import { PlatformSidebar } from "@/components/platform/platform-sidebar";
@@ -38,6 +39,7 @@ export function PlatformShell(props: PropsWithChildren) {
 
         <ProfileSettings />
         <PlatformDatabaseNotice />
+        <PlatformLibraryMemory />
         <PlatformOfflineCache />
         <PlatformWindowSync />
         <ProfileConflictNotice />

@@ -1,4 +1,11 @@
-import { lazy, type ReactNode, Suspense, useEffect } from "react";
+import {
+  type ComponentType,
+  lazy,
+  type ReactNode,
+  Suspense,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 import { useTranslations } from "use-intl";
 import { Redirect, Route, Switch } from "wouter";
 import { ChangelogPage } from "@/components/changelog/changelog-page";
@@ -7,6 +14,7 @@ import { PlatformAppRouter } from "@/components/platform/platform-app-router";
 import { PlatformDashboardSkeleton } from "@/components/platform/platform-dashboard-skeleton";
 import { PlatformProfilesSkeleton } from "@/components/platform/platform-profiles-skeleton";
 import { PlatformShell } from "@/components/platform/platform-shell";
+import { StaticShellContext } from "@/components/platform/platform-static-shell";
 import { PlatformTemplatesSkeleton } from "@/components/platform/platform-templates-skeleton";
 import { AppProviders, type IslandProps } from "@/components/shared/providers";
 import { useEditorId } from "@/hooks/use-editor-id";
@@ -63,32 +71,36 @@ const PAGE_SKELETONS: Record<LazyPage, ReactNode> = {
   profiles: <PlatformProfilesSkeleton />,
 };
 
-/**
- * The app: the shell around the library, the editor, the templates, the
- * profiles, and the changelog. One root serves `/editor`, `/template`,
- * `/profile`, and `/changelog`, so moving between them keeps the shell and
- * loads only the content, with a skeleton of that page inside the shell.
- */
-export function PlatformApp(props: IslandProps) {
+/** Marks the static shells that a page ships beside the app (`platform-app-page.astro`). */
+export const STATIC_SHELL_ATTRIBUTE = "data-static-shell";
+
+interface PlatformAppFrameProps extends IslandProps {
+  /** What the shell shows for the page of the current route. */
+  page: ComponentType<{ page: AppPage }>;
+}
+
+function PlatformAppFrame(props: PlatformAppFrameProps) {
+  const Page = props.page;
+
   return (
     <AppProviders locale={props.locale} pathname={props.pathname}>
       <PlatformAppRouter>
         <PlatformShell>
           <Switch>
             <Route path={TEMPLATE_PATHNAME}>
-              <PlatformAppPage page="templates" />
+              <Page page="templates" />
             </Route>
             <Route path={PROFILE_PATHNAME}>
-              <PlatformAppPage page="profiles" />
+              <Page page="profiles" />
             </Route>
             <Route path={CHANGELOG_PATHNAME}>
-              <PlatformAppPage page="changelog" />
+              <Page page="changelog" />
             </Route>
             <Route path={EDITOR_DOCUMENT_ROUTE}>
-              <PlatformAppPage page="editor" />
+              <Page page="editor" />
             </Route>
             <Route path={EDITOR_PATHNAME}>
-              <PlatformAppPage page="library" />
+              <Page page="library" />
             </Route>
             <Route>
               <Redirect to={EDITOR_PATHNAME} replace />
@@ -98,6 +110,41 @@ export function PlatformApp(props: IslandProps) {
       </PlatformAppRouter>
     </AppProviders>
   );
+}
+
+/**
+ * The app: the shell around the library, the editor, the templates, the
+ * profiles, and the changelog. One root serves `/editor`, `/template`,
+ * `/profile`, and `/changelog`, so moving between them keeps the shell and
+ * loads only the content, with a skeleton of that page inside the shell.
+ */
+export function PlatformApp(props: IslandProps) {
+  // The page shows a static shell until this root renders. The two are the
+  // same picture, so the static one goes before the first paint of this one.
+  useLayoutEffect(() => {
+    const shells = document.querySelectorAll(`[${STATIC_SHELL_ATTRIBUTE}]`);
+    for (const shell of shells) shell.remove();
+  }, []);
+
+  return <PlatformAppFrame {...props} page={PlatformAppPage} />;
+}
+
+/**
+ * The app as static HTML, for the first paint of a document load: the shell
+ * around the skeleton of the page, or around the changelog itself. It loads
+ * no page code and reads no storage, so the build can render it.
+ */
+export function PlatformAppStatic(props: IslandProps) {
+  return (
+    <StaticShellContext.Provider value={true}>
+      <PlatformAppFrame {...props} page={PlatformStaticPage} />
+    </StaticShellContext.Provider>
+  );
+}
+
+function PlatformStaticPage(props: { page: AppPage }) {
+  if (props.page === "changelog") return <ChangelogPage />;
+  return PAGE_SKELETONS[props.page];
 }
 
 function PlatformAppPage(props: { page: AppPage }) {

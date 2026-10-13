@@ -23,10 +23,18 @@ editorial
   Local, Download, FAQ, a statement close, and a footer of titled link groups (Product,
   Project, Support). No kickers, eyebrows, section numbers, or stat rows.
 - App pages (`/editor`, `/template`, `/profile`, `/changelog`): **Workbench-minimal**. They load
-  client-only, so the first paint is a full-page loader on the page background (see
-  Motion). The changelog is the exception: its first paint is the app itself, built
-  around the full release history, so the page reads the same before and after the
-  script runs. Moving
+  client-only, and their first paint is the app's shell as static HTML, around the
+  skeleton of the page, so the page reads the same before and after the script runs.
+  The changelog's static shell holds the full release history. `/editor` and
+  `/editor/<id>` are one file with a static shell for each, and the head script shows
+  the one for the address. A saved collapsed sidebar is the icon rail from the first
+  paint. The sidebar's "Recent" list loads as the number of rows it had on the last
+  visit, so the groups under it stay in place, and it stays out on a first visit.
+  The library loads on the block it had on the last visit, the continue card or the
+  empty state, and the empty state shows its message only after the app reads the
+  résumés. The Changelog dot shows only after the app mounts.
+  Only the Mac app's root file still opens on the full-page
+  loader (see Motion). Moving
   between them keeps the shell. While a page's code loads, the content area shows a
   skeleton of that page: the library, the template list beside a blank sheet, the
   profiles, or the editor's blank sheet and side panel. Each skeleton is the loading
@@ -296,8 +304,8 @@ column is `w-11/12 max-w-5xl` centered.
 - The reader sheet's intro sweep is the landing page's one authored motion. It is
   described under "Landing world: Two Readers".
 - Inside React islands and the app, `motion/react` carries the motion.
-- The app's full-page loader (`platform-loading.astro`) is SVG and CSS, so it plays
-  before any JavaScript. A sheet writes its lines, a scan beam reads them and turns
+- The Mac app's full-page loader (`platform-loading.astro`), which its root file
+  shows, is SVG and CSS, so it plays before any JavaScript. A sheet writes its lines, a scan beam reads them and turns
   them green, and the Lanjut mark stamps the corner. The loop is 3.2s. Every element
   rests on the finished sheet, so reduced motion shows that sheet and only fades
   the lines.
