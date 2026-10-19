@@ -1,18 +1,8 @@
-import { MESSAGES } from "@lanjut/i18n/messages";
 import { type Locale, stripLocale } from "@lanjut/i18n/routing";
-import { Toaster } from "@lanjut/ui/components/sonner";
-import { TooltipProvider } from "@lanjut/ui/components/tooltip";
 import { ThemeProvider } from "next-themes";
-import { NuqsAdapter } from "nuqs/adapters/react";
-import { type PropsWithChildren, useEffect } from "react";
+import type { ComponentProps, PropsWithChildren } from "react";
 import { IntlProvider } from "use-intl";
-import { Router } from "wouter";
 import { PathnameContext } from "@/i18n/navigation";
-import { IS_DESKTOP } from "@/lib/build-target";
-import { publicPath } from "@/lib/seo";
-import { registerResumeFlushListeners } from "@/lib/store";
-import { DesktopLocaleMemory } from "./desktop-locale-memory";
-import { DesktopUpdater } from "./desktop-updater";
 
 /** The props Astro passes to every island. */
 export interface IslandProps {
@@ -32,15 +22,20 @@ function resolveTimeZone() {
 
 const TIME_ZONE = resolveTimeZone();
 
+interface CopyProvidersProps extends PropsWithChildren<IslandProps> {
+  messages: ComponentProps<typeof IntlProvider>["messages"];
+}
+
 /**
- * Context for an island that only reads copy and the current path. Each island
- * is its own React root, so each one carries its own providers.
+ * Copy and the current path for one island root. Each island is its own React
+ * root, so each one carries its own providers. The caller picks the copy, so
+ * this module imports none and a page loads only the copy it reads.
  */
-export function IslandProviders(props: PropsWithChildren<IslandProps>) {
+export function CopyProviders(props: CopyProvidersProps) {
   return (
     <IntlProvider
       locale={props.locale}
-      messages={MESSAGES[props.locale]}
+      messages={props.messages}
       timeZone={TIME_ZONE}
     >
       <PathnameContext value={stripLocale(props.pathname)}>
@@ -62,28 +57,5 @@ export function AppThemeProvider(props: PropsWithChildren) {
     >
       {props.children}
     </ThemeProvider>
-  );
-}
-
-/** Context for an application page: the platform, the editor, feedback. */
-export function AppProviders(props: PropsWithChildren<IslandProps>) {
-  useEffect(() => registerResumeFlushListeners(), []);
-
-  return (
-    <IslandProviders locale={props.locale} pathname={props.pathname}>
-      {/* wouter reads `location` while rendering unless a router supplies the
-          path and search, and /feedback and /changelog render on the server.
-          The build names /changelog.html, so the routes get the public path. */}
-      <Router ssrPath={publicPath(props.pathname)} ssrSearch="">
-        <NuqsAdapter>
-          {IS_DESKTOP && <DesktopLocaleMemory />}
-          {IS_DESKTOP && <DesktopUpdater />}
-          <AppThemeProvider>
-            <TooltipProvider>{props.children}</TooltipProvider>
-            <Toaster />
-          </AppThemeProvider>
-        </NuqsAdapter>
-      </Router>
-    </IslandProviders>
   );
 }

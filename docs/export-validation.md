@@ -32,7 +32,9 @@ back as the same résumé, with no text left out. It also fails when more than o
 heading in four of the sample carries a `{type=...}` attribute.
 
 `apps/web/scripts/takumi-checks.ts` loads the takumi-pdf renderer through Vite, the way the app
-bundles it, and runs the PDF checks on every template. It adds:
+bundles it, and runs the PDF checks on every template. The app runs the same `renderResumePdf`
+in the PDF worker (`apps/web/src/components/editor/pdf-worker/`). The checks call it directly. It
+adds:
 
 - **Font families**: each template's PDF embeds the families it draws with (recorded
   in `takumi-checks.ts` from the react-pdf exports it replaced, plus SquareBullet for

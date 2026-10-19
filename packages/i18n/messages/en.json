@@ -190,6 +190,16 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_26_3": [
+          {
+            "title": "A faster home page",
+            "description": "The home page now opens faster, most of all on phones. The sample resume shows right away, and the page stays smooth while Lanjut reads the PDF back. Downloading or importing a PDF no longer freezes the page either."
+          },
+          {
+            "title": "Bug fixes",
+            "description": "The green buttons on the home page are a little darker, so their text is easier to read. Screen readers now read each template choice by the name you see."
+          }
+        ],
         "0_26_2": [
           {
             "title": "Bug fixes",
@@ -817,14 +827,6 @@
       "outdated": "Lanjut was updated in another tab",
       "outdatedDescription": "Refresh this tab to keep working. Until then, it cannot save changes.",
       "refresh": "Refresh"
-    },
-    "contributors": {
-      "title": "Thanks to everyone building Lanjut",
-      "description": "Lanjut is free and open source, and it grows with every contribution. Translate it into your language, fix a bug, or build the feature you wish it had.",
-      "contribute": "Contribute on GitHub",
-      "listLabel": "Contributors",
-      "profile": "{login} on GitHub",
-      "more": "and {count} more"
     }
   },
   "profile": {
@@ -1579,7 +1581,6 @@
     "noAccount": "No account. Nothing uploaded.",
     "looksHeading": "Change the look. The order stays put.",
     "looksBody": "Six templates, each with its own type and spacing. Pick one and the résumé above is read again. The sections come back in the same order, and every change to Lanjut is tested for it.",
-    "looksPick": "Use {name}",
     "lookAwal": "Plain and roomy",
     "lookKetat": "Compact serif",
     "lookLuasa": "Airy, letterspaced",
@@ -1702,6 +1703,14 @@
         "answer": "Yes. The header photo is optional and off by default. It shows in the PDF and the .docx, the .txt leaves it out, and it never changes the text a parser reads."
       }
     }
+  },
+  "contributors": {
+    "title": "Thanks to everyone building Lanjut",
+    "description": "Lanjut is free and open source, and it grows with every contribution. Translate it into your language, fix a bug, or build the feature you wish it had.",
+    "contribute": "Contribute on GitHub",
+    "listLabel": "Contributors",
+    "profile": "{login} on GitHub",
+    "more": "and {count} more"
   },
   "conflict": {
     "changedTitle": "Another window changed this {item, select, resume {resume} other {profile}}",

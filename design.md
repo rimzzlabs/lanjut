@@ -299,8 +299,10 @@ column is `w-11/12 max-w-5xl` centered.
 - Easing `[0.16, 1, 0.3, 1]` (ease-out) on entrances.
 - The landing entrance is CSS, so the static sections ship no JavaScript.
   `.landing-rise` plays once on load on the hero headline, deck, and reader, staggered
-  120ms with `--rise`. Reduced motion swaps it for `landing-fade`. Both live in
-  `apps/web/src/styles/globals.css`. The static sections below the hero have no scroll motion.
+  120ms with `--rise`. It rises 16px and does not fade, because a fade from opacity 0
+  holds back the largest contentful paint until it ends. Reduced motion turns it off.
+  It lives in `apps/web/src/styles/globals.css`. The static sections below the hero have
+  no scroll motion.
 - The reader sheet's intro sweep is the landing page's one authored motion. It is
   described under "Landing world: Two Readers".
 - Inside React islands and the app, `motion/react` carries the motion.
@@ -377,7 +379,8 @@ Light:
 - `--background` oklch(0.975 0.004 165): pale green-grey paper
 - `--foreground` oklch(0.2 0.02 168)
 - `--card` oklch(1 0 0), `--popover` oklch(0.99 0.003 165)
-- `--primary` / `--ring` oklch(0.55 0.12 164): the logo green (`#0e8a66`)
+- `--primary` / `--ring` oklch(0.53 0.12 164) (`#008159`): one step darker than the logo
+  green (`#0e8a66`), so that the white button text has a contrast of 4.8:1
 - `--primary-foreground` oklch(0.99 0.005 160)
 - `--secondary` / `--accent` oklch(0.93 0.008 165), `--muted` oklch(0.94 0.006 165)
 - `--muted-foreground` oklch(0.45 0.02 168)
@@ -429,11 +432,11 @@ component. It sits in the hero, under the draft row.
 - One white sheet (`bg-white` in both themes, `rounded-xl`, `ring-1 ring-black/10`, a
   soft drop shadow, a bottom fade mask). Aspect 3/4 on mobile, 16/10 from `sm`.
 - Left of the scanner: the live résumé render (`ResumeThumbnail`) in the chosen
-  template. Right of it: an `--ink` panel in `font-machine` with the text a parser
+  template. It is in the static HTML, so the page shows at the first paint. Right of it: an `--ink` panel in `font-machine` with the text a parser
   pulled out of that page's PDF. Lines in all caps read as headings in `--machine`;
   the rest use `--machine-muted`.
 - The read is real. `apps/web/src/hooks/use-landing-read.ts` renders the draft to a PDF and
-  reads it back through `runParserProof`. It starts when the sheet comes within 120px
+  reads it back through `runParserProof`, in the PDF worker, so the page never waits for it. It starts when the sheet comes within 120px
   of the viewport, and runs again 900ms after typing pauses. A newer run supersedes an
   older one. Until a read lands, the panel shows the plain text export of the draft.
 - The scanner is a 2px `--scanner` line with a glow, and a 44px round handle with

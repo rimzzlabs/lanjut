@@ -15,7 +15,7 @@ import { PlatformSectionHeading } from "./platform-section-heading";
  * list; without it, the invitation stands alone.
  */
 export function PlatformLibraryContributors() {
-  const t = useTranslations("platform.contributors");
+  const t = useTranslations("contributors");
   const headingId = useId();
   const state = useContributors();
 

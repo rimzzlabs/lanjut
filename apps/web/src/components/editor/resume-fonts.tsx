@@ -4,6 +4,7 @@ import {
 } from "@lanjut/resume/templates";
 import { A, pipe } from "@mobily/ts-belt";
 import type { CSSProperties } from "react";
+import { useHydrated } from "@/hooks/use-hydrated";
 import { FONTS, resolveFont } from "@/lib/fonts";
 import type { ResumePreview } from "./resume-preview";
 
@@ -76,8 +77,14 @@ const FONT_FACE_CSS = pipe(
  * catalog can be declared while only the selected font is fetched. React
  * hoists and dedupes the tag by `href`, so it can be rendered by both the
  * editor preview and every thumbnail.
+ *
+ * Static HTML leaves the faces out. There, a thumbnail would start its font
+ * downloads before the first paint, so it shows a system face until the
+ * island hydrates.
  */
 export function ResumeFontFaces() {
+  const hydrated = useHydrated();
+  if (!hydrated) return null;
   return (
     <style href="resume-font-faces" precedence="low">
       {FONT_FACE_CSS}

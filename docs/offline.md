@@ -12,7 +12,7 @@ RFC: [#229](https://github.com/rimzzlabs/lanjut/issues/229).
 | Offline page rules             | `apps/web/service-worker/offline-routes.ts`                  |
 | Build step (Astro integration) | `apps/web/service-worker/build.ts`                           |
 | Registration                   | `apps/web/src/lib/service-worker.ts`, `PlatformOfflineCache` |
-| Header rule for `/sw.js`       | `apps/web/public/_headers`                                   |
+| Header rules                   | `apps/web/public/_headers`                                   |
 
 The service worker source has its own `tsconfig.json` with the `WebWorker` library. `pnpm typecheck` checks it after `astro check`.
 
@@ -29,7 +29,7 @@ On `astro:build:done`, the build lists every file in `dist/`, gives each one a r
 | `og/`, `llms.txt`, `*.md`, `robots.txt`, sitemaps, `_headers`  | Never                                   |
 | `/api/*`                                                       | Never                                   |
 
-The install downloads about 11 MB (about 3.5 MB compressed). The PDF fonts add up to 10 MB, but a résumé draws with a few files. The download dialogs and the Document tab fetch a template's fonts before an export (`preloadPdfExport`), so the template a person uses online is ready offline.
+The install downloads about 11 MB (about 3.5 MB compressed). The PDF fonts add up to 10 MB, but a résumé draws with a few files. The download dialogs and the Document tab fetch a template's fonts before an export (`preloadPdfExport`), so the template a person uses online is ready offline. The PDF worker makes those requests. A dedicated worker goes through the service worker of its page, so the fonts are kept the same way.
 
 ## Rules
 
@@ -47,7 +47,7 @@ Online, a page load gets the newest build, the same as with no service worker. T
 
 ## Updates
 
-Each build writes a new `sw.js` when any file changes. The browser checks `sw.js` on each page load, and `_headers` sets `Cache-Control: no-cache` on it. A new service worker copies every file with an unchanged revision from the earlier cache and downloads only the rest. It then takes over at once (`skipWaiting`, `clients.claim`).
+Each build writes a new `sw.js` when any file changes. The browser checks `sw.js` on each page load, and `_headers` sets `Cache-Control: no-cache` on it. `_headers` also gives every file under `/_astro/` a one-year `immutable` cache, because its name holds a content hash. The install fetches each file with `cache: "no-cache"`, so the browser cache cannot give it an older copy. A new service worker copies every file with an unchanged revision from the earlier cache and downloads only the rest. It then takes over at once (`skipWaiting`, `clients.claim`).
 
 The service worker keeps the cache of the previous build and deletes all older ones. A window that still runs the previous build can then load its lazy chunks, which the server no longer has after a deploy.
 

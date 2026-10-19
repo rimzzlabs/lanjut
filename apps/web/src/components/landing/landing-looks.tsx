@@ -6,10 +6,8 @@ import { useTranslations } from "use-intl";
 import type { ResumePreview } from "@/components/editor/resume-preview";
 import { ResumeThumbnail } from "@/components/editor/resume-thumbnail";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
-import {
-  type IslandProps,
-  IslandProviders,
-} from "@/components/shared/providers";
+import { IslandProviders } from "@/components/shared/island-providers";
+import type { IslandProps } from "@/components/shared/providers";
 import { useLandingDraftStore } from "@/lib/store";
 import { draftToResume } from "./landing-draft-resume";
 
@@ -67,7 +65,6 @@ function LandingLookItem(props: LandingLookItemProps) {
       <button
         type="button"
         aria-pressed={props.selected}
-        aria-label={t("looksPick", { name: props.name })}
         onClick={() => setTemplate(props.id)}
         className="group block w-full rounded-md text-left outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
       >
@@ -90,7 +87,7 @@ function LandingLookItem(props: LandingLookItemProps) {
                 className="size-4 text-primary"
               />
             )}
-          </span>
+          </span>{" "}
           <span className="text-right text-xs text-muted-foreground">
             {t(LOOK_KEYS[props.id])}
           </span>

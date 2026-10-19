@@ -2,10 +2,8 @@ import { Button, buttonVariants } from "@lanjut/ui/components/button";
 import { cn } from "@lanjut/ui/lib/utils";
 import { ArrowRightIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
-import {
-  type IslandProps,
-  IslandProviders,
-} from "@/components/shared/providers";
+import { IslandProviders } from "@/components/shared/island-providers";
+import type { IslandProps } from "@/components/shared/providers";
 import { useLandingDraftCreate } from "@/hooks/use-landing-draft-create";
 import { Link } from "@/i18n/navigation";
 import { TEMPLATE_PATHNAME } from "@/lib/routes";

@@ -1,6 +1,7 @@
 import type { Resume } from "@lanjut/resume";
 import { getResume } from "@lanjut/resume/db";
 import { resolveTemplateId } from "@lanjut/resume/templates";
+import { runPdfJobInWorker } from "./pdf-worker/pdf-worker-client";
 
 /**
  * Loads the PDF renderer and the fonts a résumé draws with before the
@@ -10,14 +11,10 @@ import { resolveTemplateId } from "@lanjut/resume/templates";
 export function preloadPdfExport(
   resume: Pick<Resume, "templateId" | "font">,
 ): void {
-  void import("./takumi/render-resume-pdf")
-    .then((pdf) =>
-      pdf.warmUpResumePdf({
-        template: resolveTemplateId(resume.templateId),
-        fontId: resume.font,
-      }),
-    )
-    .catch(() => undefined);
+  void runPdfJobInWorker("warmUp", {
+    template: resolveTemplateId(resume.templateId),
+    fontId: resume.font,
+  }).catch(() => undefined);
 }
 
 /** `preloadPdfExport` for a stored résumé, read by its id. */

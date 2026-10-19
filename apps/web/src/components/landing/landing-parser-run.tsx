@@ -2,6 +2,7 @@ import type { Resume } from "@lanjut/resume";
 import type { TemplateId } from "@lanjut/resume/templates";
 import { joinPresent } from "@lanjut/resume/text";
 import { A, O, pipe, R, S } from "@mobily/ts-belt";
+import { runPdfJobInWorker } from "@/components/editor/pdf-worker/pdf-worker-client";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 
 export type ParserPhase = "render" | "extract" | "check";
@@ -41,27 +42,23 @@ interface RunParserProofParams {
  * The landing page's proof run: renders the given document to a real PDF with
  * the real export pipeline, extracts its text with the same parser the import
  * feature uses, and checks what an ATS would check. Everything happens in the
- * visitor's browser; every heavy module loads lazily on first run.
+ * visitor's browser, in the PDF worker, which loads its modules on first run.
  */
 export async function runParserProof(
   params: RunParserProofParams,
 ): Promise<R.Result<ParserProofReport, string>> {
   const { resume, template, onPhase } = params;
   onPhase("render");
-  const { renderResumePdf } = await import(
-    "@/components/editor/takumi/render-resume-pdf"
-  );
-  const bytes = await renderResumePdf({
+  const bytes = await runPdfJobInWorker("render", {
     preview: resumeToPreview(resume),
     template,
   });
 
-  // pdf.js detaches the buffer it reads, so take the size first.
+  // The bytes move to the worker that reads them, so take the size first.
   const pdfKb = Math.round(bytes.length / 1024);
 
   onPhase("extract");
-  const { extractPdfText } = await import("@lanjut/resume/import/extract");
-  const extracted = await extractPdfText(bytes);
+  const extracted = await runPdfJobInWorker("extract", { bytes });
   if (!extracted.ok) return R.makeError(extracted.reason);
 
   onPhase("check");

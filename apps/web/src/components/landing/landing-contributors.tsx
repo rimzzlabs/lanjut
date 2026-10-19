@@ -2,10 +2,8 @@ import { ArrowUpRightIcon, GithubLogoIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { ContributorFaces } from "@/components/shared/contributor-faces";
 import { ExternalLink } from "@/components/shared/external-link";
-import {
-  type IslandProps,
-  IslandProviders,
-} from "@/components/shared/providers";
+import { IslandProviders } from "@/components/shared/island-providers";
+import type { IslandProps } from "@/components/shared/providers";
 import { useContributors } from "@/hooks/use-contributors";
 import type { Contributor } from "@/lib/contributors";
 import { CONTRIBUTING_URL } from "@/lib/site";
@@ -44,7 +42,7 @@ function LandingContributorsRow(props: {
         className="inline-flex shrink-0 items-center gap-1.5 font-medium underline-offset-4 hover:underline md:ml-auto"
       >
         <GithubLogoIcon aria-hidden weight="fill" className="size-4" />
-        {t("platform.contributors.contribute")}
+        {t("contributors.contribute")}
         <ArrowUpRightIcon aria-hidden className="size-4" />
       </ExternalLink>
     </div>

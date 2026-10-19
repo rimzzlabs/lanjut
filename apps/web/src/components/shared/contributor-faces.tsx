@@ -37,7 +37,7 @@ interface ContributorFacesProps {
  * Grey circles while the list loads; nothing when it is unavailable.
  */
 export function ContributorFaces(props: ContributorFacesProps) {
-  const t = useTranslations("platform.contributors");
+  const t = useTranslations("contributors");
   const ring = RINGS[props.surface];
 
   if (props.state.status === "loading") {
@@ -80,7 +80,7 @@ export function ContributorFaces(props: ContributorFacesProps) {
 // A plain img over the initial, not AvatarImage: base-ui renders its image
 // only after the browser loads it, so the static page would show no faces.
 function ContributorFace(props: { contributor: Contributor }) {
-  const t = useTranslations("platform.contributors");
+  const t = useTranslations("contributors");
 
   return (
     <Avatar

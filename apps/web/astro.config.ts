@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, envField, fontProviders } from "astro/config";
 import type { Plugin } from "vite";
 import { serviceWorker } from "./service-worker/build";
+import { islandMessages } from "./src/i18n/island-messages-plugin";
 import { appPageFor, legacyTarget } from "./src/lib/route-rules";
 import { INDEXED_PATHS, publicPath } from "./src/lib/seo";
 
@@ -160,7 +161,11 @@ export default defineConfig({
     },
   ],
   vite: {
-    plugins: [tailwindcss(), appRoutesInDev()],
+    plugins: [tailwindcss(), appRoutesInDev(), islandMessages()],
+    // The PDF worker loads its modules on demand, which needs ES output. A
+    // build gives workers only the plugins listed here, and the PDF styles
+    // import the compiled app stylesheet.
+    worker: { format: "es", plugins: () => [tailwindcss()] },
     // nextstepjs ships extensionless ESM imports, which Node cannot load
     // during prerender. Bundling it lets Vite resolve them.
     ssr: { noExternal: ["nextstepjs"] },

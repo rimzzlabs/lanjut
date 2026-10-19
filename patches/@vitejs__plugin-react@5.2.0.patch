@@ -1,0 +1,13 @@
+diff --git a/dist/refresh-runtime.js b/dist/refresh-runtime.js
+index e798d000e9cf314b94fa8b2c10370d9202cc9421..4e674384c0471b001e4d181c81d3d68fb24843b9 100644
+--- a/dist/refresh-runtime.js
++++ b/dist/refresh-runtime.js
+@@ -596,7 +596,7 @@ function debounce(fn, delay) {
+ }
+ 
+ const hooks = []
+-window.__registerBeforePerformReactRefresh = (cb) => {
++globalThis.__registerBeforePerformReactRefresh = (cb) => {
+   hooks.push(cb)
+ }
+ const enqueueUpdate = debounce(async () => {

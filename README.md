@@ -77,7 +77,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Markdown             | comark (reads the Markdown of the code mode)                             |
 | Forms                | react-hook-form + zod                                                    |
 | Drag and drop        | @dnd-kit                                                                 |
-| Export               | takumi-pdf (PDF from the preview HTML), docx                             |
+| Export               | takumi-pdf (PDF from the preview HTML, in a Web Worker), docx            |
 | SEO                  | astro-seo (head tags), @astrojs/sitemap                                  |
 | Animation            | motion/react                                                             |
 | State                | zustand                                                                  |

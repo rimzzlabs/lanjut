@@ -190,6 +190,16 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_26_3": [
+          {
+            "title": "Halaman utama lebih cepat",
+            "description": "Halaman utama sekarang terbuka lebih cepat, apalagi di HP. Contoh resume langsung tampil, dan halamannya tetap lancar selagi Lanjut membaca ulang PDF-nya. Unduh atau impor PDF juga nggak bikin halaman macet lagi."
+          },
+          {
+            "title": "Perbaikan bug",
+            "description": "Tombol hijau di halaman utama sekarang sedikit lebih gelap, jadi tulisannya lebih gampang dibaca. Pembaca layar juga sekarang menyebut tiap pilihan template sesuai nama yang kamu lihat."
+          }
+        ],
         "0_26_2": [
           {
             "title": "Perbaikan bug",
@@ -817,14 +827,6 @@
       "outdated": "Lanjut diperbarui di tab lain",
       "outdatedDescription": "Segarkan tab ini untuk lanjut bekerja. Sampai saat itu, tab ini tidak bisa menyimpan perubahan.",
       "refresh": "Segarkan"
-    },
-    "contributors": {
-      "title": "Terima kasih untuk semua yang membangun Lanjut",
-      "description": "Lanjut gratis dan open source, dan terus tumbuh dari setiap kontribusi. Terjemahkan ke bahasamu, perbaiki bug, atau buat fitur yang kamu inginkan.",
-      "contribute": "Kontribusi di GitHub",
-      "listLabel": "Kontributor",
-      "profile": "{login} di GitHub",
-      "more": "dan {count} lainnya"
     }
   },
   "profile": {
@@ -1579,7 +1581,6 @@
     "noAccount": "Tanpa akun. Tanpa unggah.",
     "looksHeading": "Ganti tampilannya. Urutannya tetap.",
     "looksBody": "Enam template, masing-masing dengan huruf dan spasinya sendiri. Pilih satu dan resume di atas dibaca ulang. Section-nya kembali dengan urutan yang sama, dan setiap perubahan di Lanjut diuji untuk itu.",
-    "looksPick": "Pakai {name}",
     "lookAwal": "Polos dan lega",
     "lookKetat": "Serif yang padat",
     "lookLuasa": "Lapang, huruf renggang",
@@ -1702,6 +1703,14 @@
         "answer": "Bisa. Foto di header itu opsional dan mati secara bawaan. Foto muncul di PDF dan .docx, file .txt nggak menyertakannya, dan foto nggak pernah mengubah teks yang dibaca parser."
       }
     }
+  },
+  "contributors": {
+    "title": "Terima kasih untuk semua yang membangun Lanjut",
+    "description": "Lanjut gratis dan open source, dan terus tumbuh dari setiap kontribusi. Terjemahkan ke bahasamu, perbaiki bug, atau buat fitur yang kamu inginkan.",
+    "contribute": "Kontribusi di GitHub",
+    "listLabel": "Kontributor",
+    "profile": "{login} di GitHub",
+    "more": "dan {count} lainnya"
   },
   "conflict": {
     "changedTitle": "{item, select, resume {Resume} other {Profil}} ini diubah di jendela lain",

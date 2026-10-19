@@ -1,7 +1,7 @@
 import type { TemplateId } from "@lanjut/resume/templates";
 import { safeFileName, triggerDownload } from "../download-file";
+import { runPdfJobInWorker } from "../pdf-worker/pdf-worker-client";
 import type { ResumePreview } from "../resume-preview";
-import { renderResumePdf } from "./render-resume-pdf";
 
 interface DownloadResumeTakumiParams {
   preview: ResumePreview;
@@ -18,7 +18,7 @@ export async function downloadResumeTakumi(
   params: DownloadResumeTakumiParams,
 ): Promise<boolean> {
   const { preview, fileName, template } = params;
-  const bytes = await renderResumePdf({ preview, template }).catch(
+  const bytes = await runPdfJobInWorker("render", { preview, template }).catch(
     (error: unknown) => {
       console.error("takumi-pdf could not render the résumé", error);
       return null;

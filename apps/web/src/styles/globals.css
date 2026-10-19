@@ -295,17 +295,12 @@ html:not([data-workspace="editor"]) [data-workspace-view="editor"] {
 }
 
 /* The landing hero entrance, in CSS so the static sections ship no JavaScript.
-   `landing-rise` plays once on load; `--rise` staggers siblings by 120ms. */
+   `landing-rise` plays once on load; `--rise` staggers siblings by 120ms. It
+   moves the hero and does not fade it: a fade from opacity 0 holds back the
+   largest contentful paint until the fade ends. */
 @keyframes landing-rise {
   from {
-    opacity: 0;
     translate: 0 16px;
-  }
-}
-
-@keyframes landing-fade {
-  from {
-    opacity: 0;
   }
 }
 
@@ -315,9 +310,9 @@ html:not([data-workspace="editor"]) [data-workspace-view="editor"] {
 }
 
 /* The head script and the motion store set data-motion from the animation
-   setting. Reduced motion keeps fades and color changes and drops movement. */
+   setting. Reduced motion drops movement, so the hero entrance stays out. */
 :root[data-motion="reduce"] .landing-rise {
-  animation-name: landing-fade;
+  animation: none;
 }
 
 :root[data-motion="reduce"] *,
@@ -347,7 +342,7 @@ html:not([data-workspace="editor"]) [data-workspace-view="editor"] {
   --card-foreground: oklch(0.2 0.02 168);
   --popover: oklch(0.99 0.003 165);
   --popover-foreground: oklch(0.2 0.02 168);
-  --primary: oklch(0.55 0.12 164);
+  --primary: oklch(0.53 0.12 164);
   --primary-foreground: oklch(0.99 0.005 160);
   --secondary: oklch(0.93 0.008 165);
   --secondary-foreground: oklch(0.2 0.02 168);
@@ -357,7 +352,7 @@ html:not([data-workspace="editor"]) [data-workspace-view="editor"] {
   --accent-foreground: oklch(0.2 0.02 168);
   --border: oklch(0.88 0.01 168);
   --input: oklch(0.86 0.012 168);
-  --ring: oklch(0.55 0.12 164);
+  --ring: oklch(0.53 0.12 164);
   --ink: oklch(0.17 0.02 168);
   --ink-line: oklch(0.3 0.025 168);
   --machine: oklch(0.86 0.1 158);
