@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_26_2": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Di HP atau tablet, pratinjau template saat bikin resume baru sekarang tampil sesuai tampilan aslinya. Sebelumnya teksnya malah rata tengah."
+          }
+        ],
         "0_26_1": [
           {
             "title": "Halaman langsung tampil",
