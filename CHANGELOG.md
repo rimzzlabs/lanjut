@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.2](https://github.com/rimzzlabs/lanjut/compare/v0.26.1...v0.26.2) (2026-10-19)
+
+
+### Bug Fixes
+
+* align template previews left in the mobile carousel ([#244](https://github.com/rimzzlabs/lanjut/issues/244)) ([2090cd9](https://github.com/rimzzlabs/lanjut/commit/2090cd9f6c0179fec0657b20bff071b18b05e872)), closes [#243](https://github.com/rimzzlabs/lanjut/issues/243)
+
 ## [0.26.1](https://github.com/rimzzlabs/lanjut/compare/v0.26.0...v0.26.1) (2026-10-13)
 
 
