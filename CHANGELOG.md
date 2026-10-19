@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.3](https://github.com/rimzzlabs/lanjut/compare/v0.26.2...v0.26.3) (2026-10-19)
+
+
+### Performance
+
+* run pdf work in a worker and paint the landing hero at once ([f1b63b9](https://github.com/rimzzlabs/lanjut/commit/f1b63b952a019684b0efe47a6686adcf9f985180))
+
 ## [0.26.2](https://github.com/rimzzlabs/lanjut/compare/v0.26.1...v0.26.2) (2026-10-19)
 
 
