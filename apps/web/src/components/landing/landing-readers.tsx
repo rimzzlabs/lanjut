@@ -21,10 +21,8 @@ import { useMemo, useRef } from "react";
 import { useTranslations } from "use-intl";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import { resumeToText } from "@/components/editor/resume-to-text";
-import {
-  type IslandProps,
-  IslandProviders,
-} from "@/components/shared/providers";
+import { IslandProviders } from "@/components/shared/island-providers";
+import type { IslandProps } from "@/components/shared/providers";
 import { useLandingDraftCreate } from "@/hooks/use-landing-draft-create";
 import { useLandingRead } from "@/hooks/use-landing-read";
 import { Link } from "@/i18n/navigation";

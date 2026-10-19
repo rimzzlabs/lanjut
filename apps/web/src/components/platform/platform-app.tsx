@@ -16,7 +16,8 @@ import { PlatformProfilesSkeleton } from "@/components/platform/platform-profile
 import { PlatformShell } from "@/components/platform/platform-shell";
 import { StaticShellContext } from "@/components/platform/platform-static-shell";
 import { PlatformTemplatesSkeleton } from "@/components/platform/platform-templates-skeleton";
-import { AppProviders, type IslandProps } from "@/components/shared/providers";
+import { AppProviders } from "@/components/shared/app-providers";
+import type { IslandProps } from "@/components/shared/providers";
 import { useEditorId } from "@/hooks/use-editor-id";
 import type { WorkspaceView } from "@/hooks/use-workspace-view";
 import {

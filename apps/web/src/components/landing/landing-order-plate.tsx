@@ -3,10 +3,8 @@ import { A, O, pipe, S } from "@mobily/ts-belt";
 import { CircleNotchIcon } from "@phosphor-icons/react";
 import { useMemo } from "react";
 import { useTranslations } from "use-intl";
-import {
-  type IslandProps,
-  IslandProviders,
-} from "@/components/shared/providers";
+import { IslandProviders } from "@/components/shared/island-providers";
+import type { IslandProps } from "@/components/shared/providers";
 import {
   type LandingRead,
   useLandingDraftStore,

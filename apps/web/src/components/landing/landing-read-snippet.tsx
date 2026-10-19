@@ -1,9 +1,7 @@
 import { A } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
-import {
-  type IslandProps,
-  IslandProviders,
-} from "@/components/shared/providers";
+import { IslandProviders } from "@/components/shared/island-providers";
+import type { IslandProps } from "@/components/shared/providers";
 import { type LandingRead, useLandingReadStore } from "@/lib/store";
 
 /** The first lines of the hero's PDF as the extractor returned them. */

@@ -1,4 +1,5 @@
-import { AppProviders, type IslandProps } from "@/components/shared/providers";
+import { AppProviders } from "@/components/shared/app-providers";
+import type { IslandProps } from "@/components/shared/providers";
 import { usePageFeedbackContext } from "@/hooks/use-feedback-context";
 import { useFeedbackLaunch } from "@/hooks/use-feedback-params";
 import { FeedbackFlow } from "./feedback-flow";

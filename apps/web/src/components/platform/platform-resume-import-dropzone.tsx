@@ -1,6 +1,9 @@
 import type { ResumeLanguage } from "@lanjut/resume";
-import type { ImportResult, ParseResult } from "@lanjut/resume/import";
-import { runPdfImport } from "@lanjut/resume/import/run-import";
+import type {
+  ImportResult,
+  ParseOptions,
+  ParseResult,
+} from "@lanjut/resume/import";
 import { Button } from "@lanjut/ui/components/button";
 import { cn } from "@lanjut/ui/lib/utils";
 import { A, O } from "@mobily/ts-belt";
@@ -13,6 +16,7 @@ import {
 import { useCallback, useState } from "react";
 import { type FileRejection, useDropzone } from "react-dropzone";
 import { useLocale, useTranslations } from "use-intl";
+import { runPdfJobInWorker } from "@/components/editor/pdf-worker/pdf-worker-client";
 
 const MAX_BYTES = 10 * 1024 * 1024;
 
@@ -30,6 +34,17 @@ const PDF_FAILURES: Partial<Record<PdfFailureReason, ErrorKey>> = {
   empty: "errorEmpty",
   encrypted: "errorEncrypted",
 };
+
+/** Reads a PDF in the PDF worker. Any failure there reads as a generic error. */
+function importPdf(
+  bytes: ArrayBuffer,
+  options: ParseOptions,
+): Promise<ImportResult> {
+  return runPdfJobInWorker("import", {
+    bytes: new Uint8Array(bytes),
+    options,
+  }).catch((): ImportResult => ({ ok: false, reason: "error" }));
+}
 
 interface PlatformResumeImportDropzoneProps {
   onParsingChange: (parsing: boolean) => void;
@@ -93,7 +108,7 @@ export function PlatformResumeImportDropzone(
         if (imported.ok) result = imported;
         else failure = "errorInvalidData";
       } else {
-        const imported = await runPdfImport(await file.arrayBuffer(), options);
+        const imported = await importPdf(await file.arrayBuffer(), options);
         if (imported.ok) result = imported;
         else {
           failure = PDF_FAILURES[imported.reason] ?? "errorGeneric";

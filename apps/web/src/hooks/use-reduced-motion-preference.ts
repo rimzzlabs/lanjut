@@ -1,5 +1,5 @@
 import { useReducedMotion } from "motion/react";
-import { useMotionStore } from "@/lib/store";
+import { useMotionStore } from "@/lib/store/motion-store";
 
 /** The site animation setting, with "system" following the OS. */
 export function useReducedMotionPreference() {

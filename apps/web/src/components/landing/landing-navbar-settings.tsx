@@ -1,9 +1,6 @@
 import { TooltipProvider } from "@lanjut/ui/components/tooltip";
-import {
-  AppThemeProvider,
-  type IslandProps,
-  IslandProviders,
-} from "../shared/providers";
+import { IslandProviders } from "../shared/island-providers";
+import { AppThemeProvider, type IslandProps } from "../shared/providers";
 import { SiteSettingsMenu } from "../shared/site-settings-menu";
 import { SiteThemeToggle } from "../shared/site-theme-toggle";
 

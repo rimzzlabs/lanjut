@@ -5,10 +5,8 @@ import {
   AccordionTrigger,
 } from "@lanjut/ui/components/accordion";
 import { useTranslations } from "use-intl";
-import {
-  type IslandProps,
-  IslandProviders,
-} from "@/components/shared/providers";
+import { IslandProviders } from "@/components/shared/island-providers";
+import type { IslandProps } from "@/components/shared/providers";
 import { FAQ_KEYS, type FaqKey } from "./landing-faq-keys";
 
 /** The questions people have before they start, answered from what ships. */
