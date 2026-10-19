@@ -82,7 +82,7 @@ export function PlatformResumeCreateTemplateCarousel(
                   setZoomed(template.id);
                   setZoomOpen(true);
                 }}
-                className="block w-full cursor-zoom-in overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-black/5 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+                className="block w-full cursor-zoom-in overflow-hidden rounded-sm bg-white text-left shadow-sm ring-1 ring-black/5 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
               >
                 <ResumeThumbnail
                   resume={props.preview}

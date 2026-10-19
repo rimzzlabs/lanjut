@@ -30,7 +30,7 @@ const PAPER_STYLE: CSSProperties = {
 export function ResumePage(props: ResumePageProps) {
   return (
     <div
-      className="relative mx-auto overflow-hidden rounded border bg-white text-foreground shadow-sm"
+      className="relative mx-auto overflow-hidden rounded border bg-white text-left text-foreground shadow-sm"
       style={PAPER_STYLE}
     >
       {props.children}
