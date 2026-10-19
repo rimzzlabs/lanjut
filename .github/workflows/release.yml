@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Existing tag to attach the macOS app to
+        description: Existing tag to attach the desktop app to
         required: true
 
 permissions:
@@ -70,19 +70,36 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
   desktop:
-    # Attaches the macOS app to the release, one build per architecture rather
-    # than a universal binary, so nobody downloads twice the bytes they need.
-    # Windows is not built yet.
+    # Attaches the desktop app to the release, one build per system and
+    # architecture rather than a universal binary, so nobody downloads twice the
+    # bytes they need.
     needs: release-please
     if: >-
       always() &&
       (needs.release-please.outputs.release_created == 'true' ||
        github.event_name == 'workflow_dispatch')
-    runs-on: macos-latest
+    runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
       matrix:
-        target: [aarch64-apple-darwin, x86_64-apple-darwin]
+        include:
+          - platform: macos-latest
+            target: aarch64-apple-darwin
+          - platform: macos-latest
+            target: x86_64-apple-darwin
+          - platform: windows-latest
+            target: x86_64-pc-windows-msvc
+          - platform: windows-latest
+            target: aarch64-pc-windows-msvc
+          # Built on the oldest Ubuntu the app supports: a Linux build runs only
+          # on a glibc as new as the one it was built against, or newer.
+          - platform: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+          - platform: ubuntu-22.04-arm
+            target: aarch64-unknown-linux-gnu
+    defaults:
+      run:
+        shell: bash
     env:
       TAG: ${{ inputs.tag || needs.release-please.outputs.tag_name }}
     steps:
@@ -105,6 +122,12 @@ jobs:
         with:
           workspaces: apps/desktop/src-tauri
           key: ${{ matrix.target }}
+
+      - name: Install the Linux webview and bundling libraries
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf xdg-utils libfuse2
 
       - run: pnpm install --frozen-lockfile
 
@@ -137,9 +160,10 @@ jobs:
           args: --target ${{ matrix.target }}
 
   publish:
-    # release-please cuts every release as a draft. It stays hidden until both
-    # architectures have uploaded a signed bundle, so a failed build never leaves
-    # a public release with no app, and releases/latest never moves to one.
+    # release-please cuts every release as a draft. It stays hidden until every
+    # system and architecture has uploaded a signed bundle, so a failed build
+    # never leaves a public release with no app, and releases/latest never moves
+    # to one.
     needs: [release-please, desktop]
     if: >-
       !cancelled() &&
@@ -155,14 +179,33 @@ jobs:
 
       # tauri-action warns and carries on when it builds no updater artifact or
       # finds no signature, so the only proof is the manifest on the release.
-      # Keep this list in step with the desktop matrix.
+      # Keep this list in step with the desktop matrix. On Linux the plain key
+      # serves the AppImage, and an app installed from a .deb or an .rpm reads
+      # its own key.
       - name: Confirm the release carries a signed update manifest
         run: |
           set -euo pipefail
           gh release download "$TAG" --pattern latest.json --output latest.json --clobber
           node .github/scripts/check-update-manifest.mjs
         env:
-          PLATFORMS: darwin-aarch64 darwin-x86_64
+          PLATFORMS: >-
+            darwin-aarch64 darwin-x86_64
+            windows-x86_64 windows-aarch64
+            linux-x86_64 linux-x86_64-deb linux-x86_64-rpm
+            linux-aarch64 linux-aarch64-deb linux-aarch64-rpm
+
+      # The download button on lanjut.org opens the latest release, so each
+      # release page carries the install steps, one heading level down and with
+      # the real file names. A rerun finds the heading and changes nothing.
+      - name: Add the install steps to the release notes
+        run: |
+          set -euo pipefail
+          gh release view "$TAG" --json body --jq .body > notes.md
+          if ! grep -q '^## Install Lanjut' notes.md; then
+            printf '\n\n' >> notes.md
+            sed -E -e 's/^(#+) /\1# /' -e "s/<version>/${TAG#v}/g" docs/install.md >> notes.md
+            gh release edit "$TAG" --notes-file notes.md
+          fi
 
       # make_latest=legacy lets GitHub pick the latest release by date and
       # version. The API defaults to true, which would let a repair of an older

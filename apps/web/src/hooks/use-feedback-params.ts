@@ -60,20 +60,42 @@ function areaOf(value: string | undefined): FeedbackArea | undefined {
   );
 }
 
+// The engine of the app window on each system, keyed by the first word of the
+// `os` param (`platform()` of the Tauri os plugin).
+const DESKTOP_ENGINES: Record<string, string> = {
+  macos: "WebKit",
+  windows: "WebView2",
+  linux: "WebKitGTK",
+};
+
 /** The build and system the desktop app named, from new or legacy params. */
 function desktopDetails(
   app: string | undefined,
   os: string | undefined,
   client: string | undefined,
 ): FeedbackDetails {
-  if (app !== undefined) return { app, os, platform: "Mac app" };
+  if (app !== undefined) {
+    return { app, os, platform: "Desktop app", browser: desktopWindow(os) };
+  }
   if (client === undefined || !S.startsWith(client, "desktop ")) return {};
   const [, version, ...system] = S.split(client, " ");
+  // Only the Mac app sent the legacy `client` param.
   return {
     app: version,
     os: clean(A.join(system, " ")),
-    platform: "Mac app",
+    platform: "Desktop app",
+    browser: desktopWindow("macos"),
   };
+}
+
+function desktopWindow(os: string | undefined): string {
+  const engine = pipe(
+    O.fromNullable(os),
+    O.flatMap((value) => A.head(S.split(value, " "))),
+    O.flatMap((system) => O.fromNullable(DESKTOP_ENGINES[system])),
+    O.getWithDefault("Webview"),
+  );
+  return `${engine} (desktop app window)`;
 }
 
 export interface FeedbackLaunch {

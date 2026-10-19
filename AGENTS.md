@@ -8,7 +8,7 @@ An ATS Builder. Free, Open-Source, local-first resume builder. Customizable pres
 
 A pnpm workspace. Shared tooling (Biome, Prettier, commitlint, lefthook) lives at the root. Each workspace owns its dependencies. A version that more than one workspace uses comes from the `catalog` in `pnpm-workspace.yaml`, so the versions cannot drift apart.
 
-- `apps/web` (`@lanjut/web`): the Astro site, the React app, and the Worker (`worker/`). It builds `dist/` for the web and `dist-desktop/` for the Mac app.
+- `apps/web` (`@lanjut/web`): the Astro site, the React app, and the Worker (`worker/`). It builds `dist/` for the web and `dist-desktop/` for the desktop app.
 - `apps/desktop` (`@lanjut/desktop`): the Tauri shell in `src-tauri/`. It loads `apps/web/dist-desktop`.
 - `packages/resume` (`@lanjut/resume`): the résumé document. It holds the types, the schema registry, the migration ladder, the seed, PDF import, JSON and YAML interchange, the IndexedDB layer, and the template registry. Plain TypeScript with no React.
 - `packages/i18n` (`@lanjut/i18n`): the copy (`messages/*.json`) and the routing and translator helpers.
@@ -28,7 +28,7 @@ Run scripts from the repo root. They forward to the workspace that owns them: `p
 - A service worker keeps the web app's build files for offline use (`apps/web/service-worker/`, `docs/offline.md`). `astro:build:done` writes `dist/sw.js` with the file list and a content hash per file (`service-worker/build.ts`), and the build fails if an app page is missing from it. Pages load from the network first and fall back to the cache after 5 seconds, hashed files come from the cache first, and the PDF fonts are saved on first use. It never caches `/api/`, never opens IndexedDB, and the app registers it only in a production web build (`PlatformOfflineCache`). Its source has its own `tsconfig.json` with the `WebWorker` library, and `pnpm typecheck` checks it.
 - One dedicated Web Worker does the PDF work (`apps/web/src/components/editor/pdf-worker/`): the export, its warm-up, the PDF import, and the landing page's read-back. takumi-pdf and pdf.js never run on the page, so a PDF never blocks a tap. `runPdfJobInWorker` starts the worker on the first job. Where the worker cannot start, the job runs on the page. A worker cannot share chunks with the page, so its bundle repeats React and the templates. Vite builds it as ES modules with the Tailwind plugin (`worker` in `astro.config.ts`), because the PDF stylesheet imports the compiled app CSS. In `astro dev`, the React Refresh runtime writes to `window` when it loads, and a worker has no `window`. A pnpm patch on `@vitejs/plugin-react` makes it write to `globalThis`.
 - Static desktop build selected by `LANJUT_TARGET=desktop`, written to `apps/web/dist-desktop/`. Tauri packages load only through dynamic imports behind `IS_DESKTOP`, so the web app never runs them.
-- Tauri 2 (desktop shell for macOS; `apps/desktop/src-tauri/`, system webview, loads the static export from disk)
+- Tauri 2 (desktop shell for macOS, Windows, and Linux; `apps/desktop/src-tauri/`, system webview, loads the static export from disk)
 - use-intl (internationalization; English at `/` and Indonesian under `/id`, on web and desktop alike. `packages/i18n/messages/*.json` hold the copy. `@lanjut/i18n` holds the routing helpers and `getTranslator` for `.astro` files. `apps/web/src/i18n/navigation.tsx` holds the `Link`, `useRouter`, and `usePathname` replacements)
 - shadcn (base-ui primitives, Vega style: 36px controls, `rounded-md` on a `1rem` radius)
 - @phosphor-icons/react (icons; `components.json` sets shadcn's `iconLibrary` to `phosphor`, and code imports the `*Icon` names)
@@ -59,7 +59,7 @@ Run scripts from the repo root. They forward to the workspace that owns them: `p
 - Search: canonical links, hreflang, and the sitemap name a page by `publicPath` (`apps/web/src/lib/seo.ts`), because `build.format: "preserve"` reports `/feedback.html` and `/id/`, which the asset server redirects. `INDEXED_PATHS` lists the indexable pages; the @astrojs/sitemap integration (`astro.config.ts`, web build only) filters by it and writes one entry per page and language with its alternates and `x-default`, and every other page sets `noindex`. `RootLayout` renders the title, description, robots, canonical, hreflang, Open Graph, and Twitter tags through astro-seo's `SEO` component. Always pass it `canonical` (or `null` on a `noindex` page): its default comes from `Astro.url`, which names the `.html` file. `robots.txt` blocks only `/api/`: a page with `noindex` must stay crawlable, or a crawler never reads the tag. The home page's JSON-LD graph (`structured-data.ts`) holds `WebSite` (the name a search result shows), the application with its author and contributors, and an `FAQPage` built from `FAQ_KEYS`, the same list the landing FAQ renders. The landing footer links the other language with a plain `<a>`, because the language menu reloads through a cookie that crawlers cannot follow. `public/llms.txt` states the product facts for AI agents; keep it true when a fact changes. The changelog is also Markdown for agents: `[...lang]/changelog.md.ts` writes `/changelog.md` and `/id/changelog.md` from the same copy (`changelog-markdown.ts`), and the changelog page links it with `<link rel="alternate" type="text/markdown">`.
 - An application page renders one React island root: `PlatformApp` at `/editor`, `/template`, `/profile`, and `/changelog`, and `FeedbackPage` at `/feedback`. The root wraps its content in `AppProviders`.
 - `/editor`, `/template`, `/profile`, and `/changelog` load client-only (`client:only="react"`). They read everything from IndexedDB, so a hydration step would add nothing. Until the app mounts, each page shows a static shell: `PlatformAppStatic`, rendered at build time, which is the shell around the skeleton of the page (`PAGE_SKELETONS`), or around the changelog itself. It loads no page code and reads no storage. `platform-app-page.astro` writes the island and the static shell side by side, and `PlatformApp` removes the static shell in a layout effect, before its own first paint. The static shell is not the island's `fallback` slot, because Astro writes a slot into the page twice (once to show it, once as a `<template>` for the component). `/editor` and `/template` are indexed by their static title and description (and `PAGE_TITLE_KEYS` keeps those titles after load), and their static shell gives crawlers the page's real text, such as the template names and descriptions; `/profile` is `noindex`. `/feedback` still renders on the server. The static HTML of `/changelog` holds the full release history for crawlers and agents. `AppProviders` gives wouter `publicPath(pathname)` as `ssrPath`, because the build reports `/changelog.html`.
-- One file answers `/editor` and every `/editor/<id>`, so `editor.astro` writes two static shells, one for each route. The head script (`preferences.js`) names the route on `<html>` (`data-workspace`), and `globals.css` keeps the other shell out, before the first paint. The two shells repeat their ids until the app mounts. The Mac app's root file serves every route in both languages, so it keeps the full-page `PlatformLoading`.
+- One file answers `/editor` and every `/editor/<id>`, so `editor.astro` writes two static shells, one for each route. The head script (`preferences.js`) names the route on `<html>` (`data-workspace`), and `globals.css` keeps the other shell out, before the first paint. The two shells repeat their ids until the app mounts. The desktop app's root file serves every route in both languages, so it keeps the full-page `PlatformLoading`.
 - The static shell cannot know what is in storage. The head script (`preferences.js`) reads the two saved values that change its layout, before the first paint. The first is a collapsed sidebar. The static shell holds the sidebar expanded, and the icon rail is CSS on two attributes of the sidebar (`data-state`, `data-collapsible`), so the head script sets them as the parser adds the sidebar. `useSidebarStore` starts from the same mark on `<html>` (`data-sidebar`), so the first render of the app is the same picture. The second is the number of rows in the Recent list. `PlatformLibraryMemory` saves it from the shell (`saveRecentRows` in `apps/web/src/lib/recent-rows.ts`), because a phone mounts the sidebar only while its sheet is open. The head script marks the number on `<html>` (`data-recent`), and `globals.css` gives two loading states their shape from it. The Recent list keeps that many loading rows, so the groups under it do not move, and it stays out with no number, as it does with no résumé. The library skeleton holds both of its first blocks until the résumés are counted (`PlatformLibraryUncountedSkeleton`): the continue card shows for 1 or more, and the empty state for 0 and for no number. That empty state keeps its room and shows no message (`scope="unknown"`), because the shell cannot say that nothing is saved. A part that shows saved state asks `useIsStaticShell` and waits for the app, as the Changelog dot does. The avatar is the guest's until the app mounts. Keep the static shell free of anything that reads storage. The release data is `CHANGELOG` in `apps/web/src/lib/changelog.ts`, with each version's highlights in the `platform.changelog.entries` messages.
 - Landing sections are `.astro` components in `apps/web/src/components/landing/`. Only the parts that need JavaScript are React islands: the navbar theme toggle and settings menu, the hero's two-readers sheet (the live résumé beside the text a PDF extractor reads back from it), the template picker, the FAQ accordion, the closing actions, and the contributors row in the close. The contributors row renders the build-time list on the server, then refreshes from `/api/contributors` when it comes into view, and keeps the build-time list if that request fails. Each face is a plain `<img>` over the initial, not `AvatarImage`, because base-ui renders its image only after the browser loads it, so the static page would carry no faces. Each face link carries the name as visually hidden text, not as an `aria-label`. The landing page has its own scoped tokens and faces (`[data-world="readers"]` in `globals.css`, set on `<body>` through the `world` prop of `RootLayout`), so the app keeps its own look. An island that reads copy wraps itself in `IslandProviders`, which carries only the namespaces in `ISLAND_NAMESPACES` (`packages/i18n/src/island-messages.ts`). The `islandMessages` Vite plugin (`apps/web/src/i18n/island-messages-plugin.ts`) writes them as a module of their own, because the app imports each catalog whole and a bundler never splits one module between chunks. An island that reads another namespace adds it there. The app roots wrap themselves in `AppProviders`, with all the copy. Static sections take their copy from `getTranslator`. The hero sheet and the template picker draw their résumés in the static HTML: `ResumeThumbnail` scales with CSS alone, and an off-screen thumbnail skips layout (`content-visibility: auto`). The résumé font faces come in after hydration (`useHydrated`), so the static page starts no TTF download before its first paint.
 - Primitives with built-in labels (the Dialog and Sheet close button, `SidebarTrigger`, `Spinner`, `Breadcrumb`) read them from the `ui` messages namespace, so they render only inside an island that wraps `IslandProviders`. `ResumePage` takes its label as a prop instead, because the landing page renders it with no provider.
@@ -118,6 +118,7 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   storage. Changing either orphans the résumés of everyone who already installed the app.
   `bundle.windows.wix.upgradeCode` is pinned to Tauri's default for the name Lanjut. An MSI
   matches an update to the installed app by it, so a new code installs a second copy.
+  No MSI ships today, and the code stays pinned in case one does.
   `.github/scripts/check-tauri-config.mjs` fails CI when any of the three changes.
 - The window opens on `/editor`. Tauri falls back from `<path>` to `<path>.html`,
   then to `<path>/index.html`, then to the root `index.html`, so links need no
@@ -137,20 +138,24 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   anchor will work on the web and do nothing at all in the desktop app. The function
   resolves false when the user cancels the save dialog, which is not an error.
 - The app requires macOS 13 (`bundle.macOS.minimumSystemVersion`). PDF export runs takumi-pdf's WebAssembly, which the CSP allows through `'wasm-unsafe-eval'` in `script-src`, and WebKit honors that keyword only from Safari 16, which macOS 13 ships. Lowering the minimum breaks PDF export on older systems.
-- macOS is the only shipped desktop target. `bundle.targets` also lists the Windows
-  installers (NSIS, MSI) and the Linux packages (AppImage, `.deb`, `.rpm`). Tauri builds
-  only the targets of the system it runs on, so the Mac build still makes `.app` and
-  `.dmg`. The release builds macOS only. Windows (x64, ARM64) and Linux (x64, ARM64)
-  build on demand for testing. Do not describe them as supported until they pass the
-  test checklist on real machines and ship. They ship together as 1.0.0: that PR adds
-  them to the release matrix and to `PLATFORMS`, and its description carries
-  `Release-As: 1.0.0`.
-- WiX makes no ARM64 MSI, so Windows ARM64 builds the NSIS installer only
-  (`--bundles nsis`). Linux builds on `ubuntu-22.04`, the oldest Ubuntu supported,
+- The app ships for macOS (`.dmg`), Windows (the NSIS `-setup.exe`), and Linux
+  (AppImage, `.deb`, `.rpm`), each for x64 and ARM64. Tauri builds only the targets
+  of the system it runs on, so one `bundle.targets` list serves every build. Windows
+  ships no MSI: it showed two broken dialogs on Windows 10, and one installer per
+  architecture is enough. Linux builds on `ubuntu-22.04`, the oldest Ubuntu supported,
   because a Linux build runs only on a glibc as new as the one it was built against.
-- A tagged release publishes one `.dmg` per architecture. The build is unsigned, so
-  macOS refuses to open it until the quarantine attribute is cleared. That is a paid
-  Apple membership away from being fixed, not a code change.
+- The NSIS installer installs for the current user and carries the Lanjut images
+  (`apps/desktop/src-tauri/installer/`). `nsis-hooks.nsh` replaces the generic text of
+  the Welcome and Finish pages, because Tauri includes it before the page macros. NSIS
+  needs 24-bit BMP files: 164 × 314 for the sidebar, 150 × 57 for the header.
+- `docs/install.md` tells people which file to download and how to install it on each
+  system. The `publish` job appends it to every release's notes, with the real version
+  in the file names, because the download button opens the latest release. Keep its
+  file names in step with what the bundler writes.
+- No build is signed. macOS refuses to open the app until the quarantine attribute
+  is cleared, and Windows SmartScreen warns before Setup runs. Each needs a paid
+  certificate to fix, not a code change. The download section names the extra step
+  beside each button.
 - The updater verifies a signature. The public key lives in `tauri.conf.json` and the
   private key lives only in the `TAURI_SIGNING_PRIVATE_KEY` repository secret. When the
   two keys do not match, `tauri build` only prints a warning and the build still
@@ -162,7 +167,7 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   silent by design. The 0.17.0 release shipped this way.
 - release-please cuts every release as a draft, with its tag created at once
   (`draft` and `force-tag-creation` in `release-please-config.json`). The `publish`
-  job makes it public only after both desktop builds pass. A failed build therefore
+  job makes it public only after every desktop build passes. A failed build therefore
   leaves a hidden draft, and `releases/latest`, which the download button and every
   installed updater read, stays on the last complete release.
 - Nothing `tauri-action` reports can fail a release on its own. It warns and carries
@@ -171,7 +176,9 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   that finish together can drop an entry. The `publish` job reads the manifest off
   the draft and confirms it signs every architecture before the release goes public
   (`.github/scripts/check-update-manifest.mjs`). Keep its `PLATFORMS` list in step
-  with the desktop matrix.
+  with the desktop matrix. On Linux the plain key (`linux-x86_64`) serves the AppImage,
+  and an app installed from a `.deb` or an `.rpm` reads its own key
+  (`linux-x86_64-deb`), so the list names all three.
 - Repair a failed release with `gh run rerun --failed <run-id>`. That runs the failed
   jobs again inside the original run, runs `publish` after them, and updates the
   checks the run already wrote. A `workflow_dispatch` starts a separate run instead,
@@ -215,6 +222,7 @@ The one shipped example of that carve-out is the opt-in header photo: off by def
   - `docs/offline.md`: any change to the service worker, the files it keeps, or its rules.
   - `docs/multi-window.md`: any change to the edit lock, the messages between windows, or the revision check.
   - `docs/markdown-dialect.md`: any change to the Markdown of the code mode: a label, a heading rule, an escape, or a downgrade.
+  - `docs/install.md`: any change to the installers, their file names, the supported systems, or the update behavior. The `publish` job copies it into every release.
   - `apps/web/FONTS.md` and `apps/web/public/fonts/OFL.txt`: any font that is added, removed, or updated, in `public/` or in the Astro `fonts` config. A family with a Reserved Font Name ships as its unmodified upstream files, never as a subset (`FONTS.md` says why).
 - Common triggers: adding or removing a dependency (tech stack lists), a new section type or field shape (section-type lists), a new user-facing capability (README features), a new script (scripts tables), a new route or server surface (`design.md`, the data-flow rule).
 - Verify every documented claim against the code before writing it. Describe what ships, not intended behavior. A doc that overstates the product is worse than a missing line.

@@ -26,7 +26,7 @@
       },
       {
         "label": "main",
-        "title": "Lanjut (beta)",
+        "title": "Lanjut",
         "url": "/editor",
         "width": 1280,
         "height": 860,
@@ -43,7 +43,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["app", "dmg", "nsis", "msi", "appimage", "deb", "rpm"],
+    "targets": ["app", "dmg", "nsis", "appimage", "deb", "rpm"],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -52,10 +52,22 @@
       "icons/icon.ico"
     ],
     "createUpdaterArtifacts": true,
+    "copyright": "© 2026 Lanjut. Open source under AGPL-3.0.",
+    "category": "Productivity",
+    "homepage": "https://lanjut.org",
     "macOS": {
       "minimumSystemVersion": "13.0"
     },
     "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "installerIcon": "icons/icon.ico",
+        "uninstallerIcon": "icons/icon.ico",
+        "headerImage": "installer/nsis-header.bmp",
+        "uninstallerHeaderImage": "installer/nsis-header.bmp",
+        "sidebarImage": "installer/nsis-sidebar.bmp",
+        "installerHooks": "installer/nsis-hooks.nsh"
+      },
       "wix": {
         "upgradeCode": "d74b5259-696f-51ba-b46e-b015a9db0a89"
       }

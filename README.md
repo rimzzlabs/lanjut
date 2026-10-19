@@ -46,6 +46,11 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Local persistence via IndexedDB, no data leaves the browser. The editor's top bar confirms each save to the device and warns when the browser refuses one
 - Safe in two tabs: one tab edits a résumé or a profile at a time, the other shows it frozen with "Edit here", and a save never overwrites another tab's changes
 - Works offline: after the first visit to the app, the site opens, edits, and exports with no network. The PDF fonts of a template download the first time it uses them (see [docs/offline.md](docs/offline.md))
+- Desktop app for macOS, Windows, and Linux: the same editor in its own window, with no network needed. It looks for a new version at most once every three days, and installs one only when you click
+
+## Desktop App
+
+Download Lanjut for your system from the [latest release](https://github.com/rimzzlabs/lanjut/releases/latest). [docs/install.md](docs/install.md) tells you which file to pick and how to install it on macOS, Windows, and Linux. The release page shows the same steps.
 
 ## Templates
 
@@ -67,7 +72,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Framework            | Astro (static output, React islands)                                     |
 | Hosting              | Cloudflare Workers static assets, plus one Worker for the feedback relay |
 | Build targets        | Web (default), desktop (`LANJUT_TARGET=desktop`)                         |
-| Desktop shell        | Tauri 2 (macOS 13 or later)                                              |
+| Desktop shell        | Tauri 2 (macOS 13 or later, Windows 10 or later, Linux)                  |
 | Internationalization | use-intl (English, Indonesian)                                           |
 | UI components        | shadcn (base-ui, Vega style)                                             |
 | Icons                | Phosphor (@phosphor-icons/react)                                         |
@@ -107,7 +112,7 @@ Open `http://localhost:4321`.
 | Workspace           | What it holds                                                        |
 | ------------------- | -------------------------------------------------------------------- |
 | `apps/web`          | The Astro site, the React app, and the Worker                        |
-| `apps/desktop`      | The Tauri shell for macOS                                            |
+| `apps/desktop`      | The Tauri shell for macOS, Windows, and Linux                        |
 | `packages/resume`   | The résumé document: model, migrations, import, interchange, storage |
 | `packages/i18n`     | The English and Indonesian copy, and the routing helpers             |
 | `packages/ui`       | The shadcn primitives                                                |

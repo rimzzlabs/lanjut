@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_0_0": [
+          {
+            "title": "Lanjut 1.0, now on Windows and Linux",
+            "description": "The app now runs on Windows and Linux too, beside macOS, and it is no longer a beta. It is the same editor, it keeps working offline, and your resumes stay on your computer. Download it from the home page, where each system has its own button and install steps."
+          }
+        ],
         "0_26_3": [
           {
             "title": "A faster home page",
@@ -1043,7 +1049,7 @@
       "import": "Importing a file",
       "templates": "Templates",
       "library": "Library and profiles",
-      "desktop": "The Mac app",
+      "desktop": "The desktop app",
       "home": "Home page",
       "other": "Somewhere else"
     },
@@ -1594,10 +1600,17 @@
     "localSource": "Lanjut is open source under AGPL-3.0.",
     "localSourceLink": "Read the code on GitHub",
     "appHeading": "Prefer an app?",
-    "appBody": "The same editor runs as a Mac app that keeps working offline.",
+    "appBody": "The same editor runs as an app for macOS, Windows, and Linux, and it keeps working offline.",
     "macMeta": "macOS 13 or later",
     "macCta": "Download for macOS",
-    "macNote": "It is a beta and not yet signed by Apple, so macOS asks you to confirm the first time you open it.",
+    "macNote": "Apple has not signed it yet, so the first open takes one extra step.",
+    "windowsMeta": "Windows 10 or later",
+    "windowsCta": "Download for Windows",
+    "windowsNote": "Microsoft has not signed it yet. If Windows warns you, select More info, then Run anyway.",
+    "linuxMeta": "Ubuntu 22.04, Fedora 37, or newer",
+    "linuxCta": "Download for Linux",
+    "linuxNote": "Pick the .deb for Ubuntu or Debian, the .rpm for Fedora, or the AppImage for any other system.",
+    "installSteps": "Install steps",
     "closeHeading": "Free to use, and open source.",
     "closeBody": "There is no paid plan and no account to make. The code is public under AGPL-3.0, and anyone can read it or run their own copy.",
     "contributorsBody": "Made by people who give their time to it. Join them: add a translation, fix a bug, or build the feature you wish it had.",
@@ -1611,7 +1624,7 @@
       "support": "Support",
       "editor": "Build a resume",
       "templates": "Templates",
-      "download": "Download for macOS",
+      "download": "Download the app",
       "github": "GitHub",
       "rights": "© {year} Lanjut. Open source under AGPL-3.0."
     },
@@ -1657,7 +1670,6 @@
     "importRawLabel": "Text from your PDF",
     "snippetLabel": "Your PDF, read back",
     "snippetChars": "{chars, number} characters",
-    "otherPlatforms": "Windows and Linux are coming soon.",
     "faqHeading": "Common questions",
     "faqMissing": "Not covered here?",
     "faqMissingLink": "Ask on GitHub",

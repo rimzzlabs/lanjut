@@ -21,7 +21,7 @@ body:
         - Import
         - Templates
         - Library and profiles
-        - Mac app
+        - Desktop app
         - Home page
         - Other
     validations:

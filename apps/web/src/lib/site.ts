@@ -25,3 +25,6 @@ export const DONATION_LINKS = {
  */
 export const DESKTOP_RELEASE_URL =
   "https://github.com/rimzzlabs/lanjut/releases/latest";
+
+/** The install steps for each system. Its headings give the anchors `#macos`, `#windows`, and `#linux`. */
+export const INSTALL_GUIDE_URL = `${REPO_URL}/blob/main/docs/install.md`;

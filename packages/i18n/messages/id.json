@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_0_0": [
+          {
+            "title": "Lanjut 1.0, sekarang di Windows dan Linux",
+            "description": "Aplikasinya sekarang jalan di Windows dan Linux juga, selain macOS, dan udah bukan beta lagi. Editornya sama, tetap jalan tanpa internet, dan resume kamu tetap di komputer kamu. Unduh dari halaman utama: tiap sistem punya tombol dan cara pasangnya sendiri."
+          }
+        ],
         "0_26_3": [
           {
             "title": "Halaman utama lebih cepat",
@@ -1043,7 +1049,7 @@
       "import": "Saat mengimpor file",
       "templates": "Template",
       "library": "Pustaka dan profil",
-      "desktop": "Aplikasi Mac",
+      "desktop": "Aplikasi desktop",
       "home": "Halaman utama",
       "other": "Tempat lain"
     },
@@ -1594,10 +1600,17 @@
     "localSource": "Lanjut open source dengan lisensi AGPL-3.0.",
     "localSourceLink": "Baca kodenya di GitHub",
     "appHeading": "Lebih suka aplikasi?",
-    "appBody": "Editor yang sama juga ada sebagai aplikasi Mac yang tetap jalan tanpa internet.",
+    "appBody": "Editor yang sama juga ada sebagai aplikasi untuk macOS, Windows, dan Linux, dan tetap jalan tanpa internet.",
     "macMeta": "macOS 13 ke atas",
     "macCta": "Unduh untuk macOS",
-    "macNote": "Masih beta dan belum ditandatangani Apple, jadi macOS minta konfirmasi saat pertama kali dibuka.",
+    "macNote": "Belum ditandatangani Apple, jadi pas pertama kali dibuka ada satu langkah tambahan.",
+    "windowsMeta": "Windows 10 ke atas",
+    "windowsCta": "Unduh untuk Windows",
+    "windowsNote": "Belum ditandatangani Microsoft. Kalau Windows kasih peringatan, pilih More info, lalu Run anyway.",
+    "linuxMeta": "Ubuntu 22.04, Fedora 37, atau yang lebih baru",
+    "linuxCta": "Unduh untuk Linux",
+    "linuxNote": "Pilih .deb untuk Ubuntu atau Debian, .rpm untuk Fedora, atau AppImage untuk sistem lain.",
+    "installSteps": "Cara pasang",
     "closeHeading": "Gratis dipakai, dan open source.",
     "closeBody": "Nggak ada paket berbayar, dan nggak perlu bikin akun. Kodenya terbuka dengan lisensi AGPL-3.0, jadi siapa pun bisa membacanya atau menjalankan salinannya sendiri.",
     "contributorsBody": "Dibuat oleh orang-orang yang menyumbangkan waktunya. Ikut bergabung: tambahkan terjemahan, perbaiki bug, atau buat fitur yang kamu inginkan.",
@@ -1611,7 +1624,7 @@
       "support": "Dukungan",
       "editor": "Buat CV",
       "templates": "Template",
-      "download": "Unduh untuk macOS",
+      "download": "Unduh aplikasinya",
       "github": "GitHub",
       "rights": "© {year} Lanjut. Open source dengan lisensi AGPL-3.0."
     },
@@ -1657,7 +1670,6 @@
     "importRawLabel": "Teks dari PDF kamu",
     "snippetLabel": "PDF kamu, dibaca ulang",
     "snippetChars": "{chars, number} karakter",
-    "otherPlatforms": "Windows dan Linux segera hadir.",
     "faqHeading": "Pertanyaan umum",
     "faqMissing": "Pertanyaanmu nggak ada di sini?",
     "faqMissingLink": "Tanya di GitHub",

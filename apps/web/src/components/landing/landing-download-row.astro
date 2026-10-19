@@ -1,0 +1,55 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { buttonVariants } from "@lanjut/ui/components/button";
+import { cn } from "@lanjut/ui/lib/utils";
+import { ArrowUpRightIcon, DownloadSimpleIcon } from "@phosphor-icons/react";
+import { DESKTOP_RELEASE_URL, INSTALL_GUIDE_URL } from "@/lib/site";
+import type { DesktopPlatform } from "./landing-download-platforms";
+
+interface Props {
+  locale: Locale;
+  platform: DesktopPlatform;
+}
+
+const { locale, platform } = Astro.props;
+const t = getTranslator(locale, "landing");
+const Icon = platform.icon;
+---
+
+<li class="grid gap-6 py-8 md:grid-cols-12 md:items-center">
+  <div class="flex items-center gap-4 md:col-span-5">
+    <Icon aria-hidden="true" weight="fill" className="size-9" />
+    <div>
+      <p class="text-2xl font-bold tracking-tight">{platform.name}</p>
+      <p class="font-machine text-xs text-muted-foreground">
+        {t(`${platform.key}Meta`)}
+      </p>
+    </div>
+  </div>
+  <div class="flex flex-col items-start gap-3 md:col-span-7 md:items-end">
+    <a
+      href={DESKTOP_RELEASE_URL}
+      target="_blank"
+      rel="noreferrer"
+      class={cn(buttonVariants({ size: "lg" }), "h-11 gap-2 px-5")}
+    >
+      <DownloadSimpleIcon />
+      {t(`${platform.key}Cta`)}
+      <span class="sr-only">{t("newTab")}</span>
+    </a>
+    <p class="max-w-[46ch] text-xs text-pretty text-muted-foreground md:text-right">
+      {t(`${platform.key}Note`)}
+    </p>
+    <a
+      href={`${INSTALL_GUIDE_URL}#${platform.anchor}`}
+      target="_blank"
+      rel="noreferrer"
+      class="-mt-2 inline-flex items-center gap-0.5 text-xs font-medium underline-offset-4 hover:underline"
+    >
+      {t("installSteps")}
+      <ArrowUpRightIcon aria-hidden="true" className="size-3" />
+      <span class="sr-only">{t("newTab")}</span>
+    </a>
+  </div>
+</li>

@@ -59,7 +59,6 @@ export function usePageFeedbackContext(): FeedbackContext {
       area: launch.area ?? "other",
       details: {
         ...webDetails(locale),
-        ...(launch.fromDesktop ? { browser: "WebKit (Mac app window)" } : {}),
         ...launch.details,
       },
     }),
