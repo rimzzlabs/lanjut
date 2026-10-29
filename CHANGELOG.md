@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/rimzzlabs/lanjut/compare/v0.26.4...v1.0.0) (2026-10-29)
+
+
+### Features
+
+* ship the desktop app on windows and linux ([#250](https://github.com/rimzzlabs/lanjut/issues/250)) ([f67d638](https://github.com/rimzzlabs/lanjut/commit/f67d6385e32d00c8a15f9a36c7cd3a54c4f7a8f6))
+
 ## [0.26.4](https://github.com/rimzzlabs/lanjut/compare/v0.26.3...v0.26.4) (2026-10-29)
 
 
