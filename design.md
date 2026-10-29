@@ -95,7 +95,8 @@ editorial
 - The Profiles page (`/profile`) lists every profile (avatar, name, person, job
   title, résumé count, an "Active" badge). From `lg` the list stays in view beside
   the chosen profile's card: who it is, Use this profile or Active, the form, and
-  Delete. Below `lg` a row opens the same card in a drawer. Add new profile sits in
+  Delete. The card stops at `56rem`, so the fields keep a usable width on a wide
+  screen. Below `lg` a row opens the same card in a drawer. Add new profile sits in
   the page header; while its form shows, a dashed "New profile, not saved yet" row
   is the current row in the list, and the form has Cancel. Delete shows only when
   more than one profile exists, and its confirmation picks where the résumés move.
@@ -111,7 +112,8 @@ editorial
   is deleted and Lanjut switches to the profile.
 - The library (`/editor`) and the template page (`/template`) share one frame: a page
   header (title on the left, search and actions on the right, a hairline rule under
-  them) over sections in a `max-w-7xl` column. Each section has a small semibold
+  them) over sections in a column that fills the page panel, so a wide screen
+  gets more résumé columns, not wider margins. Each section has a small semibold
   heading over its content.
 - The changelog (`/changelog`) is one release history in the same column: the
   title and a subtitle over a hairline rule, then one row per release. On the left

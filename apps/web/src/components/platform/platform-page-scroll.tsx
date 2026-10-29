@@ -10,7 +10,7 @@ import { PAGE_SCROLL_ID } from "@/lib/page-scroll";
 export function PlatformPageScroll(props: { children: ReactNode }) {
   return (
     <ScrollArea id={PAGE_SCROLL_ID} className="min-h-0">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 p-4 md:p-6 lg:p-8">
+      <div className="flex w-full flex-col gap-8 p-4 md:p-6 lg:p-8">
         {props.children}
       </div>
     </ScrollArea>

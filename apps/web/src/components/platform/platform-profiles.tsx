@@ -105,7 +105,7 @@ function PlatformProfilesBody(props: PlatformProfilesBodyProps) {
   }
 
   return (
-    <div className="grid grid-cols-[20rem_minmax(0,1fr)] items-start gap-6">
+    <div className="grid grid-cols-[20rem_minmax(0,56rem)] items-start gap-6">
       <div className="sticky top-6">
         <ProfileList
           profiles={profiles}

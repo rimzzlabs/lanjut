@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "0_26_4": [
+          {
+            "title": "Bug fixes",
+            "description": "On Windows, pages no longer show two gray scrollbars along their edges. On a wide screen, your library and the templates now use the full width of the window instead of a narrow column in the middle."
+          }
+        ],
         "0_26_3": [
           {
             "title": "A faster home page",

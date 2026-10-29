@@ -122,12 +122,29 @@ function PlatformAppFrame(props: PlatformAppFrameProps) {
 export function PlatformApp(props: IslandProps) {
   // The page shows a static shell until this root renders. The two are the
   // same picture, so the static one goes before the first paint of this one.
-  useLayoutEffect(() => {
-    const shells = document.querySelectorAll(`[${STATIC_SHELL_ATTRIBUTE}]`);
-    for (const shell of shells) shell.remove();
-  }, []);
+  useLayoutEffect(removeStaticShells, []);
 
   return <PlatformAppFrame {...props} page={PlatformAppPage} />;
+}
+
+/**
+ * React reuses a hoisted style that is already in the page, such as the one
+ * that hides the native scrollbars of every `ScrollArea`, instead of adding it
+ * to the head. The static shell carries those styles, so they move to the head
+ * before the shell goes. Without them, Windows shows both native scrollbars.
+ */
+function removeStaticShells() {
+  const shells = document.querySelectorAll(`[${STATIC_SHELL_ATTRIBUTE}]`);
+  for (const shell of shells) {
+    for (const style of shell.querySelectorAll("style[data-precedence]")) {
+      const href = style.getAttribute("data-href") ?? "";
+      const inHead = document.head.querySelector(
+        `style[data-href="${CSS.escape(href)}"]`,
+      );
+      if (!inHead) document.head.append(style);
+    }
+    shell.remove();
+  }
 }
 
 /**
