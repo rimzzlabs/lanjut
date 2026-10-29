@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.4](https://github.com/rimzzlabs/lanjut/compare/v0.26.3...v0.26.4) (2026-10-29)
+
+
+### Bug Fixes
+
+* hide windows scrollbars and fill the page width ([#248](https://github.com/rimzzlabs/lanjut/issues/248)) ([0714e28](https://github.com/rimzzlabs/lanjut/commit/0714e28feab5e2b659ea7481639d3e16cec1ab09))
+
 ## [0.26.3](https://github.com/rimzzlabs/lanjut/compare/v0.26.2...v0.26.3) (2026-10-19)
 
 
