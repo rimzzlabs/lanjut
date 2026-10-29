@@ -52,7 +52,7 @@ export function PlatformProfilesBodySkeleton() {
   const ready = status === "ready";
 
   return (
-    <div className="grid items-start gap-6 lg:grid-cols-[20rem_minmax(0,1fr)]">
+    <div className="grid items-start gap-6 lg:grid-cols-[20rem_minmax(0,56rem)]">
       {ready && (
         <ProfileList
           profiles={profiles}

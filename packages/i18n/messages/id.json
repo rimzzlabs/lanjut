@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "0_26_4": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Di Windows, halaman nggak lagi nampilin dua scrollbar abu-abu di pinggirnya. Di layar lebar, library dan template sekarang pakai seluruh lebar jendela, bukan kolom sempit di tengah."
+          }
+        ],
         "0_26_3": [
           {
             "title": "Halaman utama lebih cepat",
