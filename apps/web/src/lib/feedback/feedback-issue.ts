@@ -32,7 +32,7 @@ export const AREA_NAMES: Record<FeedbackArea, string> = {
   import: "Import",
   templates: "Templates",
   library: "Library and profiles",
-  desktop: "Mac app",
+  desktop: "Desktop app",
   home: "Home page",
   other: "Other",
 };

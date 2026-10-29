@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_0_0": [
+          {
+            "title": "Lanjut 1.0, sekarang di Windows dan Linux",
+            "description": "Aplikasi desktop sekarang jalan di Windows dan Linux juga, nggak cuma di Mac. Editornya sama, tetap bisa dipakai tanpa internet, dan résumé kamu tetap di perangkat kamu sendiri. Unduh lewat halaman utama. Aplikasinya juga udah nggak beta lagi."
+          }
+        ],
         "0_26_4": [
           {
             "title": "Perbaikan bug",
@@ -1049,7 +1055,7 @@
       "import": "Saat mengimpor file",
       "templates": "Template",
       "library": "Pustaka dan profil",
-      "desktop": "Aplikasi Mac",
+      "desktop": "Aplikasi desktop",
       "home": "Halaman utama",
       "other": "Tempat lain"
     },
@@ -1600,10 +1606,13 @@
     "localSource": "Lanjut open source dengan lisensi AGPL-3.0.",
     "localSourceLink": "Baca kodenya di GitHub",
     "appHeading": "Lebih suka aplikasi?",
-    "appBody": "Editor yang sama juga ada sebagai aplikasi Mac yang tetap jalan tanpa internet.",
-    "macMeta": "macOS 13 ke atas",
+    "appBody": "Editor yang sama juga ada sebagai aplikasi desktop untuk macOS, Windows, dan Linux, dan tetap jalan tanpa internet.",
+    "macMeta": "macOS 13 ke atas · Apple silicon dan Intel",
     "macCta": "Unduh untuk macOS",
-    "macNote": "Masih beta dan belum ditandatangani Apple, jadi macOS minta konfirmasi saat pertama kali dibuka.",
+    "winMeta": "Windows 10 ke atas · x64 dan ARM",
+    "winCta": "Unduh untuk Windows",
+    "linuxMeta": "AppImage, .deb, atau .rpm · x64 dan ARM",
+    "linuxCta": "Unduh untuk Linux",
     "closeHeading": "Gratis dipakai, dan open source.",
     "closeBody": "Nggak ada paket berbayar, dan nggak perlu bikin akun. Kodenya terbuka dengan lisensi AGPL-3.0, jadi siapa pun bisa membacanya atau menjalankan salinannya sendiri.",
     "contributorsBody": "Dibuat oleh orang-orang yang menyumbangkan waktunya. Ikut bergabung: tambahkan terjemahan, perbaiki bug, atau buat fitur yang kamu inginkan.",
@@ -1617,7 +1626,7 @@
       "support": "Dukungan",
       "editor": "Buat CV",
       "templates": "Template",
-      "download": "Unduh untuk macOS",
+      "download": "Unduh aplikasinya",
       "github": "GitHub",
       "rights": "© {year} Lanjut. Open source dengan lisensi AGPL-3.0."
     },
@@ -1663,7 +1672,6 @@
     "importRawLabel": "Teks dari PDF kamu",
     "snippetLabel": "PDF kamu, dibaca ulang",
     "snippetChars": "{chars, number} karakter",
-    "otherPlatforms": "Windows dan Linux segera hadir.",
     "faqHeading": "Pertanyaan umum",
     "faqMissing": "Pertanyaanmu nggak ada di sini?",
     "faqMissingLink": "Tanya di GitHub",

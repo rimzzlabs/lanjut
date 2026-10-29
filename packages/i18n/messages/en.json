@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_0_0": [
+          {
+            "title": "Lanjut 1.0, now on Windows and Linux",
+            "description": "The desktop app now runs on Windows and Linux, as well as on the Mac. It is the same editor, it keeps working offline, and your résumés stay on your own machine. Download it from the home page. The app is no longer a beta."
+          }
+        ],
         "0_26_4": [
           {
             "title": "Bug fixes",
@@ -1049,7 +1055,7 @@
       "import": "Importing a file",
       "templates": "Templates",
       "library": "Library and profiles",
-      "desktop": "The Mac app",
+      "desktop": "The desktop app",
       "home": "Home page",
       "other": "Somewhere else"
     },
@@ -1600,10 +1606,13 @@
     "localSource": "Lanjut is open source under AGPL-3.0.",
     "localSourceLink": "Read the code on GitHub",
     "appHeading": "Prefer an app?",
-    "appBody": "The same editor runs as a Mac app that keeps working offline.",
-    "macMeta": "macOS 13 or later",
+    "appBody": "The same editor runs as a desktop app for macOS, Windows, and Linux, and it keeps working offline.",
+    "macMeta": "macOS 13 or later · Apple silicon and Intel",
     "macCta": "Download for macOS",
-    "macNote": "It is a beta and not yet signed by Apple, so macOS asks you to confirm the first time you open it.",
+    "winMeta": "Windows 10 or later · x64 and ARM",
+    "winCta": "Download for Windows",
+    "linuxMeta": "AppImage, .deb, or .rpm · x64 and ARM",
+    "linuxCta": "Download for Linux",
     "closeHeading": "Free to use, and open source.",
     "closeBody": "There is no paid plan and no account to make. The code is public under AGPL-3.0, and anyone can read it or run their own copy.",
     "contributorsBody": "Made by people who give their time to it. Join them: add a translation, fix a bug, or build the feature you wish it had.",
@@ -1617,7 +1626,7 @@
       "support": "Support",
       "editor": "Build a resume",
       "templates": "Templates",
-      "download": "Download for macOS",
+      "download": "Download the app",
       "github": "GitHub",
       "rights": "© {year} Lanjut. Open source under AGPL-3.0."
     },
@@ -1663,7 +1672,6 @@
     "importRawLabel": "Text from your PDF",
     "snippetLabel": "Your PDF, read back",
     "snippetChars": "{chars, number} characters",
-    "otherPlatforms": "Windows and Linux are coming soon.",
     "faqHeading": "Common questions",
     "faqMissing": "Not covered here?",
     "faqMissingLink": "Ask on GitHub",
