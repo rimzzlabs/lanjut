@@ -4,10 +4,8 @@ import { readFileSync } from "node:fs";
 // tauri-action lines that explain why are warnings, so the job stayed green and
 // the fault only surfaced on an installed app, which fails an update check in
 // silence. This reads the manifest back off the release and fails loudly.
-//
-// Each architecture's job merges its own entry into the manifest on the
-// release, so two jobs that finish together can drop each other's entry. Run
-// this once both are done, against every architecture the release must serve.
+// Run it after write-update-manifest.mjs, against every system and
+// architecture the release must serve.
 
 const platforms = (process.env.PLATFORMS ?? "").split(/\s+/).filter(Boolean);
 const tag = process.env.TAG;

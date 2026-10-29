@@ -33,7 +33,7 @@ editorial
   The library loads on the block it had on the last visit, the continue card or the
   empty state, and the empty state shows its message only after the app reads the
   résumés. The Changelog dot shows only after the app mounts.
-  Only the Mac app's root file still opens on the full-page
+  Only the desktop app's root file still opens on the full-page
   loader (see Motion). Moving
   between them keeps the shell. While a page's code loads, the content area shows a
   skeleton of that page: the library, the template list beside a blank sheet, the
@@ -102,7 +102,7 @@ editorial
   more than one profile exists, and its confirmation picks where the résumés move.
 - Under a profile's header, above its form, a Backup box (muted, no ring) says
   what the file holds and offers Download backup, plus Share where the system can
-  share files (not in the Mac app). It sits high so a person finds it without
+  share files (not in the desktop app). It sits high so a person finds it without
   scrolling past the form, and so the tour can point at it with room for its card.
   If a browser refuses the share, the backup downloads instead, with a toast that
   says so. The page header holds Import profile (outline) beside Add new profile.
@@ -308,7 +308,7 @@ column is `w-11/12 max-w-5xl` centered.
 - The reader sheet's intro sweep is the landing page's one authored motion. It is
   described under "Landing world: Two Readers".
 - Inside React islands and the app, `motion/react` carries the motion.
-- The Mac app's full-page loader (`platform-loading.astro`), which its root file
+- The desktop app's full-page loader (`platform-loading.astro`), which its root file
   shows, is SVG and CSS, so it plays before any JavaScript. A sheet writes its lines, a scan beam reads them and turns
   them green, and the Lanjut mark stamps the corner. The loop is 3.2s. Every element
   rests on the finished sheet, so reduced motion shows that sheet and only fades
@@ -482,8 +482,9 @@ from `md`. No section carries a kicker, eyebrow, or number above its heading.
   `--ink` plate (`landing-read-snippet.tsx`).
 - Local (`landing-local.astro`): copy beside an `--ink` panel that draws the IndexedDB
   stores, with `--ink-line` rules.
-- Download (`landing-download.astro`): one hairline-ruled macOS row with the action
-  and the unsigned-build note, then a single muted line for Windows and Linux.
+- Download (`landing-download.astro`): three hairline-ruled rows, for macOS, Windows,
+  and Linux. Each row holds the system, its requirements in Martian Mono, an outline
+  download action.
 - FAQ (`landing-faq.astro`, `landing-faq.tsx`): a sticky heading column of 4 with a
   GitHub issues link, beside the `Accordion` primitive at `rounded-xl`. Each answer
   says only what ships. Panels use `hiddenUntilFound`, so closed answers stay in the
@@ -505,7 +506,7 @@ panels. `--ink` marks machine content only. Never put human copy on it.
 - Hero controls are 44px tall (`h-11`): the four draft fields, the look select, and
   the primary action. The scanner handle is 44px (`size-11`).
 - Every landing action button is `size="lg"` at `h-11 px-5`: the hero action, the
-  close actions, and the macOS download.
+  close actions, and the three downloads.
 - The desktop nav is 56px tall (`h-14`). Its buttons are 40px (`h-10`, `size-10`).
   The logo takes no hover fill while the nav floats as a pill.
 - The primary action is the filled `Button` with a trailing `ArrowRightIcon`. The

@@ -67,7 +67,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Framework            | Astro (static output, React islands)                                     |
 | Hosting              | Cloudflare Workers static assets, plus one Worker for the feedback relay |
 | Build targets        | Web (default), desktop (`LANJUT_TARGET=desktop`)                         |
-| Desktop shell        | Tauri 2 (macOS 13 or later)                                              |
+| Desktop shell        | Tauri 2 (macOS 13 or later, Windows 10 or later, Linux)                  |
 | Internationalization | use-intl (English, Indonesian)                                           |
 | UI components        | shadcn (base-ui, Vega style)                                             |
 | Icons                | Phosphor (@phosphor-icons/react)                                         |
@@ -107,7 +107,7 @@ Open `http://localhost:4321`.
 | Workspace           | What it holds                                                        |
 | ------------------- | -------------------------------------------------------------------- |
 | `apps/web`          | The Astro site, the React app, and the Worker                        |
-| `apps/desktop`      | The Tauri shell for macOS                                            |
+| `apps/desktop`      | The Tauri shell for macOS, Windows, and Linux                        |
 | `packages/resume`   | The résumé document: model, migrations, import, interchange, storage |
 | `packages/i18n`     | The English and Indonesian copy, and the routing helpers             |
 | `packages/ui`       | The shadcn primitives                                                |

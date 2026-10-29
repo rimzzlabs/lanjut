@@ -1,3 +1,4 @@
+import { A, O, pipe, S } from "@mobily/ts-belt";
 import { useMemo } from "react";
 import { useLocale } from "use-intl";
 import { useWorkspaceView } from "@/hooks/use-workspace-view";
@@ -14,7 +15,7 @@ import type {
 } from "@/lib/feedback/feedback-schema";
 import { areaForPathname } from "@/lib/github-issue";
 import { useResumeStore } from "@/lib/store";
-import { useFeedbackLaunch } from "./use-feedback-params";
+import { type FeedbackLaunch, useFeedbackLaunch } from "./use-feedback-params";
 
 export interface FeedbackContext {
   area: FeedbackArea;
@@ -59,10 +60,29 @@ export function usePageFeedbackContext(): FeedbackContext {
       area: launch.area ?? "other",
       details: {
         ...webDetails(locale),
-        ...(launch.fromDesktop ? { browser: "WebKit (Mac app window)" } : {}),
+        ...desktopBrowser(launch),
         ...launch.details,
       },
     }),
     [launch, locale],
   );
+}
+
+/** The tauri-plugin-os platform names, as the webview each system ships. */
+const WEBVIEWS: Record<string, string> = {
+  macos: "WebKit",
+  windows: "WebView2",
+  linux: "WebKitGTK",
+};
+
+/** The desktop window's webview, from the system it named, such as "windows 10.0.19045". */
+function desktopBrowser(launch: FeedbackLaunch): FeedbackDetails {
+  if (!launch.fromDesktop) return {};
+  const webview = pipe(
+    O.fromNullable(launch.details.os),
+    O.flatMap((value) => A.head(S.split(value, " "))),
+    O.flatMap((platform) => O.fromNullable(WEBVIEWS[platform])),
+    O.getWithDefault("System webview"),
+  );
+  return { browser: `${webview} (desktop app window)` };
 }

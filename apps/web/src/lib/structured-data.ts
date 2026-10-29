@@ -47,7 +47,7 @@ export function homeStructuredData(
         description: t("description"),
         applicationCategory: "BusinessApplication",
         applicationSubCategory: t("category"),
-        operatingSystem: "Web, macOS 13 or later",
+        operatingSystem: "Web, macOS 13 or later, Windows 10 or later, Linux",
         browserRequirements: "A current browser with JavaScript",
         featureList: t("features"),
         inLanguage: locale,

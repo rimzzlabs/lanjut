@@ -66,13 +66,13 @@ function desktopDetails(
   os: string | undefined,
   client: string | undefined,
 ): FeedbackDetails {
-  if (app !== undefined) return { app, os, platform: "Mac app" };
+  if (app !== undefined) return { app, os, platform: "Desktop app" };
   if (client === undefined || !S.startsWith(client, "desktop ")) return {};
   const [, version, ...system] = S.split(client, " ");
   return {
     app: version,
     os: clean(A.join(system, " ")),
-    platform: "Mac app",
+    platform: "Desktop app",
   };
 }
 

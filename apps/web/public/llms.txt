@@ -7,7 +7,7 @@
 - Templates: https://lanjut.org/template
 - Changelog: https://lanjut.org/changelog (Markdown: https://lanjut.org/changelog.md)
 - Source code (AGPL-3.0): https://github.com/rimzzlabs/lanjut
-- Mac app: https://github.com/rimzzlabs/lanjut/releases/latest
+- Desktop app (macOS, Windows, Linux): https://github.com/rimzzlabs/lanjut/releases/latest
 
 ## Facts
 
@@ -21,7 +21,7 @@
 - Languages: English and Indonesian, for the app and for a resume's headings and dates.
 - Developer mode: off by default. With it on in Preferences, the editor shows a resume as Markdown, YAML, or JSON beside the page, and the page follows the text.
 - Profiles: one profile per kind of job. A profile and its resumes back up to one file that imports on another device.
-- Platforms: any current browser, and a macOS app (macOS 13 or later).
+- Platforms: any current browser, and a desktop app for macOS 13 or later, Windows 10 or later, and Linux (AppImage, .deb, or .rpm; Ubuntu 22.04 or later). Each runs on x64 and ARM.
 
 ## Pages
 
