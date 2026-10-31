@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/rimzzlabs/lanjut/compare/v1.1.0...v1.2.0) (2026-10-31)
+
+
+### Features
+
+* header link to the templates and plain page titles ([#255](https://github.com/rimzzlabs/lanjut/issues/255)) ([5205419](https://github.com/rimzzlabs/lanjut/commit/5205419c4cbb69b180d9b2fbe3edc57a1eaffef9))
+
 ## [1.1.0](https://github.com/rimzzlabs/lanjut/compare/v1.0.0...v1.1.0) (2026-10-31)
 
 
