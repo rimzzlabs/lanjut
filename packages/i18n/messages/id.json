@@ -4,9 +4,9 @@
     "description": "Buat CV dan resume ramah ATS secara gratis. Open source, tanpa akun, tanpa daftar: CV kamu tetap di browser. Ekspor ke PDF, Word, atau teks.",
     "category": "Pembuat CV dan resume",
     "features": "Ekspor PDF, Word (DOCX), dan teks polos yang ramah ATS; enam template; impor dari PDF, JSON, atau YAML; bahasa Inggris dan Indonesia; jalan di browser tanpa akun; cadangan profil untuk pindah perangkat",
-    "editorTitle": "Buat CV gratis, tanpa daftar",
+    "editorTitle": "Buat CV",
     "editorDescription": "Mulai CV dari halaman kosong, contoh, CV lamamu, atau template. Gratis, tanpa akun, dan tersimpan di browser kamu.",
-    "templateTitle": "Template CV ATS gratis",
+    "templateTitle": "Jelajahi template",
     "templateDescription": "Enam template CV gratis yang urutannya tetap terbaca sistem pelacakan pelamar. Lihat tiap template satu halaman penuh, pada contoh atau CV kamu sendiri.",
     "changelogTitle": "Catatan rilis",
     "changelogDescription": "Apa yang berubah di setiap rilis Lanjut: fitur baru dan perbaikan di pembuat CV ATS yang gratis dan open source."
@@ -32,7 +32,8 @@
     "animationSystem": "Sistem",
     "animationOn": "Nyala",
     "animationOff": "Mati",
-    "openApp": "Buat sekarang"
+    "buildResume": "Buat CV",
+    "exploreTemplates": "Jelajahi template"
   },
   "tour": {
     "controls": {
@@ -190,6 +191,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_2_0": [
+          {
+            "title": "Template di menu",
+            "description": "Menu di atas halaman utama sekarang punya tautan \"Jelajahi template\", dan tombol utamanya jadi \"Buat CV\". Halaman editor dan template juga punya nama yang lebih singkat di tab browser kamu."
+          }
+        ],
         "1_1_0": [
           {
             "title": "Contoh CV berbahasa Indonesia",
