@@ -84,7 +84,7 @@ const SAMPLE_SUMMARY: Record<ResumeLanguage, (jobTitle: string) => string> = {
   en: (jobTitle) =>
     `Sample summary. Replace it with two or three lines about your work as ${jobTitle}: what you do, and what you have done well.`,
   id: (jobTitle) =>
-    `Contoh ringkasan. Ganti dengan dua atau tiga baris tentang pekerjaanmu sebagai ${jobTitle}: apa yang kamu kerjakan, dan apa yang sudah kamu kerjakan dengan baik.`,
+    `Contoh ringkasan. Ganti dengan dua atau tiga baris tentang pekerjaanmu sebagai ${jobTitle}: apa yang kamu kerjakan sehari-hari, dan pencapaian terbaikmu.`,
 };
 
 function sampleSummary(
