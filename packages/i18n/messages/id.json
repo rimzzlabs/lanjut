@@ -191,6 +191,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_3_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Setiap jawaban di halaman utama sekarang bisa dipahami tanpa pertanyaannya, jadi mesin pencari dan alat AI mengutipnya dengan benar. Halaman Privasi juga sekarang menampilkan kapan terakhir diperbarui."
+          }
+        ],
         "1_3_0": [
           {
             "title": "Halaman privasi",
@@ -1713,43 +1719,43 @@
       },
       "free": {
         "question": "Lanjut beneran gratis?",
-        "answer": "Iya. Nggak ada paket berbayar dan nggak perlu akun. Kalau mau mendukung, kamu bisa berdonasi lewat Saweria atau SociaBuzz. Tautannya ada di footer."
+        "answer": "Iya, Lanjut gratis. Nggak ada paket berbayar dan nggak perlu akun. Kalau mau mendukung, kamu bisa berdonasi lewat Saweria atau SociaBuzz. Tautannya ada di footer."
       },
       "account": {
-        "question": "Perlu bikin akun?",
-        "answer": "Nggak. Buka editor dan langsung tulis. Nggak ada pendaftaran, login, atau email yang diminta, karena CV kamu tersimpan di browser ini, bukan di server."
+        "question": "Perlu daftar atau bikin akun?",
+        "answer": "Nggak, kamu nggak perlu akun. Buka editor dan langsung tulis. Nggak ada pendaftaran, login, atau email yang diminta, karena CV kamu tersimpan di browser ini, bukan di server."
       },
       "openSource": {
         "question": "Lanjut open source?",
-        "answer": "Iya. Kodenya ada di GitHub dengan lisensi AGPL-3.0. Kamu bisa lihat cara kerjanya, melaporkan bug, atau ikut menyumbang perbaikan dan terjemahan."
+        "answer": "Iya, Lanjut open source. Kodenya ada di GitHub dengan lisensi AGPL-3.0. Kamu bisa lihat cara kerjanya, melaporkan bug, atau ikut menyumbang perbaikan dan terjemahan."
       },
       "storage": {
         "question": "CV aku disimpan di mana?",
-        "answer": "Di browser ini, di perangkat ini. Lanjut menyimpan CV kamu di penyimpanan bawaan browser dan nggak mengirim apa pun ke server. Kalau kamu menghapus data situs atau pindah browser, CV kamu tertinggal, jadi cadangkan profil kamu di halaman Profil. Satu berkas berisi profil beserta semua CV-nya, dan bisa diimpor di perangkat lain."
+        "answer": "CV kamu tersimpan di browser ini, di perangkat ini. Lanjut memakai penyimpanan bawaan browser dan nggak mengirim apa pun ke server. Kalau kamu menghapus data situs atau pindah browser, CV kamu tertinggal, jadi cadangkan profil kamu di halaman Profil. Satu berkas berisi profil beserta semua CV-nya, dan bisa diimpor di perangkat lain."
       },
       "files": {
         "question": "File mana yang harus aku kirim?",
         "answer": "Kirim PDF untuk sebagian besar formulir unggah dan lewat email. Kirim .docx kalau portal atau perekrut minta file Word. Tempel .txt ke formulir yang cuma menerima teks biasa."
       },
       "ats": {
-        "question": "Apakah CV aku bakal lolos ATS?",
+        "question": "CV aku bakal lolos ATS nggak?",
         "answer": "Nggak ada alat yang bisa menjanjikan itu, karena tiap perusahaan mengatur sistemnya sendiri. Lanjut mengurus apa yang bisa diatur lewat file-nya: teks asli sesuai urutan baca, judul bagian yang standar, dan kontak yang bisa ditemukan parser. Lembar di paling atas halaman ini menunjukkan teks yang dibaca parser dari PDF kamu."
       },
       "cv": {
-        "question": "Lanjut bisa buat CV juga?",
-        "answer": "Bisa. Di Indonesia, CV dan resume biasanya berarti dokumen yang sama, dan Lanjut membuat keduanya: pengalaman, pendidikan, dan keahlian kamu dalam urutan yang bisa dibaca sistem pelacakan pelamar (ATS)."
+        "question": "CV sama resume itu beda nggak?",
+        "answer": "Di Indonesia, biasanya sama aja. Lanjut bikin satu dokumen yang bisa kamu sebut CV atau resume: pengalaman, pendidikan, dan keahlian kamu, dalam urutan yang bisa dibaca sistem pelacakan pelamar (ATS)."
       },
       "import": {
         "question": "Bisa impor CV yang sudah aku punya?",
-        "answer": "Bisa. Masukkan PDF, atau file JSON atau YAML yang kamu ekspor dari Lanjut. PDF-nya harus berisi teks asli, jadi halaman hasil scan atau file yang dikunci kata sandi nggak bisa dibaca. Baris yang nggak bisa ditempatkan Lanjut masuk ke daftar yang bisa kamu salin."
+        "answer": "Iya, CV lama kamu bisa diimpor. Masukkan PDF, atau file JSON atau YAML yang kamu ekspor dari Lanjut. PDF-nya harus berisi teks asli, jadi halaman hasil scan atau file yang dikunci kata sandi nggak bisa dibaca. Baris yang nggak bisa ditempatkan Lanjut masuk ke daftar yang bisa kamu salin."
       },
       "language": {
         "question": "Bisa bikin CV dalam bahasa Inggris?",
-        "answer": "Bisa. Atur bahasa dokumen ke Inggris di editor, dan label tetap seperti judul bagian dan tanggal ikut berubah. Aplikasinya sendiri tersedia dalam bahasa Indonesia dan Inggris."
+        "answer": "Iya, CV kamu bisa dibuat dalam bahasa Inggris. Atur bahasa dokumen ke Inggris di editor, dan label tetap seperti judul bagian dan tanggal ikut berubah. Aplikasinya sendiri tersedia dalam bahasa Indonesia dan Inggris."
       },
       "photo": {
         "question": "Bisa pasang foto?",
-        "answer": "Bisa. Foto di header itu opsional dan mati secara bawaan. Foto muncul di PDF dan .docx, file .txt nggak menyertakannya, dan foto nggak pernah mengubah teks yang dibaca parser."
+        "answer": "Iya, foto bisa dipasang di header. Fotonya opsional dan mati secara bawaan. Foto muncul di PDF dan .docx, file .txt nggak menyertakannya, dan foto nggak pernah mengubah teks yang dibaca parser."
       }
     }
   },
@@ -1814,6 +1820,7 @@
     },
     "codeTitle": "Cek sendiri",
     "codeBody": "Lanjut itu open source dengan lisensi AGPL-3.0. Semua kode di balik isi halaman ini bisa kamu baca di GitHub.",
-    "codeLink": "Baca kodenya"
+    "codeLink": "Baca kodenya",
+    "updated": "Terakhir diperbarui"
   }
 }
