@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/rimzzlabs/lanjut/compare/v1.2.0...v1.3.0) (2026-10-31)
+
+
+### Features
+
+* privacy page and seo fixes ([#257](https://github.com/rimzzlabs/lanjut/issues/257)) ([2f83b79](https://github.com/rimzzlabs/lanjut/commit/2f83b791f1b60a0336f3519e26c22bac4d30174d))
+
 ## [1.2.0](https://github.com/rimzzlabs/lanjut/compare/v1.1.0...v1.2.0) (2026-10-31)
 
 
