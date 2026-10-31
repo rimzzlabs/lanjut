@@ -221,7 +221,10 @@ function LandingReaderChecks(props: {
   ];
 
   return (
-    <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 font-machine text-xs">
+    <ul
+      data-nosnippet
+      className="flex flex-wrap items-center gap-x-5 gap-y-2 font-machine text-xs"
+    >
       {checks.map((check) => (
         <li key={check.label} className="flex items-center gap-1.5">
           <CheckMark ok={check.ok} reading={props.reading} />

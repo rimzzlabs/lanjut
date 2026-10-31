@@ -202,6 +202,7 @@ export function LandingReaderSheet(props: LandingReaderSheetProps) {
       </span>
 
       <div
+        data-nosnippet
         className="absolute inset-y-0 right-0 flex flex-col overflow-hidden bg-(--ink) font-machine"
         style={{ left: `${position}%` }}
       >

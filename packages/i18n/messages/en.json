@@ -191,6 +191,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_3_1": [
+          {
+            "title": "Bug fixes",
+            "description": "Each answer on the home page now makes sense on its own, so search engines and AI tools quote it correctly. The Privacy page shows when it was last updated."
+          }
+        ],
         "1_3_0": [
           {
             "title": "A privacy page",
@@ -1649,7 +1655,7 @@
     "closeBrowse": "Browse templates",
     "newTab": "opens in a new tab",
     "footer": {
-      "tagline": "A free ATS résumé builder that keeps your work in your browser.",
+      "tagline": "A free ATS résumé and CV builder that keeps your work in your browser.",
       "product": "Product",
       "project": "Project",
       "support": "Support",
@@ -1713,19 +1719,19 @@
       },
       "free": {
         "question": "Is Lanjut really free?",
-        "answer": "Yes. There is no paid plan and no account. If you want to support the work, you can donate through Saweria or SociaBuzz. Both links are in the footer."
+        "answer": "Yes, Lanjut is free. There is no paid plan and no account. If you want to support the work, you can donate through Saweria or SociaBuzz. Both links are in the footer."
       },
       "account": {
-        "question": "Do I need an account?",
-        "answer": "No. Open the editor and start writing. There is no sign-up, no login, and no email to give, because your résumés stay in this browser instead of on a server."
+        "question": "Do I need to sign up or make an account?",
+        "answer": "No, Lanjut needs no account. Open the editor and start writing. There is no sign-up, no login, and no email to give, because your résumés stay in this browser instead of on a server."
       },
       "openSource": {
         "question": "Is Lanjut open source?",
-        "answer": "Yes. The code is on GitHub under the AGPL-3.0 license. You can read how it works, report a bug, or contribute a fix or a translation."
+        "answer": "Yes, Lanjut is open source. The code is on GitHub under the AGPL-3.0 license. You can read how it works, report a bug, or contribute a fix or a translation."
       },
       "storage": {
         "question": "Where is my résumé saved?",
-        "answer": "In this browser, on this device. Lanjut keeps your résumés in the browser's own storage and sends nothing to a server. If you clear your site data or switch browsers, the résumés stay behind, so back up your profile on the Profiles page. One file holds the profile and all its résumés, and it imports on another device."
+        "answer": "Your résumé is saved in this browser, on this device. Lanjut keeps your résumés in the browser's own storage and sends nothing to a server. If you clear your site data or switch browsers, the résumés stay behind, so back up your profile on the Profiles page. One file holds the profile and all its résumés, and it imports on another device."
       },
       "files": {
         "question": "Which file should I send?",
@@ -1737,19 +1743,19 @@
       },
       "cv": {
         "question": "Is Lanjut a CV builder too?",
-        "answer": "Yes. Many countries call a résumé a CV, and Lanjut builds the same document under either name: your experience, education, and skills, in an order an applicant tracking system can read."
+        "answer": "Yes, Lanjut is a CV builder too. Many countries call a résumé a CV, and Lanjut builds the same document under either name: your experience, education, and skills, in an order an applicant tracking system can read."
       },
       "import": {
         "question": "Can I import the résumé I already have?",
-        "answer": "Yes. Drop in a PDF, or a JSON or YAML file you exported from Lanjut. The PDF needs real text, so a scanned page or a password-protected file cannot be read. Any line Lanjut cannot place goes to a list you can copy from."
+        "answer": "Yes, you can import your résumé. Drop in a PDF, or a JSON or YAML file you exported from Lanjut. The PDF needs real text, so a scanned page or a password-protected file cannot be read. Any line Lanjut cannot place goes to a list you can copy from."
       },
       "language": {
         "question": "Can I write my résumé in Indonesian?",
-        "answer": "Yes. Set the document language to Indonesian in the editor, and the fixed labels, such as section headings and dates, change with it. The app itself is in English and Indonesian too."
+        "answer": "Yes, you can write your résumé in Indonesian. Set the document language to Indonesian in the editor, and the fixed labels, such as section headings and dates, change with it. The app itself is in English and Indonesian too."
       },
       "photo": {
         "question": "Can I add a photo?",
-        "answer": "Yes. The header photo is optional and off by default. It shows in the PDF and the .docx, the .txt leaves it out, and it never changes the text a parser reads."
+        "answer": "Yes, you can add a photo. The header photo is optional and off by default. It shows in the PDF and the .docx, the .txt leaves it out, and it never changes the text a parser reads."
       }
     }
   },
@@ -1814,6 +1820,7 @@
     },
     "codeTitle": "Check it yourself",
     "codeBody": "Lanjut is open source under AGPL-3.0. The code that does everything on this page is public on GitHub.",
-    "codeLink": "Read the code"
+    "codeLink": "Read the code",
+    "updated": "Last updated"
   }
 }
