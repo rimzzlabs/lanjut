@@ -1,4 +1,6 @@
 import { locationSuffix } from "../../resume-entry-location";
+import { ResumeHeading } from "../../resume-heading";
+
 import { ResumeOptionalLink } from "../../resume-optional-link";
 import type { ExperienceItemView } from "../../resume-preview";
 import { ResumeRichText } from "../../resume-rich-text";
@@ -7,11 +9,11 @@ export function KetikExperienceItem(props: ExperienceItemView) {
   return (
     <article>
       <div className="flex items-baseline justify-between gap-4">
-        <h3 className="font-mono resume-body-xs font-bold">
+        <ResumeHeading level={3} className="font-mono resume-body-xs font-bold">
           <ResumeOptionalLink href={props.roleHref} className="underline">
             {props.role}
           </ResumeOptionalLink>
-        </h3>
+        </ResumeHeading>
         <span className="shrink-0 font-mono text-[0.6875rem] text-muted-foreground">
           {props.startDate} – {props.endDate}
         </span>

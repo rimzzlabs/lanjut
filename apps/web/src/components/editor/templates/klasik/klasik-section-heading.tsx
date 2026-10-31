@@ -1,3 +1,5 @@
+import { ResumeHeading } from "../../resume-heading";
+
 interface KlasikSectionHeadingProps {
   title: string;
 }
@@ -5,9 +7,12 @@ interface KlasikSectionHeadingProps {
 export function KlasikSectionHeading(props: KlasikSectionHeadingProps) {
   return (
     <div className="border-b border-muted-foreground/40 pb-1">
-      <h2 className="text-center font-serif resume-title-sm uppercase">
+      <ResumeHeading
+        level={2}
+        className="text-center font-serif resume-title-sm uppercase"
+      >
         {props.title}
-      </h2>
+      </ResumeHeading>
     </div>
   );
 }

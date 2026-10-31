@@ -76,14 +76,10 @@ export default defineConfig({
             filter: (page) =>
               A.includes(INDEXED_PATHS, stripLocale(pathOf(page))),
             i18n: { defaultLocale: "en", locales: { en: "en", id: "id" } },
-            changefreq: "daily",
-            lastmod: new Date(),
-            // The landing page, in each language, gets top priority, and
-            // every entry names the English page as x-default. Google reads
-            // neither priority nor changefreq, only lastmod.
+            // Every entry names the English page as x-default. No lastmod:
+            // a build time on every page tells a crawler nothing.
             serialize: (item) => ({
               ...item,
-              ...(stripLocale(pathOf(item.url)) === "/" && { priority: 1 }),
               links: pipe(
                 item.links ?? [],
                 A.find((link) => link.lang === "en"),

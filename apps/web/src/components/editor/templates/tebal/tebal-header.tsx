@@ -1,6 +1,7 @@
 import { A } from "@mobily/ts-belt";
 import { ResumeHeaderContact } from "../../resume-header-contact";
 import { ResumeHeaderPhoto } from "../../resume-header-photo";
+import { ResumeHeading } from "../../resume-heading";
 import type { HeaderView } from "../../resume-preview";
 
 export function TebalHeader(props: HeaderView) {
@@ -8,9 +9,12 @@ export function TebalHeader(props: HeaderView) {
     <header className="flex items-start gap-4">
       <ResumeHeaderPhoto header={props} />
       <div>
-        <h1 className="resume-name-3xl font-extrabold tracking-tight">
+        <ResumeHeading
+          level={1}
+          className="resume-name-3xl font-extrabold tracking-tight"
+        >
           {props.fullName}
-        </h1>
+        </ResumeHeading>
         {props.headline && (
           <p className="mt-1 resume-name-sm font-medium text-muted-foreground">
             {props.headline}

@@ -3,6 +3,7 @@ import { type CSSProperties, useMemo } from "react";
 import { buildResumeBlocks } from "./resume-blocks";
 import { ResumeFontFaces, resumeTypographyStyle } from "./resume-fonts";
 import { A4 } from "./resume-geometry";
+import { ResumeHeadingsContext } from "./resume-heading";
 import { ResumePage } from "./resume-page";
 import type { ResumePreview } from "./resume-preview";
 import { TEMPLATE_BLOCK_VIEWS } from "./templates/template-block-view";
@@ -56,20 +57,22 @@ export function ResumeThumbnail(props: ResumeThumbnailProps) {
       style={resumeTypographyStyle(props.resume, props.template)}
     >
       <ResumeFontFaces />
-      <div style={FRAME_STYLE}>
-        <div style={PAGE_STYLE}>
-          <ResumePage page={1} total={1}>
-            {blocks.map((block, index) => (
-              <div
-                key={block.id}
-                style={{ marginTop: index === 0 ? 0 : block.gapBefore }}
-              >
-                <BlockView block={block} />
-              </div>
-            ))}
-          </ResumePage>
+      <ResumeHeadingsContext value={false}>
+        <div style={FRAME_STYLE}>
+          <div style={PAGE_STYLE}>
+            <ResumePage page={1} total={1}>
+              {blocks.map((block, index) => (
+                <div
+                  key={block.id}
+                  style={{ marginTop: index === 0 ? 0 : block.gapBefore }}
+                >
+                  <BlockView block={block} />
+                </div>
+              ))}
+            </ResumePage>
+          </div>
         </div>
-      </div>
+      </ResumeHeadingsContext>
     </div>
   );
 }

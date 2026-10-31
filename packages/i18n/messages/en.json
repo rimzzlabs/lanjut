@@ -4,9 +4,9 @@
     "description": "Build an ATS-friendly resume or CV for free. Open source, no account, no sign-up: your resume stays in your browser. Export PDF, Word, or plain text.",
     "category": "Resume builder",
     "features": "ATS-friendly PDF, Word (DOCX), and plain-text export; six templates; import from PDF, JSON, or YAML; English and Indonesian; works in the browser with no account; profile backups that move to another device",
-    "editorTitle": "Build your resume",
+    "editorTitle": "Build a free resume, no sign-up",
     "editorDescription": "Start a resume from a blank page, the sample, your old resume, or a template. Free, no account, and saved in your browser.",
-    "templateTitle": "ATS resume templates",
+    "templateTitle": "Free ATS resume templates",
     "templateDescription": "Six free resume templates that keep an order applicant tracking systems can read. See each one as a full page, on the sample or on your own resume.",
     "changelogTitle": "Changelog",
     "changelogDescription": "What changed in each Lanjut release: the new features and fixes in the free, open-source ATS resume builder."
@@ -190,6 +190,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_0_1": [
+          {
+            "title": "Bug fixes",
+            "description": "Screen readers and search engines now find one clear main heading on the home page, the templates page, and the feedback page. The home page answers \"What is Lanjut?\" first among its questions, and the Indonesian home page now says CV throughout."
+          }
+        ],
         "1_0_0": [
           {
             "title": "Lanjut 1.0, now on Windows and Linux",
@@ -828,7 +834,8 @@
       "previewWith": "Preview with",
       "previewLabel": "Preview of {name}",
       "applyTo": "Apply to {title}",
-      "inUse": "In use"
+      "inUse": "In use",
+      "heading": "ATS resume templates"
     },
     "navbar": {
       "starOnGithub": "Star on GitHub"
@@ -1568,7 +1575,7 @@
     "headingLine1": "Every résumé",
     "headingLead": "is read ",
     "headingAccent": "twice.",
-    "deck": "First a parser pulls out the text, then a recruiter looks at the page. Lanjut makes one résumé that works for both. It is free, and it never leaves your browser.",
+    "deck": "First an ATS parser pulls out the text, then a recruiter looks at the page. Lanjut makes one résumé that works for both. It is free, and it never leaves your browser.",
     "firstName": "First name",
     "firstNamePlaceholder": "Your first name",
     "lastName": "Last name",
@@ -1620,7 +1627,7 @@
     "closeBrowse": "Browse templates",
     "newTab": "opens in a new tab",
     "footer": {
-      "tagline": "A free résumé builder that keeps your work in your browser.",
+      "tagline": "A free ATS résumé builder that keeps your work in your browser.",
       "product": "Product",
       "project": "Project",
       "support": "Support",
@@ -1628,7 +1635,8 @@
       "templates": "Templates",
       "download": "Download the app",
       "github": "GitHub",
-      "rights": "© {year} Lanjut. Open source under AGPL-3.0."
+      "rights": "© {year} Lanjut. Open source under AGPL-3.0.",
+      "madeBy": "Made by"
     },
     "draftTitle": "My resume",
     "keptHeading": "Some things stay out on purpose.",
@@ -1676,6 +1684,10 @@
     "faqMissing": "Not covered here?",
     "faqMissingLink": "Ask on GitHub",
     "faq": {
+      "whatIs": {
+        "question": "What is Lanjut?",
+        "answer": "Lanjut is a free, open-source résumé and CV builder made for applicant tracking systems (ATS). It runs in your browser at lanjut.org, and as a desktop app for macOS, Windows, and Linux. There is no account, and your résumés stay on your device. Six templates change the look but never the reading order, so a parser reads every template the same way. You can export a PDF, a Word file (.docx), or plain text. Rizki Citra builds it in the open on GitHub, with contributors."
+      },
       "free": {
         "question": "Is Lanjut really free?",
         "answer": "Yes. There is no paid plan and no account. If you want to support the work, you can donate through Saweria or SociaBuzz. Both links are in the footer."

@@ -8,11 +8,11 @@ import { PlatformTemplateSearch } from "./platform-template-search";
 
 /** The template gallery, shown at `/template`. */
 export function PlatformTemplates() {
-  const t = useTranslations("platform.breadcrumb");
+  const t = useTranslations("platform.templates");
 
   return (
     <PlatformPageScroll>
-      <PlatformPageHeader title={t("browseTemplates")}>
+      <PlatformPageHeader title={t("heading")}>
         <PlatformTemplateSearch />
       </PlatformPageHeader>
       <PlatformTemplateBrowser />

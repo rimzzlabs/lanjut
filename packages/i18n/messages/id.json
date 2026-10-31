@@ -4,12 +4,12 @@
     "description": "Buat CV dan resume ramah ATS secara gratis. Open source, tanpa akun, tanpa daftar: CV kamu tetap di browser. Ekspor ke PDF, Word, atau teks.",
     "category": "Pembuat CV dan resume",
     "features": "Ekspor PDF, Word (DOCX), dan teks polos yang ramah ATS; enam template; impor dari PDF, JSON, atau YAML; bahasa Inggris dan Indonesia; jalan di browser tanpa akun; cadangan profil untuk pindah perangkat",
-    "editorTitle": "Buat CV kamu",
+    "editorTitle": "Buat CV gratis, tanpa daftar",
     "editorDescription": "Mulai CV dari halaman kosong, contoh, CV lamamu, atau template. Gratis, tanpa akun, dan tersimpan di browser kamu.",
-    "templateTitle": "Template CV ATS",
+    "templateTitle": "Template CV ATS gratis",
     "templateDescription": "Enam template CV gratis yang urutannya tetap terbaca sistem pelacakan pelamar. Lihat tiap template satu halaman penuh, pada contoh atau CV kamu sendiri.",
     "changelogTitle": "Catatan rilis",
-    "changelogDescription": "Apa yang berubah di setiap rilis Lanjut: fitur baru dan perbaikan di pembuat resume ATS yang gratis dan open source."
+    "changelogDescription": "Apa yang berubah di setiap rilis Lanjut: fitur baru dan perbaikan di pembuat CV ATS yang gratis dan open source."
   },
   "language": {
     "label": "Bahasa",
@@ -190,6 +190,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_0_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Pembaca layar dan mesin pencari sekarang menemukan satu judul utama yang jelas di halaman utama, halaman template, dan halaman masukan. Halaman utama sekarang menjawab \"Lanjut itu apa?\" paling pertama, dan halaman utama berbahasa Indonesia sekarang pakai istilah CV di semua bagian."
+          }
+        ],
         "1_0_0": [
           {
             "title": "Lanjut 1.0, sekarang di Windows dan Linux",
@@ -828,7 +834,8 @@
       "previewWith": "Pratinjau dengan",
       "previewLabel": "Pratinjau {name}",
       "applyTo": "Pakai di {title}",
-      "inUse": "Sedang dipakai"
+      "inUse": "Sedang dipakai",
+      "heading": "Template CV ATS"
     },
     "navbar": {
       "starOnGithub": "Beri bintang di GitHub"
@@ -1564,11 +1571,11 @@
     "notDone": "Belum"
   },
   "landing": {
-    "srHeading": "Lanjut, pembuat resume ATS gratis:",
-    "headingLine1": "Setiap resume",
+    "srHeading": "Lanjut, pembuat CV ATS gratis:",
+    "headingLine1": "Setiap CV",
     "headingLead": "dibaca ",
     "headingAccent": "dua kali.",
-    "deck": "Pertama, parser mengambil teksnya. Lalu perekrut melihat tampilannya. Lanjut bikin satu resume yang pas untuk keduanya. Gratis, dan nggak pernah keluar dari browser kamu.",
+    "deck": "Pertama, parser ATS mengambil teksnya. Lalu perekrut melihat tampilannya. Lanjut bikin satu CV yang pas untuk keduanya. Gratis, dan nggak pernah keluar dari browser kamu.",
     "firstName": "Nama depan",
     "firstNamePlaceholder": "Nama depanmu",
     "lastName": "Nama belakang",
@@ -1592,15 +1599,15 @@
     "allTemplates": "Lihat keenam template",
     "noAccount": "Tanpa akun. Tanpa unggah.",
     "looksHeading": "Ganti tampilannya. Urutannya tetap.",
-    "looksBody": "Enam template, masing-masing dengan huruf dan spasinya sendiri. Pilih satu dan resume di atas dibaca ulang. Section-nya kembali dengan urutan yang sama, dan setiap perubahan di Lanjut diuji untuk itu.",
+    "looksBody": "Enam template, masing-masing dengan huruf dan spasinya sendiri. Pilih satu dan CV di atas dibaca ulang. Section-nya kembali dengan urutan yang sama, dan setiap perubahan di Lanjut diuji untuk itu.",
     "lookAwal": "Polos dan lega",
     "lookKetat": "Serif yang padat",
     "lookLuasa": "Lapang, huruf renggang",
     "lookTebal": "Nama besar, judul tebal",
     "lookKlasik": "Serif penuh, rata tengah",
     "lookKetik": "Nuansa mesin tik",
-    "localHeading": "Resume kamu nggak pernah keluar dari browser ini.",
-    "localBody": "Nggak ada akun dan nggak ada salinan di server. Lanjut menyimpan resume kamu di penyimpanan browser kamu sendiri, dan kamu bisa mengekspornya ke PDF, DOCX, teks biasa, JSON, atau YAML kapan saja.",
+    "localHeading": "CV kamu nggak pernah keluar dari browser ini.",
+    "localBody": "Nggak ada akun dan nggak ada salinan di server. Lanjut menyimpan CV kamu di penyimpanan browser kamu sendiri, dan kamu bisa mengekspornya ke PDF, DOCX, teks biasa, JSON, atau YAML kapan saja.",
     "localPanelCaption": "Tempat kerjaanmu tersimpan",
     "localStores": "Object store",
     "localSource": "Lanjut open source dengan lisensi AGPL-3.0.",
@@ -1616,11 +1623,11 @@
     "closeHeading": "Gratis dipakai, dan open source.",
     "closeBody": "Nggak ada paket berbayar, dan nggak perlu bikin akun. Kodenya terbuka dengan lisensi AGPL-3.0, jadi siapa pun bisa membacanya atau menjalankan salinannya sendiri.",
     "contributorsBody": "Dibuat oleh orang-orang yang menyumbangkan waktunya. Ikut bergabung: tambahkan terjemahan, perbaiki bug, atau buat fitur yang kamu inginkan.",
-    "closeCta": "Mulai resume kamu",
+    "closeCta": "Mulai CV kamu",
     "closeBrowse": "Lihat template",
     "newTab": "terbuka di tab baru",
     "footer": {
-      "tagline": "Pembuat resume gratis yang menyimpan kerjaanmu di browser kamu.",
+      "tagline": "Pembuat CV ATS gratis yang menyimpan kerjaanmu di browser kamu.",
       "product": "Produk",
       "project": "Proyek",
       "support": "Dukungan",
@@ -1628,11 +1635,12 @@
       "templates": "Template",
       "download": "Unduh aplikasinya",
       "github": "GitHub",
-      "rights": "© {year} Lanjut. Open source dengan lisensi AGPL-3.0."
+      "rights": "© {year} Lanjut. Open source dengan lisensi AGPL-3.0.",
+      "madeBy": "Dibuat oleh"
     },
-    "draftTitle": "Resume saya",
+    "draftTitle": "CV saya",
     "keptHeading": "Ada yang sengaja nggak dimasukkan.",
-    "keptBody": "Parser membaca halaman dari atas ke bawah. Apa pun yang merusak urutan itu bisa mengacak teksmu, jadi Lanjut menjauhkannya dari isi resume dan menyerahkan sisanya ke kamu.",
+    "keptBody": "Parser membaca halaman dari atas ke bawah. Apa pun yang merusak urutan itu bisa mengacak teksmu, jadi Lanjut menjauhkannya dari isi CV dan menyerahkan sisanya ke kamu.",
     "keptAllowedTitle": "Section yang bisa kamu pakai",
     "keptOutTitle": "Dijauhkan dari teks",
     "sectionHeader": "Header",
@@ -1655,12 +1663,12 @@
     "outImages": "Gambar di dalam teks",
     "outImagesWhy": "Parser membaca teks, bukan gambar.",
     "keptPhoto": "Foto di header satu-satunya pengecualian. Sifatnya opsional, mati secara bawaan, dan nggak pernah mengubah teks yang dibaca parser.",
-    "importHeading": "Sudah punya resume? Mulai dari situ.",
+    "importHeading": "Sudah punya CV? Mulai dari situ.",
     "importBody": "Masukkan PDF, atau file JSON atau YAML yang pernah kamu ekspor. Lanjut memilah isinya ke dalam section, dan bagian yang belum bisa ditempatkan menunggu di daftar yang bisa kamu salin. Filenya dibaca di browser kamu, sama seperti yang lainnya.",
     "importFound": "Dipilah ke dalam section",
     "importLeftovers": "Baris untuk kamu tempatkan sendiri",
-    "exportsHeading": "Satu resume, lima file.",
-    "exportsBody": "Tiap lamaran minta format yang berbeda. Kelimanya berasal dari resume yang sama, jadi isinya nggak pernah berbeda.",
+    "exportsHeading": "Satu CV, lima file.",
+    "exportsBody": "Tiap lamaran minta format yang berbeda. Kelimanya berasal dari CV yang sama, jadi isinya nggak pernah berbeda.",
     "exportPdf": "Untuk formulir unggah dan email. Terbaca ulang dengan urutan yang sama seperti yang kamu lihat.",
     "exportDocx": "Untuk perekrut dan portal yang minta file Word.",
     "exportTxt": "Untuk formulir yang minta teks biasa ditempel.",
@@ -1676,28 +1684,32 @@
     "faqMissing": "Pertanyaanmu nggak ada di sini?",
     "faqMissingLink": "Tanya di GitHub",
     "faq": {
+      "whatIs": {
+        "question": "Lanjut itu apa?",
+        "answer": "Lanjut itu pembuat CV dan resume gratis dan open source, dibuat untuk sistem pelacakan pelamar (ATS). Bisa dipakai langsung di browser di lanjut.org, atau sebagai aplikasi desktop untuk macOS, Windows, dan Linux. Nggak perlu akun, dan CV kamu tetap di perangkatmu. Enam templatenya cuma mengubah tampilan, bukan urutan baca, jadi parser membaca semua template dengan cara yang sama. Kamu bisa ekspor ke PDF, Word (.docx), atau teks biasa. Rizki Citra membangunnya secara terbuka di GitHub, bareng para kontributor."
+      },
       "free": {
         "question": "Lanjut beneran gratis?",
         "answer": "Iya. Nggak ada paket berbayar dan nggak perlu akun. Kalau mau mendukung, kamu bisa berdonasi lewat Saweria atau SociaBuzz. Tautannya ada di footer."
       },
       "account": {
         "question": "Perlu bikin akun?",
-        "answer": "Nggak. Buka editor dan langsung tulis. Nggak ada pendaftaran, login, atau email yang diminta, karena resume kamu tersimpan di browser ini, bukan di server."
+        "answer": "Nggak. Buka editor dan langsung tulis. Nggak ada pendaftaran, login, atau email yang diminta, karena CV kamu tersimpan di browser ini, bukan di server."
       },
       "openSource": {
         "question": "Lanjut open source?",
         "answer": "Iya. Kodenya ada di GitHub dengan lisensi AGPL-3.0. Kamu bisa lihat cara kerjanya, melaporkan bug, atau ikut menyumbang perbaikan dan terjemahan."
       },
       "storage": {
-        "question": "Resume aku disimpan di mana?",
-        "answer": "Di browser ini, di perangkat ini. Lanjut menyimpan resume kamu di penyimpanan bawaan browser dan nggak mengirim apa pun ke server. Kalau kamu menghapus data situs atau pindah browser, resume kamu tertinggal, jadi cadangkan profil kamu di halaman Profil. Satu berkas berisi profil beserta semua resumenya, dan bisa diimpor di perangkat lain."
+        "question": "CV aku disimpan di mana?",
+        "answer": "Di browser ini, di perangkat ini. Lanjut menyimpan CV kamu di penyimpanan bawaan browser dan nggak mengirim apa pun ke server. Kalau kamu menghapus data situs atau pindah browser, CV kamu tertinggal, jadi cadangkan profil kamu di halaman Profil. Satu berkas berisi profil beserta semua CV-nya, dan bisa diimpor di perangkat lain."
       },
       "files": {
         "question": "File mana yang harus aku kirim?",
         "answer": "Kirim PDF untuk sebagian besar formulir unggah dan lewat email. Kirim .docx kalau portal atau perekrut minta file Word. Tempel .txt ke formulir yang cuma menerima teks biasa."
       },
       "ats": {
-        "question": "Apakah resume aku bakal lolos ATS?",
+        "question": "Apakah CV aku bakal lolos ATS?",
         "answer": "Nggak ada alat yang bisa menjanjikan itu, karena tiap perusahaan mengatur sistemnya sendiri. Lanjut mengurus bagian yang ditentukan file: teks asli sesuai urutan baca, judul section yang standar, dan kontak yang bisa ditemukan parser. Lembar di bagian atas halaman ini menunjukkan teks yang dibaca parser dari PDF kamu."
       },
       "cv": {
@@ -1705,11 +1717,11 @@
         "answer": "Bisa. Di Indonesia, CV dan resume biasanya berarti dokumen yang sama, dan Lanjut membuat keduanya: pengalaman, pendidikan, dan keahlian kamu dalam urutan yang bisa dibaca sistem pelacakan pelamar (ATS)."
       },
       "import": {
-        "question": "Bisa impor resume yang sudah aku punya?",
+        "question": "Bisa impor CV yang sudah aku punya?",
         "answer": "Bisa. Masukkan PDF, atau file JSON atau YAML yang kamu ekspor dari Lanjut. PDF-nya harus berisi teks asli, jadi halaman hasil scan atau file yang dikunci kata sandi nggak bisa dibaca. Baris yang nggak bisa ditempatkan Lanjut masuk ke daftar yang bisa kamu salin."
       },
       "language": {
-        "question": "Bisa bikin resume dalam bahasa Inggris?",
+        "question": "Bisa bikin CV dalam bahasa Inggris?",
         "answer": "Bisa. Atur bahasa dokumen ke Inggris di editor, dan label tetap seperti judul section dan tanggal ikut berubah. Aplikasinya sendiri tersedia dalam bahasa Indonesia dan Inggris."
       },
       "photo": {

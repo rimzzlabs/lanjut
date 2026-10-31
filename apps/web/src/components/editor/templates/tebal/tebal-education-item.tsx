@@ -1,4 +1,6 @@
 import { withLocation } from "../../resume-entry-location";
+import { ResumeHeading } from "../../resume-heading";
+
 import type { EducationItemView } from "../../resume-preview";
 import { ResumeRichText } from "../../resume-rich-text";
 
@@ -6,7 +8,9 @@ export function TebalEducationItem(props: EducationItemView) {
   return (
     <article>
       <div className="flex items-baseline justify-between gap-4">
-        <h3 className="resume-body-sm font-bold">{props.degree}</h3>
+        <ResumeHeading level={3} className="resume-body-sm font-bold">
+          {props.degree}
+        </ResumeHeading>
         <span className="shrink-0 resume-body-xs font-semibold text-muted-foreground">
           {props.startDate} – {props.endDate}
         </span>
