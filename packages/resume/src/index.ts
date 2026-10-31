@@ -21,6 +21,7 @@ export {
   profilePersonName,
   resolveResumeProfileId,
 } from "./profile";
+export { SAMPLE_RESUME_LIST, SAMPLE_RESUMES } from "./samples";
 export {
   CANONICAL_SECTION_ORDER,
   CUSTOM_LIST_FIELDS,
@@ -47,6 +48,7 @@ export {
   sortResumeIndex,
 } from "./search";
 export { SEED_RESUME } from "./seed";
+export { SEED_RESUME_ID } from "./seed-id";
 export {
   CURRENT_SCHEMA_VERSION,
   type CustomVariant,

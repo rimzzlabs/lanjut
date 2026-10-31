@@ -190,10 +190,14 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
-        "1_0_1": [
+        "1_1_0": [
+          {
+            "title": "An Indonesian sample résumé",
+            "description": "In Indonesian, the sample résumé is now in Indonesian too, with Indonesian headings and dates. You see it on the home page, on the templates page, and when you start a new résumé from the sample."
+          },
           {
             "title": "Bug fixes",
-            "description": "Screen readers and search engines now find one clear main heading on the home page, the templates page, and the feedback page. The home page answers \"What is Lanjut?\" first among its questions, and the Indonesian home page now says CV throughout."
+            "description": "Screen readers and search engines now find one clear main heading on the home page, the templates page, and the feedback page. The home page answers \"What is Lanjut?\" first among its questions, and the Indonesian home page now says CV throughout. Importing a PDF of an Indonesian résumé now keeps its dates, a language list that starts with \"Bahasa\", and an address that wraps onto a second line."
           }
         ],
         "1_0_0": [

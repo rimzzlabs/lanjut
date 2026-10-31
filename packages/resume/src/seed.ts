@@ -1,46 +1,11 @@
-import type { JSONContent } from "@tiptap/core";
-import type { Field, Resume } from "./types";
+import { b, i, li, link, p, plain, prose, t, ul } from "./seed-runs";
+import type { Resume } from "./types";
 import { CURRENT_SCHEMA_VERSION } from "./types";
 
-function plain(value: string): Field {
-  return { kind: "plain", value };
-}
-
-function t(text: string): JSONContent {
-  return { type: "text", text };
-}
-
-function b(text: string): JSONContent {
-  return { type: "text", text, marks: [{ type: "bold" }] };
-}
-
-function i(text: string): JSONContent {
-  return { type: "text", text, marks: [{ type: "italic" }] };
-}
-
-function link(text: string, href: string): JSONContent {
-  return { type: "text", text, marks: [{ type: "link", attrs: { href } }] };
-}
-
-function p(...runs: JSONContent[]): JSONContent {
-  return { type: "paragraph", content: runs };
-}
-
-function li(...runs: JSONContent[]): JSONContent {
-  return { type: "listItem", content: [p(...runs)] };
-}
-
-function ul(...items: JSONContent[]): JSONContent {
-  return { type: "bulletList", content: items };
-}
-
-function prose(...blocks: JSONContent[]): Field {
-  return { kind: "richtext", value: { type: "doc", content: blocks } };
-}
-
 /**
- * The single code-defined sample Resume. Every newly created Resume is cloned
- * from this fixture, and the export Parser gate reuses it as its test document.
+ * The English sample Resume. A new Resume in English is cloned from this
+ * fixture (`SEED_RESUME_ID` is the Indonesian one), and the export Parser gate
+ * reuses it as its test document.
  * The stable ids here are placeholders; cloneResumeAsNew reassigns fresh ids.
  * It doubles as the "Awal" template showcase, so it exercises every section plus
  * bold / italic / link marks.

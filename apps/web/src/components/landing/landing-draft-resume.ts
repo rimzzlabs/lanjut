@@ -1,8 +1,9 @@
 import {
   type PlainField,
   type Resume,
+  type ResumeLanguage,
   type RichTextField,
-  SEED_RESUME,
+  SAMPLE_RESUMES,
   updateSectionOfType,
 } from "@lanjut/resume";
 import type { TemplateId } from "@lanjut/resume/templates";
@@ -12,14 +13,17 @@ import type { LandingDraft } from "@/lib/store";
 
 /**
  * The landing draft materialized as a full document: the sample resume with
- * the visitor's own name and title layered over it. A typed name also renames
+ * the visitor's own name and title layered over it, in the page's language. A typed name also renames
  * the sample contact details, and a typed role swaps the sample summary for a
  * marked placeholder, so nothing on the page reads as someone else's résumé.
  * Used identically by the live preview, the parser read, and the create
  * handoff.
  */
-export function draftToResume(draft: LandingDraft): Resume {
-  const resume = structuredClone(SEED_RESUME);
+export function draftToResume(
+  draft: LandingDraft,
+  language: ResumeLanguage,
+): Resume {
+  const resume = structuredClone(SAMPLE_RESUMES[language]);
   const firstName = S.trim(draft.firstName);
   const lastName = S.trim(draft.lastName);
   const jobTitle = S.trim(draft.jobTitle);
@@ -41,17 +45,21 @@ export function draftToResume(draft: LandingDraft): Resume {
         }),
       },
     },
-    sections: withRoleSummary(resume.sections, jobTitle),
+    sections: withRoleSummary(resume.sections, jobTitle, language),
   };
 }
 
-function withRoleSummary(sections: Resume["sections"], jobTitle: string) {
+function withRoleSummary(
+  sections: Resume["sections"],
+  jobTitle: string,
+  language: ResumeLanguage,
+) {
   if (S.isEmpty(jobTitle)) return sections;
   return updateSectionOfType("summary", (section) => ({
     ...section,
     entries: A.map(section.entries, (entry) => ({
       ...entry,
-      fields: { ...entry.fields, body: sampleSummary(jobTitle) },
+      fields: { ...entry.fields, body: sampleSummary(jobTitle, language) },
     })),
   }))(sections);
 }
@@ -72,7 +80,17 @@ function nameHandle(firstName: string, lastName: string) {
   return { dotted: A.join(parts, "."), compact: A.join(parts, "") };
 }
 
-function sampleSummary(jobTitle: string): RichTextField {
+const SAMPLE_SUMMARY: Record<ResumeLanguage, (jobTitle: string) => string> = {
+  en: (jobTitle) =>
+    `Sample summary. Replace it with two or three lines about your work as ${jobTitle}: what you do, and what you have done well.`,
+  id: (jobTitle) =>
+    `Contoh ringkasan. Ganti dengan dua atau tiga baris tentang pekerjaanmu sebagai ${jobTitle}: apa yang kamu kerjakan, dan apa yang sudah kamu kerjakan dengan baik.`,
+};
+
+function sampleSummary(
+  jobTitle: string,
+  language: ResumeLanguage,
+): RichTextField {
   return {
     kind: "richtext",
     value: {
@@ -83,7 +101,7 @@ function sampleSummary(jobTitle: string): RichTextField {
           content: [
             {
               type: "text",
-              text: `Sample summary. Replace it with two or three lines about your work as ${jobTitle}: what you do, and what you have done well.`,
+              text: SAMPLE_SUMMARY[language](jobTitle),
             },
           ],
         },

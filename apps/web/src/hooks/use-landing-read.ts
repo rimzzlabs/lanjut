@@ -1,6 +1,8 @@
+import type { ResumeLanguage } from "@lanjut/resume";
 import type { TemplateId } from "@lanjut/resume/templates";
 import { R } from "@mobily/ts-belt";
 import { type RefObject, useEffect, useRef, useState } from "react";
+import { useLocale } from "use-intl";
 import {
   draftKey,
   draftToResume,
@@ -49,6 +51,7 @@ export function useLandingRead(
   const setRead = useLandingReadStore((state) => state.setRead);
   const [visible, setVisible] = useState(false);
   const runRef = useRef(0);
+  const language = useLocale() as ResumeLanguage;
   const key = draftKey(draft, template);
 
   useEffect(() => {
@@ -80,7 +83,7 @@ export function useLandingRead(
           last: lastReport(previous),
         }));
         void runParserProof({
-          resume: draftToResume(draft),
+          resume: draftToResume(draft, language),
           template,
           onPhase: () => {},
         })

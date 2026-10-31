@@ -4,13 +4,45 @@ import { BULLET_RE, isLinkLine } from "./parse-rich-lines";
 // --- sections --------------------------------------------------------------
 
 const MONTH =
-  "(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember)[a-z]*\\.?";
+  "(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|agu|okt|des|januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember)[a-z]*\\.?";
 const DATE_TOKEN = `(?:${MONTH}\\s*)?\\d{4}`;
 const DATE_END = `(?:${DATE_TOKEN}|present|sekarang|current|now|kini)`;
 export const DATE_RANGE_RE = new RegExp(
   `(${DATE_TOKEN})\\s*[-–—]{1,2}\\s*(${DATE_END})`,
   "i",
 );
+
+const ONGOING_RE = /^(?:present|sekarang|current|now|kini)$/i;
+
+// The first three letters of an English or Indonesian month, to the stored
+// English abbreviation. An Indonesian résumé prints "Agu 2016" and "Sekarang".
+const MONTH_ABBR: Record<string, string> = {
+  jan: "Jan",
+  feb: "Feb",
+  mar: "Mar",
+  apr: "Apr",
+  may: "May",
+  mei: "May",
+  jun: "Jun",
+  jul: "Jul",
+  aug: "Aug",
+  agu: "Aug",
+  sep: "Sep",
+  oct: "Oct",
+  okt: "Oct",
+  nov: "Nov",
+  dec: "Dec",
+  des: "Dec",
+};
+
+/** A printed date in the stored form: "Present", "MMM YYYY", or "YYYY". */
+function storedDate(printed: string): string {
+  if (ONGOING_RE.test(printed)) return "Present";
+  const match = /^([a-z]+)\.?\s*(\d{4})$/i.exec(printed);
+  if (!match) return printed;
+  const month = MONTH_ABBR[S.toLowerCase(S.slice(match[1] ?? "", 0, 3))];
+  return month ? `${month} ${match[2]}` : printed;
+}
 
 export function findDateRange(
   lines: ReadonlyArray<string>,
@@ -19,8 +51,8 @@ export function findDateRange(
     const match = S.match(line, DATE_RANGE_RE);
     if (O.isSome(match)) {
       return {
-        start: pipe(A.get(match, 1), O.getWithDefault(""), S.trim),
-        end: pipe(A.get(match, 2), O.getWithDefault(""), S.trim),
+        start: pipe(A.get(match, 1), O.getWithDefault(""), S.trim, storedDate),
+        end: pipe(A.get(match, 2), O.getWithDefault(""), S.trim, storedDate),
       };
     }
   }

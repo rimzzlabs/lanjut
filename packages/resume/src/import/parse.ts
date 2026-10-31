@@ -98,6 +98,23 @@ function appendLine(line: string) {
   });
 }
 
+/**
+ * A section does not repeat its own heading, so a line that only contains a
+ * heading word of the open section is one of its lines: "Bahasa Jepang" in a
+ * languages list, where "bahasa" is the heading word.
+ */
+function repeatsOpenSection(
+  blocks: ReadonlyArray<Block>,
+  heading: HeadingMatch,
+): boolean {
+  if (!heading.partial) return false;
+  return O.mapWithDefault(
+    A.last(blocks),
+    false,
+    (block) => block.heading?.type === heading.type,
+  );
+}
+
 function splitBlocks(
   lines: ReadonlyArray<string>,
   rules: LinkLineRules,
@@ -108,7 +125,7 @@ function splitBlocks(
   };
   const split = A.reduce(lines, initial, (acc, line) => {
     const heading = blockHeading(line, acc.seenRecognizedHeading, rules);
-    if (heading === null) {
+    if (heading === null || repeatsOpenSection(acc.blocks, heading)) {
       const lastIdx = A.length(acc.blocks) - 1;
       return {
         ...acc,

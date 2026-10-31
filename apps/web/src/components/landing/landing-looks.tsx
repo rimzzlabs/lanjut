@@ -1,8 +1,9 @@
+import type { ResumeLanguage } from "@lanjut/resume";
 import { TEMPLATES, type TemplateId } from "@lanjut/resume/templates";
 import { cn } from "@lanjut/ui/lib/utils";
 import { CheckIcon } from "@phosphor-icons/react";
 import { useMemo } from "react";
-import { useTranslations } from "use-intl";
+import { useLocale, useTranslations } from "use-intl";
 import type { ResumePreview } from "@/components/editor/resume-preview";
 import { ResumeThumbnail } from "@/components/editor/resume-thumbnail";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
@@ -32,7 +33,11 @@ export function LandingLooks(props: IslandProps) {
 function LandingLooksGrid() {
   const draft = useLandingDraftStore((state) => state.draft);
   const template = useLandingDraftStore((state) => state.template);
-  const preview = useMemo(() => resumeToPreview(draftToResume(draft)), [draft]);
+  const language = useLocale() as ResumeLanguage;
+  const preview = useMemo(
+    () => resumeToPreview(draftToResume(draft, language)),
+    [draft, language],
+  );
 
   return (
     <ul className="mx-[-4.5%] flex snap-x snap-mandatory gap-4 overflow-x-auto px-[4.5%] py-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-x-5 sm:gap-y-8 sm:overflow-visible sm:px-0">

@@ -1,4 +1,4 @@
-import { SEED_RESUME } from "@lanjut/resume";
+import type { ResumeLanguage } from "@lanjut/resume";
 import { resolveTemplateId, SORTED_TEMPLATES } from "@lanjut/resume/templates";
 import { RadioGroup } from "@lanjut/ui/components/radio-group";
 import { Skeleton } from "@lanjut/ui/components/skeleton";
@@ -7,19 +7,22 @@ import { useMemo } from "react";
 import { useResumeStore } from "@/lib/store";
 import { buildResumeBlocks } from "../resume-blocks";
 import { resumeToPreview } from "../resume-to-preview";
+import { samplePreview } from "../sample-preview";
 import { EditorLayoutTemplateItem } from "./ed-layout-template-item";
 
 const SKELETONS = [1, 2, 3, 4, 5, 6];
-
-const SEED_PREVIEW = resumeToPreview(SEED_RESUME);
 
 /**
  * A document whose preview renders nothing beyond the header block would make
  * every template tile look identically blank, so fall back to the seed fixture
  * to keep the tiles comparable.
  */
-function toTilePreview(preview: ReturnType<typeof resumeToPreview>) {
-  return A.length(buildResumeBlocks(preview)) > 1 ? preview : SEED_PREVIEW;
+function toTilePreview(
+  preview: ReturnType<typeof resumeToPreview>,
+  language: ResumeLanguage,
+) {
+  if (A.length(buildResumeBlocks(preview)) > 1) return preview;
+  return samplePreview(language);
 }
 
 export function EditorLayoutTemplateList() {
@@ -27,7 +30,7 @@ export function EditorLayoutTemplateList() {
   const updateOpen = useResumeStore((state) => state.updateOpen);
 
   const preview = useMemo(
-    () => (open ? toTilePreview(resumeToPreview(open)) : null),
+    () => (open ? toTilePreview(resumeToPreview(open), open.language) : null),
     [open],
   );
 
