@@ -5,7 +5,7 @@ import { buttonVariants } from "@lanjut/ui/components/button";
 import { Separator } from "@lanjut/ui/components/separator";
 import { cn } from "@lanjut/ui/lib/utils";
 import { ArrowRightIcon } from "@phosphor-icons/react";
-import { EDITOR_PATHNAME } from "@/lib/routes";
+import { EDITOR_PATHNAME, TEMPLATE_PATHNAME } from "@/lib/routes";
 import { LandingNavbarSettings } from "./landing-navbar-settings";
 
 interface Props {
@@ -17,6 +17,7 @@ const { locale, pathname } = Astro.props;
 const t = getTranslator(locale, "nav");
 const homeHref = localizePath("/", locale);
 const builderHref = localizePath(EDITOR_PATHNAME, locale);
+const templatesHref = localizePath(TEMPLATE_PATHNAME, locale);
 ---
 
 <div class="relative hidden h-16 md:block">
@@ -48,10 +49,16 @@ const builderHref = localizePath(EDITOR_PATHNAME, locale);
         />
         <Separator orientation="vertical" className="my-2 bg-foreground/15" />
         <a
+          href={templatesHref}
+          class={cn(buttonVariants({ variant: "ghost" }), "h-10 px-3")}
+        >
+          {t("exploreTemplates")}
+        </a>
+        <a
           href={builderHref}
           class={cn(buttonVariants({ variant: "outline" }), "h-10 px-4")}
         >
-          {t("openApp")}
+          {t("buildResume")}
           <ArrowRightIcon />
         </a>
       </nav>
@@ -78,7 +85,7 @@ const builderHref = localizePath(EDITOR_PATHNAME, locale);
         side="top"
       />
       <a href={builderHref} class={cn(buttonVariants({ variant: "outline" }))}>
-        {t("openApp")}
+        {t("buildResume")}
         <ArrowRightIcon />
       </a>
     </nav>

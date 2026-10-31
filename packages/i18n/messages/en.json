@@ -4,9 +4,9 @@
     "description": "Build an ATS-friendly resume or CV for free. Open source, no account, no sign-up: your resume stays in your browser. Export PDF, Word, or plain text.",
     "category": "Resume builder",
     "features": "ATS-friendly PDF, Word (DOCX), and plain-text export; six templates; import from PDF, JSON, or YAML; English and Indonesian; works in the browser with no account; profile backups that move to another device",
-    "editorTitle": "Build a free resume, no sign-up",
+    "editorTitle": "Build a resume",
     "editorDescription": "Start a resume from a blank page, the sample, your old resume, or a template. Free, no account, and saved in your browser.",
-    "templateTitle": "Free ATS resume templates",
+    "templateTitle": "Explore templates",
     "templateDescription": "Six free resume templates that keep an order applicant tracking systems can read. See each one as a full page, on the sample or on your own resume.",
     "changelogTitle": "Changelog",
     "changelogDescription": "What changed in each Lanjut release: the new features and fixes in the free, open-source ATS resume builder."
@@ -32,7 +32,8 @@
     "animationSystem": "System",
     "animationOn": "On",
     "animationOff": "Off",
-    "openApp": "Build now"
+    "buildResume": "Build a resume",
+    "exploreTemplates": "Explore templates"
   },
   "tour": {
     "controls": {
@@ -190,6 +191,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_2_0": [
+          {
+            "title": "Templates in the menu",
+            "description": "The menu at the top of the home page now has an \"Explore templates\" link, and its main button says \"Build a resume\". The editor and template pages also have shorter names in your browser tab."
+          }
+        ],
         "1_1_0": [
           {
             "title": "An Indonesian sample résumé",
