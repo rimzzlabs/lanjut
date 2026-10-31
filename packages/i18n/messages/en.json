@@ -198,7 +198,7 @@
           },
           {
             "title": "Bug fixes",
-            "description": "In Indonesian, the app now says CV everywhere instead of resume. The templates page has a short introduction."
+            "description": "In Indonesian, the app now says CV everywhere instead of resume. The templates page has a short introduction, and several Indonesian sentences now read more naturally."
           }
         ],
         "1_2_0": [
