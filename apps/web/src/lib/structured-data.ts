@@ -5,7 +5,7 @@ import { FAQ_KEYS } from "@/components/landing/landing-faq-keys";
 import { CHANGELOG, type ChangelogEntry } from "./changelog";
 import type { Contributor } from "./contributors";
 import { absoluteUrl } from "./seo";
-import { DESKTOP_RELEASE_URL, REPO_URL, SITE } from "./site";
+import { DESKTOP_RELEASE_URL, LISTING_URLS, REPO_URL, SITE } from "./site";
 
 const HOME = absoluteUrl("/");
 const WEBSITE_ID = `${HOME}#website`;
@@ -81,7 +81,7 @@ export function homeStructuredData(
         releaseNotes: absoluteUrl(localizePath("/changelog", locale)),
         ...LATEST_RELEASE,
         screenshot: absoluteUrl(`/og/${locale}.png`),
-        sameAs: [REPO_URL],
+        sameAs: [REPO_URL, ...LISTING_URLS],
         isPartOf: { "@id": WEBSITE_ID },
         author: { "@id": AUTHOR_ID },
         contributor: A.map(contributors, (contributor) => ({

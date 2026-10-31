@@ -17,6 +17,7 @@ export const PROFILE_PATHNAME = "/profile";
 
 /** The release history. It renders inside the app shell and is indexed. */
 export const CHANGELOG_PATHNAME = "/changelog";
+export const PRIVACY_PATHNAME = "/privacy";
 
 type EditorHref = `${typeof EDITOR_PATHNAME}/${string}`;
 

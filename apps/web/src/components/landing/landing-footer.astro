@@ -5,6 +5,7 @@ import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import {
   CHANGELOG_PATHNAME,
   EDITOR_PATHNAME,
+  PRIVACY_PATHNAME,
   TEMPLATE_PATHNAME,
 } from "@/lib/routes";
 import { DESKTOP_RELEASE_URL, DONATION_LINKS, REPO_URL } from "@/lib/site";
@@ -68,6 +69,7 @@ const GROUPS: ReadonlyArray<{
         label: tSidebar("featureRequest"),
         href: `${feedbackHref}?kind=idea`,
       },
+      { label: t("privacy"), href: localizePath(PRIVACY_PATHNAME, locale) },
     ],
   },
   {

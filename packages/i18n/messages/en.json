@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Free ATS Resume & CV Builder, No Account | Lanjut",
+    "title": "Free ATS Resume & CV Builder, No Account or Sign-Up | Lanjut",
     "description": "Build an ATS-friendly resume or CV for free. Open source, no account, no sign-up: your resume stays in your browser. Export PDF, Word, or plain text.",
     "category": "Resume builder",
     "features": "ATS-friendly PDF, Word (DOCX), and plain-text export; six templates; import from PDF, JSON, or YAML; English and Indonesian; works in the browser with no account; profile backups that move to another device",
@@ -191,6 +191,16 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_3_0": [
+          {
+            "title": "A privacy page",
+            "description": "A new Privacy page, linked at the bottom of the home page, lists what stays on your device and every time Lanjut talks to a server."
+          },
+          {
+            "title": "Bug fixes",
+            "description": "In Indonesian, the app now says CV everywhere instead of resume. The templates page has a short introduction."
+          }
+        ],
         "1_2_0": [
           {
             "title": "Templates in the menu",
@@ -846,7 +856,8 @@
       "previewLabel": "Preview of {name}",
       "applyTo": "Apply to {title}",
       "inUse": "In use",
-      "heading": "ATS resume templates"
+      "heading": "ATS resume templates",
+      "intro": "Six free templates for an ATS-friendly resume or CV. Each one changes the type and spacing only, so an applicant tracking system reads your text in the same order. Pick one and fill it in, with no account."
     },
     "navbar": {
       "starOnGithub": "Star on GitHub"
@@ -1582,11 +1593,11 @@
     "notDone": "Not done"
   },
   "landing": {
-    "srHeading": "Lanjut, a free ATS résumé builder:",
+    "srHeading": "Lanjut, a free ATS resume and CV builder:",
     "headingLine1": "Every résumé",
     "headingLead": "is read ",
     "headingAccent": "twice.",
-    "deck": "First an ATS parser pulls out the text, then a recruiter looks at the page. Lanjut makes one résumé that works for both. It is free, and it never leaves your browser.",
+    "deck": "First an ATS parser pulls out the text, then a recruiter looks at the page. Lanjut makes one résumé, or CV, that works for both. It is free, needs no account, and never leaves your browser.",
     "firstName": "First name",
     "firstNamePlaceholder": "Your first name",
     "lastName": "Last name",
@@ -1631,7 +1642,7 @@
     "winCta": "Download for Windows",
     "linuxMeta": "AppImage, .deb, or .rpm · x64 and ARM",
     "linuxCta": "Download for Linux",
-    "closeHeading": "Free to use, and open source.",
+    "closeHeading": "Free, no account, and open source.",
     "closeBody": "There is no paid plan and no account to make. The code is public under AGPL-3.0, and anyone can read it or run their own copy.",
     "contributorsBody": "Made by people who give their time to it. Join them: add a translation, fix a bug, or build the feature you wish it had.",
     "closeCta": "Start your résumé",
@@ -1642,12 +1653,13 @@
       "product": "Product",
       "project": "Project",
       "support": "Support",
-      "editor": "Build a resume",
+      "editor": "Build a resume or CV",
       "templates": "Templates",
       "download": "Download the app",
       "github": "GitHub",
       "rights": "© {year} Lanjut. Open source under AGPL-3.0.",
-      "madeBy": "Made by"
+      "madeBy": "Made by",
+      "privacy": "Privacy"
     },
     "draftTitle": "My resume",
     "keptHeading": "Some things stay out on purpose.",
@@ -1761,5 +1773,47 @@
     "frozenTitle": "This {item, select, resume {resume} other {profile}} is open in another window",
     "frozenDescription": "Only one window edits it at a time, so no change is lost. What you see here can be out of date.",
     "editHere": "Edit here"
+  },
+  "privacy": {
+    "metaTitle": "Privacy",
+    "metaDescription": "What Lanjut keeps and what it sends. Your résumés stay in your browser, nothing is uploaded, and there is no account, no analytics, and no ads.",
+    "heading": "Privacy",
+    "lead": "You need no account to use Lanjut, and it has no analytics or ads. Your résumés stay on your device. Below is every time the site talks to a server, so you can check each one.",
+    "storedTitle": "What stays on your device",
+    "storedBody": "Your résumés, your profiles, and your settings are saved in your browser's own storage on this device. They are never sent to a server. If you clear the site's data or change browsers, they are gone, so keep a backup from the Profile page.",
+    "networkTitle": "When Lanjut talks to a server",
+    "items": {
+      "hosting": {
+        "title": "Loading the site.",
+        "body": "Cloudflare serves lanjut.org. Like any web host, it receives the usual details of each request, such as your IP address and browser."
+      },
+      "language": {
+        "title": "Your language.",
+        "body": "When you pick a language, a small cookie remembers it, so lanjut.org opens in that language next time."
+      },
+      "offline": {
+        "title": "Offline use.",
+        "body": "The site keeps a copy of its own files in your browser, so it still opens without a connection. That copy holds no résumé."
+      },
+      "feedback": {
+        "title": "Feedback.",
+        "body": "When you send feedback, what you write becomes a public issue on GitHub. Before you send it, you see the technical details that go with it, such as your browser and the page, and you can leave them out. Your résumé text is never part of it. A Cloudflare check (Turnstile) confirms that a person sent it."
+      },
+      "contributors": {
+        "title": "Contributors.",
+        "body": "The home page shows the people who build Lanjut. Your browser loads their profile pictures from GitHub."
+      },
+      "updates": {
+        "title": "Desktop updates.",
+        "body": "The desktop app checks GitHub for a new version at most once every three days. Nothing installs until you click."
+      },
+      "donations": {
+        "title": "Donations.",
+        "body": "The Saweria and SociaBuzz links are plain links. Those sites open only when you click them."
+      }
+    },
+    "codeTitle": "Check it yourself",
+    "codeBody": "Lanjut is open source under AGPL-3.0. The code that does everything on this page is public on GitHub.",
+    "codeLink": "Read the code"
   }
 }

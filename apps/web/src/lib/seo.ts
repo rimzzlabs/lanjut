@@ -34,6 +34,7 @@ export const INDEXED_PATHS: ReadonlyArray<string> = [
   "/template",
   "/changelog",
   "/feedback",
+  "/privacy",
 ];
 
 /** A page's address in every language, for hreflang and the sitemap. */

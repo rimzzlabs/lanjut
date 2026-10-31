@@ -1,10 +1,10 @@
-import { ResumeHeading } from "./resume-heading";
+import { ResumeArticle, ResumeHeading } from "./resume-heading";
 import { ResumeOptionalLink } from "./resume-optional-link";
 import type { CertificateItemView } from "./resume-preview";
 
 export function ResumeCertificateItem(props: CertificateItemView) {
   return (
-    <article>
+    <ResumeArticle>
       <div className="group flex items-baseline justify-between gap-4">
         <ResumeHeading level={3} className="resume-body-xs font-semibold">
           <ResumeOptionalLink href={props.href} className="underline">
@@ -18,6 +18,6 @@ export function ResumeCertificateItem(props: CertificateItemView) {
         )}
       </div>
       <p className="resume-body-xs text-muted-foreground">{props.issuer}</p>
-    </article>
+    </ResumeArticle>
   );
 }

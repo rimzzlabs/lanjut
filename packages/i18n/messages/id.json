@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Buat CV ATS Gratis, Tanpa Akun | Lanjut",
+    "title": "Buat CV ATS Gratis, Tanpa Daftar & Tanpa Akun | Lanjut",
     "description": "Buat CV dan resume ramah ATS secara gratis. Open source, tanpa akun, tanpa daftar: CV kamu tetap di browser. Ekspor ke PDF, Word, atau teks.",
     "category": "Pembuat CV dan resume",
     "features": "Ekspor PDF, Word (DOCX), dan teks polos yang ramah ATS; enam template; impor dari PDF, JSON, atau YAML; bahasa Inggris dan Indonesia; jalan di browser tanpa akun; cadangan profil untuk pindah perangkat",
@@ -45,15 +45,15 @@
     "library": {
       "welcome": {
         "title": "Halo, selamat datang di Lanjut!",
-        "content": "Pembuat resume gratis dan local-first. Semua yang kamu tulis tetap di browser ini; nggak ada yang dikirim ke server."
+        "content": "Pembuat CV gratis dan local-first. Semua yang kamu tulis tetap di browser ini; nggak ada yang dikirim ke server."
       },
       "create": {
-        "title": "Buat resume",
-        "content": "Mulai resume baru dari sini. Mau bikin sebanyak apa pun, bebas!"
+        "title": "Buat CV",
+        "content": "Mulai CV baru dari sini. Mau bikin sebanyak apa pun, bebas!"
       },
       "start": {
         "title": "Pilih cara memulai",
-        "content": "Mulai dari halaman kosong, contoh, resume yang sudah kamu punya, atau template."
+        "content": "Mulai dari halaman kosong, contoh, CV yang sudah kamu punya, atau template."
       },
       "search": {
         "title": "Cari nanti",
@@ -79,11 +79,11 @@
     "template": {
       "browse": {
         "title": "Jelajahi template",
-        "content": "Template cuma ngubah tampilan: tipografi, spasi, aksen. Strukturnya tetap linear biar parser ATS selalu bisa baca resume kamu."
+        "content": "Template cuma ngubah tampilan: tipografi, spasi, aksen. Strukturnya tetap linear biar parser ATS selalu bisa baca CV kamu."
       },
       "preview": {
         "title": "Coba dulu",
-        "content": "Lihat template ini di contoh atau di salah satu resume kamu. Lalu mulai resume baru, atau pakai langsung di resume itu."
+        "content": "Lihat template ini di contoh atau di salah satu CV kamu. Lalu mulai CV baru, atau pakai langsung di CV itu."
       },
       "search": {
         "title": "Cari",
@@ -97,7 +97,7 @@
       },
       "readiness": {
         "title": "Kesiapan",
-        "content": "Bilah ini nunjukin seberapa siap resume kamu untuk dikirim. Buka buat lihat yang masih kurang, lalu pilih satu poin buat langsung ke kolomnya. Cuma tulisan kamu sendiri yang dihitung, bukan isi contoh."
+        "content": "Bilah ini nunjukin seberapa siap CV kamu untuk dikirim. Buka buat lihat yang masih kurang, lalu pilih satu poin buat langsung ke kolomnya. Cuma tulisan kamu sendiri yang dihitung, bukan isi contoh."
       },
       "sections": {
         "title": "Tab Konten",
@@ -109,11 +109,11 @@
       },
       "styling": {
         "title": "Tab Gaya",
-        "content": "Atur gaya seluruh resume di sini, dalam tiga kelompok: Tipografi, Spasi, dan Umum. Kerapatan mengatur spasi dalam sekali klik, dan Umum mengganti bahasa resume."
+        "content": "Atur gaya seluruh CV di sini, dalam tiga kelompok: Tipografi, Spasi, dan Umum. Kerapatan mengatur spasi dalam sekali klik, dan Umum mengganti bahasa CV."
       },
       "document": {
         "title": "Tab Dokumen",
-        "content": "Unduh resume untuk dikirim, simpan cadangan JSON atau YAML, atau impor resume dari file atau teks yang ditempel."
+        "content": "Unduh CV untuk dikirim, simpan cadangan JSON atau YAML, atau impor CV dari file atau teks yang ditempel."
       }
     },
     "editor-sheet": {
@@ -123,7 +123,7 @@
       },
       "readiness": {
         "title": "Kesiapan",
-        "content": "Bilah ini nunjukin seberapa siap resume kamu untuk dikirim. Buka buat lihat yang masih kurang, lalu pilih satu poin buat langsung ke kolomnya. Cuma tulisan kamu sendiri yang dihitung, bukan isi contoh."
+        "content": "Bilah ini nunjukin seberapa siap CV kamu untuk dikirim. Buka buat lihat yang masih kurang, lalu pilih satu poin buat langsung ke kolomnya. Cuma tulisan kamu sendiri yang dihitung, bukan isi contoh."
       },
       "edit": {
         "title": "Buka editor",
@@ -139,21 +139,21 @@
       },
       "styling": {
         "title": "Tab Gaya",
-        "content": "Atur gaya seluruh resume di sini, dalam tiga kelompok: Tipografi, Spasi, dan Umum. Kerapatan mengatur spasi dalam sekali klik, dan Umum mengganti bahasa resume."
+        "content": "Atur gaya seluruh CV di sini, dalam tiga kelompok: Tipografi, Spasi, dan Umum. Kerapatan mengatur spasi dalam sekali klik, dan Umum mengganti bahasa CV."
       },
       "document": {
         "title": "Tab Dokumen",
-        "content": "Unduh resume untuk dikirim, simpan cadangan JSON atau YAML, atau impor resume dari file atau teks yang ditempel."
+        "content": "Unduh CV untuk dikirim, simpan cadangan JSON atau YAML, atau impor CV dari file atau teks yang ditempel."
       }
     },
     "profiles": {
       "intro": {
         "title": "Profil kamu",
-        "content": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya resumenya sendiri, dan resume baru dimulai dengan informasinya."
+        "content": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya CV-nya sendiri, dan CV baru dimulai dengan informasinya."
       },
       "list": {
         "title": "Pilih untuk diubah",
-        "content": "Buka profil untuk mengubah nama, kontak, dan ringkasannya. Profil yang aktif ditandai, dan resumenya yang tampil di pustaka kamu."
+        "content": "Buka profil untuk mengubah nama, kontak, dan ringkasannya. Profil yang aktif ditandai, dan CV-nya yang tampil di pustaka kamu."
       },
       "add": {
         "title": "Tambah profil",
@@ -165,11 +165,11 @@
       },
       "backup": {
         "title": "Cadangkan profil",
-        "content": "Unduh profil ini beserta semua resumenya sebagai satu berkas, atau bagikan langsung ke ponselmu. Impor berkasnya di perangkat lain untuk lanjut di sana."
+        "content": "Unduh profil ini beserta semua CV-nya sebagai satu berkas, atau bagikan langsung ke ponselmu. Impor berkasnya di perangkat lain untuk lanjut di sana."
       },
       "backupNarrow": {
         "title": "Cadangkan profil",
-        "content": "Buka satu profil, lalu cari Cadangan di bagian akhir detailnya. Dari situ kamu bisa mengunduh profil beserta semua resumenya sebagai satu berkas, atau membagikannya ke perangkat lain."
+        "content": "Buka satu profil, lalu cari Cadangan di bagian akhir detailnya. Dari situ kamu bisa mengunduh profil beserta semua CV-nya sebagai satu berkas, atau membagikannya ke perangkat lain."
       },
       "switch": {
         "title": "Ganti dari mana saja",
@@ -191,6 +191,16 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_3_0": [
+          {
+            "title": "Halaman privasi",
+            "description": "Sekarang ada halaman Privasi, tautannya di bagian bawah halaman utama. Isinya: apa saja yang tetap ada di perangkatmu, dan kapan saja Lanjut terhubung ke server."
+          },
+          {
+            "title": "Perbaikan bug",
+            "description": "Versi bahasa Indonesia sekarang pakai istilah CV di semua bagian, bukan resume. Halaman template juga sekarang punya pengantar singkat."
+          }
+        ],
         "1_2_0": [
           {
             "title": "Template di menu",
@@ -222,7 +232,7 @@
         "0_26_3": [
           {
             "title": "Halaman utama lebih cepat",
-            "description": "Halaman utama sekarang terbuka lebih cepat, apalagi di HP. Contoh resume langsung tampil, dan halamannya tetap lancar selagi Lanjut membaca ulang PDF-nya. Unduh atau impor PDF juga nggak bikin halaman macet lagi."
+            "description": "Halaman utama sekarang terbuka lebih cepat, apalagi di HP. Contoh CV langsung tampil, dan halamannya tetap lancar selagi Lanjut membaca ulang PDF-nya. Unduh atau impor PDF juga nggak bikin halaman macet lagi."
           },
           {
             "title": "Perbaikan bug",
@@ -232,31 +242,31 @@
         "0_26_2": [
           {
             "title": "Perbaikan bug",
-            "description": "Di HP atau tablet, pratinjau template saat bikin resume baru sekarang tampil sesuai tampilan aslinya. Sebelumnya teksnya malah rata tengah."
+            "description": "Di HP atau tablet, pratinjau template saat bikin CV baru sekarang tampil sesuai tampilan aslinya. Sebelumnya teksnya malah rata tengah."
           }
         ],
         "0_26_1": [
           {
             "title": "Halaman langsung tampil",
-            "description": "Saat kamu membuka daftar resume, template, profil, atau sebuah resume di browser, tata letak halamannya sekarang langsung muncul, lalu isinya menyusul sesaat kemudian. Animasi loading yang menutupi satu halaman penuh nggak muncul lagi di sana."
+            "description": "Saat kamu membuka daftar CV, template, profil, atau sebuah CV di browser, tata letak halamannya sekarang langsung muncul, lalu isinya menyusul sesaat kemudian. Animasi loading yang menutupi satu halaman penuh nggak muncul lagi di sana."
           }
         ],
         "0_26_0": [
           {
-            "title": "Mode developer: resume kamu sebagai teks",
-            "description": "Nyalakan Mode developer di Preferensi, dan editor dapat tombol Form dan Kode. Kode menampilkan resume kamu sebagai Markdown, YAML, atau JSON, sendirian atau di samping halaman, dan halamannya ikut berubah selagi kamu ngetik. Kalau teksnya ada kesalahan, Lanjut nggak menerapkannya, jadi resume kamu tetap seperti sebelumnya. Mode developer mati sampai kamu nyalakan sendiri."
+            "title": "Mode developer: CV kamu sebagai teks",
+            "description": "Nyalakan Mode developer di Preferensi, dan editor dapat tombol Form dan Kode. Kode menampilkan CV kamu sebagai Markdown, YAML, atau JSON, sendirian atau di samping halaman, dan halamannya ikut berubah selagi kamu ngetik. Kalau teksnya ada kesalahan, Lanjut nggak menerapkannya, jadi CV kamu tetap seperti sebelumnya. Mode developer mati sampai kamu nyalakan sendiri."
           }
         ],
         "0_25_0": [
           {
             "title": "Satu tab yang mengedit",
-            "description": "Kalau resume atau profil yang sama dibuka di dua tab, cuma satu tab yang bisa mengedit. Tab lainnya kasih tahu kalau lagi dibuka di tempat lain, dan tombol Edit di sini memindahkan pengeditan ke tab itu. Daftar resume dan profil kamu sekarang juga ikut update antar tab."
+            "description": "Kalau CV atau profil yang sama dibuka di dua tab, cuma satu tab yang bisa mengedit. Tab lainnya kasih tahu kalau lagi dibuka di tempat lain, dan tombol Edit di sini memindahkan pengeditan ke tab itu. Daftar CV dan profil kamu sekarang juga ikut update antar tab."
           }
         ],
         "0_24_1": [
           {
             "title": "Perbaikan bug",
-            "description": "Kalau resume atau profil yang sama terbuka di dua tab, menyimpan di satu tab nggak lagi menimpa perubahan dari tab lain. Lanjut nanya versi mana yang mau dipakai, dan bisa simpan punyamu sebagai salinan."
+            "description": "Kalau CV atau profil yang sama terbuka di dua tab, menyimpan di satu tab nggak lagi menimpa perubahan dari tab lain. Lanjut nanya versi mana yang mau dipakai, dan bisa simpan punyamu sebagai salinan."
           }
         ],
         "0_24_0": [
@@ -268,7 +278,7 @@
         "0_23_1": [
           {
             "title": "Perbaikan bug",
-            "description": "Kalau versi Lanjut yang lebih lama masih terbuka di tab lain, tab itu nggak lagi menimpa resume yang sudah diubah versi yang lebih baru. Tab itu kasih tahu kamu dan minta kamu segarin halaman."
+            "description": "Kalau versi Lanjut yang lebih lama masih terbuka di tab lain, tab itu nggak lagi menimpa CV yang sudah diubah versi yang lebih baru. Tab itu kasih tahu kamu dan minta kamu segarin halaman."
           }
         ],
         "0_23_0": [
@@ -280,7 +290,7 @@
         "0_22_0": [
           {
             "title": "Tampilkan keahlian lebih dulu",
-            "description": "Menu urutan bagian, di samping tombol urungkan dan ulangi di atas pratinjau, sekarang punya pilihan Keahlian dulu. Bagian Keahlian pindah tepat di bawah ringkasan, untuk resume yang menonjolkan kemampuan kamu. Pengalaman dulu mengembalikan urutan standar. Entri kamu tetap urut dari yang terbaru."
+            "description": "Menu urutan bagian, di samping tombol urungkan dan ulangi di atas pratinjau, sekarang punya pilihan Keahlian dulu. Bagian Keahlian pindah tepat di bawah ringkasan, untuk CV yang menonjolkan kemampuan kamu. Pengalaman dulu mengembalikan urutan standar. Entri kamu tetap urut dari yang terbaru."
           }
         ],
         "0_21_3": [
@@ -316,7 +326,7 @@
         "0_20_2": [
           {
             "title": "Perbaikan bug",
-            "description": "Di ponsel, ikon dan label di tiap kotak di bawah Buat resume baru sekarang sejajar."
+            "description": "Di ponsel, ikon dan label di tiap kotak di bawah Buat CV baru sekarang sejajar."
           }
         ],
         "0_20_1": [
@@ -328,7 +338,7 @@
         "0_20_0": [
           {
             "title": "Pratinjau tautan yang lebih jelas",
-            "description": "Saat kamu membagikan tautan Lanjut di chat atau postingan, gambar pratinjaunya sekarang menjelaskan apa itu Lanjut: pembuat resume gratis dan open source, tanpa akun, dan resume kamu tetap di perangkat kamu. Di samping teksnya ada halaman resume. Tautan ke situs berbahasa Indonesia punya gambarnya sendiri, dalam bahasa Indonesia."
+            "description": "Saat kamu membagikan tautan Lanjut di chat atau postingan, gambar pratinjaunya sekarang menjelaskan apa itu Lanjut: pembuat CV gratis dan open source, tanpa akun, dan CV kamu tetap di perangkat kamu. Di samping teksnya ada halaman CV. Tautan ke situs berbahasa Indonesia punya gambarnya sendiri, dalam bahasa Indonesia."
           }
         ],
         "0_19_1": [
@@ -339,24 +349,24 @@
         ],
         "0_19_0": [
           {
-            "title": "Lihat resume kamu sebelum dibuat",
-            "description": "Membuat resume sekarang tinggal tiga langkah singkat: titik awal, template, lalu nama. Di layar besar, pratinjau di samping langkah menampilkan setiap halaman selagi kamu memilih, termasuk file yang kamu impor. Di ponsel, geser untuk melihat template lain."
+            "title": "Lihat CV kamu sebelum dibuat",
+            "description": "Membuat CV sekarang tinggal tiga langkah singkat: titik awal, template, lalu nama. Di layar besar, pratinjau di samping langkah menampilkan setiap halaman selagi kamu memilih, termasuk file yang kamu impor. Di ponsel, geser untuk melihat template lain."
           },
           {
             "title": "Profil untuk tiap jenis pekerjaan",
-            "description": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya resumenya sendiri, dan setiap resume baru di dalamnya dimulai dengan nama, kontak, dan ringkasan profil itu. Kelola profil di halaman Profil yang baru, lalu ganti dari avatar di bilah atas. Tur singkat memandu kamu saat pertama kali membukanya. Tema, bahasa, dan animasi sekarang ada di Preferensi pada menu yang sama."
+            "description": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya CV-nya sendiri, dan setiap CV baru di dalamnya dimulai dengan nama, kontak, dan ringkasan profil itu. Kelola profil di halaman Profil yang baru, lalu ganti dari avatar di bilah atas. Tur singkat memandu kamu saat pertama kali membukanya. Tema, bahasa, dan animasi sekarang ada di Preferensi pada menu yang sama."
           },
           {
             "title": "Pustaka yang mulai dari terakhir kamu berhenti",
-            "description": "Pustaka kamu sekarang dibuka dengan resume yang terakhir kamu edit, tinggal satu klik ke editor. Di bawahnya, mulai resume baru dari halaman kosong, contoh, file, atau template. Setiap resume menampilkan templatenya, dan kamu bisa mengurutkan berdasarkan nama atau edit terakhir serta beralih antara grid dan daftar."
+            "description": "Pustaka kamu sekarang dibuka dengan CV yang terakhir kamu edit, tinggal satu klik ke editor. Di bawahnya, mulai CV baru dari halaman kosong, contoh, file, atau template. Setiap CV menampilkan templatenya, dan kamu bisa mengurutkan berdasarkan nama atau edit terakhir serta beralih antara grid dan daftar."
           },
           {
-            "title": "Coba template di resume kamu sendiri",
-            "description": "Halaman template sekarang menampilkan setiap template dalam ukuran penuh, semua halamannya. Lihat di contoh atau di salah satu resume kamu, lalu pakai dengan satu klik. Kalau berubah pikiran, Urungkan di editor mengembalikan template lamanya."
+            "title": "Coba template di CV kamu sendiri",
+            "description": "Halaman template sekarang menampilkan setiap template dalam ukuran penuh, semua halamannya. Lihat di contoh atau di salah satu CV kamu, lalu pakai dengan satu klik. Kalau berubah pikiran, Urungkan di editor mengembalikan template lamanya."
           },
           {
             "title": "Sidebar yang terlipat jadi ikon",
-            "description": "Sembunyikan sidebar dan sekarang ia terlipat jadi deretan ikon ramping, bukan hilang dari layar. Arahkan ke ikon untuk melihat namanya. Saat terbuka, sidebar menampilkan lima resume terbaru kamu."
+            "description": "Sembunyikan sidebar dan sekarang ia terlipat jadi deretan ikon ramping, bukan hilang dari layar. Arahkan ke ikon untuk melihat namanya. Saat terbuka, sidebar menampilkan lima CV terbaru kamu."
           },
           {
             "title": "Kenali orang-orang di balik Lanjut",
@@ -379,8 +389,8 @@
             "description": "Bilah atas editor sekarang menunjukkan kapan résumé kamu tersimpan di perangkat ini. Kalau browser menolak menyimpan, kamu langsung diberi tahu dan cara menyimpan salinannya."
           },
           {
-            "title": "Lihat seberapa siap resume kamu",
-            "description": "Bilah di atas pratinjau resume menunjukkan seberapa siap resume kamu untuk dikirim, dari 0% sampai Siap dikirim. Buka untuk melihat yang masih kurang, lalu pilih satu poin untuk langsung ke kolomnya. Hanya tulisan kamu sendiri yang dihitung, bukan isi contoh. Kartu pertama di pustaka juga menunjukkan skor yang sama sebagai cincin."
+            "title": "Lihat seberapa siap CV kamu",
+            "description": "Bilah di atas pratinjau CV menunjukkan seberapa siap CV kamu untuk dikirim, dari 0% sampai Siap dikirim. Buka untuk melihat yang masih kurang, lalu pilih satu poin untuk langsung ke kolomnya. Hanya tulisan kamu sendiri yang dihitung, bukan isi contoh. Kartu pertama di pustaka juga menunjukkan skor yang sama sebagai cincin."
           },
           {
             "title": "Ruang pratinjau lebih lega di layar besar",
@@ -392,7 +402,7 @@
           },
           {
             "title": "Tab Gaya",
-            "description": "Font, ukuran, spasi, dan bahasa resume sekarang punya tab sendiri: Gaya, dikelompokkan jadi Tipografi, Spasi, dan Umum. Tiap slider menunjukkan nilainya, tiap kelompok punya tombol atur ulang sendiri, dan pilihan Kerapatan (Rapat, Seimbang, Lega) mengatur spasi dalam sekali klik."
+            "description": "Font, ukuran, spasi, dan bahasa CV sekarang punya tab sendiri: Gaya, dikelompokkan jadi Tipografi, Spasi, dan Umum. Tiap slider menunjukkan nilainya, tiap kelompok punya tombol atur ulang sendiri, dan pilihan Kerapatan (Rapat, Seimbang, Lega) mengatur spasi dalam sekali klik."
           },
           {
             "title": "Tab Dokumen yang lebih jelas",
@@ -404,15 +414,15 @@
           },
           {
             "title": "Tempel JSON atau YAML",
-            "description": "Tempel resume yang kamu salin sebagai JSON atau YAML langsung di tab Dokumen. Teksnya berwarna, dan kesalahan langsung kelihatan sebelum kamu impor."
+            "description": "Tempel CV yang kamu salin sebagai JSON atau YAML langsung di tab Dokumen. Teksnya berwarna, dan kesalahan langsung kelihatan sebelum kamu impor."
           },
           {
             "title": "Cadangkan profil",
-            "description": "Unduh profil beserta semua resumenya sebagai satu berkas kecil, lalu impor di perangkat lain untuk lanjut di sana. Di ponsel, Bagikan mengirimnya lewat AirDrop, Nearby Share, atau aplikasi cloud. Nggak ada yang dikirim ke server, dan impor nggak pernah menghapus apa pun: kalau kedua perangkat punya resume yang sama, yang lebih baru yang dipakai."
+            "description": "Unduh profil beserta semua CV-nya sebagai satu berkas kecil, lalu impor di perangkat lain untuk lanjut di sana. Di ponsel, Bagikan mengirimnya lewat AirDrop, Nearby Share, atau aplikasi cloud. Nggak ada yang dikirim ke server, dan impor nggak pernah menghapus apa pun: kalau kedua perangkat punya CV yang sama, yang lebih baru yang dipakai."
           },
           {
             "title": "Perbaikan bug",
-            "description": "Selama tur, tombol yang ditunjuk sebuah langkah tidak lagi bereaksi pada klik atau tombol keyboard, jadi tur tidak bisa membuka menu atau panel di bawah kartunya sendiri. Impor resume PDF sekarang menaruh tiap tautan di kolomnya sendiri, seperti situs kamu atau tautan sertifikat, bukan menampilkannya sebagai teks."
+            "description": "Selama tur, tombol yang ditunjuk sebuah langkah tidak lagi bereaksi pada klik atau tombol keyboard, jadi tur tidak bisa membuka menu atau panel di bawah kartunya sendiri. Impor CV PDF sekarang menaruh tiap tautan di kolomnya sendiri, seperti situs kamu atau tautan sertifikat, bukan menampilkannya sebagai teks."
           }
         ],
         "0_18_0": [
@@ -424,7 +434,7 @@
         "0_17_2": [
           {
             "title": "Perbaikan bug",
-            "description": "Di ponsel, demo resume di halaman utama melebar jauh melewati tepi layar dan bikin seluruh halaman terlalu lebar. Sekarang sudah pas."
+            "description": "Di ponsel, demo CV di halaman utama melebar jauh melewati tepi layar dan bikin seluruh halaman terlalu lebar. Sekarang sudah pas."
           }
         ],
         "0_17_1": [
@@ -474,7 +484,7 @@
         "0_14_0": [
           {
             "title": "Pasang foto di header",
-            "description": "Sekarang kamu bisa pasang foto di resume. Sifatnya opsional dan mati secara bawaan. Tambahkan lewat Informasi Pribadi, lalu atur ukuran, kelengkungan sudut, dan posisinya. Foto ikut di ekspor PDF dan Word, dan teks resume kamu tetap terbaca penuh oleh parser."
+            "description": "Sekarang kamu bisa pasang foto di CV. Sifatnya opsional dan mati secara bawaan. Tambahkan lewat Informasi Pribadi, lalu atur ukuran, kelengkungan sudut, dan posisinya. Foto ikut di ekspor PDF dan Word, dan teks CV kamu tetap terbaca penuh oleh parser."
           },
           {
             "title": "Tampilan baru",
@@ -530,7 +540,7 @@
           },
           {
             "title": "Ekspor dan impor JSON dan YAML",
-            "description": "Salin atau unduh resume kamu sebagai JSON atau YAML, dan impor keduanya kembali tanpa kehilangan apa pun. Teks kaya dibawa sebagai markdown sederhana."
+            "description": "Salin atau unduh CV kamu sebagai JSON atau YAML, dan impor keduanya kembali tanpa kehilangan apa pun. Teks kaya dibawa sebagai markdown sederhana."
           },
           {
             "title": "Sembunyikan bagian",
@@ -546,7 +556,7 @@
           },
           {
             "title": "Pilih font kamu",
-            "description": "Pilih dari lima belas font yang aman untuk resume, dikelompokkan jadi sans, serif, dan mono, dan seluruh dokumen mengikutinya di pratinjau maupun PDF. Setiap template tetap pakai bawaannya sampai kamu memilih, dan pratinjau sekarang merender berkas font yang persis sama dengan yang disematkan di PDF."
+            "description": "Pilih dari lima belas font yang aman untuk CV, dikelompokkan jadi sans, serif, dan mono, dan seluruh dokumen mengikutinya di pratinjau maupun PDF. Setiap template tetap pakai bawaannya sampai kamu memilih, dan pratinjau sekarang merender berkas font yang persis sama dengan yang disematkan di PDF."
           },
           {
             "title": "Tinggi baris dan jarak antarhuruf",
@@ -560,7 +570,7 @@
         "0_9_3": [
           {
             "title": "Perbaikan bug",
-            "description": "Resume yang sudah dihapus bisa muncul lagi setelah halaman dimuat ulang. Sekarang menghapus langsung membuangnya dari perangkat kamu, dan Urungkan tetap bisa mengembalikannya selama hitungan mundur berjalan. Latar tur panduan juga sekarang terlihat jelas di tema gelap."
+            "description": "CV yang sudah dihapus bisa muncul lagi setelah halaman dimuat ulang. Sekarang menghapus langsung membuangnya dari perangkat kamu, dan Urungkan tetap bisa mengembalikannya selama hitungan mundur berjalan. Latar tur panduan juga sekarang terlihat jelas di tema gelap."
           }
         ],
         "0_9_2": [
@@ -578,7 +588,7 @@
         "0_9_0": [
           {
             "title": "Impor dari PDF",
-            "description": "Mulai resume baru dari PDF yang sudah ada. Lanjut membacanya di browser kamu dan mengisi bagian-bagiannya untuk kamu rapikan."
+            "description": "Mulai CV baru dari PDF yang sudah ada. Lanjut membacanya di browser kamu dan mengisi bagian-bagiannya untuk kamu rapikan."
           },
           {
             "title": "Bagian kustom",
@@ -598,11 +608,11 @@
           },
           {
             "title": "Urungkan penghapusan",
-            "description": "Menghapus resume kini menunggu sepuluh detik dan menampilkan Urungkan, jadi salah hapus gampang dibatalkan."
+            "description": "Menghapus CV kini menunggu sepuluh detik dan menampilkan Urungkan, jadi salah hapus gampang dibatalkan."
           },
           {
-            "title": "Duplikat resume",
-            "description": "Salin resume mana pun dari menunya untuk membuat versi baru tanpa mulai dari awal."
+            "title": "Duplikat CV",
+            "description": "Salin CV mana pun dari menunya untuk membuat versi baru tanpa mulai dari awal."
           }
         ],
         "0_8_0": [
@@ -612,7 +622,7 @@
           },
           {
             "title": "Entri terbaru lebih dulu",
-            "description": "Editor menampilkan entri dari yang terbaru lebih dulu, sesuai urutannya di pratinjau, jadi formulir dan resume kamu selalu sejalan."
+            "description": "Editor menampilkan entri dari yang terbaru lebih dulu, sesuai urutannya di pratinjau, jadi formulir dan CV kamu selalu sejalan."
           },
           {
             "title": "Bilah navigasi baru",
@@ -633,8 +643,8 @@
             "description": "Pamerkan proyek sampingan, kontribusi open-source, atau apa pun yang pernah kamu rilis, lengkap dengan nama, tautan, tanggal, dan deskripsi."
           },
           {
-            "title": "Pratinjau resume kosong",
-            "description": "Resume yang masih kosong menampilkan pratinjau samar di pustaka, bukan kartu putih polos, jadi resume baru tetap terlihat rapi sebelum kamu mulai mengisinya."
+            "title": "Pratinjau CV kosong",
+            "description": "CV yang masih kosong menampilkan pratinjau samar di pustaka, bukan kartu putih polos, jadi CV baru tetap terlihat rapi sebelum kamu mulai mengisinya."
           }
         ],
         "0_6_0": [
@@ -643,7 +653,7 @@
             "description": "Ganti seluruh tampilan antara Bahasa Inggris dan Indonesia kapan saja lewat tombol bahasa di bilah navigasi."
           },
           {
-            "title": "Bahasa per resume",
+            "title": "Bahasa per CV",
             "description": "Pilih Bahasa Inggris atau Indonesia per dokumen, dan judul bagian serta tanggal di ekspor PDF, DOCX, dan TXT kamu mengikuti pilihan itu."
           },
           {
@@ -662,11 +672,11 @@
         "0_5_0": [
           {
             "title": "Ganti template di editor",
-            "description": "Tab Tata Letak yang baru menampilkan resume kamu dalam setiap template, dan satu klik langsung menerapkan pilihanmu."
+            "description": "Tab Tata Letak yang baru menampilkan CV kamu dalam setiap template, dan satu klik langsung menerapkan pilihanmu."
           },
           {
-            "title": "Mulai dari resume kosong",
-            "description": "Hilangkan centang “Isi otomatis dengan contoh konten” saat membuat resume, supaya kamu mulai dari dokumen kosong, bukan contoh."
+            "title": "Mulai dari CV kosong",
+            "description": "Hilangkan centang “Isi otomatis dengan contoh konten” saat membuat CV, supaya kamu mulai dari dokumen kosong, bukan contoh."
           },
           {
             "title": "Bagian bisa dikosongkan",
@@ -682,11 +692,11 @@
         "0_4_0": [
           {
             "title": "Bagian Organisasi",
-            "description": "Tampilkan peran sukarelawan, mahasiswa, dan komunitas lengkap dengan tanggal dan poin pentingnya, sama seperti pengalaman kerja. Muncul di setiap template dan ekspor, dan resume lama kamu mendapatkannya secara otomatis."
+            "description": "Tampilkan peran sukarelawan, mahasiswa, dan komunitas lengkap dengan tanggal dan poin pentingnya, sama seperti pengalaman kerja. Muncul di setiap template dan ekspor, dan CV lama kamu mendapatkannya secara otomatis."
           },
           {
             "title": "Pembaruan aplikasi lebih aman",
-            "description": "Salinan cadangan disimpan di perangkatmu sebelum setiap perubahan format data, dan resume yang belum bisa dibaca aplikasi diberi tanda pemberitahuan, bukannya hilang."
+            "description": "Salinan cadangan disimpan di perangkatmu sebelum setiap perubahan format data, dan CV yang belum bisa dibaca aplikasi diberi tanda pemberitahuan, bukannya hilang."
           },
           {
             "title": "Tur berpemandu",
@@ -694,7 +704,7 @@
           },
           {
             "title": "Panduan halaman depan",
-            "description": "Halaman depan menjelaskan cara kerja Lanjut, dan ditutup dengan tombol satu klik untuk mulai membuat resume baru."
+            "description": "Halaman depan menjelaskan cara kerja Lanjut, dan ditutup dengan tombol satu klik untuk mulai membuat CV baru."
           },
           {
             "title": "Laporkan bug dan permintaan",
@@ -722,17 +732,17 @@
           },
           {
             "title": "Gambar kecil langsung",
-            "description": "Kartu template dan resume menampilkan gambar kecil langsung dari dokumen asli kamu."
+            "description": "Kartu template dan CV menampilkan gambar kecil langsung dari dokumen asli kamu."
           },
           {
             "title": "Bilah sisi dan aksi cepat",
-            "description": "Bilah sisi menyorot posisi kamu, dan tiap resume punya menu aksi cepat."
+            "description": "Bilah sisi menyorot posisi kamu, dan tiap CV punya menu aksi cepat."
           }
         ],
         "0_2_0": [
           {
-            "title": "Ekspor resume",
-            "description": "Simpan resume kamu ke PDF, DOCX, atau teks biasa."
+            "title": "Ekspor CV",
+            "description": "Simpan CV kamu ke PDF, DOCX, atau teks biasa."
           },
           {
             "title": "Teks kaya di pratinjau",
@@ -746,18 +756,18 @@
       }
     },
     "download": {
-      "trigger": "Resume",
+      "trigger": "CV",
       "srDownload": "Unduh",
-      "title": "Unduh resume",
+      "title": "Unduh CV",
       "description": "Pilih format dan kasih nama berkasnya."
     },
     "menu": {
       "label": "Menu",
-      "downloadResume": "Unduh Resume"
+      "downloadResume": "Unduh CV"
     },
     "sidebar": {
       "localFirst": "Local-First",
-      "tagline": "Pembuat Resume ATS",
+      "tagline": "Pembuat CV ATS",
       "platform": "Platform",
       "dashboard": "Dasbor",
       "browseTemplate": "Jelajahi Template",
@@ -766,10 +776,10 @@
       "guide": "Panduan",
       "reportBug": "Ada masalah?",
       "featureRequest": "Ajukan fitur",
-      "myResume": "Resume Saya",
+      "myResume": "CV Saya",
       "recent": "Terbaru",
       "viewAll": "Lihat semua",
-      "createResume": "Buat Resume",
+      "createResume": "Buat CV",
       "itemMenu": "Menu",
       "modify": "Ubah <b>{title}</b>",
       "rename": "Ganti nama",
@@ -782,17 +792,17 @@
       "changelogUnseen": "Rilis baru"
     },
     "toolbar": {
-      "searchResume": "Cari resume kamu",
-      "resume": "Resume",
+      "searchResume": "Cari CV kamu",
+      "resume": "CV",
       "searchTemplates": "Cari template",
       "sortNameAsc": "Nama (A-Z)"
     },
     "emptyState": {
-      "title": "Belum ada resume",
-      "description": "Belum ada yang tersimpan di perangkat ini. Yuk, mulai dari template atau bikin resume kosong.",
+      "title": "Belum ada CV",
+      "description": "Belum ada yang tersimpan di perangkat ini. Yuk, mulai dari template atau bikin CV kosong.",
       "browseTemplates": "Jelajahi template",
-      "profileTitle": "Belum ada resume di {name}",
-      "profileDescription": "Setiap profil menyimpan resumenya sendiri. Mulai satu di bawah, atau ganti profil dari avatar di bilah atas."
+      "profileTitle": "Belum ada CV di {name}",
+      "profileDescription": "Setiap profil menyimpan CV-nya sendiri. Mulai satu di bawah, atau ganti profil dari avatar di bilah atas."
     },
     "library": {
       "continue": "Lanjutkan yang terakhir kamu edit",
@@ -800,8 +810,8 @@
       "readiness": "Kesiapan",
       "readinessDone": "Siap dikirim",
       "templateHint": "Pilih tampilannya dulu, baru mulai.",
-      "all": "Semua resume",
-      "sort": "Urutkan resume",
+      "all": "Semua CV",
+      "sort": "Urutkan CV",
       "sortEdited": "Terakhir diedit",
       "view": "Tampilan",
       "viewGrid": "Grid",
@@ -809,18 +819,18 @@
       "preview": "Pratinjau {title}"
     },
     "unreadable": {
-      "title": "Beberapa resume butuh versi aplikasi yang lebih baru",
-      "description": "{count, plural, other {# resume}} disimpan sama versi Lanjut yang lebih baru dari yang jalan di tab ini. Tenang, semuanya tetap aman di perangkat kamu.",
+      "title": "Beberapa CV butuh versi aplikasi yang lebih baru",
+      "description": "{count, plural, other {# CV}} disimpan sama versi Lanjut yang lebih baru dari yang jalan di tab ini. Tenang, semuanya tetap aman di perangkat kamu.",
       "refresh": "Segarin halaman buat update aplikasinya dan lihat lagi.",
       "refreshOffline": "Nyalain internet dulu, terus segarin halaman buat update aplikasinya dan lihat lagi."
     },
     "grid": {
-      "emptyTitle": "Nggak ada resume yang cocok",
+      "emptyTitle": "Nggak ada CV yang cocok",
       "create": "Buat “{query}”",
-      "errorTitle": "Gagal memuat resume kamu",
+      "errorTitle": "Gagal memuat CV kamu",
       "errorDescription": "Tenang, nggak ada yang kehapus. Pustakanya cuma gagal dimuat dari penyimpanan browser ini. Segarin halaman buat coba lagi.",
       "open": "Buka {title}",
-      "emptyDocument": "Resume kosong, belum ada isinya",
+      "emptyDocument": "CV kosong, belum ada isinya",
       "edited": "Diedit",
       "menu": "Menu",
       "rename": "Ganti nama",
@@ -846,14 +856,15 @@
       "previewLabel": "Pratinjau {name}",
       "applyTo": "Pakai di {title}",
       "inUse": "Sedang dipakai",
-      "heading": "Template CV ATS"
+      "heading": "Template CV ATS",
+      "intro": "Enam template gratis untuk CV ATS. Tiap template cuma mengubah huruf dan spasi, jadi sistem pelacakan pelamar (ATS) tetap membaca teksmu dengan urutan yang sama. Pilih satu dan langsung isi, tanpa akun."
     },
     "navbar": {
       "starOnGithub": "Beri bintang di GitHub"
     },
     "database": {
       "blocked": "Tutup tab Lanjut lainnya untuk menyelesaikan pembaruan",
-      "blockedDescription": "Tab lain masih menjalankan versi lama dan memegang resume tersimpan kamu. Tab ini lanjut sendiri setelah tab itu ditutup atau disegarkan. Tidak ada yang hilang.",
+      "blockedDescription": "Tab lain masih menjalankan versi lama dan memegang CV tersimpan kamu. Tab ini lanjut sendiri setelah tab itu ditutup atau disegarkan. Tidak ada yang hilang.",
       "outdated": "Lanjut diperbarui di tab lain",
       "outdatedDescription": "Segarkan tab ini untuk lanjut bekerja. Sampai saat itu, tab ini tidak bisa menyimpan perubahan.",
       "refresh": "Segarkan"
@@ -869,37 +880,37 @@
     "addProfile": "Tambah profil baru",
     "newShort": "Profil baru",
     "profileSection": "Profil",
-    "profileDescription": "Informasi pribadi dan ringkasan kamu. Resume baru di profil ini dimulai dengan data ini.",
+    "profileDescription": "Informasi pribadi dan ringkasan kamu. CV baru di profil ini dimulai dengan data ini.",
     "newTitle": "Profil baru",
-    "newDescription": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya resumenya sendiri, dan resume baru dimulai dengan informasinya.",
+    "newDescription": "Simpan satu profil untuk tiap jenis pekerjaan atau pasar kerja. Setiap profil punya CV-nya sendiri, dan CV baru dimulai dengan informasinya.",
     "name": "Nama profil",
     "namePlaceholder": "Lowongan frontend",
     "nameHint": "Hanya kamu yang melihat nama ini. Gunanya untuk membedakan profil.",
     "save": "Simpan perubahan",
     "create": "Tambah profil",
     "deleteTitle": "Hapus profil",
-    "deleteDescription": "Resumenya pindah ke profil yang kamu pilih. Hanya informasi yang tersimpan di profil ini yang hilang.",
+    "deleteDescription": "CV-nya pindah ke profil yang kamu pilih. Hanya informasi yang tersimpan di profil ini yang hilang.",
     "deleteConfirm": "Hapus {name}?",
-    "prefillNote": "Resume ini masuk ke profil <b>{name}</b> dan dimulai dengan informasi pribadi serta ringkasannya.",
+    "prefillNote": "CV ini masuk ke profil <b>{name}</b> dan dimulai dengan informasi pribadi serta ringkasannya.",
     "preferencesDescription": "Tampilan dan gerak Lanjut di perangkat ini.",
     "theme": "Tema",
     "themeDescription": "Terang, gelap, atau ikut perangkat kamu.",
     "themeLight": "Terang",
     "themeDark": "Gelap",
     "themeSystem": "Sistem",
-    "languageDescription": "Bahasa aplikasi. Setiap resume punya bahasanya sendiri.",
+    "languageDescription": "Bahasa aplikasi. Setiap CV punya bahasanya sendiri.",
     "animationDescription": "Mati menghentikan gerakan di layar. Sistem mengikuti perangkat kamu.",
     "developerMode": "Mode developer",
-    "developerModeDescription": "Menambahkan tombol Form dan Kode di editor. Edit resume sebagai Markdown, YAML, atau JSON.",
+    "developerModeDescription": "Menambahkan tombol Form dan Kode di editor. Edit CV sebagai Markdown, YAML, atau JSON.",
     "active": "Aktif",
     "useProfile": "Pakai profil ini",
     "draftHint": "Belum disimpan",
-    "resumeCount": "{count, plural, =0 {Belum ada resume} other {# resume}}",
-    "deleteMove": "{count} resumenya pindah ke profil di bawah. Hanya informasi yang tersimpan di profil ini yang hilang.",
-    "deleteEmpty": "Profil ini tidak punya resume. Hanya informasi yang tersimpan di profil ini yang hilang.",
-    "moveTo": "Pindahkan resume ke",
+    "resumeCount": "{count, plural, =0 {Belum ada CV} other {# CV}}",
+    "deleteMove": "{count} CV-nya pindah ke profil di bawah. Hanya informasi yang tersimpan di profil ini yang hilang.",
+    "deleteEmpty": "Profil ini tidak punya CV. Hanya informasi yang tersimpan di profil ini yang hilang.",
+    "moveTo": "Pindahkan CV ke",
     "backupTitle": "Cadangan",
-    "backupDescription": "{count, plural, =0 {Unduh profil ini sebagai satu berkas.} other {Unduh profil ini beserta # resumenya sebagai satu berkas.}} Impor berkasnya di perangkat lain untuk lanjut di sana.",
+    "backupDescription": "{count, plural, =0 {Unduh profil ini sebagai satu berkas.} other {Unduh profil ini beserta # CV-nya sebagai satu berkas.}} Impor berkasnya di perangkat lain untuk lanjut di sana.",
     "backupDownload": "Unduh cadangan",
     "backupShare": "Bagikan",
     "backupSaved": "Cadangan diunduh",
@@ -911,7 +922,7 @@
     "importProfileSame": "Perangkat ini sudah punya profil ini, dengan detail yang sama.",
     "importProfileUpdate": "Perangkat ini sudah punya profil ini. Detail di berkas lebih baru, jadi menggantikan yang ada di sini.",
     "importProfileKeep": "Perangkat ini sudah punya profil ini. Detail di sini sama baru atau lebih baru dari berkas, jadi tetap dipakai.",
-    "importNew": "Resume baru",
+    "importNew": "CV baru",
     "importNewer": "Lebih baru dari salinan di sini",
     "importSame": "Sudah terbaru",
     "importNote": "Nggak ada yang dihapus dari perangkat ini. Lanjut pindah ke profil ini setelah impor.",
@@ -919,12 +930,12 @@
     "importConfirm": "Impor",
     "importDone": "{name} diimpor",
     "importErrorInvalid": "Berkas ini bukan cadangan profil Lanjut.",
-    "importErrorResume": "Berkas ini berisi satu resume. Impor dari tab Dokumen di editor.",
+    "importErrorResume": "Berkas ini berisi satu CV. Impor dari tab Dokumen di editor.",
     "importErrorNewer": "Berkas ini dibuat versi Lanjut yang lebih baru. Perbarui Lanjut, lalu impor lagi.",
     "importErrorRead": "Nggak bisa membaca berkas ini.",
     "importErrorTooLarge": "Berkas ini terlalu besar untuk cadangan profil.",
     "importErrorWrite": "Nggak bisa menyimpan impor. Nggak ada yang berubah. Coba lagi.",
-    "joinNote": "Resume ini masuk ke profil <b>{name}</b>."
+    "joinNote": "CV ini masuk ke profil <b>{name}</b>."
   },
   "forms": {
     "common": {
@@ -947,16 +958,16 @@
       "feedbackRequired": "Isi bagian ini."
     },
     "create": {
-      "title": "Buat resume baru",
+      "title": "Buat CV baru",
       "description": "Pilih titik awal, pilih template, lalu kasih nama.",
-      "label": "Nama resume",
+      "label": "Nama CV",
       "placeholder": "Software Engineer",
       "template": "Template",
       "sourceLabel": "Mulai dari",
       "sourceSample": "Contoh",
       "sourceEmpty": "Kosong",
       "sourceImport": "Impor file",
-      "submit": "Buat resume",
+      "submit": "Buat CV",
       "stepsLabel": "Langkah",
       "stepStart": "Mulai",
       "stepTemplate": "Template",
@@ -964,18 +975,18 @@
       "stepOf": "Langkah {current} dari {total}",
       "sourceSampleHint": "Contoh yang sudah terisi, tinggal kamu ubah jadi milikmu.",
       "sourceEmptyHint": "Semua bagian, masih kosong dan siap kamu isi.",
-      "sourceImportHint": "Bawa resume PDF, JSON, atau YAML.",
+      "sourceImportHint": "Bawa CV PDF, JSON, atau YAML.",
       "templateHint": "Pilih tampilan. Kamu bisa menggantinya kapan saja di editor.",
-      "reviewHint": "Kasih nama supaya gampang dicari di daftar resume kamu.",
+      "reviewHint": "Kasih nama supaya gampang dicari di daftar CV kamu.",
       "change": "Ganti",
       "previewLabel": "Pratinjau",
-      "previewImport": "Taruh file untuk melihat resume kamu di sini.",
+      "previewImport": "Taruh file untuk melihat CV kamu di sini.",
       "showTemplate": "Tampilkan {name}"
     },
     "rename": {
       "title": "Ganti nama",
-      "description": "Ganti label resume ini jadi apa aja yang kamu mau. Kalau nilainya sama kayak sebelumnya, nggak bakal disimpan.",
-      "label": "Label resume",
+      "description": "Ganti label CV ini jadi apa aja yang kamu mau. Kalau nilainya sama kayak sebelumnya, nggak bakal disimpan.",
+      "label": "Label CV",
       "placeholder": "mis: Software Engineer",
       "fieldDescription": "Minimal 3 karakter. Maksimal 100 karakter."
     },
@@ -987,8 +998,8 @@
     "download": {
       "title": "Unduh {title}",
       "description": "Pilih format dan kasih nama berkasnya. Ekspornya dibikin langsung di browser kamu.",
-      "missing": "Resume ini nggak bisa dimuat dari penyimpanan browser ini.",
-      "drawerTitle": "Unduh resume",
+      "missing": "CV ini nggak bisa dimuat dari penyimpanan browser ini.",
+      "drawerTitle": "Unduh CV",
       "drawerDescription": "Pilih format dan kasih nama berkasnya.",
       "format": "Format",
       "formatHint": {
@@ -1007,7 +1018,7 @@
     "import": {
       "dropPrompt": "Taruh file PDF, JSON, atau YAML di sini, atau klik untuk pilih",
       "hint": "File kamu dibaca di perangkatmu dan nggak pernah diunggah.",
-      "parsing": "Membaca resume kamu…",
+      "parsing": "Membaca CV kamu…",
       "parsed": "Siap diimpor",
       "remove": "Hapus file",
       "errorUnsupported": "Cuma file PDF, JSON, dan YAML yang didukung.",
@@ -1017,7 +1028,7 @@
       "errorGeneric": "Kami nggak bisa baca PDF ini. Coba file lain.",
       "disclaimer": "Impor sifatnya best-effort dan bisa saja melewatkan atau salah menempatkan detail. Kalau ada yang keliru, sangat membantu kalau kamu",
       "reportIssue": "laporkan masalahnya",
-      "errorInvalidData": "File ini bukan ekspor resume yang valid."
+      "errorInvalidData": "File ini bukan ekspor CV yang valid."
     }
   },
   "feedback": {
@@ -1061,11 +1072,11 @@
     },
     "titleHint": "Satu baris yang menjelaskan isinya.",
     "titlePlaceholderBug": "PDF menampilkan tanda strip sebelum kota",
-    "titlePlaceholderIdea": "Simpan satu versi resume untuk tiap negara",
+    "titlePlaceholderIdea": "Simpan satu versi CV untuk tiap negara",
     "area": "Di bagian mana?",
     "where": "Teksnya muncul di mana?",
     "areas": {
-      "editor": "Saat mengedit resume",
+      "editor": "Saat mengedit CV",
       "preview": "Pratinjau",
       "pdf": "Unduhan PDF",
       "word": "Unduhan Word",
@@ -1079,7 +1090,7 @@
     },
     "stepsField": "Apa yang kamu lakukan?",
     "stepsHint": "Tulis langkahnya, satu per baris, supaya kami bisa mengulanginya.",
-    "stepsPlaceholder": "1. Membuka resume dengan template Luasa\n2. Menambahkan kota\n3. Mengunduhnya sebagai PDF",
+    "stepsPlaceholder": "1. Membuka CV dengan template Luasa\n2. Menambahkan kota\n3. Mengunduhnya sebagai PDF",
     "expected": "Apa yang kamu harapkan?",
     "expectedPlaceholder": "Kotanya saja, seperti di pratinjau.",
     "actual": "Apa yang terjadi?",
@@ -1091,14 +1102,14 @@
       "sometimes": "Kadang-kadang",
       "once": "Sekali saja"
     },
-    "scopeNote": "Setiap resume tetap satu kolom yang mudah dibaca sistem ATS, jadi tabel, kolom, dan kotak teks di luar cakupan. Tampilan, jarak, dan huruf boleh diusulkan.",
+    "scopeNote": "Setiap CV tetap satu kolom yang mudah dibaca sistem ATS, jadi tabel, kolom, dan kotak teks di luar cakupan. Tampilan, jarak, dan huruf boleh diusulkan.",
     "goal": "Apa yang ingin kamu lakukan?",
     "goalHint": "Ceritakan situasinya, bukan hanya solusinya. Ini membantu kami menemukan solusi terbaik.",
-    "goalPlaceholder": "Aku melamar kerja di dua negara dan menyimpan satu versi resume untuk masing-masing.",
+    "goalPlaceholder": "Aku melamar kerja di dua negara dan menyimpan satu versi CV untuk masing-masing.",
     "idea": "Apa yang akan membantu?",
-    "ideaPlaceholder": "Cara menyalin resume ke bahasa lain dalam satu langkah.",
+    "ideaPlaceholder": "Cara menyalin CV ke bahasa lain dalam satu langkah.",
     "workaround": "Bagaimana caramu sekarang?",
-    "workaroundPlaceholder": "Aku menduplikasi resume dan menerjemahkannya manual.",
+    "workaroundPlaceholder": "Aku menduplikasi CV dan menerjemahkannya manual.",
     "impact": "Seberapa besar manfaatnya?",
     "impacts": {
       "nice": "Bagus kalau ada",
@@ -1124,7 +1135,7 @@
     "namePlaceholder": "mis. Sinta",
     "nameHint": "Tampil di issue publik. Kosongkan untuk tetap anonim.",
     "includeDetails": "Sertakan detail teknis",
-    "detailsHint": "Ini membantu kami menemukan masalahnya. Teks resume kamu tidak pernah ikut.",
+    "detailsHint": "Ini membantu kami menemukan masalahnya. Teks CV kamu tidak pernah ikut.",
     "details": {
       "app": "Aplikasi",
       "platform": "Platform",
@@ -1134,7 +1145,7 @@
       "page": "Halaman",
       "template": "Template",
       "font": "Huruf",
-      "documentLanguage": "Bahasa resume"
+      "documentLanguage": "Bahasa CV"
     },
     "cancel": "Batal",
     "back": "Kembali",
@@ -1189,13 +1200,13 @@
     "chrome": {
       "edit": "Edit",
       "editorTitle": "Editor",
-      "editorDescription": "Editor Resume",
+      "editorDescription": "Editor CV",
       "tabContent": "Konten",
       "tabLayout": "Tata Letak",
       "tabStyling": "Gaya",
-      "notFound": "Resume nggak ketemu",
+      "notFound": "CV nggak ketemu",
       "didYouMean": "maksud kamu:",
-      "notExist": "Resume ini nggak ada di penyimpanan browser ini.",
+      "notExist": "CV ini nggak ada di penyimpanan browser ini.",
       "dashboard": "Dasbor",
       "browseTemplates": "Jelajahi Template",
       "showSection": "Tampilkan bagian",
@@ -1251,7 +1262,7 @@
       "photoAdd": "Tambah foto",
       "photoReplace": "Ganti",
       "photoRemove": "Hapus",
-      "photoHint": "Opsional. Umum untuk lamaran di Indonesia; banyak ATS dan perusahaan luar mengabaikan atau tidak menyarankan foto. Teks resume kamu tetap terbaca penuh oleh parser.",
+      "photoHint": "Opsional. Umum untuk lamaran di Indonesia; banyak ATS dan perusahaan luar mengabaikan atau tidak menyarankan foto. Teks CV kamu tetap terbaca penuh oleh parser.",
       "photoError": "File itu tidak bisa dibaca sebagai gambar.",
       "photoDropHint": "Kamu juga bisa menempelkan gambar, atau menariknya ke sini.",
       "photoPasted": "Foto dari clipboard sudah ditambahkan.",
@@ -1482,10 +1493,10 @@
       "backupFormat": "Format cadangan",
       "copy": "Salin",
       "downloadFile": "Unduh",
-      "importHeading": "Impor resume",
-      "importHint": "Ambil resume PDF, atau pulihkan cadangan JSON atau YAML.",
+      "importHeading": "Impor CV",
+      "importHint": "Ambil CV PDF, atau pulihkan cadangan JSON atau YAML.",
       "or": "atau",
-      "replacePrompt": "Resume ini sudah ada isinya. Ganti isinya, atau simpan lalu buat yang baru?",
+      "replacePrompt": "CV ini sudah ada isinya. Ganti isinya, atau simpan lalu buat yang baru?",
       "replace": "Ganti yang ini",
       "createNew": "Buat baru",
       "copied": "Disalin ke clipboard",
@@ -1494,18 +1505,18 @@
     "paste": {
       "open": "Tempel JSON atau YAML",
       "title": "Tempel JSON atau YAML",
-      "description": "Tempel resume yang disalin Lanjut sebagai JSON atau YAML. Kamu bisa membetulkannya di sini sebelum diimpor.",
-      "label": "Resume sebagai JSON atau YAML",
+      "description": "Tempel CV yang disalin Lanjut sebagai JSON atau YAML. Kamu bisa membetulkannya di sini sebelum diimpor.",
+      "label": "CV sebagai JSON atau YAML",
       "placeholder": "Tempel di sini",
       "ready": "Siap diimpor",
       "syntaxError": "Ada kesalahan sintaks di {format} ini",
-      "schemaError": "Teks ini nggak cocok dengan resume Lanjut",
+      "schemaError": "Teks ini nggak cocok dengan CV Lanjut",
       "moreIssues": "Dan {count} masalah lainnya",
       "import": "Impor",
-      "replace": "Ganti resume ini",
-      "createNew": "Buat resume baru",
-      "imported": "Resume diimpor",
-      "pastedTitle": "Resume tempelan"
+      "replace": "Ganti CV ini",
+      "createNew": "Buat CV baru",
+      "imported": "CV diimpor",
+      "pastedTitle": "CV tempelan"
     },
     "code": {
       "modeLabel": "Mode editor",
@@ -1516,7 +1527,7 @@
       "viewSplit": "Bagi dua",
       "viewPreview": "Pratinjau",
       "formatLabel": "Format",
-      "label": "Resume sebagai {format}",
+      "label": "CV sebagai {format}",
       "keys": "<key>Tab</key> untuk indentasi. <key>Esc</key> lalu <key>Tab</key> untuk keluar.",
       "statusValid": "Diterapkan",
       "statusInvalid": "Belum diterapkan",
@@ -1524,7 +1535,7 @@
       "moreIssues": "+{count} lagi",
       "ignored": "Diterapkan, tapi {count} blok nggak punya kolom di bagiannya, jadi nggak ikut tersimpan",
       "discardTitle": "Buang teks ini?",
-      "discardDescription": "Teksnya masih ada kesalahan, jadi Lanjut belum menerapkannya. Resume tetap pakai versi valid terakhir.",
+      "discardDescription": "Teksnya masih ada kesalahan, jadi Lanjut belum menerapkannya. CV tetap pakai versi valid terakhir.",
       "discardCancel": "Terus edit",
       "discardConfirm": "Buang"
     },
@@ -1535,7 +1546,7 @@
       "failed": "Belum tersimpan",
       "failedTitle": "Browser ini tidak menyimpan perubahan terakhirmu",
       "failedBody": "Penyimpanan bisa penuh atau diblokir, misalnya di jendela pribadi. Perubahanmu masih ada di layar. Unduh salinan dari tab Dokumen sebelum kamu menutup halaman ini.",
-      "outdatedTitle": "Resume ini sudah diubah versi Lanjut yang lebih baru",
+      "outdatedTitle": "CV ini sudah diubah versi Lanjut yang lebih baru",
       "outdatedBody": "Tab ini masih jalan di versi lama, jadi perubahan terakhirmu nggak disimpan. Dengan begitu, perubahan dari versi baru tetap aman. Segarin halaman buat update aplikasinya dan lanjut edit.",
       "outdatedBodyOffline": "Tab ini masih jalan di versi lama, jadi perubahan terakhirmu nggak disimpan. Dengan begitu, perubahan dari versi baru tetap aman. Nyalain internet dulu, terus segarin halaman buat update aplikasinya.",
       "refresh": "Segarkan"
@@ -1544,10 +1555,10 @@
       "percent": "{percent}% siap",
       "percentShort": "{percent}%",
       "ready": "Siap dikirim",
-      "title": "Yang masih dibutuhkan resume kamu",
+      "title": "Yang masih dibutuhkan CV kamu",
       "description": "Tiap poin dihitung kalau isinya tulisan kamu sendiri, bukan isi contoh.",
       "readyTitle": "Siap dikirim",
-      "readyDescription": "Semua poin sudah berisi tulisan kamu sendiri. Unduh resume kamu dari tab Dokumen.",
+      "readyDescription": "Semua poin sudah berisi tulisan kamu sendiri. Unduh CV kamu dari tab Dokumen.",
       "done": "Selesai",
       "todo": "Belum",
       "sectionDone": "Lengkap",
@@ -1586,7 +1597,7 @@
     "headingLine1": "Setiap CV",
     "headingLead": "dibaca ",
     "headingAccent": "dua kali.",
-    "deck": "Pertama, parser ATS mengambil teksnya. Lalu perekrut melihat tampilannya. Lanjut bikin satu CV yang pas untuk keduanya. Gratis, dan nggak pernah keluar dari browser kamu.",
+    "deck": "Pertama, parser ATS mengambil teksnya. Lalu perekrut melihat tampilannya. Lanjut bikin satu CV yang pas untuk keduanya. Gratis, tanpa daftar, dan CV-nya nggak pernah keluar dari browser kamu.",
     "firstName": "Nama depan",
     "firstNamePlaceholder": "Nama depanmu",
     "lastName": "Nama belakang",
@@ -1631,7 +1642,7 @@
     "winCta": "Unduh untuk Windows",
     "linuxMeta": "AppImage, .deb, atau .rpm · x64 dan ARM",
     "linuxCta": "Unduh untuk Linux",
-    "closeHeading": "Gratis dipakai, dan open source.",
+    "closeHeading": "Gratis, tanpa akun, dan open source.",
     "closeBody": "Nggak ada paket berbayar, dan nggak perlu bikin akun. Kodenya terbuka dengan lisensi AGPL-3.0, jadi siapa pun bisa membacanya atau menjalankan salinannya sendiri.",
     "contributorsBody": "Dibuat oleh orang-orang yang menyumbangkan waktunya. Ikut bergabung: tambahkan terjemahan, perbaiki bug, atau buat fitur yang kamu inginkan.",
     "closeCta": "Mulai CV kamu",
@@ -1647,7 +1658,8 @@
       "download": "Unduh aplikasinya",
       "github": "GitHub",
       "rights": "© {year} Lanjut. Open source dengan lisensi AGPL-3.0.",
-      "madeBy": "Dibuat oleh"
+      "madeBy": "Dibuat oleh",
+      "privacy": "Privasi"
     },
     "draftTitle": "CV saya",
     "keptHeading": "Ada yang sengaja nggak dimasukkan.",
@@ -1750,16 +1762,58 @@
     "more": "dan {count} lainnya"
   },
   "conflict": {
-    "changedTitle": "{item, select, resume {Resume} other {Profil}} ini diubah di jendela lain",
+    "changedTitle": "{item, select, resume {CV} other {Profil}} ini diubah di jendela lain",
     "changedDescription": "Perubahan terakhirmu di jendela ini belum tersimpan. Pakai versi dari jendela lain, atau simpan punyamu sebagai salinan.",
     "keepOther": "Pakai versi lain",
     "saveCopy": "Simpan punyaku sebagai salinan",
-    "deletedTitle": "{item, select, resume {Resume} other {Profil}} ini dihapus di jendela lain",
+    "deletedTitle": "{item, select, resume {CV} other {Profil}} ini dihapus di jendela lain",
     "deletedDescription": "Perubahanmu di jendela ini belum tersimpan. Pulihkan dengan perubahanmu, atau tutup.",
     "restore": "Pulihkan",
     "close": "Tutup",
-    "frozenTitle": "{item, select, resume {Resume} other {Profil}} ini lagi dibuka di jendela lain",
+    "frozenTitle": "{item, select, resume {CV} other {Profil}} ini lagi dibuka di jendela lain",
     "frozenDescription": "Cuma satu jendela yang bisa mengedit dalam satu waktu, biar nggak ada perubahan yang hilang. Yang kamu lihat di sini bisa belum terbaru.",
     "editHere": "Edit di sini"
+  },
+  "privacy": {
+    "metaTitle": "Privasi",
+    "metaDescription": "Apa saja yang disimpan dan dikirim Lanjut. CV kamu tetap di browser dan nggak ada yang diunggah. Tanpa akun, tanpa analitik, tanpa iklan.",
+    "heading": "Privasi",
+    "lead": "Di Lanjut, kamu nggak perlu bikin akun, dan nggak ada analitik atau iklan. CV kamu tetap ada di perangkatmu. Di bawah ini ada daftar semua momen saat Lanjut terhubung ke server, jadi kamu bisa cek sendiri satu per satu.",
+    "storedTitle": "Yang tetap ada di perangkatmu",
+    "storedBody": "CV, profil, dan pengaturanmu disimpan di browser pada perangkat ini, dan nggak pernah dikirim ke server. Kalau data situs dihapus atau kamu pindah browser, semuanya ikut hilang. Jadi, simpan cadangannya lewat halaman Profil.",
+    "networkTitle": "Kapan Lanjut terhubung ke server",
+    "items": {
+      "hosting": {
+        "title": "Saat membuka situs.",
+        "body": "lanjut.org dijalankan di Cloudflare. Seperti layanan hosting pada umumnya, Cloudflare menerima info dasar dari setiap kunjungan, seperti alamat IP dan jenis browser kamu."
+      },
+      "language": {
+        "title": "Pilihan bahasa.",
+        "body": "Kalau kamu memilih bahasa, sebuah cookie kecil akan mengingatnya, jadi lanjut.org langsung terbuka dalam bahasa itu di kunjungan berikutnya."
+      },
+      "offline": {
+        "title": "Bisa dipakai offline.",
+        "body": "Situs ini menyimpan salinan file-nya sendiri di browser kamu, jadi tetap bisa dibuka tanpa internet. Salinan itu nggak berisi CV kamu."
+      },
+      "feedback": {
+        "title": "Saat kirim masukan.",
+        "body": "Masukan yang kamu kirim akan jadi issue publik di GitHub. Sebelum dikirim, kamu bisa lihat detail teknis yang ikut terkirim, seperti jenis browser dan halamannya, dan kamu bisa memilih untuk nggak menyertakannya. Isi CV kamu nggak pernah ikut terkirim. Pemeriksaan dari Cloudflare (Turnstile) dipakai untuk memastikan pengirimnya manusia, bukan bot."
+      },
+      "contributors": {
+        "title": "Foto kontributor.",
+        "body": "Halaman utama menampilkan orang-orang yang ikut membangun Lanjut. Browser kamu memuat foto profil mereka langsung dari GitHub."
+      },
+      "updates": {
+        "title": "Pembaruan aplikasi desktop.",
+        "body": "Aplikasi desktop mengecek versi terbaru di GitHub paling sering tiga hari sekali. Nggak ada yang terpasang sebelum kamu klik."
+      },
+      "donations": {
+        "title": "Donasi.",
+        "body": "Tautan Saweria dan SociaBuzz cuma tautan biasa. Situs mereka baru terbuka kalau kamu klik."
+      }
+    },
+    "codeTitle": "Cek sendiri",
+    "codeBody": "Lanjut itu open source dengan lisensi AGPL-3.0. Semua kode di balik isi halaman ini bisa kamu baca di GitHub.",
+    "codeLink": "Baca kodenya"
   }
 }

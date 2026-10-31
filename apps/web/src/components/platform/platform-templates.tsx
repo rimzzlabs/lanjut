@@ -12,7 +12,7 @@ export function PlatformTemplates() {
 
   return (
     <PlatformPageScroll>
-      <PlatformPageHeader title={t("heading")}>
+      <PlatformPageHeader title={t("heading")} description={t("intro")}>
         <PlatformTemplateSearch />
       </PlatformPageHeader>
       <PlatformTemplateBrowser />

@@ -1,11 +1,11 @@
-import { ResumeHeading } from "../../resume-heading";
+import { ResumeArticle, ResumeHeading } from "../../resume-heading";
 import { ResumeOptionalLink } from "../../resume-optional-link";
 
 import type { CertificateItemView } from "../../resume-preview";
 
 export function KetikCertificateItem(props: CertificateItemView) {
   return (
-    <article>
+    <ResumeArticle>
       <div className="flex items-baseline justify-between gap-4">
         <ResumeHeading level={3} className="font-mono resume-body-xs font-bold">
           <ResumeOptionalLink href={props.href} className="underline">
@@ -19,6 +19,6 @@ export function KetikCertificateItem(props: CertificateItemView) {
         )}
       </div>
       <p className="resume-body-xs text-muted-foreground">{props.issuer}</p>
-    </article>
+    </ResumeArticle>
   );
 }

@@ -1,12 +1,12 @@
 import { withLocation } from "../../resume-entry-location";
-import { ResumeHeading } from "../../resume-heading";
+import { ResumeArticle, ResumeHeading } from "../../resume-heading";
 
 import type { EducationItemView } from "../../resume-preview";
 import { ResumeRichText } from "../../resume-rich-text";
 
 export function LuasaEducationItem(props: EducationItemView) {
   return (
-    <article className="border-l-2 border-foreground/30 pl-4">
+    <ResumeArticle className="border-l-2 border-foreground/30 pl-4">
       <div className="flex items-baseline justify-between gap-4">
         <ResumeHeading
           level={3}
@@ -22,6 +22,6 @@ export function LuasaEducationItem(props: EducationItemView) {
         {withLocation(props.institution, props.location)}
       </p>
       <ResumeRichText blocks={props.details} className="mt-1" />
-    </article>
+    </ResumeArticle>
   );
 }

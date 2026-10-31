@@ -1,11 +1,11 @@
-import { ResumeHeading } from "../../resume-heading";
+import { ResumeArticle, ResumeHeading } from "../../resume-heading";
 import { ResumeOptionalLink } from "../../resume-optional-link";
 
 import type { CertificateItemView } from "../../resume-preview";
 
 export function TebalCertificateItem(props: CertificateItemView) {
   return (
-    <article>
+    <ResumeArticle>
       <div className="flex items-baseline justify-between gap-4">
         <ResumeHeading level={3} className="resume-body-sm font-bold">
           <ResumeOptionalLink href={props.href} className="underline">
@@ -21,6 +21,6 @@ export function TebalCertificateItem(props: CertificateItemView) {
       <p className="resume-body-xs font-medium text-muted-foreground">
         {props.issuer}
       </p>
-    </article>
+    </ResumeArticle>
   );
 }

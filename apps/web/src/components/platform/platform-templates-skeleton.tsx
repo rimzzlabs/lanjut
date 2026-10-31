@@ -39,7 +39,10 @@ export function PlatformTemplatesSkeleton() {
 
   return (
     <PlatformPageScroll>
-      <PlatformPageHeader title={t("templates.heading")}>
+      <PlatformPageHeader
+        title={t("templates.heading")}
+        description={t("templates.intro")}
+      >
         <PlatformTemplateSearch />
       </PlatformPageHeader>
 
@@ -58,7 +61,7 @@ export function PlatformTemplatesSkeleton() {
               <span className="flex min-w-0 flex-col gap-0.5 pr-6">
                 <span className="truncate text-sm font-medium">
                   {template.name}
-                </span>
+                </span>{" "}
                 <span className="line-clamp-2 text-xs text-muted-foreground">
                   {template.description}
                 </span>
@@ -85,7 +88,7 @@ export function PlatformTemplatesSkeleton() {
               <span className="flex min-w-0 flex-col gap-0.5 px-1.5">
                 <span className="truncate text-sm font-medium">
                   {template.name}
-                </span>
+                </span>{" "}
                 <span className="line-clamp-2 text-xs text-muted-foreground">
                   {template.description}
                 </span>

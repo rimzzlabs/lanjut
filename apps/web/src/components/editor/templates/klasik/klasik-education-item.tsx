@@ -1,12 +1,12 @@
 import { withLocation } from "../../resume-entry-location";
-import { ResumeHeading } from "../../resume-heading";
+import { ResumeArticle, ResumeHeading } from "../../resume-heading";
 
 import type { EducationItemView } from "../../resume-preview";
 import { ResumeRichText } from "../../resume-rich-text";
 
 export function KlasikEducationItem(props: EducationItemView) {
   return (
-    <article className="font-serif">
+    <ResumeArticle className="font-serif">
       <div className="flex items-baseline justify-between gap-4">
         <ResumeHeading level={3} className="resume-body-sm font-semibold">
           {props.degree}
@@ -19,6 +19,6 @@ export function KlasikEducationItem(props: EducationItemView) {
         {withLocation(props.institution, props.location)}
       </p>
       <ResumeRichText blocks={props.details} className="mt-1 font-serif" />
-    </article>
+    </ResumeArticle>
   );
 }

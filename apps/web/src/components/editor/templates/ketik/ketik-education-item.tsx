@@ -1,12 +1,12 @@
 import { withLocation } from "../../resume-entry-location";
-import { ResumeHeading } from "../../resume-heading";
+import { ResumeArticle, ResumeHeading } from "../../resume-heading";
 
 import type { EducationItemView } from "../../resume-preview";
 import { ResumeRichText } from "../../resume-rich-text";
 
 export function KetikEducationItem(props: EducationItemView) {
   return (
-    <article>
+    <ResumeArticle>
       <div className="flex items-baseline justify-between gap-4">
         <ResumeHeading level={3} className="font-mono resume-body-xs font-bold">
           {props.degree}
@@ -19,6 +19,6 @@ export function KetikEducationItem(props: EducationItemView) {
         {withLocation(props.institution, props.location)}
       </p>
       <ResumeRichText blocks={props.details} className="mt-1" />
-    </article>
+    </ResumeArticle>
   );
 }
