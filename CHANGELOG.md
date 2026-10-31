@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/rimzzlabs/lanjut/compare/v1.2.0...v1.3.0) (2026-10-31)
+
+
+### Features
+
+* privacy page and seo fixes ([#257](https://github.com/rimzzlabs/lanjut/issues/257)) ([2f83b79](https://github.com/rimzzlabs/lanjut/commit/2f83b791f1b60a0336f3519e26c22bac4d30174d))
+
+
+### Bug Fixes
+
+* more natural indonesian copy ([#259](https://github.com/rimzzlabs/lanjut/issues/259)) ([731e559](https://github.com/rimzzlabs/lanjut/commit/731e559398d676a404bf52be9b811a6fef625843))
+
 ## [1.2.0](https://github.com/rimzzlabs/lanjut/compare/v1.1.0...v1.2.0) (2026-10-31)
 
 
