@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/rimzzlabs/lanjut/compare/v1.0.0...v1.1.0) (2026-10-31)
+
+
+### Features
+
+* indonesian sample résumé ([#254](https://github.com/rimzzlabs/lanjut/issues/254)) ([fec70e6](https://github.com/rimzzlabs/lanjut/commit/fec70e6a3e3106e653791110943476920900bae4))
+
+
+### Bug Fixes
+
+* **seo:** clean up headings, structured data, and page copy ([#252](https://github.com/rimzzlabs/lanjut/issues/252)) ([8f70fed](https://github.com/rimzzlabs/lanjut/commit/8f70fedcea473416e100601fb3268056eb017f0a))
+
 ## [1.0.0](https://github.com/rimzzlabs/lanjut/compare/v0.26.4...v1.0.0) (2026-10-29)
 
 
