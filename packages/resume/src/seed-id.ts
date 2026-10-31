@@ -85,7 +85,7 @@ export const SEED_RESUME_ID: Resume = {
               ul(
                 li(
                   t(
-                    "Memimpin migrasi monolit 200 ribu baris ke layanan bertipe, menurunkan insiden produksi sebesar ",
+                    "Memimpin migrasi monolit 200 ribu baris ke layanan-layanan TypeScript yang lebih kecil, menurunkan insiden produksi sebesar ",
                   ),
                   b("40%"),
                   t("."),
@@ -261,7 +261,7 @@ export const SEED_RESUME_ID: Resume = {
                 ),
                 li(
                   t(
-                    "Menjalankan proses latar di produksi pada beberapa tim pembayaran dan SaaS.",
+                    "Dipakai untuk menjalankan background job di produksi oleh beberapa tim pembayaran dan SaaS.",
                   ),
                 ),
               ),
@@ -334,7 +334,7 @@ export const SEED_RESUME_ID: Resume = {
             details: prose(
               p(
                 t(
-                  "Lulus cum laude (IPK 3,80). Mata kuliah pilihan: interaksi manusia dan komputer, sistem terdistribusi, dan algoritma. Ketua Klub Pengembangan Web kampus.",
+                  "Lulus cum laude (IPK 3,80). Mata kuliah yang diambil: interaksi manusia dan komputer, sistem terdistribusi, dan algoritma. Ketua Klub Pengembangan Web kampus.",
                 ),
               ),
             ),
@@ -344,7 +344,7 @@ export const SEED_RESUME_ID: Resume = {
           id: "seed-education-2",
           fields: {
             institution: plain("Recurse Center"),
-            degree: plain("Residensi Software"),
+            degree: plain("Program Residensi Software"),
             location: plain("New York, NY"),
             startDate: plain("2019"),
             endDate: plain("2019"),

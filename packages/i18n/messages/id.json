@@ -9,7 +9,7 @@
     "templateTitle": "Jelajahi template",
     "templateDescription": "Enam template CV gratis yang urutannya tetap terbaca sistem pelacakan pelamar. Lihat tiap template satu halaman penuh, pada contoh atau CV kamu sendiri.",
     "changelogTitle": "Catatan rilis",
-    "changelogDescription": "Apa yang berubah di setiap rilis Lanjut: fitur baru dan perbaikan di pembuat CV ATS yang gratis dan open source."
+    "changelogDescription": "Apa saja yang berubah di setiap rilis Lanjut: fitur baru dan perbaikan untuk pembuat CV ATS yang gratis dan open source."
   },
   "language": {
     "label": "Bahasa",
@@ -198,7 +198,7 @@
           },
           {
             "title": "Perbaikan bug",
-            "description": "Versi bahasa Indonesia sekarang pakai istilah CV di semua bagian, bukan resume. Halaman template juga sekarang punya pengantar singkat."
+            "description": "Versi bahasa Indonesia sekarang pakai istilah CV di semua bagian, bukan resume. Halaman template juga sekarang punya pengantar singkat, dan beberapa kalimat bahasa Indonesia sekarang terdengar lebih wajar."
           }
         ],
         "1_2_0": [
@@ -210,11 +210,11 @@
         "1_1_0": [
           {
             "title": "Contoh CV berbahasa Indonesia",
-            "description": "Di bahasa Indonesia, contoh CV sekarang juga berbahasa Indonesia, lengkap dengan judul bagian dan tanggal berbahasa Indonesia. Kamu bisa lihat di halaman utama, di halaman template, dan saat mulai CV baru dari contoh."
+            "description": "Versi bahasa Indonesia sekarang punya contoh CV berbahasa Indonesia, lengkap dengan judul bagian dan tanggalnya. Contoh ini muncul di halaman utama, di halaman template, dan saat kamu mulai CV baru dari contoh."
           },
           {
             "title": "Perbaikan bug",
-            "description": "Pembaca layar dan mesin pencari sekarang menemukan satu judul utama yang jelas di halaman utama, halaman template, dan halaman masukan. Halaman utama sekarang menjawab \"Lanjut itu apa?\" paling pertama, dan halaman utama berbahasa Indonesia sekarang pakai istilah CV di semua bagian. Impor PDF dari CV berbahasa Indonesia sekarang tetap membaca tanggal, daftar bahasa yang diawali \"Bahasa\", dan alamat yang terpotong ke baris kedua."
+            "description": "Pembaca layar dan mesin pencari sekarang menemukan satu judul utama yang jelas di halaman utama, halaman template, dan halaman masukan. Pertanyaan \"Lanjut itu apa?\" sekarang ada paling atas di halaman utama, dan halaman utama berbahasa Indonesia sekarang pakai istilah CV di semua bagian. Impor PDF dari CV berbahasa Indonesia sekarang membaca dengan benar tanggal, daftar bahasa yang diawali \"Bahasa\", dan alamat yang terpotong ke baris kedua."
           }
         ],
         "1_0_0": [
@@ -1621,7 +1621,7 @@
     "allTemplates": "Lihat keenam template",
     "noAccount": "Tanpa akun. Tanpa unggah.",
     "looksHeading": "Ganti tampilannya. Urutannya tetap.",
-    "looksBody": "Enam template, masing-masing dengan huruf dan spasinya sendiri. Pilih satu dan CV di atas dibaca ulang. Bagian-bagiannya kembali dengan urutan yang sama, dan setiap perubahan di Lanjut diuji untuk itu.",
+    "looksBody": "Enam template, masing-masing dengan huruf dan spasinya sendiri. Pilih satu, lalu CV di atas dibaca ulang. Bagian-bagiannya tetap keluar dengan urutan yang sama, dan setiap perubahan di Lanjut diuji untuk memastikan hal itu.",
     "lookAwal": "Polos dan lega",
     "lookKetat": "Serif yang padat",
     "lookLuasa": "Lapang, huruf renggang",
@@ -1629,7 +1629,7 @@
     "lookKlasik": "Serif penuh, rata tengah",
     "lookKetik": "Nuansa mesin tik",
     "localHeading": "CV kamu nggak pernah keluar dari browser ini.",
-    "localBody": "Nggak ada akun dan nggak ada salinan di server. Lanjut menyimpan CV kamu di penyimpanan browser kamu sendiri, dan kamu bisa mengekspornya ke PDF, DOCX, teks biasa, JSON, atau YAML kapan saja.",
+    "localBody": "Nggak perlu akun, dan nggak ada salinan di server. Lanjut menyimpan CV kamu di penyimpanan browser kamu sendiri, dan kamu bisa mengekspornya ke PDF, DOCX, teks biasa, JSON, atau YAML kapan saja.",
     "localPanelCaption": "Tempat kerjaanmu tersimpan",
     "localStores": "Object store",
     "localSource": "Lanjut open source dengan lisensi AGPL-3.0.",
@@ -1709,7 +1709,7 @@
     "faq": {
       "whatIs": {
         "question": "Lanjut itu apa?",
-        "answer": "Lanjut itu pembuat CV dan resume gratis dan open source, dibuat untuk sistem pelacakan pelamar (ATS). Bisa dipakai langsung di browser di lanjut.org, atau sebagai aplikasi desktop untuk macOS, Windows, dan Linux. Nggak perlu akun, dan CV kamu tetap di perangkatmu. Enam templatenya cuma mengubah tampilan, bukan urutan baca, jadi parser membaca semua template dengan cara yang sama. Kamu bisa ekspor ke PDF, Word (.docx), atau teks biasa. Rizki Citra membangunnya secara terbuka di GitHub, bareng para kontributor."
+        "answer": "Lanjut adalah pembuat CV dan resume yang gratis serta open source, dibuat khusus untuk sistem pelacakan pelamar (ATS). Kamu bisa langsung memakainya di browser lewat lanjut.org, atau memasang aplikasi desktopnya untuk macOS, Windows, dan Linux. Nggak perlu akun, dan CV kamu tetap tersimpan di perangkatmu. Keenam templatenya cuma mengubah tampilan, bukan urutan baca, jadi parser membaca semua template dengan cara yang sama. CV bisa diekspor ke PDF, Word (.docx), atau teks biasa. Lanjut dibuat oleh Rizki Citra secara terbuka di GitHub, bersama para kontributor."
       },
       "free": {
         "question": "Lanjut beneran gratis?",
@@ -1733,7 +1733,7 @@
       },
       "ats": {
         "question": "Apakah CV aku bakal lolos ATS?",
-        "answer": "Nggak ada alat yang bisa menjanjikan itu, karena tiap perusahaan mengatur sistemnya sendiri. Lanjut mengurus hal yang ditentukan file: teks asli sesuai urutan baca, judul bagian yang standar, dan kontak yang bisa ditemukan parser. Lembar di atas halaman ini menunjukkan teks yang dibaca parser dari PDF kamu."
+        "answer": "Nggak ada alat yang bisa menjanjikan itu, karena tiap perusahaan mengatur sistemnya sendiri. Lanjut mengurus apa yang bisa diatur lewat file-nya: teks asli sesuai urutan baca, judul bagian yang standar, dan kontak yang bisa ditemukan parser. Lembar di paling atas halaman ini menunjukkan teks yang dibaca parser dari PDF kamu."
       },
       "cv": {
         "question": "Lanjut bisa buat CV juga?",
