@@ -105,6 +105,17 @@ const LINK_CLASS =
         Lanjut
       </a>
       <p class="mt-3 max-w-xs text-sm text-muted-foreground">{t("tagline")}</p>
+      <p class="mt-3 text-sm text-muted-foreground">
+        {t("madeBy")}{" "}
+        <a
+          href="https://rimzzlabs.com"
+          target="_blank"
+          rel="author noreferrer"
+          class="rounded-xs font-medium text-foreground underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        >
+          Rizki Citra
+        </a>
+      </p>
       <p class="mt-8 text-xs text-muted-foreground">{t("rights", { year })}</p>
       <a
         href={localizePath("/", otherLocale)}

@@ -39,7 +39,7 @@ export function PlatformTemplatesSkeleton() {
 
   return (
     <PlatformPageScroll>
-      <PlatformPageHeader title={t("breadcrumb.browseTemplates")}>
+      <PlatformPageHeader title={t("templates.heading")}>
         <PlatformTemplateSearch />
       </PlatformPageHeader>
 

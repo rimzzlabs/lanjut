@@ -206,11 +206,15 @@ export function FeedbackFlow(props: FeedbackFlowProps) {
     );
   }
 
+  const Title = props.surface === "page" ? "h1" : "h2";
+
   return (
     <form onSubmit={onSubmit} noValidate className={layout.form}>
       <header className={cn("flex flex-col gap-4", layout.header)}>
         <div className="flex flex-col gap-1">
-          <h2 className="text-lg font-semibold tracking-tight">{t("title")}</h2>
+          <Title className="text-lg font-semibold tracking-tight">
+            {t("title")}
+          </Title>
           <p className="text-sm text-balance text-muted-foreground">
             {t("description")}
           </p>

@@ -1,15 +1,37 @@
-import type { Locale } from "@lanjut/i18n/routing";
+import { type Locale, localizePath } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
-import { A } from "@mobily/ts-belt";
+import { A, O, pipe } from "@mobily/ts-belt";
 import { FAQ_KEYS } from "@/components/landing/landing-faq-keys";
+import { CHANGELOG, type ChangelogEntry } from "./changelog";
 import type { Contributor } from "./contributors";
 import { absoluteUrl } from "./seo";
 import { DESKTOP_RELEASE_URL, REPO_URL, SITE } from "./site";
 
 const HOME = absoluteUrl("/");
 const WEBSITE_ID = `${HOME}#website`;
-const APP_ID = `${HOME}#app`;
 const AUTHOR_ID = "https://rimzzlabs.com/#person";
+
+function homeOf(locale: Locale): string {
+  return absoluteUrl(localizePath("/", locale));
+}
+
+/** Each language page describes the application in its own words. */
+function appIdOf(locale: Locale): string {
+  return `${homeOf(locale)}#app`;
+}
+
+interface ReleaseFields {
+  softwareVersion?: string;
+  dateModified?: string;
+}
+
+const LATEST_RELEASE: ReleaseFields = pipe(
+  A.head(CHANGELOG),
+  O.mapWithDefault<ChangelogEntry, ReleaseFields>({}, (release) => ({
+    softwareVersion: release.version,
+    dateModified: release.date,
+  })),
+);
 
 /**
  * The home page's JSON-LD graph. `WebSite` names the site for the search
@@ -41,9 +63,10 @@ export function homeStructuredData(
       },
       {
         "@type": "WebApplication",
-        "@id": APP_ID,
+        "@id": appIdOf(locale),
         name: SITE.name,
         url: pageUrl,
+        image: absoluteUrl("/favicon-512x512.png"),
         description: t("description"),
         applicationCategory: "BusinessApplication",
         applicationSubCategory: t("category"),
@@ -55,6 +78,8 @@ export function homeStructuredData(
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
         license: "https://www.gnu.org/licenses/agpl-3.0.html",
         downloadUrl: DESKTOP_RELEASE_URL,
+        releaseNotes: absoluteUrl(localizePath("/changelog", locale)),
+        ...LATEST_RELEASE,
         screenshot: absoluteUrl(`/og/${locale}.png`),
         sameAs: [REPO_URL],
         isPartOf: { "@id": WEBSITE_ID },
@@ -84,6 +109,49 @@ export function homeStructuredData(
             text: tLanding(`faq.${key}.answer`),
           },
         })),
+      },
+    ],
+  };
+}
+
+/**
+ * The JSON-LD of an inner page: the page itself, inside the site and about
+ * the application, and its place under the home page.
+ */
+export function pageStructuredData(
+  locale: Locale,
+  pagePath: string,
+  name: string,
+  description: string,
+) {
+  const pageUrl = absoluteUrl(pagePath);
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name,
+        description,
+        inLanguage: locale,
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": appIdOf(locale) },
+        breadcrumb: { "@id": `${pageUrl}#breadcrumb` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: SITE.name,
+            item: homeOf(locale),
+          },
+          { "@type": "ListItem", position: 2, name, item: pageUrl },
+        ],
       },
     ],
   };

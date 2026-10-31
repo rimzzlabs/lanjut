@@ -1,6 +1,7 @@
 import { A } from "@mobily/ts-belt";
 import { Fragment } from "react";
 import { ResumeHeaderPhoto } from "../../resume-header-photo";
+import { ResumeHeading } from "../../resume-heading";
 import { ResumeOptionalLink } from "../../resume-optional-link";
 import type { HeaderView } from "../../resume-preview";
 
@@ -9,9 +10,12 @@ export function LuasaHeader(props: HeaderView) {
     <header className="flex items-start gap-4 border-l-2 border-foreground/80 pl-4">
       <ResumeHeaderPhoto header={props} />
       <div>
-        <h1 className="font-serif resume-name-2xl uppercase tracking-[0.08em]">
+        <ResumeHeading
+          level={1}
+          className="font-serif resume-name-2xl uppercase tracking-[0.08em]"
+        >
           {props.fullName}
-        </h1>
+        </ResumeHeading>
         {props.headline && (
           <p className="mt-0.5 font-serif resume-name-sm text-muted-foreground">
             {props.headline}

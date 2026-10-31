@@ -1,5 +1,6 @@
 import { ResumeHeaderContact } from "./resume-header-contact";
 import { ResumeHeaderPhoto } from "./resume-header-photo";
+import { ResumeHeading } from "./resume-heading";
 import type { HeaderView } from "./resume-preview";
 
 export function ResumeHeader(props: HeaderView) {
@@ -8,9 +9,12 @@ export function ResumeHeader(props: HeaderView) {
       <div className="flex items-start gap-4">
         <ResumeHeaderPhoto header={props} />
         <div>
-          <h1 className="resume-name-xl font-bold tracking-tight">
+          <ResumeHeading
+            level={1}
+            className="resume-name-xl font-bold tracking-tight"
+          >
             {props.fullName}
-          </h1>
+          </ResumeHeading>
           <p className="mt-1 text-muted-foreground resume-name-sm">
             {props.headline}
           </p>

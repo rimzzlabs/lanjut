@@ -12,6 +12,7 @@ import {
   publicPath,
 } from "@/lib/seo";
 import { SITE } from "@/lib/site";
+import { pageStructuredData } from "@/lib/structured-data";
 import preferencesScript from "@/scripts/preferences.js?raw";
 
 interface Props {
@@ -47,6 +48,13 @@ const languageAlternates = F.toMutable(
     { hrefLang: "x-default", href: defaultAlternateOf(path) },
   ),
 );
+// The home page has no title of its own and writes its own graph.
+const structuredData =
+  indexable &&
+  props.title &&
+  JSON.stringify(
+    pageStructuredData(props.locale, path, props.title, description),
+  );
 const keywords = A.join(
   [
     "resume builder",
@@ -117,6 +125,9 @@ const keywords = A.join(
     <Font cssVariable="--font-brand" />
     <Font cssVariable="--font-display" />
     <script is:inline set:html={preferencesScript} />
+    {structuredData && (
+      <script is:inline type="application/ld+json" set:html={structuredData} />
+    )}
     <slot name="head" />
   </head>
   <body data-world={props.world}>

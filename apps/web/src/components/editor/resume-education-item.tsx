@@ -1,4 +1,5 @@
 import { withLocation } from "./resume-entry-location";
+import { ResumeHeading } from "./resume-heading";
 import type { EducationItemView } from "./resume-preview";
 import { ResumeRichText } from "./resume-rich-text";
 
@@ -6,7 +7,9 @@ export function ResumeEducationItem(props: EducationItemView) {
   return (
     <article>
       <div className="flex items-baseline justify-between gap-4 pb-1">
-        <h3 className="resume-body-xs font-semibold">{props.degree}</h3>
+        <ResumeHeading level={3} className="resume-body-xs font-semibold">
+          {props.degree}
+        </ResumeHeading>
         <span className="shrink-0 resume-body-xs text-muted-foreground">
           {props.startDate} - {props.endDate}
         </span>

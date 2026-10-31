@@ -3,6 +3,7 @@
  * structured data both read this list, so they always match.
  */
 export const FAQ_KEYS = [
+  "whatIs",
   "free",
   "account",
   "openSource",

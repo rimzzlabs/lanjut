@@ -97,7 +97,7 @@ function ContributorFace(props: { contributor: Contributor }) {
       />
       <AvatarFallback aria-hidden className="text-xs">
         {S.toUpperCase(S.slice(props.contributor.login, 0, 1))}
-      </AvatarFallback>
+      </AvatarFallback>{" "}
       <span className="sr-only">
         {t("profile", { login: props.contributor.login })}
       </span>

@@ -1,4 +1,5 @@
 import { locationSuffix } from "./resume-entry-location";
+import { ResumeHeading } from "./resume-heading";
 import { ResumeOptionalLink } from "./resume-optional-link";
 import type { ExperienceItemView } from "./resume-preview";
 import { ResumeRichText } from "./resume-rich-text";
@@ -7,7 +8,9 @@ export function ResumeExperienceItem(props: ExperienceItemView) {
   return (
     <article>
       <div className="flex items-baseline justify-between gap-4">
-        <h3 className="resume-body-xs font-semibold">{props.role}</h3>
+        <ResumeHeading level={3} className="resume-body-xs font-semibold">
+          {props.role}
+        </ResumeHeading>
         <span className="shrink-0 resume-body-xs text-muted-foreground">
           {props.startDate} - {props.endDate}
         </span>
