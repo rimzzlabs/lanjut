@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/rimzzlabs/lanjut/compare/v1.3.0...v1.3.1) (2026-10-31)
+
+
+### Bug Fixes
+
+* snippets, faq answers, and privacy date ([#260](https://github.com/rimzzlabs/lanjut/issues/260)) ([2f2afc5](https://github.com/rimzzlabs/lanjut/commit/2f2afc5c258805351d5fb22ebf23a12116a8482f))
+
 ## [1.3.0](https://github.com/rimzzlabs/lanjut/compare/v1.2.0...v1.3.0) (2026-10-31)
 
 
