@@ -1,3 +1,4 @@
+import type { ResumeLanguage } from "@lanjut/resume";
 import { TEMPLATES, type TemplateId } from "@lanjut/resume/templates";
 import { Button } from "@lanjut/ui/components/button";
 import { Field, FieldLabel } from "@lanjut/ui/components/field";
@@ -18,7 +19,7 @@ import {
   XIcon,
 } from "@phosphor-icons/react";
 import { useMemo, useRef } from "react";
-import { useTranslations } from "use-intl";
+import { useLocale, useTranslations } from "use-intl";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import { resumeToText } from "@/components/editor/resume-to-text";
 import { IslandProviders } from "@/components/shared/island-providers";
@@ -60,7 +61,11 @@ function LandingReadersBoard() {
   const readerRef = useRef<HTMLDivElement>(null);
   const read = useLandingRead(readerRef, draft, template);
 
-  const preview = useMemo(() => resumeToPreview(draftToResume(draft)), [draft]);
+  const language = useLocale() as ResumeLanguage;
+  const preview = useMemo(
+    () => resumeToPreview(draftToResume(draft, language)),
+    [draft, language],
+  );
   const exportLines = useMemo(
     () => textLines(resumeToText(preview)),
     [preview],

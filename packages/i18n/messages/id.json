@@ -190,10 +190,14 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
-        "1_0_1": [
+        "1_1_0": [
+          {
+            "title": "Contoh CV berbahasa Indonesia",
+            "description": "Di bahasa Indonesia, contoh CV sekarang juga berbahasa Indonesia, lengkap dengan judul bagian dan tanggal berbahasa Indonesia. Kamu bisa lihat di halaman utama, di halaman template, dan saat mulai CV baru dari contoh."
+          },
           {
             "title": "Perbaikan bug",
-            "description": "Pembaca layar dan mesin pencari sekarang menemukan satu judul utama yang jelas di halaman utama, halaman template, dan halaman masukan. Halaman utama sekarang menjawab \"Lanjut itu apa?\" paling pertama, dan halaman utama berbahasa Indonesia sekarang pakai istilah CV di semua bagian."
+            "description": "Pembaca layar dan mesin pencari sekarang menemukan satu judul utama yang jelas di halaman utama, halaman template, dan halaman masukan. Halaman utama sekarang menjawab \"Lanjut itu apa?\" paling pertama, dan halaman utama berbahasa Indonesia sekarang pakai istilah CV di semua bagian. Impor PDF dari CV berbahasa Indonesia sekarang tetap membaca tanggal, daftar bahasa yang diawali \"Bahasa\", dan alamat yang terpotong ke baris kedua."
           }
         ],
         "1_0_0": [
@@ -483,11 +487,11 @@
         "0_12_0": [
           {
             "title": "Urungkan dan ulangi",
-            "description": "Bebas berubah pikiran: semua editan sekarang bisa diurungkan dan diulangi, dari ketikan, entri yang terhapus, sampai urutan section dan pengaturan layout. Pakai tombol panah di samping tab sidebar atau Ctrl/Cmd+Z, dan tiap kolom teks juga menyimpan riwayatnya sendiri selagi kamu menulis."
+            "description": "Bebas berubah pikiran: semua editan sekarang bisa diurungkan dan diulangi, dari ketikan, entri yang terhapus, sampai urutan bagian dan pengaturan layout. Pakai tombol panah di samping tab sidebar atau Ctrl/Cmd+Z, dan tiap kolom teks juga menyimpan riwayatnya sendiri selagi kamu menulis."
           },
           {
-            "title": "Satu section dalam satu waktu",
-            "description": "Daftar editor sekarang hanya membuka satu section, jadi form yang lagi kamu isi tetap kelihatan, nggak terdorong keluar layar."
+            "title": "Satu bagian dalam satu waktu",
+            "description": "Daftar editor sekarang hanya membuka satu bagian, jadi form yang lagi kamu isi tetap kelihatan, nggak terdorong keluar layar."
           },
           {
             "title": "Perbaikan bug",
@@ -1593,13 +1597,13 @@
     "checkName": "Nama terbaca",
     "checkRole": "Posisi terbaca",
     "checkEmail": "Email utuh",
-    "checkOrder": "Urutan section terjaga",
+    "checkOrder": "Urutan bagian terjaga",
     "sampleNote": "Nama dan posisimu, di atas konten contoh.",
     "cta": "Lanjut ke editor",
     "allTemplates": "Lihat keenam template",
     "noAccount": "Tanpa akun. Tanpa unggah.",
     "looksHeading": "Ganti tampilannya. Urutannya tetap.",
-    "looksBody": "Enam template, masing-masing dengan huruf dan spasinya sendiri. Pilih satu dan CV di atas dibaca ulang. Section-nya kembali dengan urutan yang sama, dan setiap perubahan di Lanjut diuji untuk itu.",
+    "looksBody": "Enam template, masing-masing dengan huruf dan spasinya sendiri. Pilih satu dan CV di atas dibaca ulang. Bagian-bagiannya kembali dengan urutan yang sama, dan setiap perubahan di Lanjut diuji untuk itu.",
     "lookAwal": "Polos dan lega",
     "lookKetat": "Serif yang padat",
     "lookLuasa": "Lapang, huruf renggang",
@@ -1641,7 +1645,7 @@
     "draftTitle": "CV saya",
     "keptHeading": "Ada yang sengaja nggak dimasukkan.",
     "keptBody": "Parser membaca halaman dari atas ke bawah. Apa pun yang merusak urutan itu bisa mengacak teksmu, jadi Lanjut menjauhkannya dari isi CV dan menyerahkan sisanya ke kamu.",
-    "keptAllowedTitle": "Section yang bisa kamu pakai",
+    "keptAllowedTitle": "Bagian yang bisa kamu pakai",
     "keptOutTitle": "Dijauhkan dari teks",
     "sectionHeader": "Header",
     "sectionSummary": "Ringkasan",
@@ -1653,7 +1657,7 @@
     "sectionCertifications": "Sertifikasi",
     "sectionSkills": "Keahlian",
     "sectionLanguages": "Bahasa",
-    "sectionCustom": "Section buatanmu sendiri",
+    "sectionCustom": "Bagian buatanmu sendiri",
     "outTables": "Tabel",
     "outTablesWhy": "Isi sel bisa terbaca dengan urutan yang nggak kamu maksud.",
     "outColumns": "Teks dua kolom",
@@ -1664,8 +1668,8 @@
     "outImagesWhy": "Parser membaca teks, bukan gambar.",
     "keptPhoto": "Foto di header satu-satunya pengecualian. Sifatnya opsional, mati secara bawaan, dan nggak pernah mengubah teks yang dibaca parser.",
     "importHeading": "Sudah punya CV? Mulai dari situ.",
-    "importBody": "Masukkan PDF, atau file JSON atau YAML yang pernah kamu ekspor. Lanjut memilah isinya ke dalam section, dan bagian yang belum bisa ditempatkan menunggu di daftar yang bisa kamu salin. Filenya dibaca di browser kamu, sama seperti yang lainnya.",
-    "importFound": "Dipilah ke dalam section",
+    "importBody": "Masukkan PDF, atau file JSON atau YAML yang pernah kamu ekspor. Lanjut memilah isinya ke dalam bagian-bagian CV, dan baris yang belum bisa ditempatkan menunggu di daftar yang bisa kamu salin. Filenya dibaca di browser kamu, sama seperti yang lainnya.",
+    "importFound": "Dipilah ke dalam bagian",
     "importLeftovers": "Baris untuk kamu tempatkan sendiri",
     "exportsHeading": "Satu CV, lima file.",
     "exportsBody": "Tiap lamaran minta format yang berbeda. Kelimanya berasal dari CV yang sama, jadi isinya nggak pernah berbeda.",
@@ -1674,7 +1678,7 @@
     "exportTxt": "Untuk formulir yang minta teks biasa ditempel.",
     "exportJson": "Salinan lengkap yang bisa kamu impor lagi nanti.",
     "exportYaml": "Salinan yang sama, lebih mudah dibaca dan diedit manual.",
-    "orderTitle": "Urutan section yang dibaca parser",
+    "orderTitle": "Urutan bagian yang dibaca parser",
     "orderNote": "Pilih template lain. Urutannya tetap sama.",
     "importLink": "Impor file di editor",
     "importRawLabel": "Teks dari PDF kamu",
@@ -1710,7 +1714,7 @@
       },
       "ats": {
         "question": "Apakah CV aku bakal lolos ATS?",
-        "answer": "Nggak ada alat yang bisa menjanjikan itu, karena tiap perusahaan mengatur sistemnya sendiri. Lanjut mengurus bagian yang ditentukan file: teks asli sesuai urutan baca, judul section yang standar, dan kontak yang bisa ditemukan parser. Lembar di bagian atas halaman ini menunjukkan teks yang dibaca parser dari PDF kamu."
+        "answer": "Nggak ada alat yang bisa menjanjikan itu, karena tiap perusahaan mengatur sistemnya sendiri. Lanjut mengurus hal yang ditentukan file: teks asli sesuai urutan baca, judul bagian yang standar, dan kontak yang bisa ditemukan parser. Lembar di atas halaman ini menunjukkan teks yang dibaca parser dari PDF kamu."
       },
       "cv": {
         "question": "Lanjut bisa buat CV juga?",
@@ -1722,7 +1726,7 @@
       },
       "language": {
         "question": "Bisa bikin CV dalam bahasa Inggris?",
-        "answer": "Bisa. Atur bahasa dokumen ke Inggris di editor, dan label tetap seperti judul section dan tanggal ikut berubah. Aplikasinya sendiri tersedia dalam bahasa Indonesia dan Inggris."
+        "answer": "Bisa. Atur bahasa dokumen ke Inggris di editor, dan label tetap seperti judul bagian dan tanggal ikut berubah. Aplikasinya sendiri tersedia dalam bahasa Indonesia dan Inggris."
       },
       "photo": {
         "question": "Bisa pasang foto?",

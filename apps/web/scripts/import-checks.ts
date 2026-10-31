@@ -1,6 +1,6 @@
 import type { Entry, Field, Resume } from "@lanjut/resume";
 import { importResumeFromPdf } from "@lanjut/resume/import";
-import { SEED_RESUME } from "@lanjut/resume/seed";
+import { SAMPLE_RESUME_LIST } from "@lanjut/resume/samples";
 import { TEMPLATES, type TemplateId } from "@lanjut/resume/templates";
 import { A, D, G, O, pipe, S } from "@mobily/ts-belt";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
@@ -136,23 +136,24 @@ function headerErrors(
 async function roundTrip(
   takumi: TakumiRenderer,
   template: TemplateId,
+  sample: Resume,
 ): Promise<ReadonlyArray<string>> {
-  const label = `IMPORT round trip (${template})`;
+  const label = `IMPORT round trip (${template}, ${sample.language})`;
   const pdf = await takumi.render({
-    preview: resumeToPreview(SEED_RESUME),
+    preview: resumeToPreview(sample),
     template,
     readFile: takumi.readFontFile,
   });
   const result = await importResumeFromPdf(pdf, {
-    title: SEED_RESUME.title,
-    language: SEED_RESUME.language,
+    title: sample.title,
+    language: sample.language,
     templateId: template,
   });
   if (!result.ok) return [`${label}: the import failed (${result.reason})`];
   const skip = NOT_PRINTED[template] ?? [];
   const errors = A.concat(
-    headerErrors(SEED_RESUME, result.resume, label),
-    A.flatMap(SEED_RESUME.sections, (section) =>
+    headerErrors(sample, result.resume, label),
+    A.flatMap(sample.sections, (section) =>
       sectionErrors({
         type: section.type,
         expected: section.entries,
@@ -176,7 +177,7 @@ async function roundTrip(
 }
 
 /**
- * Exports the sample résumé with every template, imports each PDF, and
+ * Exports each sample résumé with every template, imports each PDF, and
  * compares every field the template prints. Text formatting such as bold is
  * not compared: a PDF's text layer does not carry it.
  */
@@ -184,7 +185,11 @@ export async function runImportChecks(): Promise<ReadonlyArray<string>> {
   const takumi = await loadTakumiRenderer();
   try {
     const errors = await Promise.all(
-      A.map(TEMPLATES, (summary) => roundTrip(takumi, summary.id)),
+      A.flatMap(TEMPLATES, (summary) =>
+        A.map(SAMPLE_RESUME_LIST, (sample) =>
+          roundTrip(takumi, summary.id, sample),
+        ),
+      ),
     );
     return A.flat(errors);
   } finally {

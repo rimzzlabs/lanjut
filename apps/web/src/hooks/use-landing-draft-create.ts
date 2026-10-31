@@ -1,5 +1,6 @@
+import type { ResumeLanguage } from "@lanjut/resume";
 import { useState } from "react";
-import { useTranslations } from "use-intl";
+import { useLocale, useTranslations } from "use-intl";
 import {
   draftFullName,
   draftHasContent,
@@ -15,6 +16,7 @@ import { useLandingDraftStore, useResumeStore } from "@/lib/store";
  */
 export function useLandingDraftCreate() {
   const t = useTranslations("landing");
+  const language = useLocale() as ResumeLanguage;
   const router = useRouter();
   const createResume = useResumeStore((state) => state.createResume);
   const [creating, setCreating] = useState(false);
@@ -31,7 +33,7 @@ export function useLandingDraftCreate() {
         draftFullName(draft) || t("draftTitle"),
         {
           source: "import",
-          imported: { resume: draftToResume(draft), leftovers: [] },
+          imported: { resume: draftToResume(draft, language), leftovers: [] },
           templateId: template,
         },
       );

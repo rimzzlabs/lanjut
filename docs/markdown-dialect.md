@@ -149,7 +149,7 @@ characters that have a meaning (`\`, `*`, `[`, `]`, and `_` at the edge of a wor
 and a line that looks like a heading or a list item gets a backslash before its
 marker.
 
-`pnpm validate:exports` runs this check on the sample and on a hard case
+`pnpm validate:exports` runs this check on both samples and on a hard case
 (`apps/web/scripts/markdown-checks.ts`). It also counts the headings of the sample
 that carry an attribute. If more than one in four carries one, the check fails:
 that is the kill criterion of the RFC (#142).

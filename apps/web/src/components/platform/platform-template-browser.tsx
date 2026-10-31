@@ -1,4 +1,4 @@
-import { SEED_RESUME } from "@lanjut/resume";
+import type { ResumeLanguage } from "@lanjut/resume";
 import {
   filterTemplates,
   SORTED_TEMPLATES,
@@ -6,11 +6,12 @@ import {
 } from "@lanjut/resume/templates";
 import { A, O, pipe, S } from "@mobily/ts-belt";
 import { useMemo, useState } from "react";
-import { useTranslations } from "use-intl";
+import { useLocale, useTranslations } from "use-intl";
 import {
   isResumePreviewEmpty,
   resumeToPreview,
 } from "@/components/editor/resume-to-preview";
+import { samplePreview } from "@/components/editor/sample-preview";
 import { useHydrateResumeLibrary } from "@/hooks/use-hydrate-resume-library";
 import { MEDIA_LG, useMediaQuery } from "@/hooks/use-media-query";
 import { useProfileResumes } from "@/hooks/use-profile-resumes";
@@ -25,8 +26,6 @@ import { PlatformTemplateList } from "./platform-template-list/platform-template
 import { PlatformTemplatePreview } from "./platform-template-preview/platform-template-preview";
 import { SAMPLE_SOURCE } from "./platform-template-preview/platform-template-preview-source";
 
-const SEED_PREVIEW = resumeToPreview(SEED_RESUME);
-
 /**
  * Pick a template, then see it at full size on the sample or on one of your
  * own résumés. From `lg` the list sits beside the preview and stays in view
@@ -36,6 +35,7 @@ const SEED_PREVIEW = resumeToPreview(SEED_RESUME);
 export function PlatformTemplateBrowser() {
   useHydrateResumeLibrary();
   const t = useTranslations("platform.templates");
+  const sample = samplePreview(useLocale() as ResumeLanguage);
   const wide = useMediaQuery(MEDIA_LG);
   const [query] = useTemplateSearchQuery();
   const [templateId, setTemplateId] = useSelectedTemplate();
@@ -51,13 +51,13 @@ export function PlatformTemplateBrowser() {
     O.mapWithDefault(target, "", (resume) => resume.updatedAt),
   );
   const preview = useMemo(() => {
-    if (O.isNone(target)) return SEED_PREVIEW;
+    if (O.isNone(target)) return sample;
     if (!document) return null;
     return resumeToPreview(document);
-  }, [target, document]);
+  }, [target, document, sample]);
   // Tiles of a blank résumé would all look the same, so they keep the sample.
   const tilePreview =
-    preview && !isResumePreviewEmpty(preview) ? preview : SEED_PREVIEW;
+    preview && !isResumePreviewEmpty(preview) ? preview : sample;
 
   const templates = A.map(SORTED_TEMPLATES, (template) => ({
     ...template,

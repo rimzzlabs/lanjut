@@ -1,8 +1,9 @@
+import type { ResumeLanguage } from "@lanjut/resume";
 import { TEMPLATES } from "@lanjut/resume/templates";
 import { A, O, pipe, S } from "@mobily/ts-belt";
 import { CircleNotchIcon } from "@phosphor-icons/react";
 import { useMemo } from "react";
-import { useTranslations } from "use-intl";
+import { useLocale, useTranslations } from "use-intl";
 import { IslandProviders } from "@/components/shared/island-providers";
 import type { IslandProps } from "@/components/shared/providers";
 import {
@@ -23,15 +24,16 @@ export function LandingOrderPlate(props: IslandProps) {
 
 function LandingOrderPlateBody() {
   const t = useTranslations("landing");
+  const language = useLocale() as ResumeLanguage;
   const read = useLandingReadStore((state) => state.read);
   const draft = useLandingDraftStore((state) => state.draft);
   const template = useLandingDraftStore((state) => state.template);
   const titles = useMemo(
     () =>
-      A.map(draftToResume(draft).sections, (section) =>
+      A.map(draftToResume(draft, language).sections, (section) =>
         S.toUpperCase(section.title),
       ),
-    [draft],
+    [draft, language],
   );
   const lines = readLines(read);
   const order = sectionOrder(lines, titles);

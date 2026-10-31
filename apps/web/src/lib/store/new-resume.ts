@@ -5,7 +5,7 @@ import {
   type Profile,
   type Resume,
   type ResumeLanguage,
-  SEED_RESUME,
+  SAMPLE_RESUMES,
 } from "@lanjut/resume";
 import { nanoid } from "nanoid";
 
@@ -35,7 +35,7 @@ function startingResume(title: string, options?: CreateResumeOptions): Resume {
     return { ...options.imported.resume, id: nanoid(), title };
   }
   if (options?.source === "empty") return createEmptyResume(title);
-  return cloneResumeAsNew(SEED_RESUME, title);
+  return cloneResumeAsNew(SAMPLE_RESUMES[options?.language ?? "en"], title);
 }
 
 /** A sample or blank start takes its header and summary from the profile. */

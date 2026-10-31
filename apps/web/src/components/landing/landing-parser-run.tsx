@@ -1,4 +1,4 @@
-import type { Resume } from "@lanjut/resume";
+import { RESUME_LABELS, type Resume } from "@lanjut/resume";
 import type { TemplateId } from "@lanjut/resume/templates";
 import { joinPresent } from "@lanjut/resume/text";
 import { A, O, pipe, R, S } from "@mobily/ts-belt";
@@ -19,10 +19,17 @@ export interface ParserProofReport {
   employerFound: boolean;
   emailFound: boolean;
   orderOk: boolean;
-  order: string[];
+  order: ReadonlyArray<string>;
 }
 
-const SECTION_ORDER = ["SUMMARY", "EXPERIENCE", "EDUCATION", "SKILLS"];
+/** The headings that must read in this order, in the résumé's own language. */
+function sectionOrder(resume: Resume): ReadonlyArray<string> {
+  const labels = RESUME_LABELS[resume.language];
+  return A.map(
+    [labels.summary, labels.experience, labels.education, labels.skills],
+    S.toUpperCase,
+  );
+}
 
 function plainValue(field: unknown): string {
   if (field && typeof field === "object" && "value" in field) {
@@ -64,9 +71,10 @@ export async function runParserProof(
   onPhase("check");
   const text = extracted.text;
   const upper = S.toUpperCase(text);
+  const order = sectionOrder(resume);
   let cursor = -1;
   let orderOk = true;
-  for (const section of SECTION_ORDER) {
+  for (const section of order) {
     const index = S.indexOf(upper, section);
     if (O.isNone(index) || index < cursor) {
       orderOk = false;
@@ -88,8 +96,10 @@ export async function runParserProof(
     S.split("\n"),
     A.filter((line) => S.isNotEmpty(S.trim(line))),
   );
-  const headingIndex = A.getIndexBy(lines, (line) =>
-    /^experience$/i.test(S.trim(line)),
+  const experience = RESUME_LABELS[resume.language].experience;
+  const headingIndex = A.getIndexBy(
+    lines,
+    (line) => S.toUpperCase(S.trim(line)) === S.toUpperCase(experience),
   );
   const excerpt = O.match(
     headingIndex,
@@ -108,7 +118,7 @@ export async function runParserProof(
     employerFound: foundIn(upper, "Acme Corp"),
     emailFound: foundIn(upper, email),
     orderOk,
-    order: SECTION_ORDER,
+    order,
   });
 }
 

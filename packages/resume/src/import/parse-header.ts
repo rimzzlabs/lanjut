@@ -152,6 +152,45 @@ function headerAddresses(
 }
 
 /**
+ * Rejoin an address that wrapped off a contact line. A template that sets the
+ * contacts on one line can break it inside the address, "… | Jakarta, DKI"
+ * then "Jakarta, Indonesia". The contact line ends in a comma, or both halves
+ * hold one, which a headline or a name does not.
+ */
+function joinWrappedAddress(
+  preamble: ReadonlyArray<string>,
+  isHeaderContact: (line: string) => boolean,
+): ReadonlyArray<string> {
+  return A.reduce(preamble, [] as ReadonlyArray<string>, (joined, raw) => {
+    const line = S.trim(raw);
+    const wraps = O.mapWithDefault(
+      A.last(joined),
+      false,
+      (prev) =>
+        isHeaderContact(prev) &&
+        !isHeaderContact(line) &&
+        (S.endsWith(prev, ",") ||
+          (S.includes(line, ",") && S.includes(lastSegment(prev), ","))),
+    );
+    if (!wraps) return A.append(joined, line);
+    return A.updateAt(
+      joined,
+      A.length(joined) - 1,
+      (prev) => `${prev} ${line}`,
+    );
+  });
+}
+
+function lastSegment(line: string): string {
+  return pipe(
+    S.splitByRe(line, /\s*[|•·]\s*/),
+    A.filter(G.isString),
+    A.last,
+    O.getWithDefault(""),
+  );
+}
+
+/**
  * Fill the header from the preamble (lines before the first heading) and
  * contacts found anywhere. Returns the filled résumé and the preamble lines
  * that were not used, to be added to the leftovers. Deliberately conservative:
@@ -172,6 +211,7 @@ export function fillHeader(params: FillHeaderParams): HeaderFill {
   };
   const isHeaderContact = (line: string) =>
     isContactLine(line) || isLinkLine(line, rules);
+  const lines = joinWrappedAddress(preamble, isHeaderContact);
 
   const email = either(
     pipe(S.match(allText, EMAIL_RE), O.mapNullable(A.head)),
@@ -195,7 +235,7 @@ export function fillHeader(params: FillHeaderParams): HeaderFill {
   const link = A.get(addresses, 1);
 
   const named = pipe(
-    preamble,
+    lines,
     A.map(S.trim),
     A.reject((line) => S.isEmpty(line) || isHeaderContact(line)),
   );
@@ -204,7 +244,7 @@ export function fillHeader(params: FillHeaderParams): HeaderFill {
   // headline, which is the next short non-location line (some résumés have none).
   // A template can also set it beside the contacts, "github.com/x · City, Region".
   const contactSegments = pipe(
-    preamble,
+    lines,
     A.filter(isHeaderContact),
     A.flatMap((line) => S.splitByRe(line, /\s*[|•·]\s*/)),
     A.filter(G.isString),
@@ -241,7 +281,7 @@ export function fillHeader(params: FillHeaderParams): HeaderFill {
   );
   // The header holds two addresses. Any more are listed, not dropped.
   const leftovers = pipe(
-    preamble,
+    lines,
     A.map(S.trim),
     A.reject(
       (line) => S.isEmpty(line) || used.has(line) || isHeaderContact(line),

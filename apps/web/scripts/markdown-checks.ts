@@ -5,6 +5,7 @@ import {
 } from "@lanjut/resume/interchange/code-edit";
 import { importResumeFromJson } from "@lanjut/resume/interchange/import-file";
 import { SEED_RESUME } from "@lanjut/resume/seed";
+import { SEED_RESUME_ID } from "@lanjut/resume/seed-id";
 import { A, S } from "@mobily/ts-belt";
 
 // A résumé that puts every escape and every fallback of the Markdown dialect
@@ -162,10 +163,11 @@ function attributeErrors(): string[] {
 export async function runMarkdownChecks(): Promise<string[]> {
   const hard = hardCase();
   if (!hard) return ["Markdown: the hard-case document does not import"];
-  const [seed, hardCaseErrors] = await Promise.all([
+  const [seed, seedId, hardCaseErrors] = await Promise.all([
     roundTripErrors(SEED_RESUME, "sample"),
+    roundTripErrors(SEED_RESUME_ID, "Indonesian sample"),
     roundTripErrors(hard, "hard case"),
   ]);
-  console.log("Markdown: the sample and the hard case read back unchanged");
-  return [...seed, ...hardCaseErrors, ...attributeErrors()];
+  console.log("Markdown: the samples and the hard case read back unchanged");
+  return [...seed, ...seedId, ...hardCaseErrors, ...attributeErrors()];
 }

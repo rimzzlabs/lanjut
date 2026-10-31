@@ -117,6 +117,8 @@ export interface HeadingMatch {
   type: SectionType;
   /** The heading text as it should appear (used as the title of a custom section). */
   title: string;
+  /** The line only contains a heading word, as "Bahasa Jepang" contains "bahasa". */
+  partial?: true;
 }
 
 function normalizeHeading(line: string): string {
@@ -171,7 +173,7 @@ export function detectHeading(line: string): HeadingMatch | null {
   }
   for (const [type, keywords] of HEADING_KEYWORDS) {
     if (A.some(keywords, (keyword) => S.includes(norm, keyword))) {
-      return { type, title: trimmed };
+      return { type, title: trimmed, partial: true };
     }
   }
   if (looksLikeAllCapsHeading(trimmed)) {
