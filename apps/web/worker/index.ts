@@ -74,8 +74,20 @@ export default {
     const legacy = legacyTarget(url);
     if (legacy) return Response.redirect(legacy.href, 301);
 
+    const redirect = localeRedirect(request, url);
+    if (redirect) return redirect;
     const page = appPageFor(url.pathname);
-    const asset = page ? new Request(new URL(page, url), request) : request;
-    return localeRedirect(request, url) ?? env.ASSETS.fetch(asset);
+    if (!page) return env.ASSETS.fetch(request);
+    return unindexed(
+      await env.ASSETS.fetch(new Request(new URL(page, url), request)),
+    );
   },
 };
+
+// One résumé's address serves the editor page, whose canonical is /editor.
+// Search engines must not list each id as a copy of it.
+function unindexed(response: Response): Response {
+  const copy = new Response(response.body, response);
+  copy.headers.set("X-Robots-Tag", "noindex");
+  return copy;
+}

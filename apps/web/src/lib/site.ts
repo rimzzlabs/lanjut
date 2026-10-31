@@ -10,6 +10,12 @@ export const SITE = {
 /** The source repository, linked from the landing page and its footer. */
 export const REPO_URL = "https://github.com/rimzzlabs/lanjut";
 
+/** Lanjut's own pages on product directories, for search engines' `sameAs`. */
+export const LISTING_URLS: ReadonlyArray<string> = [
+  "https://www.producthunt.com/products/lanjut-ats-friendly-resume-builder",
+  "https://alternativeto.net/software/lanjut/about/",
+];
+
 /** How to contribute, linked wherever Lanjut thanks its contributors. */
 export const CONTRIBUTING_URL = `${REPO_URL}/blob/main/CONTRIBUTING.md`;
 

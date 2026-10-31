@@ -1,5 +1,5 @@
 import { locationSuffix } from "../../resume-entry-location";
-import { ResumeHeading } from "../../resume-heading";
+import { ResumeArticle, ResumeHeading } from "../../resume-heading";
 
 import { ResumeOptionalLink } from "../../resume-optional-link";
 import type { ExperienceItemView } from "../../resume-preview";
@@ -7,7 +7,7 @@ import { ResumeRichText } from "../../resume-rich-text";
 
 export function KlasikExperienceItem(props: ExperienceItemView) {
   return (
-    <article className="font-serif">
+    <ResumeArticle className="font-serif">
       <div className="flex items-baseline justify-between gap-4">
         <ResumeHeading level={3} className="resume-body-sm font-semibold">
           <ResumeOptionalLink href={props.roleHref} className="underline">
@@ -32,6 +32,6 @@ export function KlasikExperienceItem(props: ExperienceItemView) {
       )}
 
       <ResumeRichText blocks={props.description} className="mt-1 font-serif" />
-    </article>
+    </ResumeArticle>
   );
 }

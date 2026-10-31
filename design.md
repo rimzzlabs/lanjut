@@ -22,6 +22,8 @@ editorial
   and deck over the draft row and the reader sheet. Then Looks, Kept, Import, Exports,
   Local, Download, FAQ, a statement close, and a footer of titled link groups (Product,
   Project, Support). No kickers, eyebrows, section numbers, or stat rows.
+- The privacy page (`/privacy`): the same world, navbar, and footer as `/`, with one
+  prose column under them: a heading, a lead, and three short sections.
 - App pages (`/editor`, `/template`, `/profile`, `/changelog`): **Workbench-minimal**. They load
   client-only, and their first paint is the app's shell as static HTML, around the
   skeleton of the page, so the page reads the same before and after the script runs.

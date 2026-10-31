@@ -1,12 +1,12 @@
 import { withLocation } from "../../resume-entry-location";
-import { ResumeHeading } from "../../resume-heading";
+import { ResumeArticle, ResumeHeading } from "../../resume-heading";
 
 import type { EducationItemView } from "../../resume-preview";
 import { ResumeRichText } from "../../resume-rich-text";
 
 export function KetatEducationItem(props: EducationItemView) {
   return (
-    <article>
+    <ResumeArticle>
       <ResumeHeading level={3} className="resume-body-xs font-semibold">
         {props.degree}
       </ResumeHeading>
@@ -19,6 +19,6 @@ export function KetatEducationItem(props: EducationItemView) {
         </span>
       </div>
       <ResumeRichText blocks={props.details} className="mt-1" />
-    </article>
+    </ResumeArticle>
   );
 }

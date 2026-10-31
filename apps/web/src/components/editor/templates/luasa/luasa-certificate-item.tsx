@@ -1,11 +1,11 @@
-import { ResumeHeading } from "../../resume-heading";
+import { ResumeArticle, ResumeHeading } from "../../resume-heading";
 import { ResumeOptionalLink } from "../../resume-optional-link";
 
 import type { CertificateItemView } from "../../resume-preview";
 
 export function LuasaCertificateItem(props: CertificateItemView) {
   return (
-    <article className="border-l-2 border-foreground/30 pl-4">
+    <ResumeArticle className="border-l-2 border-foreground/30 pl-4">
       <div className="flex items-baseline justify-between gap-4">
         <ResumeHeading
           level={3}
@@ -24,6 +24,6 @@ export function LuasaCertificateItem(props: CertificateItemView) {
       <p className="resume-body-xs italic text-muted-foreground">
         {props.issuer}
       </p>
-    </article>
+    </ResumeArticle>
   );
 }

@@ -1,11 +1,11 @@
-import { ResumeHeading } from "../../resume-heading";
+import { ResumeArticle, ResumeHeading } from "../../resume-heading";
 import { ResumeOptionalLink } from "../../resume-optional-link";
 
 import type { CertificateItemView } from "../../resume-preview";
 
 export function KlasikCertificateItem(props: CertificateItemView) {
   return (
-    <article className="font-serif">
+    <ResumeArticle className="font-serif">
       <div className="flex items-baseline justify-between gap-4">
         <ResumeHeading level={3} className="resume-body-sm font-semibold">
           <ResumeOptionalLink href={props.href} className="underline">
@@ -19,6 +19,6 @@ export function KlasikCertificateItem(props: CertificateItemView) {
         )}
       </div>
       <p className="resume-body-xs text-muted-foreground">{props.issuer}</p>
-    </article>
+    </ResumeArticle>
   );
 }

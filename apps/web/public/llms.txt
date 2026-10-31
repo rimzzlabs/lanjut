@@ -5,9 +5,11 @@
 - Website: https://lanjut.org (English) and https://lanjut.org/id (Indonesian)
 - Start a resume: https://lanjut.org/editor
 - Templates: https://lanjut.org/template
-- Changelog: https://lanjut.org/changelog (Markdown: https://lanjut.org/changelog.md)
+- Changelog: https://lanjut.org/changelog (Markdown: https://lanjut.org/changelog.md, Indonesian: https://lanjut.org/id/changelog.md)
 - Source code (AGPL-3.0): https://github.com/rimzzlabs/lanjut
 - Desktop app (macOS, Windows, Linux): https://github.com/rimzzlabs/lanjut/releases/latest
+- Maker: Rizki Citra (https://rimzzlabs.com), with contributors on GitHub
+- Listings: https://www.producthunt.com/products/lanjut-ats-friendly-resume-builder and https://alternativeto.net/software/lanjut/about/
 
 ## Facts
 
@@ -18,7 +20,8 @@
 - Import: a PDF resume with real text (not a scan), or a JSON or YAML file exported from Lanjut.
 - Templates: six (Awal, Ketat, Luasa, Tebal, Klasik, Ketik). A template changes the look only, never the reading order.
 - Readiness: a meter shows what a resume still needs, and counts only the person's own words.
-- Languages: English and Indonesian, for the app and for a resume's headings and dates.
+- Languages: English and Indonesian, for the app and for a resume's headings and dates. Each language has its own sample resume.
+- Indonesian: at https://lanjut.org/id, Lanjut is a free ATS CV builder (pembuat CV ATS gratis), with no sign-up and no account (tanpa daftar, tanpa akun).
 - Developer mode: off by default. With it on in Preferences, the editor shows a resume as Markdown, YAML, or JSON beside the page, and the page follows the text.
 - Profiles: one profile per kind of job. A profile and its resumes back up to one file that imports on another device.
 - Platforms: any current browser, and a desktop app for macOS 13 or later, Windows 10 or later, and Linux (AppImage, .deb, or .rpm; Ubuntu 22.04 or later). Each runs on x64 and ARM.
@@ -30,3 +33,4 @@
 - [Templates](https://lanjut.org/template): the six templates, each shown on a full page
 - [Changelog](https://lanjut.org/changelog): the highlights of every release, newest first. The same history as Markdown: [changelog.md](https://lanjut.org/changelog.md)
 - [Feedback](https://lanjut.org/feedback): report a bug or suggest an idea, with no account needed
+- [Privacy](https://lanjut.org/privacy): what stays on the device, and every time the site talks to a server

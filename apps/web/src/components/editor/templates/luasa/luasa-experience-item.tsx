@@ -1,5 +1,5 @@
 import { locationSuffix } from "../../resume-entry-location";
-import { ResumeHeading } from "../../resume-heading";
+import { ResumeArticle, ResumeHeading } from "../../resume-heading";
 
 import { ResumeOptionalLink } from "../../resume-optional-link";
 import type { ExperienceItemView } from "../../resume-preview";
@@ -7,7 +7,7 @@ import { ResumeRichText } from "../../resume-rich-text";
 
 export function LuasaExperienceItem(props: ExperienceItemView) {
   return (
-    <article>
+    <ResumeArticle>
       <div className="flex items-baseline justify-between gap-4">
         <ResumeHeading
           level={3}
@@ -38,6 +38,6 @@ export function LuasaExperienceItem(props: ExperienceItemView) {
         blocks={props.description}
         className="mt-1 [&_ul]:list-[square]"
       />
-    </article>
+    </ResumeArticle>
   );
 }
