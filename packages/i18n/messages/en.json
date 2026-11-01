@@ -191,6 +191,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_5_0": [
+          {
+            "title": "Guides closer at hand",
+            "description": "The home page and the templates page now link to the guides: the question about applicant tracking systems leads to the how-to guide, and the templates page leads to a full example in every template."
+          }
+        ],
         "1_4_0": [
           {
             "title": "Guides",
@@ -869,7 +875,8 @@
       "applyTo": "Apply to {title}",
       "inUse": "In use",
       "heading": "ATS resume templates",
-      "intro": "Six free templates for an ATS-friendly resume or CV. Each one changes the type and spacing only, so an applicant tracking system reads your text in the same order. Pick one and fill it in, with no account."
+      "intro": "Six free templates for an ATS-friendly resume or CV. Each one changes the type and spacing only, so an applicant tracking system reads your text in the same order. Pick one and fill it in, with no account.",
+      "exampleLink": "See every template on a full ATS resume example"
     },
     "navbar": {
       "starOnGithub": "Star on GitHub"
@@ -1763,8 +1770,10 @@
       "photo": {
         "question": "Can I add a photo?",
         "answer": "Yes, you can add a photo. The header photo is optional and off by default. It shows in the PDF and the .docx, the .txt leaves it out, and it never changes the text a parser reads."
-      }
-    }
+      },
+      "guideLink": "Read the full guide"
+    },
+    "keptGuideLink": "See a full ATS resume example"
   },
   "contributors": {
     "title": "Thanks to everyone building Lanjut",

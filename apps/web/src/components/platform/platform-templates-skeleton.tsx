@@ -4,6 +4,7 @@ import { cn } from "@lanjut/ui/lib/utils";
 import { A, O, pipe } from "@mobily/ts-belt";
 import { CheckIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
+import { useTemplateGuideLink } from "@/hooks/use-template-guide-link";
 import {
   useSelectedTemplate,
   useTemplateSearchQuery,
@@ -23,6 +24,7 @@ import { PlatformTemplateSearch } from "./platform-template-search";
  */
 export function PlatformTemplatesSkeleton() {
   const t = useTranslations("platform");
+  const guideLink = useTemplateGuideLink();
   const [query] = useTemplateSearchQuery();
   const [selectedId] = useSelectedTemplate();
   const templates = filterTemplates(
@@ -42,6 +44,7 @@ export function PlatformTemplatesSkeleton() {
       <PlatformPageHeader
         title={t("templates.heading")}
         description={t("templates.intro")}
+        descriptionLink={guideLink}
       >
         <PlatformTemplateSearch />
       </PlatformPageHeader>
