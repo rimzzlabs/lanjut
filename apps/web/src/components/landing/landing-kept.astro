@@ -1,7 +1,8 @@
 ---
-import type { Locale } from "@lanjut/i18n/routing";
+import { type Locale, localizePath } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
 import { XIcon } from "@phosphor-icons/react";
+import { guidePath } from "@/lib/guides";
 
 interface Props {
   locale: Locale;
@@ -39,6 +40,12 @@ const KEPT_OUT = [
       {t("keptHeading")}
     </h2>
     <p class="mt-5 max-w-[60ch] text-muted-foreground">{t("keptBody")}</p>
+    <a
+      href={localizePath(guidePath("ats-resume-examples"), locale)}
+      class="mt-4 inline-block text-sm rounded-xs text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+    >
+      {t("keptGuideLink")}
+    </a>
   </div>
 
   <div class="mt-12 grid grid-cols-1 gap-12 md:mt-16 md:grid-cols-12 md:gap-16">

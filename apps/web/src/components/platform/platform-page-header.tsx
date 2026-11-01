@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 export function PlatformPageHeader(props: {
   title: string;
   description?: string;
+  /** A link that follows the description, such as a guide. */
+  descriptionLink?: { href: string; label: string };
   children?: ReactNode;
 }) {
   return (
@@ -13,6 +15,17 @@ export function PlatformPageHeader(props: {
         {props.description && (
           <p className="max-w-prose text-sm text-muted-foreground">
             {props.description}
+            {props.descriptionLink && (
+              <>
+                {" "}
+                <a
+                  href={props.descriptionLink.href}
+                  className="rounded-xs text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                >
+                  {props.descriptionLink.label}
+                </a>
+              </>
+            )}
           </p>
         )}
       </div>

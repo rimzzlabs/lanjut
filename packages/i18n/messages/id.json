@@ -191,6 +191,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_5_0": [
+          {
+            "title": "Panduan lebih gampang ditemukan",
+            "description": "Halaman utama dan halaman template sekarang punya tautan ke panduan: pertanyaan soal sistem ATS mengarah ke panduan cara membuat CV, dan halaman template mengarah ke contoh lengkap di semua template."
+          }
+        ],
         "1_4_0": [
           {
             "title": "Panduan",
@@ -869,7 +875,8 @@
       "applyTo": "Pakai di {title}",
       "inUse": "Sedang dipakai",
       "heading": "Template CV ATS",
-      "intro": "Enam template gratis untuk CV ATS. Tiap template cuma mengubah huruf dan spasi, jadi sistem pelacakan pelamar (ATS) tetap membaca teksmu dengan urutan yang sama. Pilih satu dan langsung isi, tanpa akun."
+      "intro": "Enam template gratis untuk CV ATS. Tiap template cuma mengubah huruf dan spasi, jadi sistem pelacakan pelamar (ATS) tetap membaca teksmu dengan urutan yang sama. Pilih satu dan langsung isi, tanpa akun.",
+      "exampleLink": "Lihat semua template di contoh CV ATS lengkap"
     },
     "navbar": {
       "starOnGithub": "Beri bintang di GitHub"
@@ -1763,8 +1770,10 @@
       "photo": {
         "question": "Bisa pasang foto?",
         "answer": "Iya, foto bisa dipasang di header. Fotonya opsional dan mati secara bawaan. Foto muncul di PDF dan .docx, file .txt nggak menyertakannya, dan foto nggak pernah mengubah teks yang dibaca parser."
-      }
-    }
+      },
+      "guideLink": "Baca panduan lengkapnya"
+    },
+    "keptGuideLink": "Lihat contoh CV ATS lengkap"
   },
   "contributors": {
     "title": "Terima kasih untuk semua yang membangun Lanjut",
