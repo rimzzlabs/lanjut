@@ -1,0 +1,66 @@
+---
+import { getEntry } from "astro:content";
+import { type Locale, localeStaticPaths } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { A } from "@mobily/ts-belt";
+import GuideList from "@/components/guide/guide-list.astro";
+import LandingProsePage from "@/components/landing/landing-prose-page.astro";
+import { GUIDE_SLUGS } from "@/lib/guides";
+
+export function getStaticPaths() {
+  return localeStaticPaths();
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const locale = Astro.props.locale;
+const t = getTranslator(locale, "guide");
+const guides = await Promise.all(
+  A.map(GUIDE_SLUGS, async (slug) => {
+    const entry = await getEntry("guides", `${locale}/${slug}`);
+    // A guide without a file in this language must fail the build.
+    if (!entry) throw new Error(`Missing guide: ${locale}/${slug}`);
+    return { slug, entry };
+  }),
+);
+---
+
+<LandingProsePage
+  locale={locale}
+  title={t("hubTitle")}
+  description={t("hubDescription")}
+  width="full"
+>
+  {/* The landing hero's grid: the headline with one accent phrase, the lead
+      beside it. */}
+  <header class="grid grid-cols-1 gap-6 pb-20 md:grid-cols-12 md:items-end md:gap-10 md:pb-28">
+    <h1 class="text-[clamp(2.5rem,6.4vw,5rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-balance md:col-span-8">
+      {t("hubHeadingLead")}{" "}
+      <span class="text-primary">{t("hubHeadingAccent")}</span>
+    </h1>
+    <p class="max-w-[42ch] text-base text-muted-foreground sm:text-lg md:col-span-4 md:pb-2">
+      {t("hubLead")}
+    </p>
+  </header>
+
+  {/* A landing section's grid: the label stays in view, the guides scroll. */}
+  <section
+    aria-labelledby="guides-all"
+    class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12"
+  >
+    <div class="self-start md:sticky md:top-28 md:col-span-4">
+      <h2
+        id="guides-all"
+        class="text-[clamp(2rem,4vw,3rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance"
+      >
+        {t("hubListLabel")}
+      </h2>
+      <p class="mt-5 text-muted-foreground">{t("hubListBody")}</p>
+    </div>
+    <div class="md:col-span-8">
+      <GuideList locale={locale} guides={guides} />
+    </div>
+  </section>
+</LandingProsePage>

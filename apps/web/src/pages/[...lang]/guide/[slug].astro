@@ -1,0 +1,107 @@
+---
+import { getEntry, render } from "astro:content";
+import { type Locale, localizePath, routing } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { A } from "@mobily/ts-belt";
+import GuideCta from "@/components/guide/guide-cta.astro";
+import GuideMeta from "@/components/guide/guide-meta.astro";
+import { GuideSampleGallery } from "@/components/guide/guide-sample-gallery";
+import { GuideToc } from "@/components/guide/guide-toc";
+import { toTocHeadings } from "@/components/guide/guide-toc-headings";
+import GuideTocMobile from "@/components/guide/guide-toc-mobile.astro";
+import LandingProsePage from "@/components/landing/landing-prose-page.astro";
+import { GUIDE_SLUGS, type GuideSlug } from "@/lib/guides";
+import { publicPath } from "@/lib/seo";
+import { guideStructuredData } from "@/lib/structured-data";
+
+export function getStaticPaths() {
+  return A.flatMap(routing.locales, (locale) =>
+    A.map(GUIDE_SLUGS, (slug) => ({
+      params: {
+        lang: locale === routing.defaultLocale ? undefined : locale,
+        slug,
+      },
+      props: { locale, slug },
+    })),
+  );
+}
+
+interface Props {
+  locale: Locale;
+  slug: GuideSlug;
+}
+
+const { locale, slug } = Astro.props;
+const t = getTranslator(locale, "guide");
+const entry = await getEntry("guides", `${locale}/${slug}`);
+// A guide without a file in this language must fail the build.
+if (!entry) throw new Error(`Missing guide: ${locale}/${slug}`);
+const { Content, headings } = await render(entry);
+const toc = toTocHeadings(headings);
+const guide = entry.data;
+
+const structuredData = guideStructuredData(locale, {
+  pagePath: publicPath(Astro.url.pathname),
+  headline: guide.heading,
+  description: guide.description,
+  published: guide.published,
+  updated: guide.updated,
+});
+---
+
+<LandingProsePage
+  locale={locale}
+  title={guide.title}
+  description={guide.description}
+>
+  <script
+    slot="head"
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData)}
+  />
+  <a
+    href={localizePath("/guide", locale)}
+    class="text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+  >
+    {t("hubLink")}
+  </a>
+  <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-balance md:text-5xl">
+    {guide.heading}
+  </h1>
+  <GuideMeta locale={locale} published={guide.published} updated={guide.updated} />
+  <p class="mt-6 text-lg text-muted-foreground">{guide.lead}</p>
+  {
+    A.isNotEmpty(toc) && (
+      <GuideTocMobile label={t("onThisPage")} headings={toc} />
+    )
+  }
+
+  {
+    slug === "ats-resume-examples" && (
+      <div class="mt-10">
+        <GuideSampleGallery
+          client:visible
+          language={locale}
+          plainTextLabel={t("plainTextLabel")}
+        />
+      </div>
+    )
+  }
+
+  <div class="guide-prose mt-10">
+    <Content />
+  </div>
+
+  <GuideCta locale={locale} />
+
+  {
+    A.isNotEmpty(toc) && (
+      <aside slot="rail" class="hidden xl:block">
+        <div class="sticky top-24 pb-6">
+          <GuideToc client:idle label={t("onThisPage")} headings={toc} />
+        </div>
+      </aside>
+    )
+  }
+</LandingProsePage>

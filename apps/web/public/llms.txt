@@ -34,3 +34,7 @@
 - [Changelog](https://lanjut.org/changelog): the highlights of every release, newest first. The same history as Markdown: [changelog.md](https://lanjut.org/changelog.md)
 - [Feedback](https://lanjut.org/feedback): report a bug or suggest an idea, with no account needed
 - [Privacy](https://lanjut.org/privacy): what stays on the device, and every time the site talks to a server
+- [Guides](https://lanjut.org/guide): how an ATS reads a resume, with a full example
+  - [ATS resume example](https://lanjut.org/guide/ats-resume-examples): one resume in six templates, with notes on each section
+  - [How to make an ATS-friendly resume](https://lanjut.org/guide/how-to-make-an-ats-resume): six steps and a two-minute check
+  - Indonesian: https://lanjut.org/id/guide/ats-resume-examples (contoh CV ATS) and https://lanjut.org/id/guide/how-to-make-an-ats-resume (cara membuat CV ATS)

@@ -191,6 +191,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_4_0": [
+          {
+            "title": "Panduan",
+            "description": "Ada dua panduan baru, dalam bahasa Indonesia dan Inggris: contoh CV ATS lengkap dalam keenam template, dan cara membuat CV ATS langkah demi langkah. Cari di menu Panduan di bagian bawah halaman utama."
+          }
+        ],
         "1_3_1": [
           {
             "title": "Perbaikan bug",
@@ -1665,7 +1671,8 @@
       "github": "GitHub",
       "rights": "© {year} Lanjut. Open source dengan lisensi AGPL-3.0.",
       "madeBy": "Dibuat oleh",
-      "privacy": "Privasi"
+      "privacy": "Privasi",
+      "guides": "Panduan"
     },
     "draftTitle": "CV saya",
     "keptHeading": "Ada yang sengaja nggak dimasukkan.",
@@ -1822,5 +1829,25 @@
     "codeBody": "Lanjut itu open source dengan lisensi AGPL-3.0. Semua kode di balik isi halaman ini bisa kamu baca di GitHub.",
     "codeLink": "Baca kodenya",
     "updated": "Terakhir diperbarui"
+  },
+  "guide": {
+    "hubTitle": "Panduan CV ATS",
+    "hubDescription": "Panduan singkat untuk bikin CV ATS: contoh nyata, format yang terbaca sistem, dan cara mengecek CV kamu.",
+    "hubLead": "Cara sistem ATS membaca CV, dan cara bikin CV yang terbaca dengan urutan yang benar. Singkat, praktis, dan gratis.",
+    "hubLink": "Semua panduan",
+    "byline": "Oleh",
+    "published": "Terbit",
+    "updated": "Diperbarui",
+    "plainTextLabel": "CV yang sama dalam bentuk teks biasa, dengan urutan yang dibaca sistem ATS",
+    "ctaHeading": "Bikin CV kamu sekarang",
+    "ctaBody": "Gratis dan tanpa akun. Mulai dari contoh, template, atau CV lama kamu.",
+    "ctaBuild": "Buat CV",
+    "ctaTemplates": "Jelajahi template",
+    "onThisPage": "Di halaman ini",
+    "readingTime": "{minutes} menit baca",
+    "hubHeadingLead": "Panduan bikin CV",
+    "hubHeadingAccent": "yang terbaca benar.",
+    "hubListLabel": "Semua panduan",
+    "hubListBody": "Setiap panduan memakai contoh CV dari Lanjut, jadi kamu lihat hasilnya, bukan cuma sarannya."
   }
 }

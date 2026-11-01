@@ -1,0 +1,33 @@
+---
+import { type Locale, localizePath } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { buttonVariants } from "@lanjut/ui/components/button";
+import { cn } from "@lanjut/ui/lib/utils";
+import { EDITOR_PATHNAME, TEMPLATE_PATHNAME } from "@/lib/routes";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale, "guide");
+---
+
+<aside class="mt-16 rounded-xl border bg-card p-6 md:p-8">
+  <h2 class="text-2xl font-bold tracking-tight">{t("ctaHeading")}</h2>
+  <p class="mt-2 text-muted-foreground">{t("ctaBody")}</p>
+  <div class="mt-6 flex flex-wrap gap-3">
+    <a
+      href={`${localizePath(EDITOR_PATHNAME, locale)}?create=true`}
+      class={cn(buttonVariants(), "h-10 px-4")}
+    >
+      {t("ctaBuild")}
+    </a>
+    <a
+      href={localizePath(TEMPLATE_PATHNAME, locale)}
+      class={cn(buttonVariants({ variant: "outline" }), "h-10 px-4")}
+    >
+      {t("ctaTemplates")}
+    </a>
+  </div>
+</aside>

@@ -1,0 +1,58 @@
+---
+import { Font } from "astro:assets";
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import RootLayout from "@/components/shared/root-layout.astro";
+import LandingFooter from "./landing-footer.astro";
+import LandingNavbar from "./landing-navbar.astro";
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  /** A reading page keeps its line length; the guide index uses the full width. */
+  width?: "prose" | "full";
+}
+
+const { locale, title, description } = Astro.props;
+const fullWidth = Astro.props.width === "full";
+const pathname = Astro.url.pathname;
+const tNav = getTranslator(locale, "nav");
+const hasRail = Astro.slots.has("rail");
+---
+
+{/* A reading page in the landing world: the privacy page and the guides. */}
+<RootLayout
+  locale={locale}
+  title={title}
+  description={description}
+  world="readers"
+>
+  <slot name="head" slot="head" />
+  <a
+    href="#main"
+    class="fixed top-4 left-4 -translate-y-40 focus:translate-0 z-50 rounded-md border bg-background px-4 py-2 text-sm font-medium shadow-lg outline-none ring-2 ring-ring transition"
+  >
+    {tNav("skipToContent")}
+  </a>
+
+  <Font slot="head" cssVariable="--font-landing" preload />
+  <Font slot="head" cssVariable="--font-machine" />
+  <LandingNavbar locale={locale} pathname={pathname} />
+  {/* The navbar's own container, so the text starts under the logo and a
+      rail ends under the navbar's last button. */}
+  <main id="main" class="mx-auto w-11/12 max-w-6xl pt-10 pb-24 md:pt-16">
+    <div
+      class:list={[
+        "grid grid-cols-1",
+        hasRail && "gap-16 xl:grid-cols-[minmax(0,1fr)_15rem]",
+      ]}
+    >
+      <div class:list={["min-w-0", !fullWidth && "max-w-3xl"]}>
+        <slot />
+      </div>
+      {hasRail && <slot name="rail" />}
+    </div>
+  </main>
+  <LandingFooter locale={locale} />
+</RootLayout>

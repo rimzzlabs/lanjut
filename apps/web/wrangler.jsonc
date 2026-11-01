@@ -43,6 +43,8 @@
       "/feedback",
       "/feedback/*",
       "/privacy",
+      "/guide",
+      "/guide/*",
       "/id/platform",
       "/id/platform/*",
       "/en",

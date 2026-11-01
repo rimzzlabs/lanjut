@@ -384,3 +384,39 @@ html:not([data-workspace="editor"]) [data-workspace-view="editor"] {
   --ink: oklch(0.12 0.016 168);
   --ink-line: oklch(0.28 0.022 168);
 }
+
+/* The Markdown body of a guide. Astro renders it as plain elements, so the
+   column styles them by tag. */
+@layer components {
+  .guide-prose {
+    @apply text-muted-foreground;
+  }
+  .guide-prose h2 {
+    @apply mt-12 scroll-mt-24 text-2xl font-bold tracking-tight text-foreground;
+  }
+  .guide-prose h3 {
+    @apply mt-8 scroll-mt-24 text-lg font-semibold text-foreground;
+  }
+  .guide-prose p {
+    @apply mt-4;
+  }
+  .guide-prose ul,
+  .guide-prose ol {
+    @apply mt-4 flex flex-col gap-2 pl-6;
+  }
+  .guide-prose ul {
+    @apply list-disc;
+  }
+  .guide-prose ol {
+    @apply list-decimal;
+  }
+  .guide-prose strong {
+    @apply font-semibold text-foreground;
+  }
+  .guide-prose a {
+    @apply font-medium text-foreground underline underline-offset-4 hover:text-primary;
+  }
+  .guide-prose blockquote {
+    @apply mt-4 border-l-2 border-foreground/20 pl-4 italic;
+  }
+}

@@ -191,6 +191,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_4_0": [
+          {
+            "title": "Guides",
+            "description": "Two new guides, in English and Indonesian: a full ATS résumé example shown in all six templates, and how to make an ATS-friendly résumé step by step. Find them under Guides at the bottom of the home page."
+          }
+        ],
         "1_3_1": [
           {
             "title": "Bug fixes",
@@ -1665,7 +1671,8 @@
       "github": "GitHub",
       "rights": "© {year} Lanjut. Open source under AGPL-3.0.",
       "madeBy": "Made by",
-      "privacy": "Privacy"
+      "privacy": "Privacy",
+      "guides": "Guides"
     },
     "draftTitle": "My resume",
     "keptHeading": "Some things stay out on purpose.",
@@ -1822,5 +1829,25 @@
     "codeBody": "Lanjut is open source under AGPL-3.0. The code that does everything on this page is public on GitHub.",
     "codeLink": "Read the code",
     "updated": "Last updated"
+  },
+  "guide": {
+    "hubTitle": "Resume and CV guides",
+    "hubDescription": "Short, practical guides to an ATS-friendly resume or CV: a real example, the format a parser reads, and how to check yours.",
+    "hubLead": "How an applicant tracking system reads a resume, and how to make one it reads in the right order. Short, practical, and free.",
+    "hubLink": "All guides",
+    "byline": "By",
+    "published": "Published",
+    "updated": "Updated",
+    "plainTextLabel": "The same résumé as plain text, in the order an applicant tracking system reads it",
+    "ctaHeading": "Make yours now",
+    "ctaBody": "It is free and needs no account. Start from the sample, a template, or your old resume.",
+    "ctaBuild": "Build a resume",
+    "ctaTemplates": "Explore templates",
+    "onThisPage": "On this page",
+    "readingTime": "{minutes} min read",
+    "hubHeadingLead": "Guides to a résumé",
+    "hubHeadingAccent": "that reads right.",
+    "hubListLabel": "All guides",
+    "hubListBody": "Each one uses Lanjut's own sample résumé, so you see the result, not only the advice."
   }
 }
