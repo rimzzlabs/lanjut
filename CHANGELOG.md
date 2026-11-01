@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/rimzzlabs/lanjut/compare/v1.4.0...v1.5.0) (2026-11-01)
+
+
+### Features
+
+* link the guides from the home and template pages ([#264](https://github.com/rimzzlabs/lanjut/issues/264)) ([fad6308](https://github.com/rimzzlabs/lanjut/commit/fad6308715e26a4d547d0d04b9a101b87706f4fc))
+
 ## [1.4.0](https://github.com/rimzzlabs/lanjut/compare/v1.3.1...v1.4.0) (2026-11-01)
 
 
