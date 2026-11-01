@@ -1,0 +1,28 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { longDate } from "@/lib/long-date";
+
+interface Props {
+  locale: Locale;
+  published: string;
+  updated: string;
+}
+
+const { locale, published, updated } = Astro.props;
+const t = getTranslator(locale, "guide");
+---
+
+<p class="mt-4 text-sm text-muted-foreground">
+  {t("byline")}{" "}
+  <a
+    href="https://rimzzlabs.com"
+    rel="author"
+    class="font-medium text-foreground underline-offset-4 hover:underline"
+  >
+    Rizki Citra
+  </a>
+  {" · "}
+  {published === updated ? t("published") : t("updated")}{" "}
+  <time datetime={updated}>{longDate(locale, updated)}</time>
+</p>

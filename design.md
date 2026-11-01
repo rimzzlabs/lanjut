@@ -22,8 +22,16 @@ editorial
   and deck over the draft row and the reader sheet. Then Looks, Kept, Import, Exports,
   Local, Download, FAQ, a statement close, and a footer of titled link groups (Product,
   Project, Support). No kickers, eyebrows, section numbers, or stat rows.
-- The privacy page (`/privacy`): the same world, navbar, and footer as `/`, with one
-  prose column under them: a heading, a lead, and three short sections.
+- The privacy page (`/privacy`) and the guides (`/guide`, `/guide/<slug>`): the same
+  world, navbar, and footer as `/`, with one prose column under them
+  (`landing-prose-page.astro`). A guide opens with a link back to all guides, the
+  heading, a byline with its date, and a lead, and closes with a card that links to
+  the editor and the templates. The examples guide draws the sample in every template.
+  From `xl`, a guide's table of contents sits in a sticky rail on the right, and the
+  column and the rail share the navbar's container. The `/guide` index uses the
+  landing grids: the hero's headline with one accent phrase and the lead beside it,
+  then a section with a sticky heading on the left and a row per guide on the right
+  (reading time and date in the machine font, the title in the accent on hover).
 - App pages (`/editor`, `/template`, `/profile`, `/changelog`): **Workbench-minimal**. They load
   client-only, and their first paint is the app's shell as static HTML, around the
   skeleton of the page, so the page reads the same before and after the script runs.

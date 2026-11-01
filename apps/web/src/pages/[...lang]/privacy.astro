@@ -1,10 +1,8 @@
 ---
-import { Font } from "astro:assets";
 import { type Locale, localeStaticPaths } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
-import LandingFooter from "@/components/landing/landing-footer.astro";
-import LandingNavbar from "@/components/landing/landing-navbar.astro";
-import RootLayout from "@/components/shared/root-layout.astro";
+import LandingProsePage from "@/components/landing/landing-prose-page.astro";
+import { longDate } from "@/lib/long-date";
 import { REPO_URL } from "@/lib/site";
 
 export function getStaticPaths() {
@@ -16,18 +14,12 @@ interface Props {
 }
 
 const locale = Astro.props.locale;
-const pathname = Astro.url.pathname;
 const t = getTranslator(locale, "privacy");
-const tNav = getTranslator(locale, "nav");
 
-// Every time the site talks to a server, in the order a visit meets them.
 // Change this date with any change to what the page says.
 const UPDATED = "2026-11-01";
-const updatedLabel = new Intl.DateTimeFormat(locale, {
-  dateStyle: "long",
-  timeZone: "UTC",
-}).format(new Date(`${UPDATED}T00:00:00Z`));
 
+// Every time the site talks to a server, in the order a visit meets them.
 const ITEMS = [
   "hosting",
   "language",
@@ -39,63 +31,50 @@ const ITEMS = [
 ] as const;
 ---
 
-<RootLayout
+<LandingProsePage
   locale={locale}
   title={t("metaTitle")}
   description={t("metaDescription")}
-  world="readers"
 >
-  <a
-    href="#main"
-    class="fixed top-4 left-4 -translate-y-40 focus:translate-0 z-50 rounded-md border bg-background px-4 py-2 text-sm font-medium shadow-lg outline-none ring-2 ring-ring transition"
-  >
-    {tNav("skipToContent")}
-  </a>
+  <h1 class="text-4xl font-extrabold tracking-tight md:text-5xl">
+    {t("heading")}
+  </h1>
+  <p class="mt-3 text-sm text-muted-foreground">
+    {t("updated")} <time datetime={UPDATED}>{longDate(locale, UPDATED)}</time>
+  </p>
+  <p class="mt-4 text-lg text-muted-foreground">{t("lead")}</p>
 
-  <Font slot="head" cssVariable="--font-landing" preload />
-  <LandingNavbar locale={locale} pathname={pathname} />
-  <main id="main" class="mx-auto w-11/12 max-w-3xl pt-10 pb-24 md:pt-16">
-    <h1 class="text-4xl font-extrabold tracking-tight md:text-5xl">
-      {t("heading")}
-    </h1>
-    <p class="mt-3 text-sm text-muted-foreground">
-      {t("updated")} <time datetime={UPDATED}>{updatedLabel}</time>
+  <section class="mt-12">
+    <h2 class="text-2xl font-bold tracking-tight">{t("storedTitle")}</h2>
+    <p class="mt-3 text-muted-foreground">{t("storedBody")}</p>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="text-2xl font-bold tracking-tight">{t("networkTitle")}</h2>
+    <ul class="mt-4 flex flex-col gap-4">
+      {ITEMS.map((item) => (
+        <li class="text-muted-foreground">
+          <strong class="font-semibold text-foreground">
+            {t(`items.${item}.title`)}
+          </strong>{" "}
+          {t(`items.${item}.body`)}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mt-12">
+    <h2 class="text-2xl font-bold tracking-tight">{t("codeTitle")}</h2>
+    <p class="mt-3 text-muted-foreground">
+      {t("codeBody")}{" "}
+      <a
+        href={REPO_URL}
+        target="_blank"
+        rel="noreferrer"
+        class="rounded-xs font-medium text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
+        {t("codeLink")}
+      </a>
     </p>
-    <p class="mt-4 text-lg text-muted-foreground">{t("lead")}</p>
-
-    <section class="mt-12">
-      <h2 class="text-2xl font-bold tracking-tight">{t("storedTitle")}</h2>
-      <p class="mt-3 text-muted-foreground">{t("storedBody")}</p>
-    </section>
-
-    <section class="mt-12">
-      <h2 class="text-2xl font-bold tracking-tight">{t("networkTitle")}</h2>
-      <ul class="mt-4 flex flex-col gap-4">
-        {ITEMS.map((item) => (
-          <li class="text-muted-foreground">
-            <strong class="font-semibold text-foreground">
-              {t(`items.${item}.title`)}
-            </strong>{" "}
-            {t(`items.${item}.body`)}
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    <section class="mt-12">
-      <h2 class="text-2xl font-bold tracking-tight">{t("codeTitle")}</h2>
-      <p class="mt-3 text-muted-foreground">
-        {t("codeBody")}{" "}
-        <a
-          href={REPO_URL}
-          target="_blank"
-          rel="noreferrer"
-          class="rounded-xs font-medium text-foreground underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-        >
-          {t("codeLink")}
-        </a>
-      </p>
-    </section>
-  </main>
-  <LandingFooter locale={locale} />
-</RootLayout>
+  </section>
+</LandingProsePage>

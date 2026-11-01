@@ -1,0 +1,45 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { type Locale, localizePath } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { type GuideSlug, guidePath } from "@/lib/guides";
+import { longDate } from "@/lib/long-date";
+import { readingMinutes } from "./guide-reading-time";
+
+interface Props {
+  locale: Locale;
+  guides: ReadonlyArray<{ slug: GuideSlug; entry: CollectionEntry<"guides"> }>;
+}
+
+const { locale, guides } = Astro.props;
+const t = getTranslator(locale, "guide");
+---
+
+{/* A row per guide. The title link covers the row, and the title takes the
+    accent on hover, the one place the green appears on this list. */}
+<ul class="border-b">
+  {
+    guides.map((guide) => (
+      <li class="group relative border-t py-8 md:py-10">
+        <p class="font-machine text-xs text-muted-foreground">
+          {t("readingTime", { minutes: readingMinutes(guide.entry.body ?? "") })}
+          {" · "}
+          <time datetime={guide.entry.data.updated}>
+            {longDate(locale, guide.entry.data.updated)}
+          </time>
+        </p>
+        <h3 class="mt-3 text-[clamp(1.5rem,2.6vw,2rem)] leading-[1.1] font-extrabold tracking-[-0.02em] text-balance transition-colors group-hover:text-primary">
+          <a
+            href={localizePath(guidePath(guide.slug), locale)}
+            class="after:absolute after:inset-0 focus-visible:outline-none after:focus-visible:rounded-md after:focus-visible:outline-2 after:focus-visible:outline-ring"
+          >
+            {guide.entry.data.heading}
+          </a>
+        </h3>
+        <p class="mt-3 max-w-[60ch] text-muted-foreground">
+          {guide.entry.data.description}
+        </p>
+      </li>
+    ))
+  }
+</ul>

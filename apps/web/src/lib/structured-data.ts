@@ -156,3 +156,38 @@ export function pageStructuredData(
     ],
   };
 }
+
+interface GuideArticle {
+  pagePath: string;
+  headline: string;
+  description: string;
+  published: string;
+  updated: string;
+}
+
+/** A guide is an article by the maker, about the application. */
+export function guideStructuredData(locale: Locale, guide: GuideArticle) {
+  const pageUrl = absoluteUrl(guide.pagePath);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${pageUrl}#article`,
+    mainEntityOfPage: pageUrl,
+    headline: guide.headline,
+    description: guide.description,
+    inLanguage: locale,
+    datePublished: guide.published,
+    dateModified: guide.updated,
+    image: absoluteUrl(`/og/${locale}.png`),
+    author: {
+      "@type": "Person",
+      "@id": AUTHOR_ID,
+      name: "Rizki Citra",
+      url: "https://rimzzlabs.com",
+    },
+    publisher: { "@id": AUTHOR_ID },
+    about: { "@id": appIdOf(locale) },
+    isPartOf: { "@id": WEBSITE_ID },
+  };
+}

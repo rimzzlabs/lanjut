@@ -1,0 +1,40 @@
+---
+import { cn } from "@lanjut/ui/lib/utils";
+import { CaretDownIcon } from "@phosphor-icons/react";
+import type { TocHeading } from "./guide-toc-headings";
+
+interface Props {
+  label: string;
+  headings: ReadonlyArray<TocHeading>;
+}
+
+const { label, headings } = Astro.props;
+---
+
+{/* Below the width of the rail, the table of contents folds under the lead. */}
+<details class="group mt-8 rounded-lg border xl:hidden">
+  <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-medium [&::-webkit-details-marker]:hidden">
+    {label}
+    <CaretDownIcon
+      aria-hidden="true"
+      className="size-4 text-muted-foreground transition group-open:rotate-180"
+    />
+  </summary>
+  <ul class="flex flex-col border-t px-4 py-2 text-sm">
+    {
+      headings.map((heading) => (
+        <li>
+          <a
+            href={`#${heading.slug}`}
+            class={cn(
+              "block py-1.5 text-pretty text-muted-foreground transition-colors hover:text-foreground",
+              heading.depth === 3 && "pl-3",
+            )}
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</details>

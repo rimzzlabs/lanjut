@@ -2,6 +2,7 @@
 import { type Locale, localizePath } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
+import { GUIDE_PATHNAME } from "@/lib/guides";
 import {
   CHANGELOG_PATHNAME,
   EDITOR_PATHNAME,
@@ -52,6 +53,7 @@ const GROUPS: ReadonlyArray<{
         label: t("templates"),
         href: localizePath(TEMPLATE_PATHNAME, locale),
       },
+      { label: t("guides"), href: localizePath(GUIDE_PATHNAME, locale) },
       { label: t("download"), href: DESKTOP_RELEASE_URL, external: true },
     ],
   },
