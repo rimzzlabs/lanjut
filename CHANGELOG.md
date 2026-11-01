@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/rimzzlabs/lanjut/compare/v1.3.1...v1.4.0) (2026-11-01)
+
+
+### Features
+
+* guides for ats resumes ([#262](https://github.com/rimzzlabs/lanjut/issues/262)) ([6e44bb2](https://github.com/rimzzlabs/lanjut/commit/6e44bb2d7c567e2ed80c1526f5454dc75bc31c76))
+
 ## [1.3.1](https://github.com/rimzzlabs/lanjut/compare/v1.3.0...v1.3.1) (2026-10-31)
 
 
