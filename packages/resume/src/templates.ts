@@ -11,7 +11,21 @@ export type TemplateId =
   | "luasa"
   | "tebal"
   | "klasik"
-  | "ketik";
+  | "ketik"
+  | "polos"
+  | "garis"
+  | "anggun"
+  | "tegas"
+  | "segar"
+  | "rapi"
+  | "lugas"
+  | "kertas"
+  | "jurnal"
+  | "kode"
+  | "mesin"
+  | "ringkas"
+  | "tengah"
+  | "elok";
 
 export const DEFAULT_TEMPLATE_ID: TemplateId = "awal";
 
@@ -56,6 +70,56 @@ export const TEMPLATE_LINE_HEIGHT: Record<TemplateId, number> = {
   tebal: 1.4,
   klasik: 1.45,
   ketik: 1.4,
+  polos: 1.35,
+  garis: 1.4,
+  anggun: 1.45,
+  tegas: 1.4,
+  segar: 1.35,
+  rapi: 1.4,
+  lugas: 1.4,
+  kertas: 1.35,
+  jurnal: 1.45,
+  kode: 1.4,
+  mesin: 1.4,
+  ringkas: 1.3,
+  tengah: 1.4,
+  elok: 1.45,
+};
+
+/** The families behind a template's `font-sans`, `font-serif`, and `font-mono` slots when no font is chosen. */
+export interface TemplateFontSlots {
+  sans: string;
+  serif: string;
+  mono: string;
+}
+
+const DEFAULT_FONT_SLOTS: TemplateFontSlots = {
+  sans: "Inter",
+  serif: "Lora",
+  mono: "GeistMono",
+};
+
+export const TEMPLATE_FONT_SLOTS: Record<TemplateId, TemplateFontSlots> = {
+  awal: DEFAULT_FONT_SLOTS,
+  ketat: DEFAULT_FONT_SLOTS,
+  luasa: DEFAULT_FONT_SLOTS,
+  tebal: DEFAULT_FONT_SLOTS,
+  klasik: DEFAULT_FONT_SLOTS,
+  ketik: DEFAULT_FONT_SLOTS,
+  polos: { ...DEFAULT_FONT_SLOTS, sans: "Arimo" },
+  garis: DEFAULT_FONT_SLOTS,
+  anggun: { ...DEFAULT_FONT_SLOTS, serif: "EBGaramond" },
+  tegas: { ...DEFAULT_FONT_SLOTS, sans: "SourceSans3", serif: "Merriweather" },
+  segar: { ...DEFAULT_FONT_SLOTS, sans: "OpenSans" },
+  rapi: { ...DEFAULT_FONT_SLOTS, sans: "Carlito" },
+  lugas: { ...DEFAULT_FONT_SLOTS, sans: "Roboto" },
+  kertas: { ...DEFAULT_FONT_SLOTS, serif: "Tinos" },
+  jurnal: { ...DEFAULT_FONT_SLOTS, serif: "SourceSerif4" },
+  kode: { ...DEFAULT_FONT_SLOTS, mono: "IBMPlexMono" },
+  mesin: { ...DEFAULT_FONT_SLOTS, mono: "CourierPrime" },
+  ringkas: DEFAULT_FONT_SLOTS,
+  tengah: DEFAULT_FONT_SLOTS,
+  elok: DEFAULT_FONT_SLOTS,
 };
 
 /** Templates whose headers draw contact icon glyphs; the rest render text-only contacts. */
@@ -63,6 +127,12 @@ const TEMPLATE_IDS_WITH_CONTACT_ICONS: TemplateId[] = [
   "awal",
   "ketat",
   "tebal",
+  "garis",
+  "tegas",
+  "segar",
+  "lugas",
+  "kode",
+  "elok",
 ];
 
 /** Whether a persisted template id renders contact icons. Unknown ids resolve to the default template first, matching renderer fallback. */
@@ -82,6 +152,20 @@ export const TEMPLATES: TemplateSummary[] = [
   { id: "tebal", name: "Tebal", addedAt: "2026-07-05T00:00:00.000Z" },
   { id: "klasik", name: "Klasik", addedAt: "2026-07-05T00:00:00.000Z" },
   { id: "ketik", name: "Ketik", addedAt: "2026-07-05T00:00:00.000Z" },
+  { id: "polos", name: "Polos", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "garis", name: "Garis", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "anggun", name: "Anggun", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "tegas", name: "Tegas", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "segar", name: "Segar", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "rapi", name: "Rapi", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "lugas", name: "Lugas", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "kertas", name: "Kertas", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "jurnal", name: "Jurnal", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "kode", name: "Kode", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "mesin", name: "Mesin", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "ringkas", name: "Ringkas", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "tengah", name: "Tengah", addedAt: "2026-11-02T00:00:00.000Z" },
+  { id: "elok", name: "Elok", addedAt: "2026-11-02T00:00:00.000Z" },
 ];
 
 export function filterTemplates(

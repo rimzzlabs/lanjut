@@ -1,4 +1,5 @@
 import {
+  TEMPLATE_FONT_SLOTS,
   TEMPLATE_LINE_HEIGHT,
   type TemplateId,
 } from "@lanjut/resume/templates";
@@ -21,8 +22,8 @@ type TypographySlice = Pick<
 /**
  * Inline style scoping the résumé's typography to a preview subtree.
  *
- * Fonts are CSS variables: with no override the template defaults apply (Inter
- * sans, Lora serif, GeistMono mono, matching the PDF registrations); an
+ * Fonts are CSS variables: with no override the template's own slots apply
+ * (`TEMPLATE_FONT_SLOTS`, matching the PDF registrations); an
  * override points all three slots at the chosen family. Always set from the
  * self-hosted faces so the preview matches the PDF export exactly.
  *
@@ -40,12 +41,13 @@ export function resumeTypographyStyle(
 ): CSSProperties {
   const override = resolveFont(resume.font ?? undefined);
   const lineHeight = resume.lineHeight ?? TEMPLATE_LINE_HEIGHT[template];
+  const slots = TEMPLATE_FONT_SLOTS[template];
   // Per-group font-size multipliers; the resume-<group>-* utilities multiply
   // each element's baseline size by these (default 1 via the class fallback).
   return {
-    "--font-sans": `${override?.family ?? "Inter"}, ui-sans-serif, system-ui, sans-serif`,
-    "--font-serif": `${override?.family ?? "Lora"}, ui-serif, Georgia, serif`,
-    "--font-geist-mono": `${override?.family ?? "GeistMono"}, ui-monospace, monospace`,
+    "--font-sans": `${override?.family ?? slots.sans}, ui-sans-serif, system-ui, sans-serif`,
+    "--font-serif": `${override?.family ?? slots.serif}, ui-serif, Georgia, serif`,
+    "--font-geist-mono": `${override?.family ?? slots.mono}, ui-monospace, monospace`,
     lineHeight,
     "--resume-line-height": String(lineHeight),
     ...(resume.letterSpacing !== 0 && {

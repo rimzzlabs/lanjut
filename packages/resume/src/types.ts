@@ -161,7 +161,7 @@ export interface Resume {
   /**
    * Presentation-only vertical anchor of the header photo within the header
    * strip, for the side-by-side templates. Unset means "top", which reads
-   * correctly at every header height. Centered templates (Klasik) ignore it.
+   * correctly at every header height. Centered templates (Klasik, Anggun, Kertas, Mesin, Tengah) ignore it.
    */
   photoAlign?: "top" | "center" | "bottom";
   /**

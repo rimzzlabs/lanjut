@@ -1,16 +1,16 @@
 ---
-title: "Contoh CV ATS: Satu CV dalam Enam Template"
-description: "Contoh CV ATS lengkap dalam enam template gratis, plus versi teks yang dibaca sistem. Ada penjelasan tiap bagian, untuk yang sudah berpengalaman maupun fresh graduate."
+title: "Contoh CV ATS: Satu CV dalam Dua Puluh Template"
+description: "Contoh CV ATS lengkap dalam dua puluh template gratis, plus versi teks yang dibaca sistem. Ada penjelasan tiap bagian, untuk yang sudah berpengalaman maupun fresh graduate."
 heading: "Contoh CV ATS, dibahas per bagian"
-lead: "Di bawah ini ada satu CV lengkap, yaitu contoh CV bawaan Lanjut, dalam keenam template. Di bawahnya ada CV yang sama dalam bentuk teks biasa. Teks inilah yang dipakai sistem ATS (applicant tracking system). Kalau urutannya terbaca dengan benar, CV kamu aman."
+lead: "Di bawah ini ada satu CV lengkap, yaitu contoh CV bawaan Lanjut, dalam semua 20 template. Di bawahnya ada CV yang sama dalam bentuk teks biasa. Teks inilah yang dipakai sistem ATS (applicant tracking system). Kalau urutannya terbaca dengan benar, CV kamu aman."
 published: "2026-11-01"
-updated: "2026-11-01"
+updated: "2026-11-02"
 order: 1
 ---
 
 ## Kenapa contoh ini ramah ATS
 
-Keenam template di atas kelihatan beda-beda, tapi teks di bawahnya sama persis untuk semuanya. Itu intinya. Template boleh mengubah huruf, spasi, dan aksen, tapi nggak pernah mengubah urutan isi CV kamu.
+Kedua puluh template di atas kelihatan beda-beda, tapi teks di bawahnya sama persis untuk semuanya. Itu intinya. Template boleh mengubah huruf, spasi, dan aksen, tapi nggak pernah mengubah urutan isi CV kamu.
 
 Contoh ini mengikuti lima aturan:
 

@@ -3,8 +3,9 @@ import type { Locale } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
 import {
   ArrowUpRightIcon,
-  CaretDownIcon,
-  DatabaseIcon,
+  CheckIcon,
+  CloudSlashIcon,
+  LaptopIcon,
 } from "@phosphor-icons/react";
 import { REPO_URL } from "@/lib/site";
 
@@ -15,8 +16,11 @@ interface Props {
 const { locale } = Astro.props;
 const t = getTranslator(locale, "landing");
 
-// The real database and object store names from src/lib/db/schema.ts.
-const STORES = ["resumes", "app", "backups", "leftovers"];
+const ON_DEVICE = [
+  "localSimpleResumes",
+  "localSimpleProfiles",
+  "localSimpleSettings",
+] as const;
 ---
 
 <section class="mx-auto w-11/12 max-w-6xl pb-24 md:pb-36">
@@ -47,17 +51,39 @@ const STORES = ["resumes", "app", "backups", "leftovers"];
       <figcaption class="mb-3 text-sm text-muted-foreground">
         {t("localPanelCaption")}
       </figcaption>
-      <div class="rounded-xl bg-(--ink) p-6 font-machine text-sm text-(--machine-muted) ring-1 ring-(--ink-line) md:p-8">
-        <p class="text-xs">Application / Storage / IndexedDB</p>
-        <p class="mt-5 flex items-center gap-2 text-(--machine)">
-          <CaretDownIcon aria-hidden="true" className="size-3.5" />
-          <DatabaseIcon aria-hidden="true" className="size-4" />
-          lanjut
-        </p>
-        <p class="mt-4 pl-6 text-xs">{t("localStores")}</p>
-        <ul class="mt-2 space-y-2 border-l border-(--ink-line) pl-6">
-          {STORES.map((store) => <li class="text-(--machine)">{store}</li>)}
-        </ul>
+      <div
+        class="flex flex-col gap-6 rounded-xl bg-card p-6 ring-1 ring-foreground/10 md:p-8"
+      >
+        <div>
+          <p class="flex items-center gap-2 font-semibold">
+            <LaptopIcon aria-hidden="true" className="size-5 text-primary" />
+            {t("localSimpleDevice")}
+          </p>
+          <ul class="mt-4 space-y-2.5">
+            {
+              ON_DEVICE.map((key) => (
+                <li class="flex items-center gap-2.5">
+                  <CheckIcon
+                    aria-hidden="true"
+                    weight="bold"
+                    className="size-4 shrink-0 text-primary"
+                  />
+                  {t(key)}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="border-t pt-5">
+          <p class="flex items-center gap-2 font-semibold">
+            <CloudSlashIcon
+              aria-hidden="true"
+              className="size-5 text-muted-foreground"
+            />
+            {t("localSimpleServer")}
+          </p>
+          <p class="mt-2 text-muted-foreground">{t("localSimpleNothing")}</p>
+        </div>
       </div>
     </figure>
   </div>

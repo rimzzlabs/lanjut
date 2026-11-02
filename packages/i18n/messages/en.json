@@ -3,11 +3,11 @@
     "title": "Free ATS Resume & CV Builder, No Account or Sign-Up | Lanjut",
     "description": "Build an ATS-friendly resume or CV for free. Open source, no account, no sign-up: your resume stays in your browser. Export PDF, Word, or plain text.",
     "category": "Resume builder",
-    "features": "ATS-friendly PDF, Word (DOCX), and plain-text export; six templates; import from PDF, JSON, or YAML; English and Indonesian; works in the browser with no account; profile backups that move to another device",
+    "features": "ATS-friendly PDF, Word (DOCX), and plain-text export; twenty templates; import from PDF, JSON, or YAML; English and Indonesian; works in the browser with no account; profile backups that move to another device",
     "editorTitle": "Build a resume",
     "editorDescription": "Start a resume from a blank page, the sample, your old resume, or a template. Free, no account, and saved in your browser.",
     "templateTitle": "Explore templates",
-    "templateDescription": "Six free resume templates that keep an order applicant tracking systems can read. See each one as a full page, on the sample or on your own resume.",
+    "templateDescription": "Twenty free resume templates that keep an order applicant tracking systems can read. See each one as a full page, on the sample or on your own resume.",
     "changelogTitle": "Changelog",
     "changelogDescription": "What changed in each Lanjut release: the new features and fixes in the free, open-source ATS resume builder."
   },
@@ -191,6 +191,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_6_0": [
+          {
+            "title": "Fourteen new templates",
+            "description": "Polos, Garis, Anggun, Tegas, Segar, Rapi, Lugas, Kertas, Jurnal, Kode, Mesin, Ringkas, Tengah, and Elok. Each one has its own type and spacing, and like every template, it keeps the order an applicant tracking system reads."
+          }
+        ],
         "1_5_0": [
           {
             "title": "Guides closer at hand",
@@ -867,7 +873,21 @@
         "luasa": "An airy minimalist layout: letterspaced headings, a single contact line, and slim accent bars. Generous whitespace throughout.",
         "tebal": "A bold, modern statement: oversized name, heavy uppercase headings over thick rules, and strong typographic hierarchy.",
         "klasik": "A traditional all-serif CV: centered name and contacts, quiet centered headings, and italic dates. Timeless and formal.",
-        "ketik": "A typewriter-flavored technical look: monospace name, headings, and dates over a clean sans body. Built for developers."
+        "ketik": "A typewriter-flavored technical look: monospace name, headings, and dates over a clean sans body. Built for developers.",
+        "polos": "A plain, Harvard-style page in an Arial-like sans: bold underlined headings and everything aligned left. The safest choice for strict applicant tracking systems.",
+        "garis": "A clean sans layout: each heading runs into a thin rule across the page, with contact icons and quiet gray dates.",
+        "anggun": "A soft Garamond look: a centered name, italic section headings over a short rule, and italic dates. Formal and literary.",
+        "tegas": "Merriweather headings over a Source Sans body: a thick bar marks each section, with contact icons. Strong but readable.",
+        "segar": "A compact, modern Open Sans page: a large name, underlined bold headings, and tight spacing for a full page of experience.",
+        "rapi": "A tidy corporate page in a Calibri-like sans: bold uppercase headings over a gray rule and a single contact line. Looks at home next to a Word résumé.",
+        "lugas": "A direct Roboto page: a large bold name, contact icons, and a rule above each heading. Plain and confident.",
+        "kertas": "An academic page in a Times-like serif: a centered uppercase name, bold ruled headings, and italic places. Made for research and teaching roles.",
+        "jurnal": "An editorial Source Serif look: a large name, an italic headline, and a thick rule under each heading.",
+        "kode": "IBM Plex Mono for the name, headings, roles, and dates over a clean sans body, with dotted heading rules and contact icons. Built for engineers.",
+        "mesin": "Courier Prime typewriter type for the name, headings, roles, and dates over a Lora serif body, with a centered uppercase name and underlined headings.",
+        "ringkas": "The most compact layout: small gray headings, a single contact line, and tight line spacing to fit a long history on one page.",
+        "tengah": "A centered name and contacts, with each heading centered between two thin rules. Balanced and calm.",
+        "elok": "A Lora name over a clean Inter body: letterspaced headings under a thin rule, and contact icons."
       },
       "listLabel": "Templates",
       "previewWith": "Preview with",
@@ -875,7 +895,7 @@
       "applyTo": "Apply to {title}",
       "inUse": "In use",
       "heading": "ATS resume templates",
-      "intro": "Six free templates for an ATS-friendly resume or CV. Each one changes the type and spacing only, so an applicant tracking system reads your text in the same order. Pick one and fill it in, with no account.",
+      "intro": "Twenty free templates for an ATS-friendly resume or CV. Each one changes the type and spacing only, so an applicant tracking system reads your text in the same order. Pick one and fill it in, with no account.",
       "exampleLink": "See every template on a full ATS resume example"
     },
     "navbar": {
@@ -1616,7 +1636,7 @@
     "headingLine1": "Every résumé",
     "headingLead": "is read ",
     "headingAccent": "twice.",
-    "deck": "First an ATS parser pulls out the text, then a recruiter looks at the page. Lanjut makes one résumé, or CV, that works for both. It is free, needs no account, and never leaves your browser.",
+    "deck": "Many companies run your résumé through hiring software, called an ATS, before a person sees it. The software copies out the text, then a recruiter looks at the page. Lanjut makes one résumé, or CV, that works for both. It is free, needs no account, and never leaves your browser.",
     "firstName": "First name",
     "firstNamePlaceholder": "Your first name",
     "lastName": "Last name",
@@ -1625,7 +1645,7 @@
     "rolePlaceholder": "The role you want",
     "look": "Look",
     "humanLabel": "What the recruiter sees",
-    "machineLabel": "What the parser reads",
+    "machineLabel": "What the hiring software reads",
     "scannerLabel": "Compare the two readings",
     "scannerValue": "{percent}% of the page shown as styled",
     "reading": "Reading your PDF…",
@@ -1633,25 +1653,40 @@
     "readFallback": "Plain-text export. The PDF read failed in this browser.",
     "checkName": "Name found",
     "checkRole": "Role found",
-    "checkEmail": "Email intact",
+    "checkEmail": "Email found",
     "checkOrder": "Sections in order",
     "sampleNote": "Your name and role, on sample content.",
     "cta": "Continue in the editor",
-    "allTemplates": "See all six templates",
+    "allTemplates": "See all twenty templates",
     "noAccount": "No account. Nothing uploaded.",
-    "looksHeading": "Change the look. The order stays put.",
-    "looksBody": "Six templates, each with its own type and spacing. Pick one and the résumé above is read again. The sections come back in the same order, and every change to Lanjut is tested for it.",
+    "looksHeading": "Pick any look. The software still reads it right.",
+    "looksBody": "Twenty templates, each with its own fonts and spacing. Hiring software reads a page from top to bottom, so every template keeps your sections in the same simple order. Only the look changes.",
+    "looksShowcase": {
+      "awal": "The starting point. Clean and simple, with your contact details on the right and room for every section. If you are not sure, start here.",
+      "tebal": "For a résumé that should stand out. A large name and bold headings make each part easy to find at a glance.",
+      "klasik": "Formal and quiet, in a traditional book-style font, with your name centered at the top. It suits law, finance, and academic jobs.",
+      "ketik": "Made for developers. The name, headings, and dates look typed on a typewriter, and the rest stays easy to read.",
+      "tegas": "Classic headings, each marked with a thick bar, over clean modern text. Strong, and still easy to read when your history is long."
+    },
+    "looksTry": "Try it on the résumé above",
+    "looksTried": "On the résumé above",
+    "looksMoreHeading": "Want to see more?",
+    "looksMoreBody": "Fifteen more templates wait on the templates page. Each one shows as a full page, on the sample or on your own résumé.",
     "lookAwal": "Plain and roomy",
-    "lookKetat": "Compact serif",
-    "lookLuasa": "Airy, letterspaced",
     "lookTebal": "Big name, heavy headings",
-    "lookKlasik": "All serif, centered",
-    "lookKetik": "Typewriter tone",
+    "lookKlasik": "Traditional, centered",
+    "lookKetik": "Typewriter style",
+    "lookTegas": "Bold bar headings",
     "localHeading": "Your résumé never leaves this browser.",
-    "localBody": "There is no account and no copy on a server. Lanjut keeps your résumés in your browser's own storage, and you can export them as PDF, DOCX, plain text, JSON, or YAML whenever you want.",
+    "localBody": "There is no account and no copy on a server. Lanjut keeps your résumés in your browser's own storage, and you can save them as a PDF, a Word file, plain text, or a backup file whenever you want.",
     "localPanelCaption": "Where your work lives",
-    "localStores": "Object stores",
-    "localSource": "Lanjut is open source under AGPL-3.0.",
+    "localSimpleDevice": "On this device",
+    "localSimpleResumes": "Your résumés",
+    "localSimpleProfiles": "Your profiles and contact details",
+    "localSimpleSettings": "Your settings",
+    "localSimpleServer": "On a server",
+    "localSimpleNothing": "Nothing. Lanjut has no account to sign in to and keeps no copy of your résumé.",
+    "localSource": "Lanjut is open source, so anyone can read the code.",
     "localSourceLink": "Read the code on GitHub",
     "appHeading": "Prefer an app?",
     "appBody": "The same editor runs as a desktop app for macOS, Windows, and Linux, and it keeps working offline.",
@@ -1662,7 +1697,7 @@
     "linuxMeta": "AppImage, .deb, or .rpm · x64 and ARM",
     "linuxCta": "Download for Linux",
     "closeHeading": "Free, no account, and open source.",
-    "closeBody": "There is no paid plan and no account to make. The code is public under AGPL-3.0, and anyone can read it or run their own copy.",
+    "closeBody": "There is no paid plan and no account to make. The code is public, and anyone can read it or run their own copy.",
     "contributorsBody": "Made by people who give their time to it. Join them: add a translation, fix a bug, or build the feature you wish it had.",
     "closeCta": "Start your résumé",
     "closeBrowse": "Browse templates",
@@ -1683,7 +1718,7 @@
     },
     "draftTitle": "My resume",
     "keptHeading": "Some things stay out on purpose.",
-    "keptBody": "Parsers read a page from top to bottom. Anything that breaks that order can scramble your text, so Lanjut keeps it out of the content and leaves everything else up to you.",
+    "keptBody": "Hiring software reads a page from top to bottom. Anything that breaks that order can scramble your text, so Lanjut leaves it out and lets you change everything else.",
     "keptAllowedTitle": "Sections you can use",
     "keptOutTitle": "Kept out of the text",
     "sectionHeader": "Header",
@@ -1704,10 +1739,10 @@
     "outBoxes": "Floating text boxes",
     "outBoxesWhy": "Text outside the main flow is easy to skip.",
     "outImages": "Pictures inside text",
-    "outImagesWhy": "A parser reads text, not images.",
-    "keptPhoto": "The header photo is the one exception. It is optional, off by default, and never changes the text a parser reads.",
+    "outImagesWhy": "The software reads text, not pictures.",
+    "keptPhoto": "The header photo is the one exception. It is optional, off by default, and never changes the text the software reads.",
     "importHeading": "Already have a résumé? Start from it.",
-    "importBody": "Drop in a PDF, or a JSON or YAML file you exported earlier. Lanjut sorts what it finds into sections, and anything it can't place waits in a list you can copy from. The file is read in your browser, like everything else.",
+    "importBody": "Drop in a PDF, or a backup file you saved from Lanjut earlier (JSON or YAML). Lanjut sorts what it finds into sections, and any line it can't place waits in a list you can copy from. The file stays in your browser, like everything else.",
     "importFound": "Sorted into sections",
     "importLeftovers": "Lines to place yourself",
     "exportsHeading": "One résumé, five files.",
@@ -1717,8 +1752,6 @@
     "exportTxt": "For forms that want you to paste plain text.",
     "exportJson": "A full copy you can import again later.",
     "exportYaml": "The same copy, easier to read and edit by hand.",
-    "orderTitle": "Section order the parser read",
-    "orderNote": "Pick another template. The order stays the same.",
     "importLink": "Import a file in the editor",
     "importRawLabel": "Text from your PDF",
     "snippetLabel": "Your PDF, read back",
@@ -1729,7 +1762,7 @@
     "faq": {
       "whatIs": {
         "question": "What is Lanjut?",
-        "answer": "Lanjut is a free, open-source résumé and CV builder made for applicant tracking systems (ATS). It runs in your browser at lanjut.org, and as a desktop app for macOS, Windows, and Linux. There is no account, and your résumés stay on your device. Six templates change the look but never the reading order, so a parser reads every template the same way. You can export a PDF, a Word file (.docx), or plain text. Rizki Citra builds it in the open on GitHub, with contributors."
+        "answer": "Lanjut is a free, open-source résumé and CV builder made for applicant tracking systems (ATS), the hiring software many companies use to read résumés. It runs in your browser at lanjut.org, and as a desktop app for macOS, Windows, and Linux. There is no account, and your résumés stay on your device. Twenty templates change the look but never the reading order, so the software reads every template the same way. You can export a PDF, a Word file (.docx), or plain text. Rizki Citra builds it in the open on GitHub, with contributors."
       },
       "free": {
         "question": "Is Lanjut really free?",
@@ -1753,7 +1786,7 @@
       },
       "ats": {
         "question": "Will my résumé get through an applicant tracking system?",
-        "answer": "No tool can promise that, because each company sets up its system its own way. Lanjut takes care of the part the file controls: real text in reading order, standard section headings, and contact details a parser can find. The sheet at the top of this page shows the text a parser reads back from your PDF."
+        "answer": "No tool can promise that, because each company sets up its system its own way. Lanjut takes care of the part the file controls: real text in reading order, standard section headings, and contact details the software can find. The sheet at the top of this page shows the text the software reads back from your PDF."
       },
       "cv": {
         "question": "Is Lanjut a CV builder too?",
@@ -1761,7 +1794,7 @@
       },
       "import": {
         "question": "Can I import the résumé I already have?",
-        "answer": "Yes, you can import your résumé. Drop in a PDF, or a JSON or YAML file you exported from Lanjut. The PDF needs real text, so a scanned page or a password-protected file cannot be read. Any line Lanjut cannot place goes to a list you can copy from."
+        "answer": "Yes, you can import your résumé. Drop in a PDF, or a backup file (JSON or YAML) you saved from Lanjut. The PDF needs real text, so a scanned page or a password-protected file cannot be read. Any line Lanjut cannot place goes to a list you can copy from."
       },
       "language": {
         "question": "Can I write my résumé in Indonesian?",
@@ -1769,7 +1802,7 @@
       },
       "photo": {
         "question": "Can I add a photo?",
-        "answer": "Yes, you can add a photo. The header photo is optional and off by default. It shows in the PDF and the .docx, the .txt leaves it out, and it never changes the text a parser reads."
+        "answer": "Yes, you can add a photo. The header photo is optional and off by default. It shows in the PDF and the .docx, the .txt leaves it out, and it never changes the text the software reads."
       },
       "guideLink": "Read the full guide"
     },

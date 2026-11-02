@@ -18,7 +18,7 @@
 - ATS: every export keeps real text in reading order, standard section headings, and contact details a parser can find. The document has no tables, columns, or text boxes.
 - Exports: PDF, Word (.docx), plain text (.txt), JSON, and YAML.
 - Import: a PDF resume with real text (not a scan), or a JSON or YAML file exported from Lanjut.
-- Templates: six (Awal, Ketat, Luasa, Tebal, Klasik, Ketik). A template changes the look only, never the reading order.
+- Templates: twenty (Awal, Ketat, Luasa, Tebal, Klasik, Ketik, Polos, Garis, Anggun, Tegas, Segar, Rapi, Lugas, Kertas, Jurnal, Kode, Mesin, Ringkas, Tengah, Elok). A template changes the look only, never the reading order.
 - Readiness: a meter shows what a resume still needs, and counts only the person's own words.
 - Languages: English and Indonesian, for the app and for a resume's headings and dates. Each language has its own sample resume.
 - Indonesian: at https://lanjut.org/id, Lanjut is a free ATS CV builder (pembuat CV ATS gratis), with no sign-up and no account (tanpa daftar, tanpa akun).
@@ -30,11 +30,11 @@
 
 - [Home](https://lanjut.org): what Lanjut does, with a live demo of the text an ATS reads back from a resume, and common questions
 - [Editor](https://lanjut.org/editor): start from a blank page, the sample, a resume file, or a template
-- [Templates](https://lanjut.org/template): the six templates, each shown on a full page
+- [Templates](https://lanjut.org/template): the twenty templates, each shown on a full page
 - [Changelog](https://lanjut.org/changelog): the highlights of every release, newest first. The same history as Markdown: [changelog.md](https://lanjut.org/changelog.md)
 - [Feedback](https://lanjut.org/feedback): report a bug or suggest an idea, with no account needed
 - [Privacy](https://lanjut.org/privacy): what stays on the device, and every time the site talks to a server
 - [Guides](https://lanjut.org/guide): how an ATS reads a resume, with a full example
-  - [ATS resume example](https://lanjut.org/guide/ats-resume-examples): one resume in six templates, with notes on each section
+  - [ATS resume example](https://lanjut.org/guide/ats-resume-examples): one resume in twenty templates, with notes on each section
   - [How to make an ATS-friendly resume](https://lanjut.org/guide/how-to-make-an-ats-resume): six steps and a two-minute check
   - Indonesian: https://lanjut.org/id/guide/ats-resume-examples (contoh CV ATS) and https://lanjut.org/id/guide/how-to-make-an-ats-resume (cara membuat CV ATS)

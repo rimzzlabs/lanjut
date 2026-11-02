@@ -3,11 +3,11 @@
     "title": "Buat CV ATS Gratis, Tanpa Daftar & Tanpa Akun | Lanjut",
     "description": "Buat CV dan resume ramah ATS secara gratis. Open source, tanpa akun, tanpa daftar: CV kamu tetap di browser. Ekspor ke PDF, Word, atau teks.",
     "category": "Pembuat CV dan resume",
-    "features": "Ekspor PDF, Word (DOCX), dan teks polos yang ramah ATS; enam template; impor dari PDF, JSON, atau YAML; bahasa Inggris dan Indonesia; jalan di browser tanpa akun; cadangan profil untuk pindah perangkat",
+    "features": "Ekspor PDF, Word (DOCX), dan teks polos yang ramah ATS; dua puluh template; impor dari PDF, JSON, atau YAML; bahasa Inggris dan Indonesia; jalan di browser tanpa akun; cadangan profil untuk pindah perangkat",
     "editorTitle": "Buat CV",
     "editorDescription": "Mulai CV dari halaman kosong, contoh, CV lamamu, atau template. Gratis, tanpa akun, dan tersimpan di browser kamu.",
     "templateTitle": "Jelajahi template",
-    "templateDescription": "Enam template CV gratis yang urutannya tetap terbaca sistem pelacakan pelamar. Lihat tiap template satu halaman penuh, pada contoh atau CV kamu sendiri.",
+    "templateDescription": "Dua puluh template CV gratis yang urutannya tetap terbaca sistem pelacakan pelamar. Lihat tiap template satu halaman penuh, pada contoh atau CV kamu sendiri.",
     "changelogTitle": "Catatan rilis",
     "changelogDescription": "Apa saja yang berubah di setiap rilis Lanjut: fitur baru dan perbaikan untuk pembuat CV ATS yang gratis dan open source."
   },
@@ -191,6 +191,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_6_0": [
+          {
+            "title": "Empat belas template baru",
+            "description": "Polos, Garis, Anggun, Tegas, Segar, Rapi, Lugas, Kertas, Jurnal, Kode, Mesin, Ringkas, Tengah, dan Elok. Masing-masing punya huruf dan spasinya sendiri, dan seperti semua template lain, urutan bacanya tetap aman buat sistem ATS."
+          }
+        ],
         "1_5_0": [
           {
             "title": "Panduan lebih gampang ditemukan",
@@ -867,7 +873,21 @@
         "luasa": "Tata letak minimalis yang lega: judul berspasi lebar, satu baris kontak, dan bilah aksen tipis. Ruang kosong yang leluasa di seluruh bagian.",
         "tebal": "Tampil tebal dan modern: nama gede, judul huruf kapital tebal di atas garis tebal, dan hierarki tipografi yang kuat.",
         "klasik": "CV serif tradisional: nama dan kontak di tengah, judul yang kalem di tengah, dan tanggal miring. Abadi dan formal.",
-        "ketik": "Nuansa teknis ala mesin tik: nama, judul, dan tanggal monospace di atas isi sans yang bersih. Dibuat buat developer."
+        "ketik": "Nuansa teknis ala mesin tik: nama, judul, dan tanggal monospace di atas isi sans yang bersih. Dibuat buat developer.",
+        "polos": "Halaman polos ala Harvard dengan huruf sans mirip Arial: judul tebal bergaris bawah dan semuanya rata kiri. Pilihan paling aman buat sistem ATS yang ketat.",
+        "garis": "Tata letak sans yang bersih: tiap judul nyambung ke garis tipis selebar halaman, dengan ikon kontak dan tanggal abu-abu yang kalem.",
+        "anggun": "Tampilan Garamond yang lembut: nama di tengah, judul bagian miring di atas garis pendek, dan tanggal miring. Formal dan elegan.",
+        "tegas": "Judul Merriweather di atas isi Source Sans: bilah tebal menandai tiap bagian, lengkap dengan ikon kontak. Kuat tapi tetap enak dibaca.",
+        "segar": "Halaman Open Sans yang ringkas dan modern: nama besar, judul tebal bergaris bawah, dan spasi rapat biar pengalaman kerjamu muat satu halaman.",
+        "rapi": "Halaman korporat yang rapi dengan huruf sans mirip Calibri: judul kapital tebal di atas garis abu-abu dan satu baris kontak. Cocok berdampingan dengan CV Word.",
+        "lugas": "Halaman Roboto yang lugas: nama besar tebal, ikon kontak, dan garis di atas tiap judul. Simpel dan percaya diri.",
+        "kertas": "Halaman akademik dengan serif mirip Times: nama kapital di tengah, judul tebal bergaris, dan tempat ditulis miring. Pas buat posisi riset dan mengajar.",
+        "jurnal": "Tampilan editorial Source Serif: nama besar, headline miring, dan garis tebal di bawah tiap judul.",
+        "kode": "IBM Plex Mono buat nama, judul, posisi, dan tanggal di atas isi sans yang bersih, dengan garis judul titik-titik dan ikon kontak. Dibuat buat engineer.",
+        "mesin": "Huruf mesin tik Courier Prime buat nama, judul, posisi, dan tanggal di atas isi serif Lora, dengan nama kapital di tengah dan judul bergaris bawah.",
+        "ringkas": "Tata letak paling ringkas: judul kecil abu-abu, satu baris kontak, dan spasi baris rapat biar riwayat panjang muat satu halaman.",
+        "tengah": "Nama dan kontak di tengah, dengan tiap judul di tengah di antara dua garis tipis. Seimbang dan tenang.",
+        "elok": "Nama Lora di atas isi Inter yang bersih: judul berspasi lebar di bawah garis tipis, plus ikon kontak."
       },
       "listLabel": "Template",
       "previewWith": "Pratinjau dengan",
@@ -875,7 +895,7 @@
       "applyTo": "Pakai di {title}",
       "inUse": "Sedang dipakai",
       "heading": "Template CV ATS",
-      "intro": "Enam template gratis untuk CV ATS. Tiap template cuma mengubah huruf dan spasi, jadi sistem pelacakan pelamar (ATS) tetap membaca teksmu dengan urutan yang sama. Pilih satu dan langsung isi, tanpa akun.",
+      "intro": "Dua puluh template gratis untuk CV ATS. Tiap template cuma mengubah huruf dan spasi, jadi sistem pelacakan pelamar (ATS) tetap membaca teksmu dengan urutan yang sama. Pilih satu dan langsung isi, tanpa akun.",
       "exampleLink": "Lihat semua template di contoh CV ATS lengkap"
     },
     "navbar": {
@@ -1616,7 +1636,7 @@
     "headingLine1": "Setiap CV",
     "headingLead": "dibaca ",
     "headingAccent": "dua kali.",
-    "deck": "Pertama, parser ATS mengambil teksnya. Lalu perekrut melihat tampilannya. Lanjut bikin satu CV yang pas untuk keduanya. Gratis, tanpa daftar, dan CV-nya nggak pernah keluar dari browser kamu.",
+    "deck": "Banyak perusahaan memakai software rekrutmen, namanya ATS, untuk membaca CV sebelum dilihat orang. Software itu mengambil teksnya, lalu perekrut melihat tampilannya. Lanjut bikin satu CV yang pas untuk keduanya. Gratis, tanpa daftar, dan CV-nya nggak pernah keluar dari browser kamu.",
     "firstName": "Nama depan",
     "firstNamePlaceholder": "Nama depanmu",
     "lastName": "Nama belakang",
@@ -1625,7 +1645,7 @@
     "rolePlaceholder": "Posisi incaranmu",
     "look": "Tampilan",
     "humanLabel": "Yang dilihat perekrut",
-    "machineLabel": "Yang dibaca parser",
+    "machineLabel": "Yang dibaca software rekrutmen",
     "scannerLabel": "Bandingkan dua cara baca",
     "scannerValue": "{percent}% halaman tampil dengan gaya",
     "reading": "Membaca PDF kamu…",
@@ -1633,25 +1653,40 @@
     "readFallback": "Ekspor teks biasa. Pembacaan PDF gagal di browser ini.",
     "checkName": "Nama terbaca",
     "checkRole": "Posisi terbaca",
-    "checkEmail": "Email utuh",
+    "checkEmail": "Email ketemu",
     "checkOrder": "Urutan bagian terjaga",
     "sampleNote": "Nama dan posisimu, di atas konten contoh.",
     "cta": "Lanjut ke editor",
-    "allTemplates": "Lihat keenam template",
+    "allTemplates": "Lihat semua 20 template",
     "noAccount": "Tanpa akun. Tanpa unggah.",
-    "looksHeading": "Ganti tampilannya. Urutannya tetap.",
-    "looksBody": "Enam template, masing-masing dengan huruf dan spasinya sendiri. Pilih satu, lalu CV di atas dibaca ulang. Bagian-bagiannya tetap keluar dengan urutan yang sama, dan setiap perubahan di Lanjut diuji untuk memastikan hal itu.",
+    "looksHeading": "Pilih tampilan apa saja. Software tetap membacanya dengan benar.",
+    "looksBody": "Dua puluh template, masing-masing dengan huruf dan spasinya sendiri. Software rekrutmen membaca halaman dari atas ke bawah, jadi semua template menyusun bagian CV kamu dengan urutan sederhana yang sama. Yang berubah cuma tampilannya.",
+    "looksShowcase": {
+      "awal": "Titik awal. Bersih dan simpel, kontak di kanan, dan ada ruang buat semua bagian. Kalau bingung, mulai dari sini.",
+      "tebal": "Buat CV yang mau langsung menonjol. Nama besar dan judul tebal bikin tiap bagian gampang ditemukan sekilas.",
+      "klasik": "Formal dan kalem, pakai huruf tradisional ala buku, dengan nama di tengah atas. Cocok buat kerja di bidang hukum, keuangan, dan akademik.",
+      "ketik": "Dibuat buat developer. Nama, judul, dan tanggal kelihatan seperti diketik pakai mesin tik, isinya tetap enak dibaca.",
+      "tegas": "Judul klasik dengan bilah tebal di atas teks modern yang bersih. Tegas, tapi tetap enak dibaca walau riwayatmu panjang."
+    },
+    "looksTry": "Coba di CV di atas",
+    "looksTried": "Dipakai di CV di atas",
+    "looksMoreHeading": "Mau lihat yang lain?",
+    "looksMoreBody": "Masih ada 15 template lagi di halaman template. Masing-masing tampil satu halaman penuh, pakai contoh atau CV kamu sendiri.",
     "lookAwal": "Polos dan lega",
-    "lookKetat": "Serif yang padat",
-    "lookLuasa": "Lapang, huruf renggang",
     "lookTebal": "Nama besar, judul tebal",
-    "lookKlasik": "Serif penuh, rata tengah",
-    "lookKetik": "Nuansa mesin tik",
+    "lookKlasik": "Tradisional, rata tengah",
+    "lookKetik": "Gaya mesin tik",
+    "lookTegas": "Judul berbilah tebal",
     "localHeading": "CV kamu nggak pernah keluar dari browser ini.",
-    "localBody": "Nggak perlu akun, dan nggak ada salinan di server. Lanjut menyimpan CV kamu di penyimpanan browser kamu sendiri, dan kamu bisa mengekspornya ke PDF, DOCX, teks biasa, JSON, atau YAML kapan saja.",
+    "localBody": "Nggak perlu akun, dan nggak ada salinan di server. Lanjut menyimpan CV kamu di penyimpanan browser kamu sendiri, dan kamu bisa menyimpannya sebagai PDF, file Word, teks biasa, atau file cadangan kapan saja.",
     "localPanelCaption": "Tempat kerjaanmu tersimpan",
-    "localStores": "Object store",
-    "localSource": "Lanjut open source dengan lisensi AGPL-3.0.",
+    "localSimpleDevice": "Di perangkat ini",
+    "localSimpleResumes": "CV kamu",
+    "localSimpleProfiles": "Profil dan data kontak kamu",
+    "localSimpleSettings": "Pengaturan kamu",
+    "localSimpleServer": "Di server",
+    "localSimpleNothing": "Nggak ada. Lanjut nggak punya akun untuk login dan nggak menyimpan salinan CV kamu.",
+    "localSource": "Lanjut open source, jadi siapa pun bisa membaca kodenya.",
     "localSourceLink": "Baca kodenya di GitHub",
     "appHeading": "Lebih suka aplikasi?",
     "appBody": "Editor yang sama juga ada sebagai aplikasi desktop untuk macOS, Windows, dan Linux, dan tetap jalan tanpa internet.",
@@ -1662,7 +1697,7 @@
     "linuxMeta": "AppImage, .deb, atau .rpm · x64 dan ARM",
     "linuxCta": "Unduh untuk Linux",
     "closeHeading": "Gratis, tanpa akun, dan open source.",
-    "closeBody": "Nggak ada paket berbayar, dan nggak perlu bikin akun. Kodenya terbuka dengan lisensi AGPL-3.0, jadi siapa pun bisa membacanya atau menjalankan salinannya sendiri.",
+    "closeBody": "Nggak ada paket berbayar, dan nggak perlu bikin akun. Kodenya terbuka, jadi siapa pun bisa membacanya atau menjalankan salinannya sendiri.",
     "contributorsBody": "Dibuat oleh orang-orang yang menyumbangkan waktunya. Ikut bergabung: tambahkan terjemahan, perbaiki bug, atau buat fitur yang kamu inginkan.",
     "closeCta": "Mulai CV kamu",
     "closeBrowse": "Lihat template",
@@ -1683,7 +1718,7 @@
     },
     "draftTitle": "CV saya",
     "keptHeading": "Ada yang sengaja nggak dimasukkan.",
-    "keptBody": "Parser membaca halaman dari atas ke bawah. Apa pun yang merusak urutan itu bisa mengacak teksmu, jadi Lanjut menjauhkannya dari isi CV dan menyerahkan sisanya ke kamu.",
+    "keptBody": "Software rekrutmen membaca halaman dari atas ke bawah. Apa pun yang merusak urutan itu bisa mengacak teksmu, jadi Lanjut nggak memakainya dan membebaskan kamu mengatur sisanya.",
     "keptAllowedTitle": "Bagian yang bisa kamu pakai",
     "keptOutTitle": "Dijauhkan dari teks",
     "sectionHeader": "Header",
@@ -1704,10 +1739,10 @@
     "outBoxes": "Kotak teks melayang",
     "outBoxesWhy": "Teks di luar alur utama gampang terlewat.",
     "outImages": "Gambar di dalam teks",
-    "outImagesWhy": "Parser membaca teks, bukan gambar.",
-    "keptPhoto": "Foto di header satu-satunya pengecualian. Sifatnya opsional, mati secara bawaan, dan nggak pernah mengubah teks yang dibaca parser.",
+    "outImagesWhy": "Software membaca teks, bukan gambar.",
+    "keptPhoto": "Foto di header satu-satunya pengecualian. Sifatnya opsional, mati secara bawaan, dan nggak pernah mengubah teks yang dibaca software.",
     "importHeading": "Sudah punya CV? Mulai dari situ.",
-    "importBody": "Masukkan PDF, atau file JSON atau YAML yang pernah kamu ekspor. Lanjut memilah isinya ke dalam bagian-bagian CV, dan baris yang belum bisa ditempatkan menunggu di daftar yang bisa kamu salin. Filenya dibaca di browser kamu, sama seperti yang lainnya.",
+    "importBody": "Masukkan PDF, atau file cadangan yang pernah kamu simpan dari Lanjut (JSON atau YAML). Lanjut memilah isinya ke dalam bagian-bagian CV, dan baris yang belum bisa ditempatkan menunggu di daftar yang bisa kamu salin. Filenya tetap di browser kamu, sama seperti yang lainnya.",
     "importFound": "Dipilah ke dalam bagian",
     "importLeftovers": "Baris untuk kamu tempatkan sendiri",
     "exportsHeading": "Satu CV, lima file.",
@@ -1717,8 +1752,6 @@
     "exportTxt": "Untuk formulir yang minta teks biasa ditempel.",
     "exportJson": "Salinan lengkap yang bisa kamu impor lagi nanti.",
     "exportYaml": "Salinan yang sama, lebih mudah dibaca dan diedit manual.",
-    "orderTitle": "Urutan bagian yang dibaca parser",
-    "orderNote": "Pilih template lain. Urutannya tetap sama.",
     "importLink": "Impor file di editor",
     "importRawLabel": "Teks dari PDF kamu",
     "snippetLabel": "PDF kamu, dibaca ulang",
@@ -1729,7 +1762,7 @@
     "faq": {
       "whatIs": {
         "question": "Lanjut itu apa?",
-        "answer": "Lanjut adalah pembuat CV dan resume yang gratis serta open source, dibuat khusus untuk sistem pelacakan pelamar (ATS). Kamu bisa langsung memakainya di browser lewat lanjut.org, atau memasang aplikasi desktopnya untuk macOS, Windows, dan Linux. Nggak perlu akun, dan CV kamu tetap tersimpan di perangkatmu. Keenam templatenya cuma mengubah tampilan, bukan urutan baca, jadi parser membaca semua template dengan cara yang sama. CV bisa diekspor ke PDF, Word (.docx), atau teks biasa. Lanjut dibuat oleh Rizki Citra secara terbuka di GitHub, bersama para kontributor."
+        "answer": "Lanjut adalah pembuat CV dan resume yang gratis serta open source, dibuat khusus untuk sistem pelacakan pelamar (ATS), yaitu software rekrutmen yang dipakai banyak perusahaan untuk membaca CV. Kamu bisa langsung memakainya di browser lewat lanjut.org, atau memasang aplikasi desktopnya untuk macOS, Windows, dan Linux. Nggak perlu akun, dan CV kamu tetap tersimpan di perangkatmu. Kedua puluh templatenya cuma mengubah tampilan, bukan urutan baca, jadi software membaca semua template dengan cara yang sama. CV bisa diekspor ke PDF, Word (.docx), atau teks biasa. Lanjut dibuat oleh Rizki Citra secara terbuka di GitHub, bersama para kontributor."
       },
       "free": {
         "question": "Lanjut beneran gratis?",
@@ -1753,7 +1786,7 @@
       },
       "ats": {
         "question": "CV aku bakal lolos ATS nggak?",
-        "answer": "Nggak ada alat yang bisa menjanjikan itu, karena tiap perusahaan mengatur sistemnya sendiri. Lanjut mengurus apa yang bisa diatur lewat file-nya: teks asli sesuai urutan baca, judul bagian yang standar, dan kontak yang bisa ditemukan parser. Lembar di paling atas halaman ini menunjukkan teks yang dibaca parser dari PDF kamu."
+        "answer": "Nggak ada alat yang bisa menjanjikan itu, karena tiap perusahaan mengatur sistemnya sendiri. Lanjut mengurus apa yang bisa diatur lewat file-nya: teks asli sesuai urutan baca, judul bagian yang standar, dan kontak yang bisa ditemukan software. Lembar di paling atas halaman ini menunjukkan teks yang dibaca software dari PDF kamu."
       },
       "cv": {
         "question": "CV sama resume itu beda nggak?",
@@ -1761,7 +1794,7 @@
       },
       "import": {
         "question": "Bisa impor CV yang sudah aku punya?",
-        "answer": "Iya, CV lama kamu bisa diimpor. Masukkan PDF, atau file JSON atau YAML yang kamu ekspor dari Lanjut. PDF-nya harus berisi teks asli, jadi halaman hasil scan atau file yang dikunci kata sandi nggak bisa dibaca. Baris yang nggak bisa ditempatkan Lanjut masuk ke daftar yang bisa kamu salin."
+        "answer": "Iya, CV lama kamu bisa diimpor. Masukkan PDF, atau file cadangan (JSON atau YAML) yang kamu simpan dari Lanjut. PDF-nya harus berisi teks asli, jadi halaman hasil scan atau file yang dikunci kata sandi nggak bisa dibaca. Baris yang nggak bisa ditempatkan Lanjut masuk ke daftar yang bisa kamu salin."
       },
       "language": {
         "question": "Bisa bikin CV dalam bahasa Inggris?",
@@ -1769,7 +1802,7 @@
       },
       "photo": {
         "question": "Bisa pasang foto?",
-        "answer": "Iya, foto bisa dipasang di header. Fotonya opsional dan mati secara bawaan. Foto muncul di PDF dan .docx, file .txt nggak menyertakannya, dan foto nggak pernah mengubah teks yang dibaca parser."
+        "answer": "Iya, foto bisa dipasang di header. Fotonya opsional dan mati secara bawaan. Foto muncul di PDF dan .docx, file .txt nggak menyertakannya, dan foto nggak pernah mengubah teks yang dibaca software."
       },
       "guideLink": "Baca panduan lengkapnya"
     },

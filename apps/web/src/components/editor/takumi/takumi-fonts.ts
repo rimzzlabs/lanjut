@@ -28,6 +28,20 @@ const TEMPLATE_FAMILIES: Record<TemplateId, ReadonlyArray<string>> = {
   tebal: ["Inter"],
   klasik: ["Inter", "Lora"],
   ketik: ["Inter", "GeistMono"],
+  polos: ["Inter", "Arimo"],
+  garis: ["Inter"],
+  anggun: ["Inter", "EBGaramond"],
+  tegas: ["Inter", "SourceSans3", "Merriweather"],
+  segar: ["Inter", "OpenSans"],
+  rapi: ["Inter", "Carlito"],
+  lugas: ["Inter", "Roboto"],
+  kertas: ["Inter", "Tinos"],
+  jurnal: ["Inter", "SourceSerif4"],
+  kode: ["Inter", "IBMPlexMono"],
+  mesin: ["Inter", "CourierPrime", "Lora"],
+  ringkas: ["Inter"],
+  tengah: ["Inter"],
+  elok: ["Inter", "Lora"],
 };
 
 interface FontLoader {

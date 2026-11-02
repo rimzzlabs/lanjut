@@ -21,7 +21,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 
 ## Features
 
-- Six résumé templates, all sharing one linear document structure; only styling differs
+- Twenty résumé templates, all sharing one linear document structure; only styling differs
 - Template page with search and a full-size preview of every page, on the sample or on one of your own résumés, with one-click apply (undoable in the editor)
 - Profiles: keep one profile per kind of job or job market. Each profile keeps its own résumés and its personal information and summary, which every new résumé in it starts with. Manage them on the Profiles page, and switch from the avatar in the top bar, where Preferences also hold the theme, language, and animation settings
 - Résumé library that leads with the résumé edited last, quick ways to start a new one, and every résumé as a grid or a list with live first-page thumbnails, its template, sort, rename, duplicate, download, and delete
@@ -42,7 +42,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - A readiness meter that shows what your résumé still needs, counting only your own words, never the sample's
 - Guided tours of the library, templates, profiles, and editor for first-time users
 - A changelog page with the highlights of every release, also published as Markdown at `/changelog.md` for agents
-- Guides in English and Indonesian at `/guide`: a full ATS résumé example drawn in all six templates, and how to make an ATS-friendly résumé
+- Guides in English and Indonesian at `/guide`: a full ATS résumé example drawn in all twenty templates, and how to make an ATS-friendly résumé
 - A privacy page at `/privacy` that lists what stays on the device and every time the site talks to a server
 - Send feedback in-app: a guided form for bugs, ideas, and wording fixes that checks for similar issues and shows the technical details it attaches (never the text of your résumé). Without a GitHub account, Lanjut posts it for you and links to the issue; with one, it opens the issue prefilled for you to post
 - Local persistence via IndexedDB, no data leaves the browser. The editor's top bar confirms each save to the device and warns when the browser refuses one
@@ -51,14 +51,28 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 
 ## Templates
 
-| Template   | Character                                                       |
-| ---------- | --------------------------------------------------------------- |
-| **Awal**   | Clean single-column starter with room for every section         |
-| **Ketat**  | Compact serif classic: ruled headings, italic dates             |
-| **Luasa**  | Airy minimalist: letterspaced headings, generous whitespace     |
-| **Tebal**  | Bold modern statement: oversized name, heavy uppercase headings |
-| **Klasik** | Traditional all-serif CV: centered, quiet, formal               |
-| **Ketik**  | Typewriter-flavored technical look, built for developers        |
+| Template    | Character                                                        |
+| ----------- | ---------------------------------------------------------------- |
+| **Awal**    | Clean single-column starter with room for every section          |
+| **Ketat**   | Compact serif classic: ruled headings, italic dates              |
+| **Luasa**   | Airy minimalist: letterspaced headings, generous whitespace      |
+| **Tebal**   | Bold modern statement: oversized name, heavy uppercase headings  |
+| **Klasik**  | Traditional all-serif CV: centered, quiet, formal                |
+| **Ketik**   | Typewriter-flavored technical look, built for developers         |
+| **Polos**   | Plain Harvard-style page in an Arial-like sans, all left-aligned |
+| **Garis**   | Clean sans: headings run into a thin rule                        |
+| **Anggun**  | Soft Garamond: centered name, italic headings                    |
+| **Tegas**   | Merriweather headings with a thick bar over a Source Sans body   |
+| **Segar**   | Compact modern Open Sans: large name, underlined headings        |
+| **Rapi**    | Tidy corporate look in a Calibri-like sans, gray-ruled headings  |
+| **Lugas**   | Direct Roboto page: rule above each heading, contact icons       |
+| **Kertas**  | Academic page in a Times-like serif, centered uppercase name     |
+| **Jurnal**  | Editorial Source Serif: thick rule under each heading            |
+| **Kode**    | IBM Plex Mono heads over a sans body, built for engineers        |
+| **Mesin**   | Courier Prime typewriter heads over a Lora serif body            |
+| **Ringkas** | The most compact layout, for a long history on one page          |
+| **Tengah**  | Centered header, headings centered between two rules             |
+| **Elok**    | Lora name over an Inter body, letterspaced headings              |
 
 Every template renders the same linear block sequence, so switching templates never changes parse or export order.
 

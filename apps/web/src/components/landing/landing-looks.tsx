@@ -1,103 +1,93 @@
 import type { ResumeLanguage } from "@lanjut/resume";
-import { TEMPLATES, type TemplateId } from "@lanjut/resume/templates";
-import { cn } from "@lanjut/ui/lib/utils";
-import { CheckIcon } from "@phosphor-icons/react";
-import { useMemo } from "react";
+import { A } from "@mobily/ts-belt";
+import { useMotionValueEvent, useScroll } from "motion/react";
+import { useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "use-intl";
-import type { ResumePreview } from "@/components/editor/resume-preview";
-import { ResumeThumbnail } from "@/components/editor/resume-thumbnail";
 import { resumeToPreview } from "@/components/editor/resume-to-preview";
 import { IslandProviders } from "@/components/shared/island-providers";
 import type { IslandProps } from "@/components/shared/providers";
+import { MEDIA_LG } from "@/hooks/use-media-query";
+import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import { useLandingDraftStore } from "@/lib/store";
 import { draftToResume } from "./landing-draft-resume";
+import { LandingLooksList } from "./landing-looks-list";
+import { LANDING_SHOWCASE } from "./landing-looks-showcase";
+import { LandingLooksStage } from "./landing-looks-stage";
 
-const LOOK_KEYS: Record<TemplateId, string> = {
-  awal: "lookAwal",
-  ketat: "lookKetat",
-  luasa: "lookLuasa",
-  tebal: "lookTebal",
-  klasik: "lookKlasik",
-  ketik: "lookKetik",
-};
+/** The five showcased templates, then the closing "see more" row. */
+const STATES = A.length(LANDING_SHOWCASE) + 1;
 
-/** All six templates drawn live with the visitor's draft; picking one restyles the hero too. */
+/**
+ * Five templates told one at a time, drawn live with the visitor's draft. From
+ * `lg` the section pins for one screen while the page scrolls through a tall
+ * track: the scroll picks the open row, and the page beside it fades to that
+ * template. Below `lg` nothing pins, and the rows work as tabs.
+ */
 export function LandingLooks(props: IslandProps) {
   return (
     <IslandProviders locale={props.locale} pathname={props.pathname}>
-      <LandingLooksGrid />
+      <LandingLooksShowcase />
     </IslandProviders>
   );
 }
 
-function LandingLooksGrid() {
+function LandingLooksShowcase() {
+  const t = useTranslations("landing");
   const draft = useLandingDraftStore((state) => state.draft);
-  const template = useLandingDraftStore((state) => state.template);
   const language = useLocale() as ResumeLanguage;
   const preview = useMemo(
     () => resumeToPreview(draftToResume(draft, language)),
     [draft, language],
   );
+  const reduceMotion = useReducedMotionPreference();
+  const [active, setActive] = useState(0);
+  const track = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: track,
+    offset: ["start start", "end end"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    if (!window.matchMedia(MEDIA_LG).matches) return;
+    setActive(Math.min(STATES - 1, Math.floor(progress * STATES)));
+  });
+
+  function select(index: number) {
+    setActive(index);
+    const element = track.current;
+    if (!element || !window.matchMedia(MEDIA_LG).matches) return;
+    // Land in the middle of that row's share of the track.
+    const top = window.scrollY + element.getBoundingClientRect().top;
+    const travel = element.offsetHeight - window.innerHeight;
+    window.scrollTo({
+      top: top + ((index + 0.5) / STATES) * travel,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }
 
   return (
-    <ul className="mx-[-4.5%] flex snap-x snap-mandatory gap-4 overflow-x-auto px-[4.5%] py-2 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-x-5 sm:gap-y-8 sm:overflow-visible sm:px-0">
-      {TEMPLATES.map((item) => (
-        <LandingLookItem
-          key={item.id}
-          id={item.id}
-          name={item.name}
-          preview={preview}
-          selected={item.id === template}
-        />
-      ))}
-    </ul>
-  );
-}
-
-interface LandingLookItemProps {
-  id: TemplateId;
-  name: string;
-  preview: ResumePreview;
-  selected: boolean;
-}
-
-function LandingLookItem(props: LandingLookItemProps) {
-  const t = useTranslations("landing");
-  const setTemplate = useLandingDraftStore((state) => state.setTemplate);
-
-  return (
-    <li className="w-[62%] shrink-0 snap-start sm:w-auto">
-      <button
-        type="button"
-        aria-pressed={props.selected}
-        onClick={() => setTemplate(props.id)}
-        className="group block w-full rounded-md text-left outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-      >
-        <div
-          className={cn(
-            "aspect-3/4 overflow-hidden rounded-md bg-white ring-1 ring-black/10 transition-[box-shadow,translate] duration-200 group-hover:-translate-y-0.5",
-            props.selected &&
-              "ring-2 ring-primary ring-offset-4 ring-offset-background",
-          )}
-        >
-          <ResumeThumbnail resume={props.preview} template={props.id} />
+    <div ref={track} className="lg:h-[340svh]">
+      <div className="grid grid-cols-1 gap-10 lg:sticky lg:top-0 lg:h-svh lg:grid-cols-12 lg:items-center lg:gap-12 lg:py-10">
+        <div className="lg:col-span-5">
+          <h2 className="text-[clamp(2rem,4vw,2.75rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance">
+            {t("looksHeading")}
+          </h2>
+          <p className="mt-4 max-w-[44ch] text-muted-foreground">
+            {t("looksBody")}
+          </p>
+          <div className="mt-8">
+            <LandingLooksList
+              active={active}
+              onSelect={select}
+              preview={preview}
+            />
+          </div>
         </div>
-        <p className="mt-3 flex items-baseline justify-between gap-3">
-          <span className="inline-flex items-center gap-1.5 font-semibold">
-            {props.name}
-            {props.selected && (
-              <CheckIcon
-                aria-hidden
-                weight="bold"
-                className="size-4 text-primary"
-              />
-            )}
-          </span>{" "}
-          <span className="text-right text-xs text-muted-foreground">
-            {t(LOOK_KEYS[props.id])}
-          </span>
-        </p>
-      </button>
-    </li>
+        {/* Below lg each open row draws its own page instead. */}
+        <div className="max-lg:hidden lg:col-span-7">
+          <LandingLooksStage preview={preview} active={active} />
+        </div>
+      </div>
+    </div>
   );
 }

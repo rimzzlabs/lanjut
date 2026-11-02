@@ -37,6 +37,20 @@ const EXPECTED_FAMILIES: Record<TemplateId, ReadonlyArray<string>> = {
   tebal: ["Inter"],
   klasik: ["Lora"],
   ketik: ["GeistMono", "Inter"],
+  polos: ["Arimo"],
+  garis: ["Inter"],
+  anggun: ["EBGaramond"],
+  tegas: ["Merriweather", "SourceSans3"],
+  segar: ["OpenSans"],
+  rapi: ["Carlito"],
+  lugas: ["Roboto"],
+  kertas: ["Tinos"],
+  jurnal: ["SourceSerif4"],
+  kode: ["IBMPlexMono", "Inter"],
+  mesin: ["CourierPrime", "Lora"],
+  ringkas: ["Inter"],
+  tengah: ["Inter"],
+  elok: ["Inter", "Lora"],
 };
 
 // The document letter-spacing setting is bounded to this range so that text
