@@ -40,8 +40,8 @@ version, keyed by the version it migrates _from_ (`LADDER[N]: vN → vN+1`).
 raw document on disk is untouched until the user's next edit persists the
 migrated shape.
 
-The steps live beside it. `migrations-v1-v11.ts` and `migrations-v11-v26.ts` hold
-the steps by version range, and `migrations-shared.ts` holds the document type
+The steps live beside it. `migrations-v1-v11.ts`, `migrations-v11-v26.ts`, and
+`migrations-v26-v27.ts` hold the steps by version range, and `migrations-shared.ts` holds the document type
 and the helpers they share. Write a new step in the newest range file, or start
 a new range file when that one passes 600 lines, then add it to `LADDER`.
 
@@ -65,11 +65,17 @@ to the first profile, which the app resolves at read time. The field is
 organization only, so it never renders and the JSON and YAML interchange leaves
 it out.
 
-The current v25→v26 rung stamps the version for the optional `revision`, the
+The v25→v26 rung stamps the version for the optional `revision`, the
 count of writes of the stored copy. It reshapes nothing: a résumé without
 `revision` reads as 0. A profile has the same optional field, and profiles are
 not versioned, so it needs no rung. The field is storage only: it never renders,
 and the interchange and the profile backup leave it out.
+
+The current v26→v27 rung stamps the version for the optional `colors` and
+`contactLabels`. It reshapes nothing: an absent value keeps the template's
+colors and the full addresses. The read sanitizes both (`allowedColors` in
+`colors.ts`, `usableContactLabels` in `contact-labels.ts`), so a color below AA
+or a malformed label renders as absent and stays stored as it was.
 
 Documents with a `schemaVersion` **newer** than the running app (a stale cached
 bundle or a long-lived old tab after a deploy) fail migration with an error.

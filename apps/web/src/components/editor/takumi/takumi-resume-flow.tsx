@@ -5,6 +5,7 @@ import {
   isAtomicBlock,
   type ResumeBlock,
 } from "../resume-blocks";
+import { resumeColorAttributes } from "../resume-colors";
 import { resumeTypographyStyle } from "../resume-fonts";
 import { groupBlocks } from "../resume-paginate";
 import type { ResumePreview } from "../resume-preview";
@@ -36,6 +37,7 @@ export function TakumiResumeFlow(props: TakumiResumeFlowProps) {
       data-template={template}
       className="font-sans text-foreground"
       style={resumeTypographyStyle(preview, template)}
+      {...resumeColorAttributes(preview.colors)}
     >
       <TextListMarkersContext value={true}>
         {groups.map((group, index) => (

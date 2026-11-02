@@ -6,6 +6,8 @@ interface EditorPanelSectionProps {
   description: string;
   /** A control for the whole section, such as a reset, beside the title. */
   action?: ReactNode;
+  /** The anchor a readiness check scrolls to. */
+  id?: string;
   children: ReactNode;
 }
 
@@ -17,7 +19,11 @@ export function EditorPanelSection(props: EditorPanelSectionProps) {
   const headingId = useId();
 
   return (
-    <section aria-labelledby={headingId} className="flex flex-col gap-4 py-5">
+    <section
+      id={props.id}
+      aria-labelledby={headingId}
+      className="flex scroll-mt-4 flex-col gap-4 py-5"
+    >
       <div className="flex items-start gap-3">
         <span className="grid size-8 shrink-0 place-items-center rounded-md bg-muted text-muted-foreground [&_svg]:size-4">
           {props.icon}

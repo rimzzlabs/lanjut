@@ -32,7 +32,8 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Optional header photo (off by default): add a portrait in Personal Information (choose a file, paste an image, or drop one on the field) and every template places it to match its own layout; exports embed it without affecting how parsers read the text
 - Custom sections alongside the fixed types, all sharing the same restricted schema
 - Drag to reorder sections, or apply an order in one step (experience first, or skills first for a skills-led résumé), and toggle any section's visibility (entries within a section sort by date automatically)
-- Document-level presentation controls: font, font size, section spacing, line height, letter spacing, contact-icon visibility, and a one-click style reset
+- Document-level presentation controls: font, font size, section spacing, line height, letter spacing, colors for the name, headings, lines, and links (each at AA contrast or better), contact-icon visibility, and a one-click style reset
+- Contact labels: show a short text such as "LinkedIn" in place of a long address. The link still opens the full address, the plain text export prints it, and the readiness meter warns while a label hides an address from applicant tracking systems
 - Available in English and Indonesian (`use-intl`)
 - Theme toggle and one settings menu (language, animation) in the landing and app navbars. The animation setting (System, On, Off) follows the operating system's reduced-motion setting on System
 - Export to PDF (linear reading order preserved) and plain text / .docx

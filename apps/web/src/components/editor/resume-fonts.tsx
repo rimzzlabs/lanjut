@@ -7,6 +7,7 @@ import { A, pipe } from "@mobily/ts-belt";
 import type { CSSProperties } from "react";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { FONTS, resolveFont } from "@/lib/fonts";
+import { resumeColorVariables } from "./resume-colors";
 import type { ResumePreview } from "./resume-preview";
 
 type TypographySlice = Pick<
@@ -17,6 +18,7 @@ type TypographySlice = Pick<
   | "nameScale"
   | "titleScale"
   | "bodyScale"
+  | "colors"
 >;
 
 /**
@@ -58,6 +60,7 @@ export function resumeTypographyStyle(
       "--resume-title-scale": resume.titleScale,
     }),
     ...(resume.bodyScale !== 1 && { "--resume-body-scale": resume.bodyScale }),
+    ...resumeColorVariables(resume.colors),
   } as CSSProperties;
 }
 

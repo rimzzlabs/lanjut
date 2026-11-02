@@ -6,7 +6,7 @@ interface KetatSectionHeadingProps {
 
 export function KetatSectionHeading(props: KetatSectionHeadingProps) {
   return (
-    <div className="border-y border-muted-foreground/40 py-1.5">
+    <div className="resume-rule border-y border-muted-foreground/40 py-1.5">
       <ResumeHeading
         level={2}
         className="text-center font-serif resume-title-base tracking-wide"

@@ -1,3 +1,8 @@
+import { allowedColors } from "@lanjut/resume/colors";
+import {
+  type ContactLabels,
+  usableContactLabels,
+} from "@lanjut/resume/contact-labels";
 import { RESUME_LABELS } from "@lanjut/resume/labels";
 import {
   type RichBlock,
@@ -80,8 +85,18 @@ function effectiveHeading(params: EffectiveHeadingParams): string {
 function linkContact(kind: ContactKind): (value: string) => ContactView {
   return (value) => {
     const url = withHttps(value);
-    return { kind, value: url, href: url };
+    return { kind, value: url, address: url, href: url };
   };
+}
+
+/**
+ * A label replaces the shown text only. The link keeps the full address, so a
+ * reader who clicks it still reaches it.
+ */
+function withLabel(contact: ContactView, labels: ContactLabels): ContactView {
+  const label = (labels as Partial<Record<ContactKind, string>>)[contact.kind];
+  if (label === undefined) return contact;
+  return { ...contact, value: label };
 }
 
 // Links show the full URL (scheme included): a bare domain isn't recognized as
@@ -90,13 +105,19 @@ const CONTACT_VIEWS: Record<ContactKind, (value: string) => ContactView> = {
   phone: (value) => ({
     kind: "phone",
     value,
+    address: value,
     href: `tel:${S.replaceByRe(value, /\s+/g, "")}`,
   }),
-  email: (value) => ({ kind: "email", value, href: `mailto:${value}` }),
+  email: (value) => ({
+    kind: "email",
+    value,
+    address: value,
+    href: `mailto:${value}`,
+  }),
   website: linkContact("website"),
   linkedin: linkContact("linkedin"),
   link: linkContact("link"),
-  location: (value) => ({ kind: "location", value }),
+  location: (value) => ({ kind: "location", value, address: value }),
 };
 
 function toHeaderView(resume: Resume): HeaderView {
@@ -110,6 +131,7 @@ function toHeaderView(resume: Resume): HeaderView {
     [plain(fields.city), plain(fields.province), plain(fields.country)],
     ", ",
   );
+  const labels = usableContactLabels(resume.contactLabels);
   const rawContacts: ReadonlyArray<readonly [ContactKind, string]> = [
     ["phone", plain(fields.phone)],
     ["email", plain(fields.email)],
@@ -122,6 +144,7 @@ function toHeaderView(resume: Resume): HeaderView {
     rawContacts,
     A.reject(([, value]) => S.isEmpty(value)),
     A.map(([kind, value]) => CONTACT_VIEWS[kind](value)),
+    A.map((contact) => withLabel(contact, labels)),
   );
 
   return {
@@ -306,6 +329,7 @@ export function resumeToPreview(resume: Resume): ResumePreview {
     nameScale: clampScale(resume.nameScale),
     titleScale: clampScale(resume.titleScale),
     bodyScale: clampScale(resume.bodyScale),
+    colors: allowedColors(resume.colors),
     headings,
     sectionOrder,
     customSections,

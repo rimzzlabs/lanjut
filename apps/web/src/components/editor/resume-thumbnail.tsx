@@ -1,6 +1,7 @@
 import type { TemplateId } from "@lanjut/resume/templates";
 import { type CSSProperties, useMemo } from "react";
 import { buildResumeBlocks } from "./resume-blocks";
+import { resumeColorAttributes } from "./resume-colors";
 import { ResumeFontFaces, resumeTypographyStyle } from "./resume-fonts";
 import { A4 } from "./resume-geometry";
 import { ResumeHeadingsContext } from "./resume-heading";
@@ -55,6 +56,7 @@ export function ResumeThumbnail(props: ResumeThumbnailProps) {
       data-template={props.template}
       className="pointer-events-none w-full select-none font-sans @container"
       style={resumeTypographyStyle(props.resume, props.template)}
+      {...resumeColorAttributes(props.resume.colors)}
     >
       <ResumeFontFaces />
       <ResumeHeadingsContext value={false}>

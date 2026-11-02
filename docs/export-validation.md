@@ -25,6 +25,10 @@ Languages` appears in that order in every format.
   extracted text of every template PDF and the `.docx` byte-identical to the
   photo-free output. The photo is presentation-only; if it ever shifts, drops, or
   adds a character of extracted text, the gate fails.
+- **Color invariance**: rendering every template PDF with the name, headings,
+  lines, and links colored must leave the extracted text identical.
+- **Contact labels**: with a label on every email and link, the `.txt` must still
+  print every full address, and every link must keep its target.
 
 `apps/web/scripts/markdown-checks.ts` checks the Markdown of the code mode
 (`docs/markdown-dialect.md`). The Markdown of the sample and of a hard case must read

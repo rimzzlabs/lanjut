@@ -7,6 +7,7 @@
  * Data → adapter → consumer: these types are the consumer contract.
  */
 
+import type { ResumeColors } from "@lanjut/resume/colors";
 import type { RichBlock } from "@lanjut/resume/rich-content";
 import type { ReorderableSectionType } from "@lanjut/resume/schema-registry";
 import type {
@@ -25,8 +26,10 @@ export type ContactKind =
 
 export interface ContactView {
   kind: ContactKind;
-  /** Human-readable text shown to the reader. */
+  /** Human-readable text shown to the reader: the label when one is set. */
   value: string;
+  /** The full address, for the plain text export, which ignores labels. */
+  address: string;
   /** Optional link target. Absent for non-navigable contacts (e.g. location). */
   href?: string;
 }
@@ -160,6 +163,8 @@ export interface ResumePreview {
   nameScale: number;
   titleScale: number;
   bodyScale: number;
+  /** Colors that pass AA on the paper; an absent part keeps the template's. */
+  colors: ResumeColors;
   headings: SectionHeadings;
   /**
    * The reorderable sections in document (reading) order. Drives the order blocks

@@ -5,7 +5,7 @@ import type { CertificateItemView } from "../../resume-preview";
 
 export function LuasaCertificateItem(props: CertificateItemView) {
   return (
-    <ResumeArticle className="border-l-2 border-foreground/30 pl-4">
+    <ResumeArticle className="resume-rule border-l-2 border-foreground/30 pl-4">
       <div className="flex items-baseline justify-between gap-4">
         <ResumeHeading
           level={3}

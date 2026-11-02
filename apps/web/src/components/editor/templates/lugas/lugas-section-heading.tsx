@@ -8,7 +8,7 @@ export function LugasSectionHeading(props: LugasSectionHeadingProps) {
   return (
     <ResumeHeading
       level={2}
-      className="border-t border-foreground pt-1 resume-title-sm font-bold"
+      className="resume-rule border-t border-foreground pt-1 resume-title-sm font-bold"
     >
       {props.title}
     </ResumeHeading>

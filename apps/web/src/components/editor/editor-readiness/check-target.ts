@@ -6,7 +6,8 @@ import { sectionAnchorId } from "../editor-sections/section-anchor";
 const FOCUSABLE = "input, textarea, [contenteditable='true']";
 
 /**
- * Opens the section a check points at, on the Content tab, and scrolls it
+ * Opens the section a check points at, on the Content tab (or the Styling
+ * tab for a "styling" target), and scrolls it
  * into view. Below xl the tab lives in the edit sheet, so the sheet opens
  * too and focuses the field itself (`takeJumpField`). The section's form
  * renders after this update, so the scroll waits a frame. From the code mode
@@ -19,8 +20,12 @@ export function openCheckTarget(target: ReadinessTarget) {
 function showCheckTarget(target: ReadinessTarget) {
   const chrome = useEditorChromeStore.getState();
   chrome.setMode("form");
-  chrome.setActiveTab("content");
-  chrome.setOpenSections([target.section]);
+  if (target.section === "styling") {
+    chrome.setActiveTab("styling");
+  } else {
+    chrome.setActiveTab("content");
+    chrome.setOpenSections([target.section]);
+  }
   if (!window.matchMedia(MEDIA_XL).matches) {
     chrome.setJumpTarget(target);
     chrome.setSheetOpen(true);

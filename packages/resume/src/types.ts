@@ -1,11 +1,13 @@
 import type { JSONContent } from "@tiptap/core";
+import type { ResumeColors } from "./colors";
+import type { ContactLabels } from "./contact-labels";
 
 /**
  * In-document field-shape version. Distinct from the IndexedDB DB version, which
  * governs object-store/index structure only. Bumped whenever a persisted field
  * shape changes; every bump gets a forward-only step in the migration ladder.
  */
-export const CURRENT_SCHEMA_VERSION = 26;
+export const CURRENT_SCHEMA_VERSION = 27;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
 export type ResumeLanguage = "en" | "id";
@@ -210,6 +212,18 @@ export interface Resume {
    * their internal hierarchy is preserved; see `nameScale`.
    */
   bodyScale?: number;
+  /**
+   * Presentation-only colors for the name, the section headings, the rules,
+   * and the links. Each passes WCAG AA on the paper (`colors.ts`). An absent
+   * part keeps the template's own color.
+   */
+  colors?: ResumeColors;
+  /**
+   * Text shown in place of a contact's address in the preview, the PDF, and
+   * the .docx. The link keeps the full address and the plain text export
+   * prints it. Absent means the address shows.
+   */
+  contactLabels?: ContactLabels;
   header: Header;
   sections: ReadonlyArray<Section>;
   /**

@@ -8,7 +8,7 @@ export function ElokSectionHeading(props: ElokSectionHeadingProps) {
   return (
     <ResumeHeading
       level={2}
-      className="border-t border-muted-foreground/40 pt-1.5 resume-title-xs font-semibold uppercase tracking-[0.12em]"
+      className="resume-rule border-t border-muted-foreground/40 pt-1.5 resume-title-xs font-semibold uppercase tracking-[0.12em]"
     >
       {props.title}
     </ResumeHeading>

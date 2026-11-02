@@ -27,7 +27,7 @@ function blockLines(block: ResumeBlock): ReadonlyArray<string> {
       const { fullName, headline, contacts } = block.header;
       return [
         ...presentLines([fullName, headline]),
-        ...A.map(contacts, (contact) => contact.value),
+        ...A.map(contacts, (contact) => contact.address),
       ];
     }
     case "heading":

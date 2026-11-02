@@ -13,7 +13,7 @@ export function GarisSectionHeading(props: GarisSectionHeadingProps) {
       >
         {props.title}
       </ResumeHeading>
-      <span className="flex-1 border-t border-muted-foreground/40" />
+      <span className="resume-rule flex-1 border-t border-muted-foreground/40" />
     </div>
   );
 }
