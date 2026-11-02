@@ -48,6 +48,7 @@ const t = getTranslator(locale, "download");
               <div class="flex flex-wrap gap-3">
                 <a
                   href={desktopFileUrl(pick.primary)}
+                  data-download
                   class={cn(buttonVariants({ size: "lg" }), "h-11 gap-2 px-5")}
                 >
                   <DownloadSimpleIcon aria-hidden="true" />
@@ -55,6 +56,7 @@ const t = getTranslator(locale, "download");
                 </a>
                 <a
                   href={desktopFileUrl(pick.secondary)}
+                  data-download
                   class={cn(
                     buttonVariants({ size: "lg", variant: "outline" }),
                     "h-11 px-5",

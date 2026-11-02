@@ -32,6 +32,11 @@ editorial
   card with the installer for that system, or a card that sends phones and tablets to
   the editor. Every installer follows in a list by system, then the first-launch steps.
   Each link points at a stable file name on the latest release (`desktop-files.json`).
+  A plain click on any installer link (`data-download`) also opens a thank-you dialog
+  (`download-thanks.tsx`): a confetti burst unless motion is reduced, the file name, a
+  Try again link to the same file, and a link to the first-launch steps. The link
+  itself starts the download, so the dialog only listens, and a click that opens a
+  new tab or window opens no dialog.
 - The privacy page (`/privacy`) and the guides (`/guide`, `/guide/<slug>`): the same
   world, navbar, and footer as `/`, with one prose column under them
   (`landing-prose-page.astro`). A guide opens with a link back to all guides, the

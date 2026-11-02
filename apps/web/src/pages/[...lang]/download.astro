@@ -9,6 +9,7 @@ import { A, O, pipe, S } from "@mobily/ts-belt";
 import DownloadHelp from "@/components/download/download-help.astro";
 import DownloadPlatformList from "@/components/download/download-platform-list.astro";
 import DownloadRecommended from "@/components/download/download-recommended.astro";
+import { DownloadThanks } from "@/components/download/download-thanks";
 import LandingProsePage from "@/components/landing/landing-prose-page.astro";
 import { CHANGELOG } from "@/lib/changelog";
 import { CHANGELOG_PATHNAME } from "@/lib/routes";
@@ -62,4 +63,15 @@ const version = pipe(
   <DownloadRecommended locale={locale} />
   <DownloadPlatformList locale={locale} />
   <DownloadHelp locale={locale} />
+  <DownloadThanks
+    client:idle
+    locale={locale}
+    pathname={Astro.url.pathname}
+    copy={{
+      title: t("thanks.title"),
+      body: t("thanks.body"),
+      retry: t("thanks.retry"),
+      steps: t("thanks.steps"),
+    }}
+  />
 </LandingProsePage>

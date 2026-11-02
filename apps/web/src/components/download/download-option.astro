@@ -24,6 +24,7 @@ const format = t(`formats.${option.format}`);
       option.choices.map((choice) => (
         <a
           href={desktopFileUrl(choice.file)}
+          data-download
           aria-label={t("downloadFile", {
             format,
             arch: t(`arch.${choice.arch}`),
