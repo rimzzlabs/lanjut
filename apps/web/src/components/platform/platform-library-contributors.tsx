@@ -1,10 +1,10 @@
 import { buttonVariants } from "@lanjut/ui/components/button";
 import { cn } from "@lanjut/ui/lib/utils";
-import { GithubLogoIcon } from "@phosphor-icons/react";
 import { useId } from "react";
 import { useTranslations } from "use-intl";
 import { useContributors } from "@/hooks/use-contributors";
 import { CONTRIBUTING_URL } from "@/lib/site";
+import { GithubMarkIcon } from "../shared/brand-icons";
 import { ContributorFaces } from "../shared/contributor-faces";
 import { ExternalLink } from "../shared/external-link";
 import { PlatformSectionHeading } from "./platform-section-heading";
@@ -35,7 +35,7 @@ export function PlatformLibraryContributors() {
           href={CONTRIBUTING_URL}
           className={cn(buttonVariants({ variant: "outline" }), "shrink-0")}
         >
-          <GithubLogoIcon weight="fill" data-icon="inline-start" />
+          <GithubMarkIcon data-icon="inline-start" />
           {t("contribute")}
         </ExternalLink>
       </div>

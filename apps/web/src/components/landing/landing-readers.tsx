@@ -42,7 +42,7 @@ const TEMPLATE_OPTIONS = A.map(TEMPLATES, (template) => ({
   label: template.name,
 }));
 
-/** The first viewport: the visitor's résumé, read by a person and a parser at once. */
+/** The read-back demo: the visitor's résumé, read by a person and a parser at once. */
 export function LandingReaders(props: IslandProps) {
   return (
     <IslandProviders locale={props.locale} pathname={props.pathname}>

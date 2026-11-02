@@ -1,5 +1,6 @@
-// Runs inline in <head> on the download page, before the first paint. It marks
-// the visitor's system on <html> (data-os), and CSS shows the matching card.
+// Runs inline in <head> on the landing pages, before the first paint. It marks
+// the visitor's system on <html> (data-os), and CSS shows the elements that
+// name that system (data-os-only in globals.css).
 (() => {
   const agent = navigator.userAgent;
   const platform =

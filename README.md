@@ -97,6 +97,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Drag and drop        | @dnd-kit                                                                 |
 | Export               | takumi-pdf (PDF from the preview HTML, in a Web Worker), docx            |
 | SEO                  | astro-seo (head tags), @astrojs/sitemap                                  |
+| Images               | sharp (Astro builds the home page screenshot as AVIF and WebP)           |
 | Animation            | motion/react                                                             |
 | State                | zustand                                                                  |
 | Search params state  | nuqs                                                                     |

@@ -1,12 +1,12 @@
 import { buttonVariants } from "@lanjut/ui/components/button";
 import { SidebarTrigger } from "@lanjut/ui/components/sidebar";
 import { cn } from "@lanjut/ui/lib/utils";
-import { GithubLogoIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { useWorkspaceView } from "@/hooks/use-workspace-view";
 import { REPO_URL } from "@/lib/site";
 import { EditorSaveStatus } from "../editor/editor-save-status";
 import { ProfileMenu } from "../profile/profile-menu";
+import { GithubMarkIcon } from "../shared/brand-icons";
 import { ExternalLink } from "../shared/external-link";
 import { PlatformNavbarBreadcrumb } from "./platform-navbar-breadcrumb";
 
@@ -37,7 +37,7 @@ export function PlatformNavbar() {
               "gap-2 bg-neutral-800 hover:bg-neutral-700 dark:bg-background text-neutral-50 hover:text-neutral-50 dark:text-stone-50 max-md:w-9 max-md:px-0",
             )}
           >
-            <GithubLogoIcon weight="fill" />
+            <GithubMarkIcon />
             <span className="max-md:sr-only">{t("starOnGithub")}</span>
           </ExternalLink>
           <ProfileMenu />

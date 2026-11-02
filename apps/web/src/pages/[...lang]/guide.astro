@@ -25,6 +25,8 @@ const guides = await Promise.all(
     return { slug, entry };
   }),
 );
+
+import HeadlineWords from "@/components/shared/headline-words.astro";
 ---
 
 <LandingProsePage
@@ -37,7 +39,7 @@ const guides = await Promise.all(
       beside it. */}
   <header class="grid grid-cols-1 gap-6 pb-20 md:grid-cols-12 md:items-end md:gap-10 md:pb-28">
     <h1 class="text-[clamp(2.5rem,6.4vw,5rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-balance md:col-span-8">
-      {t("hubHeadingLead")}{" "}
+      <HeadlineWords text={t("hubHeadingLead")} />{" "}
       <span class="text-primary">{t("hubHeadingAccent")}</span>
     </h1>
     <p class="max-w-[42ch] text-base text-muted-foreground sm:text-lg md:col-span-4 md:pb-2">

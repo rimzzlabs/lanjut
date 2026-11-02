@@ -28,7 +28,7 @@
 
 ## Pages
 
-- [Home](https://lanjut.org): what Lanjut does, with a live demo of the text an ATS reads back from a resume, and common questions
+- [Home](https://lanjut.org): what Lanjut does, a picture of the editor, a live demo of the text an ATS reads back from a resume, and common questions
 - [Editor](https://lanjut.org/editor): start from a blank page, the sample, a resume file, or a template
 - [Templates](https://lanjut.org/template): the twenty templates, each shown on a full page
 - [Changelog](https://lanjut.org/changelog): the highlights of every release, newest first. The same history as Markdown: [changelog.md](https://lanjut.org/changelog.md)

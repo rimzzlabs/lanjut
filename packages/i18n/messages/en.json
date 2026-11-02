@@ -3,7 +3,7 @@
     "title": "Free ATS Resume & CV Builder, No Account or Sign-Up | Lanjut",
     "description": "Build an ATS-friendly resume or CV for free. Open source, no account, no sign-up: your resume stays in your browser. Export PDF, Word, or plain text.",
     "category": "Resume builder",
-    "features": "ATS-friendly PDF, Word (DOCX), and plain-text export; twenty templates; import from PDF, JSON, or YAML; English and Indonesian; works in the browser with no account; profile backups that move to another device",
+    "features": "Free and open source; local-first, with no account and no upload; multiple CV profiles; twenty ATS-friendly templates; ATS-friendly PDF, Word (DOCX), and plain-text export; import from PDF, JSON, or YAML; a CV readiness check; profile backups that move to another device; English and Indonesian; works offline, with a desktop app for macOS, Windows, and Linux",
     "editorTitle": "Build a resume",
     "editorDescription": "Start a resume from a blank page, the sample, your old resume, or a template. Free, no account, and saved in your browser.",
     "templateTitle": "Explore templates",
@@ -32,8 +32,14 @@
     "animationSystem": "System",
     "animationOn": "On",
     "animationOff": "Off",
-    "buildResume": "Build a resume",
-    "exploreTemplates": "Explore templates"
+    "buildResume": "Build your CV",
+    "exploreTemplates": "Templates",
+    "guides": "Guides",
+    "download": "Download",
+    "github": "Lanjut on GitHub",
+    "githubStars": "Lanjut on GitHub, {count} stars",
+    "newTab": "opens in a new tab",
+    "menu": "Menu"
   },
   "tour": {
     "controls": {
@@ -207,6 +213,10 @@
           {
             "title": "A download page for the desktop app",
             "description": "lanjut.org/download picks the right installer for your computer and starts the download right away. It also shows what to do when macOS or Windows warns you the first time you open the app."
+          },
+          {
+            "title": "A clearer home page",
+            "description": "The home page now shows the editor itself and lists every feature in one place: CV profiles, templates, import, export, offline use, and more. The menu at the top links the templates, the guides, and the download page."
           }
         ],
         "1_5_0": [
@@ -1680,10 +1690,7 @@
   },
   "landing": {
     "srHeading": "Lanjut, a free ATS resume and CV builder:",
-    "headingLine1": "Every résumé",
-    "headingLead": "is read ",
-    "headingAccent": "twice.",
-    "deck": "Many companies run your résumé through hiring software, called an ATS, before a person sees it. The software copies out the text, then a recruiter looks at the page. Lanjut makes one résumé, or CV, that works for both. It is free, needs no account, and never leaves your browser.",
+    "deck": "Pick a template, fill in your details, and download a PDF or Word file. Lanjut keeps your resume in the order hiring software reads, so the ATS gets the same CV a recruiter sees. No account, and your CV stays on your device.",
     "firstName": "First name",
     "firstNamePlaceholder": "Your first name",
     "lastName": "Last name",
@@ -1715,8 +1722,8 @@
       "ketik": "Made for developers. The name, headings, and dates look typed on a typewriter, and the rest stays easy to read.",
       "tegas": "Classic headings, each marked with a thick bar, over clean modern text. Strong, and still easy to read when your history is long."
     },
-    "looksTry": "Try it on the résumé above",
-    "looksTried": "On the résumé above",
+    "looksTry": "Try it on the résumé below",
+    "looksTried": "On the résumé below",
     "looksMoreHeading": "Want to see more?",
     "looksMoreBody": "Fifteen more templates wait on the templates page. Each one shows as a full page, on the sample or on your own résumé.",
     "lookAwal": "Plain and roomy",
@@ -1724,36 +1731,15 @@
     "lookKlasik": "Traditional, centered",
     "lookKetik": "Typewriter style",
     "lookTegas": "Bold bar headings",
-    "localHeading": "Your résumé never leaves this browser.",
-    "localBody": "There is no account and no copy on a server. Lanjut keeps your résumés in your browser's own storage, and you can save them as a PDF, a Word file, plain text, or a backup file whenever you want.",
-    "localPanelCaption": "Where your work lives",
-    "localSimpleDevice": "On this device",
-    "localSimpleResumes": "Your résumés",
-    "localSimpleProfiles": "Your profiles and contact details",
-    "localSimpleSettings": "Your settings",
-    "localSimpleServer": "On a server",
-    "localSimpleNothing": "Nothing. Lanjut has no account to sign in to and keeps no copy of your résumé.",
-    "localSource": "Lanjut is open source, so anyone can read the code.",
-    "localSourceLink": "Read the code on GitHub",
-    "appHeading": "Prefer an app?",
-    "appBody": "The same editor runs as a desktop app for macOS, Windows, and Linux, and it keeps working offline.",
-    "macMeta": "macOS 13 or later · Apple silicon and Intel",
-    "macCta": "Download for macOS",
-    "winMeta": "Windows 10 or later · x64 and ARM",
-    "winCta": "Download for Windows",
-    "linuxMeta": "AppImage, .deb, or .rpm · x64 and ARM",
-    "linuxCta": "Download for Linux",
-    "closeHeading": "Free, no account, and open source.",
-    "closeBody": "There is no paid plan and no account to make. The code is public, and anyone can read it or run their own copy.",
+    "closeHeading": "Start your next CV now.",
+    "closeBody": "Free, no account, and nothing to install. Your CV is ready to download when you are.",
     "contributorsBody": "Made by people who give their time to it. Join them: add a translation, fix a bug, or build the feature you wish it had.",
-    "closeCta": "Start your résumé",
-    "closeBrowse": "Browse templates",
+    "closeCta": "Build your CV",
     "newTab": "opens in a new tab",
     "footer": {
-      "tagline": "A free ATS résumé and CV builder that keeps your work in your browser.",
+      "tagline": "A free, open-source ATS résumé and CV builder. Your work stays in your browser.",
       "product": "Product",
-      "project": "Project",
-      "support": "Support",
+      "support": "Support Lanjut",
       "editor": "Build a resume or CV",
       "templates": "Templates",
       "download": "Download the app",
@@ -1761,48 +1747,18 @@
       "rights": "© {year} Lanjut. Open source under AGPL-3.0.",
       "madeBy": "Made by",
       "privacy": "Privacy",
-      "guides": "Guides"
+      "guides": "Guides",
+      "languages": "Languages",
+      "resources": "Resources",
+      "openSource": "Open source",
+      "supportNote": "Lanjut is free. A donation helps keep it that way.",
+      "allGuides": "All guides",
+      "contribute": "Contribute",
+      "badgeFree": "Free",
+      "badgeOpenSource": "Open source",
+      "badgeLocal": "Local-first"
     },
     "draftTitle": "My resume",
-    "keptHeading": "Some things stay out on purpose.",
-    "keptBody": "Hiring software reads a page from top to bottom. Anything that breaks that order can scramble your text, so Lanjut leaves it out and lets you change everything else.",
-    "keptAllowedTitle": "Sections you can use",
-    "keptOutTitle": "Kept out of the text",
-    "sectionHeader": "Header",
-    "sectionSummary": "Summary",
-    "sectionExperience": "Experience",
-    "sectionInternship": "Internship",
-    "sectionProjects": "Projects",
-    "sectionOrganizations": "Organizations",
-    "sectionEducation": "Education",
-    "sectionCertifications": "Certifications",
-    "sectionSkills": "Skills",
-    "sectionLanguages": "Languages",
-    "sectionCustom": "Your own sections",
-    "outTables": "Tables",
-    "outTablesWhy": "Cells can be read in an order you never meant.",
-    "outColumns": "Two-column text",
-    "outColumnsWhy": "Side-by-side lines can merge into one jumbled line.",
-    "outBoxes": "Floating text boxes",
-    "outBoxesWhy": "Text outside the main flow is easy to skip.",
-    "outImages": "Pictures inside text",
-    "outImagesWhy": "The software reads text, not pictures.",
-    "keptPhoto": "The header photo is the one exception. It is optional, off by default, and never changes the text the software reads.",
-    "importHeading": "Already have a résumé? Start from it.",
-    "importBody": "Drop in a PDF, or a backup file you saved from Lanjut earlier (JSON or YAML). Lanjut sorts what it finds into sections, and any line it can't place waits in a list you can copy from. The file stays in your browser, like everything else.",
-    "importFound": "Sorted into sections",
-    "importLeftovers": "Lines to place yourself",
-    "exportsHeading": "One résumé, five files.",
-    "exportsBody": "Each application asks for something different. All five come from the same résumé, so they never drift apart.",
-    "exportPdf": "For upload forms and email. It reads back in the same order you see.",
-    "exportDocx": "For recruiters and portals that ask for Word.",
-    "exportTxt": "For forms that want you to paste plain text.",
-    "exportJson": "A full copy you can import again later.",
-    "exportYaml": "The same copy, easier to read and edit by hand.",
-    "importLink": "Import a file in the editor",
-    "importRawLabel": "Text from your PDF",
-    "snippetLabel": "Your PDF, read back",
-    "snippetChars": "{chars, number} characters",
     "faqHeading": "Common questions",
     "faqMissing": "Not covered here?",
     "faqMissingLink": "Ask on GitHub",
@@ -1819,6 +1775,10 @@
         "question": "Do I need to sign up or make an account?",
         "answer": "No, Lanjut needs no account. Open the editor and start writing. There is no sign-up, no login, and no email to give, because your résumés stay in this browser instead of on a server."
       },
+      "profiles": {
+        "question": "Can I keep different CVs for different jobs?",
+        "answer": "Yes. Make one profile for each kind of job, such as engineering roles and management roles. Each profile keeps its own CVs, contact details, and summary, and you switch between them from the avatar in the app."
+      },
       "openSource": {
         "question": "Is Lanjut open source?",
         "answer": "Yes, Lanjut is open source. The code is on GitHub under the AGPL-3.0 license. You can read how it works, report a bug, or contribute a fix or a translation."
@@ -1827,13 +1787,21 @@
         "question": "Where is my résumé saved?",
         "answer": "Your résumé is saved in this browser, on this device. Lanjut keeps your résumés in the browser's own storage and sends nothing to a server. If you clear your site data or switch browsers, the résumés stay behind, so back up your profile on the Profiles page. One file holds the profile and all its résumés, and it imports on another device."
       },
+      "offline": {
+        "question": "Does Lanjut work offline?",
+        "answer": "Yes. After your first visit, the site opens, edits, and exports without a connection. A template's PDF fonts download the first time you use it. The desktop app for macOS, Windows, and Linux works offline too."
+      },
       "files": {
         "question": "Which file should I send?",
         "answer": "Send the PDF to most upload forms and by email. Send the .docx when a portal or a recruiter asks for Word. Paste the .txt into forms that only take plain text."
       },
       "ats": {
         "question": "Will my résumé get through an applicant tracking system?",
-        "answer": "No tool can promise that, because each company sets up its system its own way. Lanjut takes care of the part the file controls: real text in reading order, standard section headings, and contact details the software can find. The sheet at the top of this page shows the text the software reads back from your PDF."
+        "answer": "No tool can promise that, because each company sets up its system its own way. Lanjut takes care of the part the file controls: real text in reading order, standard section headings, and contact details the software can find. The demo on this page shows the text the software reads back from your PDF."
+      },
+      "layout": {
+        "question": "Why can't I use tables or two columns?",
+        "answer": "Hiring software reads a page from top to bottom. Tables, side-by-side columns, floating text boxes, and pictures inside text can scramble that order, so Lanjut leaves them out of the text. You can still change the fonts, spacing, colors, and the order of your sections. The header photo is the one exception: it is optional and never changes the text the software reads."
       },
       "cv": {
         "question": "Is Lanjut a CV builder too?",
@@ -1853,7 +1821,96 @@
       },
       "guideLink": "Read the full guide"
     },
-    "keptGuideLink": "See a full ATS resume example"
+    "heroLead": "Build an ATS-friendly CV",
+    "heroAccent": "for free.",
+    "heroCta": "Build your CV",
+    "heroTemplates": "Browse templates",
+    "downloadMac": "Download for Mac",
+    "downloadWindows": "Download for Windows",
+    "downloadLinux": "Download for Linux",
+    "downloadApp": "Get the desktop app",
+    "mockupLabel": "The Lanjut editor: the sidebar on the left, the sample CV in the middle, and its sections listed on the right.",
+    "readersHeading": "See what the ATS reads.",
+    "readersBody": "Type your name and the role you want. The left side is the page a recruiter sees. The right side is the text that hiring software copies out of the same PDF. Drag the handle to compare the two.",
+    "pillars": {
+      "free": {
+        "title": "Free",
+        "body": "No paid plan, no trial, and no watermark. Download as many CVs as you want."
+      },
+      "openSource": {
+        "title": "Open source",
+        "body": "The code is public on GitHub under AGPL-3.0. Anyone can read it, check it, or run their own copy."
+      },
+      "local": {
+        "title": "Local-first and private",
+        "body": "Your CVs stay in your browser, on your device. No account, no upload, and no copy on a server."
+      }
+    },
+    "features": {
+      "heading": "Everything your CV needs, free.",
+      "body": "No trial, no paywall at download, and no account. Every feature works from your first visit.",
+      "profileExamples": {
+        "one": "Software engineer",
+        "two": "Product manager",
+        "three": "Remote roles"
+      },
+      "items": {
+        "profiles": {
+          "title": "Multiple CV profiles",
+          "body": "Keep one profile for each kind of job or job market. Each profile has its own CVs, contact details, and summary, and every new CV in it starts from them."
+        },
+        "templates": {
+          "title": "ATS-friendly templates",
+          "body": "Twenty templates, each with its own fonts and spacing. Every one keeps your sections in the simple order that hiring software reads."
+        },
+        "import": {
+          "title": "Import your CV from PDF",
+          "body": "Drop in your old CV. Lanjut sorts it into sections, and any line it cannot place waits in a list for you."
+        },
+        "export": {
+          "title": "Export to PDF and Word",
+          "body": "Download a PDF for upload forms, a Word file (.docx) when a recruiter asks for one, or plain text to paste."
+        },
+        "readiness": {
+          "title": "CV readiness check",
+          "body": "A meter shows what your CV still needs. It counts only your own words, never the sample's."
+        },
+        "backup": {
+          "title": "Back up to any device",
+          "body": "Save a profile and all its CVs as one small file, then open it on another computer. No server and no account."
+        },
+        "languages": {
+          "title": "English and Indonesian",
+          "body": "Use the app in English or Indonesian, and write each CV in either one. Section headings and dates follow the CV's language."
+        },
+        "style": {
+          "title": "Your look, your order",
+          "body": "Change fonts, spacing, and colors, add your own sections, drag sections into place, and add a photo if you want one."
+        },
+        "offline": {
+          "title": "Works offline, on any computer",
+          "body": "After your first visit, Lanjut opens, edits, and exports without a connection. The desktop app for Mac, Windows, and Linux works offline too."
+        }
+      }
+    },
+    "proof": {
+      "heading": "Your CV never leaves your device.",
+      "body": "Lanjut is local-first. Everything you write stays in this browser, and only you decide where a file goes.",
+      "noAccount": {
+        "title": "No account",
+        "body": "Nothing to sign up for. Open the editor and start writing."
+      },
+      "noUpload": {
+        "title": "No upload",
+        "body": "Your CVs live in your browser's own storage. Lanjut keeps no copy on a server."
+      },
+      "backup": {
+        "title": "Your own backup",
+        "body": "Save a profile and all its CVs as one file, and keep it wherever you want."
+      },
+      "privacyLink": "See every time Lanjut talks to a server"
+    },
+    "openHeading": "Built in the open"
   },
   "contributors": {
     "title": "Thanks to everyone building Lanjut",
@@ -1926,7 +1983,8 @@
   "download": {
     "metaTitle": "Download Lanjut for Mac, Windows, and Linux",
     "metaDescription": "Download Lanjut, a free ATS résumé and CV builder, as a desktop app for macOS, Windows, and Linux. It works offline, needs no account, and keeps your résumés on your computer.",
-    "heading": "Download Lanjut",
+    "headingLead": "Download",
+    "headingAccent": "Lanjut.",
     "lead": "The same résumé and CV builder as the website, as an app on your computer. It works offline, needs no account, and is free.",
     "version": "Version {version}",
     "whatsNew": "What's new",
@@ -1984,8 +2042,8 @@
     "plainTextLabel": "The same résumé as plain text, in the order an applicant tracking system reads it",
     "ctaHeading": "Make yours now",
     "ctaBody": "It is free and needs no account. Start from the sample, a template, or your old resume.",
-    "ctaBuild": "Build a resume",
-    "ctaTemplates": "Explore templates",
+    "ctaBuild": "Build your CV",
+    "ctaTemplates": "Browse templates",
     "onThisPage": "On this page",
     "readingTime": "{minutes} min read",
     "hubHeadingLead": "Guides to a résumé",

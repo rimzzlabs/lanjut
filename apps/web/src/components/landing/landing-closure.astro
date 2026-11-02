@@ -1,9 +1,12 @@
 ---
-import type { Locale } from "@lanjut/i18n/routing";
+import { type Locale, localizePath } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
+import { A } from "@mobily/ts-belt";
 import { contributorsAtBuild } from "@/lib/contributors-build";
+import { DOWNLOAD_PATHNAME, TEMPLATE_PATHNAME } from "@/lib/routes";
 import { LandingClosureActions } from "./landing-closure-actions";
 import { LandingContributors } from "./landing-contributors";
+import { DOWNLOAD_LABEL_KEYS } from "./landing-download-labels";
 
 interface Props {
   locale: Locale;
@@ -13,26 +16,46 @@ interface Props {
 const { locale, pathname } = Astro.props;
 const t = getTranslator(locale, "landing");
 const contributors = await contributorsAtBuild();
+const downloadLabels = A.map(DOWNLOAD_LABEL_KEYS, (item) => ({
+  os: item.os,
+  label: t(item.key),
+}));
 ---
 
-<section class="mx-auto w-11/12 max-w-6xl pb-28 md:pb-40">
-  <h2
-    class="max-w-4xl text-[clamp(2.75rem,8vw,6rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-balance"
-  >
-    {t("closeHeading")}
-  </h2>
-  <p class="mt-6 max-w-[52ch] text-base text-muted-foreground sm:text-lg">
-    {t("closeBody")}
-  </p>
-  <div class="mt-10">
-    <LandingClosureActions client:visible locale={locale} pathname={pathname} />
+{/* The last push: a centered call to action with the hero's own actions, so
+    the page ends where it starts. Under it, the people who build Lanjut. */}
+<section class="mx-auto w-11/12 max-w-6xl pb-24 md:pb-32">
+  <div class="text-center">
+    <h2
+      class="mx-auto max-w-4xl text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] font-extrabold tracking-[-0.035em] text-balance"
+    >
+      {t("closeHeading")}
+    </h2>
+    <p class="mx-auto mt-6 max-w-[52ch] text-base text-balance text-muted-foreground sm:text-lg">
+      {t("closeBody")}
+    </p>
+    <div class="mt-8 md:mt-10">
+      <LandingClosureActions
+        client:visible
+        locale={locale}
+        pathname={pathname}
+        templatesHref={localizePath(TEMPLATE_PATHNAME, locale)}
+        templatesLabel={t("heroTemplates")}
+        downloadHref={localizePath(DOWNLOAD_PATHNAME, locale)}
+        downloadLabels={downloadLabels}
+      />
+    </div>
   </div>
-  <div class="mt-14 border-t border-border pt-8">
-    <LandingContributors
-      client:visible
-      locale={locale}
-      pathname={pathname}
-      contributors={contributors}
-    />
+
+  <div class="mt-20 rounded-xl bg-card p-6 ring-1 ring-foreground/10 md:mt-28 md:p-8">
+    <h3 class="text-lg font-bold tracking-tight">{t("openHeading")}</h3>
+    <div class="mt-5">
+      <LandingContributors
+        client:visible
+        locale={locale}
+        pathname={pathname}
+        contributors={contributors}
+      />
+    </div>
   </div>
 </section>

@@ -18,11 +18,16 @@ editorial
 - Marketing pages (`/`): **Two Readers**. One résumé is read twice: by a person, and
   by the parser that pulls text out of its PDF. The page has its own world, documented
   in "Landing world: Two Readers" below. Masthead nav (hides on scroll down and returns
-  as a floating pill on scroll up; a bottom bar on mobile). The hero sets the headline
-  and deck over the draft row and the reader sheet. Then Looks, Kept, Import, Exports,
-  Local, Download, FAQ, a statement close, and a footer of titled link groups (Product,
-  Project, Support). No kickers, eyebrows, section numbers, or stat rows.
-- The download page (`/download`): the same frame as the privacy page, at full width.
+  as a floating pill on scroll up). On mobile a floating bottom bar holds the logo on the left, and the theme toggle, the
+  settings menu, and a Menu button on the right. Menu opens a drawer with the desktop
+  links in the same order, then GitHub and the "Build your CV" action
+  (`landing-mobile-menu.tsx`). The hero sets the headline,
+  the deck, and the actions over a picture of the editor. Then the three pillars (free,
+  open source, local-first), Looks, the read-back demo with the reader sheet, Features,
+  Local, FAQ, a statement close, and a footer of titled link groups (Product, Project, Support). No
+  kickers, eyebrows, section numbers, or stat rows.
+- The download page (`/download`): the same frame as the privacy page, at full width,
+  with the `/guide` header: the headline with one accent word and the lead beside it.
   A head script marks the visitor's system on `<html>` (`data-os`), and CSS shows one
   card with the installer for that system, or a card that sends phones and tablets to
   the editor. Every installer follows in a list by system, then the first-launch steps.
@@ -364,16 +369,16 @@ column is `w-11/12 max-w-5xl` centered.
 
 ## Per-page allowances
 
-- Marketing pages MAY use the Two Readers world: its own tokens, faces, the dark
-  `--ink` panels, and live résumé renders on a white sheet with a 1px ring. No
+- Marketing pages MAY use the Two Readers world: its own faces, the dark `--ink`
+  panels, and live résumé renders on a white sheet with a 1px ring. No
   dotted-glow cards, no gradient clip-text, no pulsing badges.
 - App pages MUST NOT use the display serif or enrichment. Restraint carries them.
 
 ## What pages MUST share
 
 - The wordmark (the Reading Line mark + "Lanjut" set in Plus Jakarta Sans bold, everywhere via `font-brand`).
-- The evergreen accent and its ≤5% placement. The landing world uses its own logo
-  green under the same budget.
+- The palette: the warm cream neutrals and the evergreen accent at ≤5% placement.
+  The landing world takes them from the app.
 - The Inter body / Geist Mono pairing, on every page except the landing page.
 - The CTA voice (button shape, radius `--radius` 1rem with `rounded-md` controls, icon placement).
 - Hairline rules (`border-foreground/15`) as the divider language, not card borders.
@@ -387,37 +392,17 @@ column is `w-11/12 max-w-5xl` centered.
 
 The landing page (`/`, `apps/web/src/pages/[...lang]/index.astro`) wraps its content in
 `<body data-world="readers">` (the `world` prop of `RootLayout`). That attribute
-re-points the shadcn tokens on that page only. Every primitive on the page inherits the world, and the app keeps the
-evergreen broadsheet. The page has one subject: the same résumé, read by a person and
+adds the machine tokens and the landing fonts on that page only. The colors are the
+app's. The page has one subject: the same résumé, read by a person and
 by a machine.
 
 ### Palette
 
-Tokens live under `[data-world="readers"]` and `.dark [data-world="readers"]` in
-`apps/web/src/styles/globals.css`. The neutrals lean cool green (hue 165 to 168), not warm
-cream.
-
-Light:
-
-- `--background` oklch(0.975 0.004 165): pale green-grey paper
-- `--foreground` oklch(0.2 0.02 168)
-- `--card` oklch(1 0 0), `--popover` oklch(0.99 0.003 165)
-- `--primary` / `--ring` oklch(0.53 0.12 164) (`#008159`): one step darker than the logo
-  green (`#0e8a66`), so that the white button text has a contrast of 4.8:1
-- `--primary-foreground` oklch(0.99 0.005 160)
-- `--secondary` / `--accent` oklch(0.93 0.008 165), `--muted` oklch(0.94 0.006 165)
-- `--muted-foreground` oklch(0.45 0.02 168)
-- `--border` oklch(0.88 0.01 168), `--input` oklch(0.86 0.012 168)
-
-Dark:
-
-- `--background` oklch(0.155 0.018 168), `--foreground` oklch(0.965 0.008 160)
-- `--card` oklch(0.19 0.02 168), `--popover` oklch(0.2 0.02 168)
-- `--primary` / `--ring` oklch(0.76 0.15 160), with ink foreground oklch(0.17 0.03 165)
-- `--secondary` oklch(0.23 0.02 168), `--muted` oklch(0.22 0.02 168),
-  `--accent` oklch(0.24 0.022 168)
-- `--muted-foreground` oklch(0.74 0.02 165)
-- `--border` oklch(0.3 0.022 168), `--input` oklch(0.33 0.024 168)
+The landing pages use the app's palette (`:root` and `.dark` above), so the site,
+the editor screenshot in the hero, and the app share one warm cream background
+and one evergreen accent. `[data-world="readers"]` in
+`apps/web/src/styles/globals.css` adds only the machine tokens below, and the
+landing fonts.
 
 Machine tokens. These name the parser's side of the page:
 
@@ -450,7 +435,7 @@ through `<Font>` in `apps/web/src/pages/[...lang]/index.astro`.
 ### Signature: the reader sheet
 
 `apps/web/src/components/landing/landing-reader-sheet.tsx` is the page's one signature
-component. It sits in the hero, under the draft row.
+component. It sits in the read-back section, under the draft row.
 
 - One white sheet (`bg-white` in both themes, `rounded-xl`, `ring-1 ring-black/10`, a
   soft drop shadow, a bottom fade mask). Aspect 3/4 on mobile, 16/10 from `sm`.
@@ -481,57 +466,81 @@ Every section is a `<section>` on `mx-auto w-11/12 max-w-6xl`, with bottom paddi
 `pb-24 md:pb-36` (the close uses `pb-28 md:pb-40`). Sections build on a 12-column grid
 from `md`. No section carries a kicker, eyebrow, or number above its heading.
 
-- Hero (`landing-hero.astro`): headline over 8 columns, deck over 4, bottom-aligned.
-  One headline word takes `text-primary`. Then the draft row (first name, last name,
-  role, look, primary action) and the reader sheet (`landing-readers.tsx`).
+- Pillars (`landing-pillars.astro`): three columns between hairlines, right under
+  the hero: free, open source, and local-first. Each has a duotone icon on a
+  `bg-primary/10` tile, a short heading, and one sentence.
+- Hero (`landing-hero.astro`): centered. The headline, with its last phrase in
+  `text-primary` and each hyphenated word kept on one line (`headline-words.astro`),
+  then the deck at `58ch`, then the actions in one row (`landing-hero-actions.tsx`):
+  one labeled primary action, "Build your CV", and two 44px outline icon buttons for
+  the templates and the download. Each icon button carries its name as visually
+  hidden text and in a tooltip. The download name says the visitor's system
+  (`data-os-only`, with the labels in `landing-download-labels.ts`). Then a
+  screenshot of the editor (`landing-editor-shot.astro`, from
+  `apps/web/src/assets/landing/editor.png`) in a `rounded-2xl` frame that fades
+  into the page from 55% of its height (`mask-b-from-55%`). Astro's
+  `Picture` writes it as AVIF and WebP at five widths, and it loads eagerly with high
+  fetch priority, because it is the hero's largest element. The screenshot is of the
+  light theme, so dark mode dims it to 85% brightness (`dark:brightness-85`). As it scrolls into view
+  it settles from a 22° backward lean to flat (`landing-tilt` in `globals.css`, a
+  scroll-driven CSS animation with no script). Browsers without view timelines and
+  reduced motion show it flat. Retake the screenshot when the editor's layout changes.
 - Looks (`landing-looks.astro`, `landing-looks.tsx`): from `lg` the section pins
   for one screen while the page scrolls through a track of about 340svh. The left 5
   columns hold the heading, the deck, and a list of five templates
   (`LANDING_SHOWCASE`, the most different looks) plus a closing "see more" row. The
   scroll opens one row at a time: a 2px `border-primary` marks it, and its body shows
-  the description and an outline button that restyles the hero sheet. The right 7
+  the description and an outline button that restyles the reader sheet below. The right 7
   columns hold one résumé page that fades to the open row, or three fanned pages for
   the closing row, which links to `/template`. A click on a row scrolls to its
   place in the track. Below `lg` nothing pins: the rows work as an accordion, and
   each open row draws its own page.
-- Kept (`landing-kept.astro`): allowed section types as `bg-secondary` chips, the
-  custom section as a dashed neutral chip. The kept-out list is a hairline `dl` with
-  a muted x before each plain name.
-- Import (`landing-import.astro`): heading over 7 columns beside the deck and an
-  outline link to the editor's import, then a full-width diagram below. Raw extracted
-  lines sit on an `--ink` plate, then an arrow, then a hairline `dl` of the sections
-  `parseResumeText` sorts them into. The one line it cannot place stays in Martian
-  Mono under the leftovers label.
-- Exports (`landing-exports.astro`): hairline rows, extension in Martian Mono beside
-  its use. The `.pdf` row also shows the first lines of the hero's real read on an
-  `--ink` plate (`landing-read-snippet.tsx`).
-- Local (`landing-local.astro`): copy beside a card that lists what stays on the
-  device and says that a server holds nothing. It is static HTML, with no island.
-- Download (`landing-download.astro`): three hairline-ruled rows, for macOS, Windows,
-  and Linux. Each row holds the system, its requirements in Martian Mono, an outline
-  download action.
-- FAQ (`landing-faq.astro`, `landing-faq.tsx`): a sticky heading column of 4 with a
-  GitHub issues link, beside the `Accordion` primitive at `rounded-xl`. Each answer
-  says only what ships. Panels use `hiddenUntilFound`, so closed answers stay in the
-  HTML for search and find-in-page.
-- Close (`landing-closure.astro`): a hero-size statement that Lanjut is free and open
-  source, a deck that names the license, and the two actions. Under a hairline rule
-  below them, the contributors row (`landing-contributors.tsx`): the contributors'
-  faces (from the build, then refreshed from the Worker's daily list), an invitation
-  to translate, fix a bug, or build a feature, and a plain "Contribute on GitHub"
-  link. It shows the open-source claim where the page makes it, and it adds no heading to compete with the statement.
-- Footer (`landing-footer.astro`): wordmark and tagline, then titled link groups, over
-  a top hairline.
+- Read-back (`landing-read-back.astro`): heading over 6 columns beside the deck, then
+  the draft row (first name, last name, role, look, primary action) and the reader
+  sheet (`landing-readers.tsx`).
+- Features (`landing-features.astro`, `landing-feature-card.astro`): heading beside
+  the deck, then a bento grid of nine cards on three columns from `lg` (two from
+  `sm`). Each card has a duotone Phosphor icon on a `bg-primary/10` tile, a heading
+  written as the phrase people search for, and one or two sentences. Profiles spans
+  two columns with three example profile chips. Offline spans the full row with the
+  download action for the visitor's system and the three system logos.
+- Local (`landing-local.astro`): the one inverted band on the page,
+  `bg-foreground text-background` at `rounded-2xl`, so it is dark on the light theme
+  and light on the dark theme. The heading sits beside the deck, then three facts
+  under a hairline (no account, no upload, your own backup), each with a duotone icon
+  on a `bg-background/10` tile, then a link to `/privacy`. It is static HTML, with no
+  island.
+- FAQ (`landing-faq.astro`, `landing-faq.tsx`): the heading beside a GitHub issues
+  link, then the questions in two columns from `lg`, each its own `Accordion` at
+  `rounded-xl`: the first half, then the rest. Each answer says only what ships.
+  Panels use `hiddenUntilFound`, so closed answers stay in the HTML for search and
+  find-in-page.
+- Close (`landing-closure.astro`): a centered call to action, then the hero's actions
+  (`landing-closure-actions.tsx`, sharing `landing-secondary-actions.tsx` with the
+  hero). Its primary action carries any draft typed in the read-back demo into the
+  editor. Under it, a "Built in the open" card with the contributors row
+  (`landing-contributors.tsx`): the contributors' faces (from the build, then
+  refreshed from the Worker's daily list), an invitation to translate, fix a bug, or
+  build a feature, and a plain "Contribute on GitHub" link.
+- Footer (`landing-footer.astro`): over a top hairline, a brand column of 4 (wordmark,
+  tagline, the three pillars as outline chips, a GitHub button with the star count
+  from the build, and the byline), beside four link groups: Product (editor,
+  templates, download, changelog), Resources (all guides, each guide by its heading,
+  privacy), Open source (GitHub, contributing, bug report, feature request), and
+  Support Lanjut (a one-line note over the donation links). A bottom row under a second hairline holds the copyright and plain
+  links to the home page in English and Bahasa Indonesia, the current one marked.
 
-Surfaces are three: `bg-secondary` fills, 1px `border-border` outlines, and `--ink`
-panels. `--ink` marks machine content only. Never put human copy on it.
+Surfaces are four: `bg-secondary` fills, 1px `border-border` outlines, `--ink` panels,
+and the one inverted band of the Local section. `--ink` marks machine content only.
+Never put human copy on it.
 
 ### Controls
 
-- Hero controls are 44px tall (`h-11`): the four draft fields, the look select, and
+- Read-back controls are 44px tall (`h-11`): the draft fields, the look select, and
   the primary action. The scanner handle is 44px (`size-11`).
-- Every landing action button is `size="lg"` at `h-11 px-5`: the hero action, the
-  close actions, and the three downloads.
+- Every landing action button is `size="lg"` at `h-11 px-5`: the hero actions, the
+  import link, the download action, the close actions, the guide card, and the
+  download page.
 - The desktop nav is 56px tall (`h-14`). Its buttons are 40px (`h-10`, `size-10`).
   The logo takes no hover fill while the nav floats as a pill.
 - The primary action is the filled `Button` with a trailing `ArrowRightIcon`. The
@@ -553,11 +562,15 @@ panels. `--ink` marks machine content only. Never put human copy on it.
 ### Accent budget
 
 - The logo green (`--primary`) fills the primary actions, takes the one accent word
-  in the hero headline, marks the focus ring, and rings the picked look with its
+  in the hero headline, the file icons of the export card, marks the focus ring, and rings the picked look with its
   check. Link hover may use it.
-- Everything else stays neutral: the nav "Build a resume" is an outline button,
-  "Explore templates" beside it is a ghost link, and the hero's parser check icons
-  are `--foreground`.
+- Everything else stays neutral: the desktop nav is all ghost buttons, in this
+  order: Guides, Templates, Download, "Build your CV", the GitHub link
+  with the star count, a hairline, then the theme toggle and the settings menu. The
+  parser check icons are `--foreground`.
+- GitHub and Linux use their usual marks from Simple Icons
+  (`apps/web/src/components/shared/brand-icons.tsx`), not Phosphor's versions.
+  Apple and Windows keep Phosphor's filled logos.
 - `--scanner` is the brighter green. It belongs to the scanner line and handle only.
 - No section is carpeted in green. The large color fields on the page are `--ink`,
   not green.

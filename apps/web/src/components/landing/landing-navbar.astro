@@ -4,8 +4,18 @@ import { getTranslator } from "@lanjut/i18n/translator";
 import { buttonVariants } from "@lanjut/ui/components/button";
 import { Separator } from "@lanjut/ui/components/separator";
 import { cn } from "@lanjut/ui/lib/utils";
+import { O } from "@mobily/ts-belt";
 import { ArrowRightIcon } from "@phosphor-icons/react";
-import { EDITOR_PATHNAME, TEMPLATE_PATHNAME } from "@/lib/routes";
+import { GithubMarkIcon } from "@/components/shared/brand-icons";
+import { starsAtBuild } from "@/lib/github-stars-build";
+import { GUIDE_PATHNAME } from "@/lib/guides";
+import {
+  DOWNLOAD_PATHNAME,
+  EDITOR_PATHNAME,
+  TEMPLATE_PATHNAME,
+} from "@/lib/routes";
+import { REPO_URL } from "@/lib/site";
+import { LandingMobileMenu } from "./landing-mobile-menu";
 import { LandingNavbarSettings } from "./landing-navbar-settings";
 
 interface Props {
@@ -17,7 +27,27 @@ const { locale, pathname } = Astro.props;
 const t = getTranslator(locale, "nav");
 const homeHref = localizePath("/", locale);
 const builderHref = localizePath(EDITOR_PATHNAME, locale);
-const templatesHref = localizePath(TEMPLATE_PATHNAME, locale);
+const LINKS = [
+  { href: localizePath(GUIDE_PATHNAME, locale), label: t("guides") },
+  {
+    href: localizePath(TEMPLATE_PATHNAME, locale),
+    label: t("exploreTemplates"),
+  },
+  { href: localizePath(DOWNLOAD_PATHNAME, locale), label: t("download") },
+];
+
+const stars = await starsAtBuild();
+const starsCompact = O.map(stars, (count) =>
+  new Intl.NumberFormat(locale, {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(count),
+);
+const githubName = O.match(
+  stars,
+  (count) => t("githubStars", { count }),
+  () => t("github"),
+);
 ---
 
 <div class="relative hidden h-16 md:block">
@@ -36,31 +66,59 @@ const templatesHref = localizePath(TEMPLATE_PATHNAME, locale);
           "-ml-3 h-10 gap-2 px-3 font-brand text-lg font-bold tracking-tight transition-[margin,background-color] group-data-[state=pill]/header:ml-0 group-data-[state=pill]/header:hover:bg-transparent dark:group-data-[state=pill]/header:hover:bg-transparent",
         )}
       >
-        <img src="/favicon.svg" alt="" width="22" height="22" class="size-5.5" />
+        <img
+          src="/favicon.svg"
+          alt=""
+          width="22"
+          height="22"
+          class="size-5.5"
+        />
         Lanjut
       </a>
 
-      <nav aria-label={t("main")} class="ml-auto inline-flex items-center gap-2">
+      <nav
+        aria-label={t("main")}
+        class="ml-auto inline-flex items-center gap-0.5"
+      >
+        {
+          LINKS.map((link) => (
+            <a
+              href={link.href}
+              class={cn(buttonVariants({ variant: "ghost" }), "h-10 px-3")}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+        <a
+          href={builderHref}
+          class={cn(buttonVariants({ variant: "ghost" }), "h-10 px-3")}
+        >
+          {t("buildResume")}
+        </a>
+        <a
+          href={REPO_URL}
+          target="_blank"
+          rel="noreferrer"
+          class={cn(buttonVariants({ variant: "ghost" }), "h-10 gap-2 px-3")}
+        >
+          <GithubMarkIcon className="size-5" />
+          {
+            O.match(
+              starsCompact,
+              (label) => <span aria-hidden="true">{label}</span>,
+              () => null,
+            )
+          }
+          <span class="sr-only">{githubName}, {t("newTab")}</span>
+        </a>
+        <Separator orientation="vertical" className="my-2 bg-foreground/15" />
         <LandingNavbarSettings
           client:media="(min-width: 48rem)"
           locale={locale}
           pathname={pathname}
           buttonClassName="size-10"
         />
-        <Separator orientation="vertical" className="my-2 bg-foreground/15" />
-        <a
-          href={templatesHref}
-          class={cn(buttonVariants({ variant: "ghost" }), "h-10 px-3")}
-        >
-          {t("exploreTemplates")}
-        </a>
-        <a
-          href={builderHref}
-          class={cn(buttonVariants({ variant: "outline" }), "h-10 px-4")}
-        >
-          {t("buildResume")}
-          <ArrowRightIcon />
-        </a>
       </nav>
     </div>
   </header>
@@ -72,23 +130,26 @@ const templatesHref = localizePath(TEMPLATE_PATHNAME, locale);
   class="fixed inset-x-2.5 bottom-[calc(0.5rem+env(safe-area-inset-bottom))] z-40 rounded-[calc(var(--radius-md)+0.5rem)] border border-foreground/10 bg-popover/70 text-popover-foreground dark:bg-popover/85 shadow-md transition-[translate,opacity] duration-300 ease-out before:pointer-events-none before:absolute before:inset-0 before:-z-1 before:rounded-[inherit] before:backdrop-blur-2xl before:backdrop-saturate-150 data-[hidden=true]:pointer-events-none data-[hidden=true]:translate-y-[calc(100%+0.5rem+env(safe-area-inset-bottom))] data-[hidden=true]:opacity-0 has-focus-visible:pointer-events-auto has-focus-visible:translate-y-0 has-focus-visible:opacity-100 has-aria-expanded:pointer-events-auto has-aria-expanded:translate-y-0 has-aria-expanded:opacity-100 md:hidden"
 >
   <div class="flex h-12.5 items-center px-1.75">
-    <a href={homeHref} class={cn(buttonVariants({ variant: "ghost", size: "icon" }))}>
+    <a
+      href={homeHref}
+      class={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
+    >
       <img src="/favicon.svg" alt="" width="20" height="20" class="size-5" />
       <span class="sr-only">Lanjut</span>
     </a>
 
-    <nav aria-label={t("main")} class="ml-auto inline-flex items-center gap-1">
-      <LandingNavbarSettings
+    <div class="ml-auto">
+      <LandingMobileMenu
         client:media="(max-width: 47.99rem)"
         locale={locale}
         pathname={pathname}
-        side="top"
+        links={LINKS}
+        build={{ href: builderHref, label: t("buildResume") }}
+        repoUrl={REPO_URL}
+        stars={O.toUndefined(starsCompact)}
+        githubName={githubName}
       />
-      <a href={builderHref} class={cn(buttonVariants({ variant: "outline" }))}>
-        {t("buildResume")}
-        <ArrowRightIcon />
-      </a>
-    </nav>
+    </div>
   </div>
 </header>
 

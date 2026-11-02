@@ -47,6 +47,8 @@ const structuredData = guideStructuredData(locale, {
   published: guide.published,
   updated: guide.updated,
 });
+
+import HeadlineWords from "@/components/shared/headline-words.astro";
 ---
 
 <LandingProsePage
@@ -67,7 +69,7 @@ const structuredData = guideStructuredData(locale, {
     {t("hubLink")}
   </a>
   <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-balance md:text-5xl">
-    {guide.heading}
+    <HeadlineWords text={guide.heading} />
   </h1>
   <GuideMeta locale={locale} published={guide.published} updated={guide.updated} />
   <p class="mt-6 text-lg text-muted-foreground">{guide.lead}</p>

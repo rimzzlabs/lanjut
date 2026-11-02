@@ -3,16 +3,15 @@ import { Font } from "astro:assets";
 import { type Locale, localeStaticPaths } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
 import LandingClosure from "@/components/landing/landing-closure.astro";
-import LandingDownload from "@/components/landing/landing-download.astro";
-import LandingExports from "@/components/landing/landing-exports.astro";
 import LandingFaq from "@/components/landing/landing-faq.astro";
+import LandingFeatures from "@/components/landing/landing-features.astro";
 import LandingFooter from "@/components/landing/landing-footer.astro";
 import LandingHero from "@/components/landing/landing-hero.astro";
-import LandingImport from "@/components/landing/landing-import.astro";
-import LandingKept from "@/components/landing/landing-kept.astro";
 import LandingLocal from "@/components/landing/landing-local.astro";
 import LandingLooks from "@/components/landing/landing-looks.astro";
 import LandingNavbar from "@/components/landing/landing-navbar.astro";
+import LandingPillars from "@/components/landing/landing-pillars.astro";
+import LandingReadBack from "@/components/landing/landing-read-back.astro";
 import PlatformDesktopRoot from "@/components/platform/platform-desktop-root.astro";
 import RootLayout from "@/components/shared/root-layout.astro";
 import { IS_DESKTOP } from "@/lib/build-target";
@@ -62,13 +61,12 @@ const structuredData = homeStructuredData(
     <Font slot="head" cssVariable="--font-machine" />
       <LandingNavbar locale={locale} pathname={pathname} />
       <main id="main">
-        <LandingHero locale={locale} pathname={pathname} />
+        <LandingHero locale={locale} />
+        <LandingPillars locale={locale} />
         <LandingLooks locale={locale} pathname={pathname} />
-        <LandingKept locale={locale} />
-        <LandingImport locale={locale} />
-        <LandingExports locale={locale} pathname={pathname} />
+        <LandingReadBack locale={locale} pathname={pathname} />
+        <LandingFeatures locale={locale} />
         <LandingLocal locale={locale} />
-        <LandingDownload locale={locale} />
         <LandingFaq locale={locale} pathname={pathname} />
         <LandingClosure locale={locale} pathname={pathname} />
       </main>

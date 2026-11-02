@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@lanjut/ui/components/accordion";
+import { A } from "@mobily/ts-belt";
 import { useLocale, useTranslations } from "use-intl";
 import { IslandProviders } from "@/components/shared/island-providers";
 import type { IslandProps } from "@/components/shared/providers";
@@ -25,10 +26,28 @@ export function LandingFaq(props: IslandProps) {
   );
 }
 
+// Two columns from `lg`, each its own accordion: the first half of the
+// questions, then the rest, so the order still reads down the first column.
+const HALF = Math.ceil(A.length(FAQ_KEYS) / 2);
+const FAQ_COLUMNS = [
+  { id: "first", keys: A.take(FAQ_KEYS, HALF) },
+  { id: "rest", keys: A.drop(FAQ_KEYS, HALF) },
+];
+
 function LandingFaqList() {
   return (
+    <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
+      {FAQ_COLUMNS.map((column) => (
+        <LandingFaqColumn key={column.id} keys={column.keys} />
+      ))}
+    </div>
+  );
+}
+
+function LandingFaqColumn(props: { keys: ReadonlyArray<FaqKey> }) {
+  return (
     <Accordion className="rounded-xl">
-      {FAQ_KEYS.map((key) => (
+      {props.keys.map((key) => (
         <LandingFaqItem key={key} id={key} />
       ))}
     </Accordion>

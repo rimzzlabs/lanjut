@@ -1,0 +1,28 @@
+---
+import { cn } from "@lanjut/ui/lib/utils";
+import type { Icon } from "@phosphor-icons/react";
+
+interface Props {
+  title: string;
+  body: string;
+  icon: Icon;
+  class?: string;
+}
+
+const { title, body } = Astro.props;
+const FeatureIcon = Astro.props.icon;
+---
+
+<li
+  class={cn(
+    "flex flex-col gap-3 rounded-xl bg-card p-6 ring-1 ring-foreground/10 transition-shadow hover:shadow-lg hover:shadow-foreground/5 md:p-7",
+    Astro.props.class,
+  )}
+>
+  <span class="grid size-11 place-items-center rounded-lg bg-primary/10 text-primary">
+    <FeatureIcon aria-hidden="true" weight="duotone" className="size-6" />
+  </span>
+  <h3 class="text-lg font-bold tracking-tight">{title}</h3>
+  <p class="text-muted-foreground">{body}</p>
+  <slot />
+</li>

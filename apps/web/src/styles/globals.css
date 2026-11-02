@@ -278,6 +278,22 @@ html[data-sidebar="collapsed"] [data-slot="sidebar-container"] {
   width: calc(var(--sidebar-width-icon) + 1rem + 2px);
 }
 
+/* The landing head script marks the visitor's system on <html> (data-os): mac,
+   windows, linux, or web for phones, tablets, and other systems. An element
+   with data-os-only shows only for the systems it lists. "none" lists the case
+   with no script, so a page can name a default. */
+[data-os-only] {
+  display: none;
+}
+
+html[data-os="mac"] [data-os-only~="mac"],
+html[data-os="windows"] [data-os-only~="windows"],
+html[data-os="linux"] [data-os-only~="linux"],
+html[data-os="web"] [data-os-only~="web"],
+html:not([data-os]) [data-os-only~="none"] {
+  display: revert;
+}
+
 /* The Recent list of the sidebar reads storage. The head script marks on <html>
    the number of rows it had last, and its loading rows take that number, so the
    groups under it stay in place. With no number, the group stays out, as it
@@ -324,9 +340,38 @@ html:not([data-workspace="editor"]) [data-workspace-view="editor"] {
   animation-delay: calc(80ms + var(--rise, 0) * 120ms);
 }
 
+/* The hero screenshot leans back and settles flat as it scrolls into view.
+   The scroll drives it, so no script runs. A browser without view timelines
+   shows it flat. It does not fade, for the same reason as landing-rise. */
+@keyframes landing-tilt {
+  from {
+    transform: perspective(1600px) rotateX(22deg) scale(0.92);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Lightning CSS folds a literal animation-timeline into the animation
+   shorthand, which browsers then reject whole. The variable keeps it a
+   longhand. */
+@supports (animation-timeline: view()) {
+  .landing-tilt {
+    --landing-tilt-timeline: view();
+    transform-origin: 50% 0%;
+    animation-name: landing-tilt;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: var(--landing-tilt-timeline);
+    animation-range: entry 0% cover 40%;
+  }
+}
+
 /* The head script and the motion store set data-motion from the animation
-   setting. Reduced motion drops movement, so the hero entrance stays out. */
-:root[data-motion="reduce"] .landing-rise {
+   setting. Reduced motion drops movement, so the hero entrance and the
+   screenshot tilt stay out. */
+:root[data-motion="reduce"] .landing-rise,
+:root[data-motion="reduce"] .landing-tilt {
   animation: none;
 }
 
@@ -348,26 +393,11 @@ html:not([data-workspace="editor"]) [data-workspace-view="editor"] {
   transition-property: var(--reduced-motion-transitions) !important;
 }
 
-/* The landing page's own world ("two readers"). It re-points the shadcn tokens
-   on the landing page's body only, so the app keeps its look. */
+/* The landing world ("two readers"). It takes the app's palette, so the site
+   and the editor screenshot share one background, and adds only the landing's
+   own tokens: the ink panel of the read-back sheet, the machine text on it, and
+   the scanner. */
 [data-world="readers"] {
-  --background: oklch(0.975 0.004 165);
-  --foreground: oklch(0.2 0.02 168);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.02 168);
-  --popover: oklch(0.99 0.003 165);
-  --popover-foreground: oklch(0.2 0.02 168);
-  --primary: oklch(0.53 0.12 164);
-  --primary-foreground: oklch(0.99 0.005 160);
-  --secondary: oklch(0.93 0.008 165);
-  --secondary-foreground: oklch(0.2 0.02 168);
-  --muted: oklch(0.94 0.006 165);
-  --muted-foreground: oklch(0.45 0.02 168);
-  --accent: oklch(0.93 0.008 165);
-  --accent-foreground: oklch(0.2 0.02 168);
-  --border: oklch(0.88 0.01 168);
-  --input: oklch(0.86 0.012 168);
-  --ring: oklch(0.53 0.12 164);
   --ink: oklch(0.17 0.02 168);
   --ink-line: oklch(0.3 0.025 168);
   --machine: oklch(0.86 0.1 158);
@@ -379,23 +409,6 @@ html:not([data-workspace="editor"]) [data-workspace-view="editor"] {
 }
 
 .dark [data-world="readers"] {
-  --background: oklch(0.155 0.018 168);
-  --foreground: oklch(0.965 0.008 160);
-  --card: oklch(0.19 0.02 168);
-  --card-foreground: oklch(0.965 0.008 160);
-  --popover: oklch(0.2 0.02 168);
-  --popover-foreground: oklch(0.965 0.008 160);
-  --primary: oklch(0.76 0.15 160);
-  --primary-foreground: oklch(0.17 0.03 165);
-  --secondary: oklch(0.23 0.02 168);
-  --secondary-foreground: oklch(0.965 0.008 160);
-  --muted: oklch(0.22 0.02 168);
-  --muted-foreground: oklch(0.74 0.02 165);
-  --accent: oklch(0.24 0.022 168);
-  --accent-foreground: oklch(0.965 0.008 160);
-  --border: oklch(0.3 0.022 168);
-  --input: oklch(0.33 0.024 168);
-  --ring: oklch(0.76 0.15 160);
   --ink: oklch(0.12 0.016 168);
   --ink-line: oklch(0.28 0.022 168);
 }

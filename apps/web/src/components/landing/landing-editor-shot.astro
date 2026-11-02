@@ -1,0 +1,30 @@
+---
+import { Picture } from "astro:assets";
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import editorShot from "@/assets/landing/editor.png";
+
+interface Props {
+  locale: Locale;
+}
+
+const t = getTranslator(Astro.props.locale, "landing");
+---
+
+{/* The hero's largest element, so it loads at once and ahead of other
+    images. The bottom fades into the page, as the reader sheet does. The
+    screenshot is of the light theme, so a dark page dims it by 15%. */}
+<div
+  class="landing-tilt overflow-hidden rounded-2xl bg-card ring-1 ring-foreground/10 mask-b-from-55%"
+>
+  <Picture
+    src={editorShot}
+    alt={t("mockupLabel")}
+    formats={["avif", "webp"]}
+    widths={[640, 960, 1280, 1920, 2880]}
+    sizes="(min-width: 80rem) 72rem, 92vw"
+    loading="eager"
+    fetchpriority="high"
+    class="block h-auto w-full dark:brightness-85"
+  />
+</div>
