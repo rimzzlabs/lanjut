@@ -1,16 +1,16 @@
 ---
-title: "ATS Resume Example: One Resume in Six Templates"
-description: "A complete ATS-friendly resume example, shown in six free templates and as the plain text a parser reads, with notes on each section for experienced hires and fresh graduates."
+title: "ATS Resume Example: One Resume in Twenty Templates"
+description: "A complete ATS-friendly resume example, shown in twenty free templates and as the plain text a parser reads, with notes on each section for experienced hires and fresh graduates."
 heading: "ATS resume example, section by section"
-lead: "Below is one complete résumé, the sample that ships with Lanjut, in all six templates. Under it is the same résumé as plain text. That text is what an applicant tracking system (ATS) works from. If it reads in the right order, the résumé does its job."
+lead: "Below is one complete résumé, the sample that ships with Lanjut, in all twenty templates. Under it is the same résumé as plain text. That text is what an applicant tracking system (ATS) works from. If it reads in the right order, the résumé does its job."
 published: "2026-11-01"
-updated: "2026-11-01"
+updated: "2026-11-02"
 order: 1
 ---
 
 ## What makes this example ATS-friendly
 
-The six templates above look different, but the plain text under them is the same for all six. That is the whole idea. A template may change the type, the spacing, and the accents. It never changes the order of what you wrote.
+The twenty templates above look different, but the plain text under them is the same for all twenty. That is the whole idea. A template may change the type, the spacing, and the accents. It never changes the order of what you wrote.
 
 The example follows five rules:
 

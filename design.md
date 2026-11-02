@@ -473,12 +473,16 @@ from `md`. No section carries a kicker, eyebrow, or number above its heading.
 - Hero (`landing-hero.astro`): headline over 8 columns, deck over 4, bottom-aligned.
   One headline word takes `text-primary`. Then the draft row (first name, last name,
   role, look, primary action) and the reader sheet (`landing-readers.tsx`).
-- Looks (`landing-looks.astro`, `landing-looks.tsx`): a sticky heading column of 4
-  over template thumbnails in a grid of 3. On mobile it becomes a snap-scroll row.
-  The heading column also holds an `--ink` plate with the section order the parser
-  read (`landing-order-plate.tsx`). Picking a look re-reads the hero sheet; the plate
-  shows the same order again. The picked look takes `ring-2 ring-primary` with a 4px
-  `ring-offset-background` gap, and a green check beside its name.
+- Looks (`landing-looks.astro`, `landing-looks.tsx`): from `lg` the section pins
+  for one screen while the page scrolls through a track of about 340svh. The left 5
+  columns hold the heading, the deck, and a list of five templates
+  (`LANDING_SHOWCASE`, the most different looks) plus a closing "see more" row. The
+  scroll opens one row at a time: a 2px `border-primary` marks it, and its body shows
+  the description and an outline button that restyles the hero sheet. The right 7
+  columns hold one résumé page that fades to the open row, or three fanned pages for
+  the closing row, which links to `/template`. A click on a row scrolls to its
+  place in the track. Below `lg` nothing pins: the rows work as an accordion, and
+  each open row draws its own page.
 - Kept (`landing-kept.astro`): allowed section types as `bg-secondary` chips, the
   custom section as a dashed neutral chip. The kept-out list is a hairline `dl` with
   a muted x before each plain name.
@@ -490,8 +494,8 @@ from `md`. No section carries a kicker, eyebrow, or number above its heading.
 - Exports (`landing-exports.astro`): hairline rows, extension in Martian Mono beside
   its use. The `.pdf` row also shows the first lines of the hero's real read on an
   `--ink` plate (`landing-read-snippet.tsx`).
-- Local (`landing-local.astro`): copy beside an `--ink` panel that draws the IndexedDB
-  stores, with `--ink-line` rules.
+- Local (`landing-local.astro`): copy beside a card that lists what stays on the
+  device and says that a server holds nothing. It is static HTML, with no island.
 - Download (`landing-download.astro`): three hairline-ruled rows, for macOS, Windows,
   and Linux. Each row holds the system, its requirements in Martian Mono, an outline
   download action.

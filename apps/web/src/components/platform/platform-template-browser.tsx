@@ -4,6 +4,7 @@ import {
   SORTED_TEMPLATES,
   type TemplateId,
 } from "@lanjut/resume/templates";
+import { ScrollArea } from "@lanjut/ui/components/scroll-area";
 import { A, O, pipe, S } from "@mobily/ts-belt";
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "use-intl";
@@ -28,8 +29,8 @@ import { SAMPLE_SOURCE } from "./platform-template-preview/platform-template-pre
 
 /**
  * Pick a template, then see it at full size on the sample or on one of your
- * own résumés. From `lg` the list sits beside the preview and stays in view
- * while the pages scroll. Below `lg` the templates are cards, and a card opens
+ * own résumés. From `lg` the list sits beside the preview, stays in view while
+ * the pages scroll, and scrolls on its own when it is taller than the window. Below `lg` the templates are cards, and a card opens
  * its preview in a drawer.
  */
 export function PlatformTemplateBrowser() {
@@ -101,14 +102,19 @@ export function PlatformTemplateBrowser() {
 
   return (
     <div className="grid grid-cols-[18rem_minmax(0,1fr)] items-start gap-6">
+      {/* The window less the navbar (4rem and its 1px border) and the sticky offset. */}
       <div className="sticky top-6">
-        <PlatformTemplateList
-          templates={results}
-          value={templateId}
-          onValueChange={setTemplateId}
-          preview={tilePreview}
-          query={S.trim(query)}
-        />
+        <ScrollArea className="h-[calc(100svh-5.5rem-1px)]">
+          <div className="p-0.5 pr-3 pb-8">
+            <PlatformTemplateList
+              templates={results}
+              value={templateId}
+              onValueChange={setTemplateId}
+              preview={tilePreview}
+              query={S.trim(query)}
+            />
+          </div>
+        </ScrollArea>
       </div>
 
       <PlatformTemplatePreview variant="card" {...previewProps} />

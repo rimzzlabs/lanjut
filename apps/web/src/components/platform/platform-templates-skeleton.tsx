@@ -50,7 +50,7 @@ export function PlatformTemplatesSkeleton() {
       </PlatformPageHeader>
 
       <div className="grid gap-6 lg:grid-cols-[18rem_minmax(0,1fr)] lg:items-start">
-        <ul className="flex flex-col gap-3 max-lg:hidden">
+        <ul className="sticky top-6 flex h-[calc(100svh-5.5rem-1px)] flex-col gap-3 overflow-hidden p-0.5 pr-3 pb-8 max-lg:hidden">
           {templates.map((template) => (
             <li
               key={template.id}
