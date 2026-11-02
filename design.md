@@ -41,7 +41,9 @@ editorial
   world, navbar, and footer as `/`, with one prose column under them
   (`landing-prose-page.astro`). A guide opens with a link back to all guides, the
   heading, a byline with its date, and a lead, and closes with a card that links to
-  the editor and the templates. The examples guide draws the sample in every template.
+  the editor and the templates. The examples guide draws the sample in the five
+  showcase templates. A click opens one at full size, every page, in a sheet from the
+  right (a drawer on phones), with a link to pick it on the template page.
   From `xl`, a guide's table of contents sits in a sticky rail on the right, and the
   column and the rail share the navbar's container. The `/guide` index uses the
   landing grids: the hero's headline with one accent phrase and the lead beside it,

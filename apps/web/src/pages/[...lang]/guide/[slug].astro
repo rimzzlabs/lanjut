@@ -2,15 +2,18 @@
 import { getEntry, render } from "astro:content";
 import { type Locale, localizePath, routing } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
-import { A } from "@mobily/ts-belt";
+import { TEMPLATES } from "@lanjut/resume/templates";
+import { A, O, pipe } from "@mobily/ts-belt";
 import GuideCta from "@/components/guide/guide-cta.astro";
 import GuideMeta from "@/components/guide/guide-meta.astro";
 import { GuideSampleGallery } from "@/components/guide/guide-sample-gallery";
 import { GuideToc } from "@/components/guide/guide-toc";
 import { toTocHeadings } from "@/components/guide/guide-toc-headings";
 import GuideTocMobile from "@/components/guide/guide-toc-mobile.astro";
+import { LANDING_SHOWCASE } from "@/components/landing/landing-looks-showcase";
 import LandingProsePage from "@/components/landing/landing-prose-page.astro";
 import { GUIDE_SLUGS, type GuideSlug } from "@/lib/guides";
+import { TEMPLATE_PATHNAME } from "@/lib/routes";
 import { publicPath } from "@/lib/seo";
 import { guideStructuredData } from "@/lib/structured-data";
 
@@ -38,6 +41,18 @@ const entry = await getEntry("guides", `${locale}/${slug}`);
 if (!entry) throw new Error(`Missing guide: ${locale}/${slug}`);
 const { Content, headings } = await render(entry);
 const toc = toTocHeadings(headings);
+
+// The examples guide shows the home page's five showcase templates, the most
+// different looks, and links to the rest.
+const tTemplates = getTranslator(locale, "platform.templates");
+const sampleTemplates = A.map(LANDING_SHOWCASE, (item) => ({
+  id: item.id,
+  name: pipe(
+    A.find(TEMPLATES, (template) => template.id === item.id),
+    O.mapWithDefault(item.id, (template) => template.name),
+  ),
+  description: tTemplates(`descriptions.${item.id}`),
+}));
 const guide = entry.data;
 
 const structuredData = guideStructuredData(locale, {
@@ -84,8 +99,17 @@ import HeadlineWords from "@/components/shared/headline-words.astro";
       <div class="mt-10">
         <GuideSampleGallery
           client:visible
+          locale={locale}
+          pathname={Astro.url.pathname}
           language={locale}
           plainTextLabel={t("plainTextLabel")}
+          templates={sampleTemplates}
+          templatesHref={localizePath(TEMPLATE_PATHNAME, locale)}
+          labels={{
+            open: t("sampleOpen"),
+            allTemplates: t("sampleAll"),
+            useTemplate: t("sampleUse"),
+          }}
         />
       </div>
     )

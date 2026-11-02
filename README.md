@@ -43,7 +43,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - A readiness meter that shows what your résumé still needs, counting only your own words, never the sample's
 - Guided tours of the library, templates, profiles, and editor for first-time users
 - A changelog page with the highlights of every release, also published as Markdown at `/changelog.md` for agents
-- Guides in English and Indonesian at `/guide`: a full ATS résumé example drawn in all twenty templates, and how to make an ATS-friendly résumé
+- Guides in English and Indonesian at `/guide`: a full ATS résumé example in five templates, each opening at full size, and how to make an ATS-friendly résumé
 - A download page at `/download` that offers the desktop installer for the visitor's system, links every file of the latest release, and explains the first launch of an unsigned build
 - A privacy page at `/privacy` that lists what stays on the device and every time the site talks to a server
 - Send feedback in-app: a guided form for bugs, ideas, and wording fixes that checks for similar issues and shows the technical details it attaches (never the text of your résumé). Without a GitHub account, Lanjut posts it for you and links to the issue; with one, it opens the issue prefilled for you to post
