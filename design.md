@@ -22,6 +22,11 @@ editorial
   and deck over the draft row and the reader sheet. Then Looks, Kept, Import, Exports,
   Local, Download, FAQ, a statement close, and a footer of titled link groups (Product,
   Project, Support). No kickers, eyebrows, section numbers, or stat rows.
+- The download page (`/download`): the same frame as the privacy page, at full width.
+  A head script marks the visitor's system on `<html>` (`data-os`), and CSS shows one
+  card with the installer for that system, or a card that sends phones and tablets to
+  the editor. Every installer follows in a list by system, then the first-launch steps.
+  Each link points at a stable file name on the latest release (`desktop-files.json`).
 - The privacy page (`/privacy`) and the guides (`/guide`, `/guide/<slug>`): the same
   world, navbar, and footer as `/`, with one prose column under them
   (`landing-prose-page.astro`). A guide opens with a link back to all guides, the

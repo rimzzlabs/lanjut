@@ -203,6 +203,20 @@ jobs:
             windows-x86_64 windows-aarch64
             linux-x86_64 linux-aarch64
 
+      # The download page links releases/latest/download/<stable name>, so a
+      # visitor gets the file without the release page. The names live in
+      # apps/web/src/lib/desktop-files.json.
+      - name: Upload each installer again under its stable name
+        run: |
+          set -euo pipefail
+          gh release view "$TAG" --json assets --jq '[.assets[].name]' > assets.json
+          node .github/scripts/stable-file-names.mjs assets.json > stable.txt
+          mkdir stable
+          while read -r release file; do
+            gh release download "$TAG" --pattern "$release" --output "stable/$file" --clobber
+          done < stable.txt
+          gh release upload "$TAG" stable/* --clobber
+
       # make_latest=legacy lets GitHub pick the latest release by date and
       # version. The API defaults to true, which would let a repair of an older
       # tag pull releases/latest, and every installed updater, backwards.

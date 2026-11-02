@@ -1,0 +1,46 @@
+{
+  "macos-arm64": {
+    "file": "Lanjut-macos-arm64.dmg",
+    "release": "Lanjut_{version}_aarch64.dmg"
+  },
+  "macos-x64": {
+    "file": "Lanjut-macos-x64.dmg",
+    "release": "Lanjut_{version}_x64.dmg"
+  },
+  "windows-x64": {
+    "file": "Lanjut-windows-x64-setup.exe",
+    "release": "Lanjut_{version}_x64-setup.exe"
+  },
+  "windows-arm64": {
+    "file": "Lanjut-windows-arm64-setup.exe",
+    "release": "Lanjut_{version}_arm64-setup.exe"
+  },
+  "windows-x64-msi": {
+    "file": "Lanjut-windows-x64.msi",
+    "release": "Lanjut_{version}_x64_en-US.msi"
+  },
+  "linux-x64-appimage": {
+    "file": "Lanjut-linux-x64.AppImage",
+    "release": "Lanjut_{version}_amd64.AppImage"
+  },
+  "linux-arm64-appimage": {
+    "file": "Lanjut-linux-arm64.AppImage",
+    "release": "Lanjut_{version}_aarch64.AppImage"
+  },
+  "linux-x64-deb": {
+    "file": "Lanjut-linux-x64.deb",
+    "release": "Lanjut_{version}_amd64.deb"
+  },
+  "linux-arm64-deb": {
+    "file": "Lanjut-linux-arm64.deb",
+    "release": "Lanjut_{version}_arm64.deb"
+  },
+  "linux-x64-rpm": {
+    "file": "Lanjut-linux-x64.rpm",
+    "release": "Lanjut-{version}-1.x86_64.rpm"
+  },
+  "linux-arm64-rpm": {
+    "file": "Lanjut-linux-arm64.rpm",
+    "release": "Lanjut-{version}-1.aarch64.rpm"
+  }
+}

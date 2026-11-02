@@ -1,0 +1,47 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { ArrowUpRightIcon } from "@phosphor-icons/react";
+import { DESKTOP_RELEASE_URL } from "@/lib/site";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale, "download");
+const tLanding = getTranslator(locale, "landing");
+
+const QUARANTINE_COMMAND =
+  "xattr -dr com.apple.quarantine /Applications/Lanjut.app";
+---
+
+<section aria-labelledby="first-open" class="max-w-3xl">
+  <h2
+    id="first-open"
+    class="text-[clamp(1.75rem,3vw,2.25rem)] font-extrabold tracking-[-0.03em]"
+  >
+    {t("helpHeading")}
+  </h2>
+  <h3 class="mt-8 text-lg font-bold">macOS</h3>
+  <p class="mt-2 text-muted-foreground">{t("helpMacBody")}</p>
+  <p class="mt-3 text-muted-foreground">{t("helpMacDamaged")}</p>
+  <pre
+    class="mt-3 rounded-md bg-muted px-4 py-3 font-machine text-sm break-all whitespace-pre-wrap"><code>{QUARANTINE_COMMAND}</code></pre>
+  <h3 class="mt-8 text-lg font-bold">Windows</h3>
+  <p class="mt-2 text-muted-foreground">{t("helpWindowsBody")}</p>
+  <p class="mt-8 text-muted-foreground">{t("helpUpdates")}</p>
+  <p class="mt-8 text-sm">
+    {t("older")}{" "}
+    <a
+      href={DESKTOP_RELEASE_URL}
+      target="_blank"
+      rel="noreferrer"
+      class="inline-flex items-center gap-1 rounded-xs font-medium underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+    >
+      {t("olderLink")}
+      <ArrowUpRightIcon aria-hidden="true" className="size-3.5" />
+      <span class="sr-only">{tLanding("newTab")}</span>
+    </a>
+  </p>
+</section>

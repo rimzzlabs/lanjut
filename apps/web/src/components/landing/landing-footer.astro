@@ -5,11 +5,12 @@ import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import { GUIDE_PATHNAME } from "@/lib/guides";
 import {
   CHANGELOG_PATHNAME,
+  DOWNLOAD_PATHNAME,
   EDITOR_PATHNAME,
   PRIVACY_PATHNAME,
   TEMPLATE_PATHNAME,
 } from "@/lib/routes";
-import { DESKTOP_RELEASE_URL, DONATION_LINKS, REPO_URL } from "@/lib/site";
+import { DONATION_LINKS, REPO_URL } from "@/lib/site";
 
 interface Props {
   locale: Locale;
@@ -54,7 +55,7 @@ const GROUPS: ReadonlyArray<{
         href: localizePath(TEMPLATE_PATHNAME, locale),
       },
       { label: t("guides"), href: localizePath(GUIDE_PATHNAME, locale) },
-      { label: t("download"), href: DESKTOP_RELEASE_URL, external: true },
+      { label: t("download"), href: localizePath(DOWNLOAD_PATHNAME, locale) },
     ],
   },
   {

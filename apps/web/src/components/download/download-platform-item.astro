@@ -1,0 +1,38 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import DownloadOption from "./download-option.astro";
+import DownloadOsIcon from "./download-os-icon.astro";
+import type { DownloadPlatform } from "./download-platforms";
+
+interface Props {
+  locale: Locale;
+  platform: DownloadPlatform;
+}
+
+const { locale, platform } = Astro.props;
+const t = getTranslator(locale, "download");
+---
+
+<li
+  id={platform.os}
+  class="grid scroll-mt-24 gap-6 border-b border-border py-8 md:grid-cols-12"
+>
+  <div class="flex items-start gap-4 md:col-span-5">
+    <DownloadOsIcon os={platform.os} class="size-9 shrink-0" />
+    <div>
+      <h3 class="text-2xl font-bold tracking-tight">{platform.name}</h3>
+      <p class="text-sm text-muted-foreground">{t(`requires.${platform.os}`)}</p>
+    </div>
+  </div>
+  <div class="flex flex-col gap-4 md:col-span-7">
+    <ul class="flex flex-col gap-4">
+      {platform.options.map((option) => <DownloadOption locale={locale} option={option} />)}
+    </ul>
+    {
+      platform.os === "mac" && (
+        <p class="text-sm text-muted-foreground">{t("whichMac")}</p>
+      )
+    }
+  </div>
+</li>

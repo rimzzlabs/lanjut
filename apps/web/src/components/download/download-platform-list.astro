@@ -1,0 +1,29 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import DownloadPlatformItem from "./download-platform-item.astro";
+import { DOWNLOAD_PLATFORMS } from "./download-platforms";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getTranslator(locale, "download");
+---
+
+<section aria-labelledby="all-downloads" class="pb-16 md:pb-24">
+  <h2
+    id="all-downloads"
+    class="text-[clamp(1.75rem,3vw,2.25rem)] font-extrabold tracking-[-0.03em]"
+  >
+    {t("allHeading")}
+  </h2>
+  <ul class="mt-6 border-t border-border">
+    {
+      DOWNLOAD_PLATFORMS.map((platform) => (
+        <DownloadPlatformItem locale={locale} platform={platform} />
+      ))
+    }
+  </ul>
+</section>
