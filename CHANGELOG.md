@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.0](https://github.com/rimzzlabs/lanjut/compare/v1.5.0...v1.6.0) (2026-11-02)
+
+
+### Features
+
+* add a download page for the desktop app ([#269](https://github.com/rimzzlabs/lanjut/issues/269)) ([669f4b5](https://github.com/rimzzlabs/lanjut/commit/669f4b5eb0543eb4e83ead8d0af2ffc380da7785))
+* add fourteen templates and a template walk-through on the home page ([#266](https://github.com/rimzzlabs/lanjut/issues/266)) ([c9a9d48](https://github.com/rimzzlabs/lanjut/commit/c9a9d480f04c80d60570759e6a083b37486d1f6e))
+* add resume colors and contact labels ([#268](https://github.com/rimzzlabs/lanjut/issues/268)) ([6106b48](https://github.com/rimzzlabs/lanjut/commit/6106b48ff075268ae6a2f7e7dcff3bdc8eac5eab))
+* preview guide templates at full size ([#272](https://github.com/rimzzlabs/lanjut/issues/272)) ([c8d14f0](https://github.com/rimzzlabs/lanjut/commit/c8d14f087835d111b993d66c898947c84b049b1c))
+* redesign the home page around the editor ([#270](https://github.com/rimzzlabs/lanjut/issues/270)) ([d58c033](https://github.com/rimzzlabs/lanjut/commit/d58c03316288f4bdbaa35a4fd9aa612f1aaeb52f))
+* thank the visitor when a desktop download starts ([#271](https://github.com/rimzzlabs/lanjut/issues/271)) ([e9d9f52](https://github.com/rimzzlabs/lanjut/commit/e9d9f5281b2e3e7e937ee131b8f4a38d24ac3f02))
+
 ## [1.5.0](https://github.com/rimzzlabs/lanjut/compare/v1.4.0...v1.5.0) (2026-11-01)
 
 
