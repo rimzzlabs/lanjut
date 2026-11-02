@@ -217,6 +217,10 @@
           {
             "title": "Halaman depan yang lebih jelas",
             "description": "Halaman depan sekarang langsung menampilkan editornya dan merangkum semua fitur di satu tempat: profil CV, template, impor, download, bisa offline, dan lainnya. Menu di atas juga punya tautan ke template, panduan, dan halaman download."
+          },
+          {
+            "title": "Pratinjau template ukuran penuh di panduan",
+            "description": "Panduan contoh CV ATS sekarang menampilkan lima template. Ketuk salah satunya untuk melihat semua halamannya dalam ukuran penuh, lalu pakai dengan sekali klik."
           }
         ],
         "1_5_0": [
@@ -2055,6 +2059,9 @@
     "hubHeadingLead": "Panduan bikin CV",
     "hubHeadingAccent": "yang terbaca benar.",
     "hubListLabel": "Semua panduan",
-    "hubListBody": "Setiap panduan memakai contoh CV dari Lanjut, jadi kamu lihat hasilnya, bukan cuma sarannya."
+    "hubListBody": "Setiap panduan memakai contoh CV dari Lanjut, jadi kamu lihat hasilnya, bukan cuma sarannya.",
+    "sampleOpen": "Buka pratinjau besar",
+    "sampleAll": "Lihat semua 20 template",
+    "sampleUse": "Pakai template ini"
   }
 }

@@ -217,6 +217,10 @@
           {
             "title": "A clearer home page",
             "description": "The home page now shows the editor itself and lists every feature in one place: CV profiles, templates, import, export, offline use, and more. The menu at the top links the templates, the guides, and the download page."
+          },
+          {
+            "title": "Full-size template previews in the guide",
+            "description": "The ATS resume example guide now shows five templates. Tap one to see every page at full size, then pick it in one click."
           }
         ],
         "1_5_0": [
@@ -2055,6 +2059,9 @@
     "hubHeadingLead": "Guides to a résumé",
     "hubHeadingAccent": "that reads right.",
     "hubListLabel": "All guides",
-    "hubListBody": "Each one uses Lanjut's own sample résumé, so you see the result, not only the advice."
+    "hubListBody": "Each one uses Lanjut's own sample résumé, so you see the result, not only the advice.",
+    "sampleOpen": "Open a larger preview",
+    "sampleAll": "See all twenty templates",
+    "sampleUse": "Use this template"
   }
 }
