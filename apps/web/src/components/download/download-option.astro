@@ -1,0 +1,39 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { buttonVariants } from "@lanjut/ui/components/button";
+import { cn } from "@lanjut/ui/lib/utils";
+import { DownloadSimpleIcon } from "@phosphor-icons/react";
+import { desktopFileUrl } from "@/lib/desktop-files";
+import type { DownloadOption } from "./download-platforms";
+
+interface Props {
+  locale: Locale;
+  option: DownloadOption;
+}
+
+const { locale, option } = Astro.props;
+const t = getTranslator(locale, "download");
+const format = t(`formats.${option.format}`);
+---
+
+<li class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+  <span class="font-medium">{format}</span>
+  <span class="flex flex-wrap gap-2">
+    {
+      option.choices.map((choice) => (
+        <a
+          href={desktopFileUrl(choice.file)}
+          aria-label={t("downloadFile", {
+            format,
+            arch: t(`arch.${choice.arch}`),
+          })}
+          class={cn(buttonVariants({ variant: "outline" }), "gap-2")}
+        >
+          <DownloadSimpleIcon aria-hidden="true" />
+          {t(`arch.${choice.arch}`)}
+        </a>
+      ))
+    }
+  </span>
+</li>

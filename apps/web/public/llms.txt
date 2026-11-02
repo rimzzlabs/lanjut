@@ -7,7 +7,7 @@
 - Templates: https://lanjut.org/template
 - Changelog: https://lanjut.org/changelog (Markdown: https://lanjut.org/changelog.md, Indonesian: https://lanjut.org/id/changelog.md)
 - Source code (AGPL-3.0): https://github.com/rimzzlabs/lanjut
-- Desktop app (macOS, Windows, Linux): https://github.com/rimzzlabs/lanjut/releases/latest
+- Desktop app (macOS, Windows, Linux): https://lanjut.org/download
 - Maker: Rizki Citra (https://rimzzlabs.com), with contributors on GitHub
 - Listings: https://www.producthunt.com/products/lanjut-ats-friendly-resume-builder and https://alternativeto.net/software/lanjut/about/
 
@@ -33,6 +33,7 @@
 - [Templates](https://lanjut.org/template): the twenty templates, each shown on a full page
 - [Changelog](https://lanjut.org/changelog): the highlights of every release, newest first. The same history as Markdown: [changelog.md](https://lanjut.org/changelog.md)
 - [Feedback](https://lanjut.org/feedback): report a bug or suggest an idea, with no account needed
+- [Download](https://lanjut.org/download): the desktop app, with the right installer for the visitor's system and steps for the first launch
 - [Privacy](https://lanjut.org/privacy): what stays on the device, and every time the site talks to a server
 - [Guides](https://lanjut.org/guide): how an ATS reads a resume, with a full example
   - [ATS resume example](https://lanjut.org/guide/ats-resume-examples): one resume in twenty templates, with notes on each section

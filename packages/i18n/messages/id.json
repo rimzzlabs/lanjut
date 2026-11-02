@@ -203,6 +203,10 @@
           {
             "title": "Label kontak",
             "description": "Tampilkan kata singkat seperti LinkedIn sebagai ganti alamat yang panjang. Tautannya tetap membuka alamat lengkap, dan Lanjut kasih tahu kalau label menyembunyikannya dari ATS."
+          },
+          {
+            "title": "Halaman download aplikasi desktop",
+            "description": "lanjut.org/download memilihkan installer yang pas untuk komputermu dan langsung mulai download. Ada juga langkah-langkahnya kalau macOS atau Windows kasih peringatan waktu aplikasinya pertama kali dibuka."
           }
         ],
         "1_5_0": [
@@ -1905,6 +1909,10 @@
         "title": "Pembaruan aplikasi desktop.",
         "body": "Aplikasi desktop mengecek versi terbaru di GitHub paling sering tiga hari sekali. Nggak ada yang terpasang sebelum kamu klik."
       },
+      "downloads": {
+        "title": "Download aplikasi desktop.",
+        "body": "Tombol download mengambil aplikasinya dari GitHub, tempat Lanjut merilis setiap versi. Seperti host lain, GitHub menerima detail biasa dari permintaan itu."
+      },
       "donations": {
         "title": "Donasi.",
         "body": "Tautan Saweria dan SociaBuzz cuma tautan biasa. Situs mereka baru terbuka kalau kamu klik."
@@ -1914,6 +1922,56 @@
     "codeBody": "Lanjut itu open source dengan lisensi AGPL-3.0. Semua kode di balik isi halaman ini bisa kamu baca di GitHub.",
     "codeLink": "Baca kodenya",
     "updated": "Terakhir diperbarui"
+  },
+  "download": {
+    "metaTitle": "Download Lanjut untuk Mac, Windows, dan Linux",
+    "metaDescription": "Download Lanjut, pembuat CV ATS gratis, sebagai aplikasi desktop untuk macOS, Windows, dan Linux. Jalan tanpa internet, tanpa daftar akun, dan CV kamu tetap di komputermu.",
+    "heading": "Download Lanjut",
+    "lead": "Pembuat CV yang sama dengan versi webnya, sekarang sebagai aplikasi di komputermu. Jalan tanpa internet, tanpa akun, dan gratis.",
+    "version": "Versi {version}",
+    "whatsNew": "Yang baru",
+    "recommended": "Untuk komputer ini",
+    "macCta": "Download untuk Mac",
+    "macNote": "Untuk Mac dengan Apple silicon (M1 ke atas).",
+    "macIntel": "Mac Intel",
+    "windowsCta": "Download untuk Windows",
+    "windowsNote": "Untuk kebanyakan PC Windows (x64).",
+    "windowsArm": "PC ARM64",
+    "linuxCta": "Download AppImage",
+    "linuxNote": "Jalan di kebanyakan distro. Paket .deb dan .rpm ada di daftar di bawah.",
+    "linuxArm": "ARM64",
+    "webTitle": "Belum ada aplikasi untuk perangkat ini",
+    "webBody": "Aplikasi desktopnya untuk komputer Mac, Windows, dan Linux. Di perangkat ini, Lanjut jalan di browser, dengan template dan format ekspor yang sama.",
+    "webCta": "Buka editor",
+    "allHeading": "Semua file",
+    "requires": {
+      "mac": "macOS 13 ke atas",
+      "windows": "Windows 10 ke atas",
+      "linux": "Ubuntu 22.04 ke atas, atau distro yang seumuran"
+    },
+    "formats": {
+      "dmg": "Disk image (.dmg)",
+      "exe": "Installer (.exe)",
+      "msi": "Installer untuk tim IT (.msi)",
+      "appimage": "AppImage, untuk distro apa pun",
+      "deb": "Ubuntu dan Debian (.deb)",
+      "rpm": "Fedora dan openSUSE (.rpm)"
+    },
+    "arch": {
+      "appleSilicon": "Apple silicon",
+      "intel": "Intel",
+      "x64": "x64",
+      "arm64": "ARM64"
+    },
+    "downloadFile": "Download {format}, {arch}",
+    "whichMac": "Mac kamu yang mana? Buka menu Apple, lalu pilih About This Mac. Kalau ada tulisan Chip, pilih Apple silicon. Kalau tulisannya Processor, pilih Intel.",
+    "helpHeading": "Pertama kali membuka aplikasinya",
+    "helpMacBody": "Lanjut belum ditandatangani Apple, jadi macOS memblokirnya di awal. Coba buka Lanjut sekali. Lalu buka System Settings, masuk ke Privacy & Security, dan klik Open Anyway.",
+    "helpMacDamaged": "Kalau macOS bilang aplikasinya rusak (damaged), jalankan perintah ini di Terminal, lalu buka Lanjut lagi:",
+    "helpWindowsBody": "Lanjut belum ditandatangani untuk Windows, jadi SmartScreen menampilkan peringatan di awal. Klik More info, lalu Run anyway.",
+    "helpUpdates": "Setelah terpasang, Lanjut mengecek versi baru paling sering tiga hari sekali. Nggak ada yang terpasang sebelum kamu klik.",
+    "older": "Cari versi lama?",
+    "olderLink": "Semua rilis di GitHub"
   },
   "guide": {
     "hubTitle": "Panduan CV ATS",

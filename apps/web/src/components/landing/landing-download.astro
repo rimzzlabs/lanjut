@@ -1,5 +1,5 @@
 ---
-import type { Locale } from "@lanjut/i18n/routing";
+import { type Locale, localizePath } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
 import { buttonVariants } from "@lanjut/ui/components/button";
 import { cn } from "@lanjut/ui/lib/utils";
@@ -9,7 +9,7 @@ import {
   LinuxLogoIcon,
   WindowsLogoIcon,
 } from "@phosphor-icons/react";
-import { DESKTOP_RELEASE_URL } from "@/lib/site";
+import { DOWNLOAD_PATHNAME } from "@/lib/routes";
 
 interface Props {
   locale: Locale;
@@ -17,11 +17,12 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = getTranslator(locale, "landing");
+const downloadHref = localizePath(DOWNLOAD_PATHNAME, locale);
 
 const PLATFORMS = [
-  { name: "macOS", key: "mac", Icon: AppleLogoIcon },
-  { name: "Windows", key: "win", Icon: WindowsLogoIcon },
-  { name: "Linux", key: "linux", Icon: LinuxLogoIcon },
+  { name: "macOS", key: "mac", os: "mac", Icon: AppleLogoIcon },
+  { name: "Windows", key: "win", os: "windows", Icon: WindowsLogoIcon },
+  { name: "Linux", key: "linux", os: "linux", Icon: LinuxLogoIcon },
 ] as const;
 ---
 
@@ -48,9 +49,7 @@ const PLATFORMS = [
           </div>
           <div class="flex flex-col items-start gap-3 md:col-span-7 md:items-end">
             <a
-              href={DESKTOP_RELEASE_URL}
-              target="_blank"
-              rel="noreferrer"
+              href={`${downloadHref}#${platform.os}`}
               class={cn(
                 buttonVariants({ size: "lg", variant: "outline" }),
                 "h-11 gap-2 px-5",
@@ -58,7 +57,6 @@ const PLATFORMS = [
             >
               <DownloadSimpleIcon />
               {t(`${platform.key}Cta`)}
-              <span class="sr-only">{t("newTab")}</span>
             </a>
           </div>
         </li>

@@ -4,8 +4,9 @@ import { A, O, pipe } from "@mobily/ts-belt";
 import { FAQ_KEYS } from "@/components/landing/landing-faq-keys";
 import { CHANGELOG, type ChangelogEntry } from "./changelog";
 import type { Contributor } from "./contributors";
+import { DOWNLOAD_PATHNAME } from "./routes";
 import { absoluteUrl } from "./seo";
-import { DESKTOP_RELEASE_URL, LISTING_URLS, REPO_URL, SITE } from "./site";
+import { LISTING_URLS, REPO_URL, SITE } from "./site";
 
 const HOME = absoluteUrl("/");
 const WEBSITE_ID = `${HOME}#website`;
@@ -77,7 +78,7 @@ export function homeStructuredData(
         isAccessibleForFree: true,
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
         license: "https://www.gnu.org/licenses/agpl-3.0.html",
-        downloadUrl: DESKTOP_RELEASE_URL,
+        downloadUrl: absoluteUrl(localizePath(DOWNLOAD_PATHNAME, locale)),
         releaseNotes: absoluteUrl(localizePath("/changelog", locale)),
         ...LATEST_RELEASE,
         screenshot: absoluteUrl(`/og/${locale}.png`),

@@ -35,6 +35,7 @@ export const INDEXED_PATHS: ReadonlyArray<string> = [
   "/changelog",
   "/feedback",
   "/privacy",
+  "/download",
   "/guide",
   "/guide/ats-resume-examples",
   "/guide/how-to-make-an-ats-resume",

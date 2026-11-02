@@ -25,9 +25,6 @@ export const DONATION_LINKS = {
   sociabuzz: "https://sociabuzz.com/rimzzlabs/tribe",
 } as const;
 
-/**
- * Where the desktop download points. The latest-release page rather than a
- * pinned asset, so the link does not rot when a new version publishes.
- */
+/** Every release on GitHub, for the versions the download page does not list. */
 export const DESKTOP_RELEASE_URL =
   "https://github.com/rimzzlabs/lanjut/releases/latest";

@@ -203,6 +203,10 @@
           {
             "title": "Contact labels",
             "description": "Show a short word such as LinkedIn in place of a long address. The link still opens the full address, and Lanjut tells you when a label hides it from applicant tracking systems."
+          },
+          {
+            "title": "A download page for the desktop app",
+            "description": "lanjut.org/download picks the right installer for your computer and starts the download right away. It also shows what to do when macOS or Windows warns you the first time you open the app."
           }
         ],
         "1_5_0": [
@@ -1905,6 +1909,10 @@
         "title": "Desktop updates.",
         "body": "The desktop app checks GitHub for a new version at most once every three days. Nothing installs until you click."
       },
+      "downloads": {
+        "title": "Desktop downloads.",
+        "body": "The download buttons get the app from GitHub, where Lanjut publishes each release. Like any host, GitHub receives the usual details of that request."
+      },
       "donations": {
         "title": "Donations.",
         "body": "The Saweria and SociaBuzz links are plain links. Those sites open only when you click them."
@@ -1914,6 +1922,56 @@
     "codeBody": "Lanjut is open source under AGPL-3.0. The code that does everything on this page is public on GitHub.",
     "codeLink": "Read the code",
     "updated": "Last updated"
+  },
+  "download": {
+    "metaTitle": "Download Lanjut for Mac, Windows, and Linux",
+    "metaDescription": "Download Lanjut, a free ATS résumé and CV builder, as a desktop app for macOS, Windows, and Linux. It works offline, needs no account, and keeps your résumés on your computer.",
+    "heading": "Download Lanjut",
+    "lead": "The same résumé and CV builder as the website, as an app on your computer. It works offline, needs no account, and is free.",
+    "version": "Version {version}",
+    "whatsNew": "What's new",
+    "recommended": "For this computer",
+    "macCta": "Download for Mac",
+    "macNote": "For Macs with Apple silicon (M1 or later).",
+    "macIntel": "Intel Mac",
+    "windowsCta": "Download for Windows",
+    "windowsNote": "For most Windows PCs (x64).",
+    "windowsArm": "ARM64 PC",
+    "linuxCta": "Download AppImage",
+    "linuxNote": "Runs on most distributions. The .deb and .rpm packages are in the list below.",
+    "linuxArm": "ARM64",
+    "webTitle": "No app for this device",
+    "webBody": "The desktop app is for Mac, Windows, and Linux computers. On this device, Lanjut works in your browser, with the same templates and exports.",
+    "webCta": "Open the editor",
+    "allHeading": "All downloads",
+    "requires": {
+      "mac": "macOS 13 or later",
+      "windows": "Windows 10 or later",
+      "linux": "Ubuntu 22.04 or later, or a distribution of the same age"
+    },
+    "formats": {
+      "dmg": "Disk image (.dmg)",
+      "exe": "Installer (.exe)",
+      "msi": "Installer for IT teams (.msi)",
+      "appimage": "AppImage, for any distribution",
+      "deb": "Ubuntu and Debian (.deb)",
+      "rpm": "Fedora and openSUSE (.rpm)"
+    },
+    "arch": {
+      "appleSilicon": "Apple silicon",
+      "intel": "Intel",
+      "x64": "x64",
+      "arm64": "ARM64"
+    },
+    "downloadFile": "Download {format}, {arch}",
+    "whichMac": "Which Mac do I have? Open the Apple menu and choose About This Mac. If you see Chip, pick Apple silicon. If you see Processor, pick Intel.",
+    "helpHeading": "Opening the app for the first time",
+    "helpMacBody": "Apple has not yet signed Lanjut, so macOS blocks it the first time. Try to open Lanjut once. Then open System Settings, go to Privacy & Security, and click Open Anyway.",
+    "helpMacDamaged": "If macOS says that the app is damaged, run this command in Terminal, then open Lanjut again:",
+    "helpWindowsBody": "Lanjut is not yet signed for Windows, so SmartScreen shows a warning the first time. Click More info, then Run anyway.",
+    "helpUpdates": "After you install it, Lanjut checks for a new version at most once every three days. Nothing installs until you click.",
+    "older": "Looking for an older version?",
+    "olderLink": "All releases on GitHub"
   },
   "guide": {
     "hubTitle": "Resume and CV guides",

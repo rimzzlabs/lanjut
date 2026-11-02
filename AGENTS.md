@@ -180,6 +180,13 @@ Contact labels (`Resume.contactLabels`) show a short text in place of an email o
   confirms that it signs every system and architecture before the release goes public
   (`.github/scripts/check-update-manifest.mjs`). Keep its `PLATFORMS` list in step
   with the desktop matrix.
+- The download page (`/download`) links each installer by a stable name, such as
+  `releases/latest/download/Lanjut-macos-arm64.dmg`, so a visitor gets the file and
+  never sees the release page. The `publish` job uploads a copy of each installer under
+  that name before the release goes public (`.github/scripts/stable-file-names.mjs`).
+  `apps/web/src/lib/desktop-files.json` holds both names for the site and the job, and
+  the job fails when an installer it names is missing. A new target or a renamed bundle
+  changes that file in the same PR.
 - Repair a failed release with `gh run rerun --failed <run-id>`. That runs the failed
   jobs again inside the original run, runs `publish` after them, and updates the
   checks the run already wrote. A `workflow_dispatch` starts a separate run instead,
