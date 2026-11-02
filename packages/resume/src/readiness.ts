@@ -1,4 +1,5 @@
-import { A, G, pipe, S } from "@mobily/ts-belt";
+import { A, D, G, pipe, S } from "@mobily/ts-belt";
+import { usableContactLabels } from "./contact-labels";
 import {
   isSampleEntry,
   isSampleLine,
@@ -19,12 +20,16 @@ export type ReadinessCheckId =
   | "experience"
   | "bullets"
   | "education"
-  | "skills";
+  | "skills"
+  | "contactLabels";
 
 /** Where a check is fixed: a section of the editor list, and a field in it. */
 export interface ReadinessTarget {
-  /** The section's value in the editor list: "personal", or a section type. */
-  section: "personal" | SectionType;
+  /**
+   * The section's value in the editor list: "personal", or a section type.
+   * "styling" points at the Styling tab instead.
+   */
+  section: "personal" | "styling" | SectionType;
   field?: string;
 }
 
@@ -107,6 +112,22 @@ function headerCheck(
 
 type SectionCheck = (resume: Resume) => ReadinessCheck | undefined;
 
+// Shows only while a label hides an address that the header holds. Most
+// applicant tracking systems read only the visible text, so the address is
+// lost to them. It never passes: the fix is to remove the label.
+function contactLabelsCheck(resume: Resume): ReadinessCheck | undefined {
+  const labels = usableContactLabels(resume.contactLabels);
+  const hidden = A.some(D.keys(labels), (kind) =>
+    S.isNotEmpty(plainOf(resume.header.fields[kind])),
+  );
+  if (!hidden) return undefined;
+  return {
+    id: "contactLabels",
+    done: false,
+    target: { section: "styling", field: "contact-labels" },
+  };
+}
+
 // A check on sections that are all hidden or absent drops out: hiding a
 // section is a choice, and it never keeps a résumé from being ready.
 const SECTION_CHECKS: ReadonlyArray<SectionCheck> = [
@@ -187,7 +208,9 @@ export function measureReadiness(resume: Resume): Readiness {
       headerCheck(resume, "phone", ["phone"]),
       headerCheck(resume, "location", ["city", "province", "country"]),
     ],
-    A.filterMap(SECTION_CHECKS, (check) => check(resume)),
+    A.filterMap(A.append(SECTION_CHECKS, contactLabelsCheck), (check) =>
+      check(resume),
+    ),
   );
   const done = A.length(A.filter(checks, (check) => check.done));
   return {

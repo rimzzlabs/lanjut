@@ -201,13 +201,19 @@ editorial
 - The Styling and Document tabs group their controls by intent. Each group is an
   `EditorPanelSection`: an icon in a muted square, a title, one line on what the
   group is for, an optional action beside the title, then the controls.
-  - Styling: Typography (font, name, heading, and body size), Spacing (a Density
-    choice of Compact, Balanced, or Airy, then between sections, lines, and
-    letters), and General (résumé language, contact icons). Density sets the
+  - Styling: General (résumé language, contact icons) first, then Typography
+    (font, name, heading, and body size), Spacing (a Density choice of Compact,
+    Balanced, or Airy, then between sections, lines, and letters), Contact labels
+    (a short text in place of each filled email or link address), and Colors
+    (name, section headings, lines, and links) last. Density sets the
     space between sections and the line height, as an offset from the
     template's own line height. Letter spacing is not density, so it stays. No
-    segment shows as chosen once a slider moves off every preset. Typography and Spacing each have their own reset, turned off while
-    the group has its defaults. Language is content, so no reset touches it.
+    segment shows as chosen once a slider moves off every preset. Typography, Spacing, Colors, and Contact labels each have their own reset, turned off while
+    the group has its defaults. A color row offers the template's color, eight
+    swatches, and a hex field with the contrast ratio and WCAG level beside the
+    label. A color below AA on white (4.5:1 for text, 3:1 for lines) stays in the
+    field with an error and never reaches the résumé. While a label is set, an
+    `Alert` says that most applicant tracking systems read only the visible text. Language is content, so no reset touches it.
     Each slider row shows its value beside its label: a percent for sizes, a
     signed px offset or "Default" for spacing, and the line height to two
     decimals.

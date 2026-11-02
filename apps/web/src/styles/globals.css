@@ -192,6 +192,21 @@
   font-size: calc(0.75rem * var(--resume-body-scale, 1));
 }
 
+/* Résumé colors. The root names each part the person colored
+   (resumeColorAttributes), so a part without a color keeps the template's. */
+[data-name-color] .resume-name-ink {
+  color: var(--resume-name-color);
+}
+[data-heading-color] .resume-heading-ink {
+  color: var(--resume-heading-color);
+}
+[data-rule-color] .resume-rule {
+  border-color: var(--resume-rule-color);
+}
+[data-link-color] .resume-link {
+  color: var(--resume-link-color);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

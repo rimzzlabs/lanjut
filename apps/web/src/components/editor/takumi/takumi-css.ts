@@ -10,15 +10,23 @@ function svg(body: string, size: string): string {
   );
 }
 
+function dot(fill: string, opacity: number): string {
+  return svg(
+    `<rect width="1" height="1" fill="${fill}" fill-opacity="${opacity}"/>`,
+    'width="2" height="1"',
+  );
+}
+
+function dash(fill: string, opacity: number): string {
+  return svg(
+    `<rect width="3" height="1" fill="${fill}" fill-opacity="${opacity}"/>`,
+    'width="6" height="1"',
+  );
+}
+
 // neutral-600 at the opacity each rule uses in the preview.
-const DOT = svg(
-  '<rect width="1" height="1" fill="#525252" fill-opacity="0.4"/>',
-  'width="2" height="1"',
-);
-const DASH = svg(
-  '<rect width="3" height="1" fill="#525252" fill-opacity="0.5"/>',
-  'width="6" height="1"',
-);
+const DOT = dot("#525252", 0.4);
+const DASH = dash("#525252", 0.5);
 
 // takumi-pdf 0.15 drops :where() selectors and the margin-block-end longhand,
 // which every Tailwind space-y utility uses. Each one is restated as a plain
@@ -109,3 +117,16 @@ const COMPACT_APP_CSS = pipe(
 
 /** The app's compiled stylesheet followed by the PDF-only rules. */
 export const RESUME_PDF_CSS: ReadonlyArray<string> = [COMPACT_APP_CSS, PDF_CSS];
+
+/**
+ * A dotted or dashed rule is an image in the PDF, so a rule color cannot
+ * reach it through a variable. This draws it again in that color.
+ */
+export function resumePdfCss(ruleColor: string | undefined) {
+  if (ruleColor === undefined) return RESUME_PDF_CSS;
+  return A.append(
+    RESUME_PDF_CSS,
+    `[data-rule-color] .resume-rule.border-dotted{background-image:url("data:image/svg+xml,${dot(ruleColor, 1)}")}
+[data-rule-color] .resume-rule.border-dashed{background-image:url("data:image/svg+xml,${dash(ruleColor, 1)}")}`,
+  );
+}

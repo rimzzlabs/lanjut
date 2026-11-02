@@ -7,7 +7,7 @@ interface LuasaSummaryBodyProps {
 
 export function LuasaSummaryBody(props: LuasaSummaryBodyProps) {
   return (
-    <div className="border-l-2 border-foreground/30 pl-4">
+    <div className="resume-rule border-l-2 border-foreground/30 pl-4">
       <ResumeRichText blocks={props.body} />
     </div>
   );

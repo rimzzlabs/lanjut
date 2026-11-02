@@ -13,7 +13,7 @@ export function AnggunSectionHeading(props: AnggunSectionHeadingProps) {
       >
         {props.title}
       </ResumeHeading>
-      <span className="w-8 border-t border-muted-foreground/60" />
+      <span className="resume-rule w-8 border-t border-muted-foreground/60" />
     </div>
   );
 }

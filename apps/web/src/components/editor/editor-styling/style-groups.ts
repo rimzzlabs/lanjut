@@ -1,7 +1,11 @@
 import type { Resume } from "@lanjut/resume";
 import { D } from "@mobily/ts-belt";
 
-export type StyleGroupId = "typography" | "spacing";
+export type StyleGroupId =
+  | "typography"
+  | "spacing"
+  | "colors"
+  | "contactLabels";
 
 interface StyleGroup {
   /** Whether every setting in the group still has its default. */
@@ -30,5 +34,13 @@ export const STYLE_GROUPS: Record<StyleGroupId, StyleGroup> = {
       sectionSpacing: 0,
       letterSpacing: 0,
     }),
+  },
+  colors: {
+    isDefault: (resume) => resume.colors === undefined,
+    reset: (resume) => D.deleteKey(resume, "colors"),
+  },
+  contactLabels: {
+    isDefault: (resume) => resume.contactLabels === undefined,
+    reset: (resume) => D.deleteKey(resume, "contactLabels"),
   },
 };

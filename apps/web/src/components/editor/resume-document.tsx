@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "use-intl";
 import { ResumeAnimatedBlock } from "./resume-animated-block";
 import { buildResumeBlocks } from "./resume-blocks";
+import { resumeColorAttributes } from "./resume-colors";
 import { ResumeFontFaces, resumeTypographyStyle } from "./resume-fonts";
 import { A4, CONTENT_HEIGHT_PX, CONTENT_WIDTH_PX } from "./resume-geometry";
 import { ResumePage } from "./resume-page";
@@ -102,6 +103,7 @@ export function ResumeDocument(props: ResumeDocumentProps) {
       ref={containerRef}
       className="w-full font-sans"
       style={resumeTypographyStyle(props.resume, props.template)}
+      {...resumeColorAttributes(props.resume.colors)}
     >
       <ResumeFontFaces />
       <div

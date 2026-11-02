@@ -234,6 +234,30 @@ async function main(): Promise<void> {
   }
   console.log("Photo invariance: DOCX text identical with a photo");
 
+  // A contact label replaces the shown text only. The plain text export must
+  // still print every full address.
+  const labeledPreview = resumeToPreview({
+    ...SEED_RESUME,
+    contactLabels: {
+      email: "Email",
+      website: "Website",
+      linkedin: "LinkedIn",
+      link: "GitHub",
+    },
+  });
+  const labeledText = resumeToText(labeledPreview);
+  for (const contact of preview.header.contacts) {
+    if (!labeledText.includes(contact.address)) {
+      errors.push(`TXT: a label hid the address ${contact.address}`);
+    }
+  }
+  const labeledHrefs = labeledPreview.header.contacts.map((c) => c.href);
+  const plainHrefs = preview.header.contacts.map((c) => c.href);
+  if (labeledHrefs.join("|") !== plainHrefs.join("|")) {
+    errors.push("Contact labels changed a link target");
+  }
+  console.log("Contact labels: TXT keeps every full address and link target");
+
   const takumiErrors = await runTakumiChecks({
     preview,
     photoPreview,

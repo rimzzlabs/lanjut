@@ -1,3 +1,4 @@
+import { cn } from "@lanjut/ui/lib/utils";
 import type { ReactNode } from "react";
 
 interface ResumeOptionalLinkProps {
@@ -12,7 +13,7 @@ interface ResumeOptionalLinkProps {
 export function ResumeOptionalLink(props: ResumeOptionalLinkProps) {
   if (props.href) {
     return (
-      <a href={props.href} className={props.className}>
+      <a href={props.href} className={cn("resume-link", props.className)}>
         {props.children}
       </a>
     );

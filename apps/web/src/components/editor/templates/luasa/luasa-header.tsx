@@ -7,7 +7,7 @@ import type { HeaderView } from "../../resume-preview";
 
 export function LuasaHeader(props: HeaderView) {
   return (
-    <header className="flex items-start gap-4 border-l-2 border-foreground/80 pl-4">
+    <header className="resume-rule flex items-start gap-4 border-l-2 border-foreground/80 pl-4">
       <ResumeHeaderPhoto header={props} />
       <div>
         <ResumeHeading

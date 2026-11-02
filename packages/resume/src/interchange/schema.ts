@@ -7,6 +7,8 @@ import {
   SECTION_REGISTRY,
   type SectionType,
 } from "..";
+import { type ColorPart, contrastFloor, contrastOnPaper } from "../colors";
+import { CONTACT_LABEL_MAX } from "../contact-labels";
 
 export const INTERCHANGE_FORMAT = "lanjut-resume";
 export const INTERCHANGE_VERSION = 1;
@@ -96,6 +98,33 @@ const sectionSchema = z.discriminatedUnion("type", [
   customSection,
 ]);
 
+/** A `#rrggbb` color that passes WCAG AA for its part on the white paper. */
+function colorOf(part: ColorPart) {
+  return z
+    .string()
+    .regex(/^#[0-9a-fA-F]{6}$/, "use a #rrggbb color")
+    .transform((value) => value.toLowerCase())
+    .refine((value) => contrastOnPaper(value) >= contrastFloor(part), {
+      message: `too light: the contrast on white must be ${contrastFloor(part)}:1 or more`,
+    });
+}
+
+const colorsSchema = z.strictObject({
+  name: colorOf("name").optional(),
+  heading: colorOf("heading").optional(),
+  rule: colorOf("rule").optional(),
+  link: colorOf("link").optional(),
+});
+
+const contactLabel = z.string().trim().min(1).max(CONTACT_LABEL_MAX);
+
+const contactLabelsSchema = z.strictObject({
+  email: contactLabel.optional(),
+  website: contactLabel.optional(),
+  linkedin: contactLabel.optional(),
+  link: contactLabel.optional(),
+});
+
 export const interchangeSchema = z
   .strictObject({
     format: z.literal(INTERCHANGE_FORMAT),
@@ -111,6 +140,8 @@ export const interchangeSchema = z
     nameScale: z.number().min(0.8).max(1.2).optional(),
     titleScale: z.number().min(0.8).max(1.2).optional(),
     bodyScale: z.number().min(0.8).max(1.2).optional(),
+    colors: colorsSchema.optional(),
+    contactLabels: contactLabelsSchema.optional(),
     header: interchangeHeaderSchema.optional(),
     /** Opt-in portrait as a data URL; kept out of the header field map since it is not text. */
     photo: interchangePhotoSchema.optional(),

@@ -17,6 +17,8 @@ export const OPTIONAL_SETTINGS = [
   "nameScale",
   "titleScale",
   "bodyScale",
+  "colors",
+  "contactLabels",
   "photoSize",
   "photoRadius",
   "photoAlign",

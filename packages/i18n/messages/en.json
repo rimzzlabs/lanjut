@@ -109,7 +109,7 @@
       },
       "styling": {
         "title": "Styling tab",
-        "content": "Style the whole resume here, in three groups: Typography, Spacing, and General. Density sets the spacing in one click, and General switches the resume's language."
+        "content": "Style the whole resume here: General, Typography, Spacing, Contact labels, and Colors. Density sets the spacing in one click, and General switches the resume's language."
       },
       "document": {
         "title": "Document tab",
@@ -139,7 +139,7 @@
       },
       "styling": {
         "title": "Styling tab",
-        "content": "Style the whole resume here, in three groups: Typography, Spacing, and General. Density sets the spacing in one click, and General switches the resume's language."
+        "content": "Style the whole resume here: General, Typography, Spacing, Contact labels, and Colors. Density sets the spacing in one click, and General switches the resume's language."
       },
       "document": {
         "title": "Document tab",
@@ -195,6 +195,14 @@
           {
             "title": "Fourteen new templates",
             "description": "Polos, Garis, Anggun, Tegas, Segar, Rapi, Lugas, Kertas, Jurnal, Kode, Mesin, Ringkas, Tengah, and Elok. Each one has its own type and spacing, and like every template, it keeps the order an applicant tracking system reads."
+          },
+          {
+            "title": "Colors for your resume",
+            "description": "Pick a color for your name, section headings, lines, and links in the Styling tab. Every color stays easy to read: Lanjut refuses one that is too light on white."
+          },
+          {
+            "title": "Contact labels",
+            "description": "Show a short word such as LinkedIn in place of a long address. The link still opens the full address, and Lanjut tells you when a label hides it from applicant tracking systems."
           }
         ],
         "1_5_0": [
@@ -1234,7 +1242,41 @@
       "betweenSections": "Between sections",
       "betweenLines": "Between lines",
       "betweenLetters": "Between letters",
-      "default": "Default"
+      "default": "Default",
+      "colors": "Colors",
+      "colorsHint": "Color the name, headings, lines, and links. Every color keeps AA contrast on white or better.",
+      "resetColors": "Reset colors",
+      "colorName": "Name",
+      "colorHeading": "Section headings",
+      "colorRule": "Lines",
+      "colorLink": "Links",
+      "colorTemplate": "Template color",
+      "colorHex": "Custom color",
+      "colorHexPlaceholder": "#rrggbb",
+      "colorInvalid": "Use a hex color, such as #1d4ed8.",
+      "colorTooLight": "Too light to read: {ratio}:1. Pick a darker color, {min}:1 or more.",
+      "contrast": "{level} {ratio}:1",
+      "swatches": {
+        "navy": "Navy",
+        "blue": "Blue",
+        "teal": "Teal",
+        "green": "Green",
+        "red": "Red",
+        "purple": "Purple",
+        "rust": "Rust",
+        "slate": "Slate"
+      },
+      "contactLabels": "Contact labels",
+      "contactLabelsHint": "Show a short word in place of a long address. The link still opens the full address.",
+      "resetContactLabels": "Reset contact labels",
+      "contactLabelsEmpty": "Add an email or a link in Personal Information first.",
+      "labelEmail": "Email",
+      "labelWebsite": "Website",
+      "labelLinkedin": "LinkedIn",
+      "labelLink": "Link",
+      "contactLabelsWarningTitle": "Labels hide the address from ATS",
+      "contactLabelsWarning": "Most applicant tracking systems read only the text on the page, not the link behind it. The plain text download always shows the full address.",
+      "contactLabelsEmailWarning": "Recruiters also copy your email from the text, so keep it visible if you can."
     },
     "chrome": {
       "edit": "Edit",
@@ -1612,7 +1654,8 @@
         "experience": "Add a job with a start date",
         "bullets": "Write {min} bullet points about your work",
         "education": "Add your education",
-        "skills": "List {min} skills"
+        "skills": "List {min} skills",
+        "contactLabels": "Show your full addresses: a contact label hides them from ATS"
       }
     }
   },

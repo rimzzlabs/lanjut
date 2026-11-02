@@ -9,7 +9,7 @@ function RichRun(props: InlineRun) {
   if (props.italic) node = <em>{node}</em>;
   if (props.href) {
     node = (
-      <a href={props.href} className="underline">
+      <a href={props.href} className="resume-link underline">
         {node}
       </a>
     );

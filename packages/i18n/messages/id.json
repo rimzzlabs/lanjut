@@ -109,7 +109,7 @@
       },
       "styling": {
         "title": "Tab Gaya",
-        "content": "Atur gaya seluruh CV di sini, dalam tiga kelompok: Tipografi, Spasi, dan Umum. Kerapatan mengatur spasi dalam sekali klik, dan Umum mengganti bahasa CV."
+        "content": "Atur gaya seluruh CV di sini: Umum, Tipografi, Spasi, Label kontak, dan Warna. Kerapatan mengatur spasi dalam sekali klik, dan Umum mengganti bahasa CV."
       },
       "document": {
         "title": "Tab Dokumen",
@@ -139,7 +139,7 @@
       },
       "styling": {
         "title": "Tab Gaya",
-        "content": "Atur gaya seluruh CV di sini, dalam tiga kelompok: Tipografi, Spasi, dan Umum. Kerapatan mengatur spasi dalam sekali klik, dan Umum mengganti bahasa CV."
+        "content": "Atur gaya seluruh CV di sini: Umum, Tipografi, Spasi, Label kontak, dan Warna. Kerapatan mengatur spasi dalam sekali klik, dan Umum mengganti bahasa CV."
       },
       "document": {
         "title": "Tab Dokumen",
@@ -195,6 +195,14 @@
           {
             "title": "Empat belas template baru",
             "description": "Polos, Garis, Anggun, Tegas, Segar, Rapi, Lugas, Kertas, Jurnal, Kode, Mesin, Ringkas, Tengah, dan Elok. Masing-masing punya huruf dan spasinya sendiri, dan seperti semua template lain, urutan bacanya tetap aman buat sistem ATS."
+          },
+          {
+            "title": "Warna buat CV kamu",
+            "description": "Pilih warna buat nama, judul bagian, garis, dan tautan di tab Gaya. Semua warna tetap gampang dibaca: Lanjut menolak warna yang terlalu terang di atas putih."
+          },
+          {
+            "title": "Label kontak",
+            "description": "Tampilkan kata singkat seperti LinkedIn sebagai ganti alamat yang panjang. Tautannya tetap membuka alamat lengkap, dan Lanjut kasih tahu kalau label menyembunyikannya dari ATS."
           }
         ],
         "1_5_0": [
@@ -1234,7 +1242,41 @@
       "betweenSections": "Antarbagian",
       "betweenLines": "Antarbaris",
       "betweenLetters": "Antarhuruf",
-      "default": "Bawaan"
+      "default": "Bawaan",
+      "colors": "Warna",
+      "colorsHint": "Kasih warna ke nama, judul, garis, dan tautan. Tiap warna tetap punya kontras minimal AA di atas putih.",
+      "resetColors": "Atur ulang warna",
+      "colorName": "Nama",
+      "colorHeading": "Judul bagian",
+      "colorRule": "Garis",
+      "colorLink": "Tautan",
+      "colorTemplate": "Warna template",
+      "colorHex": "Warna sendiri",
+      "colorHexPlaceholder": "#rrggbb",
+      "colorInvalid": "Pakai warna hex, misalnya #1d4ed8.",
+      "colorTooLight": "Terlalu terang buat dibaca: {ratio}:1. Pilih warna yang lebih gelap, minimal {min}:1.",
+      "contrast": "{level} {ratio}:1",
+      "swatches": {
+        "navy": "Biru dongker",
+        "blue": "Biru",
+        "teal": "Hijau toska",
+        "green": "Hijau",
+        "red": "Merah",
+        "purple": "Ungu",
+        "rust": "Bata",
+        "slate": "Abu batu"
+      },
+      "contactLabels": "Label kontak",
+      "contactLabelsHint": "Tampilkan kata singkat sebagai ganti alamat yang panjang. Tautannya tetap membuka alamat lengkap.",
+      "resetContactLabels": "Atur ulang label kontak",
+      "contactLabelsEmpty": "Isi dulu email atau tautan di Informasi Pribadi.",
+      "labelEmail": "Email",
+      "labelWebsite": "Situs web",
+      "labelLinkedin": "LinkedIn",
+      "labelLink": "Tautan",
+      "contactLabelsWarningTitle": "Label menyembunyikan alamat dari ATS",
+      "contactLabelsWarning": "Kebanyakan ATS cuma membaca teks di halaman, bukan tautan di baliknya. Unduhan teks biasa selalu menampilkan alamat lengkap.",
+      "contactLabelsEmailWarning": "Perekrut juga menyalin email dari teksnya, jadi sebisa mungkin biarkan email kelihatan."
     },
     "chrome": {
       "edit": "Edit",
@@ -1612,7 +1654,8 @@
         "experience": "Tambah pengalaman kerja dengan tanggal mulai",
         "bullets": "Tulis {min} poin tentang pekerjaan kamu",
         "education": "Tambah pendidikan",
-        "skills": "Isi {min} keahlian"
+        "skills": "Isi {min} keahlian",
+        "contactLabels": "Tampilkan alamat lengkap: label kontak menyembunyikannya dari ATS"
       }
     }
   },

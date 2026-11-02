@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { PdfRenderer } from "takumi-pdf";
 import { A4 } from "../resume-geometry";
 import type { ResumePreview } from "../resume-preview";
-import { RESUME_PDF_CSS } from "./takumi-css";
+import { resumePdfCss } from "./takumi-css";
 import {
   fetchFontFile,
   type ReadFontFile,
@@ -42,7 +42,7 @@ export function renderResumePdf(
   return renderer().render(html, {
     size: "a4",
     margin: A4.marginPx,
-    css: RESUME_PDF_CSS,
+    css: resumePdfCss(preview.colors.rule),
     // takumi-pdf takes a mutable font list.
     fonts: F.toMutable(
       resumeFontLoaders({

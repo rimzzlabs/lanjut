@@ -17,6 +17,8 @@ import {
   type ResumeLanguage,
   type Section,
 } from "..";
+import { allowedColors, type ResumeColors } from "../colors";
+import { type ContactLabels, usableContactLabels } from "../contact-labels";
 import { markdownToTiptap, tiptapToMarkdown } from "./markdown";
 import {
   INTERCHANGE_FORMAT,
@@ -38,6 +40,8 @@ export interface ResumeContent {
   nameScale?: number;
   titleScale?: number;
   bodyScale?: number;
+  colors?: ResumeColors;
+  contactLabels?: ContactLabels;
   photoSize?: number;
   photoRadius?: number;
   photoAlign?: "top" | "center" | "bottom";
@@ -153,6 +157,10 @@ export function headerFromInterchange(
   return withPhoto({ ...empty, fields }, photo);
 }
 
+function nonEmpty<T extends object>(value: T): T | undefined {
+  return D.isEmpty(value) ? undefined : value;
+}
+
 export function resumeToInterchange(resume: Resume): InterchangeResume {
   const header = headerToInterchange(resume.header);
   return {
@@ -169,6 +177,8 @@ export function resumeToInterchange(resume: Resume): InterchangeResume {
     nameScale: resume.nameScale,
     titleScale: resume.titleScale,
     bodyScale: resume.bodyScale,
+    colors: nonEmpty(allowedColors(resume.colors)),
+    contactLabels: nonEmpty(usableContactLabels(resume.contactLabels)),
     header,
     photo: resume.header.photo,
     photoSize: resume.photoSize,
@@ -326,6 +336,8 @@ export function interchangeToContent(data: InterchangeResume): ResumeContent {
     nameScale: data.nameScale,
     titleScale: data.titleScale,
     bodyScale: data.bodyScale,
+    colors: data.colors,
+    contactLabels: data.contactLabels,
     photoSize: data.photoSize,
     photoRadius: data.photoRadius,
     photoAlign: data.photoAlign,

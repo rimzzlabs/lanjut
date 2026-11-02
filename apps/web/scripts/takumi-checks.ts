@@ -1,4 +1,5 @@
 import { inflateSync } from "node:zlib";
+import type { ResumeColors } from "@lanjut/resume/colors";
 import type { RichBlock } from "@lanjut/resume/rich-content";
 import { TEMPLATES, type TemplateId } from "@lanjut/resume/templates";
 import { A, G, O, pipe, S } from "@mobily/ts-belt";
@@ -12,6 +13,13 @@ import {
   loadTakumiRenderer,
   type TakumiRenderer,
 } from "./load-takumi-renderer";
+
+const TEST_COLORS: ResumeColors = {
+  name: "#1e3a8a",
+  heading: "#b91c1c",
+  rule: "#0f766e",
+  link: "#6d28d9",
+};
 
 interface TakumiChecksParams {
   preview: ResumePreview;
@@ -344,6 +352,20 @@ async function checkTemplate(
     `${label}: adding a photo changed the text`,
   );
 
+  // Colors are presentation-only: every part colored must leave the text as
+  // it was.
+  const colored = await checks.extractPdfText(
+    await render({
+      takumi,
+      preview: { ...checks.preview, colors: TEST_COLORS },
+      template,
+    }),
+  );
+  const colorErrors = failWhen(
+    text !== colored,
+    `${label}: adding colors changed the text`,
+  );
+
   const probe = splitProbe(checks.preview);
   if (O.isNone(probe)) return [`${label}: seed has no experience entry`];
   const probeBuffer = await render({ takumi, preview: probe, template });
@@ -371,6 +393,7 @@ async function checkTemplate(
     A.concat(hiddenErrors),
     A.concat(A.flat(spacingErrors)),
     A.concat(photoErrors),
+    A.concat(colorErrors),
     A.concat(splitErrors),
     A.concat(listErrors),
   );

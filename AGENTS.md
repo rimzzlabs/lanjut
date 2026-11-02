@@ -80,6 +80,10 @@ Any feature request that adds structural freedom (tables, columns, floating elem
 
 The one shipped example of that carve-out is the opt-in header photo: off by default, stored as a downscaled data URL on `header.photo`, rendered by each template's header (never absolutely positioned), embedded in PDF and DOCX, ignored by TXT. `apps/web/scripts/validate-exports.ts` enforces that adding a photo never changes the extracted text of any export.
 
+Colors are presentation-only too: `Resume.colors` colors the name, the section headings, the rules, and the links (`packages/resume/src/colors.ts`). Each must pass WCAG AA on the white paper, 4.5:1 for text and 3:1 for a rule. The editor refuses a lower color, the interchange schema rejects one, and the read drops one (`allowedColors`). The résumé root marks each colored part (`resumeColorAttributes`), and `globals.css` colors the elements that carry `resume-name-ink`, `resume-heading-ink`, `resume-rule`, or `resume-link`. A new template marks its rules with `resume-rule`. A dotted or dashed rule is an image in the PDF, so `resumePdfCss` draws it again in the rule color.
+
+Contact labels (`Resume.contactLabels`) show a short text in place of an email or link address in the preview, the PDF, and the .docx. The link keeps the full address, and the .txt export prints it (`ContactView.address`). Most ATS read only the visible text, so the editor warns while a label is set, and readiness adds a check that never passes until the label goes.
+
 ## Data and Storage
 
 - zustand holds working state, synced to IndexedDB on change (debounced).
