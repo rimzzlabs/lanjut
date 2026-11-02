@@ -212,7 +212,7 @@
           },
           {
             "title": "Halaman download aplikasi desktop",
-            "description": "lanjut.org/download memilihkan installer yang pas untuk komputermu dan langsung mulai download. Ada juga langkah-langkahnya kalau macOS atau Windows kasih peringatan waktu aplikasinya pertama kali dibuka."
+            "description": "lanjut.org/download memilihkan installer yang pas untuk komputermu dan langsung mulai download, lengkap dengan ucapan terima kasih dan tombol Coba lagi. Ada juga langkah-langkahnya kalau macOS atau Windows kasih peringatan waktu aplikasinya pertama kali dibuka."
           },
           {
             "title": "Halaman depan yang lebih jelas",
@@ -2029,7 +2029,13 @@
     "helpWindowsBody": "Lanjut belum ditandatangani untuk Windows, jadi SmartScreen menampilkan peringatan di awal. Klik More info, lalu Run anyway.",
     "helpUpdates": "Setelah terpasang, Lanjut mengecek versi baru paling sering tiga hari sekali. Nggak ada yang terpasang sebelum kamu klik.",
     "older": "Cari versi lama?",
-    "olderLink": "Semua rilis di GitHub"
+    "olderLink": "Semua rilis di GitHub",
+    "thanks": {
+      "title": "Makasih udah download Lanjut!",
+      "body": "Download-nya bakal mulai dalam beberapa detik. Kalau belum mulai, coba lagi.",
+      "retry": "Coba lagi",
+      "steps": "Langkah pertama kali buka"
+    }
   },
   "guide": {
     "hubTitle": "Panduan CV ATS",

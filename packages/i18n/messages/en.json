@@ -212,7 +212,7 @@
           },
           {
             "title": "A download page for the desktop app",
-            "description": "lanjut.org/download picks the right installer for your computer and starts the download right away. It also shows what to do when macOS or Windows warns you the first time you open the app."
+            "description": "lanjut.org/download picks the right installer for your computer and starts the download right away, with a thank-you note and a Try again button. It also shows what to do when macOS or Windows warns you the first time you open the app."
           },
           {
             "title": "A clearer home page",
@@ -2029,7 +2029,13 @@
     "helpWindowsBody": "Lanjut is not yet signed for Windows, so SmartScreen shows a warning the first time. Click More info, then Run anyway.",
     "helpUpdates": "After you install it, Lanjut checks for a new version at most once every three days. Nothing installs until you click.",
     "older": "Looking for an older version?",
-    "olderLink": "All releases on GitHub"
+    "olderLink": "All releases on GitHub",
+    "thanks": {
+      "title": "Thanks for downloading Lanjut!",
+      "body": "Your download should start in a few seconds. If it does not, try again.",
+      "retry": "Try again",
+      "steps": "First-launch steps"
+    }
   },
   "guide": {
     "hubTitle": "Resume and CV guides",
