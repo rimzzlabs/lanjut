@@ -1,0 +1,40 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import {
+  GiftIcon,
+  GitBranchIcon,
+  ShieldCheckIcon,
+} from "@phosphor-icons/react";
+
+interface Props {
+  locale: Locale;
+}
+
+const t = getTranslator(Astro.props.locale, "landing.pillars");
+
+const PILLARS = [
+  { key: "free", Icon: GiftIcon },
+  { key: "openSource", Icon: GitBranchIcon },
+  { key: "local", Icon: ShieldCheckIcon },
+] as const;
+---
+
+{/* The three things Lanjut stands on, right under the hero. */}
+<section class="mx-auto w-11/12 max-w-6xl pb-24 md:pb-36">
+  <ul
+    class="grid grid-cols-1 divide-y divide-border border-y border-border md:grid-cols-3 md:divide-x md:divide-y-0"
+  >
+    {
+      PILLARS.map((pillar) => (
+        <li class="flex flex-col gap-3 py-8 md:px-8 md:first:pl-0 md:last:pr-0">
+          <span class="grid size-11 place-items-center rounded-lg bg-primary/10 text-primary">
+            <pillar.Icon aria-hidden="true" weight="duotone" className="size-6" />
+          </span>
+          <h2 class="text-xl font-bold tracking-tight">{t(`${pillar.key}.title`)}</h2>
+          <p class="text-muted-foreground">{t(`${pillar.key}.body`)}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>

@@ -77,7 +77,7 @@ export function SiteSettingsMenu(props: SiteSettingsMenuProps) {
         align="end"
         side={props.side}
         sideOffset={12}
-        className="min-w-44"
+        className="w-max min-w-44"
       >
         <SiteSettingsLanguage />
         <DropdownMenuSeparator />

@@ -1,28 +1,37 @@
-import { Button, buttonVariants } from "@lanjut/ui/components/button";
-import { cn } from "@lanjut/ui/lib/utils";
-import { ArrowRightIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { Button } from "@lanjut/ui/components/button";
+import { TooltipProvider } from "@lanjut/ui/components/tooltip";
+import { ArrowRightIcon } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { IslandProviders } from "@/components/shared/island-providers";
 import type { IslandProps } from "@/components/shared/providers";
 import { useLandingDraftCreate } from "@/hooks/use-landing-draft-create";
-import { Link } from "@/i18n/navigation";
-import { TEMPLATE_PATHNAME } from "@/lib/routes";
+import {
+  LandingSecondaryActions,
+  type SecondaryActionsProps,
+} from "./landing-secondary-actions";
 
-/** The closing actions, carrying any draft typed in the hero into the editor. */
-export function LandingClosureActions(props: IslandProps) {
+/**
+ * The closing actions, the same as the hero's. The primary one carries any
+ * draft typed in the read-back demo into the editor.
+ */
+export function LandingClosureActions(
+  props: IslandProps & SecondaryActionsProps,
+) {
   return (
     <IslandProviders locale={props.locale} pathname={props.pathname}>
-      <LandingClosureButtons />
+      <TooltipProvider>
+        <LandingClosureButtons {...props} />
+      </TooltipProvider>
     </IslandProviders>
   );
 }
 
-function LandingClosureButtons() {
+function LandingClosureButtons(props: SecondaryActionsProps) {
   const t = useTranslations("landing");
   const { create, creating } = useLandingDraftCreate();
 
   return (
-    <div className="flex w-full max-w-xs flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row sm:gap-4">
+    <div className="flex items-center justify-center gap-3">
       <Button
         size="lg"
         className="h-11 gap-2 px-5"
@@ -32,16 +41,7 @@ function LandingClosureButtons() {
         {t("closeCta")}
         <ArrowRightIcon />
       </Button>
-      <Link
-        href={TEMPLATE_PATHNAME}
-        className={cn(
-          buttonVariants({ size: "lg", variant: "outline" }),
-          "h-11 px-5",
-        )}
-      >
-        <MagnifyingGlassIcon />
-        {t("closeBrowse")}
-      </Link>
+      <LandingSecondaryActions {...props} />
     </div>
   );
 }

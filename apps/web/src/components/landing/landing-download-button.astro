@@ -1,0 +1,25 @@
+---
+import { type Locale, localizePath } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { buttonVariants } from "@lanjut/ui/components/button";
+import { cn } from "@lanjut/ui/lib/utils";
+import { DownloadSimpleIcon } from "@phosphor-icons/react";
+import { DOWNLOAD_PATHNAME } from "@/lib/routes";
+import { DOWNLOAD_LABEL_KEYS } from "./landing-download-labels";
+
+interface Props {
+  locale: Locale;
+  variant: "default" | "outline" | "ghost";
+}
+
+const { locale, variant } = Astro.props;
+const t = getTranslator(locale, "landing");
+---
+
+<a
+  href={localizePath(DOWNLOAD_PATHNAME, locale)}
+  class={cn(buttonVariants({ size: "lg", variant }), "h-11 gap-2 px-5")}
+>
+  <DownloadSimpleIcon aria-hidden="true" />
+  {DOWNLOAD_LABEL_KEYS.map((label) => <span data-os-only={label.os}>{t(label.key)}</span>)}
+</a>

@@ -1,0 +1,29 @@
+---
+import type { Locale } from "@lanjut/i18n/routing";
+import { getTranslator } from "@lanjut/i18n/translator";
+import { LandingReaders } from "./landing-readers";
+
+interface Props {
+  locale: Locale;
+  pathname: string;
+}
+
+const { locale, pathname } = Astro.props;
+const t = getTranslator(locale, "landing");
+---
+
+<section class="mx-auto w-11/12 max-w-6xl pb-24 md:pb-36">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:items-end md:gap-12">
+    <h2
+      class="text-[clamp(2rem,4vw,3rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance md:col-span-6"
+    >
+      {t("readersHeading")}
+    </h2>
+    <p class="max-w-[52ch] text-muted-foreground md:col-span-6">
+      {t("readersBody")}
+    </p>
+  </div>
+  <div class="mt-10 md:mt-14">
+    <LandingReaders client:visible locale={locale} pathname={pathname} />
+  </div>
+</section>

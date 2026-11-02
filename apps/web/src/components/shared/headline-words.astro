@@ -1,0 +1,20 @@
+---
+import { pipe, S } from "@mobily/ts-belt";
+
+interface Props {
+  text: string;
+}
+
+// A hyphenated word such as "ATS-friendly" stays on one line, so a large
+// headline never breaks after its hyphen.
+const words = pipe(Astro.props.text, S.split(" "));
+---
+
+{
+  words.map((word, index) => (
+    <>
+      {index > 0 && " "}
+      <span class:list={[S.includes(word, "-") && "whitespace-nowrap"]}>{word}</span>
+    </>
+  ))
+}

@@ -21,16 +21,16 @@ const { locale } = Astro.props;
 const t = getTranslator(locale, "download");
 ---
 
-{/* One card per system. The head script marks the visitor's system on
-    <html> (data-os), and the style below shows only its card. Without the
-    script, no card shows and the full list below still carries every file. */}
+{/* One card per system, and data-os-only shows the visitor's. Without the
+    head script, no card shows and the full list below still carries every
+    file. */}
 <section aria-label={t("recommended")} class="pb-16 md:pb-24">
   {
     DOWNLOAD_PLATFORMS.map((platform) => {
       const pick = RECOMMENDED_DOWNLOADS[platform.os];
       return (
         <div
-          data-os-card={platform.os}
+          data-os-only={platform.os}
           class="rounded-xl bg-card p-6 ring-1 ring-foreground/10 md:p-8"
         >
           <p class="text-sm text-muted-foreground">{t("recommended")}</p>
@@ -73,7 +73,7 @@ const t = getTranslator(locale, "download");
     })
   }
   <div
-    data-os-card="web"
+    data-os-only="web"
     class="rounded-xl bg-card p-6 ring-1 ring-foreground/10 md:p-8"
   >
     <div class="grid gap-6 md:grid-cols-12 md:items-center">
@@ -95,16 +95,3 @@ const t = getTranslator(locale, "download");
     </div>
   </div>
 </section>
-
-<style>
-  [data-os-card] {
-    display: none;
-  }
-
-  :global(html[data-os="mac"]) [data-os-card="mac"],
-  :global(html[data-os="windows"]) [data-os-card="windows"],
-  :global(html[data-os="linux"]) [data-os-card="linux"],
-  :global(html[data-os="web"]) [data-os-card="web"] {
-    display: block;
-  }
-</style>

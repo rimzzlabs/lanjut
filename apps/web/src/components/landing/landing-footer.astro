@@ -1,8 +1,12 @@
 ---
+import { getEntry } from "astro:content";
 import { type Locale, localizePath } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
-import { ArrowUpRightIcon } from "@phosphor-icons/react";
-import { GUIDE_PATHNAME } from "@/lib/guides";
+import { A, O } from "@mobily/ts-belt";
+import { ArrowUpRightIcon, StarIcon } from "@phosphor-icons/react";
+import { GithubMarkIcon } from "@/components/shared/brand-icons";
+import { starsAtBuild } from "@/lib/github-stars-build";
+import { GUIDE_PATHNAME, GUIDE_SLUGS, guidePath } from "@/lib/guides";
 import {
   CHANGELOG_PATHNAME,
   DOWNLOAD_PATHNAME,
@@ -10,7 +14,7 @@ import {
   PRIVACY_PATHNAME,
   TEMPLATE_PATHNAME,
 } from "@/lib/routes";
-import { DONATION_LINKS, REPO_URL } from "@/lib/site";
+import { CONTRIBUTING_URL, DONATION_LINKS, REPO_URL } from "@/lib/site";
 
 interface Props {
   locale: Locale;
@@ -19,19 +23,45 @@ interface Props {
 const { locale } = Astro.props;
 const t = getTranslator(locale, "landing.footer");
 const tLanding = getTranslator(locale, "landing");
+const tNav = getTranslator(locale, "nav");
 const tSidebar = getTranslator(locale, "platform.sidebar");
 const year = new Date().getFullYear();
 
 const feedbackHref = localizePath("/feedback", locale);
 
-// A plain link to the page in the other language. The language menu sets a
+// Plain links to the home page in each language. The language menu sets a
 // cookie and reloads, which a crawler cannot follow.
-const OTHER_LOCALE: Record<Locale, Locale> = { en: "id", id: "en" };
-const LANGUAGE_NAME: Record<Locale, string> = {
-  en: "English",
-  id: "Bahasa Indonesia",
-};
-const otherLocale = OTHER_LOCALE[locale];
+const LANGUAGES: ReadonlyArray<{ locale: Locale; name: string }> = [
+  { locale: "en", name: "English" },
+  { locale: "id", name: "Bahasa Indonesia" },
+];
+
+const BADGES = ["badgeFree", "badgeOpenSource", "badgeLocal"] as const;
+
+const stars = await starsAtBuild();
+const starsLabel = O.map(stars, (count) =>
+  new Intl.NumberFormat(locale, {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(count),
+);
+const githubName = O.match(
+  stars,
+  (count) => tNav("githubStars", { count }),
+  () => tNav("github"),
+);
+
+// Each guide by its heading, so every page links them with their own words.
+const guideLinks = await Promise.all(
+  A.map(GUIDE_SLUGS, async (slug) => {
+    const entry = await getEntry("guides", `${locale}/${slug}`);
+    if (!entry) throw new Error(`Missing guide: ${locale}/${slug}`);
+    return {
+      label: entry.data.heading,
+      href: localizePath(guidePath(slug), locale),
+    };
+  }),
+);
 
 interface FooterLink {
   label: string;
@@ -40,44 +70,50 @@ interface FooterLink {
   logo?: string;
 }
 
-const GROUPS: ReadonlyArray<{
+interface FooterGroup {
   id: string;
   title: string;
+  note?: string;
   links: ReadonlyArray<FooterLink>;
-}> = [
+}
+
+const GROUPS: ReadonlyArray<FooterGroup> = [
   {
     id: "footer-product",
     title: t("product"),
     links: [
       { label: t("editor"), href: localizePath(EDITOR_PATHNAME, locale) },
-      {
-        label: t("templates"),
-        href: localizePath(TEMPLATE_PATHNAME, locale),
-      },
-      { label: t("guides"), href: localizePath(GUIDE_PATHNAME, locale) },
+      { label: t("templates"), href: localizePath(TEMPLATE_PATHNAME, locale) },
       { label: t("download"), href: localizePath(DOWNLOAD_PATHNAME, locale) },
-    ],
-  },
-  {
-    id: "footer-project",
-    title: t("project"),
-    links: [
-      { label: t("github"), href: REPO_URL, external: true },
       {
         label: tSidebar("changelog"),
         href: localizePath(CHANGELOG_PATHNAME, locale),
       },
-      { label: tSidebar("reportBug"), href: `${feedbackHref}?kind=bug` },
-      {
-        label: tSidebar("featureRequest"),
-        href: `${feedbackHref}?kind=idea`,
-      },
+    ],
+  },
+  {
+    id: "footer-resources",
+    title: t("resources"),
+    links: [
+      { label: t("allGuides"), href: localizePath(GUIDE_PATHNAME, locale) },
+      ...guideLinks,
       { label: t("privacy"), href: localizePath(PRIVACY_PATHNAME, locale) },
+    ],
+  },
+  {
+    id: "footer-open-source",
+    title: t("openSource"),
+    links: [
+      { label: t("github"), href: REPO_URL, external: true },
+      { label: t("contribute"), href: CONTRIBUTING_URL, external: true },
+      { label: tSidebar("reportBug"), href: `${feedbackHref}?kind=bug` },
+      { label: tSidebar("featureRequest"), href: `${feedbackHref}?kind=idea` },
     ],
   },
   {
     id: "footer-support",
     title: t("support"),
+    note: t("supportNote"),
     links: [
       {
         label: "Saweria",
@@ -99,9 +135,9 @@ const LINK_CLASS =
   "inline-flex items-center gap-1.5 rounded-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 ---
 
-<footer class="mx-auto w-11/12 max-w-6xl border-t border-border pt-12 pb-28 md:pb-14">
-  <div class="grid gap-12 md:grid-cols-[1fr_auto] md:gap-16">
-    <div>
+<footer class="mx-auto w-11/12 max-w-6xl border-t border-border pt-14 pb-28 md:pb-14">
+  <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
+    <div class="lg:col-span-4">
       <a
         href={localizePath("/", locale)}
         class="inline-flex items-center gap-2 rounded-xs font-brand text-lg font-bold tracking-tight focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
@@ -110,7 +146,38 @@ const LINK_CLASS =
         Lanjut
       </a>
       <p class="mt-3 max-w-xs text-sm text-muted-foreground">{t("tagline")}</p>
-      <p class="mt-3 text-sm text-muted-foreground">
+      <ul class="mt-5 flex flex-wrap gap-2">
+        {
+          BADGES.map((badge) => (
+            <li class="rounded-full border border-border px-2.5 py-1 text-xs font-medium">
+              {t(badge)}
+            </li>
+          ))
+        }
+      </ul>
+      <a
+        href={REPO_URL}
+        target="_blank"
+        rel="noreferrer"
+        class="mt-6 inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm font-medium transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
+        <GithubMarkIcon className="size-4" />
+        <span aria-hidden="true">GitHub</span>
+        {
+          O.match(
+            starsLabel,
+            (label) => (
+              <span aria-hidden="true" class="inline-flex items-center gap-1 text-muted-foreground">
+                <StarIcon weight="fill" className="size-3.5" />
+                {label}
+              </span>
+            ),
+            () => null,
+          )
+        }
+        <span class="sr-only">{githubName}, {tLanding("newTab")}</span>
+      </a>
+      <p class="mt-6 text-sm text-muted-foreground">
         {t("madeBy")}{" "}
         <a
           href="https://rimzzlabs.com"
@@ -121,24 +188,18 @@ const LINK_CLASS =
           Rizki Citra
         </a>
       </p>
-      <p class="mt-8 text-xs text-muted-foreground">{t("rights", { year })}</p>
-      <a
-        href={localizePath("/", otherLocale)}
-        hreflang={otherLocale}
-        lang={otherLocale}
-        class={`mt-2 text-xs ${LINK_CLASS}`}
-      >
-        {LANGUAGE_NAME[otherLocale]}
-      </a>
     </div>
 
-    <div class="grid grid-cols-2 gap-10 sm:grid-cols-3 sm:gap-16">
+    <div class="grid grid-cols-2 gap-10 sm:grid-cols-4 lg:col-span-8 lg:gap-8">
       {
         GROUPS.map((group) => (
           <nav aria-labelledby={group.id}>
             <h2 id={group.id} class="text-sm font-semibold">
               {group.title}
             </h2>
+            {group.note && (
+              <p class="mt-3 text-xs text-muted-foreground">{group.note}</p>
+            )}
             <ul class="mt-4 flex flex-col gap-2.5 text-sm">
               {group.links.map((link) => (
                 <li>
@@ -164,5 +225,26 @@ const LINK_CLASS =
         ))
       }
     </div>
+  </div>
+
+  <div
+    class="mt-12 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p>{t("rights", { year })}</p>
+    <nav aria-label={t("languages")} class="flex gap-4">
+      {
+        LANGUAGES.map((language) => (
+          <a
+            href={localizePath("/", language.locale)}
+            hreflang={language.locale}
+            lang={language.locale}
+            aria-current={language.locale === locale ? "true" : undefined}
+            class:list={[LINK_CLASS, language.locale === locale && "font-medium text-foreground"]}
+          >
+            {language.name}
+          </a>
+        ))
+      }
+    </nav>
   </div>
 </footer>

@@ -18,7 +18,9 @@ interface LandingLooksRowProps {
 
 export function LandingLooksRow(props: LandingLooksRowProps) {
   const t = useTranslations("landing");
-  const inHero = useLandingDraftStore((state) => state.template === props.id);
+  const inReadBack = useLandingDraftStore(
+    (state) => state.template === props.id,
+  );
   const setTemplate = useLandingDraftStore((state) => state.setTemplate);
 
   return (
@@ -38,11 +40,11 @@ export function LandingLooksRow(props: LandingLooksRowProps) {
         variant="outline"
         size="sm"
         className="mt-3"
-        aria-pressed={inHero}
+        aria-pressed={inReadBack}
         onClick={() => setTemplate(props.id)}
       >
-        {inHero && <CheckIcon aria-hidden weight="bold" />}
-        {inHero ? t("looksTried") : t("looksTry")}
+        {inReadBack && <CheckIcon aria-hidden weight="bold" />}
+        {inReadBack ? t("looksTried") : t("looksTry")}
       </Button>
     </LandingLooksRowFrame>
   );

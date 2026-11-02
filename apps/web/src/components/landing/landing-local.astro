@@ -1,90 +1,63 @@
 ---
-import type { Locale } from "@lanjut/i18n/routing";
+import { type Locale, localizePath } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
 import {
-  ArrowUpRightIcon,
-  CheckIcon,
+  ArrowRightIcon,
   CloudSlashIcon,
-  LaptopIcon,
+  FloppyDiskIcon,
+  UserCircleDashedIcon,
 } from "@phosphor-icons/react";
-import { REPO_URL } from "@/lib/site";
+import { PRIVACY_PATHNAME } from "@/lib/routes";
 
 interface Props {
   locale: Locale;
 }
 
 const { locale } = Astro.props;
-const t = getTranslator(locale, "landing");
+const t = getTranslator(locale, "landing.proof");
 
-const ON_DEVICE = [
-  "localSimpleResumes",
-  "localSimpleProfiles",
-  "localSimpleSettings",
+const FACTS = [
+  { key: "noAccount", Icon: UserCircleDashedIcon },
+  { key: "noUpload", Icon: CloudSlashIcon },
+  { key: "backup", Icon: FloppyDiskIcon },
 ] as const;
 ---
 
+{/* The one inverted band on the page. It backs the local-first pillar with
+    three facts and a link to the page that lists every network call. */}
 <section class="mx-auto w-11/12 max-w-6xl pb-24 md:pb-36">
-  <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:items-center md:gap-12">
-    <div class="md:col-span-6">
+  <div class="rounded-2xl bg-foreground px-6 py-12 text-background md:px-12 md:py-16">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-12 md:items-end md:gap-12">
       <h2
-        class="text-[clamp(2rem,4vw,3rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance"
+        class="text-[clamp(2rem,4vw,3rem)] leading-[1.02] font-extrabold tracking-[-0.03em] text-balance md:col-span-7"
       >
-        {t("localHeading")}
+        {t("heading")}
       </h2>
-      <p class="mt-5 max-w-[52ch] text-muted-foreground">{t("localBody")}</p>
-      <p class="mt-6 text-sm">
-        {t("localSource")}{" "}
-        <a
-          href={REPO_URL}
-          target="_blank"
-          rel="noreferrer"
-          class="inline-flex items-center gap-1 rounded-xs font-medium underline underline-offset-4 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-        >
-          {t("localSourceLink")}
-          <ArrowUpRightIcon aria-hidden="true" className="size-3.5" />
-          <span class="sr-only">{t("newTab")}</span>
-        </a>
-      </p>
+      <p class="max-w-[52ch] text-background/70 md:col-span-5">{t("body")}</p>
     </div>
 
-    <figure class="md:col-span-6">
-      <figcaption class="mb-3 text-sm text-muted-foreground">
-        {t("localPanelCaption")}
-      </figcaption>
-      <div
-        class="flex flex-col gap-6 rounded-xl bg-card p-6 ring-1 ring-foreground/10 md:p-8"
-      >
-        <div>
-          <p class="flex items-center gap-2 font-semibold">
-            <LaptopIcon aria-hidden="true" className="size-5 text-primary" />
-            {t("localSimpleDevice")}
-          </p>
-          <ul class="mt-4 space-y-2.5">
-            {
-              ON_DEVICE.map((key) => (
-                <li class="flex items-center gap-2.5">
-                  <CheckIcon
-                    aria-hidden="true"
-                    weight="bold"
-                    className="size-4 shrink-0 text-primary"
-                  />
-                  {t(key)}
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-        <div class="border-t pt-5">
-          <p class="flex items-center gap-2 font-semibold">
-            <CloudSlashIcon
-              aria-hidden="true"
-              className="size-5 text-muted-foreground"
-            />
-            {t("localSimpleServer")}
-          </p>
-          <p class="mt-2 text-muted-foreground">{t("localSimpleNothing")}</p>
-        </div>
-      </div>
-    </figure>
+    <ul
+      class="mt-12 grid grid-cols-1 gap-8 border-t border-background/15 pt-10 md:mt-16 md:grid-cols-3"
+    >
+      {
+        FACTS.map((fact) => (
+          <li class="flex flex-col gap-3">
+            <span class="grid size-11 place-items-center rounded-lg bg-background/10">
+              <fact.Icon aria-hidden="true" weight="duotone" className="size-6" />
+            </span>
+            <h3 class="text-lg font-bold tracking-tight">{t(`${fact.key}.title`)}</h3>
+            <p class="text-background/70">{t(`${fact.key}.body`)}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <a
+      href={localizePath(PRIVACY_PATHNAME, locale)}
+      class="mt-10 inline-flex items-center gap-2 rounded-xs font-medium underline underline-offset-4 hover:no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-background md:mt-12"
+    >
+      {t("privacyLink")}
+      <ArrowRightIcon aria-hidden="true" className="size-4" />
+    </a>
   </div>
 </section>

@@ -1,11 +1,8 @@
 import { FieldLegend, FieldSet } from "@lanjut/ui/components/field";
 import { RadioCard } from "@lanjut/ui/components/radio-card";
 import { RadioGroup } from "@lanjut/ui/components/radio-group";
-import {
-  GithubLogoIcon,
-  type Icon,
-  PaperPlaneTiltIcon,
-} from "@phosphor-icons/react";
+import { PaperPlaneTiltIcon } from "@phosphor-icons/react";
+import type { ComponentType } from "react";
 import { Controller } from "react-hook-form";
 import { useTranslations } from "use-intl";
 import {
@@ -13,10 +10,14 @@ import {
   type FeedbackAccount,
   type FeedbackControl,
 } from "@/lib/feedback/feedback-form";
+import { GithubMarkIcon } from "../shared/brand-icons";
 
-const ACCOUNT_ICONS: Record<FeedbackAccount, Icon> = {
+const ACCOUNT_ICONS: Record<
+  FeedbackAccount,
+  ComponentType<{ className?: string }>
+> = {
   none: PaperPlaneTiltIcon,
-  github: GithubLogoIcon,
+  github: GithubMarkIcon,
 };
 
 /**

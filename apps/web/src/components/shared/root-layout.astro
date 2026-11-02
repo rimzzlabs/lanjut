@@ -13,6 +13,7 @@ import {
 } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 import { pageStructuredData } from "@/lib/structured-data";
+import detectOsScript from "@/scripts/detect-os.js?raw";
 import preferencesScript from "@/scripts/preferences.js?raw";
 
 interface Props {
@@ -125,6 +126,9 @@ const keywords = A.join(
     <Font cssVariable="--font-brand" />
     <Font cssVariable="--font-display" />
     <script is:inline set:html={preferencesScript} />
+    {props.world === "readers" && (
+      <script is:inline set:html={detectOsScript} />
+    )}
     {structuredData && (
       <script is:inline type="application/ld+json" set:html={structuredData} />
     )}

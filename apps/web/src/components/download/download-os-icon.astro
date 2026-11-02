@@ -1,9 +1,6 @@
 ---
-import {
-  AppleLogoIcon,
-  LinuxLogoIcon,
-  WindowsLogoIcon,
-} from "@phosphor-icons/react";
+import { AppleLogoIcon, WindowsLogoIcon } from "@phosphor-icons/react";
+import { LinuxMarkIcon } from "@/components/shared/brand-icons";
 import type { DownloadOs } from "./download-platforms";
 
 interface Props {
@@ -11,13 +8,9 @@ interface Props {
   class?: string;
 }
 
-const ICONS = {
-  mac: AppleLogoIcon,
-  windows: WindowsLogoIcon,
-  linux: LinuxLogoIcon,
-} as const;
-
-const Icon = ICONS[Astro.props.os];
+const { os } = Astro.props;
 ---
 
-<Icon aria-hidden="true" weight="fill" className={Astro.props.class} />
+{os === "mac" && <AppleLogoIcon aria-hidden="true" weight="fill" className={Astro.props.class} />}
+{os === "windows" && <WindowsLogoIcon aria-hidden="true" weight="fill" className={Astro.props.class} />}
+{os === "linux" && <LinuxMarkIcon className={Astro.props.class} />}
