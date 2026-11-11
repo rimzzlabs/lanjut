@@ -1966,7 +1966,7 @@
       },
       "feedback": {
         "title": "Saat kirim masukan.",
-        "body": "Masukan yang kamu kirim akan jadi issue publik di GitHub. Sebelum dikirim, kamu bisa lihat detail teknis yang ikut terkirim, seperti jenis browser dan halamannya, dan kamu bisa memilih untuk nggak menyertakannya. Isi CV kamu nggak pernah ikut terkirim. Pemeriksaan dari Cloudflare (Turnstile) dipakai untuk memastikan pengirimnya manusia, bukan bot."
+        "body": "Masukan yang kamu kirim akan jadi issue publik di GitHub. Sebelum dikirim, kamu bisa lihat detail teknis yang ikut terkirim, seperti jenis browser dan halamannya, dan kamu bisa memilih untuk nggak menyertakannya. Isi CV kamu nggak pernah ikut terkirim. Pemeriksaan dari Cloudflare (Turnstile) dipakai untuk memastikan pengirimnya manusia, bukan bot. Pembuat Lanjut juga dapat salinan issue itu lewat email, yang dikirim melalui Resend, layanan pengiriman email."
       },
       "contributors": {
         "title": "Foto kontributor.",

@@ -84,6 +84,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | -------------------- | ------------------------------------------------------------------------ |
 | Framework            | Astro (static output, React islands)                                     |
 | Hosting              | Cloudflare Workers static assets, plus one Worker for the feedback relay |
+| Email                | Resend and react-email (tells the maintainer about new feedback)         |
 | Build targets        | Web (default), desktop (`LANJUT_TARGET=desktop`)                         |
 | Desktop shell        | Tauri 2 (macOS 13 or later, Windows 10 or later, Linux)                  |
 | Internationalization | use-intl (English, Indonesian)                                           |
@@ -130,6 +131,7 @@ Open `http://localhost:4321`.
 | `packages/resume`   | The résumé document: model, migrations, import, interchange, storage |
 | `packages/i18n`     | The English and Indonesian copy, and the routing helpers             |
 | `packages/ui`       | The shadcn primitives                                                |
+| `packages/mailing`  | The emails the Worker sends                                          |
 | `packages/tsconfig` | The shared TypeScript base                                           |
 
 Run every script from the repo root.

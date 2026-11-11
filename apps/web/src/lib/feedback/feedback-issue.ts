@@ -21,6 +21,28 @@ export interface FeedbackIssue {
   labels: string[];
 }
 
+/** A short fact of a report or of its technical details. */
+export interface FeedbackFact {
+  label: string;
+  value: string;
+}
+
+/** One answer of a report: its English heading and the reporter's text. */
+export interface FeedbackAnswer {
+  heading: string;
+  text: string;
+  /** The text quotes the app's copy, so it shows as a quotation. */
+  quoted?: boolean;
+}
+
+export interface FeedbackOutline {
+  facts: ReadonlyArray<FeedbackFact>;
+  answers: ReadonlyArray<FeedbackAnswer>;
+  details: ReadonlyArray<FeedbackFact>;
+  /** The reporter's name, empty for an anonymous report. */
+  sender: string;
+}
+
 const VIA_APP = "via app";
 
 export const AREA_NAMES: Record<FeedbackArea, string> = {
@@ -111,17 +133,20 @@ function excerpt(text: string): string {
   return `${S.trimEnd(lastSpace > 20 ? S.slice(cut, 0, lastSpace) : cut)}…`;
 }
 
-function detailsBlock(details: FeedbackDetails | undefined): string {
-  if (details === undefined) return "";
-  const rows = pipe(
-    DETAIL_ROWS,
-    A.filterMap(([key, label]) => {
-      const value = details[key];
-      if (value === undefined || S.isEmpty(S.trim(value))) return undefined;
-      return `| ${label} | ${escapeInline(value)} |`;
-    }),
-  );
-  if (A.isEmpty(rows)) return "";
+function detailRows(
+  details: FeedbackDetails | undefined,
+): ReadonlyArray<FeedbackFact> {
+  if (details === undefined) return [];
+  return A.filterMap(DETAIL_ROWS, (row) => {
+    const [key, label] = row;
+    const value = details[key];
+    if (value === undefined || S.isEmpty(S.trim(value))) return undefined;
+    return { label, value: S.trim(value) };
+  });
+}
+
+function detailsBlock(details: ReadonlyArray<FeedbackFact>): string {
+  if (A.isEmpty(details)) return "";
   return pipe(
     [
       "<details>",
@@ -129,7 +154,10 @@ function detailsBlock(details: FeedbackDetails | undefined): string {
       "",
       "| | |",
       "| --- | --- |",
-      ...rows,
+      ...A.map(
+        details,
+        (row) => `| ${row.label} | ${escapeInline(row.value)} |`,
+      ),
       "",
       "</details>",
     ],
@@ -137,71 +165,93 @@ function detailsBlock(details: FeedbackDetails | undefined): string {
   );
 }
 
-function footer(report: FeedbackReport, delivery: FeedbackDelivery): string {
+function footer(sender: string, delivery: FeedbackDelivery): string {
   if (delivery === "github") {
     return "---\n\n_Written with the feedback form in the app._";
   }
-  const name = S.trim(report.name);
-  const by = S.isEmpty(name) ? "anonymously" : `by **${escapeInline(name)}**`;
+  const by = S.isEmpty(sender)
+    ? "anonymously"
+    : `by **${escapeInline(sender)}**`;
   return `---\n\n_Sent ${by} from the feedback form in the app, and filed on their behalf._`;
 }
 
-function summaryLine(parts: ReadonlyArray<[string, string]>): string {
+function summaryLine(facts: ReadonlyArray<FeedbackFact>): string {
   return pipe(
-    parts,
-    A.map(([label, value]) => `**${label}:** ${value}`),
+    facts,
+    A.map((fact) => `**${fact.label}:** ${fact.value}`),
     A.join(" · "),
   );
 }
 
-function bodyOf(report: FeedbackReport): string {
+function answerBlock(answer: FeedbackAnswer): string {
+  if (answer.quoted) return `### ${answer.heading}\n\n${quote(answer.text)}`;
+  return section(answer.heading, answer.text);
+}
+
+function factsOf(report: FeedbackReport): ReadonlyArray<FeedbackFact> {
   switch (report.kind) {
     case "bug":
-      return pipe(
-        [
-          summaryLine([
-            ["Area", AREA_NAMES[report.area]],
-            ["Happens", FREQUENCY_NAMES[report.frequency]],
-          ]),
-          section("What I did", report.steps),
-          section("What I expected", report.expected),
-          section("What happened instead", report.actual),
-        ],
-        A.join("\n\n"),
-      );
+      return [
+        { label: "Area", value: AREA_NAMES[report.area] },
+        { label: "Happens", value: FREQUENCY_NAMES[report.frequency] },
+      ];
     case "idea":
-      return pipe(
-        [
-          summaryLine([
-            ["Area", AREA_NAMES[report.area]],
-            ["How much it would help", IMPACT_NAMES[report.impact]],
-          ]),
-          section("What I am trying to do", report.goal),
-          section("What would help", report.idea),
-          S.isEmpty(S.trim(report.workaround))
-            ? ""
-            : section("How I manage today", report.workaround),
-        ],
-        A.filter(S.isNotEmpty),
-        A.join("\n\n"),
-      );
+      return [
+        { label: "Area", value: AREA_NAMES[report.area] },
+        {
+          label: "How much it would help",
+          value: IMPACT_NAMES[report.impact],
+        },
+      ];
     case "wording":
-      return pipe(
-        [
-          summaryLine([
-            ["Where", AREA_NAMES[report.area]],
-            ["Language", LANGUAGE_NAMES[report.language]],
-          ]),
-          `### The text now\n\n${quote(report.current)}`,
-          S.isEmpty(S.trim(report.suggested))
-            ? ""
-            : `### Better wording\n\n${quote(report.suggested)}`,
-          S.isEmpty(S.trim(report.note)) ? "" : section("Note", report.note),
-        ],
-        A.filter(S.isNotEmpty),
-        A.join("\n\n"),
-      );
+      return [
+        { label: "Where", value: AREA_NAMES[report.area] },
+        { label: "Language", value: LANGUAGE_NAMES[report.language] },
+      ];
   }
+}
+
+function answersOf(report: FeedbackReport): ReadonlyArray<FeedbackAnswer> {
+  switch (report.kind) {
+    case "bug":
+      return [
+        { heading: "What I did", text: report.steps },
+        { heading: "What I expected", text: report.expected },
+        { heading: "What happened instead", text: report.actual },
+      ];
+    case "idea":
+      return [
+        { heading: "What I am trying to do", text: report.goal },
+        { heading: "What would help", text: report.idea },
+        { heading: "How I manage today", text: report.workaround },
+      ];
+    case "wording":
+      return [
+        { heading: "The text now", text: report.current, quoted: true },
+        { heading: "Better wording", text: report.suggested, quoted: true },
+        { heading: "Note", text: report.note },
+      ];
+  }
+}
+
+/**
+ * The report in parts, before any Markdown. The issue body and the email to
+ * the maintainer both come from it. An answer left empty is not in it.
+ */
+export function buildFeedbackOutline(
+  report: FeedbackReport,
+  details: FeedbackDetails | undefined,
+): FeedbackOutline {
+  return {
+    facts: factsOf(report),
+    answers: pipe(
+      answersOf(report),
+      A.map((answer) => ({ ...answer, text: S.trim(answer.text) })),
+      A.filter((answer) => S.isNotEmpty(answer.text)),
+    ),
+    details: detailRows(details),
+    sender: S.trim(report.name),
+  };
 }
 
 function titleOf(report: FeedbackReport): string {
@@ -241,11 +291,17 @@ export function buildFeedbackIssue(
   details: FeedbackDetails | undefined,
   delivery: FeedbackDelivery = "relay",
 ): FeedbackIssue {
+  const outline = buildFeedbackOutline(report, details);
   return {
     title: titleOf(report),
     labels: labelsOf(report),
     body: pipe(
-      [bodyOf(report), detailsBlock(details), footer(report, delivery)],
+      [
+        summaryLine(outline.facts),
+        ...A.map(outline.answers, answerBlock),
+        detailsBlock(outline.details),
+        footer(outline.sender, delivery),
+      ],
       A.filter(S.isNotEmpty),
       A.join("\n\n"),
     ),
