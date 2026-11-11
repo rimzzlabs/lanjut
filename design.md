@@ -531,7 +531,7 @@ from `md`. No section carries a kicker, eyebrow, or number above its heading.
   build a feature, and a plain "Contribute on GitHub" link.
 - Footer (`landing-footer.astro`): over a top hairline, a brand column of 4 (wordmark,
   tagline, the three pillars as outline chips, a GitHub button with the star count
-  from the build, and the byline), beside four link groups: Product (editor,
+  (from the build, then refreshed from the Worker's hourly count), and the byline), beside four link groups: Product (editor,
   templates, download, changelog), Resources (all guides, each guide by its heading,
   privacy), Open source (GitHub, contributing, bug report, feature request), and
   Support Lanjut (a one-line note over the donation links). A bottom row under a second hairline holds the copyright and plain

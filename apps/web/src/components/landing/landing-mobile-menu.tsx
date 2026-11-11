@@ -10,7 +10,9 @@ import {
 import { TooltipProvider } from "@lanjut/ui/components/tooltip";
 import { cn } from "@lanjut/ui/lib/utils";
 import { ArrowRightIcon, ListIcon } from "@phosphor-icons/react";
-import { useTranslations } from "use-intl";
+import { useLocale, useTranslations } from "use-intl";
+import { useGithubStars } from "@/hooks/use-github-stars";
+import { formatStars } from "@/lib/github-stars";
 import { GithubMarkIcon } from "../shared/brand-icons";
 import { IslandProviders } from "../shared/island-providers";
 import { AppThemeProvider, type IslandProps } from "../shared/providers";
@@ -26,9 +28,8 @@ interface LandingMobileMenuProps extends IslandProps {
   links: ReadonlyArray<MenuLink>;
   build: MenuLink;
   repoUrl: string;
-  /** The compact star count, absent when the build could not read it. */
-  stars?: string;
-  githubName: string;
+  /** The star count of the build, absent when the build could not read it. */
+  stars?: number;
 }
 
 /**
@@ -68,23 +69,10 @@ function LandingMobileMenuDrawer(props: LandingMobileMenuProps) {
             {props.links.map((link) => (
               <LandingMobileMenuLink key={link.href} link={link} />
             ))}
-            <a
-              href={props.repoUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-3 border-b border-border py-4 text-lg font-medium"
-            >
-              <GithubMarkIcon className="size-5" />
-              <span aria-hidden="true">GitHub</span>
-              {props.stars && (
-                <span aria-hidden="true" className="text-muted-foreground">
-                  {props.stars}
-                </span>
-              )}
-              <span className="sr-only">
-                {props.githubName}, {t("newTab")}
-              </span>
-            </a>
+            <LandingMobileMenuGithub
+              repoUrl={props.repoUrl}
+              stars={props.stars}
+            />
           </nav>
           <DrawerFooter className="gap-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
             <a
@@ -98,6 +86,34 @@ function LandingMobileMenuDrawer(props: LandingMobileMenuProps) {
         </DrawerContent>
       </Drawer>
     </div>
+  );
+}
+
+function LandingMobileMenuGithub(props: { repoUrl: string; stars?: number }) {
+  const t = useTranslations("nav");
+  const locale = useLocale();
+  const stars = useGithubStars(props.stars);
+  const hasStars = stars !== undefined;
+  const name = hasStars ? t("githubStars", { count: stars }) : t("github");
+
+  return (
+    <a
+      href={props.repoUrl}
+      target="_blank"
+      rel="noreferrer"
+      className="flex items-center gap-3 border-b border-border py-4 text-lg font-medium"
+    >
+      <GithubMarkIcon className="size-5" />
+      <span aria-hidden="true">GitHub</span>
+      {hasStars && (
+        <span aria-hidden="true" className="text-muted-foreground">
+          {formatStars(locale, stars)}
+        </span>
+      )}
+      <span className="sr-only">
+        {name}, {t("newTab")}
+      </span>
+    </a>
   );
 }
 

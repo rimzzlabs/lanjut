@@ -1,0 +1,33 @@
+---
+// Carries no markup. The navbar and the footer each include it, and Astro
+// writes the script once. It refreshes every `data-github-stars` count and
+// every `data-github-stars-name` on the page from the Worker.
+---
+
+<script>
+  import { O } from "@mobily/ts-belt";
+  import { formatStars, starsName } from "@/lib/github-stars";
+  import { loadStars } from "@/lib/github-stars-live";
+
+  function show(count: number) {
+    const locale = document.documentElement.lang;
+    const label = formatStars(locale, count);
+
+    for (const target of document.querySelectorAll("[data-github-stars]")) {
+      target.textContent = label;
+      target.closest("[hidden]")?.removeAttribute("hidden");
+    }
+
+    for (const target of document.querySelectorAll<HTMLElement>(
+      "[data-github-stars-name]",
+    )) {
+      target.textContent = starsName(
+        target.dataset.githubStarsName ?? "",
+        locale,
+        count,
+      );
+    }
+  }
+
+  loadStars().then((stars) => O.match(stars, show, () => undefined));
+</script>

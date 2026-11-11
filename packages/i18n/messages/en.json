@@ -197,6 +197,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_6_1": [
+          {
+            "title": "Bug fixes",
+            "description": "The GitHub star count on the home page now stays current. Before, it changed only with a new release."
+          }
+        ],
         "1_6_0": [
           {
             "title": "Fourteen new templates",

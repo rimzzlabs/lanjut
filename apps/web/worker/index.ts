@@ -1,17 +1,20 @@
 /**
  * The only server code Lanjut runs. Every page is a static file; this Worker
- * sits in front of a few paths to relay feedback and find similar issues, serve the contributor list,
+ * sits in front of a few paths to relay feedback and find similar issues, serve the contributor list
+ * and the star count,
  * pick the visitor's language, forward addresses from older layouts, and
  * serve the editor page for /editor/<id>. Résumé content never reaches it.
  */
 import { S } from "@mobily/ts-belt";
 import { CONTRIBUTORS_PATH } from "../src/lib/contributors";
 import { SIMILAR_ISSUES_PATH } from "../src/lib/feedback/similar-issues";
+import { STARS_PATH } from "../src/lib/github-stars";
 import { appPageFor, legacyTarget } from "../src/lib/route-rules";
 import { serveContributors } from "./contributors";
 import { FeedbackError, fileFeedback } from "./feedback";
 import { localeRedirect } from "./locale";
 import { serveSimilarIssues } from "./similar-issues";
+import { serveStars } from "./stars";
 
 export interface Env {
   ASSETS: { fetch(request: Request): Promise<Response> };
@@ -55,6 +58,13 @@ export default {
         return new Response(null, { status: 405, headers: { Allow: "GET" } });
       }
       return serveContributors(request, env, context);
+    }
+
+    if (url.pathname === STARS_PATH) {
+      if (request.method !== "GET") {
+        return new Response(null, { status: 405, headers: { Allow: "GET" } });
+      }
+      return serveStars(request, env, context);
     }
 
     if (url.pathname === "/api/feedback") {

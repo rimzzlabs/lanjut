@@ -8,9 +8,9 @@ import { fetchGithubStars } from "./github-stars";
 let atBuild: Promise<O.Option<number>> | undefined;
 
 /**
- * The star count as of the build, for the landing navbar. It is never fetched
- * in the browser, so the count is as fresh as the last deploy. A failed
- * request gives none, and the navbar shows the GitHub icon alone.
+ * The star count as of the build, for the static HTML of the landing navbar
+ * and footer. The browser refreshes it from the Worker. A failed request
+ * gives none.
  */
 export function starsAtBuild(): Promise<O.Option<number>> {
   if (IS_DESKTOP) return Promise.resolve(O.None);
