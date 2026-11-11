@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/rimzzlabs/lanjut/compare/v1.6.1...v1.7.0) (2026-11-11)
+
+
+### Features
+
+* email the maintainer when feedback arrives ([#275](https://github.com/rimzzlabs/lanjut/issues/275)) ([14d5e64](https://github.com/rimzzlabs/lanjut/commit/14d5e649e43bee4b37e705d53f3c0c72b5e147a5))
+
 ## [1.6.1](https://github.com/rimzzlabs/lanjut/compare/v1.6.0...v1.6.1) (2026-11-11)
 
 
