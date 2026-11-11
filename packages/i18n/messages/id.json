@@ -197,6 +197,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_6_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Jumlah bintang GitHub di halaman utama sekarang selalu terbaru. Sebelumnya, angkanya cuma berubah waktu ada rilis baru."
+          }
+        ],
         "1_6_0": [
           {
             "title": "Empat belas template baru",

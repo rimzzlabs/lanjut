@@ -5,6 +5,7 @@ import { getTranslator } from "@lanjut/i18n/translator";
 import { A, O } from "@mobily/ts-belt";
 import { ArrowUpRightIcon, StarIcon } from "@phosphor-icons/react";
 import { GithubMarkIcon } from "@/components/shared/brand-icons";
+import { formatStars } from "@/lib/github-stars";
 import { starsAtBuild } from "@/lib/github-stars-build";
 import { GUIDE_PATHNAME, GUIDE_SLUGS, guidePath } from "@/lib/guides";
 import {
@@ -15,6 +16,7 @@ import {
   TEMPLATE_PATHNAME,
 } from "@/lib/routes";
 import { CONTRIBUTING_URL, DONATION_LINKS, REPO_URL } from "@/lib/site";
+import LandingGithubStars from "./landing-github-stars.astro";
 
 interface Props {
   locale: Locale;
@@ -39,12 +41,9 @@ const LANGUAGES: ReadonlyArray<{ locale: Locale; name: string }> = [
 const BADGES = ["badgeFree", "badgeOpenSource", "badgeLocal"] as const;
 
 const stars = await starsAtBuild();
-const starsLabel = O.map(stars, (count) =>
-  new Intl.NumberFormat(locale, {
-    notation: "compact",
-    maximumFractionDigits: 1,
-  }).format(count),
-);
+const starsLabel = O.map(stars, (count) => formatStars(locale, count));
+// The message with its placeholder kept, for the script that refreshes it.
+const githubNameTemplate = tNav("githubStars", { count: "{count}" });
 const githubName = O.match(
   stars,
   (count) => tNav("githubStars", { count }),
@@ -163,19 +162,17 @@ const LINK_CLASS =
       >
         <GithubMarkIcon className="size-4" />
         <span aria-hidden="true">GitHub</span>
-        {
-          O.match(
-            starsLabel,
-            (label) => (
-              <span aria-hidden="true" class="inline-flex items-center gap-1 text-muted-foreground">
-                <StarIcon weight="fill" className="size-3.5" />
-                {label}
-              </span>
-            ),
-            () => null,
-          )
-        }
-        <span class="sr-only">{githubName}, {tLanding("newTab")}</span>
+        <span
+          aria-hidden="true"
+          hidden={O.isNone(stars)}
+          class="inline-flex items-center gap-1 text-muted-foreground"
+        >
+          <StarIcon weight="fill" className="size-3.5" />
+          <span data-github-stars>{O.getWithDefault(starsLabel, "")}</span>
+        </span>
+        <span class="sr-only">
+          <span data-github-stars-name={githubNameTemplate}>{githubName}</span>, {tLanding("newTab")}
+        </span>
       </a>
       <p class="mt-6 text-sm text-muted-foreground">
         {t("madeBy")}{" "}
@@ -248,3 +245,5 @@ const LINK_CLASS =
     </nav>
   </div>
 </footer>
+
+<LandingGithubStars />
