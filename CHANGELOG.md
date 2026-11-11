@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/rimzzlabs/lanjut/compare/v1.6.0...v1.6.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* keep the github star count current ([#273](https://github.com/rimzzlabs/lanjut/issues/273)) ([591d594](https://github.com/rimzzlabs/lanjut/commit/591d5946817faf9b77537e948c14890833c45445))
+
 ## [1.6.0](https://github.com/rimzzlabs/lanjut/compare/v1.5.0...v1.6.0) (2026-11-02)
 
 
