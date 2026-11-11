@@ -1,6 +1,7 @@
 /**
  * The only server code Lanjut runs. Every page is a static file; this Worker
- * sits in front of a few paths to relay feedback and find similar issues, serve the contributor list
+ * sits in front of a few paths to relay feedback (and email the maintainer
+ * about it) and find similar issues, serve the contributor list
  * and the star count,
  * pick the visitor's language, forward addresses from older layouts, and
  * serve the editor page for /editor/<id>. Résumé content never reaches it.
@@ -13,10 +14,11 @@ import { appPageFor, legacyTarget } from "../src/lib/route-rules";
 import { serveContributors } from "./contributors";
 import { FeedbackError, fileFeedback } from "./feedback";
 import { localeRedirect } from "./locale";
+import type { NotifyEnv } from "./notify";
 import { serveSimilarIssues } from "./similar-issues";
 import { serveStars } from "./stars";
 
-export interface Env {
+export interface Env extends NotifyEnv {
   ASSETS: { fetch(request: Request): Promise<Response> };
   GITHUB_ISSUE_TOKEN?: string;
   TURNSTILE_SECRET_KEY?: string;
@@ -26,9 +28,13 @@ export interface Env {
 // open /en/feedback, so the prefix forwards instead of reading a 404.
 const LEGACY_DEFAULT_PREFIX = /^\/en(?=\/|$)/;
 
-async function relayFeedback(request: Request, env: Env) {
+async function relayFeedback(
+  request: Request,
+  env: Env,
+  context: { waitUntil(promise: Promise<unknown>): void },
+) {
   try {
-    const url = await fileFeedback(request, env);
+    const url = await fileFeedback(request, env, context);
     return Response.json({ url }, { status: 201 });
   } catch (error) {
     if (error instanceof FeedbackError) {
@@ -71,7 +77,7 @@ export default {
       if (request.method !== "POST") {
         return new Response(null, { status: 405, headers: { Allow: "POST" } });
       }
-      return relayFeedback(request, env);
+      return relayFeedback(request, env, context);
     }
 
     if (LEGACY_DEFAULT_PREFIX.test(url.pathname)) {

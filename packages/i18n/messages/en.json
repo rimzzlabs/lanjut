@@ -1966,7 +1966,7 @@
       },
       "feedback": {
         "title": "Feedback.",
-        "body": "When you send feedback, what you write becomes a public issue on GitHub. Before you send it, you see the technical details that go with it, such as your browser and the page, and you can leave them out. Your résumé text is never part of it. A Cloudflare check (Turnstile) confirms that a person sent it."
+        "body": "When you send feedback, what you write becomes a public issue on GitHub. Before you send it, you see the technical details that go with it, such as your browser and the page, and you can leave them out. Your résumé text is never part of it. A Cloudflare check (Turnstile) confirms that a person sent it. The maker also gets a copy of the issue by email, through Resend, an email delivery service."
       },
       "contributors": {
         "title": "Contributors.",

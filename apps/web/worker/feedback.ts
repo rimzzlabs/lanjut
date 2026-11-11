@@ -1,10 +1,14 @@
-import { buildFeedbackIssue } from "../src/lib/feedback/feedback-issue";
+import {
+  buildFeedbackIssue,
+  buildFeedbackOutline,
+} from "../src/lib/feedback/feedback-issue";
 import {
   type FeedbackPayload,
   feedbackPayloadSchema,
 } from "../src/lib/feedback/feedback-schema";
 import { GITHUB_REPO } from "../src/lib/github-issue";
 import type { Env } from "./index";
+import { notifyFeedback } from "./notify";
 
 const TURNSTILE_VERIFY_URL =
   "https://challenges.cloudflare.com/turnstile/v0/siteverify";
@@ -46,8 +50,19 @@ async function readPayload(request: Request): Promise<FeedbackPayload> {
   }
 }
 
-/** Files the report as a GitHub issue and returns its URL. */
-export async function fileFeedback(request: Request, env: Env) {
+interface WaitUntil {
+  waitUntil(promise: Promise<unknown>): void;
+}
+
+/**
+ * Files the report as a GitHub issue and returns its URL. The email to the
+ * maintainer goes out after the answer, so the reporter never waits for it.
+ */
+export async function fileFeedback(
+  request: Request,
+  env: Env,
+  context: WaitUntil,
+) {
   const githubToken = env.GITHUB_ISSUE_TOKEN;
   const turnstileSecret = env.TURNSTILE_SECRET_KEY;
   if (!githubToken || !turnstileSecret) {
@@ -77,5 +92,14 @@ export async function fileFeedback(request: Request, env: Env) {
   if (!response.ok) throw new FeedbackError("github-error", 502);
 
   const created = (await response.json()) as { html_url?: string };
+  if (created.html_url) {
+    context.waitUntil(
+      notifyFeedback(env, {
+        issue,
+        outline: buildFeedbackOutline(payload.report, payload.details),
+        url: created.html_url,
+      }),
+    );
+  }
   return created.html_url;
 }

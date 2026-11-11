@@ -1,0 +1,25 @@
+{
+  "name": "@lanjut/mailing",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./theme": "./src/theme.ts",
+    "./*": "./src/*.tsx"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react-email": "^6.11.11"
+  },
+  "peerDependencies": {
+    "react": "catalog:"
+  },
+  "devDependencies": {
+    "@lanjut/tsconfig": "workspace:*",
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}
