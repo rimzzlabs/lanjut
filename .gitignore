@@ -49,3 +49,4 @@ cloudflare-env.d.ts
 # Tauri build output: gigabytes, never tracked
 apps/desktop/src-tauri/target/
 apps/desktop/src-tauri/gen/
+apps/desktop/src-tauri/binaries/

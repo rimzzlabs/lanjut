@@ -205,6 +205,12 @@ Contact labels (`Resume.contactLabels`) show a short text in place of an email o
   every three days, a failure is silent, and nothing installs without a click.
 - Biome ignores `apps/desktop/src-tauri`. Rust is formatted by `cargo fmt`, and the JSON config files
   are written by the Tauri CLI.
+- RFC #278 (work with an AI assistant) is in progress. The app serves MCP on a local socket
+  (`src-tauri/src/mcp/`), and only `LANJUT_MCP=1` turns it on. An assistant starts the
+  `lanjut-mcp` relay (`src-tauri/relay/`, a Tauri `externalBin`), which copies stdio to the
+  socket. tauri-build refuses to build while `src-tauri/binaries/lanjut-mcp-<target triple>`
+  is missing, so run `node apps/desktop/scripts/build-relay.mjs` before a bare `cargo build`.
+  `pnpm desktop:dev` and `beforeBuildCommand` run it. No network port opens.
 
 ## Reordering
 
