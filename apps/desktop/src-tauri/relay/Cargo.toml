@@ -1,0 +1,19 @@
+[package]
+name = "lanjut-mcp"
+version = "0.0.0"
+description = "Relays an AI assistant's stdio to the Lanjut desktop app"
+authors = ["Rizki Citra"]
+edition = "2021"
+rust-version = "1.88"
+
+[lib]
+name = "lanjut_mcp"
+path = "src/lib.rs"
+
+[[bin]]
+name = "lanjut-mcp"
+path = "src/main.rs"
+
+[dependencies]
+dirs = "6"
+tokio = { version = "1", features = ["io-std", "io-util", "macros", "net", "rt", "time"] }

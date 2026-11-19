@@ -2,7 +2,7 @@
   "name": "@lanjut/desktop",
   "private": true,
   "scripts": {
-    "dev": "LANJUT_TARGET=desktop tauri dev",
+    "dev": "node scripts/build-relay.mjs --debug && LANJUT_TARGET=desktop tauri dev",
     "build": "LANJUT_TARGET=desktop tauri build",
     "tauri": "tauri"
   },

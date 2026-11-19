@@ -84,6 +84,10 @@ jobs:
       - name: Confirm the shell config still holds its load-bearing values
         run: node .github/scripts/check-tauri-config.mjs
 
+      # tauri-build refuses to build while the externalBin relay is missing.
+      - name: Build the MCP relay
+        run: node apps/desktop/scripts/build-relay.mjs --debug
+
       - name: Build the desktop shell
         run: cargo build --manifest-path apps/desktop/src-tauri/Cargo.toml
 

@@ -1,9 +1,11 @@
+mod mcp;
+
 use std::sync::mpsc::{channel, Sender};
 use std::sync::Mutex;
 use std::time::{Duration, Instant};
 use tauri::webview::PageLoadEvent;
 use tauri::window::Color;
-use tauri::{Manager, Theme};
+use tauri::{Manager, RunEvent, Theme};
 
 /// Window backgrounds, matched to the app's own paper tokens. Without these the
 /// webview paints its default white, which flashes on a dark system.
@@ -38,6 +40,8 @@ pub fn run() {
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(PageLoaded(Mutex::new(Some(tx))))
+        .manage(mcp::SharedBridge::default())
+        .invoke_handler(tauri::generate_handler![mcp::mcp_attach, mcp::mcp_reply])
         .on_page_load(|webview, payload| {
             if webview.label() != "main" || payload.event() != PageLoadEvent::Finished {
                 return;
@@ -50,6 +54,9 @@ pub fn run() {
         })
         .setup(move |app| {
             let handle = app.handle().clone();
+            if mcp::enabled() {
+                mcp::start(&handle);
+            }
 
             // Follow the system theme before anything paints.
             for label in ["splashscreen", "main"] {
@@ -82,6 +89,11 @@ pub fn run() {
             });
             Ok(())
         })
-        .run(tauri::generate_context!())
-        .expect("error while running lanjut");
+        .build(tauri::generate_context!())
+        .expect("error while building lanjut")
+        .run(|_, event| {
+            if let RunEvent::Exit = event {
+                mcp::stop();
+            }
+        });
 }

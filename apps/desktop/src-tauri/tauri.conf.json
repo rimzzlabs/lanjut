@@ -5,7 +5,7 @@
   "identifier": "com.rimzzlabs.lanjut",
   "build": {
     "beforeDevCommand": "pnpm --filter @lanjut/web dev:astro",
-    "beforeBuildCommand": "pnpm --filter @lanjut/web build",
+    "beforeBuildCommand": "node scripts/build-relay.mjs && pnpm --filter @lanjut/web build",
     "devUrl": "http://localhost:4321",
     "frontendDist": "../../web/dist-desktop"
   },
@@ -52,6 +52,7 @@
       "icons/icon.ico"
     ],
     "createUpdaterArtifacts": true,
+    "externalBin": ["binaries/lanjut-mcp"],
     "macOS": {
       "minimumSystemVersion": "13.0"
     },
