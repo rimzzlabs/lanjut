@@ -1,8 +1,13 @@
 //! The MCP tools. They know nothing about résumés: each one checks its
 //! arguments and asks the page.
 
-use super::args::{Check, EditResumeArgs, GetResumeArgs, ReplaceResumeArgs, ResumeIdArgs};
-use super::bridge::Bridge;
+use super::args::{
+    Check, CreateResumeArgs, DuplicateResumeArgs, EditResumeArgs, ExportResumeArgs, GetResumeArgs,
+    ProfileIdArgs, ReplaceResumeArgs, ResumeIdArgs, ResumeSettingsArgs, SaveProfileArgs,
+    SectionOrderArgs, SetPhotoArgs,
+};
+use super::bridge::{Bridge, PERSON_TIMEOUT};
+use super::photo::read_photo;
 use rmcp::handler::server::router::tool::ToolRouter;
 use rmcp::handler::server::wrapper::Parameters;
 use rmcp::model::{CallToolResult, ContentBlock, Implementation, ServerCapabilities, ServerConfig};
@@ -14,10 +19,15 @@ use std::sync::Arc;
 
 const INSTRUCTIONS: &str = "Lanjut is a résumé builder on this device. \
 Call lanjut_list_resumes for the résumés of the active profile, and lanjut_get_resume \
-to read one as Markdown with its revision. To change it, call lanjut_edit_resume for \
-exact replacements, or lanjut_replace_resume for the full text, with that revision as \
-base_revision. Each write is one undo step in Lanjut, and the person sees it. If a write \
-says that the résumé changed, read it again before you write.";
+to read one as Markdown with its revision, its section ids, and the templates and fonts. \
+To change the text, call lanjut_edit_resume for exact replacements, or lanjut_replace_resume \
+for the full text. To change the look, call lanjut_update_resume_settings, \
+lanjut_set_section_order, or lanjut_set_photo. Every write takes the revision that you read \
+as base_revision and gives the next one. Each write is one undo step in Lanjut, and the \
+person sees it. If a write says that the résumé changed, read it again before you write. \
+Profiles hold a person's details for one kind of job: lanjut_list_profiles, \
+lanjut_switch_profile, and lanjut_save_profile. A delete and an export wait for the \
+person to answer in Lanjut.";
 
 #[derive(Clone)]
 pub struct LanjutMcp {
@@ -28,6 +38,13 @@ pub struct LanjutMcp {
 
 fn failure(message: impl Into<String>) -> CallToolResult {
     CallToolResult::error(vec![ContentBlock::text(message)])
+}
+
+fn reply(result: Result<Value, String>) -> CallToolResult {
+    match result {
+        Ok(value) => CallToolResult::success(vec![ContentBlock::text(value.to_string())]),
+        Err(message) => failure(message),
+    }
 }
 
 /// The text goes in a block of its own, so the model copies `old_str` from it
@@ -82,6 +99,20 @@ impl LanjutMcp {
             .map_err(|error| error.to_string())
     }
 
+    async fn ask_person<A: Check + Serialize>(
+        &self,
+        tool: &'static str,
+        args: &A,
+        context: &RequestContext<RoleServer>,
+    ) -> Result<Value, String> {
+        args.check()?;
+        let args = serde_json::to_value(args).map_err(|error| error.to_string())?;
+        self.bridge
+            .call_waiting(tool, args, client_name(context), PERSON_TIMEOUT)
+            .await
+            .map_err(|error| error.to_string())
+    }
+
     #[tool(
         description = "Gives the title, id, and last change of each résumé in the active Lanjut profile, newest first.",
         annotations(title = "List résumés", read_only_hint = true, open_world_hint = false)
@@ -101,6 +132,7 @@ impl LanjutMcp {
 and the format. The second block is the text. Markdown is the default: a `#` heading with the name, \
 `Label: value` lines, a `##` heading for each section, and a `###` heading for each entry. \
 Keep the headings and the labels as the text gives them. The text never holds the photo. \
+The first block also lists the sections with their ids, and the template and font ids. \
 Give `revision` as `base_revision` to a write.",
         annotations(
             title = "Read a résumé",
@@ -185,6 +217,224 @@ small change. Refuses when the résumé changed after `base_revision`: read it a
             Ok(value) => CallToolResult::success(vec![ContentBlock::text(value.to_string())]),
             Err(message) => failure(message),
         }
+    }
+    #[tool(
+        description = "Creates a résumé in the active profile and opens it in Lanjut. It starts blank \
+or from the sample, with the header and the summary of the active profile. Gives the id and the revision.",
+        annotations(
+            title = "Create a résumé",
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = false,
+            open_world_hint = false
+        )
+    )]
+    async fn lanjut_create_resume(
+        &self,
+        Parameters(args): Parameters<CreateResumeArgs>,
+        context: RequestContext<RoleServer>,
+    ) -> CallToolResult {
+        reply(self.ask("lanjut_create_resume", &args, &context).await)
+    }
+
+    #[tool(
+        description = "Copies a résumé in the active profile and opens the copy in Lanjut. Gives the id \
+and the revision of the copy.",
+        annotations(
+            title = "Duplicate a résumé",
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = false,
+            open_world_hint = false
+        )
+    )]
+    async fn lanjut_duplicate_resume(
+        &self,
+        Parameters(args): Parameters<DuplicateResumeArgs>,
+        context: RequestContext<RoleServer>,
+    ) -> CallToolResult {
+        reply(self.ask("lanjut_duplicate_resume", &args, &context).await)
+    }
+
+    #[tool(
+        description = "Asks the person to delete a résumé. Lanjut shows its delete dialog, and only the \
+person can confirm. The call waits up to two minutes for the answer. If the person keeps the résumé, \
+do not ask again unless they say so.",
+        annotations(
+            title = "Delete a résumé",
+            read_only_hint = false,
+            destructive_hint = true,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    async fn lanjut_delete_resume(
+        &self,
+        Parameters(args): Parameters<ResumeIdArgs>,
+        context: RequestContext<RoleServer>,
+    ) -> CallToolResult {
+        reply(
+            self.ask_person("lanjut_delete_resume", &args, &context)
+                .await,
+        )
+    }
+
+    #[tool(
+        description = "Changes the look of a résumé: the title, the template, the language of the \
+headings and the dates, the font, the sizes, the spacing, the colors, and the contact icons. Also moves \
+the résumé into another profile. Lanjut checks every value as the editor does: a color that is too light \
+on white is refused. Leave out what stays. One undo step. Gives the new revision.",
+        annotations(
+            title = "Change the settings of a résumé",
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    async fn lanjut_update_resume_settings(
+        &self,
+        Parameters(args): Parameters<ResumeSettingsArgs>,
+        context: RequestContext<RoleServer>,
+    ) -> CallToolResult {
+        reply(
+            self.ask("lanjut_update_resume_settings", &args, &context)
+                .await,
+        )
+    }
+
+    #[tool(
+        description = "Changes the order of the sections, with a preset or an exact order of the \
+section ids that lanjut_get_resume gives, and hides or shows sections. The summary stays below the \
+header. Entries keep their date order. One undo step. Gives the new revision.",
+        annotations(
+            title = "Order and show sections",
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    async fn lanjut_set_section_order(
+        &self,
+        Parameters(args): Parameters<SectionOrderArgs>,
+        context: RequestContext<RoleServer>,
+    ) -> CallToolResult {
+        reply(self.ask("lanjut_set_section_order", &args, &context).await)
+    }
+
+    #[tool(
+        description = "Sets the header photo from an image file on this device, or removes the photo \
+when `path` is left out. Lanjut crops the image to a square and makes it small. The photo never comes \
+back to you. One undo step. Gives the new revision.",
+        annotations(
+            title = "Set the photo",
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    async fn lanjut_set_photo(
+        &self,
+        Parameters(args): Parameters<SetPhotoArgs>,
+        context: RequestContext<RoleServer>,
+    ) -> CallToolResult {
+        if let Err(message) = args.check() {
+            return failure(message);
+        }
+        let image = match &args.path {
+            Some(path) => match read_photo(path).await {
+                Ok(image) => serde_json::to_value(image).unwrap_or(Value::Null),
+                Err(message) => return failure(message),
+            },
+            None => Value::Null,
+        };
+        let page_args = serde_json::json!({
+            "id": args.id,
+            "base_revision": args.base_revision,
+            "image": image,
+        });
+        let call = self
+            .bridge
+            .call("lanjut_set_photo", page_args, client_name(&context));
+        reply(call.await.map_err(|error| error.to_string()))
+    }
+
+    #[tool(
+        description = "Exports a résumé as PDF, DOCX, or TXT. Lanjut opens its save dialog, and the \
+person picks where the file goes. The call waits up to two minutes for the answer.",
+        annotations(
+            title = "Export a résumé",
+            read_only_hint = true,
+            open_world_hint = false
+        )
+    )]
+    async fn lanjut_export_resume(
+        &self,
+        Parameters(args): Parameters<ExportResumeArgs>,
+        context: RequestContext<RoleServer>,
+    ) -> CallToolResult {
+        reply(
+            self.ask_person("lanjut_export_resume", &args, &context)
+                .await,
+        )
+    }
+
+    #[tool(
+        description = "Gives every profile: its id, name, whether it is active, how many résumés it \
+holds, its revision, and its header and summary as Markdown. A new résumé starts with the header and \
+the summary of the active profile.",
+        annotations(
+            title = "List profiles",
+            read_only_hint = true,
+            open_world_hint = false
+        )
+    )]
+    async fn lanjut_list_profiles(&self, context: RequestContext<RoleServer>) -> CallToolResult {
+        let call = self
+            .bridge
+            .call("lanjut_list_profiles", Value::Null, client_name(&context));
+        reply(call.await.map_err(|error| error.to_string()))
+    }
+
+    #[tool(
+        description = "Makes a profile the active one. lanjut_list_resumes then gives its résumés.",
+        annotations(
+            title = "Switch the profile",
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = true,
+            open_world_hint = false
+        )
+    )]
+    async fn lanjut_switch_profile(
+        &self,
+        Parameters(args): Parameters<ProfileIdArgs>,
+        context: RequestContext<RoleServer>,
+    ) -> CallToolResult {
+        reply(self.ask("lanjut_switch_profile", &args, &context).await)
+    }
+
+    #[tool(
+        description = "Creates a profile when `id` is left out, and makes it active. With `id` and \
+`base_revision`, changes the name, or the header and the summary as Markdown in the form that \
+lanjut_list_profiles gives. A profile holds no other sections. Lanjut shows the profile on its \
+Profiles page. Gives the new revision.",
+        annotations(
+            title = "Save a profile",
+            read_only_hint = false,
+            destructive_hint = false,
+            idempotent_hint = false,
+            open_world_hint = false
+        )
+    )]
+    async fn lanjut_save_profile(
+        &self,
+        Parameters(args): Parameters<SaveProfileArgs>,
+        context: RequestContext<RoleServer>,
+    ) -> CallToolResult {
+        reply(self.ask("lanjut_save_profile", &args, &context).await)
     }
 }
 

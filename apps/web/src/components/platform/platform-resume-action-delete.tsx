@@ -29,6 +29,8 @@ interface PlatformResumeActionDeleteProps {
   open: boolean;
   onOpenChange: (next: boolean) => void;
   resume: { id: string; title: string };
+  /** Runs when the person confirms, before the dialog closes. */
+  onDeleted?: () => void;
 }
 
 export function PlatformResumeActionDelete(
@@ -43,6 +45,7 @@ export function PlatformResumeActionDelete(
   // The open résumé leaves the editor first, so the editor never shows a
   // document that is gone. Undo brings it back to the library.
   async function handleDelete() {
+    props.onDeleted?.();
     props.onOpenChange(false);
     if (editorId === props.resume.id) await router.push(EDITOR_PATHNAME);
     void deleteResumeWithUndo(props.resume.id, {

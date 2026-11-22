@@ -7,6 +7,7 @@ import { showAssistantNotice } from "@/lib/assistant/assistant-notice";
 import { IS_DESKTOP } from "@/lib/build-target";
 import { markAssistantChange } from "@/lib/store/assistant-activity-store";
 import { watchAssistantStatus } from "@/lib/store/assistant-store";
+import { AssistantDeleteRequest } from "./assistant-delete-request";
 
 /**
  * Connects the page to the desktop app's MCP server, and follows the switch
@@ -41,5 +42,6 @@ export function DesktopAssistantBridge() {
     return () => controller.abort();
   }, []);
 
-  return null;
+  if (!IS_DESKTOP) return null;
+  return <AssistantDeleteRequest />;
 }

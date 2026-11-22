@@ -200,7 +200,7 @@
         "1_8_0": [
           {
             "title": "Kerja bareng asisten AI kamu",
-            "description": "Di aplikasi desktop, buka Pengaturan, lalu Asisten AI, dan nyalakan Kerja bareng asisten AI. Lalu hubungkan asisten yang sudah kamu pakai: Claude Code, Codex, Cursor, LM Studio, Claude Desktop, atau yang lain. Minta dia memendekkan poin-poin kamu atau menyesuaikan ringkasan dengan lowongan, dan CV kamu langsung berubah di layar. Setiap perubahan bisa diurungkan satu langkah, dan Lanjut kasih tahu kamu. Fitur ini mati sampai kamu nyalakan, dan Lanjut tidak mengirim apa pun ke server Lanjut."
+            "description": "Di aplikasi desktop, buka Pengaturan, lalu Asisten AI, dan nyalakan Kerja bareng asisten AI. Lalu hubungkan asisten yang sudah kamu pakai: Claude Code, Codex, Cursor, LM Studio, Claude Desktop, atau yang lain. Minta dia memendekkan poin-poin kamu, menyesuaikan ringkasan dengan lowongan, ganti template, atau bikin profil baru, dan CV kamu langsung berubah di layar. Setiap perubahan CV bisa diurungkan satu langkah, dan dia tanya kamu dulu sebelum menghapus CV atau menyimpan file. Fitur ini mati sampai kamu nyalakan, dan Lanjut tidak mengirim apa pun ke server Lanjut."
           }
         ],
         "1_6_1": [
@@ -1022,16 +1022,16 @@
       "nav": "Asisten AI",
       "navShort": "AI",
       "title": "Kerja bareng asisten AI",
-      "description": "Hubungkan asisten AI yang sudah kamu pakai, biar dia bisa baca dan ubah CV kamu. Cuma di aplikasi desktop.",
+      "description": "Hubungkan asisten AI yang sudah kamu pakai, biar dia bisa baca dan ubah CV dan profil kamu. Cuma di aplikasi desktop.",
       "switch": "Kerja bareng asisten AI",
       "switchDescription": "Mati sampai kamu nyalakan. Cuma aplikasi di perangkat ini, di akun kamu, yang bisa terhubung.",
       "changeFailed": "Lanjut gagal mengubah pengaturan ini. Coba lagi.",
       "confirmTitle": "Nyalakan Kerja bareng asisten AI?",
       "confirmDescription": "Baca dulu apa yang didapat asisten sebelum kamu nyalakan.",
-      "factReads": "Asisten yang kamu hubungkan bisa membaca dan mengubah CV di profil aktif kamu.",
+      "factReads": "Asisten yang kamu hubungkan bisa membaca dan mengubah CV dan profil kamu. Dia tanya kamu dulu sebelum menghapus CV atau menyimpan file.",
       "factCloud": "Lanjut tidak mengirim apa pun ke server Lanjut. Kalau asisten kamu jalan di cloud, perusahaannya menerima teks yang dia baca. Biar teksnya tetap di perangkat ini, pakai model yang jalan di sini, misalnya di LM Studio.",
       "factPhoto": "Foto kamu tidak pernah dikirim ke asisten.",
-      "factUndo": "Setiap perubahan bisa diurungkan satu langkah, dan Lanjut kasih tahu kamu.",
+      "factUndo": "Setiap perubahan CV bisa diurungkan satu langkah, dan Lanjut kasih tahu kamu.",
       "factOff": "Matikan kapan saja untuk menutup semua koneksi.",
       "confirm": "Nyalakan",
       "cancel": "Batal",
@@ -2057,7 +2057,7 @@
       },
       "assistant": {
         "title": "Asisten AI (cuma di aplikasi desktop).",
-        "body": "Kerja bareng asisten AI mati sampai kamu nyalakan di Pengaturan. Kalau nyala, aplikasinya nggak membuka port jaringan. Dia cuma mendengarkan lewat socket lokal di perangkat kamu (named pipe di Windows), jadi cuma aplikasi di akun kamu, di perangkat ini, yang bisa terhubung. Asisten yang kamu hubungkan menerima teks CV yang dia baca, tapi nggak pernah foto kamu. Kalau asistennya jalan di cloud, perusahaannya bisa memproses teks itu di sana. Biar teksnya tetap di perangkat kamu, pakai model yang jalan di sini, misalnya di LM Studio. Lanjut nggak mengirim apa pun ke server Lanjut."
+        "body": "Kerja bareng asisten AI mati sampai kamu nyalakan di Pengaturan. Kalau nyala, aplikasinya nggak membuka port jaringan. Dia cuma mendengarkan lewat socket lokal di perangkat kamu (named pipe di Windows), jadi cuma aplikasi di akun kamu, di perangkat ini, yang bisa terhubung. Asisten yang kamu hubungkan menerima teks CV dan profil yang dia baca, tapi nggak pernah foto kamu. Saat dia memasang foto, aplikasinya membaca file gambar di perangkat kamu, dan gambarnya nggak dikirim balik ke asisten. File yang dia simpan cuma masuk ke tempat yang kamu pilih di dialog simpan. Kalau asistennya jalan di cloud, perusahaannya bisa memproses teks itu di sana. Biar teksnya tetap di perangkat kamu, pakai model yang jalan di sini, misalnya di LM Studio. Lanjut nggak mengirim apa pun ke server Lanjut."
       },
       "downloads": {
         "title": "Download aplikasi desktop.",

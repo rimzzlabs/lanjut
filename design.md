@@ -248,6 +248,10 @@ editorial
   them scrolls into view. A toast says what changed, with Undo, for 8 seconds, and
   leaves as soon as the résumé changes again. Reduced motion stops the pulse and
   the smooth scroll.
+- An assistant that asks to delete a résumé gets the library's own delete dialog,
+  the same `AlertDialog` (a `Drawer` on a phone) with Cancel and a destructive
+  Delete. An assistant that asks to save a file gets the system save dialog. It
+  has no Lanjut surface of its own, and both wait for the person.
 - The Styling and Document tabs group their controls by intent. Each group is an
   `EditorPanelSection`: an icon in a muted square, a title, one line on what the
   group is for, an optional action beside the title, then the controls.

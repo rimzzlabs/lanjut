@@ -1,14 +1,39 @@
 import { R } from "@mobily/ts-belt";
 import type { z } from "zod";
 import {
+  createResumeArgs,
+  duplicateResumeArgs,
   editResumeArgs,
+  exportResumeArgs,
   getResumeArgs,
   parseArgs,
+  profileIdArgs,
   replaceResumeArgs,
   resumeIdArgs,
+  resumeSettingsArgs,
+  saveProfileArgs,
+  sectionOrderArgs,
+  setPhotoArgs,
 } from "./assistant-args";
 import { findResume, listResumes } from "./assistant-library";
+import {
+  listProfiles,
+  moveResumeToProfile,
+  saveProfile,
+  switchProfile,
+} from "./assistant-profiles";
 import { getResumeText } from "./assistant-read";
+import {
+  createResume,
+  deleteResume,
+  duplicateResume,
+  exportResume,
+} from "./assistant-resumes";
+import {
+  setPhoto,
+  setSectionOrder,
+  updateResumeSettings,
+} from "./assistant-settings";
 import { type AssistantWindow, showResume } from "./assistant-window";
 import { editResume, replaceResume } from "./assistant-write";
 
@@ -23,6 +48,22 @@ async function openResume(
   return R.map(await showResume(id, win), (resume) => ({
     id: resume.id,
     title: resume.title,
+  }));
+}
+
+/** The settings first, then the move: a résumé in another profile is out of reach. */
+async function settingsThenMove(
+  args: z.infer<typeof resumeSettingsArgs>,
+  win: AssistantWindow,
+): Promise<ToolResult> {
+  const written = await updateResumeSettings(args, win);
+  if (R.isError(written) || args.profile_id === undefined) return written;
+  const moved = await moveResumeToProfile(args.id, args.profile_id);
+  if (R.isError(moved)) return moved;
+  return R.map(written, (result) => ({
+    ...result,
+    profileId: args.profile_id,
+    note: "The résumé is in another profile now. Call lanjut_switch_profile to reach it again.",
   }));
 }
 
@@ -66,6 +107,29 @@ const TOOLS: Readonly<Record<string, Tool>> = {
     ),
   lanjut_open_resume: (args, win) =>
     withArgs(resumeIdArgs, args, (parsed) => openResume(parsed.id, win)),
+  lanjut_create_resume: (args, win) =>
+    withArgs(createResumeArgs, args, (parsed) => createResume(parsed, win)),
+  lanjut_duplicate_resume: (args, win) =>
+    withArgs(duplicateResumeArgs, args, (parsed) =>
+      duplicateResume(parsed, win),
+    ),
+  lanjut_delete_resume: (args) =>
+    withArgs(resumeIdArgs, args, (parsed) => deleteResume(parsed)),
+  lanjut_update_resume_settings: (args, win) =>
+    withArgs(resumeSettingsArgs, args, (parsed) =>
+      settingsThenMove(parsed, win),
+    ),
+  lanjut_set_section_order: (args, win) =>
+    withArgs(sectionOrderArgs, args, (parsed) => setSectionOrder(parsed, win)),
+  lanjut_set_photo: (args, win) =>
+    withArgs(setPhotoArgs, args, (parsed) => setPhoto(parsed, win)),
+  lanjut_export_resume: (args) =>
+    withArgs(exportResumeArgs, args, (parsed) => exportResume(parsed)),
+  lanjut_list_profiles: () => listProfiles(),
+  lanjut_switch_profile: (args) =>
+    withArgs(profileIdArgs, args, (parsed) => switchProfile(parsed)),
+  lanjut_save_profile: (args, win) =>
+    withArgs(saveProfileArgs, args, (parsed) => saveProfile(parsed, win)),
 };
 
 interface AssistantCall {

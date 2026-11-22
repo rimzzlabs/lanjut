@@ -53,11 +53,13 @@ function staleMessage(revision: number): string {
   return `The résumé changed after base_revision: it is at revision ${revision} now. Call lanjut_get_resume again, then write against the new text.`;
 }
 
+/** The résumé that a write makes from the open one, or why it cannot. */
+export type NextResume = (resume: Resume) => Promise<R.Result<Resume, string>>;
+
 interface WriteParams {
   id: string;
   baseRevision: number;
-  /** The new Markdown, from the Markdown of the résumé as it is. */
-  nextText: (current: string) => R.Result<string, string>;
+  next: NextResume;
 }
 
 /** Still the same résumé object, edited here, with no code text in the way. */
@@ -69,10 +71,11 @@ function unchangedSince(resume: Resume): boolean {
 }
 
 /**
- * Writes the résumé through the code mode's reader, as one undo step. It
- * opens in the editor first, so the person sees the change and can undo it.
+ * Writes the résumé as one undo step. It opens in the editor first, so the
+ * person sees the change and can undo it. Every assistant write of a résumé
+ * goes through here.
  */
-async function writeResume(
+export async function writeResume(
   params: WriteParams,
   win: AssistantWindow,
 ): Promise<R.Result<WriteResult, string>> {
@@ -93,18 +96,55 @@ async function writeResume(
   }
 
   const resume = before.open;
-  return R.match(
-    params.nextText(resumeToCodeText(resume, "markdown")),
-    (text) => applyText({ resume, revision: before.openRevision, text }, win),
-    (message) => Promise.resolve(R.makeError<WriteResult, string>(message)),
+  const next = await params.next(resume);
+  if (R.isError(next)) return next;
+  return commit(
+    { resume, revision: before.openRevision, next: R.getExn(next) },
+    win,
   );
 }
 
-interface ApplyTextParams {
-  /** The open résumé that the text was made from. */
+interface CommitParams {
+  /** The open résumé that the change was made from. */
   resume: Resume;
   revision: number;
-  text: string;
+  next: Resume;
+}
+
+async function commit(
+  params: CommitParams,
+  win: AssistantWindow,
+): Promise<R.Result<WriteResult, string>> {
+  const { resume, revision, next } = params;
+  // The person can type while the change is made.
+  if (!unchangedSince(resume)) {
+    return R.makeError(staleMessage(useResumeStore.getState().openRevision));
+  }
+  if (next === resume) {
+    return R.makeOk({
+      id: resume.id,
+      title: resume.title,
+      revision,
+      changed: false,
+    });
+  }
+
+  useResumeStore.getState().updateOpenAsStep(() => next);
+  const unsaved = D.get(UNSAVED, await savedStatus());
+  if (O.isSome(unsaved)) {
+    return R.makeError(
+      `Lanjut shows the change, but did not save it. ${unsaved}`,
+    );
+  }
+  const after = useResumeStore.getState();
+  const written = after.open ?? next;
+  win.changed(resume, written);
+  return R.makeOk({
+    id: written.id,
+    title: written.title,
+    revision: after.openRevision,
+    changed: true,
+  });
 }
 
 const READER_ERROR =
@@ -122,44 +162,25 @@ function markdownReaderLoads(): Promise<boolean> {
   );
 }
 
-async function applyText(
-  params: ApplyTextParams,
-  win: AssistantWindow,
-): Promise<R.Result<WriteResult, string>> {
-  const { resume, revision, text } = params;
-  if (!(await markdownReaderLoads())) return R.makeError(READER_ERROR);
-  const edit = await applyCodeText({ resume, text, format: "markdown" });
-  if (!edit.parsed.ok) return R.makeError(failureMessage(text, edit.parsed));
-  if (edit.ignored > 0) return R.makeError(ignoredMessage(edit.ignored));
-  // The person can type while the text is read.
-  if (!unchangedSince(resume)) {
-    return R.makeError(staleMessage(useResumeStore.getState().openRevision));
-  }
-  if (edit.resume === resume) {
-    return R.makeOk({
-      id: resume.id,
-      title: resume.title,
-      revision,
-      changed: false,
+/** The résumé that a Markdown text makes, from the Markdown of the résumé as it is. */
+function fromMarkdown(
+  nextText: (current: string) => R.Result<string, string>,
+): NextResume {
+  return async (resume) => {
+    const text = nextText(resumeToCodeText(resume, "markdown"));
+    if (R.isError(text)) return text;
+    const markdown = R.getExn(text);
+    if (!(await markdownReaderLoads())) return R.makeError(READER_ERROR);
+    const edit = await applyCodeText({
+      resume,
+      text: markdown,
+      format: "markdown",
     });
-  }
-
-  useResumeStore.getState().updateOpenAsStep(() => edit.resume);
-  const unsaved = D.get(UNSAVED, await savedStatus());
-  if (O.isSome(unsaved)) {
-    return R.makeError(
-      `Lanjut shows the change, but did not save it. ${unsaved}`,
-    );
-  }
-  const after = useResumeStore.getState();
-  const written = after.open ?? edit.resume;
-  win.changed(resume, written);
-  return R.makeOk({
-    id: written.id,
-    title: written.title,
-    revision: after.openRevision,
-    changed: true,
-  });
+    if (!edit.parsed.ok)
+      return R.makeError(failureMessage(markdown, edit.parsed));
+    if (edit.ignored > 0) return R.makeError(ignoredMessage(edit.ignored));
+    return R.makeOk(edit.resume);
+  };
 }
 
 interface EditParams {
@@ -176,7 +197,7 @@ export function editResume(
     {
       id: params.id,
       baseRevision: params.baseRevision,
-      nextText: (current) => applyTextEdits(current, params.edits),
+      next: fromMarkdown((current) => applyTextEdits(current, params.edits)),
     },
     win,
   );
@@ -196,7 +217,7 @@ export function replaceResume(
     {
       id: params.id,
       baseRevision: params.baseRevision,
-      nextText: () => R.makeOk(params.markdown),
+      next: fromMarkdown(() => R.makeOk(params.markdown)),
     },
     win,
   );

@@ -7,6 +7,7 @@ mod args;
 mod bridge;
 mod connections;
 mod listener;
+mod photo;
 mod relay;
 mod server;
 mod settings;

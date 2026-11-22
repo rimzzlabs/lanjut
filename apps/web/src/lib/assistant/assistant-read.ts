@@ -8,6 +8,7 @@ import { O, R } from "@mobily/ts-belt";
 import { flushOpenResumePersist } from "@/lib/store/persistence";
 import { useResumeStore } from "@/lib/store/resume-store";
 import { findResume } from "./assistant-library";
+import { sectionList, settingsOptions } from "./assistant-settings";
 import { editedHere, UNREADABLE_RESUME } from "./assistant-window";
 
 /** What `lanjut_get_resume` gives. The text never holds the photo. */
@@ -16,6 +17,10 @@ interface ResumeText {
   title: string;
   revision: number;
   format: CodeFormat;
+  /** What the settings and section tools take. */
+  sections: ReturnType<typeof sectionList>;
+  options: ReturnType<typeof settingsOptions>;
+  hasPhoto: boolean;
   text: string;
 }
 
@@ -59,6 +64,9 @@ export async function getResumeText(
     title: copy.resume.title,
     revision: copy.revision,
     format: params.format,
+    sections: sectionList(copy.resume),
+    options: settingsOptions(),
+    hasPhoto: Boolean(copy.resume.header.photo),
     text: resumeToCodeText(copy.resume, params.format),
   });
 }

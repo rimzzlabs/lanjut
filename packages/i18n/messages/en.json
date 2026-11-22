@@ -200,7 +200,7 @@
         "1_8_0": [
           {
             "title": "Work with your AI assistant",
-            "description": "In the desktop app, open Settings, then AI assistant, and turn on Work with an AI assistant. Then connect the assistant you already use: Claude Code, Codex, Cursor, LM Studio, Claude Desktop, or another one. Ask it to shorten your bullets or fit your summary to a job post, and your resume changes on screen. Each change is one undo step, and Lanjut tells you about it. It stays off until you turn it on, and Lanjut sends nothing to a server of its own."
+            "description": "In the desktop app, open Settings, then AI assistant, and turn on Work with an AI assistant. Then connect the assistant you already use: Claude Code, Codex, Cursor, LM Studio, Claude Desktop, or another one. Ask it to shorten your bullets, fit your summary to a job post, switch the template, or set up a new profile, and your resume changes on screen. Each change to a resume is one undo step, and it asks you before it deletes a resume or saves a file. It stays off until you turn it on, and Lanjut sends nothing to a server of its own."
           }
         ],
         "1_6_1": [
@@ -1022,16 +1022,16 @@
       "nav": "AI assistant",
       "navShort": "AI",
       "title": "Work with an AI assistant",
-      "description": "Connect the AI assistant you already use, so it can read and change your resumes. In this desktop app only.",
+      "description": "Connect the AI assistant you already use, so it can read and change your resumes and profiles. In this desktop app only.",
       "switch": "Work with an AI assistant",
       "switchDescription": "Off until you turn it on. Only apps on this device, under your account, can connect.",
       "changeFailed": "Lanjut could not change this setting. Try again.",
       "confirmTitle": "Turn on Work with an AI assistant?",
       "confirmDescription": "Read what the assistant gets before you turn this on.",
-      "factReads": "An assistant you connect can read the resumes of your active profile and change them.",
+      "factReads": "An assistant you connect can read and change your resumes and your profiles. It asks you before it deletes a resume or saves a file.",
       "factCloud": "Lanjut sends nothing to a server of its own. If your assistant runs in the cloud, its company receives the text that it reads. To keep the text on this device, use a model that runs here, for example in LM Studio.",
       "factPhoto": "Your photo never goes to the assistant.",
-      "factUndo": "Each change is one undo step, and Lanjut tells you about it.",
+      "factUndo": "Each change to a resume is one undo step, and Lanjut tells you about it.",
       "factOff": "Turn this off at any time to close every connection.",
       "confirm": "Turn on",
       "cancel": "Cancel",
@@ -2057,7 +2057,7 @@
       },
       "assistant": {
         "title": "AI assistant (desktop app only).",
-        "body": "Work with an AI assistant is off until you turn it on in Settings. When it is on, the app opens no network port. It listens on a local socket on your device (a named pipe on Windows), so only apps under your account on this device can connect. The assistant you connect receives the text of the résumés it reads, but never your photo. If that assistant runs in the cloud, its company can process that text there. To keep the text on your device, use a model that runs on it, for example in LM Studio. Lanjut sends nothing to a server of its own."
+        "body": "Work with an AI assistant is off until you turn it on in Settings. When it is on, the app opens no network port. It listens on a local socket on your device (a named pipe on Windows), so only apps under your account on this device can connect. The assistant you connect receives the text of the résumés and the profiles it reads, but never your photo. When it sets a photo, the app reads the image file on your device, and the image does not go back to the assistant. A file that it saves goes only where you pick in the save dialog. If that assistant runs in the cloud, its company can process that text there. To keep the text on your device, use a model that runs on it, for example in LM Studio. Lanjut sends nothing to a server of its own."
       },
       "downloads": {
         "title": "Desktop downloads.",

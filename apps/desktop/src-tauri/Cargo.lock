@@ -2220,6 +2220,7 @@ dependencies = [
 name = "lanjut"
 version = "0.0.0"
 dependencies = [
+ "base64 0.22.1",
  "lanjut-mcp",
  "libc",
  "rmcp",

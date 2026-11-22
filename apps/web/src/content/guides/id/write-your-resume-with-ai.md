@@ -2,7 +2,7 @@
 title: "Tulis CV Bareng Asisten AI di Lanjut"
 description: "Hubungkan Claude Code, Codex, Cursor, LM Studio, Claude Desktop, atau asisten AI lain ke aplikasi desktop Lanjut, biar dia bisa baca CV kamu dan mengubahnya langsung di layar."
 heading: "Tulis CV bareng asisten AI"
-lead: "Fitur ini cuma ada di aplikasi desktop Lanjut. Di aplikasi desktop, kamu bisa menghubungkan asisten AI yang sudah kamu pakai. Minta dia memendekkan poin-poin kamu atau menyesuaikan ringkasan dengan lowongan, dan perubahannya langsung muncul di CV kamu."
+lead: "Fitur ini cuma ada di aplikasi desktop Lanjut. Di aplikasi desktop, kamu bisa menghubungkan asisten AI yang sudah kamu pakai. Minta dia memendekkan poin-poin kamu, menyesuaikan ringkasan dengan lowongan, atau mengganti template, dan perubahannya langsung muncul di CV kamu."
 published: "2026-11-22"
 updated: "2026-11-22"
 order: 3
@@ -16,12 +16,21 @@ Untuk memakainya, [unduh Lanjut](/download) untuk macOS, Windows, atau Linux. CV
 
 ## Apa yang bisa dilakukan
 
-Kalau fitur ini nyala, asisten bisa melakukan empat hal:
+Kalau fitur ini nyala, asisten bisa mengerjakan CV kamu:
 
-- Melihat daftar CV di profil aktif kamu.
-- Membaca satu CV sebagai teks.
-- Mengubah CV, per baris atau sekaligus.
-- Membuka CV di jendela Lanjut.
+- Melihat daftar, membaca, dan membuka CV di profil aktif kamu.
+- Mengubah kata-katanya, per baris atau sekaligus.
+- Mengubah tampilannya: template, font, ukuran, jarak, warna, dan ikon kontak.
+- Mengubah urutan bagian, dan menyembunyikan atau menampilkan bagian.
+- Memasang foto dari file gambar di perangkat kamu, atau menghapus fotonya.
+- Membuat CV baru, kosong atau dari contoh, dan menyalin CV.
+- Minta izin kamu untuk menghapus CV, atau menyimpannya sebagai file PDF, .docx, atau .txt.
+
+Dia juga bisa mengerjakan profil kamu:
+
+- Melihat daftar profil, lengkap dengan informasi pribadi dan ringkasannya.
+- Mengganti profil aktif, membuat profil, dan mengubah profil.
+- Memindahkan CV ke profil lain.
 
 Saat asisten mengubah CV, Lanjut membukanya dulu di editor, jadi kamu lihat setiap perubahannya. Selama asisten bekerja, ada chip di atas halaman yang menunjukkan nama asistennya, dan bagian yang dia ubah diberi warna selama 3 detik.
 
@@ -36,7 +45,7 @@ Kalau nyala:
 - Lanjut tetap nggak mengirim apa pun ke server Lanjut.
 - Koneksinya lewat socket lokal di perangkat kamu, bukan port jaringan. Cuma aplikasi yang jalan di akun kamu, di perangkat ini, yang bisa terhubung.
 - Asisten yang kamu hubungkan menerima teks CV yang dia baca. Kalau asistennya jalan di cloud, perusahaannya juga menerima teks itu. Biar teksnya tetap di perangkat kamu, pakai model yang jalan di sini, misalnya di LM Studio.
-- Foto kamu nggak pernah dikirim ke asisten.
+- Foto kamu nggak pernah dikirim ke asisten. Saat dia memasang foto, Lanjut membaca file gambarnya di perangkat kamu, dan gambarnya nggak dikirim balik ke asisten.
 
 ## Nyalakan fiturnya
 
@@ -116,11 +125,25 @@ Sebut CV-nya dan bilang apa yang mau diubah. Beberapa permintaan yang hasilnya b
 - "Perbaiki tata bahasanya. Jangan ubah faktanya."
 - "Terjemahkan CV ini ke bahasa Inggris."
 
-Asisten mengubah kata-katanya. Dia nggak bisa mengubah template, warna, bahasa CV, atau foto. Dia juga nggak bisa menambahkan tabel, kolom, atau jenis bagian baru, jadi CV kamu tetap gampang dibaca ATS seperti sebelumnya.
+Beberapa permintaan untuk tampilan dan urutan:
+
+- "Pakai template Ketat, dan bikin judul bagiannya biru tua."
+- "Taruh keahlian paling atas, dan sembunyikan sertifikat."
+- "Pakai foto di /Users/aku/Pictures/foto.jpg."
+
+Asisten memakai pengaturan yang sama dengan editor, dengan batas yang sama. Dia nggak bisa menambahkan tabel, kolom, atau jenis bagian baru, jadi CV kamu tetap gampang dibaca ATS seperti sebelumnya.
+
+## Hapus dan simpan selalu tanya kamu dulu
+
+Asisten nggak pernah menghapus CV sendiri. Saat dia minta, Lanjut menampilkan dialog hapus yang biasa, dan cuma kamu yang bisa pilih Hapus. Kalau kamu pilih Batal, CV-nya tetap ada.
+
+Saat asisten menyimpan CV sebagai file, Lanjut membuka dialog simpan, dan kamu yang pilih foldernya. Kalau kamu tutup dialognya, Lanjut nggak menyimpan apa-apa.
+
+Asisten menunggu jawaban kamu selama dua menit.
 
 ## Urungkan perubahan
 
-Setiap perubahan dari asisten adalah satu langkah urungkan. Begitu perubahannya masuk, Lanjut menampilkan pemberitahuan dengan tombol Urungkan. Kamu juga bisa pilih Urungkan di editor, atau tekan Cmd+Z (Ctrl+Z di Windows dan Linux).
+Setiap perubahan asisten pada CV adalah satu langkah urungkan. Begitu perubahannya masuk, Lanjut menampilkan pemberitahuan dengan tombol Urungkan. Kamu juga bisa pilih Urungkan di editor, atau tekan Cmd+Z (Ctrl+Z di Windows dan Linux).
 
 Tombol Urungkan di pemberitahuan cuma membatalkan perubahan dari asisten. Kalau kamu mengedit CV setelahnya, pemberitahuannya hilang, jadi tombol itu nggak pernah membatalkan tulisanmu sendiri.
 
@@ -130,6 +153,7 @@ Lanjut menolak perubahan, dan kasih tahu asisten alasannya, dalam kasus berikut:
 
 - Kamu mengubah CV setelah asisten membacanya. Asisten membaca ulang, lalu menulis.
 - Lanjut nggak bisa membaca teksnya, atau ada bagian teks yang nggak punya kolom di bagiannya. CV kamu nggak berubah, dan asisten dapat baris yang perlu diperbaiki.
+- Pengaturannya di luar batas editor, misalnya warna yang terlalu terang di kertas putih, atau template yang nggak ada.
 - Tampilan kode berisi teks dengan error yang masih kamu tulis. Lanjut menyimpan teks kamu. Perbaiki teksnya, atau balik ke Form.
 - Versi Lanjut yang lebih baru sudah menyimpan CV ini. Perbarui Lanjut.
 
