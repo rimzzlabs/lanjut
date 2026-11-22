@@ -9,11 +9,22 @@ import { readFileSync } from "node:fs";
 // label names), and BASE_REF (the base branch).
 
 const CHANGELOG_FILE = "apps/web/src/lib/changelog.ts";
-const LOCALES = ["en", "id"];
+const LOCALES = ["en", "id", "fr"];
 const SKIP_LABEL = "no-changelog";
 
 function git(...args) {
   return execFileSync("git", args, { encoding: "utf8" }).trim();
+}
+
+function existsAt(path, ref) {
+  try {
+    execFileSync("git", ["cat-file", "-e", `${ref}:${path}`], {
+      stdio: "ignore",
+    });
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function readJson(path, ref) {
@@ -115,7 +126,10 @@ if (ownReleases && !labels.includes(SKIP_LABEL)) {
   }
   for (const locale of LOCALES) {
     const path = `packages/i18n/messages/${locale}.json`;
-    const before = readJson(path, base).platform.changelog.entries[keyOf(next)];
+    // A language added in this PR has no file on the base branch yet.
+    const before = existsAt(path, base)
+      ? readJson(path, base).platform.changelog.entries[keyOf(next)]
+      : undefined;
     const after = entries[locale][keyOf(next)];
     if (JSON.stringify(before) === JSON.stringify(after)) {
       failures.push(

@@ -75,7 +75,7 @@ export const resumeSettingsArgs = z.object({
   base_revision: revision,
   title: title.optional(),
   template: z.string().max(MAX_ID).optional(),
-  language: z.enum(["en", "id"]).optional(),
+  language: z.enum(["en", "id", "fr"]).optional(),
   font: z.string().max(MAX_ID).optional(),
   show_icons: z.boolean().optional(),
   section_spacing: z.number().optional(),

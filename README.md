@@ -34,7 +34,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Drag to reorder sections, or apply an order in one step (experience first, or skills first for a skills-led résumé), and toggle any section's visibility (entries within a section sort by date automatically)
 - Document-level presentation controls: font, font size, section spacing, line height, letter spacing, colors for the name, headings, lines, and links (each at AA contrast or better), contact-icon visibility, and a one-click style reset
 - Contact labels: show a short text such as "LinkedIn" in place of a long address. The link still opens the full address, the plain text export prints it, and the readiness meter warns while a label hides an address from applicant tracking systems
-- Available in English and Indonesian (`use-intl`)
+- Available in English, Indonesian, and French (`use-intl`), and each résumé can be written in any of the three
 - Theme toggle and one settings menu (language, animation) in the landing and app navbars. The animation setting (System, On, Off) follows the operating system's reduced-motion setting on System
 - Export to PDF (linear reading order preserved) and plain text / .docx
 - Copy, download, and re-import a résumé as JSON or YAML, from a file or as pasted text shown in color
@@ -44,7 +44,7 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - A readiness meter that shows what your résumé still needs, counting only your own words, never the sample's
 - Guided tours of the library, templates, profiles, and editor for first-time users
 - A changelog page with the highlights of every release, also published as Markdown at `/changelog.md` for agents
-- Guides in English and Indonesian at `/guide`: a full ATS résumé example in five templates, each opening at full size, how to make an ATS-friendly résumé, and how to write a résumé with an AI assistant in the desktop app
+- Guides in English, Indonesian, and French at `/guide`: a full ATS résumé example in five templates, each opening at full size, how to make an ATS-friendly résumé, and how to write a résumé with an AI assistant in the desktop app
 - A download page at `/download` that offers the desktop installer for the visitor's system, links every file of the latest release, and explains the first launch of an unsigned build
 - A privacy page at `/privacy` that lists what stays on the device and every time the site talks to a server
 - Send feedback in-app: a guided form for bugs, ideas, and wording fixes that checks for similar issues and shows the technical details it attaches (never the text of your résumé). Without a GitHub account, Lanjut posts it for you and links to the issue; with one, it opens the issue prefilled for you to post
@@ -89,7 +89,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Build targets        | Web (default), desktop (`LANJUT_TARGET=desktop`)                         |
 | Desktop shell        | Tauri 2 (macOS 13 or later, Windows 10 or later, Linux)                  |
 | AI assistant         | rmcp (MCP server in the desktop app, on a local socket)                  |
-| Internationalization | use-intl (English, Indonesian)                                           |
+| Internationalization | use-intl (English, Indonesian, French)                                   |
 | UI components        | shadcn (base-ui, Vega style)                                             |
 | Icons                | Phosphor (@phosphor-icons/react)                                         |
 | Styling              | Tailwind CSS                                                             |
@@ -131,7 +131,7 @@ Open `http://localhost:4321`.
 | `apps/web`          | The Astro site, the React app, and the Worker                        |
 | `apps/desktop`      | The Tauri shell for macOS, Windows, and Linux                        |
 | `packages/resume`   | The résumé document: model, migrations, import, interchange, storage |
-| `packages/i18n`     | The English and Indonesian copy, and the routing helpers             |
+| `packages/i18n`     | The English, Indonesian, and French copy, and the routing helpers    |
 | `packages/ui`       | The shadcn primitives                                                |
 | `packages/mailing`  | The emails the Worker sends                                          |
 | `packages/tsconfig` | The shared TypeScript base                                           |

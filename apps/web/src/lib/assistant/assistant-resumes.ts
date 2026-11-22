@@ -26,7 +26,8 @@ import {
 type ToolResult = R.Result<unknown, string>;
 
 function pageLanguage(): ResumeLanguage {
-  return document.documentElement.lang === "id" ? "id" : "en";
+  const lang = document.documentElement.lang;
+  return lang === "id" || lang === "fr" ? lang : "en";
 }
 
 /** The new résumé opens in the editor, so the person sees it. */

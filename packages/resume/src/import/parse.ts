@@ -27,11 +27,15 @@ export interface ParseResult {
  * every visual line, so a single sentence arrives as several lines. A line is a
  * continuation of the previous one when it does not start a new bullet, heading,
  * dated header, or contact, the previous line did not end a sentence, and it
- * either starts lowercase or completes a hyphenated word split. Merging these
+ * either starts lowercase (an accented letter too, as in French), starts with a
+ * number and a percent sign that French sets apart ("40 %"), or completes a
+ * hyphenated word split. Merging these
  * keeps a wrapped bullet as one item and stops a fragment being read as a header.
  * Nothing joins a section heading, and a line that is all one link's text, such
  * as a project named "pg-jobs", stands alone.
  */
+const WRAPPED_PERCENT_RE = /^\d[\d\s.,]*%/;
+
 function reassembleLines(
   rawLines: ReadonlyArray<string>,
   labels: ReadonlySet<string>,
@@ -50,7 +54,9 @@ function reassembleLines(
       !labels.has(line) &&
       detectHeading(prev) === null &&
       !/[.!?:]$/.test(prev) &&
-      (/^[a-z]/.test(line) || /[-–—]$/.test(prev));
+      (/^\p{Ll}/u.test(line) ||
+        WRAPPED_PERCENT_RE.test(line) ||
+        /[-–—]$/.test(prev));
     if (!isContinuation) return A.append(result, line);
     const lastIdx = A.length(result) - 1;
     if (/[-–—]$/.test(prev)) {

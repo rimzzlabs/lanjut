@@ -1,4 +1,5 @@
 import { SEED_RESUME } from "./seed";
+import { SEED_RESUME_FR } from "./seed-fr";
 import { SEED_RESUME_ID } from "./seed-id";
 import type { Resume, ResumeLanguage } from "./types";
 
@@ -6,9 +7,11 @@ import type { Resume, ResumeLanguage } from "./types";
 export const SAMPLE_RESUMES: Record<ResumeLanguage, Resume> = {
   en: SEED_RESUME,
   id: SEED_RESUME_ID,
+  fr: SEED_RESUME_FR,
 };
 
 export const SAMPLE_RESUME_LIST: ReadonlyArray<Resume> = [
   SEED_RESUME,
   SEED_RESUME_ID,
+  SEED_RESUME_FR,
 ];

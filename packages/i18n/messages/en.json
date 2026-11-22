@@ -14,7 +14,8 @@
   "language": {
     "label": "Language",
     "en": "English",
-    "id": "Indonesia"
+    "id": "Indonesia",
+    "fr": "Français"
   },
   "updater": {
     "title": "Lanjut {version} is available",
@@ -201,6 +202,10 @@
           {
             "title": "Work with your AI assistant",
             "description": "In the desktop app, open Settings, then AI assistant, and turn on Work with an AI assistant. Then connect the assistant you already use: Claude Code, Codex, Cursor, LM Studio, Claude Desktop, or another one. Ask it to shorten your bullets, fit your summary to a job post, switch the template, or set up a new profile, and your resume changes on screen. Each change to a resume is one undo step, and it asks you before it deletes a resume or saves a file. It stays off until you turn it on, and Lanjut sends nothing to a server of its own."
+          },
+          {
+            "title": "Lanjut in French",
+            "description": "Lanjut is now in French too. Pick Français from the language menu, or set a CV's language to French: its section headings and dates change with it, and a French sample shows you a filled-in CV. Thanks to Pierrick29 for the first French labels."
           }
         ],
         "1_6_1": [
@@ -1901,8 +1906,8 @@
         "answer": "Yes, you can import your résumé. Drop in a PDF, or a backup file (JSON or YAML) you saved from Lanjut. The PDF needs real text, so a scanned page or a password-protected file cannot be read. Any line Lanjut cannot place goes to a list you can copy from."
       },
       "language": {
-        "question": "Can I write my résumé in Indonesian?",
-        "answer": "Yes, you can write your résumé in Indonesian. Set the document language to Indonesian in the editor, and the fixed labels, such as section headings and dates, change with it. The app itself is in English and Indonesian too."
+        "question": "Can I write my résumé in Indonesian or French?",
+        "answer": "Yes, you can write your résumé in Indonesian or French. Set the document language in the editor, and the fixed labels, such as section headings and dates, change with it. The app itself is in English, Indonesian, and French too."
       },
       "photo": {
         "question": "Can I add a photo?",
@@ -1969,8 +1974,8 @@
           "body": "Save a profile and all its CVs as one small file, then open it on another computer. No server and no account."
         },
         "languages": {
-          "title": "English and Indonesian",
-          "body": "Use the app in English or Indonesian, and write each CV in either one. Section headings and dates follow the CV's language."
+          "title": "English, Indonesian, and French",
+          "body": "Use the app in English, Indonesian, or French, and write each CV in any of them. Section headings and dates follow the CV's language."
         },
         "style": {
           "title": "Your look, your order",

@@ -59,7 +59,7 @@ export function homeStructuredData(
         name: SITE.name,
         alternateName: ["Lanjut Resume Builder", "lanjut.org"],
         description: t("description"),
-        inLanguage: ["en", "id"],
+        inLanguage: ["en", "id", "fr"],
         publisher: { "@id": AUTHOR_ID },
       },
       {

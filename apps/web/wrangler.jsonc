@@ -37,6 +37,8 @@
       "/editor/*",
       "/id/editor",
       "/id/editor/*",
+      "/fr/editor",
+      "/fr/editor/*",
       "/template",
       "/profile",
       "/changelog",

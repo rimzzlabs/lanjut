@@ -75,7 +75,10 @@ export default defineConfig({
           sitemap({
             filter: (page) =>
               A.includes(INDEXED_PATHS, stripLocale(pathOf(page))),
-            i18n: { defaultLocale: "en", locales: { en: "en", id: "id" } },
+            i18n: {
+              defaultLocale: "en",
+              locales: { en: "en", id: "id", fr: "fr" },
+            },
             // Every entry names the English page as x-default. No lastmod:
             // a build time on every page tells a crawler nothing.
             serialize: (item) => ({

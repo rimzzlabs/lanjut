@@ -158,7 +158,7 @@ pub struct ResumeSettingsArgs {
     /// A template id from `options.templates`.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub template: Option<String>,
-    /// The language of the headings and the dates: "en" or "id". The text does not change.
+    /// The language of the headings and the dates: "en", "id", or "fr". The text does not change.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub language: Option<String>,
     /// A font id from `options.fonts`.

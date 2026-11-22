@@ -10,7 +10,7 @@ import type { ContactLabels } from "./contact-labels";
 export const CURRENT_SCHEMA_VERSION = 27;
 
 /** The language the rendered document's fixed labels (headings, dates) use. */
-export type ResumeLanguage = "en" | "id";
+export type ResumeLanguage = "en" | "id" | "fr";
 
 /**
  * Presentation-only column count for grid-rendered sections (skills, languages).

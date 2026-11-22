@@ -10,6 +10,7 @@ body:
       options:
         - English
         - Indonesian
+        - French
     validations:
       required: true
   - type: textarea

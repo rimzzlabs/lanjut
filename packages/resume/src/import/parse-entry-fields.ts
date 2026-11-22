@@ -175,7 +175,15 @@ const COMPANY_SUFFIXES = new Set([
   "ab",
 ]);
 
-const WORKPLACE_WORDS = new Set(["remote", "hybrid", "onsite", "on-site"]);
+const WORKPLACE_WORDS = new Set([
+  "remote",
+  "hybrid",
+  "onsite",
+  "on-site",
+  "télétravail",
+  "hybride",
+  "sur site",
+]);
 
 function isLocationSegment(segment: string): boolean {
   return (

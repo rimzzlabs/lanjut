@@ -2,7 +2,7 @@ import { A, pipe, S } from "@mobily/ts-belt";
 import type { SectionType } from "..";
 
 /**
- * Bilingual (English + Indonesian) heading keywords per recognized section type.
+ * English, Indonesian, and French heading keywords per recognized section type.
  * Matching is case-insensitive against short lines only; a document that uses
  * these words as a heading is detected, others fall through to `custom` or body.
  */
@@ -24,6 +24,11 @@ const HEADING_KEYWORDS: Array<[SectionType, string[]]> = [
       "tentang saya",
       "ikhtisar",
       "objektif",
+      "synthèse",
+      "profil professionnel",
+      "à propos",
+      "objectif",
+      "résumé",
     ],
   ],
   [
@@ -39,9 +44,24 @@ const HEADING_KEYWORDS: Array<[SectionType, string[]]> = [
       "pengalaman kerja",
       "pengalaman profesional",
       "riwayat pekerjaan",
+      "expérience",
+      "expériences",
+      "expérience professionnelle",
+      "expériences professionnelles",
+      "parcours professionnel",
     ],
   ],
-  ["internship", ["internship", "internships", "magang", "pengalaman magang"]],
+  [
+    "internship",
+    [
+      "internship",
+      "internships",
+      "magang",
+      "pengalaman magang",
+      "stage",
+      "stages",
+    ],
+  ],
   [
     "projects",
     [
@@ -51,6 +71,9 @@ const HEADING_KEYWORDS: Array<[SectionType, string[]]> = [
       "proyek",
       "portofolio",
       "portfolio",
+      "projets",
+      "projet",
+      "projets personnels",
     ],
   ],
   [
@@ -69,6 +92,11 @@ const HEADING_KEYWORDS: Array<[SectionType, string[]]> = [
       "kepanitiaan",
       "relawan",
       "kepemimpinan",
+      "associations",
+      "vie associative",
+      "engagement associatif",
+      "bénévolat",
+      "activités",
     ],
   ],
   [
@@ -81,6 +109,10 @@ const HEADING_KEYWORDS: Array<[SectionType, string[]]> = [
       "riwayat pendidikan",
       "latar belakang pendidikan",
       "akademik",
+      "formation",
+      "formations",
+      "parcours académique",
+      "études",
     ],
   ],
   [
@@ -94,6 +126,8 @@ const HEADING_KEYWORDS: Array<[SectionType, string[]]> = [
       "sertifikat",
       "sertifikasi",
       "lisensi",
+      "certifications",
+      "certificats",
     ],
   ],
   [
@@ -108,9 +142,14 @@ const HEADING_KEYWORDS: Array<[SectionType, string[]]> = [
       "keterampilan",
       "kemampuan",
       "kompetensi",
+      "compétences",
+      "compétences techniques",
     ],
   ],
-  ["languages", ["languages", "language", "bahasa", "kemampuan bahasa"]],
+  [
+    "languages",
+    ["languages", "language", "bahasa", "kemampuan bahasa", "langues"],
+  ],
 ];
 
 export interface HeadingMatch {

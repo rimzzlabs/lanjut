@@ -1,7 +1,7 @@
 ---
 import "@/styles/globals.css";
 import { Font } from "astro:assets";
-import type { Locale } from "@lanjut/i18n/routing";
+import { type Locale, routing } from "@lanjut/i18n/routing";
 import { getTranslator } from "@lanjut/i18n/translator";
 import { A, F } from "@mobily/ts-belt";
 import { SEO } from "astro-seo";
@@ -30,15 +30,20 @@ interface Props {
 const props = Astro.props;
 const t = getTranslator(props.locale, "meta");
 
-const OG_LOCALE: Record<Locale, string> = { en: "en_US", id: "id_ID" };
-const OTHER_LOCALE: Record<Locale, Locale> = { en: "id", id: "en" };
+const OG_LOCALE: Record<Locale, string> = {
+  en: "en_US",
+  id: "id_ID",
+  fr: "fr_FR",
+};
+// French has no share image of its own yet, so it shares the English one.
+const OG_IMAGE: Record<Locale, string> = { en: "en", id: "id", fr: "en" };
 
 const siteTitle = t("title");
 const title = props.title ? `${props.title} · ${SITE.name}` : siteTitle;
 const description = props.description ?? t("description");
 const path = publicPath(Astro.url.pathname);
 const canonical = absoluteUrl(path);
-const ogImage = absoluteUrl(`/og/${props.locale}.png`);
+const ogImage = absoluteUrl(`/og/${OG_IMAGE[props.locale]}.png`);
 const indexable = !props.noindex;
 const languageAlternates = F.toMutable(
   A.append(
@@ -91,7 +96,12 @@ const keywords = A.join(
           siteName: SITE.name,
           description,
           locale: OG_LOCALE[props.locale],
-          localeAlternate: [OG_LOCALE[OTHER_LOCALE[props.locale]]],
+          localeAlternate: F.toMutable(
+            A.map(
+              A.reject(routing.locales, (locale) => locale === props.locale),
+              (locale) => OG_LOCALE[locale],
+            ),
+          ),
         },
         image: { width: 1200, height: 630, alt: siteTitle },
       }}

@@ -62,7 +62,7 @@ order:
 
 1. A `{type=...}` attribute at the end of the heading.
 2. The title, when it is the default title of a core section or its label in a
-   résumé language: `Experience` and `Pengalaman` are both the experience section.
+   résumé language: `Experience`, `Pengalaman`, and `Expérience` are all the experience section.
 3. If the two steps above find nothing, the section is a custom section.
 
 The title stays as written. `## Work History {type=experience}` is the experience
