@@ -17,6 +17,7 @@ export interface ChangelogHighlight {
  * with dots replaced by underscores, as a list of { title, description }.
  */
 export const CHANGELOG: ReadonlyArray<ChangelogEntry> = [
+  { version: "1.8.1", date: "2026-11-23" },
   { version: "1.8.0", date: "2026-11-22" },
   { version: "1.6.1", date: "2026-11-11" },
   { version: "1.6.0", date: "2026-11-02" },

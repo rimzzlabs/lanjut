@@ -198,6 +198,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_8_1": [
+          {
+            "title": "Bug fixes",
+            "description": "A link to the French site now shows its own share image in French, not the English one."
+          }
+        ],
         "1_8_0": [
           {
             "title": "Work with your AI assistant",

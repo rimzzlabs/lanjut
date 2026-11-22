@@ -35,15 +35,13 @@ const OG_LOCALE: Record<Locale, string> = {
   id: "id_ID",
   fr: "fr_FR",
 };
-// French has no share image of its own yet, so it shares the English one.
-const OG_IMAGE: Record<Locale, string> = { en: "en", id: "id", fr: "en" };
 
 const siteTitle = t("title");
 const title = props.title ? `${props.title} · ${SITE.name}` : siteTitle;
 const description = props.description ?? t("description");
 const path = publicPath(Astro.url.pathname);
 const canonical = absoluteUrl(path);
-const ogImage = absoluteUrl(`/og/${OG_IMAGE[props.locale]}.png`);
+const ogImage = absoluteUrl(`/og/${props.locale}.png`);
 const indexable = !props.noindex;
 const languageAlternates = F.toMutable(
   A.append(

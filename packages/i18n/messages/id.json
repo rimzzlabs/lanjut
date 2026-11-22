@@ -198,6 +198,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_8_1": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Link ke situs versi Prancis sekarang menampilkan gambar pratinjau berbahasa Prancis, bukan yang berbahasa Inggris."
+          }
+        ],
         "1_8_0": [
           {
             "title": "Kerja bareng asisten AI kamu",

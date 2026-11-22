@@ -198,6 +198,12 @@
       "latest": "Dernière",
       "fullChangelog": "Historique complet sur GitHub",
       "entries": {
+        "1_8_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Un lien vers le site en français affiche maintenant son propre aperçu en français, et non plus celui en anglais."
+          }
+        ],
         "1_8_0": [
           {
             "title": "Travaillez avec votre assistant IA",
