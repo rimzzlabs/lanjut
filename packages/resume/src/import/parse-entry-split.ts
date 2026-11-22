@@ -4,18 +4,20 @@ import { BULLET_RE, isLinkLine } from "./parse-rich-lines";
 // --- sections --------------------------------------------------------------
 
 const MONTH =
-  "(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|agu|okt|des|januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember)[a-z]*\\.?";
+  "(?:(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|agu|okt|des|januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember)[a-z]*|(?:janv(?:ier)?|f[ée]vr(?:ier)?|mars|avr(?:il)?|mai|juin|juil(?:let)?|ao[uû]t|sept(?:embre)?|octobre|novembre|d[ée]c(?:embre)?))\\.?";
 const DATE_TOKEN = `(?:${MONTH}\\s*)?\\d{4}`;
-const DATE_END = `(?:${DATE_TOKEN}|present|sekarang|current|now|kini)`;
+const DATE_END = `(?:${DATE_TOKEN}|present|sekarang|current|now|kini|présent|aujourd'hui)`;
 export const DATE_RANGE_RE = new RegExp(
   `(${DATE_TOKEN})\\s*[-–—]{1,2}\\s*(${DATE_END})`,
-  "i",
+  "iu",
 );
 
-const ONGOING_RE = /^(?:present|sekarang|current|now|kini)$/i;
+const ONGOING_RE =
+  /^(?:present|sekarang|current|now|kini|présent|aujourd'hui)$/iu;
 
-// The first three letters of an English or Indonesian month, to the stored
-// English abbreviation. An Indonesian résumé prints "Agu 2016" and "Sekarang".
+// The first three letters of an English, Indonesian, or French month, without
+// accents, to the stored English abbreviation. An Indonesian résumé prints
+// "Agu 2016" and "Sekarang", and a French one "Août 2016" and "Présent".
 const MONTH_ABBR: Record<string, string> = {
   jan: "Jan",
   feb: "Feb",
@@ -33,14 +35,35 @@ const MONTH_ABBR: Record<string, string> = {
   nov: "Nov",
   dec: "Dec",
   des: "Dec",
+  fev: "Feb",
+  avr: "Apr",
+  mai: "May",
+  aou: "Aug",
 };
+
+/** French "juin" and "juil" share three letters, so they need a fourth. */
+const JUNE_JULY: Record<string, string> = { juin: "Jun", juil: "Jul" };
+
+function monthKey(name: string): string {
+  // NFD splits an accent from its letter, so the accent can be dropped.
+  return S.replaceByRe(
+    S.toLowerCase(name).normalize("NFD"),
+    /[\u0300-\u036f]/g,
+    "",
+  );
+}
+
+function storedMonth(name: string): string | undefined {
+  const key = monthKey(name);
+  return JUNE_JULY[S.slice(key, 0, 4)] ?? MONTH_ABBR[S.slice(key, 0, 3)];
+}
 
 /** A printed date in the stored form: "Present", "MMM YYYY", or "YYYY". */
 function storedDate(printed: string): string {
   if (ONGOING_RE.test(printed)) return "Present";
-  const match = /^([a-z]+)\.?\s*(\d{4})$/i.exec(printed);
+  const match = /^(\p{L}+)\.?\s*(\d{4})$/iu.exec(printed);
   if (!match) return printed;
-  const month = MONTH_ABBR[S.toLowerCase(S.slice(match[1] ?? "", 0, 3))];
+  const month = storedMonth(match[1] ?? "");
   return month ? `${month} ${match[2]}` : printed;
 }
 

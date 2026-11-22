@@ -25,7 +25,7 @@ export type BugFrequency = (typeof BUG_FREQUENCIES)[number];
 export const IDEA_IMPACTS = ["nice", "time", "blocker"] as const;
 export type IdeaImpact = (typeof IDEA_IMPACTS)[number];
 
-export const WORDING_LANGUAGES = ["en", "id"] as const;
+export const WORDING_LANGUAGES = ["en", "id", "fr"] as const;
 export type WordingLanguage = (typeof WORDING_LANGUAGES)[number];
 
 export const FEEDBACK_LIMITS = {

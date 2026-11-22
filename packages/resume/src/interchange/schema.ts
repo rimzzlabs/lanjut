@@ -131,7 +131,7 @@ export const interchangeSchema = z
     version: z.literal(INTERCHANGE_VERSION),
     title: z.string().optional(),
     template: z.string().optional(),
-    language: z.enum(["en", "id"]).optional(),
+    language: z.enum(["en", "id", "fr"]).optional(),
     showIcons: z.boolean().optional(),
     sectionSpacing: z.number().int().min(-24).max(60).optional(),
     font: z.string().optional(),

@@ -5,6 +5,7 @@ import {
 } from "@lanjut/resume/interchange/code-edit";
 import { importResumeFromJson } from "@lanjut/resume/interchange/import-file";
 import { SEED_RESUME } from "@lanjut/resume/seed";
+import { SEED_RESUME_FR } from "@lanjut/resume/seed-fr";
 import { SEED_RESUME_ID } from "@lanjut/resume/seed-id";
 import { A, S } from "@mobily/ts-belt";
 
@@ -166,6 +167,7 @@ export async function runMarkdownChecks(): Promise<string[]> {
   const [seed, seedId, hardCaseErrors] = await Promise.all([
     roundTripErrors(SEED_RESUME, "sample"),
     roundTripErrors(SEED_RESUME_ID, "Indonesian sample"),
+    roundTripErrors(SEED_RESUME_FR, "French sample"),
     roundTripErrors(hard, "hard case"),
   ]);
   console.log("Markdown: the samples and the hard case read back unchanged");

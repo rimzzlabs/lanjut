@@ -1,7 +1,7 @@
 import { A, pipe, S } from "@mobily/ts-belt";
 
 export const routing = {
-  locales: ["en", "id"],
+  locales: ["en", "id", "fr"],
   defaultLocale: "en",
 } as const;
 
@@ -14,7 +14,7 @@ export function isLocale(value: unknown): value is Locale {
   return A.includes(routing.locales, value as Locale);
 }
 
-const LOCALE_PREFIX = /^\/id(?=\/|$)/;
+const LOCALE_PREFIX = /^\/(id|fr)(?=\/|$)/;
 
 /**
  * Drops the locale prefix and any trailing slash: `/id/editor/` becomes
@@ -31,7 +31,8 @@ export function stripLocale(pathname: string): string {
 }
 
 export function localeFromPath(pathname: string): Locale {
-  return LOCALE_PREFIX.test(pathname) ? "id" : routing.defaultLocale;
+  const match = LOCALE_PREFIX.exec(pathname);
+  return match && isLocale(match[1]) ? match[1] : routing.defaultLocale;
 }
 
 /**

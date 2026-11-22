@@ -86,6 +86,7 @@ const IMPACT_NAMES: Record<IdeaImpact, string> = {
 const LANGUAGE_NAMES: Record<WordingLanguage, string> = {
   en: "English",
   id: "Indonesian",
+  fr: "French",
 };
 
 const DETAIL_ROWS: ReadonlyArray<[keyof FeedbackDetails, string]> = [

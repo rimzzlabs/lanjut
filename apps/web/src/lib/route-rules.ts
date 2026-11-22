@@ -16,7 +16,7 @@ const QUERY_EDITOR_PATH = /^(\/id)?\/editor\/?$/;
 export const PRECACHE_HEADER = "x-lanjut-precache";
 
 // /editor/<id>: no file exists per résumé, so the one editor page answers.
-const EDITOR_DOCUMENT_PATH = /^(\/id)?\/editor\/[^/]+\/?$/;
+const EDITOR_DOCUMENT_PATH = /^(\/(?:id|fr))?\/editor\/[^/]+\/?$/;
 
 function editorTarget(prefix: string, id: string | null, url: URL) {
   const pathname = id === null ? EDITOR_PATHNAME : editorHref(id);

@@ -2,10 +2,10 @@
 
 > Lanjut is a free, open-source ATS resume builder (a CV builder too) that runs in the browser with no account. Resumes stay on the person's own device; nothing is uploaded to a server.
 
-- Website: https://lanjut.org (English) and https://lanjut.org/id (Indonesian)
+- Website: https://lanjut.org (English), https://lanjut.org/id (Indonesian), and https://lanjut.org/fr (French)
 - Start a resume: https://lanjut.org/editor
 - Templates: https://lanjut.org/template
-- Changelog: https://lanjut.org/changelog (Markdown: https://lanjut.org/changelog.md, Indonesian: https://lanjut.org/id/changelog.md)
+- Changelog: https://lanjut.org/changelog (Markdown: https://lanjut.org/changelog.md, Indonesian: https://lanjut.org/id/changelog.md, French: https://lanjut.org/fr/changelog.md)
 - Source code (AGPL-3.0): https://github.com/rimzzlabs/lanjut
 - Desktop app (macOS, Windows, Linux): https://lanjut.org/download
 - Maker: Rizki Citra (https://rimzzlabs.com), with contributors on GitHub
@@ -21,8 +21,9 @@
 - Import: a PDF resume with real text (not a scan), or a JSON or YAML file exported from Lanjut.
 - Templates: twenty (Awal, Ketat, Luasa, Tebal, Klasik, Ketik, Polos, Garis, Anggun, Tegas, Segar, Rapi, Lugas, Kertas, Jurnal, Kode, Mesin, Ringkas, Tengah, Elok). A template changes the look only, never the reading order.
 - Readiness: a meter shows what a resume still needs, and counts only the person's own words.
-- Languages: English and Indonesian, for the app and for a resume's headings and dates. Each language has its own sample resume.
+- Languages: English, Indonesian, and French, for the app and for a resume's headings and dates. Each language has its own sample resume.
 - Indonesian: at https://lanjut.org/id, Lanjut is a free ATS CV builder (pembuat CV ATS gratis), with no sign-up and no account (tanpa daftar, tanpa akun).
+- French: at https://lanjut.org/fr, Lanjut is a free ATS CV builder (créer un CV ATS gratuit), with no sign-up and no account (sans inscription, sans compte).
 - Developer mode: off by default. With it on in Preferences, the editor shows a resume as Markdown, YAML, or JSON beside the page, and the page follows the text.
 - Profiles: one profile per kind of job. A profile and its resumes back up to one file that imports on another device.
 - Platforms: any current browser, and a desktop app for macOS 13 or later, Windows 10 or later, and Linux (AppImage, .deb, or .rpm; Ubuntu 22.04 or later). Each runs on x64 and ARM.
@@ -41,3 +42,4 @@
   - [How to make an ATS-friendly resume](https://lanjut.org/guide/how-to-make-an-ats-resume): six steps and a two-minute check
   - [Write your resume with an AI assistant](https://lanjut.org/guide/write-your-resume-with-ai): turn on the AI assistant in the desktop app, connect each assistant, and what it can and cannot change
   - Indonesian: https://lanjut.org/id/guide/ats-resume-examples (contoh CV ATS) and https://lanjut.org/id/guide/how-to-make-an-ats-resume (cara membuat CV ATS), and https://lanjut.org/id/guide/write-your-resume-with-ai (tulis CV bareng asisten AI)
+  - French: https://lanjut.org/fr/guide/ats-resume-examples, https://lanjut.org/fr/guide/how-to-make-an-ats-resume, and https://lanjut.org/fr/guide/write-your-resume-with-ai

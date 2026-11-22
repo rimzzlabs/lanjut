@@ -4,7 +4,7 @@ description: "How to make a resume an applicant tracking system can read: the fo
 heading: "How to make an ATS-friendly resume"
 lead: "An applicant tracking system (ATS) reads your résumé before a person does. It pulls the text out of your file and sorts it into fields. This guide shows how to make a résumé that comes through that step whole, in six steps."
 published: "2026-11-01"
-updated: "2026-11-01"
+updated: "2026-11-22"
 order: 2
 ---
 
@@ -79,7 +79,7 @@ If the pasted text reads cleanly, a parser can read it too. If it comes out jumb
 Lanjut is built around these rules, so you can focus on what you write:
 
 1. Open the editor and start from a template, the sample, a blank page, or your old résumé as a PDF.
-2. Fill in each section. Every template is one column with standard headings, in English or Indonesian.
+2. Fill in each section. Every template is one column with standard headings, in English, Indonesian, or French.
 3. Follow the readiness meter. It shows what is still missing and counts only your own words.
 4. Download a PDF, a .docx, or a .txt file.
 

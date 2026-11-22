@@ -1,0 +1,2161 @@
+{
+  "meta": {
+    "title": "Créateur de CV ATS gratuit, sans compte ni inscription | Lanjut",
+    "description": "Créez un CV compatible ATS gratuitement. Open source, sans compte ni inscription : votre CV reste dans votre navigateur. Exportez en PDF, Word ou texte brut.",
+    "category": "Créateur de CV",
+    "features": "Gratuit et open source ; local d'abord, sans compte ni envoi de fichier ; plusieurs profils de CV ; vingt modèles compatibles ATS ; export PDF, Word (DOCX) et texte brut compatible ATS ; import depuis un PDF, du JSON ou du YAML ; un contrôle de préparation du CV ; des sauvegardes de profil à transférer sur un autre appareil ; anglais et indonésien ; fonctionne hors ligne, avec une application de bureau pour macOS, Windows et Linux",
+    "editorTitle": "Créer un CV",
+    "editorDescription": "Commencez un CV depuis une page vierge, l'exemple, votre ancien CV ou un modèle. Gratuit, sans compte, et enregistré dans votre navigateur.",
+    "templateTitle": "Découvrir les modèles",
+    "templateDescription": "Vingt modèles de CV gratuits qui gardent un ordre lisible par les logiciels de recrutement (ATS). Affichez chacun en pleine page, sur l'exemple ou sur votre propre CV.",
+    "changelogTitle": "Nouveautés",
+    "changelogDescription": "Ce qui a changé dans chaque version de Lanjut : les nouvelles fonctionnalités et les corrections du créateur de CV ATS gratuit et open source."
+  },
+  "language": {
+    "label": "Langue",
+    "en": "Anglais",
+    "id": "Indonésien",
+    "fr": "Français"
+  },
+  "updater": {
+    "title": "Lanjut {version} est disponible",
+    "description": "Sinon, vous êtes à jour. L'installation prend un instant et rouvre l'application.",
+    "install": "Installer",
+    "later": "Plus tard",
+    "installing": "Téléchargement de la mise à jour"
+  },
+  "nav": {
+    "skipToContent": "Aller au contenu principal",
+    "main": "Principal",
+    "toggleTheme": "Changer de thème",
+    "settings": "Paramètres",
+    "animation": "Animations",
+    "animationSystem": "Système",
+    "animationOn": "Activées",
+    "animationOff": "Désactivées",
+    "buildResume": "Créer votre CV",
+    "exploreTemplates": "Modèles",
+    "guides": "Guides",
+    "download": "Télécharger",
+    "github": "Lanjut sur GitHub",
+    "githubStars": "Lanjut sur GitHub, {count} étoiles",
+    "newTab": "s'ouvre dans un nouvel onglet",
+    "menu": "Menu"
+  },
+  "tour": {
+    "controls": {
+      "skip": "Passer",
+      "back": "Retour",
+      "next": "Suivant",
+      "done": "Terminé"
+    },
+    "library": {
+      "welcome": {
+        "title": "Bienvenue sur Lanjut",
+        "content": "Un créateur de CV gratuit et local. Tout ce que vous écrivez reste dans ce navigateur. Rien n'est jamais envoyé à un serveur."
+      },
+      "create": {
+        "title": "Créer un CV",
+        "content": "Commencez un nouveau CV ici. Vous pouvez en garder autant que vous voulez."
+      },
+      "start": {
+        "title": "Choisir comment commencer",
+        "content": "Partez d'une page vierge, de l'exemple, d'un CV que vous avez déjà ou d'un modèle."
+      },
+      "search": {
+        "title": "Le retrouver plus tard",
+        "content": "Quand votre bibliothèque grandit, cherchez un CV par son titre."
+      },
+      "nav": {
+        "title": "Se déplacer",
+        "content": "Passez d'ici à votre tableau de bord, aux modèles et à vos profils."
+      },
+      "replay": {
+        "title": "Revoir à tout moment",
+        "content": "Ce bouton relance le guide de la page où vous êtes."
+      },
+      "navPhone": {
+        "title": "Se déplacer",
+        "content": "Ouvrez ce menu pour passer à votre tableau de bord, aux modèles et à vos profils."
+      },
+      "replayPhone": {
+        "title": "Revoir à tout moment",
+        "content": "Appuyez sur Guide dans ce menu pour revoir la visite de la page où vous êtes."
+      }
+    },
+    "template": {
+      "browse": {
+        "title": "Parcourir les modèles",
+        "content": "Les modèles changent seulement la présentation : typographie, espacement, accents. La structure reste linéaire, pour que les ATS puissent toujours lire votre CV."
+      },
+      "preview": {
+        "title": "Essayez-le",
+        "content": "Affichez le modèle sur l'exemple ou sur l'un de vos CV. Ensuite, commencez un nouveau CV avec, ou appliquez-le à ce CV."
+      },
+      "search": {
+        "title": "Rechercher",
+        "content": "Cherchez un modèle par son nom."
+      }
+    },
+    "editor": {
+      "preview": {
+        "title": "Aperçu en direct",
+        "content": "Voici votre aperçu en direct, exactement ce qui sera exporté. Il se met à jour pendant la saisie et s'enregistre automatiquement dans ce navigateur."
+      },
+      "readiness": {
+        "title": "Préparation",
+        "content": "Cette barre montre si votre CV est prêt à être envoyé. Ouvrez-la pour voir ce qui manque encore, et choisissez un point pour aller droit au champ. Seuls vos propres mots comptent, pas ceux de l'exemple."
+      },
+      "sections": {
+        "title": "Onglet Contenu",
+        "content": "Remplissez chaque section ici. Faites-les glisser pour changer leur ordre ou masquez celles dont vous n'avez pas besoin. La structure reste lisible par les ATS."
+      },
+      "layout": {
+        "title": "Onglet Mise en page",
+        "content": "Changez de modèle depuis l'onglet Mise en page. Chaque modèle change seulement la typographie et l'espacement : votre contenu et son ordre de lecture ne changent jamais."
+      },
+      "styling": {
+        "title": "Onglet Style",
+        "content": "Mettez en forme tout le CV ici : Général, Typographie, Espacement, Libellés de contact et Couleurs. Densité règle l'espacement en un clic, et Général change la langue du CV."
+      },
+      "document": {
+        "title": "Onglet Document",
+        "content": "Téléchargez votre CV pour l'envoyer, gardez une sauvegarde JSON ou YAML, ou importez un CV depuis un fichier ou un texte collé."
+      }
+    },
+    "editor-sheet": {
+      "preview": {
+        "title": "Aperçu en direct",
+        "content": "Voici votre aperçu en direct, exactement ce qui sera exporté. Il se met à jour pendant la saisie et s'enregistre automatiquement dans ce navigateur."
+      },
+      "readiness": {
+        "title": "Préparation",
+        "content": "Cette barre montre si votre CV est prêt à être envoyé. Ouvrez-la pour voir ce qui manque encore, et choisissez un point pour aller droit au champ. Seuls vos propres mots comptent, pas ceux de l'exemple."
+      },
+      "edit": {
+        "title": "Ouvrir l'éditeur",
+        "content": "Touchez Modifier à tout moment pour ouvrir ce panneau et faire des changements."
+      },
+      "sections": {
+        "title": "Onglet Contenu",
+        "content": "Remplissez chaque section ici. Faites-les glisser pour changer leur ordre ou masquez celles dont vous n'avez pas besoin. La structure reste lisible par les ATS."
+      },
+      "layout": {
+        "title": "Onglet Mise en page",
+        "content": "Changez de modèle depuis l'onglet Mise en page. Chaque modèle change seulement la typographie et l'espacement : votre contenu et son ordre de lecture ne changent jamais."
+      },
+      "styling": {
+        "title": "Onglet Style",
+        "content": "Mettez en forme tout le CV ici : Général, Typographie, Espacement, Libellés de contact et Couleurs. Densité règle l'espacement en un clic, et Général change la langue du CV."
+      },
+      "document": {
+        "title": "Onglet Document",
+        "content": "Téléchargez votre CV pour l'envoyer, gardez une sauvegarde JSON ou YAML, ou importez un CV depuis un fichier ou un texte collé."
+      }
+    },
+    "profiles": {
+      "intro": {
+        "title": "Vos profils",
+        "content": "Gardez un profil par type de poste ou par marché de l'emploi. Chaque profil a ses propres CV, et les nouveaux CV reprennent ses informations."
+      },
+      "list": {
+        "title": "Choisir un profil à modifier",
+        "content": "Ouvrez un profil pour changer son nom, ses coordonnées et son résumé. Le profil actif est marqué, et votre bibliothèque affiche ses CV."
+      },
+      "add": {
+        "title": "Ajouter un profil",
+        "content": "Créez un autre profil quand vous postulez à un autre type de poste, ou dans un autre pays."
+      },
+      "import": {
+        "title": "Importer un profil",
+        "content": "Vous changez d'appareil ? Importez ici son fichier de sauvegarde. Lanjut montre ce que le fichier ajoute avant tout changement, et ne supprime jamais rien."
+      },
+      "backup": {
+        "title": "Sauvegarder un profil",
+        "content": "Téléchargez ce profil et tous ses CV en un seul fichier, ou partagez-le directement vers votre téléphone. Importez le fichier sur un autre appareil pour continuer là-bas."
+      },
+      "backupNarrow": {
+        "title": "Sauvegarder un profil",
+        "content": "Ouvrez un profil et trouvez Sauvegarde à la fin de ses détails. Elle télécharge le profil et tous ses CV en un seul fichier, ou le partage vers un autre appareil."
+      },
+      "switch": {
+        "title": "Changer depuis n'importe où",
+        "content": "Votre avatar dans la barre du haut change de profil depuis n'importe quelle page."
+      }
+    }
+  },
+  "platform": {
+    "breadcrumb": {
+      "platform": "Tableau de bord",
+      "editor": "Éditeur",
+      "browseTemplates": "Parcourir les modèles",
+      "changelog": "Nouveautés"
+    },
+    "changelog": {
+      "title": "Nouveautés",
+      "subtitle": "Historique des versions de Lanjut",
+      "versions": "Versions",
+      "latest": "Dernière",
+      "fullChangelog": "Historique complet sur GitHub",
+      "entries": {
+        "1_8_0": [
+          {
+            "title": "Travaillez avec votre assistant IA",
+            "description": "Dans l'application de bureau, ouvrez Réglages, puis Assistant IA, et activez Travailler avec un assistant IA. Connectez ensuite l'assistant que vous utilisez déjà : Claude Code, Codex, Cursor, LM Studio, Claude Desktop ou un autre. Demandez-lui de raccourcir vos puces, d'adapter votre résumé à une offre d'emploi, de changer de modèle ou de créer un nouveau profil, et votre CV change à l'écran. Chaque modification d'un CV s'annule en une étape, et l'assistant vous demande avant de supprimer un CV ou d'enregistrer un fichier. Il reste désactivé tant que vous ne l'activez pas, et Lanjut n'envoie rien à un serveur à lui."
+          },
+          {
+            "title": "Lanjut en français",
+            "description": "Lanjut existe maintenant en français. Choisissez Français dans le menu de langue, ou passez la langue d'un CV en français : ses titres de section et ses dates changent avec elle, et un exemple de CV en français vous montre un CV rempli. Merci à Pierrick29 pour les premiers libellés en français."
+          }
+        ],
+        "1_6_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Le nombre d'étoiles GitHub sur la page d'accueil reste maintenant à jour. Avant, il ne changeait qu'à chaque nouvelle version."
+          }
+        ],
+        "1_6_0": [
+          {
+            "title": "Quatorze nouveaux modèles",
+            "description": "Polos, Garis, Anggun, Tegas, Segar, Rapi, Lugas, Kertas, Jurnal, Kode, Mesin, Ringkas, Tengah et Elok. Chacun a sa propre police et ses propres espacements et, comme tous les modèles, il garde l'ordre que lit un logiciel de recrutement (ATS)."
+          },
+          {
+            "title": "Des couleurs pour votre CV",
+            "description": "Choisissez une couleur pour votre nom, les titres de section, les lignes et les liens dans l'onglet Style. Chaque couleur reste facile à lire : Lanjut refuse une couleur trop claire sur fond blanc."
+          },
+          {
+            "title": "Libellés de contact",
+            "description": "Affichez un mot court comme LinkedIn à la place d'une longue adresse. Le lien ouvre toujours l'adresse complète, et Lanjut vous prévient quand un libellé la cache aux logiciels de recrutement."
+          },
+          {
+            "title": "Une page de téléchargement pour l'application de bureau",
+            "description": "lanjut.org/download choisit le bon installateur pour votre ordinateur et lance aussitôt le téléchargement, avec un mot de remerciement et un bouton Réessayer. La page indique aussi quoi faire quand macOS ou Windows vous avertit à la première ouverture de l'application."
+          },
+          {
+            "title": "Une page d'accueil plus claire",
+            "description": "La page d'accueil montre maintenant l'éditeur lui-même et liste toutes les fonctionnalités au même endroit : profils de CV, modèles, import, export, usage hors ligne, et plus encore. Le menu du haut mène aux modèles, aux guides et à la page de téléchargement."
+          },
+          {
+            "title": "Aperçus des modèles en taille réelle dans le guide",
+            "description": "Le guide d'exemple de CV ATS montre maintenant cinq modèles. Touchez-en un pour voir chaque page en taille réelle, puis choisissez-le en un clic."
+          }
+        ],
+        "1_5_0": [
+          {
+            "title": "Des guides plus faciles à trouver",
+            "description": "La page d'accueil et la page des modèles renvoient maintenant aux guides : la question sur les logiciels de recrutement mène au guide pratique, et la page des modèles mène à un exemple complet dans chaque modèle."
+          }
+        ],
+        "1_4_0": [
+          {
+            "title": "Guides",
+            "description": "Deux nouveaux guides, en anglais et en indonésien : un exemple complet de CV ATS montré dans les six modèles, et comment créer un CV compatible ATS étape par étape. Retrouvez-les sous Guides en bas de la page d'accueil."
+          }
+        ],
+        "1_3_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Chaque réponse de la page d'accueil a maintenant du sens à elle seule, pour que les moteurs de recherche et les outils d'IA la citent correctement. La page Confidentialité indique sa date de dernière mise à jour."
+          }
+        ],
+        "1_3_0": [
+          {
+            "title": "Une page de confidentialité",
+            "description": "Une nouvelle page Confidentialité, accessible en bas de la page d'accueil, liste ce qui reste sur votre appareil et chaque fois que Lanjut contacte un serveur."
+          },
+          {
+            "title": "Corrections de bugs",
+            "description": "En indonésien, l'application dit maintenant CV partout au lieu de resume. La page des modèles a une courte introduction, et plusieurs phrases en indonésien sonnent plus naturelles."
+          }
+        ],
+        "1_2_0": [
+          {
+            "title": "Les modèles dans le menu",
+            "description": "Le menu en haut de la page d'accueil a maintenant un lien \"Explorer les modèles\", et son bouton principal dit \"Créer un CV\". Les pages de l'éditeur et des modèles ont aussi des noms plus courts dans l'onglet du navigateur."
+          }
+        ],
+        "1_1_0": [
+          {
+            "title": "Un exemple de CV en indonésien",
+            "description": "En indonésien, l'exemple de CV est maintenant lui aussi en indonésien, avec des titres et des dates en indonésien. Vous le voyez sur la page d'accueil, sur la page des modèles et quand vous créez un CV à partir de l'exemple."
+          },
+          {
+            "title": "Corrections de bugs",
+            "description": "Les lecteurs d'écran et les moteurs de recherche trouvent maintenant un titre principal clair sur la page d'accueil, la page des modèles et la page des retours. La page d'accueil répond d'abord à \"Qu'est-ce que Lanjut ?\", et la page d'accueil en indonésien dit maintenant CV partout. L'import du PDF d'un CV en indonésien garde maintenant ses dates, une liste de langues qui commence par \"Bahasa\" et une adresse sur deux lignes."
+          }
+        ],
+        "1_0_0": [
+          {
+            "title": "Lanjut 1.0, maintenant sur Windows et Linux",
+            "description": "L'application de bureau fonctionne maintenant sur Windows et Linux, en plus du Mac. C'est le même éditeur, il fonctionne toujours hors ligne, et vos CV restent sur votre machine. Téléchargez-la depuis la page d'accueil. L'application n'est plus en bêta."
+          }
+        ],
+        "0_26_4": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Sur Windows, les pages n'affichent plus deux barres de défilement grises sur leurs bords. Sur un grand écran, votre bibliothèque et les modèles utilisent maintenant toute la largeur de la fenêtre au lieu d'une colonne étroite au centre."
+          }
+        ],
+        "0_26_3": [
+          {
+            "title": "Une page d'accueil plus rapide",
+            "description": "La page d'accueil s'ouvre maintenant plus vite, surtout sur téléphone. L'exemple de CV s'affiche tout de suite, et la page reste fluide pendant que Lanjut relit le PDF. Télécharger ou importer un PDF ne fige plus la page non plus."
+          },
+          {
+            "title": "Corrections de bugs",
+            "description": "Les boutons verts de la page d'accueil sont un peu plus foncés, pour que leur texte soit plus lisible. Les lecteurs d'écran lisent maintenant chaque choix de modèle sous le nom affiché."
+          }
+        ],
+        "0_26_2": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Sur téléphone ou tablette, les aperçus des modèles dans les étapes de création d'un CV montrent maintenant chaque modèle tel qu'il est vraiment. Avant, le texte était centré."
+          }
+        ],
+        "0_26_1": [
+          {
+            "title": "Les pages s'affichent tout de suite",
+            "description": "Quand vous ouvrez votre bibliothèque, les modèles, vos profils ou un CV dans un navigateur, la mise en page s'affiche maintenant tout de suite et votre contenu apparaît un instant plus tard. L'animation de chargement qui couvrait toute la page n'y apparaît plus."
+          }
+        ],
+        "0_26_0": [
+          {
+            "title": "Mode développeur : votre CV en texte",
+            "description": "Activez le mode développeur dans Préférences, et l'éditeur reçoit un sélecteur Formulaire et Code. Code affiche votre CV en Markdown, YAML ou JSON, seul ou à côté de la page, et la page suit le texte pendant la saisie. Lanjut n'applique pas un texte qui contient une erreur, donc votre CV reste tel qu'il était. Le mode développeur reste désactivé tant que vous ne l'activez pas."
+          }
+        ],
+        "0_25_0": [
+          {
+            "title": "Un seul onglet modifie à la fois",
+            "description": "Ouvrez le même CV ou profil dans deux onglets, et un seul onglet peut le modifier. L'autre indique qu'il est ouvert ailleurs, et Modifier ici déplace la modification dans cet onglet. Votre bibliothèque et votre liste de profils se mettent aussi à jour d'un onglet à l'autre."
+          }
+        ],
+        "0_24_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Si le même CV ou profil est ouvert dans deux onglets, enregistrer dans l'un n'écrase plus les modifications faites dans l'autre. Lanjut vous demande quelle version garder et peut enregistrer la vôtre comme copie."
+          }
+        ],
+        "0_24_0": [
+          {
+            "title": "Fonctionne hors ligne",
+            "description": "Après votre première visite de l'application, Lanjut s'ouvre, enregistre et exporte sans internet. Un PDF dans un modèle que vous n'avez pas encore utilisé a besoin d'internet une fois, pour récupérer ses polices."
+          }
+        ],
+        "0_23_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Si une ancienne version de Lanjut est encore ouverte dans un autre onglet, elle n'enregistre plus par-dessus un CV modifié par une version plus récente. Elle vous le signale et vous demande d'actualiser la page."
+          }
+        ],
+        "0_23_0": [
+          {
+            "title": "Collez ou déposez votre photo",
+            "description": "Le champ photo des Informations personnelles accepte maintenant une image collée ou déposée. Copiez une photo, ouvrez Informations personnelles et appuyez sur Ctrl+V ou Cmd+V. Ou faites glisser le fichier image sur le champ photo."
+          }
+        ],
+        "0_22_0": [
+          {
+            "title": "Mettez vos compétences en avant",
+            "description": "Le menu d'ordre des sections, à côté d'annuler et rétablir au-dessus de l'aperçu, propose maintenant Compétences d'abord. Il place Compétences juste sous votre résumé, pour un CV qui commence par ce que vous savez faire. Expérience d'abord rétablit l'ordre standard. Vos entrées restent listées de la plus récente à la plus ancienne."
+          }
+        ],
+        "0_21_3": [
+          {
+            "title": "Corrections de bugs",
+            "description": "L'import d'un PDF créé par Lanjut récupère maintenant la ligne de contexte de l'entreprise, les liens de l'entreprise et des projets, et l'organisme de chaque certification, et lit correctement les mises en page Ketat et Luasa. Le texte que le PDF imprime en majuscules revient toujours en majuscules."
+          }
+        ],
+        "0_21_2": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Le texte en russe et dans les autres alphabets cyrilliques s'imprime maintenant dans votre PDF avec tous les modèles et toutes les polices. Avec les polices par défaut, il sortait vide. Les lettres comme ł, ő et ş d'autres langues européennes s'impriment maintenant aussi."
+          }
+        ],
+        "0_21_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "La version 0.21.0 manquait dans les nouveautés. Elle y est maintenant."
+          }
+        ],
+        "0_21_0": [
+          {
+            "title": "Toutes les versions au même endroit",
+            "description": "Les nouveautés ont maintenant leur propre page, Nouveautés, sous Autre dans la barre latérale. Elle liste chaque version de Lanjut, de la plus récente à la plus ancienne, avec sa date et ce qui a changé, et chaque version renvoie à sa publication sur GitHub. Le pied de la page d'accueil y renvoie aussi."
+          }
+        ],
+        "0_20_3": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Sur téléphone et tablette, l'aperçu d'un modèle s'ouvre maintenant dans un panneau qui monte depuis le bas de l'écran, et toute la page tient dans sa largeur."
+          }
+        ],
+        "0_20_2": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Sur téléphone, l'icône et le libellé de chaque tuile sous Créer un CV sont maintenant alignés."
+          }
+        ],
+        "0_20_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Deux bugs corrigés sur téléphone. Sur iPhone, le panneau de la démo de la page d'accueil bouge maintenant quand vous le faites glisser. La page d'accueil ne défile plus non plus sur le côté."
+          }
+        ],
+        "0_20_0": [
+          {
+            "title": "Un aperçu de lien plus clair",
+            "description": "Quand vous partagez un lien vers Lanjut dans une discussion ou une publication, son image d'aperçu dit maintenant ce qu'est Lanjut : un créateur de CV gratuit et open source, sans compte, qui garde votre CV sur votre appareil. Une page de CV se trouve à côté du texte. Un lien vers le site indonésien a sa propre image, écrite en indonésien."
+          }
+        ],
+        "0_19_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Les personnes qui créent Lanjut apparaissent maintenant sur la page d'accueil dès son ouverture. Avant, leurs visages restaient des cercles gris jusqu'à ce que vous fassiez défiler jusqu'à eux."
+          }
+        ],
+        "0_19_0": [
+          {
+            "title": "Voyez votre CV avant de le créer",
+            "description": "Créer un CV se fait maintenant en trois étapes courtes : le point de départ, le modèle et un nom. Sur un grand écran, un aperçu à côté des étapes montre chaque page pendant vos choix, même pour un fichier importé. Sur téléphone, faites défiler les modèles du doigt."
+          },
+          {
+            "title": "Des profils pour chaque type d'emploi",
+            "description": "Gardez un profil pour chaque type d'emploi ou marché du travail. Chaque profil garde ses propres CV, et chaque nouveau CV qu'il contient commence avec son nom, ses coordonnées et son résumé. Gérez les profils sur la nouvelle page Profils, et passez de l'un à l'autre depuis votre avatar dans la barre du haut. Une courte visite guidée vous montre la page à la première ouverture. Le thème, la langue et l'animation se trouvent maintenant dans Préférences, dans le même menu."
+          },
+          {
+            "title": "Une bibliothèque qui reprend là où vous en étiez",
+            "description": "Votre bibliothèque s'ouvre maintenant sur le dernier CV modifié, à un clic de l'éditeur. En dessous, créez un CV à partir d'une page vierge, de l'exemple, d'un fichier ou d'un modèle. Chaque CV affiche son modèle, et vous pouvez trier par nom ou par dernière modification et passer d'une grille à une liste."
+          },
+          {
+            "title": "Essayez un modèle sur votre propre CV",
+            "description": "La page des modèles montre maintenant chaque modèle en taille réelle, page par page. Prévisualisez-le sur l'exemple ou sur l'un de vos CV, puis appliquez-le en un clic. Si vous changez d'avis, Annuler dans l'éditeur remet l'ancien modèle."
+          },
+          {
+            "title": "Une barre latérale qui se replie en icônes",
+            "description": "Masquez la barre latérale et elle se replie maintenant en une fine rangée d'icônes au lieu de quitter l'écran. Survolez une icône pour voir son nom. Ouverte, elle liste vos cinq derniers CV."
+          },
+          {
+            "title": "Découvrez les personnes derrière Lanjut",
+            "description": "Votre bibliothèque remercie maintenant toutes les personnes qui créent Lanjut, avec un moyen direct de les rejoindre : traduire, corriger un bug ou créer une fonctionnalité."
+          },
+          {
+            "title": "Des retours corrigés plus vite",
+            "description": "Envoyer un retour vous guide maintenant vers ce qui aide le plus : ce que vous avez fait, ce que vous attendiez et ce qui s'est passé à la place. Le formulaire montre des signalements proches du vôtre pendant la saisie, indique exactement ce qu'il joint et vous donne le lien du ticket une fois créé. Vous pouvez aussi signaler un mot ou une traduction incorrects."
+          },
+          {
+            "title": "Votre PDF correspond maintenant à l'aperçu",
+            "description": "Les PDF téléchargés sont maintenant produits à partir de la page que vous voyez dans l'éditeur, donc les polices, les tailles et les espacements du fichier correspondent à l'aperçu. Le texte reste sélectionnable pour les logiciels de recrutement."
+          },
+          {
+            "title": "Désactivez les animations",
+            "description": "Un nouveau menu de réglages dans la barre du haut contient votre langue et un sélecteur d'animation. Choisissez Désactivé pour arrêter les mouvements à l'écran, ou Système pour suivre votre appareil. Le sélecteur de thème se trouve juste à côté."
+          },
+          {
+            "title": "Sachez que votre CV est enregistré",
+            "description": "La barre du haut de l'éditeur indique maintenant quand votre CV est enregistré sur cet appareil. Si le navigateur refuse un jour d'enregistrer, elle vous le dit tout de suite et vous explique comment garder une copie."
+          },
+          {
+            "title": "Voyez si votre CV est prêt",
+            "description": "Une barre au-dessus de l'aperçu de votre CV montre s'il est prêt à envoyer, de 0 % à Prêt à envoyer. Ouvrez-la pour voir ce qui manque encore, et choisissez un élément pour aller directement au champ. Seuls vos propres mots comptent, pas ceux de l'exemple. La première carte de la bibliothèque montre le même score sous forme d'anneau."
+          },
+          {
+            "title": "Plus de place pour l'aperçu sur grand écran",
+            "description": "Sur un écran large, le panneau d'édition garde une largeur confortable, et l'aperçu de la page prend la place restante."
+          },
+          {
+            "title": "Un premier PDF plus rapide",
+            "description": "Votre premier téléchargement de PDF démarre maintenant plus tôt. L'éditeur prépare le générateur de PDF pendant que vous ouvrez le téléchargement, et il charge seulement les polices de votre modèle."
+          },
+          {
+            "title": "Un onglet Style",
+            "description": "La police, les tailles, les espacements et la langue du CV ont maintenant leur propre onglet Style, groupé en Typographie, Espacement et Général. Chaque curseur affiche sa valeur, chaque groupe a sa propre réinitialisation, et un choix de densité (Compacte, Équilibrée, Aérée) règle les espacements en un clic."
+          },
+          {
+            "title": "Un onglet Document plus clair",
+            "description": "L'onglet Document est maintenant groupé en Téléchargement, Sauvegarde et Import. Chaque format de téléchargement indique quand l'utiliser, et une sauvegarde JSON ou YAML se copie ou se télécharge au même endroit."
+          },
+          {
+            "title": "Des formulaires qui profitent d'un panneau plus large",
+            "description": "Élargissez le panneau d'édition, et les champs de chaque section se placent côte à côte sur deux colonnes."
+          },
+          {
+            "title": "Collez du JSON ou du YAML",
+            "description": "Collez dans l'onglet Document un CV copié en JSON ou en YAML. Le texte s'affiche en couleur, et toute erreur s'affiche avant l'import."
+          },
+          {
+            "title": "Sauvegardez un profil",
+            "description": "Téléchargez un profil avec tous ses CV dans un seul petit fichier, puis importez-le sur un autre appareil pour continuer là-bas. Sur téléphone, Partager l'envoie par AirDrop, Partage à proximité ou une application cloud. Rien ne passe par un serveur, et un import ne supprime jamais rien : quand les deux appareils ont un même CV, le plus récent l'emporte."
+          },
+          {
+            "title": "Corrections de bugs",
+            "description": "Pendant une visite guidée, le bouton visé par une étape ne réagit plus à un clic ou à une touche, donc la visite ne peut plus ouvrir un menu ou un panneau sous sa propre carte. L'import d'un CV en PDF place maintenant chaque lien dans son propre champ, comme votre site web ou le lien d'une certification, au lieu d'afficher l'adresse comme du texte."
+          }
+        ],
+        "0_18_0": [
+          {
+            "title": "Ajoutez du contexte sur une entreprise",
+            "description": "Les entrées d'expérience et de stage ont maintenant un champ facultatif de contexte sur l'entreprise, pour présenter en quelques mots un employeur peu connu. Il apparaît dans chaque aperçu et chaque export avant vos réalisations."
+          }
+        ],
+        "0_17_2": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Sur téléphone, la démo de CV de la page d'accueil dépassait largement le bord de l'écran et rendait toute la page trop large. Elle tient maintenant dans l'écran."
+          }
+        ],
+        "0_17_1": [
+          {
+            "title": "L'application Mac se met à jour toute seule",
+            "description": "Quand une nouvelle version sort, l'application Mac vous la propose maintenant. Elle vérifie au plus une fois régulièrement, et rien ne s'installe sans votre clic."
+          },
+          {
+            "title": "Corrections de bugs",
+            "description": "Dans l'application Mac, la barre latérale couvrait la page à l'ouverture, et le bouton pour la masquer ne faisait rien. Les deux problèmes sont corrigés."
+          }
+        ],
+        "0_17_0": [
+          {
+            "title": "L'application Mac recherche les mises à jour",
+            "description": "L'application Mac recherche maintenant les nouvelles versions. Cette version est sortie sans les fichiers nécessaires à une mise à jour, donc les mises à jour ne fonctionnent qu'à partir de la 0.17.1."
+          }
+        ],
+        "0_16_2": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Dans l'application Mac, la barre latérale s'ouvrait par-dessus la page, et son bouton de repli ne faisait rien tant que vous ne changiez pas de langue. La fenêtre s'affiche maintenant correctement à l'ouverture."
+          }
+        ],
+        "0_16_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "La version 0.16.0 est sortie sans l'application Mac, donc le bouton de téléchargement de la page d'accueil menait à une publication vide. L'application y est maintenant."
+          }
+        ],
+        "0_16_0": [
+          {
+            "title": "Lanjut sur votre Mac",
+            "description": "Il existe maintenant une application Mac. C'est le même créateur de CV que vous utilisez déjà, sur votre propre machine, et il fonctionne même sans réseau. Vos CV restent sur cette machine. Téléchargez-la depuis le lien de la page d'accueil. C'est une bêta, pas encore signée par Apple, donc macOS vous demandera de confirmer à la première ouverture."
+          },
+          {
+            "title": "Une page pour les retours",
+            "description": "Les signalements de bugs et les demandes de fonctionnalités ont maintenant leur propre page, pour en envoyer depuis n'importe où, y compris depuis l'application Mac. Vous n'avez toujours pas besoin d'un compte GitHub."
+          }
+        ],
+        "0_15_0": [
+          {
+            "title": "L'application Mac se prépare",
+            "description": "Cette version a construit l'essentiel de l'application Mac. Le logo Lanjut s'affiche au démarrage, vous pouvez envoyer un retour depuis l'application, les liens s'ouvrent dans votre navigateur, et un export vous demande où enregistrer le fichier. Le lien de téléchargement est arrivé dans la version suivante."
+          }
+        ],
+        "0_14_0": [
+          {
+            "title": "Ajoutez une photo à votre en-tête",
+            "description": "Vous pouvez maintenant mettre une photo sur votre CV. Elle est facultative et désactivée par défaut. Ajoutez-la dans Informations personnelles, puis choisissez la taille, l'arrondi des coins et la position. Elle figure dans les exports PDF et Word, et le texte de votre CV reste entièrement lisible par les logiciels d'analyse."
+          },
+          {
+            "title": "Un nouveau look",
+            "description": "Lanjut a un nouveau logo et une page d'accueil refaite. Les aperçus de cette page sont produits par les vrais modèles, donc vous obtenez exactement ce que vous voyez."
+          },
+          {
+            "title": "Soutenez Lanjut",
+            "description": "Lanjut est gratuit et le restera. S'il vous a aidé, vous pouvez maintenant soutenir son développement via Saweria ou SociaBuzz, directement depuis la barre latérale ou le pied de page."
+          }
+        ],
+        "0_13_0": [
+          {
+            "title": "Un lien de plus dans votre en-tête",
+            "description": "Un nouveau champ Lien facultatif se trouve à côté de LinkedIn dans Informations personnelles, pour votre portfolio, GitHub ou autre chose. Il s'affiche dans l'aperçu et dans chaque export, et l'import d'un PDF le récupère aussi."
+          }
+        ],
+        "0_12_0": [
+          {
+            "title": "Annuler et rétablir",
+            "description": "Changez d'avis librement : chaque modification peut maintenant être annulée et rétablie, de la saisie et des entrées supprimées jusqu'à l'ordre des sections et aux réglages de mise en page. Utilisez les flèches à côté des onglets de la barre latérale ou Ctrl/Cmd+Z, et chaque champ de texte garde son propre historique pendant la saisie."
+          },
+          {
+            "title": "Une section à la fois",
+            "description": "La liste de l'éditeur garde maintenant une seule section ouverte, donc le formulaire sur lequel vous travaillez reste visible au lieu de pousser les autres hors de l'écran."
+          },
+          {
+            "title": "Corrections de bugs",
+            "description": "Trois bugs signalés corrigés : les liens de vos exports sont maintenant cliquables, un tiret en trop n'apparaît plus dans la ligne de contact du PDF, et les lieux vont dans le bon champ quand vous importez un PDF."
+          }
+        ],
+        "0_11_0": [
+          {
+            "title": "Lieu de l'entreprise",
+            "description": "Les entrées d'expérience et de stage ont maintenant un lieu, affiché à côté de l'employeur dans l'aperçu, le PDF et tous les autres exports. Les lieux de formation s'affichent aussi, au lieu de rester cachés."
+          }
+        ],
+        "0_10_2": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Une entrée de votre PDF ne se coupe plus sur deux pages. Quand une entrée ne tient pas en bas d'une page, l'entrée entière passe à la page suivante, comme dans l'aperçu."
+          }
+        ],
+        "0_10_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Deux bugs corrigés. Les mots avec fi ou fl dans votre PDF restent maintenant entiers quand un outil extrait le texte. \"fintech\" revenait sous la forme \"fntech\", et certains logiciels de recrutement lisent les PDF de cette façon. Dans la section Projets, le lien est maintenant sur le nom du projet, pas sur votre rôle."
+          }
+        ],
+        "0_10_0": [
+          {
+            "title": "Des retours sans compte GitHub",
+            "description": "Signalez un bug ou demandez une fonctionnalité directement depuis l'application : nous créons le ticket GitHub pour vous sous le nom que vous donnez, protégé par une vérification rapide."
+          },
+          {
+            "title": "Export et import JSON et YAML",
+            "description": "Copiez ou téléchargez votre CV en JSON ou en YAML, et réimportez l'un ou l'autre sans aucune perte. Le texte enrichi passe en Markdown simple."
+          },
+          {
+            "title": "Masquer des sections",
+            "description": "Chaque section, Résumé compris, a maintenant une icône en forme d'œil dans la liste de l'éditeur. Les sections masquées gardent leur contenu mais disparaissent de l'aperçu et de chaque export jusqu'à ce que vous les affichiez à nouveau."
+          },
+          {
+            "title": "Masquer les icônes de contact",
+            "description": "Un nouvel interrupteur dans l'onglet Document masque les petites icônes à côté de vos coordonnées, pour un en-tête plus sobre dans l'aperçu et le PDF. Le texte de vos coordonnées reste toujours."
+          },
+          {
+            "title": "Espacement des sections",
+            "description": "Un curseur dans l'onglet Document règle l'espace au-dessus de chaque section, dans l'aperçu comme dans le PDF. Augmentez-le pour une mise en page aérée, ou réduisez-le sous la valeur par défaut du modèle jusqu'à coller les sections."
+          },
+          {
+            "title": "Choisissez votre police",
+            "description": "Choisissez parmi quinze polices adaptées aux CV, groupées en sans serif, serif et mono, et tout le document suit dans l'aperçu et le PDF. Chaque modèle garde sa police par défaut tant que vous n'en choisissez pas, et l'aperçu utilise maintenant exactement les mêmes fichiers de police que le PDF."
+          },
+          {
+            "title": "Interligne et espacement des lettres",
+            "description": "Deux curseurs de plus dans l'onglet Document, réglés sur les vraies valeurs de chaque modèle : resserrez ou desserrez l'interligne et l'espacement des lettres, dans les deux sens, toujours dans la plage où le texte du PDF s'extrait correctement, pour que votre style ne nuise jamais à la lecture ATS."
+          },
+          {
+            "title": "Réglage des tailles de police",
+            "description": "Redimensionnez votre nom, les titres de section et le texte séparément depuis l'onglet Document. Chaque curseur agrandit son groupe en respectant les proportions du modèle, donc un nom plus grand n'écrase jamais le reste, et l'aperçu et le PDF restent alignés."
+          }
+        ],
+        "0_9_3": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Un CV supprimé pouvait réapparaître après le rechargement de la page. La suppression l'efface maintenant tout de suite de votre appareil, et Annuler le restaure encore pendant le compte à rebours. Le fond de la visite guidée ressort aussi mieux en thème sombre."
+          }
+        ],
+        "0_9_2": [
+          {
+            "title": "Corrections de bugs",
+            "description": "La page d'accueil se charge plus vite sur téléphone, car ses captures d'écran se téléchargent maintenant à la taille affichée par votre écran. Le sélecteur de langue fonctionne aussi mieux avec les lecteurs d'écran."
+          }
+        ],
+        "0_9_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Un problème empêchait la mise en ligne des nouvelles versions de Lanjut : le code d'export PDF et Word rendait le site trop lourd pour être publié. C'est corrigé, et les mises à jour sortent à nouveau."
+          }
+        ],
+        "0_9_0": [
+          {
+            "title": "Importer depuis un PDF",
+            "description": "Créez un CV à partir d'un PDF existant. Lanjut le lit dans votre navigateur et remplit les sections pour que vous les mettiez au propre."
+          },
+          {
+            "title": "Sections personnalisées",
+            "description": "Ajoutez vos propres sections en plus de celles prévues, sous forme de bloc de texte enrichi ou de liste d'entrées."
+          },
+          {
+            "title": "Réorganiser les certifications",
+            "description": "Faites glisser les certifications dans l'ordre voulu, comme pour les compétences et les langues."
+          },
+          {
+            "title": "Masquer le niveau",
+            "description": "Désactivez le niveau des compétences et des langues quand vous préférez simplement les lister, avec un interrupteur dans chaque section."
+          },
+          {
+            "title": "Colonnes de langues",
+            "description": "Affichez vos langues sur une ou deux colonnes, avec le même réglage de mise en page que dans Compétences."
+          },
+          {
+            "title": "Annuler une suppression",
+            "description": "La suppression d'un CV attend maintenant dix secondes et affiche Annuler, pour revenir facilement sur une suppression accidentelle."
+          },
+          {
+            "title": "Dupliquer un CV",
+            "description": "Copiez n'importe quel CV depuis son menu pour créer une nouvelle version sans tout recommencer."
+          }
+        ],
+        "0_8_0": [
+          {
+            "title": "Colonnes des compétences",
+            "description": "Un interrupteur dans la section Compétences passe d'une à deux colonnes, et votre choix s'applique à l'aperçu et à chaque export."
+          },
+          {
+            "title": "Entrées les plus récentes d'abord",
+            "description": "L'éditeur liste vos entrées de la plus récente à la plus ancienne, dans l'ordre de l'aperçu, donc les formulaires et votre CV restent toujours alignés."
+          },
+          {
+            "title": "Nouvelle barre de navigation",
+            "description": "La page d'accueil a une nouvelle barre de navigation, avec un menu qui s'ouvre proprement sur mobile."
+          },
+          {
+            "title": "Progression du chargement",
+            "description": "Passer d'une page à l'autre affiche une fine barre de progression en haut, pour un retour immédiat pendant le chargement."
+          }
+        ],
+        "0_7_0": [
+          {
+            "title": "Section Stages",
+            "description": "Listez vos stages comme des entrées à part, séparées des postes à temps plein, avec les mêmes champs que l'Expérience."
+          },
+          {
+            "title": "Section Projets",
+            "description": "Donnez aux projets personnels, aux contributions open source et à tout ce que vous avez livré leur propre espace, chacun avec un nom, un lien, des dates et une description."
+          },
+          {
+            "title": "Aperçu d'un CV vierge",
+            "description": "Un CV vierge affiche un aperçu indicatif dans votre bibliothèque au lieu d'une carte blanche vide, pour qu'un nouveau CV paraisse voulu tant que vous n'avez pas commencé à écrire."
+          }
+        ],
+        "0_6_0": [
+          {
+            "title": "Bahasa Indonesia",
+            "description": "Passez toute l'interface de l'anglais à l'indonésien à tout moment avec le sélecteur de langue de la barre de navigation."
+          },
+          {
+            "title": "Langue par CV",
+            "description": "Choisissez l'anglais ou l'indonésien pour chaque document, et les titres de section et les dates de vos exports PDF, DOCX et TXT suivent ce choix."
+          },
+          {
+            "title": "Réorganiser compétences et langues",
+            "description": "Saisissez la poignée à côté d'une entrée et faites-la glisser à sa place, ou utilisez le clavier pour la déplacer. Le nouvel ordre passe directement dans l'aperçu et dans chaque export."
+          },
+          {
+            "title": "Invites pour les sections vides",
+            "description": "Au lieu d'un simple bouton, chaque section sans entrée affiche une courte invite sur ce qu'il faut ajouter."
+          },
+          {
+            "title": "Nouveau dégradé d'accueil",
+            "description": "Le grand titre de la page d'accueil a un nouveau dégradé, réglé pour le mode clair comme pour le mode sombre."
+          }
+        ],
+        "0_5_0": [
+          {
+            "title": "Changer de modèle dans l'éditeur",
+            "description": "Le nouvel onglet Mise en page montre votre CV dans chaque modèle, et un clic applique votre choix."
+          },
+          {
+            "title": "Partir d'un CV vierge",
+            "description": "Décochez « Préremplir avec un exemple » dans la fenêtre de création pour commencer avec un document vierge au lieu de l'exemple de CV."
+          },
+          {
+            "title": "Sections que l'on peut vider",
+            "description": "Chaque entrée a un bouton de suppression, et supprimer la dernière retire la section de l'aperçu jusqu'à ce que vous en ajoutiez une autre."
+          }
+        ],
+        "0_4_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Sur petit écran, les boutons de la barre du haut sont de nouveau alignés sur une rangée, et le bouton de fermeture des panneaux latéraux est arrondi comme les autres commandes."
+          }
+        ],
+        "0_4_0": [
+          {
+            "title": "Section Organisations",
+            "description": "Mettez en valeur vos engagements bénévoles, étudiants et associatifs avec des dates et des points forts, comme une expérience professionnelle. La section apparaît dans chaque modèle et chaque export, et les CV existants la reçoivent automatiquement."
+          },
+          {
+            "title": "Des mises à jour plus sûres",
+            "description": "Une copie de sauvegarde est gardée sur votre appareil avant toute mise à niveau du format des données, et un CV que l'application ne sait pas encore lire est signalé par un avis au lieu de disparaître."
+          },
+          {
+            "title": "Visite guidée",
+            "description": "Une visite guidée vous présente le tableau de bord, les modèles et l'éditeur lors de votre première visite."
+          },
+          {
+            "title": "Présentation sur la page d'accueil",
+            "description": "La page d'accueil explique le fonctionnement de Lanjut et se termine par un moyen de créer un CV en un clic."
+          },
+          {
+            "title": "Signaler bugs et demandes",
+            "description": "Signalez un bug ou demandez une fonctionnalité depuis la barre latérale : nous préremplissons le ticket GitHub pour vous."
+          },
+          {
+            "title": "Panneaux sur mobile",
+            "description": "Sur votre téléphone, les fenêtres s'ouvrent en panneaux plus faciles à atteindre et à fermer d'un glissement."
+          }
+        ],
+        "0_3_1": [
+          {
+            "title": "Corrections de bugs",
+            "description": "L'image affichée quand vous partagez un lien vers Lanjut rendait le site trop lourd pour être publié, donc les nouvelles versions ne pouvaient pas sortir. C'est maintenant un simple fichier image, et les mises à jour sortent à nouveau."
+          }
+        ],
+        "0_3_0": [
+          {
+            "title": "Catalogue de modèles",
+            "description": "Parcourez les modèles sur leur propre page, avec recherche et tri."
+          },
+          {
+            "title": "Cinq nouveaux modèles",
+            "description": "Ketat, Luasa, Tebal, Klasik et Ketik."
+          },
+          {
+            "title": "Miniatures en direct",
+            "description": "Les cartes de modèle et de CV affichent une miniature en direct de votre vrai document."
+          },
+          {
+            "title": "Barre latérale et actions rapides",
+            "description": "La barre latérale indique où vous êtes, et chaque CV a un menu d'actions rapides."
+          }
+        ],
+        "0_2_0": [
+          {
+            "title": "Exportez votre CV",
+            "description": "Enregistrez votre CV en PDF, en DOCX ou en texte brut."
+          },
+          {
+            "title": "Texte enrichi dans l'aperçu",
+            "description": "Le gras, l'italique, les liens et les listes s'affichent dans l'aperçu en direct."
+          },
+          {
+            "title": "Toutes les sections dans l'éditeur",
+            "description": "L'éditeur couvre le résumé, l'expérience, la formation, les compétences, les certifications et les langues."
+          }
+        ]
+      }
+    },
+    "download": {
+      "trigger": "CV",
+      "srDownload": "Télécharger",
+      "title": "Télécharger le CV",
+      "description": "Choisissez un format et nommez votre fichier."
+    },
+    "menu": {
+      "label": "Menu",
+      "downloadResume": "Télécharger le CV"
+    },
+    "sidebar": {
+      "localFirst": "Local d'abord",
+      "tagline": "Créateur de CV ATS",
+      "platform": "Plateforme",
+      "dashboard": "Tableau de bord",
+      "browseTemplate": "Parcourir les modèles",
+      "other": "Autre",
+      "support": "Soutenir",
+      "guide": "Guide",
+      "reportBug": "Signaler un bug",
+      "featureRequest": "Demander une fonctionnalité",
+      "myResume": "Mes CV",
+      "recent": "Récents",
+      "viewAll": "Tout voir",
+      "createResume": "Créer un CV",
+      "itemMenu": "Menu",
+      "modify": "Modifier <b>{title}</b>",
+      "rename": "Renommer",
+      "duplicate": "Dupliquer",
+      "copyOf": "Copie de {title}",
+      "delete": "Supprimer",
+      "label": "Navigation de l'application",
+      "feedback": "Envoyer un retour",
+      "changelog": "Nouveautés",
+      "changelogUnseen": "Nouvelle version",
+      "assistantConnected": "Assistant IA connecté"
+    },
+    "toolbar": {
+      "searchResume": "Rechercher dans vos CV",
+      "resume": "CV",
+      "searchTemplates": "Rechercher des modèles",
+      "sortNameAsc": "Nom (A–Z)"
+    },
+    "emptyState": {
+      "title": "Aucun CV pour l'instant",
+      "description": "Rien n'est encore enregistré sur cet appareil. Partez d'un modèle ou créez un CV vierge.",
+      "browseTemplates": "Parcourir les modèles",
+      "profileTitle": "Aucun CV dans {name} pour l'instant",
+      "profileDescription": "Chaque profil garde ses propres CV. Créez-en un ci-dessous, ou changez de profil depuis votre avatar dans la barre du haut."
+    },
+    "library": {
+      "continue": "Reprenez là où vous en étiez",
+      "openEditor": "Ouvrir l'éditeur",
+      "readiness": "Préparation",
+      "readinessDone": "Prêt à envoyer",
+      "templateHint": "Choisissez d'abord un style, puis lancez-vous.",
+      "all": "Tous les CV",
+      "sort": "Trier les CV",
+      "sortEdited": "Récents",
+      "view": "Affichage",
+      "viewGrid": "Grille",
+      "viewList": "Liste",
+      "preview": "Aperçu de {title}"
+    },
+    "unreadable": {
+      "title": "Certains CV ont besoin d'une version plus récente de l'application",
+      "description": "{count, plural, one {# CV a été enregistré} other {# CV ont été enregistrés}} par une version de Lanjut plus récente que celle de cet onglet. Ils restent stockés en sécurité sur cet appareil.",
+      "refresh": "Actualisez la page pour mettre à jour l'application et les revoir.",
+      "refreshOffline": "Connectez-vous à internet, puis actualisez la page pour mettre à jour l'application et les revoir."
+    },
+    "grid": {
+      "emptyTitle": "Aucun CV ne correspond",
+      "create": "Créer « {query} »",
+      "errorTitle": "Impossible de charger vos CV",
+      "errorDescription": "Rien n'a été supprimé. La bibliothèque n'a simplement pas pu se charger depuis le stockage de ce navigateur. Actualisez la page pour réessayer.",
+      "open": "Ouvrir {title}",
+      "emptyDocument": "CV vierge, rien d'ajouté pour l'instant",
+      "edited": "Modifié",
+      "menu": "Menu",
+      "rename": "Renommer",
+      "duplicate": "Dupliquer",
+      "copyOf": "Copie de {title}",
+      "download": "Télécharger",
+      "delete": "Supprimer"
+    },
+    "templates": {
+      "noMatch": "Aucun modèle ne correspond à « {query} ».",
+      "use": "Utiliser {name}",
+      "useTemplate": "Utiliser le modèle {name}",
+      "descriptions": {
+        "awal": "Un modèle de départ simple, sur une colonne et compatible ATS. Ordre de lecture linéaire, sans colonnes ni tableaux, avec de la place pour chaque section.",
+        "ketat": "Un classique serif compact : titres de section centrés et soulignés d'un filet, colonne de contact alignée à droite et dates en italique. Dense sans être tassé.",
+        "luasa": "Une mise en page minimaliste et aérée : titres espacés, une seule ligne de contact et de fines barres d'accent. Beaucoup d'espace blanc partout.",
+        "tebal": "Un style moderne et affirmé : nom en très grand, titres en majuscules épaisses sur des filets larges et une hiérarchie typographique forte.",
+        "klasik": "Un CV traditionnel tout en serif : nom et coordonnées centrés, titres centrés et discrets, dates en italique. Intemporel et formel.",
+        "ketik": "Un style technique façon machine à écrire : nom, titres et dates en monospace sur un texte sans serif net. Pensé pour les développeurs.",
+        "polos": "Une page sobre façon Harvard dans une police sans serif proche d'Arial : titres en gras soulignés et tout aligné à gauche. Le choix le plus sûr pour les logiciels de recrutement les plus stricts.",
+        "garis": "Une mise en page sans serif nette : chaque titre se prolonge par un filet fin sur toute la page, avec des icônes de contact et des dates en gris discret.",
+        "anggun": "Un style Garamond tout en douceur : nom centré, titres de section en italique sur un filet court et dates en italique. Formel et littéraire.",
+        "tegas": "Des titres en Merriweather sur un texte en Source Sans : une barre épaisse marque chaque section, avec des icônes de contact. Affirmé mais lisible.",
+        "segar": "Une page Open Sans compacte et moderne : un grand nom, des titres en gras soulignés et des espacements serrés pour une page pleine d'expérience.",
+        "rapi": "Une page professionnelle soignée dans une police sans serif proche de Calibri : titres en majuscules grasses sur un filet gris et une seule ligne de contact. Se fond à côté d'un CV Word.",
+        "lugas": "Une page Roboto directe : un grand nom en gras, des icônes de contact et un filet au-dessus de chaque titre. Simple et assurée.",
+        "kertas": "Une page académique dans une police serif proche de Times : nom centré en majuscules, titres en gras avec filet et lieux en italique. Faite pour la recherche et l'enseignement.",
+        "jurnal": "Un style éditorial en Source Serif : un grand nom, un titre d'accroche en italique et un filet épais sous chaque titre.",
+        "kode": "IBM Plex Mono pour le nom, les titres, les postes et les dates sur un texte sans serif net, avec des filets pointillés sous les titres et des icônes de contact. Pensé pour les ingénieurs.",
+        "mesin": "Police machine à écrire Courier Prime pour le nom, les titres, les postes et les dates sur un texte en Lora serif, avec un nom centré en majuscules et des titres soulignés.",
+        "ringkas": "La mise en page la plus compacte : petits titres gris, une seule ligne de contact et un interligne serré pour faire tenir un long parcours sur une page.",
+        "tengah": "Un nom et des coordonnées centrés, avec chaque titre centré entre deux filets fins. Équilibré et calme.",
+        "elok": "Un nom en Lora sur un texte en Inter net : des titres espacés sous un filet fin et des icônes de contact."
+      },
+      "listLabel": "Modèles",
+      "previewWith": "Aperçu avec",
+      "previewLabel": "Aperçu de {name}",
+      "applyTo": "Appliquer à {title}",
+      "inUse": "Utilisé",
+      "heading": "Modèles de CV ATS",
+      "intro": "Vingt modèles gratuits pour un CV compatible ATS. Chacun change seulement la police et les espacements, donc un logiciel de recrutement lit votre texte dans le même ordre. Choisissez-en un et remplissez-le, sans compte.",
+      "exampleLink": "Voir chaque modèle sur un exemple complet de CV ATS"
+    },
+    "navbar": {
+      "starOnGithub": "Mettre une étoile sur GitHub"
+    },
+    "database": {
+      "blocked": "Fermez les autres onglets Lanjut pour terminer la mise à jour",
+      "blockedDescription": "Un autre onglet utilise encore l'ancienne version et bloque vos CV enregistrés. Cet onglet continue tout seul dès que l'autre est fermé ou actualisé. Rien n'est perdu.",
+      "outdated": "Lanjut a été mis à jour dans un autre onglet",
+      "outdatedDescription": "Actualisez cet onglet pour continuer. D'ici là, il ne peut pas enregistrer les modifications.",
+      "refresh": "Actualiser"
+    },
+    "assistant": {
+      "changed": "Votre assistant IA a modifié « {title} ».",
+      "undo": "Annuler"
+    }
+  },
+  "profile": {
+    "guest": "Invité",
+    "menuLabel": "Menu du profil de {name}",
+    "profiles": "Profils",
+    "settings": "Paramètres",
+    "settingsDescription": "Vos profils et les préférences de cet appareil.",
+    "preferences": "Préférences",
+    "addProfile": "Ajouter un profil",
+    "newShort": "Nouveau profil",
+    "profileSection": "Profil",
+    "profileDescription": "Vos informations personnelles et votre résumé. Les nouveaux CV de ce profil partent de ces informations.",
+    "newTitle": "Nouveau profil",
+    "newDescription": "Créez un profil par type de poste ou par marché de l'emploi. Chaque profil garde ses propres CV, et les nouveaux CV partent de ses informations.",
+    "name": "Nom du profil",
+    "namePlaceholder": "Postes frontend",
+    "nameHint": "Vous seul voyez ce nom. Il sert à distinguer vos profils.",
+    "save": "Enregistrer",
+    "create": "Ajouter le profil",
+    "deleteTitle": "Supprimer le profil",
+    "deleteDescription": "Ses CV passent dans le profil de votre choix. Seules les informations enregistrées dans ce profil disparaissent.",
+    "deleteConfirm": "Supprimer {name} ?",
+    "prefillNote": "Ce CV va dans le profil <b>{name}</b> et part de ses informations personnelles et de son résumé.",
+    "preferencesDescription": "L'apparence et les animations de Lanjut sur cet appareil.",
+    "theme": "Thème",
+    "themeDescription": "Clair, sombre, ou comme votre appareil.",
+    "themeLight": "Clair",
+    "themeDark": "Sombre",
+    "themeSystem": "Système",
+    "languageDescription": "La langue de l'app. Chaque CV garde la sienne.",
+    "animationDescription": "Désactivé arrête les mouvements à l'écran. Système suit votre appareil.",
+    "developerMode": "Mode développeur",
+    "developerModeDescription": "Ajoute un sélecteur Formulaire et Code à l'éditeur. Modifiez un CV en Markdown, YAML ou JSON.",
+    "active": "Actif",
+    "useProfile": "Utiliser ce profil",
+    "draftHint": "Pas encore enregistré",
+    "resumeCount": "{count, plural, =0 {Aucun CV} one {# CV} other {# CV}}",
+    "deleteMove": "{count, plural, one {Son CV passe} other {Ses # CV passent}} dans le profil ci-dessous. Seules les informations enregistrées dans ce profil disparaissent.",
+    "deleteEmpty": "Il ne contient aucun CV. Seules les informations enregistrées dans ce profil disparaissent.",
+    "moveTo": "Déplacer les CV vers",
+    "backupTitle": "Sauvegarde",
+    "backupDescription": "{count, plural, =0 {Téléchargez ce profil dans un seul fichier.} one {Téléchargez ce profil et son CV dans un seul fichier.} other {Téléchargez ce profil et ses # CV dans un seul fichier.}} Importez le fichier sur un autre appareil pour continuer là-bas.",
+    "backupDownload": "Télécharger la sauvegarde",
+    "backupShare": "Partager",
+    "backupSaved": "Sauvegarde téléchargée",
+    "backupFailed": "Impossible de créer la sauvegarde. Réessayez.",
+    "backupShareFallback": "Ce navigateur ne peut pas partager le fichier, il a donc été téléchargé. Envoyez-le depuis vos téléchargements.",
+    "importProfile": "Importer un profil",
+    "importTitle": "Importer {name} ?",
+    "importProfileAdd": "Ce profil est nouveau sur cet appareil.",
+    "importProfileSame": "Cet appareil a déjà ce profil, avec les mêmes informations.",
+    "importProfileUpdate": "Cet appareil a déjà ce profil. Les informations du fichier sont plus récentes, elles remplacent donc celles d'ici.",
+    "importProfileKeep": "Cet appareil a déjà ce profil. Ses informations ici sont aussi récentes que celles du fichier, ou plus, elles restent donc.",
+    "importNew": "Nouveaux CV",
+    "importNewer": "Plus récents que la copie d'ici",
+    "importSame": "Déjà à jour",
+    "importNote": "Rien n'est supprimé sur cet appareil. Lanjut passe à ce profil après l'import.",
+    "importCancel": "Annuler",
+    "importConfirm": "Importer",
+    "importDone": "{name} importé",
+    "importErrorInvalid": "Ce fichier n'est pas une sauvegarde de profil Lanjut.",
+    "importErrorResume": "Ce fichier contient un seul CV. Importez-le depuis l'onglet Document de l'éditeur.",
+    "importErrorNewer": "Une version plus récente de Lanjut a créé ce fichier. Mettez Lanjut à jour, puis importez-le à nouveau.",
+    "importErrorRead": "Impossible de lire ce fichier.",
+    "importErrorTooLarge": "Ce fichier est trop volumineux pour être une sauvegarde de profil.",
+    "importErrorWrite": "Impossible d'enregistrer l'import. Rien n'a changé. Réessayez.",
+    "joinNote": "Ce CV va dans le profil <b>{name}</b>.",
+    "assistant": {
+      "nav": "Assistant IA",
+      "navShort": "IA",
+      "title": "Travailler avec un assistant IA",
+      "description": "Connectez l'assistant IA que vous utilisez déjà, pour qu'il puisse lire et modifier vos CV et vos profils. Uniquement dans l'app de bureau.",
+      "switch": "Travailler avec un assistant IA",
+      "switchDescription": "Désactivé tant que vous ne l'activez pas. Seules les apps de cet appareil, sous votre compte, peuvent se connecter.",
+      "changeFailed": "Lanjut n'a pas pu modifier ce réglage. Réessayez.",
+      "confirmTitle": "Activer Travailler avec un assistant IA ?",
+      "confirmDescription": "Lisez ce que l'assistant reçoit avant de l'activer.",
+      "factReads": "Un assistant connecté peut lire et modifier vos CV et vos profils. Il vous demande avant de supprimer un CV ou d'enregistrer un fichier.",
+      "factCloud": "Lanjut n'envoie rien à un serveur à lui. Si votre assistant tourne dans le cloud, l'entreprise qui le fournit reçoit le texte qu'il lit. Pour garder le texte sur cet appareil, utilisez un modèle qui tourne ici, par exemple dans LM Studio.",
+      "factPhoto": "Votre photo n'est jamais envoyée à l'assistant.",
+      "factUndo": "Chaque modification d'un CV compte comme une seule étape d'annulation, et Lanjut vous la signale.",
+      "factOff": "Désactivez ce réglage à tout moment pour fermer toutes les connexions.",
+      "confirm": "Activer",
+      "cancel": "Annuler",
+      "waiting": "Activé. Aucun assistant n'est connecté.",
+      "connected": "{count, plural, =1 {1 assistant est connecté.} other {# assistants sont connectés.}}",
+      "startInUse": "Une autre copie de Lanjut est ouverte et sert l'assistant. Fermez-la, puis désactivez et réactivez ce réglage.",
+      "startFailed": "Lanjut n'a pas pu lancer la connexion. Désactivez et réactivez ce réglage.",
+      "missingTitle": "L'outil de l'assistant est introuvable",
+      "missingDescription": "Lanjut ne trouve pas lanjut-mcp, l'outil que lance un assistant. Réinstallez Lanjut.",
+      "quarantineTitle": "macOS bloque l'outil de l'assistant",
+      "quarantineDescription": "macOS marque Lanjut comme téléchargé depuis Internet et empêche un assistant de lancer l'outil de Lanjut. Exécutez cette commande une fois dans le Terminal, puis rouvrez cette page.",
+      "copyCommand": "Copier la commande",
+      "copied": "Copié",
+      "copyFailed": "Lanjut n'a pas pu copier. Sélectionnez le texte et copiez-le.",
+      "openFailed": "L'app ne s'est pas ouverte. Vérifiez qu'elle est installée.",
+      "connectTitle": "Connecter votre assistant",
+      "connectDescription": "Gardez Lanjut ouvert pendant que vous travaillez. Si l'assistant tournait avant l'ouverture de Lanjut, reconnectez-le depuis l'assistant.",
+      "clients": {
+        "claudeCode": {
+          "name": "Claude Code",
+          "description": "Copiez la commande, puis exécutez-la dans un terminal.",
+          "action": "Copier la commande"
+        },
+        "codex": {
+          "name": "Codex",
+          "description": "Copiez la commande, puis exécutez-la dans un terminal.",
+          "action": "Copier la commande"
+        },
+        "cursor": {
+          "name": "Cursor",
+          "description": "Ouvre Cursor et ajoute Lanjut à ses outils.",
+          "action": "Ouvrir dans Cursor"
+        },
+        "lmStudio": {
+          "name": "LM Studio",
+          "description": "Ouvre LM Studio et ajoute Lanjut. Un modèle dans LM Studio tourne sur cet appareil.",
+          "action": "Ouvrir dans LM Studio"
+        },
+        "claudeDesktop": {
+          "name": "Claude Desktop",
+          "description": "Copiez l'entrée. Dans Claude, ouvrez Settings, puis Developer, puis Edit Config, et ajoutez l'entrée lanjut sous mcpServers. Redémarrez ensuite Claude.",
+          "action": "Copier l'entrée"
+        },
+        "other": {
+          "name": "Un autre assistant",
+          "description": "Copiez l'entrée pour un assistant qui lit un fichier mcpServers.",
+          "action": "Copier l'entrée"
+        }
+      }
+    }
+  },
+  "forms": {
+    "common": {
+      "cancel": "Annuler",
+      "save": "Enregistrer",
+      "delete": "Supprimer",
+      "undo": "Annuler",
+      "download": "Télécharger",
+      "openIssue": "Ouvrir un ticket GitHub",
+      "back": "Retour",
+      "next": "Suivant"
+    },
+    "validation": {
+      "titleMin": "Utilisez au moins {min} caractères.",
+      "titleMax": "Limitez-vous à {max} caractères.",
+      "fileNameRequired": "Nommez le fichier avant de le télécharger.",
+      "sectionTitleRequired": "Saisissez un nom de section.",
+      "verificationRequired": "Terminez d'abord la vérification rapide.",
+      "profileNameRequired": "Nommez ce profil.",
+      "feedbackRequired": "Remplissez ce champ."
+    },
+    "create": {
+      "title": "Créer un nouveau CV",
+      "description": "Choisissez un point de départ, un modèle, puis donnez-lui un nom.",
+      "label": "Nom du CV",
+      "placeholder": "Ingénieur logiciel",
+      "template": "Modèle",
+      "sourceLabel": "Partir de",
+      "sourceSample": "Exemple",
+      "sourceEmpty": "Vierge",
+      "sourceImport": "Importer un fichier",
+      "submit": "Créer le CV",
+      "stepsLabel": "Étapes",
+      "stepStart": "Départ",
+      "stepTemplate": "Modèle",
+      "stepReview": "Vérification",
+      "stepOf": "Étape {current} sur {total}",
+      "sourceSampleHint": "Un exemple rempli que vous adaptez à votre profil.",
+      "sourceEmptyHint": "Toutes les sections, vides et prêtes pour vos mots.",
+      "sourceImportHint": "Importez un CV en PDF, JSON ou YAML.",
+      "templateHint": "Choisissez un style. Vous pourrez le changer à tout moment dans l'éditeur.",
+      "reviewHint": "Nommez-le pour le retrouver dans votre bibliothèque.",
+      "change": "Modifier",
+      "previewLabel": "Aperçu",
+      "previewImport": "Déposez un fichier pour voir votre CV ici.",
+      "showTemplate": "Afficher {name}"
+    },
+    "rename": {
+      "title": "Renommer",
+      "description": "Vous pouvez renommer ce CV comme vous le souhaitez. Si le nom est identique, il ne sera pas enregistré.",
+      "label": "Nom du CV",
+      "placeholder": "ex. : Ingénieur logiciel",
+      "fieldDescription": "Au moins 3 caractères. 100 caractères maximum."
+    },
+    "delete": {
+      "title": "Supprimer <b>{title}</b> ?",
+      "description": "<b>{title}</b> sera supprimé. Vous aurez quelques secondes pour annuler. Voulez-vous continuer ?",
+      "toast": "Suppression de \"{title}\"..."
+    },
+    "download": {
+      "title": "Télécharger {title}",
+      "description": "Choisissez un format et nommez votre fichier. L'export est créé dans votre navigateur.",
+      "missing": "Ce CV n'a pas pu être chargé depuis le stockage de ce navigateur.",
+      "drawerTitle": "Télécharger le CV",
+      "drawerDescription": "Choisissez un format et nommez votre fichier.",
+      "format": "Format",
+      "formatHint": {
+        "pdf": "Garde votre mise en page. Idéal pour l'e-mail et la plupart des sites d'emploi.",
+        "docx": "Pour les sites d'emploi et formulaires qui demandent un fichier Word.",
+        "txt": "Texte brut sans mise en page, à coller dans les formulaires de candidature.",
+        "json": "Données structurées, pour une sauvegarde ou une autre app.",
+        "yaml": "Texte structuré, facile à lire et à modifier à la main."
+      },
+      "fileName": "Nom du fichier",
+      "fileNamePlaceholder": "Ingénieur logiciel",
+      "downloadAs": "Télécharger en {format}",
+      "offlineTitle": "Cet export a besoin d'Internet une fois",
+      "offlineDescription": "Certains fichiers nécessaires, comme les polices de ce modèle, ne sont pas encore sur cet appareil. Connectez-vous à Internet, puis relancez l'export. Ensuite, il fonctionnera hors ligne."
+    },
+    "import": {
+      "dropPrompt": "Déposez un fichier PDF, JSON ou YAML ici, ou cliquez pour parcourir",
+      "hint": "Votre fichier est lu sur votre appareil et n'est jamais envoyé.",
+      "parsing": "Lecture de votre CV…",
+      "parsed": "Prêt à importer",
+      "remove": "Retirer le fichier",
+      "errorUnsupported": "Seuls les fichiers PDF, JSON et YAML sont acceptés.",
+      "errorTooLarge": "Ce fichier est trop volumineux. La limite est de 10 Mo.",
+      "errorEmpty": "Ce PDF n'a pas de texte lisible. Il semble scanné. Essayez d'exporter un PDF avec du texte.",
+      "errorEncrypted": "Ce PDF est protégé par un mot de passe. Retirez le mot de passe et réessayez.",
+      "errorGeneric": "Nous n'avons pas pu lire ce PDF. Essayez un autre fichier.",
+      "disclaimer": "L'import fait de son mieux et peut oublier ou mal placer des détails. Si quelque chose ne va pas, cela nous aiderait beaucoup que vous",
+      "reportIssue": "signaliez un problème",
+      "errorInvalidData": "Ce fichier n'est pas un export de CV valide."
+    }
+  },
+  "feedback": {
+    "metaTitle": "Envoyer un avis",
+    "metaDescription": "Signalez un bug, proposez une idée ou corrigez un mot. Nous créons le ticket GitHub pour vous, sans compte.",
+    "title": "Envoyer un avis",
+    "description": "Il devient un ticket public sur GitHub, où chaque bug et chaque idée sont suivis.",
+    "stepsLabel": "Étapes",
+    "steps": {
+      "kind": "Type",
+      "details": "Détails",
+      "review": "Envoi"
+    },
+    "kindLabel": "De quel type d'avis s'agit-il ?",
+    "detailsTitle": "{kind}",
+    "reviewTitle": "Vérifiez et envoyez",
+    "kinds": {
+      "bug": {
+        "title": "Quelque chose ne marche pas",
+        "description": "Un bouton ne fait rien, le PDF est incorrect, ou un import perd une section."
+      },
+      "idea": {
+        "title": "J'ai une idée",
+        "description": "Une chose que Lanjut pourrait faire, ou mieux faire."
+      },
+      "wording": {
+        "title": "Un mot ou une traduction est faux",
+        "description": "Une faute de frappe, une phrase peu claire ou une traduction maladroite."
+      }
+    },
+    "accountLabel": "Avez-vous un compte GitHub ?",
+    "accounts": {
+      "none": {
+        "title": "Non, envoyez-le pour moi",
+        "description": "Nous le publions pour vous, sans compte. Donnez tous les détails : nous ne pourrons pas vous poser de questions ensuite."
+      },
+      "github": {
+        "title": "Oui, je le publie moi-même",
+        "description": "Nous ouvrons le ticket sur GitHub, déjà rempli. Vous le publiez, et GitHub vous prévient des réponses."
+      }
+    },
+    "titleHint": "Une ligne qui dit de quoi il s'agit.",
+    "titlePlaceholderBug": "Le PDF affiche un tiret avant ma ville",
+    "titlePlaceholderIdea": "Garder une version de mon CV pour chaque pays",
+    "area": "Où dans Lanjut ?",
+    "where": "Où le texte s'affiche-t-il ?",
+    "areas": {
+      "editor": "Modification d'un CV",
+      "preview": "L'aperçu",
+      "pdf": "Téléchargement PDF",
+      "word": "Téléchargement Word",
+      "other-export": "Texte, JSON ou YAML",
+      "import": "Import d'un fichier",
+      "templates": "Modèles",
+      "library": "Bibliothèque et profils",
+      "desktop": "L'application de bureau",
+      "home": "Page d'accueil",
+      "other": "Ailleurs"
+    },
+    "stepsField": "Qu'avez-vous fait ?",
+    "stepsHint": "Les étapes, une par ligne, pour que nous puissions faire de même.",
+    "stepsPlaceholder": "1. J'ai ouvert un CV fait avec Luasa\n2. J'ai ajouté ma ville\n3. Je l'ai téléchargé en PDF",
+    "expected": "À quoi vous attendiez-vous ?",
+    "expectedPlaceholder": "La ville seule, comme dans l'aperçu.",
+    "actual": "Que s'est-il passé à la place ?",
+    "actualHint": "Si vous avez vu un message d'erreur, copiez-le ici tel quel.",
+    "actualPlaceholder": "Le PDF affiche un tiret avant la ville.",
+    "frequency": "À quelle fréquence cela arrive-t-il ?",
+    "frequencies": {
+      "always": "À chaque fois",
+      "sometimes": "Parfois",
+      "once": "Une seule fois"
+    },
+    "scopeNote": "Chaque CV reste sur une seule colonne lisible par les logiciels de recrutement : les tableaux, les colonnes et les zones de texte sont donc exclus. L'apparence, l'espacement et les polices sont ouverts aux idées.",
+    "goal": "Qu'essayez-vous de faire ?",
+    "goalHint": "Décrivez la situation, pas seulement la solution. Cela nous aide à trouver la meilleure réponse.",
+    "goalPlaceholder": "Je postule dans deux pays et je garde une version de mon CV pour chacun.",
+    "idea": "Qu'est-ce qui vous aiderait ?",
+    "ideaPlaceholder": "Un moyen de copier un CV dans l'autre langue en une étape.",
+    "workaround": "Comment faites-vous aujourd'hui ?",
+    "workaroundPlaceholder": "Je duplique le CV et je le traduis à la main.",
+    "impact": "À quel point cela vous aiderait-il ?",
+    "impacts": {
+      "nice": "Ce serait un plus",
+      "time": "Me ferait gagner du temps",
+      "blocker": "Je ne peux pas utiliser Lanjut sans cela"
+    },
+    "language": "Dans quelle langue est le texte ?",
+    "current": "Le texte tel qu'il est",
+    "currentHint": "Copiez-le tel quel, pour que nous puissions le trouver.",
+    "currentPlaceholder": "Enregistrer les modifcations",
+    "suggested": "Que devrait-il dire ?",
+    "suggestedHint": "Laissez vide si vous n'êtes pas sûr.",
+    "suggestedPlaceholder": "Enregistrer les modifications",
+    "note": "Autre chose ?",
+    "notePlaceholder": "C'est sur le bouton sous le champ Résumé.",
+    "similarTitle": "Déjà signalé ?",
+    "similarHint": "Si l'un de ces tickets correspond, ajoutez-y plutôt un pouce levé ou un commentaire.",
+    "similarOpen": "Ouvert",
+    "similarClosed": "Fermé",
+    "previewTitle": "Ce qui part sur GitHub",
+    "contactTitle": "À propos de vous",
+    "name": "Votre nom",
+    "namePlaceholder": "ex. Camille",
+    "nameHint": "Affiché sur le ticket public. Laissez vide pour rester anonyme.",
+    "includeDetails": "Inclure les détails techniques",
+    "detailsHint": "Ils nous aident à trouver le problème. Ils ne contiennent jamais le texte de votre CV.",
+    "details": {
+      "app": "Application",
+      "platform": "Plateforme",
+      "browser": "Navigateur",
+      "os": "Système",
+      "language": "Langue",
+      "page": "Page",
+      "template": "Modèle",
+      "font": "Police",
+      "documentLanguage": "Langue du CV"
+    },
+    "cancel": "Annuler",
+    "back": "Retour",
+    "next": "Suivant",
+    "send": "Envoyer",
+    "openGitHub": "Ouvrir sur GitHub",
+    "errorToast": "L'envoi a échoué. Réessayez dans un instant.",
+    "sentTitle": "Merci, c'est sur GitHub",
+    "sentBody": "Gardez le lien pour suivre le ticket : les réponses et les corrections y apparaissent. Pour y ajouter une capture d'écran, il faut un compte GitHub.",
+    "githubTitle": "Terminez sur GitHub",
+    "githubBody": "Nous avons ouvert le ticket avec tout déjà rempli. Vérifiez-le, puis envoyez-le là-bas.",
+    "viewIssue": "Voir le ticket",
+    "sendAnother": "Envoyer un autre avis",
+    "close": "Fermer",
+    "offlineToast": "Vous devez être en ligne pour envoyer un avis. Vérifiez votre connexion et réessayez.",
+    "titleField": "Titre court"
+  },
+  "editor": {
+    "common": {
+      "add": "Ajouter"
+    },
+    "layout": {
+      "documentLanguage": "Langue du document",
+      "documentIcons": "Afficher les icônes de contact",
+      "documentFont": "Police",
+      "templateDefault": "Par défaut",
+      "fontSans": "Sans",
+      "fontSerif": "Serif",
+      "fontMono": "Mono",
+      "fontSizeName": "Taille du nom",
+      "fontSizeTitle": "Taille des titres",
+      "fontSizeBody": "Taille du texte"
+    },
+    "styling": {
+      "typography": "Typographie",
+      "typographyHint": "La police, et la taille de chaque type de texte.",
+      "spacing": "Espacement",
+      "spacingHint": "L'espace entre les sections, les lignes et les lettres. Resserrez-le pour tenir plus de contenu sur une page.",
+      "density": "Densité",
+      "compact": "Compact",
+      "balanced": "Équilibré",
+      "airy": "Aéré",
+      "general": "Général",
+      "generalHint": "La langue des titres et des dates, et les icônes de contact.",
+      "resetTypography": "Réinitialiser la typographie",
+      "resetSpacing": "Réinitialiser l'espacement",
+      "betweenSections": "Entre les sections",
+      "betweenLines": "Entre les lignes",
+      "betweenLetters": "Entre les lettres",
+      "default": "Par défaut",
+      "colors": "Couleurs",
+      "colorsHint": "Colorez le nom, les titres, les lignes et les liens. Chaque couleur garde un contraste AA ou mieux sur fond blanc.",
+      "resetColors": "Réinitialiser les couleurs",
+      "colorName": "Nom",
+      "colorHeading": "Titres de section",
+      "colorRule": "Lignes",
+      "colorLink": "Liens",
+      "colorTemplate": "Couleur du modèle",
+      "colorHex": "Couleur personnalisée",
+      "colorHexPlaceholder": "#rrggbb",
+      "colorInvalid": "Utilisez une couleur hexadécimale, par exemple #1d4ed8.",
+      "colorTooLight": "Trop clair pour être lu : {ratio}:1. Choisissez une couleur plus foncée, {min}:1 ou plus.",
+      "contrast": "{level} {ratio}:1",
+      "swatches": {
+        "navy": "Marine",
+        "blue": "Bleu",
+        "teal": "Sarcelle",
+        "green": "Vert",
+        "red": "Rouge",
+        "purple": "Violet",
+        "rust": "Rouille",
+        "slate": "Ardoise"
+      },
+      "contactLabels": "Libellés de contact",
+      "contactLabelsHint": "Affichez un mot court à la place d'une longue adresse. Le lien ouvre toujours l'adresse complète.",
+      "resetContactLabels": "Réinitialiser les libellés",
+      "contactLabelsEmpty": "Ajoutez d'abord un e-mail ou un lien dans Informations personnelles.",
+      "labelEmail": "E-mail",
+      "labelWebsite": "Site web",
+      "labelLinkedin": "LinkedIn",
+      "labelLink": "Lien",
+      "contactLabelsWarningTitle": "Les libellés cachent l'adresse aux ATS",
+      "contactLabelsWarning": "La plupart des logiciels de recrutement lisent seulement le texte de la page, pas le lien derrière. Le téléchargement en texte brut affiche toujours l'adresse complète.",
+      "contactLabelsEmailWarning": "Les recruteurs copient aussi votre e-mail depuis le texte, alors gardez-le visible si possible."
+    },
+    "chrome": {
+      "edit": "Modifier",
+      "editorTitle": "Éditeur",
+      "editorDescription": "Éditeur de CV",
+      "tabContent": "Contenu",
+      "tabLayout": "Mise en page",
+      "tabStyling": "Style",
+      "notFound": "CV introuvable",
+      "didYouMean": "vouliez-vous dire :",
+      "notExist": "Ce CV n'existe pas dans le stockage de ce navigateur.",
+      "dashboard": "Tableau de bord",
+      "browseTemplates": "Voir les modèles",
+      "showSection": "Afficher la section",
+      "hideSection": "Masquer la section",
+      "reorderSection": "Déplacer la section",
+      "sectionOrder": "Ordre des sections",
+      "orderExperienceFirst": "Expérience d'abord",
+      "orderSkillsFirst": "Compétences d'abord",
+      "sectionsHeading": "Sections",
+      "addSection": "Section personnalisée",
+      "tabDocument": "Document",
+      "undo": "Annuler",
+      "redo": "Rétablir"
+    },
+    "dateRange": {
+      "startDate": "Date de début",
+      "startPlaceholder": "Date de début",
+      "endDate": "Date de fin",
+      "endPlaceholder": "Date de fin",
+      "present": "Aujourd'hui"
+    },
+    "personal": {
+      "accordionTitle": "Informations personnelles",
+      "personalInfo": "Informations personnelles",
+      "personalInfoDesc": "Pour que les RH sachent qui vous êtes",
+      "firstName": "Prénom",
+      "firstNamePlaceholder": "Jean",
+      "lastName": "Nom",
+      "lastNamePlaceholder": "Dupont",
+      "jobTitle": "Intitulé du poste",
+      "jobTitlePlaceholder": "UX Engineer",
+      "contactInfo": "Coordonnées",
+      "contactInfoDesc": "Pour que les RH vous joignent facilement",
+      "email": "Adresse e-mail",
+      "emailPlaceholder": "jean@acme.inc",
+      "phone": "Téléphone",
+      "phonePlaceholder": "+33612345678",
+      "website": "Site web",
+      "websitePlaceholder": "rimzzlabs.com",
+      "linkedin": "LinkedIn",
+      "linkedinPlaceholder": "jeandupont",
+      "link": "Lien",
+      "linkPlaceholder": "github.com/jeandupont",
+      "location": "Localisation",
+      "locationDesc": "D'où venez-vous ?",
+      "city": "Ville",
+      "cityPlaceholder": "Lyon",
+      "province": "Région",
+      "provincePlaceholder": "Auvergne-Rhône-Alpes",
+      "country": "Pays",
+      "countryPlaceholder": "France",
+      "photo": "Photo",
+      "photoAdd": "Ajouter une photo",
+      "photoReplace": "Remplacer",
+      "photoRemove": "Retirer",
+      "photoHint": "Facultatif. Courant pour les candidatures en Indonésie. Beaucoup d'ATS et d'employeurs américains ignorent ou déconseillent les photos. Le texte de votre CV reste toujours lisible par les logiciels d'analyse.",
+      "photoError": "Ce fichier n'a pas pu être lu comme une image.",
+      "photoDropHint": "Vous pouvez aussi coller une image, ou la déposer ici.",
+      "photoPasted": "Photo ajoutée depuis le presse-papiers.",
+      "photoSize": "Taille de la photo",
+      "photoRadius": "Arrondi des coins",
+      "photoAlign": "Position",
+      "photoAlignTop": "Haut",
+      "photoAlignCenter": "Centre",
+      "photoAlignBottom": "Bas"
+    },
+    "summary": {
+      "accordionTitle": "Résumé professionnel",
+      "label": "Résumé professionnel",
+      "placeholder": "UX engineer passionné, je crée des expériences visuelles engageantes..."
+    },
+    "experience": {
+      "accordionTitle": "Expérience professionnelle",
+      "legend": "Expérience professionnelle",
+      "legendDesc": "Décrivez vos expériences passées",
+      "add": "Expérience professionnelle",
+      "emptyTitle": "Aucune expérience",
+      "emptyDescription": "Ajoutez vos postes pour construire votre parcours.",
+      "itemLegend": "Expérience {index}",
+      "jobTitle": "Intitulé du poste",
+      "jobTitlePlaceholder": "UX Engineer",
+      "company": "Entreprise",
+      "companyPlaceholder": "Acme Inc.",
+      "location": "Lieu",
+      "locationPlaceholder": "Paris, France",
+      "companyContext": "Contexte de l'entreprise",
+      "companyContextPlaceholder": "Plateforme de paiement B2B au service de 2 M de commerçants",
+      "companyWebsite": "Site de l'entreprise",
+      "companyWebsitePlaceholder": "acme.com",
+      "present": "J'occupe ce poste actuellement",
+      "summary": "Résumé",
+      "summaryPlaceholder": "Création d'une application en temps réel qui....",
+      "remove": "Retirer"
+    },
+    "internship": {
+      "accordionTitle": "Stage",
+      "legend": "Stage",
+      "legendDesc": "Ajoutez les stages que vous avez faits",
+      "add": "Stage",
+      "emptyTitle": "Aucun stage",
+      "emptyDescription": "Ajoutez vos stages pour montrer une première expérience concrète.",
+      "itemLegend": "Stage {index}",
+      "role": "Poste",
+      "rolePlaceholder": "Stagiaire en génie logiciel",
+      "company": "Entreprise",
+      "companyPlaceholder": "Acme Inc.",
+      "location": "Lieu",
+      "locationPlaceholder": "Paris, France",
+      "companyContext": "Contexte de l'entreprise",
+      "companyContextPlaceholder": "Plateforme de paiement B2B au service de 2 M de commerçants",
+      "companyWebsite": "Site de l'entreprise",
+      "companyWebsitePlaceholder": "acme.com",
+      "present": "Je suis en stage ici actuellement",
+      "summary": "Résumé",
+      "summaryPlaceholder": "Création d'outils internes qui....",
+      "remove": "Retirer"
+    },
+    "projects": {
+      "accordionTitle": "Projets",
+      "legend": "Projets",
+      "legendDesc": "Montrez ce que vous avez construit",
+      "add": "Projet",
+      "emptyTitle": "Aucun projet",
+      "emptyDescription": "Ajoutez vos projets perso, vos contributions open source ou ce que vous avez livré.",
+      "itemLegend": "Projet {index}",
+      "name": "Nom du projet",
+      "namePlaceholder": "pg-jobs",
+      "role": "Rôle",
+      "rolePlaceholder": "Mainteneur",
+      "url": "URL du projet",
+      "urlPlaceholder": "github.com/vous/projet",
+      "present": "Projet en cours",
+      "summary": "Description",
+      "summaryPlaceholder": "Ce qu'il fait, ce que vous avez construit, son impact....",
+      "remove": "Retirer"
+    },
+    "organizations": {
+      "accordionTitle": "Associations",
+      "legend": "Engagement associatif",
+      "legendDesc": "Décrivez vos rôles bénévoles, étudiants et associatifs",
+      "add": "Engagement associatif",
+      "emptyTitle": "Aucune association",
+      "emptyDescription": "Ajoutez ici vos rôles bénévoles, étudiants ou associatifs.",
+      "itemLegend": "Association {index}",
+      "role": "Rôle",
+      "rolePlaceholder": "Responsable des relations publiques",
+      "organization": "Association",
+      "organizationPlaceholder": "Bureau des étudiants",
+      "present": "J'y suis actif actuellement",
+      "summary": "Résumé",
+      "summaryPlaceholder": "Organisation d'événements qui....",
+      "remove": "Retirer"
+    },
+    "education": {
+      "accordionTitle": "Formation",
+      "legend": "Formation",
+      "legendDesc": "Où vous avez étudié",
+      "add": "Formation",
+      "emptyTitle": "Aucune formation",
+      "emptyDescription": "Ajoutez vos diplômes, écoles et cursus.",
+      "itemLegend": "Formation {index}",
+      "institution": "Établissement",
+      "institutionPlaceholder": "Université de Lyon",
+      "degree": "Diplôme",
+      "degreePlaceholder": "Licence d'informatique",
+      "location": "Lieu",
+      "locationPlaceholder": "Lyon, France",
+      "present": "J'étudie ici actuellement",
+      "details": "Détails",
+      "detailsPlaceholder": "Diplômé avec mention. Cours suivis…",
+      "remove": "Retirer"
+    },
+    "certifications": {
+      "accordionTitle": "Certifications",
+      "legend": "Certifications",
+      "legendDesc": "Licences et certifications",
+      "add": "Certification",
+      "emptyTitle": "Aucune certification",
+      "emptyDescription": "Ajoutez les licences et certifications que vous avez obtenues.",
+      "itemLegend": "Certification {index}",
+      "name": "Nom",
+      "namePlaceholder": "AWS Certified Solutions Architect",
+      "issuer": "Organisme",
+      "issuerPlaceholder": "Amazon Web Services",
+      "url": "URL du certificat",
+      "urlPlaceholder": "acme.com/cert",
+      "urlDesc": "Lien vers le certificat ou le site de l'organisme.",
+      "reorder": "Déplacer la certification",
+      "remove": "Retirer"
+    },
+    "skills": {
+      "accordionTitle": "Compétences",
+      "legend": "Compétences",
+      "legendDesc": "Listez vos compétences",
+      "add": "Compétence",
+      "emptyTitle": "Aucune compétence",
+      "emptyDescription": "Ajoutez les outils et technologies que vous utilisez.",
+      "namePlaceholder": "TypeScript",
+      "proficiency": "Niveau",
+      "reorder": "Déplacer la compétence",
+      "remove": "Retirer la compétence",
+      "columnsLabel": "Colonnes",
+      "columnsOne": "1",
+      "columnsOneAria": "Une colonne",
+      "columnsTwo": "2",
+      "columnsTwoAria": "Deux colonnes",
+      "proficiencyLabel": "Afficher le niveau"
+    },
+    "languages": {
+      "accordionTitle": "Langues",
+      "legend": "Langues",
+      "legendDesc": "Les langues que vous parlez",
+      "add": "Langue",
+      "emptyTitle": "Aucune langue",
+      "emptyDescription": "Ajoutez les langues que vous parlez et votre niveau.",
+      "namePlaceholder": "Anglais",
+      "proficiency": "Niveau",
+      "proficiencyLabel": "Afficher le niveau",
+      "columnsLabel": "Colonnes",
+      "columnsOne": "1",
+      "columnsOneAria": "Une colonne",
+      "columnsTwo": "2",
+      "columnsTwoAria": "Deux colonnes",
+      "reorder": "Déplacer la langue",
+      "remove": "Retirer la langue"
+    },
+    "richText": {
+      "undo": "Annuler",
+      "redo": "Rétablir",
+      "bold": "Gras",
+      "italic": "Italique",
+      "underline": "Souligné",
+      "bulletList": "Liste à puces",
+      "orderedList": "Liste numérotée",
+      "link": "Lien",
+      "linkPlaceholder": "https://example.com",
+      "apply": "Appliquer",
+      "removeLink": "Retirer le lien"
+    },
+    "custom": {
+      "defaultTitle": "Section personnalisée",
+      "variantLabel": "Mise en page",
+      "variantText": "Texte",
+      "variantTextAria": "Un seul bloc de texte",
+      "variantList": "Liste",
+      "variantListAria": "Liste d'entrées",
+      "menuLabel": "Options de la section",
+      "rename": "Renommer",
+      "remove": "Supprimer",
+      "addHeading": "Ajouter une section",
+      "addDescription": "Nommez votre nouvelle section. Vous pourrez la renommer plus tard.",
+      "renameHeading": "Renommer la section",
+      "renameDescription": "Donnez un nouveau nom à cette section.",
+      "nameLabel": "Nom de la section",
+      "namePlaceholder": "Nommez cette section",
+      "bodyLabel": "Contenu",
+      "bodyPlaceholder": "Écrivez le contenu de la section…",
+      "addEntry": "Ajouter une entrée",
+      "emptyTitle": "Aucune entrée",
+      "emptyDescription": "Ajoutez une entrée pour remplir cette section.",
+      "itemLegend": "Entrée {index}",
+      "entryTitle": "Titre",
+      "entryTitlePlaceholder": "Titre de l'entrée",
+      "entrySubtitle": "Sous-titre",
+      "entrySubtitlePlaceholder": "Sous-titre de l'entrée",
+      "present": "En cours",
+      "entryDescription": "Description",
+      "entryDescriptionPlaceholder": "Ajoutez des détails…",
+      "removeEntry": "Retirer l'entrée"
+    },
+    "leftovers": {
+      "button": "Texte non placé ({count})",
+      "title": "Texte que nous n'avons pas pu placer",
+      "description": "L'import n'a pas pu ranger ces éléments dans une section. Copiez ce qui vaut la peine d'être gardé, puis ignorez le reste.",
+      "copy": "Copier",
+      "close": "Fermer",
+      "dismiss": "Tout ignorer"
+    },
+    "document": {
+      "downloadHeading": "Télécharger",
+      "downloadHint": "Obtenez un fichier à joindre à vos candidatures.",
+      "backupHeading": "Sauvegarde",
+      "backupHint": "Gardez une copie en JSON ou YAML, ou modifiez-la dans une autre app.",
+      "backupFormat": "Format de sauvegarde",
+      "copy": "Copier",
+      "downloadFile": "Télécharger",
+      "importHeading": "Importer un CV",
+      "importHint": "Importez un CV en PDF, ou restaurez une sauvegarde JSON ou YAML.",
+      "or": "ou",
+      "replacePrompt": "Ce CV a déjà du contenu. Voulez-vous le remplacer, ou le garder et en créer un nouveau ?",
+      "replace": "Remplacer celui-ci",
+      "createNew": "Créer un nouveau",
+      "copied": "Copié dans le presse-papiers",
+      "copyFailed": "Impossible de copier dans le presse-papiers."
+    },
+    "paste": {
+      "open": "Coller du JSON ou YAML",
+      "title": "Coller du JSON ou YAML",
+      "description": "Collez un CV que Lanjut a copié en JSON ou YAML. Vous pouvez le corriger ici avant de l'importer.",
+      "label": "CV en JSON ou YAML",
+      "placeholder": "Collez ici",
+      "ready": "Prêt à importer",
+      "syntaxError": "Ce {format} contient une erreur de syntaxe",
+      "schemaError": "Ce texte ne correspond pas à un CV Lanjut",
+      "moreIssues": "{count, plural, one {Et # autre problème} other {Et # autres problèmes}}",
+      "import": "Importer",
+      "replace": "Remplacer ce CV",
+      "createNew": "Créer un nouveau CV",
+      "imported": "CV importé",
+      "pastedTitle": "CV collé"
+    },
+    "code": {
+      "modeLabel": "Mode de l'éditeur",
+      "modeForm": "Formulaire",
+      "modeCode": "Code",
+      "viewLabel": "Affichage",
+      "viewCode": "Code",
+      "viewSplit": "Partagé",
+      "viewPreview": "Aperçu",
+      "formatLabel": "Format",
+      "label": "CV en {format}",
+      "keys": "<key>Tab</key> indente. <key>Esc</key> puis <key>Tab</key> pour sortir.",
+      "statusValid": "Appliqué",
+      "statusInvalid": "Non appliqué",
+      "statusPending": "Vérification",
+      "moreIssues": "+{count} de plus",
+      "ignored": "{count, plural, one {Appliqué, mais # bloc n'a pas de champ dans sa section et il est ignoré} other {Appliqué, mais # blocs n'ont pas de champ dans leur section et ils sont ignorés}}",
+      "discardTitle": "Abandonner ce texte ?",
+      "discardDescription": "Le texte contient une erreur, donc Lanjut ne l'a pas appliqué. Le CV garde sa dernière version valide.",
+      "discardCancel": "Continuer à modifier",
+      "discardConfirm": "Abandonner"
+    },
+    "saveStatus": {
+      "saved": "Enregistré sur cet appareil",
+      "savedShort": "Enregistré",
+      "saving": "Enregistrement…",
+      "failed": "Non enregistré",
+      "failedTitle": "Ce navigateur n'a pas enregistré votre dernière modification",
+      "failedBody": "Le stockage est peut-être plein ou bloqué, par exemple en navigation privée. Vos modifications sont toujours à l'écran. Téléchargez une copie depuis l'onglet Document avant de fermer cette page.",
+      "outdatedTitle": "Une version plus récente de Lanjut a modifié ce CV",
+      "outdatedBody": "Cet onglet utilise une ancienne version, donc il n'a pas enregistré votre dernière modification. Cela protège les modifications plus récentes. Actualisez la page pour mettre l'app à jour et continuer.",
+      "outdatedBodyOffline": "Cet onglet utilise une ancienne version, donc il n'a pas enregistré votre dernière modification. Cela protège les modifications plus récentes. Connectez-vous à Internet, puis actualisez la page pour mettre l'app à jour.",
+      "refresh": "Actualiser"
+    },
+    "readiness": {
+      "percent": "Prêt à {percent} %",
+      "percentShort": "{percent} %",
+      "ready": "Prêt à envoyer",
+      "title": "Ce qu'il manque à votre CV",
+      "description": "Un élément compte dès qu'il contient vos propres mots, pas ceux de l'exemple.",
+      "readyTitle": "Prêt à envoyer",
+      "readyDescription": "Chaque élément contient vos propres mots. Téléchargez votre CV depuis l'onglet Document.",
+      "done": "Fait",
+      "todo": "À faire",
+      "sectionDone": "Complet",
+      "sectionTodo": "À compléter",
+      "checks": {
+        "name": "Ajoutez votre nom",
+        "jobTitle": "Ajoutez un intitulé de poste",
+        "email": "Ajoutez une adresse e-mail",
+        "phone": "Ajoutez un numéro de téléphone",
+        "location": "Ajoutez votre ville ou votre pays",
+        "summary": "Écrivez un résumé d'au moins {min} mots",
+        "experience": "Ajoutez un poste avec une date de début",
+        "bullets": "Écrivez {min} puces sur votre travail",
+        "education": "Ajoutez votre formation",
+        "skills": "Listez {min} compétences",
+        "contactLabels": "Affichez vos adresses complètes : un libellé de contact les cache aux ATS"
+      }
+    },
+    "assistant": {
+      "working": "Un assistant IA travaille sur ce CV",
+      "workingNamed": "{name} travaille sur ce CV"
+    }
+  },
+  "notFound": {
+    "metaTitle": "Page introuvable",
+    "title": "Cette page n'existe pas",
+    "body": "Le lien est cassé, ou la page a été déplacée.",
+    "home": "Aller à la page d'accueil"
+  },
+  "ui": {
+    "close": "Fermer",
+    "toggleSidebar": "Afficher ou masquer la barre latérale",
+    "loading": "Chargement",
+    "breadcrumb": "Fil d'Ariane",
+    "pageOf": "Page {page} sur {total}",
+    "done": "Terminé",
+    "notDone": "Non terminé"
+  },
+  "landing": {
+    "srHeading": "Lanjut, un outil gratuit pour créer un CV ATS :",
+    "deck": "Choisissez un modèle, remplissez vos informations et téléchargez un PDF ou un fichier Word. Lanjut garde votre CV dans l'ordre que lisent les logiciels de recrutement, donc l'ATS reçoit le même CV que le recruteur. Sans compte, et votre CV reste sur votre appareil.",
+    "firstName": "Prénom",
+    "firstNamePlaceholder": "Votre prénom",
+    "lastName": "Nom",
+    "lastNamePlaceholder": "Votre nom",
+    "role": "Poste visé",
+    "rolePlaceholder": "Le poste que vous voulez",
+    "look": "Style",
+    "humanLabel": "Ce que voit le recruteur",
+    "machineLabel": "Ce que lit le logiciel de recrutement",
+    "scannerLabel": "Comparer les deux lectures",
+    "scannerValue": "{percent} % de la page en version mise en forme",
+    "reading": "Lecture de votre PDF…",
+    "readDone": "Relu depuis un vrai PDF · {chars, number} caractères",
+    "readFallback": "Export en texte brut. La lecture du PDF a échoué dans ce navigateur.",
+    "checkName": "Nom trouvé",
+    "checkRole": "Poste trouvé",
+    "checkEmail": "E-mail trouvé",
+    "checkOrder": "Sections dans l'ordre",
+    "sampleNote": "Votre nom et votre poste, sur un contenu d'exemple.",
+    "cta": "Continuer dans l'éditeur",
+    "allTemplates": "Voir les vingt modèles",
+    "noAccount": "Sans compte. Rien n'est envoyé.",
+    "looksHeading": "Choisissez le style. Le logiciel le lit toujours correctement.",
+    "looksBody": "Vingt modèles, chacun avec ses polices et ses espacements. Les logiciels de recrutement lisent une page de haut en bas, donc chaque modèle garde vos sections dans le même ordre simple. Seul le style change.",
+    "looksShowcase": {
+      "awal": "Le point de départ. Sobre et simple, avec vos coordonnées à droite et de la place pour chaque section. Si vous hésitez, commencez ici.",
+      "tebal": "Pour un CV qui doit se démarquer. Un grand nom et des titres en gras rendent chaque partie facile à repérer d'un coup d'œil.",
+      "klasik": "Formel et discret, dans une police classique de livre, avec votre nom centré en haut. Il convient au droit, à la finance et aux postes universitaires.",
+      "ketik": "Pensé pour les développeurs. Le nom, les titres et les dates semblent tapés à la machine, et le reste reste facile à lire.",
+      "tegas": "Des titres classiques, chacun marqué d'une barre épaisse, sur un texte moderne et net. Affirmé, et toujours facile à lire avec un long parcours."
+    },
+    "looksTry": "Essayez-le sur le CV ci-dessous",
+    "looksTried": "Sur le CV ci-dessous",
+    "looksMoreHeading": "Envie d'en voir plus ?",
+    "looksMoreBody": "Quinze autres modèles vous attendent sur la page des modèles. Chacun s'affiche en pleine page, sur l'exemple ou sur votre propre CV.",
+    "lookAwal": "Simple et aéré",
+    "lookTebal": "Grand nom, titres épais",
+    "lookKlasik": "Classique, centré",
+    "lookKetik": "Style machine à écrire",
+    "lookTegas": "Titres à barre épaisse",
+    "closeHeading": "Créez votre prochain CV dès maintenant.",
+    "closeBody": "Gratuit, sans compte et rien à installer. Votre CV est prêt à télécharger quand vous l'êtes.",
+    "contributorsBody": "Créé par des personnes qui y donnent de leur temps. Rejoignez-les : ajoutez une traduction, corrigez un bug ou créez la fonctionnalité qui vous manque.",
+    "closeCta": "Créer votre CV",
+    "newTab": "s'ouvre dans un nouvel onglet",
+    "footer": {
+      "tagline": "Un outil gratuit et open source pour créer un CV ATS. Votre travail reste dans votre navigateur.",
+      "product": "Produit",
+      "support": "Soutenir Lanjut",
+      "editor": "Créer un CV",
+      "templates": "Modèles",
+      "download": "Télécharger l'application",
+      "github": "GitHub",
+      "rights": "© {year} Lanjut. Open source sous licence AGPL-3.0.",
+      "madeBy": "Créé par",
+      "privacy": "Confidentialité",
+      "guides": "Guides",
+      "languages": "Langues",
+      "resources": "Ressources",
+      "openSource": "Open source",
+      "supportNote": "Lanjut est gratuit. Un don aide à le garder gratuit.",
+      "allGuides": "Tous les guides",
+      "contribute": "Contribuer",
+      "badgeFree": "Gratuit",
+      "badgeOpenSource": "Open source",
+      "badgeLocal": "Local d'abord"
+    },
+    "draftTitle": "Mon CV",
+    "faqHeading": "Questions fréquentes",
+    "faqMissing": "Votre question n'est pas ici ?",
+    "faqMissingLink": "Posez-la sur GitHub",
+    "faq": {
+      "whatIs": {
+        "question": "Qu'est-ce que Lanjut ?",
+        "answer": "Lanjut est un outil gratuit et open source pour créer un CV adapté aux systèmes de suivi des candidatures (ATS), les logiciels de recrutement que beaucoup d'entreprises utilisent pour lire les CV. Il fonctionne dans votre navigateur sur lanjut.org, et comme application de bureau pour macOS, Windows et Linux. Il n'y a pas de compte, et vos CV restent sur votre appareil. Vingt modèles changent le style mais jamais l'ordre de lecture, donc le logiciel lit chaque modèle de la même façon. Vous pouvez exporter un PDF, un fichier Word (.docx) ou du texte brut. Rizki Citra le développe en public sur GitHub, avec des contributeurs."
+      },
+      "free": {
+        "question": "Lanjut est-il vraiment gratuit ?",
+        "answer": "Oui, Lanjut est gratuit. Il n'y a pas d'offre payante et pas de compte. Si vous voulez soutenir le projet, vous pouvez faire un don via Saweria ou SociaBuzz. Les deux liens sont en bas de page."
+      },
+      "account": {
+        "question": "Dois-je m'inscrire ou créer un compte ?",
+        "answer": "Non, Lanjut fonctionne sans inscription. Ouvrez l'éditeur et commencez à écrire. Pas d'inscription, pas de connexion et pas d'e-mail à donner, car vos CV restent dans ce navigateur et non sur un serveur."
+      },
+      "profiles": {
+        "question": "Puis-je garder des CV différents pour des postes différents ?",
+        "answer": "Oui. Créez un profil pour chaque type de poste, par exemple les postes d'ingénieur et les postes de management. Chaque profil garde ses propres CV, coordonnées et résumé, et vous passez de l'un à l'autre depuis l'avatar dans l'application."
+      },
+      "openSource": {
+        "question": "Lanjut est-il open source ?",
+        "answer": "Oui, Lanjut est open source. Le code est sur GitHub sous licence AGPL-3.0. Vous pouvez voir comment il fonctionne, signaler un bug, ou proposer une correction ou une traduction."
+      },
+      "storage": {
+        "question": "Où mon CV est-il enregistré ?",
+        "answer": "Votre CV est enregistré dans ce navigateur, sur cet appareil. Lanjut garde vos CV dans le stockage propre au navigateur et n'envoie rien à un serveur. Si vous effacez les données du site ou changez de navigateur, les CV restent derrière, alors sauvegardez votre profil sur la page Profils. Un seul fichier contient le profil et tous ses CV, et il s'importe sur un autre appareil."
+      },
+      "offline": {
+        "question": "Lanjut fonctionne-t-il hors ligne ?",
+        "answer": "Oui. Après votre première visite, le site s'ouvre, modifie et exporte sans connexion. Les polices PDF d'un modèle se téléchargent la première fois que vous l'utilisez. L'application de bureau pour macOS, Windows et Linux fonctionne aussi hors ligne."
+      },
+      "files": {
+        "question": "Quel fichier envoyer ?",
+        "answer": "Envoyez le PDF dans la plupart des formulaires de candidature et par e-mail. Envoyez le .docx quand un portail ou un recruteur demande un fichier Word. Collez le .txt dans les formulaires qui n'acceptent que du texte brut."
+      },
+      "ats": {
+        "question": "Mon CV passera-t-il un système de suivi des candidatures ?",
+        "answer": "Aucun outil ne peut le promettre, car chaque entreprise configure son système à sa façon. Lanjut s'occupe de ce qui dépend du fichier : du vrai texte dans l'ordre de lecture, des titres de section standard et des coordonnées que le logiciel peut trouver. La démo sur cette page montre le texte que le logiciel relit dans votre PDF."
+      },
+      "layout": {
+        "question": "Pourquoi ne puis-je pas utiliser de tableaux ni de deux colonnes ?",
+        "answer": "Les logiciels de recrutement lisent une page de haut en bas. Les tableaux, les colonnes côte à côte, les zones de texte flottantes et les images dans le texte peuvent mélanger cet ordre, donc Lanjut les exclut du texte. Vous pouvez quand même changer les polices, les espacements, les couleurs et l'ordre de vos sections. La photo d'en-tête est la seule exception : elle est facultative et ne change jamais le texte que lit le logiciel."
+      },
+      "cv": {
+        "question": "Lanjut sert-il aussi à créer un CV ?",
+        "answer": "Oui, Lanjut sert aussi à créer un CV. Selon les pays, on parle de CV ou de résumé, et Lanjut crée le même document sous les deux noms : votre expérience, votre formation et vos compétences, dans un ordre qu'un système de suivi des candidatures peut lire."
+      },
+      "import": {
+        "question": "Puis-je importer le CV que j'ai déjà ?",
+        "answer": "Oui, vous pouvez importer votre CV. Déposez un PDF, ou un fichier de sauvegarde (JSON ou YAML) enregistré depuis Lanjut. Le PDF doit contenir du vrai texte, donc une page scannée ou un fichier protégé par mot de passe ne peut pas être lu. Toute ligne que Lanjut ne sait pas placer va dans une liste où vous pouvez la copier."
+      },
+      "language": {
+        "question": "Puis-je écrire mon CV en indonésien ou en anglais ?",
+        "answer": "Oui, vous pouvez écrire votre CV en anglais ou en indonésien. Choisissez la langue du document dans l'éditeur : les libellés fixes, comme les titres de section et les dates, changent avec elle. L'application elle-même existe aussi en anglais, en indonésien et en français."
+      },
+      "photo": {
+        "question": "Puis-je ajouter une photo ?",
+        "answer": "Oui, vous pouvez ajouter une photo. La photo d'en-tête est facultative et désactivée par défaut. Elle apparaît dans le PDF et le .docx, le .txt la laisse de côté, et elle ne change jamais le texte que lit le logiciel."
+      },
+      "guideLink": "Lire le guide complet"
+    },
+    "heroLead": "Créez un CV compatible ATS",
+    "heroAccent": "gratuitement.",
+    "heroCta": "Créer votre CV",
+    "heroTemplates": "Voir les modèles",
+    "downloadMac": "Télécharger pour Mac",
+    "downloadWindows": "Télécharger pour Windows",
+    "downloadLinux": "Télécharger pour Linux",
+    "downloadApp": "Obtenir l'application de bureau",
+    "mockupLabel": "L'éditeur Lanjut : la barre latérale à gauche, le CV d'exemple au centre et ses sections listées à droite.",
+    "readersHeading": "Voyez ce que lit l'ATS.",
+    "readersBody": "Tapez votre nom et le poste que vous voulez. Le côté gauche est la page que voit le recruteur. Le côté droit est le texte que le logiciel de recrutement extrait du même PDF. Faites glisser la poignée pour comparer les deux.",
+    "pillars": {
+      "free": {
+        "title": "Gratuit",
+        "body": "Pas d'offre payante, pas d'essai et pas de filigrane. Téléchargez autant de CV que vous voulez."
+      },
+      "openSource": {
+        "title": "Open source",
+        "body": "Le code est public sur GitHub sous licence AGPL-3.0. Tout le monde peut le lire, le vérifier ou lancer sa propre copie."
+      },
+      "local": {
+        "title": "Local et privé",
+        "body": "Vos CV restent dans votre navigateur, sur votre appareil. Sans compte, sans envoi et sans copie sur un serveur."
+      }
+    },
+    "features": {
+      "heading": "Tout ce dont votre CV a besoin, gratuitement.",
+      "body": "Pas d'essai, pas de paiement au téléchargement et pas de compte. Chaque fonctionnalité marche dès votre première visite.",
+      "profileExamples": {
+        "one": "Ingénieur logiciel",
+        "two": "Chef de produit",
+        "three": "Postes en télétravail"
+      },
+      "items": {
+        "profiles": {
+          "title": "Plusieurs profils de CV",
+          "body": "Gardez un profil pour chaque type de poste ou de marché de l'emploi. Chaque profil a ses propres CV, coordonnées et résumé, et chaque nouveau CV du profil part de ces informations."
+        },
+        "templates": {
+          "title": "Modèles de CV compatibles ATS",
+          "body": "Vingt modèles, chacun avec ses polices et ses espacements. Chacun garde vos sections dans l'ordre simple que lisent les logiciels de recrutement."
+        },
+        "import": {
+          "title": "Importez votre CV depuis un PDF",
+          "body": "Déposez votre ancien CV. Lanjut le range en sections, et toute ligne qu'il ne sait pas placer vous attend dans une liste."
+        },
+        "export": {
+          "title": "Export en PDF et Word",
+          "body": "Téléchargez un PDF pour les formulaires de candidature, un fichier Word (.docx) quand un recruteur en demande un, ou du texte brut à coller."
+        },
+        "readiness": {
+          "title": "Vérification de votre CV",
+          "body": "Une jauge montre ce qui manque encore à votre CV. Elle ne compte que vos propres mots, jamais ceux de l'exemple."
+        },
+        "backup": {
+          "title": "Sauvegarde vers n'importe quel appareil",
+          "body": "Enregistrez un profil et tous ses CV dans un petit fichier, puis ouvrez-le sur un autre ordinateur. Sans serveur et sans compte."
+        },
+        "languages": {
+          "title": "Anglais, indonésien et français",
+          "body": "Utilisez l'application en anglais, en indonésien ou en français, et écrivez chaque CV dans l'une de ces langues. Les titres de section et les dates suivent la langue du CV."
+        },
+        "style": {
+          "title": "Votre style, votre ordre",
+          "body": "Changez les polices, les espacements et les couleurs, ajoutez vos propres sections, faites glisser les sections à leur place et ajoutez une photo si vous le voulez."
+        },
+        "offline": {
+          "title": "Hors ligne, sur n'importe quel ordinateur",
+          "body": "Après votre première visite, Lanjut s'ouvre, modifie et exporte sans connexion. L'application de bureau pour Mac, Windows et Linux fonctionne aussi hors ligne."
+        }
+      }
+    },
+    "proof": {
+      "heading": "Votre CV ne quitte jamais votre appareil.",
+      "body": "Lanjut fonctionne en local. Tout ce que vous écrivez reste dans ce navigateur, et vous seul décidez où va un fichier.",
+      "noAccount": {
+        "title": "Sans compte",
+        "body": "Aucune inscription. Ouvrez l'éditeur et commencez à écrire."
+      },
+      "noUpload": {
+        "title": "Sans envoi",
+        "body": "Vos CV restent dans le stockage propre à votre navigateur. Lanjut n'en garde aucune copie sur un serveur."
+      },
+      "backup": {
+        "title": "Votre propre sauvegarde",
+        "body": "Enregistrez un profil et tous ses CV dans un seul fichier, et gardez-le où vous voulez."
+      },
+      "privacyLink": "Voir chaque échange de Lanjut avec un serveur"
+    },
+    "openHeading": "Développé en public"
+  },
+  "contributors": {
+    "title": "Merci à toutes les personnes qui développent Lanjut",
+    "description": "Lanjut est gratuit et open source, et il grandit avec chaque contribution. Traduisez-le dans votre langue, corrigez un bug ou créez la fonctionnalité qui vous manque.",
+    "contribute": "Contribuer sur GitHub",
+    "listLabel": "Contributeurs",
+    "profile": "{login} sur GitHub",
+    "more": "et {count} de plus"
+  },
+  "conflict": {
+    "changedTitle": "Une autre fenêtre a modifié {item, select, resume {ce CV} other {ce profil}}",
+    "changedDescription": "Vos dernières modifications dans cette fenêtre ne sont pas enregistrées. Gardez la version de l'autre fenêtre, ou enregistrez la vôtre comme copie.",
+    "keepOther": "Garder l'autre version",
+    "saveCopy": "Enregistrer la mienne comme copie",
+    "deletedTitle": "{item, select, resume {Ce CV a été supprimé} other {Ce profil a été supprimé}} dans une autre fenêtre",
+    "deletedDescription": "Vos modifications dans cette fenêtre ne sont pas enregistrées. Restaurez-le avec vos modifications, ou fermez-le.",
+    "restore": "Le restaurer",
+    "close": "Fermer",
+    "frozenTitle": "{item, select, resume {Ce CV est ouvert} other {Ce profil est ouvert}} dans une autre fenêtre",
+    "frozenDescription": "Une seule fenêtre le modifie à la fois, pour qu'aucun changement ne soit perdu. Ce que vous voyez ici peut ne pas être à jour.",
+    "editHere": "Modifier ici"
+  },
+  "privacy": {
+    "metaTitle": "Confidentialité",
+    "metaDescription": "Ce que Lanjut garde et ce qu'il envoie. Vos CV restent dans votre navigateur, rien n'est envoyé, et il n'y a ni compte, ni statistiques d'audience, ni publicité.",
+    "heading": "Confidentialité",
+    "lead": "Vous n'avez besoin d'aucun compte pour utiliser Lanjut, et il n'a ni statistiques d'audience ni publicité. Vos CV restent sur votre appareil. Voici chaque fois que le site échange avec un serveur, pour que vous puissiez vérifier chacun de ces échanges.",
+    "storedTitle": "Ce qui reste sur votre appareil",
+    "storedBody": "Vos CV, vos profils et vos réglages sont enregistrés dans le stockage propre à votre navigateur, sur cet appareil. Ils ne sont jamais envoyés à un serveur, sauf si vous connectez un assistant IA dans l'application de bureau (voir ci-dessous). Si vous effacez les données du site ou changez de navigateur, ils disparaissent, alors gardez une sauvegarde depuis la page Profil.",
+    "networkTitle": "Quand Lanjut échange avec un serveur",
+    "items": {
+      "hosting": {
+        "title": "Chargement du site.",
+        "body": "Cloudflare sert lanjut.org. Comme tout hébergeur web, il reçoit les informations habituelles de chaque requête, comme votre adresse IP et votre navigateur."
+      },
+      "language": {
+        "title": "Votre langue.",
+        "body": "Quand vous choisissez une langue, un petit cookie la retient, pour que lanjut.org s'ouvre dans cette langue la fois suivante."
+      },
+      "offline": {
+        "title": "Utilisation hors ligne.",
+        "body": "Le site garde une copie de ses propres fichiers dans votre navigateur, pour qu'il s'ouvre même sans connexion. Cette copie ne contient aucun CV."
+      },
+      "feedback": {
+        "title": "Retours.",
+        "body": "Quand vous envoyez un retour, ce que vous écrivez devient une issue publique sur GitHub. Avant l'envoi, vous voyez les informations techniques qui l'accompagnent, comme votre navigateur et la page, et vous pouvez les retirer. Le texte de votre CV n'en fait jamais partie. Une vérification Cloudflare (Turnstile) confirme qu'une personne l'a envoyé. Le créateur reçoit aussi une copie de l'issue par e-mail, via Resend, un service d'envoi d'e-mails."
+      },
+      "contributors": {
+        "title": "Contributeurs.",
+        "body": "La page d'accueil montre les personnes qui développent Lanjut. Votre navigateur charge leurs photos de profil depuis GitHub."
+      },
+      "updates": {
+        "title": "Mises à jour de l'application de bureau.",
+        "body": "L'application de bureau cherche une nouvelle version sur GitHub au plus une fois tous les trois jours. Rien ne s'installe avant que vous cliquiez."
+      },
+      "assistant": {
+        "title": "Assistant IA (application de bureau uniquement).",
+        "body": "Le travail avec un assistant IA est désactivé tant que vous ne l'activez pas dans les Réglages. Quand il est activé, l'application n'ouvre aucun port réseau. Elle écoute sur un socket local de votre appareil (un canal nommé sous Windows), donc seules les applications de votre compte sur cet appareil peuvent s'y connecter. L'assistant que vous connectez reçoit le texte des CV et des profils qu'il lit, mais jamais votre photo. Quand il définit une photo, l'application lit le fichier image sur votre appareil, et l'image ne retourne pas à l'assistant. Un fichier qu'il enregistre va uniquement là où vous le choisissez dans la fenêtre d'enregistrement. Si cet assistant fonctionne dans le cloud, l'entreprise qui le fournit peut traiter ce texte là-bas. Pour garder le texte sur votre appareil, utilisez un modèle qui fonctionne dessus, par exemple dans LM Studio. Lanjut n'envoie rien à un serveur qui lui appartient."
+      },
+      "downloads": {
+        "title": "Téléchargements de l'application de bureau.",
+        "body": "Les boutons de téléchargement récupèrent l'application sur GitHub, où Lanjut publie chaque version. Comme tout hébergeur, GitHub reçoit les informations habituelles de cette requête."
+      },
+      "donations": {
+        "title": "Dons.",
+        "body": "Les liens Saweria et SociaBuzz sont de simples liens. Ces sites s'ouvrent uniquement quand vous cliquez dessus."
+      }
+    },
+    "codeTitle": "Vérifiez par vous-même",
+    "codeBody": "Lanjut est open source sous licence AGPL-3.0. Le code qui fait tout ce que décrit cette page est public sur GitHub.",
+    "codeLink": "Lire le code",
+    "updated": "Dernière mise à jour"
+  },
+  "download": {
+    "metaTitle": "Télécharger Lanjut pour Mac, Windows et Linux",
+    "metaDescription": "Téléchargez Lanjut, un outil gratuit pour créer un CV ATS, en application de bureau pour macOS, Windows et Linux. Il fonctionne hors ligne, sans inscription, et garde vos CV sur votre ordinateur.",
+    "headingLead": "Téléchargez",
+    "headingAccent": "Lanjut.",
+    "lead": "Le même outil de création de CV que le site, en application sur votre ordinateur. Il fonctionne hors ligne, sans compte, et il est gratuit.",
+    "version": "Version {version}",
+    "whatsNew": "Nouveautés",
+    "recommended": "Pour cet ordinateur",
+    "macCta": "Télécharger pour Mac",
+    "macNote": "Pour les Mac avec puce Apple (M1 ou plus récent).",
+    "macIntel": "Mac Intel",
+    "windowsCta": "Télécharger pour Windows",
+    "windowsNote": "Pour la plupart des PC Windows (x64).",
+    "windowsArm": "PC ARM64",
+    "linuxCta": "Télécharger l'AppImage",
+    "linuxNote": "Fonctionne sur la plupart des distributions. Les paquets .deb et .rpm sont dans la liste ci-dessous.",
+    "linuxArm": "ARM64",
+    "webTitle": "Pas d'application pour cet appareil",
+    "webBody": "L'application de bureau est faite pour les ordinateurs Mac, Windows et Linux. Sur cet appareil, Lanjut fonctionne dans votre navigateur, avec les mêmes modèles et les mêmes exports.",
+    "webCta": "Ouvrir l'éditeur",
+    "allHeading": "Tous les téléchargements",
+    "requires": {
+      "mac": "macOS 13 ou plus récent",
+      "windows": "Windows 10 ou plus récent",
+      "linux": "Ubuntu 22.04 ou plus récent, ou une distribution de la même époque"
+    },
+    "formats": {
+      "dmg": "Image disque (.dmg)",
+      "exe": "Programme d'installation (.exe)",
+      "msi": "Programme d'installation pour les équipes informatiques (.msi)",
+      "appimage": "AppImage, pour toute distribution",
+      "deb": "Ubuntu et Debian (.deb)",
+      "rpm": "Fedora et openSUSE (.rpm)"
+    },
+    "arch": {
+      "appleSilicon": "Puce Apple",
+      "intel": "Intel",
+      "x64": "x64",
+      "arm64": "ARM64"
+    },
+    "downloadFile": "Télécharger {format}, {arch}",
+    "whichMac": "Quel Mac avez-vous ? Ouvrez le menu Pomme et choisissez À propos de ce Mac. Si vous voyez Puce, choisissez Puce Apple. Si vous voyez Processeur, choisissez Intel.",
+    "helpHeading": "Ouvrir l'application pour la première fois",
+    "helpMacBody": "Apple n'a pas encore signé Lanjut, donc macOS le bloque la première fois. Essayez d'ouvrir Lanjut une fois. Ouvrez ensuite Réglages Système, allez dans Confidentialité et sécurité, puis cliquez sur Ouvrir quand même.",
+    "helpMacDamaged": "Si macOS indique que l'application est endommagée, lancez cette commande dans Terminal, puis ouvrez à nouveau Lanjut :",
+    "helpWindowsBody": "Lanjut n'est pas encore signé pour Windows, donc SmartScreen affiche un avertissement la première fois. Cliquez sur Informations complémentaires, puis sur Exécuter quand même.",
+    "helpUpdates": "Une fois installé, Lanjut cherche une nouvelle version au plus une fois tous les trois jours. Rien ne s'installe avant que vous cliquiez.",
+    "older": "Vous cherchez une version plus ancienne ?",
+    "olderLink": "Toutes les versions sur GitHub",
+    "thanks": {
+      "title": "Merci d'avoir téléchargé Lanjut !",
+      "body": "Votre téléchargement devrait commencer dans quelques secondes. Sinon, réessayez.",
+      "retry": "Réessayer",
+      "steps": "Étapes du premier lancement"
+    }
+  },
+  "guide": {
+    "hubTitle": "Guides pour un CV ATS",
+    "hubDescription": "Des guides courts et pratiques pour un CV compatible ATS : un vrai exemple, le format que lit un analyseur et comment vérifier le vôtre.",
+    "hubLead": "Comment un système de suivi des candidatures lit un CV, et comment en créer un qu'il lit dans le bon ordre. Court, pratique et gratuit.",
+    "hubLink": "Tous les guides",
+    "byline": "Par",
+    "published": "Publié le",
+    "updated": "Mis à jour le",
+    "plainTextLabel": "Le même CV en texte brut, dans l'ordre où un système de suivi des candidatures le lit",
+    "ctaHeading": "Créez le vôtre maintenant",
+    "ctaBody": "C'est gratuit et sans inscription. Partez de l'exemple, d'un modèle ou de votre ancien CV.",
+    "ctaBuild": "Créer votre CV",
+    "ctaTemplates": "Voir les modèles",
+    "onThisPage": "Sur cette page",
+    "readingTime": "{minutes} min de lecture",
+    "hubHeadingLead": "Des guides pour un CV",
+    "hubHeadingAccent": "qui se lit bien.",
+    "hubListLabel": "Tous les guides",
+    "hubListBody": "Chacun utilise le CV d'exemple de Lanjut, pour que vous voyiez le résultat, pas seulement le conseil.",
+    "sampleOpen": "Ouvrir un aperçu plus grand",
+    "sampleAll": "Voir les vingt modèles",
+    "sampleUse": "Utiliser ce modèle"
+  }
+}

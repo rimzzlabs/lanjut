@@ -5,6 +5,7 @@ import { resumeToPreview } from "./resume-to-preview";
 const SAMPLE_PREVIEWS: Record<ResumeLanguage, ResumePreview> = {
   en: resumeToPreview(SAMPLE_RESUMES.en),
   id: resumeToPreview(SAMPLE_RESUMES.id),
+  fr: resumeToPreview(SAMPLE_RESUMES.fr),
 };
 
 /** The sample résumé's preview in a document language. */

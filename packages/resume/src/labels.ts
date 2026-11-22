@@ -1,6 +1,6 @@
 import type { ResumeLanguage } from "./types";
 
-export const RESUME_LANGUAGES: ResumeLanguage[] = ["en", "id"];
+export const RESUME_LANGUAGES: ResumeLanguage[] = ["en", "id", "fr"];
 
 interface DocumentLabels {
   summary: string;
@@ -74,6 +74,32 @@ export const RESUME_LABELS: Record<ResumeLanguage, DocumentLabels> = {
       "Okt",
       "Nov",
       "Des",
+    ],
+  },
+  fr: {
+    summary: "Synthèse",
+    experience: "Expérience",
+    internship: "Stage",
+    projects: "Projets",
+    organizations: "Associations",
+    education: "Formation",
+    certificates: "Certifications",
+    skills: "Compétences",
+    languages: "Langues",
+    present: "Présent",
+    months: [
+      "Janv",
+      "Févr",
+      "Mars",
+      "Avr",
+      "Mai",
+      "Juin",
+      "Juil",
+      "Août",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Déc",
     ],
   },
 };

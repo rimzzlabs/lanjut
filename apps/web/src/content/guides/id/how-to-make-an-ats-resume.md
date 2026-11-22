@@ -4,7 +4,7 @@ description: "Cara membuat CV yang bisa dibaca sistem ATS: aturan formatnya, ena
 heading: "Cara membuat CV ATS yang terbaca sistem"
 lead: "Sistem ATS (applicant tracking system) membaca CV kamu sebelum manusia membacanya. Sistem ini mengambil teks dari file kamu, lalu memilahnya ke kolom-kolom data. Panduan ini menunjukkan cara bikin CV yang lolos tahap itu dengan utuh, dalam enam langkah."
 published: "2026-11-01"
-updated: "2026-11-01"
+updated: "2026-11-22"
 order: 2
 ---
 
@@ -79,7 +79,7 @@ Kalau teks yang ditempel terbaca rapi, parser juga bisa membacanya. Kalau hasiln
 Lanjut dibuat dengan aturan-aturan ini, jadi kamu bisa fokus ke isinya:
 
 1. Buka editor dan mulai dari template, contoh, halaman kosong, atau CV lama kamu dalam bentuk PDF.
-2. Isi setiap bagian. Semua template satu kolom dengan judul bagian standar, dalam bahasa Indonesia atau Inggris.
+2. Isi setiap bagian. Semua template satu kolom dengan judul bagian standar, dalam bahasa Indonesia, Inggris, atau Prancis.
 3. Ikuti penanda kesiapan. Penanda ini menunjukkan apa yang masih kurang, dan cuma menghitung tulisanmu sendiri.
 4. Unduh dalam bentuk PDF, .docx, atau .txt.
 

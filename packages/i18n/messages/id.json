@@ -14,7 +14,8 @@
   "language": {
     "label": "Bahasa",
     "en": "Bahasa Inggris",
-    "id": "Bahasa Indonesia"
+    "id": "Bahasa Indonesia",
+    "fr": "Bahasa Prancis"
   },
   "updater": {
     "title": "Lanjut {version} sudah tersedia",
@@ -201,6 +202,10 @@
           {
             "title": "Kerja bareng asisten AI kamu",
             "description": "Di aplikasi desktop, buka Pengaturan, lalu Asisten AI, dan nyalakan Kerja bareng asisten AI. Lalu hubungkan asisten yang sudah kamu pakai: Claude Code, Codex, Cursor, LM Studio, Claude Desktop, atau yang lain. Minta dia memendekkan poin-poin kamu, menyesuaikan ringkasan dengan lowongan, ganti template, atau bikin profil baru, dan CV kamu langsung berubah di layar. Setiap perubahan CV bisa diurungkan satu langkah, dan dia tanya kamu dulu sebelum menghapus CV atau menyimpan file. Fitur ini mati sampai kamu nyalakan, dan Lanjut tidak mengirim apa pun ke server Lanjut."
+          },
+          {
+            "title": "Lanjut dalam bahasa Prancis",
+            "description": "Lanjut sekarang tersedia dalam bahasa Prancis juga. Pilih Français dari menu bahasa, atau atur bahasa CV ke Prancis: judul bagian dan tanggalnya ikut berubah, dan ada contoh CV dalam bahasa Prancis yang sudah terisi. Terima kasih buat Pierrick29 untuk label Prancis pertamanya."
           }
         ],
         "1_6_1": [
@@ -1901,8 +1906,8 @@
         "answer": "Iya, CV lama kamu bisa diimpor. Masukkan PDF, atau file cadangan (JSON atau YAML) yang kamu simpan dari Lanjut. PDF-nya harus berisi teks asli, jadi halaman hasil scan atau file yang dikunci kata sandi nggak bisa dibaca. Baris yang nggak bisa ditempatkan Lanjut masuk ke daftar yang bisa kamu salin."
       },
       "language": {
-        "question": "Bisa bikin CV dalam bahasa Inggris?",
-        "answer": "Iya, CV kamu bisa dibuat dalam bahasa Inggris. Atur bahasa dokumen ke Inggris di editor, dan label tetap seperti judul bagian dan tanggal ikut berubah. Aplikasinya sendiri tersedia dalam bahasa Indonesia dan Inggris."
+        "question": "Bisa bikin CV dalam bahasa Inggris atau Prancis?",
+        "answer": "Iya, CV kamu bisa dibuat dalam bahasa Inggris atau Prancis. Atur bahasa dokumennya di editor, dan label tetap seperti judul bagian dan tanggal ikut berubah. Aplikasinya sendiri tersedia dalam bahasa Indonesia, Inggris, dan Prancis."
       },
       "photo": {
         "question": "Bisa pasang foto?",
@@ -1969,8 +1974,8 @@
           "body": "Simpan satu profil beserta semua CV-nya jadi satu file kecil, lalu buka di komputer lain. Tanpa server, tanpa akun."
         },
         "languages": {
-          "title": "Bahasa Inggris dan Indonesia",
-          "body": "Pakai aplikasinya dalam bahasa Inggris atau Indonesia, dan tulis tiap CV pakai salah satunya. Judul bagian dan tanggal ikut bahasa CV-nya."
+          "title": "Bahasa Inggris, Indonesia, dan Prancis",
+          "body": "Pakai aplikasinya dalam bahasa Inggris, Indonesia, atau Prancis, dan tulis tiap CV pakai salah satunya. Judul bagian dan tanggal ikut bahasa CV-nya."
         },
         "style": {
           "title": "Tampilan dan urutan sesukamu",

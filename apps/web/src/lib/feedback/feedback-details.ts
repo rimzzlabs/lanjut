@@ -15,6 +15,7 @@ import { describeUserAgent } from "./user-agent";
 export const LANGUAGE_NAMES: Record<WordingLanguage, string> = {
   en: "English",
   id: "Indonesian",
+  fr: "French",
 };
 
 /** The page a report was opened from, by name. */
