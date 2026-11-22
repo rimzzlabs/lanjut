@@ -49,7 +49,8 @@ export function liveDraft(params: LiveDraftParams): CodeDraft | null {
   return draft;
 }
 
-function hasInvalidDraft(): boolean {
+/** Whether the code shows a text with an error, which never reached the résumé. */
+export function hasInvalidDraft(): boolean {
   if (!isCodeModeOn()) return false;
   const draft = liveDraft({
     draft: useEditorCodeStore.getState().draft,

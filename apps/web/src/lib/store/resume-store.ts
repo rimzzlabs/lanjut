@@ -55,7 +55,8 @@ interface ResumeStoreState {
   /** Bumped whenever a document's import leftovers change, so views re-read them. */
   leftoversVersion: number;
   /**
-   * Bumped on every undo and redo. The section forms own their values (RHF
+   * Bumped on every undo and redo, and on an edit from outside the forms
+   * (`updateOpenAsStep`). The section forms own their values (RHF
    * writes into the store, never the reverse), so a rewind only reaches a
    * mounted form by remounting it: the accordion keys on this counter the same
    * way it already keys on the open document's id.
@@ -93,6 +94,11 @@ interface ResumeStoreState {
   openResume: (id: string) => Promise<void>;
   /** Apply an edit to the open document; schedules a debounced persist. */
   updateOpen: (update: (resume: Resume) => Resume) => void;
+  /**
+   * Apply an edit that comes from outside the forms, such as an AI assistant,
+   * as an undo step of its own. The forms remount to show it.
+   */
+  updateOpenAsStep: (update: (resume: Resume) => Resume) => void;
   /** Rewind the open document one undo step; no-op when the history is empty. */
   undo: () => void;
   /** Reapply the last undone step; no-op when nothing was undone. */
@@ -351,6 +357,16 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
       canRedo: false,
     }));
     scheduleOpenResumePersist();
+  },
+
+  updateOpenAsStep(update) {
+    const before = get().open;
+    // Neither the person's last keystroke nor the next one joins this step.
+    undoGroupUntil = 0;
+    get().updateOpen(update);
+    undoGroupUntil = 0;
+    if (get().open === before) return;
+    set((state) => ({ undoEpoch: state.undoEpoch + 1 }));
   },
 
   undo() {

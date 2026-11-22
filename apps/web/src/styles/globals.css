@@ -447,4 +447,7 @@ html:not([data-workspace="editor"]) [data-workspace-view="editor"] {
   .guide-prose blockquote {
     @apply mt-4 border-l-2 border-foreground/20 pl-4 italic;
   }
+  .guide-prose img {
+    @apply mt-6 h-auto w-full rounded-lg border;
+  }
 }

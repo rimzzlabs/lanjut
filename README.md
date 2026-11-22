@@ -39,11 +39,12 @@ Customization applies to how the resume looks. It does not extend to layouts tha
 - Export to PDF (linear reading order preserved) and plain text / .docx
 - Copy, download, and re-import a résumé as JSON or YAML, from a file or as pasted text shown in color
 - Developer mode (off by default, in Preferences): a Form/Code switch in the editor shows the résumé as Markdown, YAML, or JSON in three views (code, split, preview). The page follows the text as you type, and a text with an error never reaches the résumé
+- Work with an AI assistant (desktop app only, off by default, in Settings): connect Claude Code, Codex, Cursor, LM Studio, Claude Desktop, or another MCP client, and it can list, read, and change the résumés of the active profile. The app serves MCP on a local socket and opens no network port. Each change opens in the editor, is one undo step, and comes with a notice that can undo it. A chip on the page names the assistant, and the changed blocks show a short tint. The assistant never receives the photo. The guide is at `/guide/write-your-resume-with-ai`
 - Back up a profile with all its résumés as one small file and import it on another device; nothing goes to a server, an import never deletes anything, and where both devices have a résumé the newer one wins
 - A readiness meter that shows what your résumé still needs, counting only your own words, never the sample's
 - Guided tours of the library, templates, profiles, and editor for first-time users
 - A changelog page with the highlights of every release, also published as Markdown at `/changelog.md` for agents
-- Guides in English and Indonesian at `/guide`: a full ATS résumé example in five templates, each opening at full size, and how to make an ATS-friendly résumé
+- Guides in English and Indonesian at `/guide`: a full ATS résumé example in five templates, each opening at full size, how to make an ATS-friendly résumé, and how to write a résumé with an AI assistant in the desktop app
 - A download page at `/download` that offers the desktop installer for the visitor's system, links every file of the latest release, and explains the first launch of an unsigned build
 - A privacy page at `/privacy` that lists what stays on the device and every time the site talks to a server
 - Send feedback in-app: a guided form for bugs, ideas, and wording fixes that checks for similar issues and shows the technical details it attaches (never the text of your résumé). Without a GitHub account, Lanjut posts it for you and links to the issue; with one, it opens the issue prefilled for you to post
@@ -87,6 +88,7 @@ Every template renders the same linear block sequence, so switching templates ne
 | Email                | Resend and react-email (tells the maintainer about new feedback)         |
 | Build targets        | Web (default), desktop (`LANJUT_TARGET=desktop`)                         |
 | Desktop shell        | Tauri 2 (macOS 13 or later, Windows 10 or later, Linux)                  |
+| AI assistant         | rmcp (MCP server in the desktop app, on a local socket)                  |
 | Internationalization | use-intl (English, Indonesian)                                           |
 | UI components        | shadcn (base-ui, Vega style)                                             |
 | Icons                | Phosphor (@phosphor-icons/react)                                         |
@@ -154,7 +156,7 @@ Run every script from the repo root.
 
 ## Data and Privacy
 
-Resume content is stored in IndexedDB in the browser. No resume content is sent to any server, API route, or third-party service. Clearing browser storage deletes saved resumes; export your work before doing so.
+Resume content is stored in IndexedDB in the browser. No resume content is sent to any server, API route, or third-party service. The one exception is the opt-in AI assistant of the desktop app: the assistant the person connects receives the text it reads, and a cloud assistant's provider can process it. Clearing browser storage deletes saved resumes; export your work before doing so.
 
 ## Export Formats
 

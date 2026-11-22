@@ -206,7 +206,11 @@ Contact labels (`Resume.contactLabels`) show a short text in place of an email o
 - Biome ignores `apps/desktop/src-tauri`. Rust is formatted by `cargo fmt`, and the JSON config files
   are written by the Tauri CLI.
 - RFC #278 (work with an AI assistant) is in progress. The app serves MCP on a local socket
-  (`src-tauri/src/mcp/`), and only `LANJUT_MCP=1` turns it on. An assistant starts the
+  (`src-tauri/src/mcp/`), off by default. The switch is in Settings, under AI assistant, and
+  the app keeps it in `assistant.json` in its config folder, because the server starts with
+  the app, before the page loads. Turning it off closes the socket and every connection. Each
+  write goes through `applyCodeText` with a `base_revision`, opens the résumé in the editor
+  first, and is one undo step (`updateOpenAsStep`). An assistant starts the
   `lanjut-mcp` relay (`src-tauri/relay/`, a Tauri `externalBin`), which copies stdio to the
   socket. tauri-build refuses to build while `src-tauri/binaries/lanjut-mcp-<target triple>`
   is missing, so run `node apps/desktop/scripts/build-relay.mjs` before a bare `cargo build`.

@@ -13,6 +13,12 @@
       "allow": [
         {
           "url": "https://*"
+        },
+        {
+          "url": "cursor://anysphere.cursor-deeplink/mcp/install*"
+        },
+        {
+          "url": "lmstudio://add_mcp*"
         }
       ]
     },

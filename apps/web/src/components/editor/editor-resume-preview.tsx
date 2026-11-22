@@ -1,8 +1,10 @@
 import { resolveTemplateId } from "@lanjut/resume/templates";
 import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useMemo } from "react";
+import { useOpenAssistantChange } from "@/hooks/use-open-assistant-activity";
 import { useReducedMotionPreference } from "@/hooks/use-reduced-motion-preference";
 import { useResumeStore } from "@/lib/store";
+import { EditorAssistantGlow } from "./editor-assistant-glow";
 import { EditorPreviewSkeleton } from "./editor-preview-skeleton";
 import { ResumeDocument } from "./resume-document";
 import { resumeToPreview } from "./resume-to-preview";
@@ -22,6 +24,7 @@ export function EditorResumePreview() {
   const open = useResumeStore((state) => state.open);
   const openStatus = useResumeStore((state) => state.openStatus);
   const preview = useMemo(() => (open ? resumeToPreview(open) : null), [open]);
+  const assistantChange = useOpenAssistantChange();
   // EditorPanels shows a missing résumé in place of the whole editor.
   const missing = openStatus === "missing";
 
@@ -39,6 +42,8 @@ export function EditorResumePreview() {
               <ResumeDocument
                 resume={preview}
                 template={resolveTemplateId(open.templateId)}
+                marks={assistantChange}
+                pageOverlay={<EditorAssistantGlow />}
               />
             </div>
           </PreviewContentReveal>

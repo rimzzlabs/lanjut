@@ -13,6 +13,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@lanjut/ui/components/sheet";
+import { A } from "@mobily/ts-belt";
 import { useTranslations } from "use-intl";
 import { SegmentedControl } from "@/components/shared/segmented-control";
 import { MEDIA_LG, useMediaQuery } from "@/hooks/use-media-query";
@@ -21,7 +22,14 @@ import {
   useProfileSettingsStore,
 } from "@/lib/store";
 import { ProfileSettingsBody } from "./profile-settings-body";
-import { ProfileSettingsNav } from "./profile-settings-nav";
+import { ProfileSettingsNav, SETTINGS_SECTIONS } from "./profile-settings-nav";
+
+const SHORT_LABEL_KEYS: Record<ProfileSettingsSection, string> = {
+  profile: "profileSection",
+  preferences: "preferences",
+  assistant: "assistant.navShort",
+  new: "newShort",
+};
 
 /**
  * Profile settings, preferences, and a new profile in one surface. From `lg`
@@ -87,11 +95,10 @@ function ProfileSettingsSwitch(props: { section: ProfileSettingsSection }) {
       aria-label={t("settings")}
       value={props.section}
       onValueChange={(value) => openAt(value as ProfileSettingsSection)}
-      items={[
-        { value: "profile", label: t("profileSection") },
-        { value: "preferences", label: t("preferences") },
-        { value: "new", label: t("newShort") },
-      ]}
+      items={A.map(SETTINGS_SECTIONS, (item) => ({
+        value: item.section,
+        label: t(SHORT_LABEL_KEYS[item.section]),
+      }))}
     />
   );
 }

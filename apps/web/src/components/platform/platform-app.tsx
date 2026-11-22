@@ -17,9 +17,11 @@ import { PlatformShell } from "@/components/platform/platform-shell";
 import { StaticShellContext } from "@/components/platform/platform-static-shell";
 import { PlatformTemplatesSkeleton } from "@/components/platform/platform-templates-skeleton";
 import { AppProviders } from "@/components/shared/app-providers";
+import { DesktopAssistantBridge } from "@/components/shared/desktop-assistant-bridge";
 import type { IslandProps } from "@/components/shared/providers";
 import { useEditorId } from "@/hooks/use-editor-id";
 import type { WorkspaceView } from "@/hooks/use-workspace-view";
+import { IS_DESKTOP } from "@/lib/build-target";
 import {
   CHANGELOG_PATHNAME,
   EDITOR_DOCUMENT_ROUTE,
@@ -86,6 +88,7 @@ function PlatformAppFrame(props: PlatformAppFrameProps) {
   return (
     <AppProviders locale={props.locale} pathname={props.pathname}>
       <PlatformAppRouter>
+        {IS_DESKTOP && <DesktopAssistantBridge />}
         <PlatformShell>
           <Switch>
             <Route path={TEMPLATE_PATHNAME}>

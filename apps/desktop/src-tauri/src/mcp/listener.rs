@@ -2,6 +2,7 @@
 //! that connects gets an MCP connection of its own. No network port opens.
 
 use super::bridge::Bridge;
+use super::connections::Connections;
 use super::server::LanjutMcp;
 use rmcp::ServiceExt;
 use std::io;
@@ -9,15 +10,25 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 use tokio::io::{AsyncRead, AsyncWrite};
 
-/// Set once this process binds the endpoint, so that a second copy of the app,
-/// which failed to bind, never removes the socket of the first on exit.
+/// Set while this process holds the endpoint, so that a second copy of the
+/// app, which failed to bind, never removes the socket of the first.
 static BOUND: AtomicBool = AtomicBool::new(false);
 
-fn serve_connection<S>(stream: S, bridge: Arc<Bridge>, version: String)
+/// What a connection needs from the app.
+#[derive(Clone)]
+pub struct Context {
+    pub bridge: Arc<Bridge>,
+    pub version: String,
+    pub connections: Arc<Connections>,
+}
+
+fn serve_connection<S>(stream: S, context: &Context)
 where
     S: AsyncRead + AsyncWrite + Send + Unpin + 'static,
 {
-    tauri::async_runtime::spawn(async move {
+    let bridge = context.bridge.clone();
+    let version = context.version.clone();
+    context.connections.spawn(async move {
         match LanjutMcp::new(bridge, version).serve(stream).await {
             Ok(running) => {
                 let _ = running.waiting().await;
@@ -28,7 +39,11 @@ where
 }
 
 #[cfg(unix)]
-pub async fn listen(bridge: Arc<Bridge>, version: String) -> io::Result<()> {
+pub type Endpoint = tokio::net::UnixListener;
+
+/// Takes the endpoint, or says why not. Call it inside the tokio runtime.
+#[cfg(unix)]
+pub async fn bind() -> io::Result<Endpoint> {
     use std::fs::{self, DirBuilder, Permissions};
     use std::os::unix::fs::{DirBuilderExt, PermissionsExt};
     use tokio::net::{UnixListener, UnixStream};
@@ -43,7 +58,7 @@ pub async fn listen(bridge: Arc<Bridge>, version: String) -> io::Result<()> {
         if UnixStream::connect(&path).await.is_ok() {
             return Err(io::Error::new(
                 io::ErrorKind::AddrInUse,
-                "another Lanjut window already listens",
+                "another copy of Lanjut already listens",
             ));
         }
         fs::remove_file(&path)?;
@@ -52,18 +67,24 @@ pub async fn listen(bridge: Arc<Bridge>, version: String) -> io::Result<()> {
     let listener = UnixListener::bind(&path)?;
     BOUND.store(true, Ordering::SeqCst);
     fs::set_permissions(&path, Permissions::from_mode(0o600))?;
+    Ok(listener)
+}
 
+#[cfg(unix)]
+pub async fn accept(endpoint: Endpoint, context: Context) {
     loop {
-        match listener.accept().await {
-            Ok((stream, _)) => serve_connection(stream, bridge.clone(), version.clone()),
+        match endpoint.accept().await {
+            Ok((stream, _)) => serve_connection(stream, &context),
             Err(error) => eprintln!("lanjut: MCP accept failed: {error}"),
         }
     }
 }
 
+/// Removes the socket, if this process made it. The listener and the
+/// connections stop by their own tasks being aborted.
 #[cfg(unix)]
 pub fn close() {
-    if !BOUND.load(Ordering::SeqCst) {
+    if !BOUND.swap(false, Ordering::SeqCst) {
         return;
     }
     if let Some(path) = lanjut_mcp::socket_path() {
@@ -72,27 +93,48 @@ pub fn close() {
 }
 
 #[cfg(windows)]
-pub async fn listen(bridge: Arc<Bridge>, version: String) -> io::Result<()> {
+pub type Endpoint = tokio::net::windows::named_pipe::NamedPipeServer;
+
+#[cfg(windows)]
+pub async fn bind() -> io::Result<Endpoint> {
+    use tokio::net::windows::named_pipe::ServerOptions;
+
+    let server = ServerOptions::new()
+        .first_pipe_instance(true)
+        .reject_remote_clients(true)
+        .create(lanjut_mcp::pipe_name())?;
+    BOUND.store(true, Ordering::SeqCst);
+    Ok(server)
+}
+
+#[cfg(windows)]
+pub async fn accept(mut server: Endpoint, context: Context) {
     use tokio::net::windows::named_pipe::ServerOptions;
 
     let name = lanjut_mcp::pipe_name();
-    let mut server = ServerOptions::new()
-        .first_pipe_instance(true)
-        .reject_remote_clients(true)
-        .create(&name)?;
-    BOUND.store(true, Ordering::SeqCst);
-
     loop {
-        server.connect().await?;
+        if let Err(error) = server.connect().await {
+            eprintln!("lanjut: MCP accept failed: {error}");
+            return;
+        }
         // The next instance must exist before this one leaves, or a relay that
         // connects in between finds no pipe.
-        let next = ServerOptions::new()
+        let next = match ServerOptions::new()
             .reject_remote_clients(true)
-            .create(&name)?;
+            .create(&name)
+        {
+            Ok(next) => next,
+            Err(error) => {
+                eprintln!("lanjut: MCP pipe failed: {error}");
+                return;
+            }
+        };
         let connected = std::mem::replace(&mut server, next);
-        serve_connection(connected, bridge.clone(), version.clone());
+        serve_connection(connected, &context);
     }
 }
 
 #[cfg(windows)]
-pub fn close() {}
+pub fn close() {
+    BOUND.store(false, Ordering::SeqCst);
+}

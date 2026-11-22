@@ -54,6 +54,14 @@ A create sends `saved`. The profile list keeps this window's copy of a profile t
 
 The lock cannot reach a window on an older build, or a write that lands after a steal. `writeRevised` covers both: it refuses a write when the stored `revision` is not the one the window read or last wrote. The window then shows `ConflictDialog`. See `docs/schema-migrations.md`.
 
+## AI assistant
+
+The desktop app has one window. Its MCP bridge (`apps/desktop/src-tauri/src/mcp/bridge.rs`) sends each tool call to the page that loaded last, not to a chosen window. A write does what a typed edit does:
+
+1. It opens the résumé in the editor of that window (`showResume` in `assistant-window.ts`) and waits up to 5 seconds until the window holds the edit lock.
+2. If the window is frozen, the tool refuses and asks the person to press "Edit here".
+3. It writes through `updateOpenAsStep`, so the revision check covers it like any other write.
+
 ## Test steps
 
 Run `pnpm dev` and open one résumé in two tabs.

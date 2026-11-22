@@ -18,6 +18,10 @@ const REPLY_TIMEOUT: Duration = Duration::from_secs(10);
 pub struct PageRequest {
     id: u64,
     tool: &'static str,
+    /// The arguments of the tool, checked on this side and again on the page.
+    args: Value,
+    /// What the assistant calls itself, when it says.
+    client: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -36,10 +40,13 @@ pub enum BridgeError {
 impl fmt::Display for BridgeError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::NoWindow => f.write_str("The Lanjut window is not ready. Open it, then try again."),
+            Self::NoWindow => {
+                f.write_str("The Lanjut window is not ready. Open it, then try again.")
+            }
             Self::Timeout => write!(
                 f,
-                "Lanjut did not answer in {} seconds. Bring the Lanjut window to the front, then try again.",
+                "Lanjut did not answer in {} seconds. Bring the Lanjut window to the front. \
+                 A change can still land late, so read the résumé again before you write it.",
                 REPLY_TIMEOUT.as_secs()
             ),
             Self::Page(message) => f.write_str(message),
@@ -68,14 +75,24 @@ impl Bridge {
         waiting.is_some_and(|sender| sender.send(reply).is_ok())
     }
 
-    pub async fn call(&self, tool: &'static str) -> Result<Value, BridgeError> {
+    pub async fn call(
+        &self,
+        tool: &'static str,
+        args: Value,
+        client: Option<String>,
+    ) -> Result<Value, BridgeError> {
         let id = self.next_id.fetch_add(1, Ordering::Relaxed);
         let (sender, receiver) = oneshot::channel();
         if let Ok(mut map) = self.pending.lock() {
             map.insert(id, sender);
         }
 
-        if !self.send(PageRequest { id, tool }) {
+        if !self.send(PageRequest {
+            id,
+            tool,
+            args,
+            client,
+        }) {
             self.forget(id);
             return Err(BridgeError::NoWindow);
         }

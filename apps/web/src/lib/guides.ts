@@ -2,6 +2,7 @@
 export const GUIDE_SLUGS = [
   "ats-resume-examples",
   "how-to-make-an-ats-resume",
+  "write-your-resume-with-ai",
 ] as const;
 
 export type GuideSlug = (typeof GUIDE_SLUGS)[number];

@@ -2221,6 +2221,7 @@ name = "lanjut"
 version = "0.0.0"
 dependencies = [
  "lanjut-mcp",
+ "libc",
  "rmcp",
  "serde",
  "serde_json",
