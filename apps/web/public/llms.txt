@@ -15,6 +15,7 @@
 
 - Price: free. There is no paid plan, no account, and no sign-up.
 - Privacy: resumes are saved in the browser's own storage on the person's device. No resume text is sent to any server.
+- AI assistant: desktop app only, off by default. With "Work with an AI assistant" on in Settings, the person connects an AI assistant they already use (Claude Code, Codex, Cursor, LM Studio, Claude Desktop, or another MCP client). It can read and change resumes (text, template, font, sizes, colors, section order and visibility, photo from a local image file), create and copy them, and read, create, change, and switch profiles. Each change to a resume is one undo step. A delete and a file export open a dialog that the person answers; the assistant cannot do either alone. The app serves MCP on a local socket and opens no network port. The assistant receives the resume and profile text it reads, never the photo, and a cloud assistant's provider can process that text. Lanjut sends nothing to a server of its own.
 - ATS: every export keeps real text in reading order, standard section headings, and contact details a parser can find. The document has no tables, columns, or text boxes.
 - Exports: PDF, Word (.docx), plain text (.txt), JSON, and YAML.
 - Import: a PDF resume with real text (not a scan), or a JSON or YAML file exported from Lanjut.
@@ -35,7 +36,8 @@
 - [Feedback](https://lanjut.org/feedback): report a bug or suggest an idea, with no account needed
 - [Download](https://lanjut.org/download): the desktop app, with the right installer for the visitor's system and steps for the first launch
 - [Privacy](https://lanjut.org/privacy): what stays on the device, and every time the site talks to a server
-- [Guides](https://lanjut.org/guide): how an ATS reads a resume, with a full example
+- [Guides](https://lanjut.org/guide): how an ATS reads a resume, with a full example, and how to write with an AI assistant
   - [ATS resume example](https://lanjut.org/guide/ats-resume-examples): one resume in five templates, each opening at full size, with notes on each section
   - [How to make an ATS-friendly resume](https://lanjut.org/guide/how-to-make-an-ats-resume): six steps and a two-minute check
-  - Indonesian: https://lanjut.org/id/guide/ats-resume-examples (contoh CV ATS) and https://lanjut.org/id/guide/how-to-make-an-ats-resume (cara membuat CV ATS)
+  - [Write your resume with an AI assistant](https://lanjut.org/guide/write-your-resume-with-ai): turn on the AI assistant in the desktop app, connect each assistant, and what it can and cannot change
+  - Indonesian: https://lanjut.org/id/guide/ats-resume-examples (contoh CV ATS) and https://lanjut.org/id/guide/how-to-make-an-ats-resume (cara membuat CV ATS), and https://lanjut.org/id/guide/write-your-resume-with-ai (tulis CV bareng asisten AI)

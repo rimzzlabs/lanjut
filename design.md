@@ -90,6 +90,11 @@ editorial
   Changelog shows a dot until the person opens it after a release. A résumé's menu
   offers Delete even while it is open; deleting the open résumé returns to the
   library first.
+- In the desktop app, the sidebar footer shows "AI assistant connected" while an
+  assistant is connected: a `SidebarMenuButton` with the plugs icon and a primary
+  dot at its right end. On the icon rail, the dot sits at the icon's top right.
+  It opens Settings on AI assistant. With no assistant connected, the footer is
+  empty, and the web app has no footer.
 - Guide starts the tour of the page on screen: the library, the templates, the
   profiles, or the editor. The changelog has no tour, so Guide is disabled there. Each tour also starts by itself the first time its page
   opens. A tour only points. The spotlight blocks clicks on its target, and the page
@@ -119,6 +124,20 @@ editorial
   The theme is three cards, each a small mockup of the app drawn with the real
   tokens of its theme (`.light` or `.dark` on the mockup); System splits the
   mockup diagonally.
+- Settings has an AI assistant section in the desktop app only, after Preferences.
+  It is a heading, then one `Switch` row, "Work with an AI assistant", off by
+  default. Turning it on opens a `ResponsiveDialog` first, with what the assistant
+  gets (it reads and changes the résumés of the active profile, its provider can
+  receive the text, the photo never goes, each change is one undo step, and the
+  switch closes every connection) and Cancel and Turn on. With the switch on, a
+  status line with a dot (muted while it waits, primary while an assistant is
+  connected) says how many are connected. Under it, "Connect your assistant" lists
+  one row for each assistant: Claude Code, Codex, Cursor, LM Studio, Claude
+  Desktop, and Another assistant. A row is the name, one line on what to do, and
+  the action: a copy block (the command or the `mcpServers` entry, with a Copy
+  button) or an outline button that opens the assistant. When the helper is
+  missing, a destructive `Alert` takes the place of the rows. When macOS
+  quarantines it, an `Alert` with the `xattr` command to copy takes their place.
 - The Profiles page (`/profile`) lists every profile (avatar, name, person, job
   title, résumé count, an "Active" badge). From `lg` the list stays in view beside
   the chosen profile's card: who it is, Use this profile or Active, the form, and
@@ -215,6 +234,24 @@ editorial
   text at once and keeps the last valid version while the text has an error. A
   format change or the switch back to Form asks first when it drops a text with an
   error. Layout, Styling, and Document stay in Form.
+- In the desktop app, the editor shows when an AI assistant works on the open
+  résumé, while a call runs and for 30 seconds after the last one. A chip sits
+  centered at the top of the preview, sticky, and takes no room: a `rounded-full`
+  pill, 28px tall, with the assistant's mark (the Claude mark in its orange, the
+  OpenAI logo for Codex, or a robot for any other), "<name> is working on this
+  resume" (or "An AI assistant is working on this resume" when it gives no name),
+  and a primary dot.
+  Each page shows a glow inside its edge, a 2px primary ring and a soft inner
+  shadow, over the page and never in the PDF. The dot and the glow pulse while a
+  call runs. After a write, the changed blocks keep a primary tint for 3 seconds,
+  drawn as a background and a shadow so the page keeps its size, and the first of
+  them scrolls into view. A toast says what changed, with Undo, for 8 seconds, and
+  leaves as soon as the résumé changes again. Reduced motion stops the pulse and
+  the smooth scroll.
+- An assistant that asks to delete a résumé gets the library's own delete dialog,
+  the same `AlertDialog` (a `Drawer` on a phone) with Cancel and a destructive
+  Delete. An assistant that asks to save a file gets the system save dialog. It
+  has no Lanjut surface of its own, and both wait for the person.
 - The Styling and Document tabs group their controls by intent. Each group is an
   `EditorPanelSection`: an icon in a muted square, a title, one line on what the
   group is for, an optional action beside the title, then the controls.

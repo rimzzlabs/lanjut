@@ -7,7 +7,6 @@ import { Router } from "wouter";
 import { IS_DESKTOP } from "@/lib/build-target";
 import { publicPath } from "@/lib/seo";
 import { registerResumeFlushListeners } from "@/lib/store";
-import { DesktopAssistantBridge } from "./desktop-assistant-bridge";
 import { DesktopLocaleMemory } from "./desktop-locale-memory";
 import { DesktopUpdater } from "./desktop-updater";
 import { AppThemeProvider, CopyProviders, type IslandProps } from "./providers";
@@ -29,7 +28,6 @@ export function AppProviders(props: PropsWithChildren<IslandProps>) {
         <NuqsAdapter>
           {IS_DESKTOP && <DesktopLocaleMemory />}
           {IS_DESKTOP && <DesktopUpdater />}
-          {IS_DESKTOP && <DesktopAssistantBridge />}
           <AppThemeProvider>
             <TooltipProvider>{props.children}</TooltipProvider>
             <Toaster />

@@ -39,6 +39,7 @@ export const INDEXED_PATHS: ReadonlyArray<string> = [
   "/guide",
   "/guide/ats-resume-examples",
   "/guide/how-to-make-an-ats-resume",
+  "/guide/write-your-resume-with-ai",
 ];
 
 /** A page's address in every language, for hreflang and the sitemap. */

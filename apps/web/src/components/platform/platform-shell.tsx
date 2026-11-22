@@ -1,4 +1,8 @@
-import { Sidebar, SidebarInset } from "@lanjut/ui/components/sidebar";
+import {
+  Sidebar,
+  SidebarFooter,
+  SidebarInset,
+} from "@lanjut/ui/components/sidebar";
 import type { PropsWithChildren } from "react";
 import { PlatformDatabaseNotice } from "@/components/platform/platform-database-notice";
 import { PlatformFeedbackSheet } from "@/components/platform/platform-feedback-sheet";
@@ -6,6 +10,7 @@ import { PlatformLibraryMemory } from "@/components/platform/platform-library-me
 import { PlatformNavbar } from "@/components/platform/platform-navbar";
 import { PlatformOfflineCache } from "@/components/platform/platform-offline-cache";
 import { PlatformSidebar } from "@/components/platform/platform-sidebar";
+import { PlatformSidebarAssistant } from "@/components/platform/platform-sidebar-assistant";
 import { PlatformSidebarProvider } from "@/components/platform/platform-sidebar-provider";
 import { PlatformWindowSync } from "@/components/platform/platform-window-sync";
 import { ProfileConflictNotice } from "@/components/profile/profile-conflict-notice";
@@ -20,6 +25,11 @@ export function PlatformShell(props: PropsWithChildren) {
       <PlatformSidebarProvider>
         <Sidebar variant="inset" collapsible="icon">
           <PlatformSidebar />
+          {IS_DESKTOP && (
+            <SidebarFooter>
+              <PlatformSidebarAssistant />
+            </SidebarFooter>
+          )}
         </Sidebar>
 
         {/* min-w-0 lets this flex-1 region shrink instead of being forced wide

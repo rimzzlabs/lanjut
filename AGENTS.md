@@ -206,7 +206,21 @@ Contact labels (`Resume.contactLabels`) show a short text in place of an email o
 - Biome ignores `apps/desktop/src-tauri`. Rust is formatted by `cargo fmt`, and the JSON config files
   are written by the Tauri CLI.
 - RFC #278 (work with an AI assistant) is in progress. The app serves MCP on a local socket
-  (`src-tauri/src/mcp/`), and only `LANJUT_MCP=1` turns it on. An assistant starts the
+  (`src-tauri/src/mcp/`), off by default. The switch is in Settings, under AI assistant, and
+  the app keeps it in `assistant.json` in its config folder, because the server starts with
+  the app, before the page loads. Turning it off closes the socket and every connection. Each
+  résumé write takes a `base_revision`, opens the résumé in the editor first, and is one undo
+  step (`updateOpenAsStep`). Every résumé write goes through
+  `writeResume` in `apps/web/src/lib/assistant/assistant-write.ts`: the text tools read
+  Markdown with `applyCodeText`, the settings tool patches the interchange document and
+  validates it with the import schema (so the AA color rule holds), and the order, visibility,
+  and photo tools build the next résumé directly. The photo tool reads the image file on the
+  Rust side (`mcp/photo.rs`, by its bytes, 10 MB at most), and the photo never goes back to
+  the assistant. A delete shows the library's own delete dialog and an export opens the save
+  dialog through `triggerDownload`: the person answers, and those two calls wait up to
+  120 seconds (`PERSON_TIMEOUT`). The profile tools read and write a profile's header and
+  summary as the same Markdown, and save through `saveProfile` with its revision check. An
+  assistant starts the
   `lanjut-mcp` relay (`src-tauri/relay/`, a Tauri `externalBin`), which copies stdio to the
   socket. tauri-build refuses to build while `src-tauri/binaries/lanjut-mcp-<target triple>`
   is missing, so run `node apps/desktop/scripts/build-relay.mjs` before a bare `cargo build`.

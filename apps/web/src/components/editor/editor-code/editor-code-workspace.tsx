@@ -5,6 +5,7 @@ import {
 } from "@lanjut/ui/components/resizable";
 import type { ReactNode } from "react";
 import { useCodeView } from "@/hooks/use-editor-mode";
+import { EditorAssistantChip } from "../editor-assistant-chip";
 import { EditorPreviewScroll } from "../editor-preview-scroll";
 import { EditorCodeDiscard } from "./editor-code-discard";
 import { EditorCodePane } from "./editor-code-pane";
@@ -19,7 +20,12 @@ export function EditorCodeWorkspace(props: { children: ReactNode }) {
       <EditorCodeToolbar />
       <div className="min-h-0">
         <EditorCodeDiscard />
-        {view === "code" && <EditorCodePane />}
+        {view === "code" && (
+          <div className="relative h-full">
+            <EditorAssistantChip />
+            <EditorCodePane />
+          </div>
+        )}
         {view === "preview" && (
           <EditorPreviewScroll>{props.children}</EditorPreviewScroll>
         )}

@@ -1,5 +1,6 @@
 import { ScrollArea } from "@lanjut/ui/components/scroll-area";
 import type { ReactNode } from "react";
+import { EditorAssistantChip } from "./editor-assistant-chip";
 import { EditorPreviewActions } from "./editor-preview-actions";
 import { EditorPreviewBar } from "./editor-preview-bar";
 import { EditorReadiness } from "./editor-readiness/editor-readiness";
@@ -30,7 +31,10 @@ export function EditorPreviewScroll(props: EditorPreviewScrollProps) {
         <EditorPreviewActions />
       </EditorPreviewBar>
       <ScrollArea className="h-full">
-        <div className="bg-muted px-6 py-10 min-h-screen">{props.children}</div>
+        <div className="bg-muted px-6 py-10 min-h-screen">
+          <EditorAssistantChip />
+          {props.children}
+        </div>
       </ScrollArea>
     </div>
   );

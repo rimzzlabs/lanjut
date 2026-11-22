@@ -197,6 +197,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_8_0": [
+          {
+            "title": "Work with your AI assistant",
+            "description": "In the desktop app, open Settings, then AI assistant, and turn on Work with an AI assistant. Then connect the assistant you already use: Claude Code, Codex, Cursor, LM Studio, Claude Desktop, or another one. Ask it to shorten your bullets, fit your summary to a job post, switch the template, or set up a new profile, and your resume changes on screen. Each change to a resume is one undo step, and it asks you before it deletes a resume or saves a file. It stays off until you turn it on, and Lanjut sends nothing to a server of its own."
+          }
+        ],
         "1_6_1": [
           {
             "title": "Bug fixes",
@@ -845,7 +851,8 @@
       "label": "App navigation",
       "feedback": "Send feedback",
       "changelog": "Changelog",
-      "changelogUnseen": "New release"
+      "changelogUnseen": "New release",
+      "assistantConnected": "AI assistant connected"
     },
     "toolbar": {
       "searchResume": "Search your resume",
@@ -939,6 +946,10 @@
       "outdated": "Lanjut was updated in another tab",
       "outdatedDescription": "Refresh this tab to keep working. Until then, it cannot save changes.",
       "refresh": "Refresh"
+    },
+    "assistant": {
+      "changed": "Your AI assistant changed “{title}”.",
+      "undo": "Undo"
     }
   },
   "profile": {
@@ -1006,7 +1017,71 @@
     "importErrorRead": "Couldn't read this file.",
     "importErrorTooLarge": "This file is too large to be a profile backup.",
     "importErrorWrite": "Couldn't save the import. Nothing changed. Try again.",
-    "joinNote": "This resume goes into the profile <b>{name}</b>."
+    "joinNote": "This resume goes into the profile <b>{name}</b>.",
+    "assistant": {
+      "nav": "AI assistant",
+      "navShort": "AI",
+      "title": "Work with an AI assistant",
+      "description": "Connect the AI assistant you already use, so it can read and change your resumes and profiles. In this desktop app only.",
+      "switch": "Work with an AI assistant",
+      "switchDescription": "Off until you turn it on. Only apps on this device, under your account, can connect.",
+      "changeFailed": "Lanjut could not change this setting. Try again.",
+      "confirmTitle": "Turn on Work with an AI assistant?",
+      "confirmDescription": "Read what the assistant gets before you turn this on.",
+      "factReads": "An assistant you connect can read and change your resumes and your profiles. It asks you before it deletes a resume or saves a file.",
+      "factCloud": "Lanjut sends nothing to a server of its own. If your assistant runs in the cloud, its company receives the text that it reads. To keep the text on this device, use a model that runs here, for example in LM Studio.",
+      "factPhoto": "Your photo never goes to the assistant.",
+      "factUndo": "Each change to a resume is one undo step, and Lanjut tells you about it.",
+      "factOff": "Turn this off at any time to close every connection.",
+      "confirm": "Turn on",
+      "cancel": "Cancel",
+      "waiting": "On. No assistant is connected.",
+      "connected": "{count, plural, =1 {1 assistant is connected.} other {# assistants are connected.}}",
+      "startInUse": "Another copy of Lanjut is open and serves the assistant. Close it, then turn this off and on again.",
+      "startFailed": "Lanjut could not start the connection. Turn this off and on again.",
+      "missingTitle": "The assistant helper is missing",
+      "missingDescription": "Lanjut cannot find lanjut-mcp, the helper that an assistant starts. Install Lanjut again.",
+      "quarantineTitle": "macOS blocks the assistant helper",
+      "quarantineDescription": "macOS marks Lanjut as downloaded from the internet, and it stops an assistant from starting Lanjut's helper. Run this command once in Terminal, then open this page again.",
+      "copyCommand": "Copy command",
+      "copied": "Copied",
+      "copyFailed": "Lanjut could not copy. Select the text and copy it.",
+      "openFailed": "The app did not open. Make sure it is installed.",
+      "connectTitle": "Connect your assistant",
+      "connectDescription": "Keep Lanjut open while you work. If the assistant ran before Lanjut opened, connect it again from the assistant.",
+      "clients": {
+        "claudeCode": {
+          "name": "Claude Code",
+          "description": "Copy the command, then run it in a terminal.",
+          "action": "Copy command"
+        },
+        "codex": {
+          "name": "Codex",
+          "description": "Copy the command, then run it in a terminal.",
+          "action": "Copy command"
+        },
+        "cursor": {
+          "name": "Cursor",
+          "description": "Opens Cursor and adds Lanjut to its tools.",
+          "action": "Open in Cursor"
+        },
+        "lmStudio": {
+          "name": "LM Studio",
+          "description": "Opens LM Studio and adds Lanjut. A model in LM Studio runs on this device.",
+          "action": "Open in LM Studio"
+        },
+        "claudeDesktop": {
+          "name": "Claude Desktop",
+          "description": "Copy the entry. In Claude, open Settings, then Developer, then Edit Config, and add the lanjut entry under mcpServers. Then restart Claude.",
+          "action": "Copy entry"
+        },
+        "other": {
+          "name": "Another assistant",
+          "description": "Copy the entry for an assistant that reads an mcpServers file.",
+          "action": "Copy entry"
+        }
+      }
+    }
   },
   "forms": {
     "common": {
@@ -1681,6 +1756,10 @@
         "skills": "List {min} skills",
         "contactLabels": "Show your full addresses: a contact label hides them from ATS"
       }
+    },
+    "assistant": {
+      "working": "An AI assistant is working on this resume",
+      "workingNamed": "{name} is working on this resume"
     }
   },
   "notFound": {
@@ -1949,7 +2028,7 @@
     "heading": "Privacy",
     "lead": "You need no account to use Lanjut, and it has no analytics or ads. Your résumés stay on your device. Below is every time the site talks to a server, so you can check each one.",
     "storedTitle": "What stays on your device",
-    "storedBody": "Your résumés, your profiles, and your settings are saved in your browser's own storage on this device. They are never sent to a server. If you clear the site's data or change browsers, they are gone, so keep a backup from the Profile page.",
+    "storedBody": "Your résumés, your profiles, and your settings are saved in your browser's own storage on this device. They are never sent to a server, unless you connect an AI assistant in the desktop app (see below). If you clear the site's data or change browsers, they are gone, so keep a backup from the Profile page.",
     "networkTitle": "When Lanjut talks to a server",
     "items": {
       "hosting": {
@@ -1975,6 +2054,10 @@
       "updates": {
         "title": "Desktop updates.",
         "body": "The desktop app checks GitHub for a new version at most once every three days. Nothing installs until you click."
+      },
+      "assistant": {
+        "title": "AI assistant (desktop app only).",
+        "body": "Work with an AI assistant is off until you turn it on in Settings. When it is on, the app opens no network port. It listens on a local socket on your device (a named pipe on Windows), so only apps under your account on this device can connect. The assistant you connect receives the text of the résumés and the profiles it reads, but never your photo. When it sets a photo, the app reads the image file on your device, and the image does not go back to the assistant. A file that it saves goes only where you pick in the save dialog. If that assistant runs in the cloud, its company can process that text there. To keep the text on your device, use a model that runs on it, for example in LM Studio. Lanjut sends nothing to a server of its own."
       },
       "downloads": {
         "title": "Desktop downloads.",

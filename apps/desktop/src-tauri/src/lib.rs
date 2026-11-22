@@ -40,8 +40,12 @@ pub fn run() {
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(PageLoaded(Mutex::new(Some(tx))))
-        .manage(mcp::SharedBridge::default())
-        .invoke_handler(tauri::generate_handler![mcp::mcp_attach, mcp::mcp_reply])
+        .invoke_handler(tauri::generate_handler![
+            mcp::mcp_attach,
+            mcp::mcp_reply,
+            mcp::assistant_status,
+            mcp::assistant_set_enabled
+        ])
         .on_page_load(|webview, payload| {
             if webview.label() != "main" || payload.event() != PageLoadEvent::Finished {
                 return;
@@ -54,9 +58,7 @@ pub fn run() {
         })
         .setup(move |app| {
             let handle = app.handle().clone();
-            if mcp::enabled() {
-                mcp::start(&handle);
-            }
+            mcp::setup(&handle);
 
             // Follow the system theme before anything paints.
             for label in ["splashscreen", "main"] {

@@ -1,6 +1,11 @@
 import { create } from "zustand";
 
-export type ProfileSettingsSection = "profile" | "preferences" | "new";
+/** `assistant` shows only in the desktop app. */
+export type ProfileSettingsSection =
+  | "profile"
+  | "preferences"
+  | "assistant"
+  | "new";
 
 interface ProfileSettingsStoreState {
   open: boolean;

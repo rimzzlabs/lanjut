@@ -1,14 +1,16 @@
 import { profilePersonName } from "@lanjut/resume";
 import { Button } from "@lanjut/ui/components/button";
-import { S } from "@mobily/ts-belt";
+import { A, S } from "@mobily/ts-belt";
 import {
   type Icon,
+  PlugsConnectedIcon,
   PlusIcon,
   SlidersHorizontalIcon,
   UserCircleIcon,
 } from "@phosphor-icons/react";
 import { useTranslations } from "use-intl";
 import { useProfileLabel } from "@/hooks/use-profile-label";
+import { IS_DESKTOP } from "@/lib/build-target";
 import {
   type ProfileSettingsSection,
   selectActiveProfile,
@@ -28,8 +30,19 @@ const SECTIONS: ReadonlyArray<{
     labelKey: "preferences",
     icon: SlidersHorizontalIcon,
   },
+  {
+    section: "assistant",
+    labelKey: "assistant.nav",
+    icon: PlugsConnectedIcon,
+  },
   { section: "new", labelKey: "addProfile", icon: PlusIcon },
 ];
+
+/** Work with an AI assistant needs the desktop app. */
+export const SETTINGS_SECTIONS = A.filter(
+  SECTIONS,
+  (item) => IS_DESKTOP || item.section !== "assistant",
+);
 
 /** From `lg`: the active profile over the list of settings sections. */
 export function ProfileSettingsNav() {
@@ -55,7 +68,7 @@ export function ProfileSettingsNav() {
       </div>
 
       <nav aria-label={t("settings")} className="flex flex-col gap-1">
-        {SECTIONS.map((item) => (
+        {SETTINGS_SECTIONS.map((item) => (
           <Button
             key={item.section}
             variant="ghost"

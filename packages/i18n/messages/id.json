@@ -197,6 +197,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_8_0": [
+          {
+            "title": "Kerja bareng asisten AI kamu",
+            "description": "Di aplikasi desktop, buka Pengaturan, lalu Asisten AI, dan nyalakan Kerja bareng asisten AI. Lalu hubungkan asisten yang sudah kamu pakai: Claude Code, Codex, Cursor, LM Studio, Claude Desktop, atau yang lain. Minta dia memendekkan poin-poin kamu, menyesuaikan ringkasan dengan lowongan, ganti template, atau bikin profil baru, dan CV kamu langsung berubah di layar. Setiap perubahan CV bisa diurungkan satu langkah, dan dia tanya kamu dulu sebelum menghapus CV atau menyimpan file. Fitur ini mati sampai kamu nyalakan, dan Lanjut tidak mengirim apa pun ke server Lanjut."
+          }
+        ],
         "1_6_1": [
           {
             "title": "Perbaikan bug",
@@ -845,7 +851,8 @@
       "label": "Navigasi aplikasi",
       "feedback": "Kirim masukan",
       "changelog": "Catatan rilis",
-      "changelogUnseen": "Rilis baru"
+      "changelogUnseen": "Rilis baru",
+      "assistantConnected": "Asisten AI terhubung"
     },
     "toolbar": {
       "searchResume": "Cari CV kamu",
@@ -939,6 +946,10 @@
       "outdated": "Lanjut diperbarui di tab lain",
       "outdatedDescription": "Segarkan tab ini untuk lanjut bekerja. Sampai saat itu, tab ini tidak bisa menyimpan perubahan.",
       "refresh": "Segarkan"
+    },
+    "assistant": {
+      "changed": "Asisten AI kamu mengubah “{title}”.",
+      "undo": "Urungkan"
     }
   },
   "profile": {
@@ -1006,7 +1017,71 @@
     "importErrorRead": "Nggak bisa membaca berkas ini.",
     "importErrorTooLarge": "Berkas ini terlalu besar untuk cadangan profil.",
     "importErrorWrite": "Nggak bisa menyimpan impor. Nggak ada yang berubah. Coba lagi.",
-    "joinNote": "CV ini masuk ke profil <b>{name}</b>."
+    "joinNote": "CV ini masuk ke profil <b>{name}</b>.",
+    "assistant": {
+      "nav": "Asisten AI",
+      "navShort": "AI",
+      "title": "Kerja bareng asisten AI",
+      "description": "Hubungkan asisten AI yang sudah kamu pakai, biar dia bisa baca dan ubah CV dan profil kamu. Cuma di aplikasi desktop.",
+      "switch": "Kerja bareng asisten AI",
+      "switchDescription": "Mati sampai kamu nyalakan. Cuma aplikasi di perangkat ini, di akun kamu, yang bisa terhubung.",
+      "changeFailed": "Lanjut gagal mengubah pengaturan ini. Coba lagi.",
+      "confirmTitle": "Nyalakan Kerja bareng asisten AI?",
+      "confirmDescription": "Baca dulu apa yang didapat asisten sebelum kamu nyalakan.",
+      "factReads": "Asisten yang kamu hubungkan bisa membaca dan mengubah CV dan profil kamu. Dia tanya kamu dulu sebelum menghapus CV atau menyimpan file.",
+      "factCloud": "Lanjut tidak mengirim apa pun ke server Lanjut. Kalau asisten kamu jalan di cloud, perusahaannya menerima teks yang dia baca. Biar teksnya tetap di perangkat ini, pakai model yang jalan di sini, misalnya di LM Studio.",
+      "factPhoto": "Foto kamu tidak pernah dikirim ke asisten.",
+      "factUndo": "Setiap perubahan CV bisa diurungkan satu langkah, dan Lanjut kasih tahu kamu.",
+      "factOff": "Matikan kapan saja untuk menutup semua koneksi.",
+      "confirm": "Nyalakan",
+      "cancel": "Batal",
+      "waiting": "Nyala. Belum ada asisten yang terhubung.",
+      "connected": "{count, plural, =1 {1 asisten terhubung.} other {# asisten terhubung.}}",
+      "startInUse": "Ada Lanjut lain yang terbuka dan melayani asisten. Tutup dulu, lalu matikan dan nyalakan lagi pengaturan ini.",
+      "startFailed": "Lanjut gagal memulai koneksi. Matikan dan nyalakan lagi pengaturan ini.",
+      "missingTitle": "Pembantu asisten tidak ada",
+      "missingDescription": "Lanjut tidak menemukan lanjut-mcp, pembantu yang dijalankan asisten. Instal ulang Lanjut.",
+      "quarantineTitle": "macOS memblokir pembantu asisten",
+      "quarantineDescription": "macOS menandai Lanjut sebagai unduhan dari internet, jadi asisten tidak bisa menjalankan pembantu Lanjut. Jalankan perintah ini sekali di Terminal, lalu buka lagi halaman ini.",
+      "copyCommand": "Salin perintah",
+      "copied": "Tersalin",
+      "copyFailed": "Lanjut gagal menyalin. Pilih teksnya lalu salin sendiri.",
+      "openFailed": "Aplikasinya tidak terbuka. Pastikan sudah terinstal.",
+      "connectTitle": "Hubungkan asisten kamu",
+      "connectDescription": "Biarkan Lanjut tetap terbuka selama kamu kerja. Kalau asisten sudah jalan sebelum Lanjut dibuka, hubungkan ulang dari asistennya.",
+      "clients": {
+        "claudeCode": {
+          "name": "Claude Code",
+          "description": "Salin perintahnya, lalu jalankan di terminal.",
+          "action": "Salin perintah"
+        },
+        "codex": {
+          "name": "Codex",
+          "description": "Salin perintahnya, lalu jalankan di terminal.",
+          "action": "Salin perintah"
+        },
+        "cursor": {
+          "name": "Cursor",
+          "description": "Membuka Cursor dan menambahkan Lanjut ke tool-nya.",
+          "action": "Buka di Cursor"
+        },
+        "lmStudio": {
+          "name": "LM Studio",
+          "description": "Membuka LM Studio dan menambahkan Lanjut. Model di LM Studio jalan di perangkat ini.",
+          "action": "Buka di LM Studio"
+        },
+        "claudeDesktop": {
+          "name": "Claude Desktop",
+          "description": "Salin entrinya. Di Claude, buka Settings, lalu Developer, lalu Edit Config, dan tambahkan entri lanjut di bawah mcpServers. Lalu mulai ulang Claude.",
+          "action": "Salin entri"
+        },
+        "other": {
+          "name": "Asisten lain",
+          "description": "Salin entrinya untuk asisten yang membaca file mcpServers.",
+          "action": "Salin entri"
+        }
+      }
+    }
   },
   "forms": {
     "common": {
@@ -1681,6 +1756,10 @@
         "skills": "Isi {min} keahlian",
         "contactLabels": "Tampilkan alamat lengkap: label kontak menyembunyikannya dari ATS"
       }
+    },
+    "assistant": {
+      "working": "Asisten AI sedang mengerjakan CV ini",
+      "workingNamed": "{name} sedang mengerjakan CV ini"
     }
   },
   "notFound": {
@@ -1949,7 +2028,7 @@
     "heading": "Privasi",
     "lead": "Di Lanjut, kamu nggak perlu bikin akun, dan nggak ada analitik atau iklan. CV kamu tetap ada di perangkatmu. Di bawah ini ada daftar semua momen saat Lanjut terhubung ke server, jadi kamu bisa cek sendiri satu per satu.",
     "storedTitle": "Yang tetap ada di perangkatmu",
-    "storedBody": "CV, profil, dan pengaturanmu disimpan di browser pada perangkat ini, dan nggak pernah dikirim ke server. Kalau data situs dihapus atau kamu pindah browser, semuanya ikut hilang. Jadi, simpan cadangannya lewat halaman Profil.",
+    "storedBody": "CV, profil, dan pengaturanmu disimpan di browser pada perangkat ini, dan nggak pernah dikirim ke server, kecuali kamu menghubungkan asisten AI di aplikasi desktop (lihat di bawah). Kalau data situs dihapus atau kamu pindah browser, semuanya ikut hilang. Jadi, simpan cadangannya lewat halaman Profil.",
     "networkTitle": "Kapan Lanjut terhubung ke server",
     "items": {
       "hosting": {
@@ -1975,6 +2054,10 @@
       "updates": {
         "title": "Pembaruan aplikasi desktop.",
         "body": "Aplikasi desktop mengecek versi terbaru di GitHub paling sering tiga hari sekali. Nggak ada yang terpasang sebelum kamu klik."
+      },
+      "assistant": {
+        "title": "Asisten AI (cuma di aplikasi desktop).",
+        "body": "Kerja bareng asisten AI mati sampai kamu nyalakan di Pengaturan. Kalau nyala, aplikasinya nggak membuka port jaringan. Dia cuma mendengarkan lewat socket lokal di perangkat kamu (named pipe di Windows), jadi cuma aplikasi di akun kamu, di perangkat ini, yang bisa terhubung. Asisten yang kamu hubungkan menerima teks CV dan profil yang dia baca, tapi nggak pernah foto kamu. Saat dia memasang foto, aplikasinya membaca file gambar di perangkat kamu, dan gambarnya nggak dikirim balik ke asisten. File yang dia simpan cuma masuk ke tempat yang kamu pilih di dialog simpan. Kalau asistennya jalan di cloud, perusahaannya bisa memproses teks itu di sana. Biar teksnya tetap di perangkat kamu, pakai model yang jalan di sini, misalnya di LM Studio. Lanjut nggak mengirim apa pun ke server Lanjut."
       },
       "downloads": {
         "title": "Download aplikasi desktop.",

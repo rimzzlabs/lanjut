@@ -1,9 +1,9 @@
 import type { TemplateId } from "@lanjut/resume/templates";
 import { A, D, O, pipe } from "@mobily/ts-belt";
 import { AnimatePresence } from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "use-intl";
-import { ResumeAnimatedBlock } from "./resume-animated-block";
+import { type BlockMark, ResumeAnimatedBlock } from "./resume-animated-block";
 import { buildResumeBlocks } from "./resume-blocks";
 import { resumeColorAttributes } from "./resume-colors";
 import { ResumeFontFaces, resumeTypographyStyle } from "./resume-fonts";
@@ -13,9 +13,33 @@ import { paginate } from "./resume-paginate";
 import type { ResumePreview } from "./resume-preview";
 import { TEMPLATE_BLOCK_VIEWS } from "./templates/template-block-view";
 
+/** Blocks to mark for a moment, in reading order. */
+export interface BlockMarks {
+  blockIds: ReadonlyArray<string>;
+  seq: number;
+}
+
 interface ResumeDocumentProps {
   resume: ResumePreview;
   template: TemplateId;
+  marks?: BlockMarks;
+  /** Drawn over each page. It must take no room. */
+  pageOverlay?: ReactNode;
+}
+
+function markOf(
+  marks: BlockMarks | undefined,
+  id: string,
+): BlockMark | undefined {
+  if (!marks || !A.includes(marks.blockIds, id)) return undefined;
+  return {
+    seq: marks.seq,
+    reveal: O.mapWithDefault(
+      A.head(marks.blockIds),
+      false,
+      (first) => first === id,
+    ),
+  };
 }
 
 /** Vertical gap between stacked pages (matches the `gap-6` on the page stack). */
@@ -156,11 +180,13 @@ export function ResumeDocument(props: ResumeDocumentProps) {
                       style={{
                         marginTop: blockIndex === 0 ? 0 : block.gapBefore,
                       }}
+                      mark={markOf(props.marks, block.id)}
                     >
                       <BlockView block={block} />
                     </ResumeAnimatedBlock>
                   ))}
                 </AnimatePresence>
+                {props.pageOverlay}
               </ResumePage>
             );
           })}
