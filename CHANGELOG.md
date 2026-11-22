@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.8.0](https://github.com/rimzzlabs/lanjut/compare/v1.7.0...v1.8.0) (2026-11-22)
+
+
+### Features
+
+* add french ([#282](https://github.com/rimzzlabs/lanjut/issues/282)) ([bb734b5](https://github.com/rimzzlabs/lanjut/commit/bb734b5c0e69e152ee48ddd7c481249c6064bbb1))
+* **desktop:** work with an ai assistant over mcp ([#280](https://github.com/rimzzlabs/lanjut/issues/280)) ([b0cba38](https://github.com/rimzzlabs/lanjut/commit/b0cba385042e407199dbc52e5d73e850f6529c99))
+
 ## [1.7.0](https://github.com/rimzzlabs/lanjut/compare/v1.6.1...v1.7.0) (2026-11-11)
 
 
