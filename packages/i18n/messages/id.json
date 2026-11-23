@@ -198,6 +198,12 @@
       "latest": "Terbaru",
       "fullChangelog": "Changelog lengkap di GitHub",
       "entries": {
+        "1_8_2": [
+          {
+            "title": "Perbaikan bug",
+            "description": "Bagian ucapan terima kasih sekarang menampilkan semua orang yang ikut menulis perubahan, seperti terjemahan bahasa Prancis. Link GitHub di bagian atas beranda sekarang menampilkan bintang di samping jumlahnya."
+          }
+        ],
         "1_8_1": [
           {
             "title": "Perbaikan bug",

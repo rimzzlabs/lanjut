@@ -9,7 +9,7 @@ import {
 } from "@lanjut/ui/components/drawer";
 import { TooltipProvider } from "@lanjut/ui/components/tooltip";
 import { cn } from "@lanjut/ui/lib/utils";
-import { ArrowRightIcon, ListIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, ListIcon, StarIcon } from "@phosphor-icons/react";
 import { useLocale, useTranslations } from "use-intl";
 import { useGithubStars } from "@/hooks/use-github-stars";
 import { formatStars } from "@/lib/github-stars";
@@ -106,7 +106,11 @@ function LandingMobileMenuGithub(props: { repoUrl: string; stars?: number }) {
       <GithubMarkIcon className="size-5" />
       <span aria-hidden="true">GitHub</span>
       {hasStars && (
-        <span aria-hidden="true" className="text-muted-foreground">
+        <span
+          aria-hidden="true"
+          className="inline-flex items-center gap-1 text-muted-foreground"
+        >
+          <StarIcon weight="fill" className="size-4" />
           {formatStars(locale, stars)}
         </span>
       )}

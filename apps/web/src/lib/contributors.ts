@@ -1,4 +1,8 @@
 import { A, G, pipe, R } from "@mobily/ts-belt";
+import {
+  fetchGithubCoAuthors,
+  mergeCoAuthors,
+} from "./contributors-co-authors";
 import { GITHUB_REPO } from "./github-issue";
 
 /** The same-origin address of the contributor list the Worker keeps. */
@@ -56,13 +60,27 @@ export function parseGithubContributors(
 }
 
 /**
- * The repository's contributors, straight from GitHub. The Worker and the
- * site build both ask through this. A token lifts GitHub's rate limit;
- * without one the request goes out unauthenticated. A refused or failed
- * request comes back as an error value: its HTTP status, or 0 when no
- * answer came.
+ * The repository's contributors, straight from GitHub, with the people named
+ * in Co-authored-by trailers added. The Worker and the site build both ask
+ * through this. A token lifts GitHub's rate limit; without one the requests
+ * go out unauthenticated. A refused or failed contributor request comes back
+ * as an error value: its HTTP status, or 0 when no answer came. A failed
+ * co-author search only leaves the co-authors out.
  */
 export async function fetchGithubContributors(
+  token: string | undefined,
+  userAgent: string,
+): Promise<R.Result<ReadonlyArray<Contributor>, number>> {
+  const [authors, coAuthors] = await Promise.all([
+    fetchGithubAuthors(token, userAgent),
+    fetchGithubCoAuthors(token, userAgent),
+  ]);
+  return R.map(authors, (list) =>
+    mergeCoAuthors(list, R.getWithDefault(coAuthors, [])),
+  );
+}
+
+async function fetchGithubAuthors(
   token: string | undefined,
   userAgent: string,
 ): Promise<R.Result<ReadonlyArray<Contributor>, number>> {
