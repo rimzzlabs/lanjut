@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.8.1](https://github.com/rimzzlabs/lanjut/compare/v1.8.0...v1.8.1) (2026-11-23)
+
+
+### Bug Fixes
+
+* scale resume thumbnails in the desktop app ([#287](https://github.com/rimzzlabs/lanjut/issues/287)) ([093b42a](https://github.com/rimzzlabs/lanjut/commit/093b42a3ee746eb152104d57f4f9431dc2ec1f40))
+* show the french share image on french pages ([#284](https://github.com/rimzzlabs/lanjut/issues/284)) ([4810e71](https://github.com/rimzzlabs/lanjut/commit/4810e7196bd3adaf63f2ea3d5aa9893439b47bfb))
+
 ## [1.8.0](https://github.com/rimzzlabs/lanjut/compare/v1.7.0...v1.8.0) (2026-11-22)
 
 
