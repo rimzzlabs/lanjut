@@ -5,7 +5,7 @@ import { buttonVariants } from "@lanjut/ui/components/button";
 import { Separator } from "@lanjut/ui/components/separator";
 import { cn } from "@lanjut/ui/lib/utils";
 import { O } from "@mobily/ts-belt";
-import { ArrowRightIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, StarIcon } from "@phosphor-icons/react";
 import { GithubMarkIcon } from "@/components/shared/brand-icons";
 import { formatStars } from "@/lib/github-stars";
 import { starsAtBuild } from "@/lib/github-stars-build";
@@ -102,7 +102,14 @@ const githubName = O.match(
           class={cn(buttonVariants({ variant: "ghost" }), "h-10 gap-2 px-3")}
         >
           <GithubMarkIcon className="size-5" />
-          <span aria-hidden="true" data-github-stars hidden={O.isNone(stars)}>{O.getWithDefault(starsCompact, "")}</span>
+          <span
+            aria-hidden="true"
+            hidden={O.isNone(stars)}
+            class="inline-flex items-center gap-1"
+          >
+            <StarIcon weight="fill" className="size-3.5" />
+            <span data-github-stars>{O.getWithDefault(starsCompact, "")}</span>
+          </span>
           <span class="sr-only">
             <span data-github-stars-name={githubNameTemplate}>{githubName}</span>, {t("newTab")}
           </span>

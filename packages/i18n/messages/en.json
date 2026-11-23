@@ -198,6 +198,12 @@
       "latest": "Latest",
       "fullChangelog": "Full changelog on GitHub",
       "entries": {
+        "1_8_2": [
+          {
+            "title": "Bug fixes",
+            "description": "The thank-you band now shows everyone who co-wrote a change, such as the French translation. The GitHub link at the top of the home page now shows a star beside its count."
+          }
+        ],
         "1_8_1": [
           {
             "title": "Bug fixes",

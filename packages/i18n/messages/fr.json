@@ -198,6 +198,12 @@
       "latest": "Dernière",
       "fullChangelog": "Historique complet sur GitHub",
       "entries": {
+        "1_8_2": [
+          {
+            "title": "Corrections de bugs",
+            "description": "Le bandeau de remerciements affiche maintenant toutes les personnes qui ont coécrit une modification, comme la traduction française. Le lien GitHub en haut de la page d'accueil affiche maintenant une étoile à côté de son nombre."
+          }
+        ],
         "1_8_1": [
           {
             "title": "Corrections de bugs",
