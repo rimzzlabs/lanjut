@@ -201,7 +201,7 @@
         "1_8_1": [
           {
             "title": "Bug fixes",
-            "description": "A link to the French site now shows its own share image in French, not the English one."
+            "description": "A link to the French site now shows its own share image in French, not the English one. In the desktop app, the résumé previews in your library and on the templates page show the whole page again."
           }
         ],
         "1_8_0": [

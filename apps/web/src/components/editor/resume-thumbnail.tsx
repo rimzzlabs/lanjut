@@ -16,12 +16,14 @@ interface ResumeThumbnailProps {
 
 // The thumbnail's width over the A4 width, as a plain number. CSS has no
 // division of two lengths, but tan(atan2(a, b)) equals a / b, and every
-// browser the app supports computes it. 100cqw is the thumbnail's own width.
-const SCALE = `tan(atan2(100cqw, ${A4.widthPx}px))`;
+// browser the app supports computes it. --thumbnail-width is the thumbnail's
+// own width (100cqw), registered as a length in globals.css for WebKit.
+const SCALE = `tan(atan2(var(--thumbnail-width), ${A4.widthPx}px))`;
 
 // An off-screen thumbnail skips layout and paint, and so loads no font, until
 // it comes near the viewport. The explicit height keeps its room meanwhile.
 const FRAME_STYLE: CSSProperties = {
+  ["--thumbnail-width" as string]: "100cqw",
   height: `calc(${A4.heightPx}px * ${SCALE})`,
   contentVisibility: "auto",
 };
