@@ -201,7 +201,7 @@
         "1_8_1": [
           {
             "title": "Corrections de bugs",
-            "description": "Un lien vers le site en français affiche maintenant son propre aperçu en français, et non plus celui en anglais."
+            "description": "Un lien vers le site en français affiche maintenant son propre aperçu en français, et non plus celui en anglais. Dans l'application de bureau, les aperçus de CV de votre bibliothèque et de la page des modèles affichent de nouveau la page entière."
           }
         ],
         "1_8_0": [
