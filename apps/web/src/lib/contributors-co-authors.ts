@@ -1,4 +1,4 @@
-import { A, D, G, O, pipe, R, S } from "@mobily/ts-belt";
+import { A, D, F, G, O, pipe, R, S } from "@mobily/ts-belt";
 import type { Contributor } from "./contributors";
 import { GITHUB_REPO } from "./github-issue";
 
@@ -13,19 +13,18 @@ const GITHUB_CO_AUTHORS_URL = `https://api.github.com/search/commits?per_page=10
 // Only a GitHub noreply address names an account: `<id>+<login>@` or, for
 // older accounts, `<login>@`. Any other address cannot be tied to a profile.
 const TRAILER =
-  /^co-authored-by:.*<(?:(\d+)\+)?([a-z\d-]+(?:\[bot\])?)@users\.noreply\.github\.com>\s*$/i;
+  /^co-authored-by:.*<(?:\d+\+)?([a-z\d-]+(?:\[bot\])?)@users\.noreply\.github\.com>\s*$/i;
 
 interface CoAuthor {
-  id: string | undefined;
   login: string;
 }
 
 function readTrailer(line: string): O.Option<CoAuthor> {
   const match = TRAILER.exec(S.trim(line));
   if (!match) return O.None;
-  const login = match[2];
+  const login = match[1];
   if (!login || S.endsWith(login, "[bot]")) return O.None;
-  return O.Some({ id: match[1], login });
+  return O.Some({ login });
 }
 
 function commitMessage(item: unknown): O.Option<string> {
@@ -36,16 +35,10 @@ function commitMessage(item: unknown): O.Option<string> {
   return G.isString(message) ? O.Some(message) : O.None;
 }
 
-function avatarUrl(coAuthor: CoAuthor): string {
-  if (G.isNullable(coAuthor.id))
-    return `https://github.com/${coAuthor.login}.png`;
-  return `https://avatars.githubusercontent.com/u/${coAuthor.id}?v=4`;
-}
-
 function toContributor(group: ReadonlyArray<CoAuthor>): O.Option<Contributor> {
   return O.map(A.head(group), (first) => ({
     login: first.login,
-    avatarUrl: avatarUrl(first),
+    avatarUrl: `https://github.com/${first.login}.png`,
     profileUrl: `https://github.com/${first.login}`,
     contributions: A.length(group),
   }));
@@ -104,24 +97,76 @@ export function mergeCoAuthors(
   );
 }
 
+function githubHeaders(token: string | undefined, userAgent: string) {
+  return {
+    Accept: "application/vnd.github+json",
+    "User-Agent": userAgent,
+    ...(token && { Authorization: `Bearer ${token}` }),
+  };
+}
+
+interface GithubUser {
+  avatar_url: string;
+  html_url: string;
+  type: string;
+}
+
+function isGithubUser(value: unknown): value is GithubUser {
+  if (!G.isObject(value)) return false;
+  const item = value as Record<string, unknown>;
+  return (
+    G.isString(item.avatar_url) &&
+    G.isString(item.html_url) &&
+    G.isString(item.type)
+  );
+}
+
 /**
- * The co-authors of the repository's commits, from GitHub's commit search.
- * A failed request comes back as an error value, as the contributor list does.
+ * The co-author with GitHub's own avatar and profile, or None when the
+ * account is not a person. Some apps co-author under a name with no `[bot]`
+ * in it, so only the account type tells them apart. An account that cannot be
+ * looked up is left out too.
+ */
+async function confirmPerson(
+  coAuthor: Contributor,
+  headers: Record<string, string>,
+): Promise<O.Option<Contributor>> {
+  try {
+    const response = await fetch(
+      `https://api.github.com/users/${encodeURIComponent(coAuthor.login)}`,
+      { headers },
+    );
+    if (!response.ok) return O.None;
+    const user: unknown = await response.json();
+    if (!isGithubUser(user) || user.type !== "User") return O.None;
+    return O.Some({
+      ...coAuthor,
+      avatarUrl: user.avatar_url,
+      profileUrl: user.html_url,
+    });
+  } catch {
+    return O.None;
+  }
+}
+
+/**
+ * The people among the co-authors of the repository's commits, from GitHub's
+ * commit search. A failed search comes back as an error value, as the
+ * contributor list does.
  */
 export async function fetchGithubCoAuthors(
   token: string | undefined,
   userAgent: string,
 ): Promise<R.Result<ReadonlyArray<Contributor>, number>> {
+  const headers = githubHeaders(token, userAgent);
   try {
-    const response = await fetch(GITHUB_CO_AUTHORS_URL, {
-      headers: {
-        Accept: "application/vnd.github+json",
-        "User-Agent": userAgent,
-        ...(token && { Authorization: `Bearer ${token}` }),
-      },
-    });
+    const response = await fetch(GITHUB_CO_AUTHORS_URL, { headers });
     if (!response.ok) return R.makeError(response.status);
-    return R.makeOk(parseGithubCoAuthors(await response.json()));
+    const coAuthors = parseGithubCoAuthors(await response.json());
+    const people = await Promise.all(
+      A.map(coAuthors, (coAuthor) => confirmPerson(coAuthor, headers)),
+    );
+    return R.makeOk(A.filterMap(people, F.identity));
   } catch {
     return R.makeError(0);
   }
