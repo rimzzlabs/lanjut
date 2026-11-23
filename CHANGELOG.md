@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.2](https://github.com/rimzzlabs/lanjut/compare/v1.8.1...v1.8.2) (2026-11-23)
+
+
+### Bug Fixes
+
+* show co-authors among contributors and a star on the github link ([#288](https://github.com/rimzzlabs/lanjut/issues/288)) ([d7c8222](https://github.com/rimzzlabs/lanjut/commit/d7c8222a241298132ef2b43a274bc4d65cba348c))
+
 ## [1.8.1](https://github.com/rimzzlabs/lanjut/compare/v1.8.0...v1.8.1) (2026-11-23)
 
 
